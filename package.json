@@ -1,8 +1,8 @@
 {
   "name": "b.kit",
-  "version": "1.0.0",
-  "description": "Made with create-react-library",
-  "author": "MrDigii",
+  "version": "0.1.0",
+  "description": "Web.kit to develop awesome websites",
+  "author": "Lukas Wochner<lukas.wochner@blateral.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
