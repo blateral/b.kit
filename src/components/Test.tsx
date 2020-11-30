@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
-export const Test = () => {
-    return <h1>Test</h1>;
+const View = styled.h1`
+    color: red;
+`;
+
+export const Test: FC = () => {
+    return <View>Test</View>;
 };
