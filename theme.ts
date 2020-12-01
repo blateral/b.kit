@@ -99,7 +99,7 @@ export const fonts: Fonts = {
         small: {
             ...copyBase,
             lineHeight: '1.53',
-            size: [10, 13],
+            size: [11, 13],
         },
         medium: {
             ...copyBase,
@@ -117,7 +117,7 @@ export const fonts: Fonts = {
             ...copyBase,
             style: 'italic',
             lineHeight: '1.53',
-            size: [10, 13],
+            size: [11, 13],
         },
         medium: {
             ...copyBase,
@@ -137,7 +137,7 @@ export const fonts: Fonts = {
             ...copyBase,
             weight: '700',
             lineHeight: '1.53',
-            size: [10, 13],
+            size: [11, 13],
         },
         medium: {
             ...copyBase,
@@ -173,7 +173,7 @@ export const fonts: Fonts = {
         small: {
             ...copyBase,
             lineHeight: '1.53',
-            size: [10, 13],
+            size: [11, 13],
         },
         medium: {
             ...copyBase,
@@ -190,7 +190,7 @@ export const fonts: Fonts = {
         small: {
             ...copyBase,
             lineHeight: '1.53',
-            size: [10, 13],
+            size: [11, 13],
         },
         medium: {
             ...copyBase,

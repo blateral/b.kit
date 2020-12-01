@@ -1,14 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { mq, spacings } from 'utils/styles';
+import { spacings } from 'utils/styles';
 
 export type ClampWidthType = 'normal' | 'large';
-type Whitespaces = 'right' | 'left' | 'both';
 type BgMode = 'full' | 'half';
 
 const View = styled.div<{
-    addWhitespace?: Whitespaces;
     clampWidth?: ClampWidthType;
     bgColor?: string;
     bgMode?: BgMode;
@@ -19,22 +17,7 @@ const View = styled.div<{
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
     margin-left: auto;
     margin-right: auto;
-
-    padding-left: ${({ addWhitespace }) =>
-        (addWhitespace === 'left' || addWhitespace === 'both') &&
-        spacings.spacer + 'px'};
-    padding-right: ${({ addWhitespace }) =>
-        (addWhitespace === 'right' || addWhitespace === 'both') &&
-        spacings.spacer + 'px'};
-
-    @media ${mq.xlarge} {
-        padding-left: ${({ addWhitespace }) =>
-            (addWhitespace === 'left' || addWhitespace === 'both') &&
-            (120 / spacings.wrapper) * 100 + '%'};
-        padding-right: ${({ addWhitespace }) =>
-            (addWhitespace === 'right' || addWhitespace === 'both') &&
-            (120 / spacings.wrapper) * 100 + '%'};
-    }
+    padding: 0 ${spacings.spacer}px;
 
     &:before {
         content: ${({ bgColor }) => (bgColor ? `""` : undefined)};
@@ -50,23 +33,14 @@ const View = styled.div<{
 
 const Wrapper: React.FC<{
     clampWidth?: ClampWidthType;
-    addWhitespace?: Whitespaces;
     bgColor?: string;
     bgMode?: BgMode;
     className?: string;
-}> = ({
-    addWhitespace,
-    clampWidth,
-    bgColor,
-    bgMode = 'full',
-    className,
-    children,
-}) => {
+}> = ({ clampWidth, bgColor, bgMode = 'full', className, children }) => {
     return (
         <View
             className={className}
             clampWidth={clampWidth}
-            addWhitespace={addWhitespace}
             bgColor={bgColor}
             bgMode={bgMode}
         >

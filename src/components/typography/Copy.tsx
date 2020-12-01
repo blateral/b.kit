@@ -34,9 +34,9 @@ const BaseStyles = styled.div<{
         margin-top: 0;
     }
 
-    *:last-child {
-        margin-bottom: 0;
-    }
+    // *:last-child {
+    //     margin-bottom: 0;
+    // }
 
     ${({ columns }) =>
         columns &&

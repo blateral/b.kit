@@ -56,7 +56,7 @@ const ImgDescDesktop = styled(Copy)`
 
 const ImgDescMobile = styled(Copy)`
     display: block;
-    padding: ${spacings.spacer}px ${spacings.spacer}px;
+    padding: ${spacings.spacer}px 0;
 
     @media ${mq.semilarge} {
         display: none;
@@ -65,12 +65,10 @@ const ImgDescMobile = styled(Copy)`
 
 const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
     padding-top: ${spacings.nudge}px;
-    padding-right: ${spacings.spacer}px;
     padding-bottom: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
-        padding-top: ${spacings.nudge * 6}px;
+        ${withRange([spacings.spacer * 3, spacings.spacer * 4], 'padding-top')}
 
         ${({ isMirrored }) =>
             withRange(
@@ -113,6 +111,10 @@ const Actions = styled.div`
         padding-bottom: 0;
     }
 
+    & > * {
+        flex: 1;
+    }
+
     & > * + * {
         margin-left: ${spacings.spacer}px;
     }
@@ -124,8 +126,14 @@ const ContentBlock = styled(Copy)`
         list-style-position: inside;
     }
 
-    & + & {
+    :not(:first-child) {
         padding-top: ${spacings.nudge * 5}px;
+    }
+`;
+
+const SubTextBlock = styled(ContentBlock)`
+    :not(:first-child) {
+        padding-top: ${spacings.nudge * 3}px;
     }
 `;
 
@@ -140,7 +148,9 @@ const Teaser: FC<{
     image?: Omit<ImageProps, 'coverSpace'> & { description?: string };
     intro?: string;
     text?: string;
-    action?: React.ReactNode;
+    subText?: string;
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
     isInverted,
     isMirrored,
@@ -152,15 +162,23 @@ const Teaser: FC<{
     image,
     intro,
     text,
-    action,
+    subText,
+    primaryAction,
+    secondaryAction,
 }) => {
     return (
         <Section
             addSeperation
             isBgWrapped
-            bgColor={hasBack ? colors.mono.medium : 'transparent'}
+            bgColor={
+                isInverted
+                    ? colors.black
+                    : hasBack
+                    ? colors.mono.light
+                    : 'transparent'
+            }
         >
-            <Wrapper clampWidth="large" addWhitespace="both">
+            <Wrapper clampWidth="normal">
                 <Grid.Row gutter={spacings.spacer}>
                     <Grid.Col
                         semilarge={{
@@ -197,6 +215,7 @@ const Teaser: FC<{
                     >
                         <InfoWrapper isMirrored={isMirrored}>
                             <StyledTitle
+                                isInverted={isInverted}
                                 title={title}
                                 titleAs={titleAs}
                                 superTitle={superTitle}
@@ -217,16 +236,30 @@ const Teaser: FC<{
                                         isInverted ? colors.white : colors.black
                                     }
                                 >
-                                    {text && (
-                                        <div
-                                            dangerouslySetInnerHTML={{
-                                                __html: text,
-                                            }}
-                                        />
-                                    )}
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: text,
+                                        }}
+                                    />
                                 </ContentBlock>
                             )}
-                            {action && <Actions>{action}</Actions>}
+                            {subText && (
+                                <SubTextBlock
+                                    textColor={
+                                        isInverted ? colors.white : colors.black
+                                    }
+                                    type="copy-i"
+                                >
+                                    {subText}
+                                </SubTextBlock>
+                            )}
+                            {(primaryAction || secondaryAction) && (
+                                <Actions>
+                                    {primaryAction && primaryAction(isInverted)}
+                                    {secondaryAction &&
+                                        secondaryAction(isInverted)}
+                                </Actions>
+                            )}
                         </InfoWrapper>
                     </Grid.Col>
                 </Grid.Row>
