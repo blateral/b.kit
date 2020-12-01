@@ -69,27 +69,39 @@ storiesOf('Typography / Copy', module)
             </Copy>
         );
     })
+    .add('with different types', () => {
+        return (
+            <>
+                <Separator />
+                <Copy type="copy">
+                    <CopyExample />
+                </Copy>
+                <Separator />
+                <Copy type="copy-i">
+                    <CopyExample />
+                </Copy>
+                <Separator />
+                <Copy type="copy-b">
+                    <CopyExample />
+                </Copy>
+            </>
+        );
+    })
     .add('with size', () => {
         return (
             <>
                 <Separator />
-                <Copy size="regular">
+                <Copy size="medium">
                     <CopyExample />
                 </Copy>
                 <Separator />
-                <Copy size="regularBold">
+                <Copy size="small">
                     <CopyExample />
                 </Copy>
                 <Separator />
-                <Copy size="large">
+                <Copy size="big">
                     <CopyExample />
                 </Copy>
-                <Separator />
-                <Separator />
-                <Copy size="largeBold">
-                    <CopyExample />
-                </Copy>
-                <Separator />
             </>
         );
     })

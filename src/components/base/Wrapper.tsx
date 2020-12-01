@@ -10,6 +10,7 @@ const View = styled.div<{
     clampWidth?: ClampWidthType;
     bgColor?: string;
     bgMode?: BgMode;
+    addWhitespace?: boolean;
 }>`
     position: relative;
     width: 100%;
@@ -17,7 +18,7 @@ const View = styled.div<{
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 ${spacings.spacer}px;
+    padding: 0 ${({ addWhitespace }) => (addWhitespace ? spacings.spacer : 0)}px;
 
     &:before {
         content: ${({ bgColor }) => (bgColor ? `""` : undefined)};
@@ -32,14 +33,23 @@ const View = styled.div<{
 `;
 
 const Wrapper: React.FC<{
+    addWhitespace?: boolean;
     clampWidth?: ClampWidthType;
     bgColor?: string;
     bgMode?: BgMode;
     className?: string;
-}> = ({ clampWidth, bgColor, bgMode = 'full', className, children }) => {
+}> = ({
+    addWhitespace,
+    clampWidth,
+    bgColor,
+    bgMode = 'full',
+    className,
+    children,
+}) => {
     return (
         <View
             className={className}
+            addWhitespace={addWhitespace}
             clampWidth={clampWidth}
             bgColor={bgColor}
             bgMode={bgMode}

@@ -21,18 +21,8 @@ storiesOf('Base / Wrapper', module)
             <ExampleContent />
         </Wrapper>
     ))
-    .add('addWhitespace left', () => (
-        <Wrapper addWhitespace="left">
-            <ExampleContent />
-        </Wrapper>
-    ))
-    .add('addWhitespace right', () => (
-        <Wrapper addWhitespace="right">
-            <ExampleContent />
-        </Wrapper>
-    ))
-    .add('addWhitespace both sides', () => (
-        <Wrapper addWhitespace="both">
+    .add('with whitespace', () => (
+        <Wrapper addWhitespace>
             <ExampleContent />
         </Wrapper>
     ));

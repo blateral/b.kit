@@ -5,7 +5,13 @@ import { FontOptionType, fonts, FontType } from '../../../theme';
 
 type CopyType = Exclude<
     FontType,
-    'heading-1' | 'heading-2' | 'heading-3' | 'heading-4' | 'callout' | 'super'
+    | 'heading-1'
+    | 'heading-2'
+    | 'heading-3'
+    | 'heading-4'
+    | 'callout'
+    | 'super'
+    | 'label'
 >;
 
 const BaseStyles = styled.div<{
