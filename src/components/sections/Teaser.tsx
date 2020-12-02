@@ -137,15 +137,6 @@ const SubTextBlock = styled(ContentBlock)`
     }
 `;
 
-const StyledWrapper = styled(Wrapper)<{ addSeperation?: boolean }>`
-    ${({ addSeperation }) =>
-        addSeperation &&
-        withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-top')}
-    ${({ addSeperation }) =>
-        addSeperation &&
-        withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-bottom')}
-`;
-
 const Teaser: FC<{
     isInverted?: boolean;
     isMirrored?: boolean;
@@ -175,7 +166,7 @@ const Teaser: FC<{
     primaryAction,
     secondaryAction,
 }) => {
-    const getWrapperBgMode = (): BgMode | undefined => {
+    const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
             case 'full':
                 return 'full';
@@ -186,20 +177,10 @@ const Teaser: FC<{
         }
     };
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return isMirrored ? 'half-left' : 'half-right';
-            default:
-                return undefined;
-        }
-    };
-
     return (
         <Section
-            isBgWrapped
+            addSeperation
+            bgClamp="normal"
             bgColor={
                 isInverted
                     ? colors.black
@@ -208,22 +189,8 @@ const Teaser: FC<{
                     : 'transparent'
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
-            bgBreakpoint="semilarge"
         >
-            <StyledWrapper
-                clampWidth="normal"
-                addWhitespace
-                addSeperation
-                bgColor={
-                    isInverted
-                        ? colors.black
-                        : bgMode
-                        ? colors.mono.light
-                        : 'transparent'
-                }
-                bgMode={!isInverted ? getWrapperBgMode() : undefined}
-                bgBreakpoint="semilarge"
-            >
+            <Wrapper clampWidth="normal" addWhitespace>
                 <Grid.Row gutter={spacings.spacer}>
                     <Grid.Col
                         semilarge={{
@@ -343,7 +310,7 @@ const Teaser: FC<{
                         }}
                     />
                 </Grid.Row>
-            </StyledWrapper>
+            </Wrapper>
         </Section>
     );
 };
