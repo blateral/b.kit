@@ -7,39 +7,31 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 import Title from 'components/blocks/Title';
 import Wrapper from 'components/base/Wrapper';
-import Section, { BgMode } from 'components/base/Section';
+import Section from 'components/base/Section';
 import { mq, spacings, withRange } from 'utils/styles';
 import { colors } from '../../../theme';
 
-const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
-    display: flex;
-    flex-direction: column;
+const WideImage = styled(Image)<{ isMirrored?: boolean }>`
     position: relative;
-    height: 100%;
-    width: 100%;
-`;
-
-const StyledImage = styled(Image)`
-    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
-`;
-
-const ImgDescDesktop = styled(Copy)`
-    display: none;
 
     @media ${mq.semilarge} {
-        display: block;
-        padding: ${spacings.spacer}px ${spacings.spacer * 2}px;
+        position: absolute;
+        width: 50%;
+        left: ${({ isMirrored }) => (isMirrored ? 'auto' : '50%')};
+        right: ${({ isMirrored }) => (isMirrored ? '50%' : 'auto')};
+
+        transform: translateX(
+            ${({ isMirrored }) => (isMirrored ? '100%' : '-100%')}
+        );
     }
-`;
 
-const ImgDescMobile = styled(Copy)`
-    display: block;
-    padding: ${spacings.spacer}px 0;
-
-    @media ${mq.semilarge} {
-        display: none;
+    @media ${mq.xlarge} {
+        max-width: ${spacings.wrapperLarge / 2}px;
     }
 `;
 
@@ -120,7 +112,7 @@ const SubTextBlock = styled(ContentBlock)`
 const Teaser: FC<{
     isInverted?: boolean;
     isMirrored?: boolean;
-    bgMode?: 'full' | 'splitted';
+    hasBack?: boolean;
     superTitle?: string;
     title?: string;
     titleAs?: HeadlineTag;
@@ -133,7 +125,7 @@ const Teaser: FC<{
 }> = ({
     isInverted,
     isMirrored,
-    bgMode,
+    hasBack,
     superTitle,
     title,
     titleAs,
@@ -144,17 +136,6 @@ const Teaser: FC<{
     primaryAction,
     secondaryAction,
 }) => {
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return isMirrored ? 'larger-left' : 'larger-right';
-            default:
-                return undefined;
-        }
-    };
-
     return (
         <Section
             addSeperation
@@ -162,12 +143,14 @@ const Teaser: FC<{
             bgColor={
                 isInverted
                     ? colors.black
-                    : bgMode
+                    : hasBack
                     ? colors.mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
+            {image && (
+                <WideImage coverSpace {...image} isMirrored={isMirrored} />
+            )}
             <Wrapper clampWidth="normal" addWhitespace>
                 <Grid.Row gutter={spacings.spacer}>
                     <Grid.Col
@@ -175,21 +158,7 @@ const Teaser: FC<{
                             span: 14 / 28,
                             move: (isMirrored ? 14 : 0) / 28,
                         }}
-                    >
-                        <ImgWrapper isMirrored={isMirrored}>
-                            {image && <StyledImage coverSpace {...image} />}
-                            {image?.description && (
-                                <ImgDescMobile
-                                    size="small"
-                                    textColor={
-                                        isInverted ? colors.white : colors.black
-                                    }
-                                >
-                                    {image.description}
-                                </ImgDescMobile>
-                            )}
-                        </ImgWrapper>
-                    </Grid.Col>
+                    ></Grid.Col>
                     <Grid.Col
                         semilarge={{
                             span: 14 / 28,
@@ -245,41 +214,6 @@ const Teaser: FC<{
                             )}
                         </InfoWrapper>
                     </Grid.Col>
-                </Grid.Row>
-                <Grid.Row gutter={spacings.spacer}>
-                    <Grid.Col
-                        semilarge={{
-                            span: (bgMode === 'splitted' ? 11.2 : 14) / 28,
-                            move:
-                                (isMirrored
-                                    ? bgMode === 'splitted'
-                                        ? 16.8
-                                        : 14
-                                    : 0) / 28,
-                        }}
-                    >
-                        {image?.description && (
-                            <ImgDescDesktop
-                                size="small"
-                                textColor={
-                                    isInverted ? colors.white : colors.black
-                                }
-                            >
-                                {image.description}
-                            </ImgDescDesktop>
-                        )}
-                    </Grid.Col>
-                    <Grid.Col
-                        semilarge={{
-                            span: (bgMode === 'splitted' ? 16.8 : 14) / 28,
-                            move:
-                                (isMirrored
-                                    ? bgMode === 'splitted'
-                                        ? -11.2
-                                        : -14
-                                    : 0) / 28,
-                        }}
-                    />
                 </Grid.Row>
             </Wrapper>
         </Section>
