@@ -19,11 +19,12 @@ export type ColorType = keyof Colors;
 /***** Font Types *****/
 export interface FontProps {
     family: string;
-    weight: string;
-    style: string;
-    lineHeight: string;
-    letterSpacing: string;
+    weight?: string;
+    style?: string;
+    lineHeight?: string;
+    letterSpacing?: string;
     size: [number, number];
+    textTransform?: string;
 }
 
 export interface FontOptions {
@@ -152,7 +153,12 @@ export const fonts: Fonts = {
             size: [20, 22],
         },
     },
-    super: copyBase,
+    super: {
+        ...copyBase,
+        weight: '700',
+        lineHeight: '1.43',
+        size: [14, 16],
+    },
     'heading-1': headingBase,
     'heading-2': {
         ...headingBase,

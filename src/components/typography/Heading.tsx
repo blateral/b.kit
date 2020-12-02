@@ -41,6 +41,7 @@ const View = styled(BaseStyles)`
     ${({ type }) => withRange(fonts[type].size, 'font-size')}
     line-height: ${({ type }) => fonts[type].lineHeight};
     letter-spacing: ${({ type }) => fonts[type].letterSpacing};
+    text-transform: ${({ type }) => fonts[type].textTransform};
 `;
 
 export type HeadlineTag =

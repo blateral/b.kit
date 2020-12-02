@@ -3,16 +3,25 @@ import styled from 'styled-components';
 
 import Heading, { HeadlineTag } from 'components/typography/Heading';
 import { spacings, withRange } from 'utils/styles';
-import { colors } from '../../../theme';
-import Copy from 'components/typography/Copy';
+import { colors, fonts } from '../../../theme';
 
 const View = styled.div<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
 `;
 
-const SuperTitle = styled.div`
+const SuperTitle = styled.div<{ textColor?: string }>`
     display: inline-block;
     ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding-bottom')};
+
+    font-family: ${fonts['super'].family};
+    font-weight: ${fonts['super'].weight};
+    font-style: ${fonts['super'].style};
+    ${withRange(fonts['super'].size, 'font-size')}
+    line-height: ${fonts['super'].lineHeight};
+    letter-spacing: ${fonts['super'].letterSpacing};
+    text-transform: ${fonts['super'].textTransform};
+
+    color: ${({ textColor }) => textColor || 'inherit'};
 `;
 
 const Title: FC<{
@@ -26,13 +35,10 @@ const Title: FC<{
     return (
         <View isCentered={isCentered} className={className}>
             {superTitle && (
-                <SuperTitle>
-                    <Copy
-                        type="copy-b"
-                        textColor={isInverted ? colors.white : colors.black}
-                    >
-                        {superTitle}
-                    </Copy>
+                <SuperTitle
+                    textColor={isInverted ? colors.white : colors.black}
+                >
+                    {superTitle}
                 </SuperTitle>
             )}
             {title && (

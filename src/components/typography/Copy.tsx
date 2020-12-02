@@ -67,6 +67,7 @@ const View = styled(BaseStyles)`
     ${({ type, size }) => withRange(fonts[type][size].size, 'font-size')}
     line-height: ${({ type, size }) => fonts[type][size].lineHeight};
     letter-spacing: ${({ type, size }) => fonts[type][size].letterSpacing};
+    text-transform: ${({ type, size }) => fonts[type][size].textTransform};
 `;
 
 const Copy: React.FC<{
