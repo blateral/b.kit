@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import Grid from 'components/base/Grid';
-import Section, { BgMode } from 'components/base/Section';
+import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import { spacings } from 'utils/styles';
