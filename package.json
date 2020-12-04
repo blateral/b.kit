@@ -7,8 +7,6 @@
     "types": "lib",
     "scripts": {
         "build": "rollup -c",
-        "tsbuild": "tsc --project tsconfig.json",
-        "dev": "tsc --watch --project tsconfig.json",
         "storybook": "start-storybook -p 9000 -c .storybook",
         "tc": "tsc --noEmit"
     },
@@ -52,6 +50,6 @@
     "peerDependencies": {
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
-        "styled-components": "^5.2.1"
+        "styled-components": ">= 5"
     }
 }

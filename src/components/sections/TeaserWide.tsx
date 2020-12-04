@@ -8,8 +8,7 @@ import Copy from '../typography/Copy';
 import Title from '../blocks/Title';
 import Wrapper from '../base/Wrapper';
 import Section from '../base/Section';
-import { mq, spacings, withRange } from '../../utils/styles';
-import { colors } from '../../theme';
+import { mq, spacings, withRange, colors } from '../../utils/styles';
 
 const WideImage = styled(Image)<{ isMirrored?: boolean }>`
     position: relative;

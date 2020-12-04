@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { mq, spacings, withRange } from '../../utils/styles';
-import { FontOptionType, fonts, FontType } from '../../theme';
+import { FontOptionType, FontType } from '../../theme';
+import { fonts, mq, spacings, withRange } from '../../utils/styles';
 
 type CopyType = Exclude<
     FontType,

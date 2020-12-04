@@ -1,0 +1,51 @@
+/***** Color Types *****/
+interface ColorOptions {
+    light: string;
+    medium: string;
+    dark: string;
+}
+
+export interface Colors {
+    black: string;
+    white: string;
+    mono: ColorOptions;
+    primary: ColorOptions;
+    secondary: ColorOptions;
+    tertiary: ColorOptions;
+}
+
+export type ColorType = keyof Colors;
+
+/***** Font Types *****/
+export interface FontProps {
+    family: string;
+    weight?: string;
+    style?: string;
+    lineHeight?: string;
+    letterSpacing?: string;
+    size: [number, number];
+    textTransform?: string;
+}
+
+export interface FontOptions {
+    small: FontProps;
+    medium: FontProps;
+    big: FontProps;
+}
+
+export type FontOptionType = keyof FontOptions;
+
+export interface Fonts {
+    copy: FontOptions;
+    'copy-i': FontOptions;
+    'copy-b': FontOptions;
+    super: FontProps;
+    'heading-1': FontProps;
+    'heading-2': FontProps;
+    'heading-3': FontProps;
+    'heading-4': FontProps;
+    label: FontOptions;
+    callout: FontOptions;
+}
+
+export type FontType = keyof Fonts;

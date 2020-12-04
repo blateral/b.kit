@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext, useEffect } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
 import Grid from '../base/Grid';
 import { HeadlineTag } from '../typography/Heading';
@@ -8,8 +8,7 @@ import Copy from '../typography/Copy';
 import Title from '../blocks/Title';
 import Wrapper from '../base/Wrapper';
 import Section, { BgMode } from '../base/Section';
-import { mq, spacings, withRange } from '../../utils/styles';
-import { colors } from '../../theme';
+import { mq, spacings, withRange, colors } from '../../utils/styles';
 
 const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
     display: flex;
@@ -144,6 +143,8 @@ const Teaser: FC<{
     primaryAction,
     secondaryAction,
 }) => {
+    const themeContext = useContext(ThemeContext);
+
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
             case 'full':
@@ -155,6 +156,10 @@ const Teaser: FC<{
         }
     };
 
+    useEffect(() => {
+        console.log(themeContext);
+    }, [themeContext]);
+
     return (
         <Section
             addSeperation
@@ -163,7 +168,7 @@ const Teaser: FC<{
                 isInverted
                     ? colors.black
                     : bgMode
-                    ? colors.mono.light
+                    ? themeContext?.colors?.mono?.light || colors.mono.light
                     : 'transparent'
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}

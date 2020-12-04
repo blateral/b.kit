@@ -5,8 +5,7 @@ import Grid from '../base/Grid';
 import Section from '../base/Section';
 import Wrapper from '../base/Wrapper';
 import Image, { ImageProps } from '../blocks/Image';
-import { spacings } from '../../utils/styles';
-import { colors } from '../../theme';
+import { spacings, colors } from '../../utils/styles';
 
 const StyledImage = styled(Image)`
     width: 100%;

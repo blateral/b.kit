@@ -4,8 +4,7 @@ import Wrapper from '../base/Wrapper';
 import Title from '../blocks/Title';
 import styled from 'styled-components';
 import Copy from '../typography/Copy';
-import { spacings } from '../../utils/styles';
-import { colors } from '../../theme';
+import { spacings, colors } from '../../utils/styles';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
