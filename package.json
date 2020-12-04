@@ -3,9 +3,11 @@
     "version": "0.1.0",
     "description": "",
     "main": "lib/index.js",
+    "module": "lib/index.es.js",
     "types": "lib",
     "scripts": {
-        "build": "tsc --project tsconfig.json",
+        "build": "rollup -c",
+        "tsbuild": "tsc --project tsconfig.json",
         "dev": "tsc --watch --project tsconfig.json",
         "storybook": "start-storybook -p 9000 -c .storybook",
         "tc": "tsc --noEmit"
@@ -27,6 +29,8 @@
         }
     },
     "devDependencies": {
+        "@rollup/plugin-commonjs": "^17.0.0",
+        "@rollup/plugin-node-resolve": "^11.0.0",
         "@storybook/react": "^6.1.9",
         "@types/react": "^17.0.0",
         "@types/react-dom": "^17.0.0",
@@ -39,6 +43,9 @@
         "husky": "^4.3.0",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
+        "rollup": "^2.34.1",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-typescript2": "^0.29.0",
         "styled-components": "^5.2.1",
         "typescript": "^4.1.2"
     },

@@ -4,5 +4,5 @@ export declare const getBgImage: (bgImage: {
     semilarge?: string;
     large?: string;
     xlarge?: string;
-}, mq?: "small" | "medium" | "semilarge" | "large" | "xlarge" | undefined) => string;
+}, mq?: "small" | "large" | "medium" | "semilarge" | "xlarge" | undefined) => string;
 //# sourceMappingURL=backgroundImage.d.ts.map

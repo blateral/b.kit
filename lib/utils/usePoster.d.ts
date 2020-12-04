@@ -9,6 +9,6 @@ export declare const canUseWebP: () => boolean;
 export declare type PosterMq = 'small' | 'medium' | 'semilarge' | 'large' | 'xlarge';
 export declare const usePoster: (posterImage: PosterImage & {
     webp?: PosterImage;
-}, mqs?: ("small" | "medium" | "semilarge" | "large" | "xlarge")[] | undefined) => string | undefined;
+}, mqs?: ("small" | "large" | "medium" | "semilarge" | "xlarge")[] | undefined) => string | undefined;
 export {};
 //# sourceMappingURL=usePoster.d.ts.map
