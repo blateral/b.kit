@@ -2,9 +2,9 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import Button from 'components/buttons/Button';
-import ArrowRight from 'components/base/icons/ArrowRight';
-import { colors } from '../theme';
+import Button from '../src/components/buttons/Button';
+import ArrowRight from '../src/components/base/icons/ArrowRight';
+import { colors } from '../src/theme';
 
 // Story Helper
 const Helper = styled.div<{ inverted?: boolean }>`

@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import Grid from 'components/base/Grid';
-import { HeadlineTag } from 'components/typography/Heading';
-import Image, { ImageProps } from 'components/blocks/Image';
-import Copy from 'components/typography/Copy';
-import Title from 'components/blocks/Title';
-import Wrapper from 'components/base/Wrapper';
-import Section, { BgMode } from 'components/base/Section';
-import { mq, spacings, withRange } from 'utils/styles';
-import { colors } from '../../../theme';
+import Grid from '../base/Grid';
+import { HeadlineTag } from '../typography/Heading';
+import Image, { ImageProps } from '../blocks/Image';
+import Copy from '../typography/Copy';
+import Title from '../blocks/Title';
+import Wrapper from '../base/Wrapper';
+import Section, { BgMode } from '../base/Section';
+import { mq, spacings, withRange } from '../../utils/styles';
+import { colors } from '../../theme';
 
 const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
     display: flex;

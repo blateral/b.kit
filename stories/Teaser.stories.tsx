@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Teaser from 'components/sections/Teaser';
-import Button from 'components/buttons/Button';
+import Teaser from '../src/components/sections/Teaser';
+import Button from '../src/components/buttons/Button';
 
 storiesOf('Sections / Teaser', module)
     .add('with content', () => (

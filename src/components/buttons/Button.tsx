@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { spacings, withRange } from 'utils/styles';
-import { colors, fonts } from '../../../theme';
+import { spacings, withRange } from '../../utils/styles';
+import { colors, fonts } from '../../theme';
 
 const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     min-height: 3em;

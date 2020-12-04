@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Copy from 'components/typography/Copy';
+import Copy from '../src/components/typography/Copy';
 
 const CopyExample = () => (
     <>

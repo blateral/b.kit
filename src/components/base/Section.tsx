@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { mq, spacings, withRange } from 'utils/styles';
+import { mq, spacings, withRange } from '../../utils/styles';
 
 export type BgMode =
     | 'full'

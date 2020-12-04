@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Nl2Br from 'components/base/nl2br';
+import Nl2Br from '../src/components/base/nl2br';
 
 storiesOf('Typography / nl2br', module).add('default', () => {
     return (

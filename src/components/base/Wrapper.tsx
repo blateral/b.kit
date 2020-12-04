@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { spacings } from 'utils/styles';
+import { spacings } from '../../utils/styles';
 
 export type ClampWidthType = 'normal' | 'large';
 

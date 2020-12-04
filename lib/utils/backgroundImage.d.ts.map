@@ -1,0 +1,1 @@
+{"version":3,"file":"backgroundImage.d.ts","sourceRoot":"","sources":["../../src/utils/backgroundImage.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,UAAU,YACV;IACL,KAAK,EAAE,MAAM,CAAC;IACd,MAAM,CAAC,EAAE,MAAM,CAAC;IAChB,SAAS,CAAC,EAAE,MAAM,CAAC;IACnB,KAAK,CAAC,EAAE,MAAM,CAAC;IACf,MAAM,CAAC,EAAE,MAAM,CAAC;CACnB,6EAEF,MA0CF,CAAC"}

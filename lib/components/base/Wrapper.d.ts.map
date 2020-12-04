@@ -1,0 +1,1 @@
+{"version":3,"file":"Wrapper.d.ts","sourceRoot":"","sources":["../../../src/components/base/Wrapper.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAK/B,oBAAY,cAAc,GAAG,QAAQ,GAAG,OAAO,CAAC;AAehD,QAAA,MAAM,OAAO,EAAE,KAAK,CAAC,EAAE,CAAC;IACpB,aAAa,CAAC,EAAE,OAAO,CAAC;IACxB,UAAU,CAAC,EAAE,cAAc,CAAC;IAC5B,SAAS,CAAC,EAAE,MAAM,CAAC;CACtB,CAUA,CAAC;AAEF,eAAe,OAAO,CAAC"}

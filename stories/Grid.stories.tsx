@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Grid from 'components/base/Grid';
+import Grid from '../src/components/base/Grid';
 
 const ExampleCol = (props: any) => {
     return (

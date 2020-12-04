@@ -2,6 +2,8 @@
     "name": "b.kit",
     "version": "0.1.0",
     "description": "",
+    "main": "lib/index.js",
+    "types": "lib",
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "dev": "tsc --watch --project tsconfig.json",

@@ -1,0 +1,1 @@
+{"version":3,"file":"Link.d.ts","sourceRoot":"","sources":["../../../src/components/typography/Link.tsx"],"names":[],"mappings":"AAAA,OAAc,EAAE,EAAE,EAAE,MAAM,OAAO,CAAC;AAElC,MAAM,WAAW,SAAS;IACtB,UAAU,CAAC,EAAE,OAAO,CAAC;IACrB,IAAI,CAAC,EAAE,MAAM,CAAC;CACjB;AAED,QAAA,MAAM,IAAI,EAAE,EAAE,CACV,SAAS,GAAG;IACR,SAAS,CAAC,EAAE,MAAM,CAAC;CACtB,CAYJ,CAAC;AAEF,eAAe,IAAI,CAAC"}

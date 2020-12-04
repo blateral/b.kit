@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Gallery from 'components/sections/Gallery';
+import Gallery from '../src/components/sections/Gallery';
 
 storiesOf('Sections / Gallery', module)
     .add('single image full', () => (

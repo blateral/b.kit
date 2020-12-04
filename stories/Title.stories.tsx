@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Title from 'components/blocks/Title';
+import Title from '../src/components/blocks/Title';
 
 storiesOf('Blocks / Title', module)
     .add('default', () => (
