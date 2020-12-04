@@ -117,6 +117,7 @@ storiesOf('Sections / IconList', module)
                 primaryItems={Items}
                 secondaryItems={Items}
                 isCentered
+                bgMode="full"
             />
         );
     });
