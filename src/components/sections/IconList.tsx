@@ -1,11 +1,11 @@
 import * as React from 'react';
-import Section, { BgMode } from 'components/base/Section';
-import Wrapper from 'components/base/Wrapper';
-import Title from 'components/blocks/Title';
+import Section, { BgMode } from '../base/Section';
+import Wrapper from '../base/Wrapper';
+import Title from '../blocks/Title';
 import styled from 'styled-components';
-import Copy from 'components/typography/Copy';
-import { spacings } from 'utils/styles';
-import { colors } from '../../../theme';
+import Copy from '../typography/Copy';
+import { spacings } from '../../utils/styles';
+import { colors } from '../../theme';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};

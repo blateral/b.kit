@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import IconList from 'components/sections/IconList';
-import Button from 'components/buttons/Button';
+import IconList from '../src/components/sections/IconList';
+import Button from '../src/components/buttons/Button';
 
 const Items = [
     {
