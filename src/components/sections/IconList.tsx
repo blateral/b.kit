@@ -42,6 +42,7 @@ const ItemContainer = styled.div`
 
 const ShowMore = styled.span`
     text-decoration: underline;
+    cursor: pointer;
 `;
 
 const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
