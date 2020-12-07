@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { spacings, withRange, getColors, getFonts } from '../../utils/styles';
+import { getColor, getFont, spacings, withRange } from '../../utils/styles';
 
 const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     min-height: 3em;
@@ -17,13 +17,15 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     align-items: center;
     vertical-align: middle;
 
-    font-family: ${({ theme }) => getFonts(theme).copy.medium.family};
-    ${({ theme }) => withRange(getFonts(theme).copy.medium.size, 'font-size')}
-    font-weight: ${({ theme }) => getFonts(theme).copy.medium.weight};
+    font-family: ${({ theme }) => getFont(theme, 'copy', 'family', 'medium')};
+    ${({ theme }) =>
+        withRange(getFont(theme, 'copy', 'size', 'medium'), 'font-size')}
+    font-weight: ${({ theme }) => getFont(theme, 'copy', 'weight', 'medium')};
     text-align: center;
     text-decoration: none;
     line-height: 1;
-    letter-spacing: ${({ theme }) => getFonts(theme).copy.medium.letterSpacing};
+    letter-spacing: ${({ theme }) =>
+        getFont(theme, 'copy', 'letterSpacing', 'medium')};
 
     outline: none;
     border: none;
@@ -36,16 +38,16 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
 
     background-color: ${({ theme, inverted, disable }) =>
         disable
-            ? getColors(theme).mono.medium
+            ? getColor(theme, 'mono', 'medium')
             : inverted
-            ? getColors(theme).white
-            : getColors(theme).black};
+            ? getColor(theme, 'white')
+            : getColor(theme, 'black')};
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? getColors(theme).white
+            ? getColor(theme, 'white')
             : inverted
-            ? getColors(theme).black
-            : getColors(theme).white};
+            ? getColor(theme, 'black')
+            : getColor(theme, 'white')};
     text-align: left;
 
     transition: all ease-in-out 0.2s;
@@ -53,10 +55,10 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? getColors(theme).white
+                ? getColor(theme, 'white')
                 : inverted
-                ? getColors(theme).black
-                : getColors(theme).white};
+                ? getColor(theme, 'black')
+                : getColor(theme, 'white')};
     }
 
     & > :not(:last-child) {
@@ -81,27 +83,27 @@ const ViewGhost = styled(View)`
     border: solid 1px
         ${({ theme, inverted, disable }) =>
             disable
-                ? getColors(theme).mono.medium
+                ? getColor(theme, 'mono', 'medium')
                 : inverted
-                ? getColors(theme).white
-                : getColors(theme).black};
+                ? getColor(theme, 'white')
+                : getColor(theme, 'black')};
     box-shadow: none;
     background-color: transparent;
     text-align: center;
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? getColors(theme).mono.medium
+            ? getColor(theme, 'mono', 'medium')
             : inverted
-            ? getColors(theme).white
-            : getColors(theme).black};
+            ? getColor(theme, 'white')
+            : getColor(theme, 'black')};
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? getColors(theme).mono.medium
+                ? getColor(theme, 'mono', 'medium')
                 : inverted
-                ? getColors(theme).white
-                : getColors(theme).black};
+                ? getColor(theme, 'white')
+                : getColor(theme, 'black')};
     }
 
     &:hover {
@@ -185,7 +187,8 @@ const Icon = styled.div<{ color?: string }>`
     width: 35px;
     height: 35px;
 
-    color: ${({ theme, color }) => color || getColors(theme)['primary-2']};
+    color: ${({ theme, color }) =>
+        color || getColor(theme, 'primary', 'medium')};
 
     transition: transform 0.2s ease-in-out;
 

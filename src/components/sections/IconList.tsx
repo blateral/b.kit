@@ -4,7 +4,7 @@ import Wrapper from '../base/Wrapper';
 import Title from '../blocks/Title';
 import styled, { ThemeContext } from 'styled-components';
 import Copy from '../typography/Copy';
-import { spacings, getColors } from '../../utils/styles';
+import { getColor, spacings } from '../../utils/styles';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
@@ -108,9 +108,9 @@ const IconList: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).black
+                    ? getColor(theme, 'black')
                     : bgMode
-                    ? getColors(theme).mono.light
+                    ? getColor(theme, 'mono', 'light')
                     : 'transparent'
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
@@ -128,8 +128,8 @@ const IconList: React.FC<{
                     type="copy-b"
                     textColor={
                         isInverted
-                            ? getColors(theme).white
-                            : getColors(theme).black
+                            ? getColor(theme, 'white')
+                            : getColor(theme, 'black')
                     }
                 >
                     {text}
@@ -141,8 +141,8 @@ const IconList: React.FC<{
                         size="medium"
                         textColor={
                             isInverted
-                                ? getColors(theme).white
-                                : getColors(theme).black
+                                ? getColor(theme, 'white')
+                                : getColor(theme, 'black')
                         }
                     >
                         <ItemContainer>

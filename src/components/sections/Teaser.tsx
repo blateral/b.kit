@@ -8,7 +8,7 @@ import Copy from '../typography/Copy';
 import Title from '../blocks/Title';
 import Wrapper from '../base/Wrapper';
 import Section, { BgMode } from '../base/Section';
-import { mq, spacings, withRange, getColors } from '../../utils/styles';
+import { mq, spacings, withRange, getColor } from '../../utils/styles';
 
 const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
     display: flex;
@@ -162,9 +162,9 @@ const Teaser: FC<{
             bgClamp="normal"
             bgColor={
                 isInverted
-                    ? getColors(theme).black
+                    ? getColor(theme, 'black')
                     : bgMode
-                    ? getColors(theme).mono?.light
+                    ? getColor(theme, 'mono', 'light')
                     : 'transparent'
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
@@ -184,8 +184,8 @@ const Teaser: FC<{
                                     size="small"
                                     textColor={
                                         isInverted
-                                            ? getColors(theme).white
-                                            : getColors(theme).black
+                                            ? getColor(theme, 'white')
+                                            : getColor(theme, 'black')
                                     }
                                 >
                                     {image.description}
@@ -211,8 +211,8 @@ const Teaser: FC<{
                                     type="copy-b"
                                     textColor={
                                         isInverted
-                                            ? getColors(theme).white
-                                            : getColors(theme).black
+                                            ? getColor(theme, 'white')
+                                            : getColor(theme, 'black')
                                     }
                                 >
                                     {intro}
@@ -222,8 +222,8 @@ const Teaser: FC<{
                                 <ContentBlock
                                     textColor={
                                         isInverted
-                                            ? getColors(theme).white
-                                            : getColors(theme).black
+                                            ? getColor(theme, 'white')
+                                            : getColor(theme, 'black')
                                     }
                                 >
                                     <div
@@ -237,8 +237,8 @@ const Teaser: FC<{
                                 <SubTextBlock
                                     textColor={
                                         isInverted
-                                            ? getColors(theme).white
-                                            : getColors(theme).black
+                                            ? getColor(theme, 'white')
+                                            : getColor(theme, 'black')
                                     }
                                     type="copy-i"
                                 >
@@ -272,8 +272,8 @@ const Teaser: FC<{
                                 size="small"
                                 textColor={
                                     isInverted
-                                        ? getColors(theme).white
-                                        : getColors(theme).black
+                                        ? getColor(theme, 'white')
+                                        : getColor(theme, 'black')
                                 }
                             >
                                 {image.description}

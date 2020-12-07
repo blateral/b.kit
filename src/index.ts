@@ -7,10 +7,14 @@ import IconListSection from './components/sections/IconList';
 import { Colors, Fonts } from './utils/styles';
 
 /***** Styled Component theme override *****/
+type RecursivePartial<T> = {
+    [P in keyof T]?: RecursivePartial<T[P]>;
+};
+
 declare module 'styled-components' {
     export interface DefaultTheme {
-        colors?: Partial<Colors>;
-        fonts?: Partial<Fonts>;
+        colors?: RecursivePartial<Colors>;
+        fonts?: RecursivePartial<Fonts>;
     }
 }
 
