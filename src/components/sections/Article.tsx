@@ -4,7 +4,7 @@ import styled, { ThemeContext, css } from 'styled-components';
 import Section, { BgMode } from '../base/Section';
 import Title from '../blocks/Title';
 import Copy from '../typography/Copy';
-import { spacings, getColors, mq } from '../../utils/styles';
+import { spacings, mq, getColor } from '../../utils/styles';
 import Wrapper from '../base/Wrapper';
 
 const Content = styled.div<{ withAsideText?: boolean }>`
@@ -92,9 +92,9 @@ const Article: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).black
+                    ? getColor(theme, 'black')
                     : bgMode
-                    ? getColors(theme).mono.light
+                    ? getColor(theme, 'mono', 'light')
                     : 'transparent'
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
@@ -111,8 +111,8 @@ const Article: React.FC<{
                             type="copy"
                             textColor={
                                 isInverted
-                                    ? getColors(theme).white
-                                    : getColors(theme).black
+                                    ? getColor(theme, 'white')
+                                    : getColor(theme, 'black')
                             }
                             columns={withColumns}
                         >
@@ -124,8 +124,8 @@ const Article: React.FC<{
                             type="copy"
                             textColor={
                                 isInverted
-                                    ? getColors(theme).white
-                                    : getColors(theme).black
+                                    ? getColor(theme, 'white')
+                                    : getColor(theme, 'black')
                             }
                             isAside
                         >
