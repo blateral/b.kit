@@ -5,6 +5,7 @@ import Section, { BgMode } from '../base/Section';
 import Title from '../blocks/Title';
 import Copy from '../typography/Copy';
 import { spacings, getColors, mq } from '../../utils/styles';
+import Wrapper from '../base/Wrapper';
 
 const Content = styled.div<{ withAsideText?: boolean }>`
     :not(:first-child) {
@@ -98,45 +99,49 @@ const Article: React.FC<{
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <Title
-                title={title}
-                superTitle={superTitle}
-                isInverted={isInverted}
-            />
-            <Content withAsideText={asideText ? true : false}>
-                {text && (
-                    <ContentBlock
-                        type="copy"
-                        textColor={
-                            isInverted
-                                ? getColors(theme).white
-                                : getColors(theme).black
-                        }
-                        columns={withColumns}
-                    >
-                        <div dangerouslySetInnerHTML={{ __html: text }} />
-                    </ContentBlock>
+            <Wrapper clampWidth="normal" addWhitespace>
+                <Title
+                    title={title}
+                    superTitle={superTitle}
+                    isInverted={isInverted}
+                />
+                <Content withAsideText={asideText ? true : false}>
+                    {text && (
+                        <ContentBlock
+                            type="copy"
+                            textColor={
+                                isInverted
+                                    ? getColors(theme).white
+                                    : getColors(theme).black
+                            }
+                            columns={withColumns}
+                        >
+                            <div dangerouslySetInnerHTML={{ __html: text }} />
+                        </ContentBlock>
+                    )}
+                    {asideText && (
+                        <ContentBlock
+                            type="copy"
+                            textColor={
+                                isInverted
+                                    ? getColors(theme).white
+                                    : getColors(theme).black
+                            }
+                            isAside
+                        >
+                            <div
+                                dangerouslySetInnerHTML={{ __html: asideText }}
+                            />
+                        </ContentBlock>
+                    )}
+                </Content>
+                {(primaryAction || secondaryAction) && (
+                    <Actions>
+                        {primaryAction && primaryAction(isInverted)}
+                        {secondaryAction && secondaryAction(isInverted)}
+                    </Actions>
                 )}
-                {asideText && (
-                    <ContentBlock
-                        type="copy"
-                        textColor={
-                            isInverted
-                                ? getColors(theme).white
-                                : getColors(theme).black
-                        }
-                        isAside
-                    >
-                        <div dangerouslySetInnerHTML={{ __html: asideText }} />
-                    </ContentBlock>
-                )}
-            </Content>
-            {(primaryAction || secondaryAction) && (
-                <Actions>
-                    {primaryAction && primaryAction(isInverted)}
-                    {secondaryAction && secondaryAction(isInverted)}
-                </Actions>
-            )}
+            </Wrapper>
         </Section>
     );
 };
