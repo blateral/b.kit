@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
 import Grid from '../base/Grid';
 import { HeadlineTag } from '../typography/Heading';
@@ -8,7 +8,7 @@ import Copy from '../typography/Copy';
 import Title from '../blocks/Title';
 import Wrapper from '../base/Wrapper';
 import Section from '../base/Section';
-import { mq, spacings, withRange, colors } from '../../utils/styles';
+import { mq, spacings, withRange, getColors } from '../../utils/styles';
 
 const WideImage = styled(Image)<{ isMirrored?: boolean }>`
     position: relative;
@@ -135,15 +135,17 @@ const Teaser: FC<{
     primaryAction,
     secondaryAction,
 }) => {
+    const theme = useContext(ThemeContext);
+
     return (
         <Section
             addSeperation
             bgClamp="normal"
             bgColor={
                 isInverted
-                    ? colors.black
+                    ? getColors(theme).black
                     : hasBack
-                    ? colors.mono.light
+                    ? getColors(theme).mono.light
                     : 'transparent'
             }
         >
@@ -175,7 +177,9 @@ const Teaser: FC<{
                                 <ContentBlock
                                     type="copy-b"
                                     textColor={
-                                        isInverted ? colors.white : colors.black
+                                        isInverted
+                                            ? getColors(theme).white
+                                            : getColors(theme).black
                                     }
                                 >
                                     {intro}
@@ -184,7 +188,9 @@ const Teaser: FC<{
                             {text && (
                                 <ContentBlock
                                     textColor={
-                                        isInverted ? colors.white : colors.black
+                                        isInverted
+                                            ? getColors(theme).white
+                                            : getColors(theme).black
                                     }
                                 >
                                     <div
@@ -197,7 +203,9 @@ const Teaser: FC<{
                             {subText && (
                                 <SubTextBlock
                                     textColor={
-                                        isInverted ? colors.white : colors.black
+                                        isInverted
+                                            ? getColors(theme).white
+                                            : getColors(theme).black
                                     }
                                     type="copy-i"
                                 >

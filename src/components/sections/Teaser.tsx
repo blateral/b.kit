@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect } from 'react';
+import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import Grid from '../base/Grid';
@@ -8,7 +8,7 @@ import Copy from '../typography/Copy';
 import Title from '../blocks/Title';
 import Wrapper from '../base/Wrapper';
 import Section, { BgMode } from '../base/Section';
-import { mq, spacings, withRange, colors } from '../../utils/styles';
+import { mq, spacings, withRange, getColors } from '../../utils/styles';
 
 const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
     display: flex;
@@ -143,7 +143,7 @@ const Teaser: FC<{
     primaryAction,
     secondaryAction,
 }) => {
-    const themeContext = useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
 
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
@@ -156,19 +156,15 @@ const Teaser: FC<{
         }
     };
 
-    useEffect(() => {
-        console.log(themeContext);
-    }, [themeContext]);
-
     return (
         <Section
             addSeperation
             bgClamp="normal"
             bgColor={
                 isInverted
-                    ? colors.black
+                    ? getColors(theme).black
                     : bgMode
-                    ? themeContext?.colors?.mono?.light || colors.mono.light
+                    ? getColors(theme).mono?.light
                     : 'transparent'
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
@@ -187,7 +183,9 @@ const Teaser: FC<{
                                 <ImgDescMobile
                                     size="small"
                                     textColor={
-                                        isInverted ? colors.white : colors.black
+                                        isInverted
+                                            ? getColors(theme).white
+                                            : getColors(theme).black
                                     }
                                 >
                                     {image.description}
@@ -212,7 +210,9 @@ const Teaser: FC<{
                                 <ContentBlock
                                     type="copy-b"
                                     textColor={
-                                        isInverted ? colors.white : colors.black
+                                        isInverted
+                                            ? getColors(theme).white
+                                            : getColors(theme).black
                                     }
                                 >
                                     {intro}
@@ -221,7 +221,9 @@ const Teaser: FC<{
                             {text && (
                                 <ContentBlock
                                     textColor={
-                                        isInverted ? colors.white : colors.black
+                                        isInverted
+                                            ? getColors(theme).white
+                                            : getColors(theme).black
                                     }
                                 >
                                     <div
@@ -234,7 +236,9 @@ const Teaser: FC<{
                             {subText && (
                                 <SubTextBlock
                                     textColor={
-                                        isInverted ? colors.white : colors.black
+                                        isInverted
+                                            ? getColors(theme).white
+                                            : getColors(theme).black
                                     }
                                     type="copy-i"
                                 >
@@ -267,7 +271,9 @@ const Teaser: FC<{
                             <ImgDescDesktop
                                 size="small"
                                 textColor={
-                                    isInverted ? colors.white : colors.black
+                                    isInverted
+                                        ? getColors(theme).white
+                                        : getColors(theme).black
                                 }
                             >
                                 {image.description}

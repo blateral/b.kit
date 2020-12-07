@@ -1,4 +1,4 @@
-import { Colors, FontProps, Fonts } from '../theme';
+import { DefaultTheme } from 'styled-components';
 
 export type MediaQueryType =
     | 'small'
@@ -45,8 +45,60 @@ export const withRange = (
     `;
 };
 
+/***** Color Types *****/
+interface ColorOptions {
+    light: string;
+    medium: string;
+    dark: string;
+}
+
+export interface Colors {
+    black: string;
+    white: string;
+    mono: ColorOptions;
+    primary: ColorOptions;
+    secondary: ColorOptions;
+    tertiary: ColorOptions;
+}
+
+export type ColorType = keyof Colors;
+
+/***** Font Types *****/
+export interface FontProps {
+    family: string;
+    weight?: string;
+    style?: string;
+    lineHeight?: string;
+    letterSpacing?: string;
+    size: [number, number];
+    textTransform?: string;
+}
+
+export interface FontOptions {
+    small: FontProps;
+    medium: FontProps;
+    big: FontProps;
+}
+
+export type FontOptionType = keyof FontOptions;
+
+export interface Fonts {
+    copy: FontOptions;
+    'copy-i': FontOptions;
+    'copy-b': FontOptions;
+    super: FontProps;
+    'heading-1': FontProps;
+    'heading-2': FontProps;
+    'heading-3': FontProps;
+    'heading-4': FontProps;
+    label: FontOptions;
+    callout: FontOptions;
+}
+
+export type FontType = keyof Fonts;
+
 /***** Colors *****/
-export const colors: Colors = {
+const defaultColors: Colors = {
     black: '#000000',
     white: '#ffffff',
     mono: {
@@ -90,7 +142,7 @@ const headingBase: FontProps = {
     size: [38, 40],
 };
 
-export const fonts: Fonts = {
+const defaultFonts: Fonts = {
     copy: {
         small: {
             ...copyBase,
@@ -204,4 +256,17 @@ export const fonts: Fonts = {
             size: [20, 22],
         },
     },
+};
+
+/***** Theme Helper *****/
+export const getColors = (theme: DefaultTheme) => {
+    return theme?.colors
+        ? ({ defaultColors, ...theme.colors } as Colors)
+        : defaultColors;
+};
+
+export const getFonts = (theme: DefaultTheme) => {
+    return theme?.fonts
+        ? ({ defaultFonts, ...theme.fonts } as Fonts)
+        : defaultFonts;
 };

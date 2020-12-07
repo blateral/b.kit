@@ -1,16 +1,16 @@
 import 'styled-components';
-import { Colors, Fonts } from './theme';
 
 import GallerySection from './components/sections/Gallery';
 import TeaserSection from './components/sections/Teaser';
 import TeaserWideSection from './components/sections/TeaserWide';
 import IconListSection from './components/sections/IconList';
+import { Colors, Fonts } from './utils/styles';
 
 /***** Styled Component theme override *****/
 declare module 'styled-components' {
     export interface DefaultTheme {
-        colors: Partial<Colors>;
-        fonts: Partial<Fonts>;
+        colors?: Partial<Colors>;
+        fonts?: Partial<Fonts>;
     }
 }
 

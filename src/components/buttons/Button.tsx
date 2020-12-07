@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { spacings, withRange, colors, fonts } from '../../utils/styles';
+import { spacings, withRange, getColors, getFonts } from '../../utils/styles';
 
 const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     min-height: 3em;
@@ -17,13 +17,13 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     align-items: center;
     vertical-align: middle;
 
-    font-family: ${fonts.copy.medium.family};
-    ${withRange(fonts.copy.medium.size, 'font-size')}
-    font-weight: ${fonts.copy.medium.weight};
+    font-family: ${({ theme }) => getFonts(theme).copy.medium.family};
+    ${({ theme }) => withRange(getFonts(theme).copy.medium.size, 'font-size')}
+    font-weight: ${({ theme }) => getFonts(theme).copy.medium.weight};
     text-align: center;
     text-decoration: none;
     line-height: 1;
-    letter-spacing: ${fonts.copy.medium.letterSpacing};
+    letter-spacing: ${({ theme }) => getFonts(theme).copy.medium.letterSpacing};
 
     outline: none;
     border: none;
@@ -34,17 +34,29 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
 
     will-change: transform;
 
-    background-color: ${({ inverted, disable }) =>
-        disable ? colors.mono.medium : inverted ? colors.white : colors.black};
-    color: ${({ inverted, disable }) =>
-        disable ? colors.white : inverted ? colors.black : colors.white};
+    background-color: ${({ theme, inverted, disable }) =>
+        disable
+            ? getColors(theme).mono.medium
+            : inverted
+            ? getColors(theme).white
+            : getColors(theme).black};
+    color: ${({ theme, inverted, disable }) =>
+        disable
+            ? getColors(theme).white
+            : inverted
+            ? getColors(theme).black
+            : getColors(theme).white};
     text-align: left;
 
     transition: all ease-in-out 0.2s;
 
     & > * {
-        color: ${({ inverted, disable }) =>
-            disable ? colors.white : inverted ? colors.black : colors.white};
+        color: ${({ theme, inverted, disable }) =>
+            disable
+                ? getColors(theme).white
+                : inverted
+                ? getColors(theme).black
+                : getColors(theme).white};
     }
 
     & > :not(:last-child) {
@@ -67,25 +79,29 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
 
 const ViewGhost = styled(View)`
     border: solid 1px
-        ${({ inverted, disable }) =>
+        ${({ theme, inverted, disable }) =>
             disable
-                ? colors.mono.medium
+                ? getColors(theme).mono.medium
                 : inverted
-                ? colors.white
-                : colors.black};
+                ? getColors(theme).white
+                : getColors(theme).black};
     box-shadow: none;
     background-color: transparent;
     text-align: center;
-    color: ${({ inverted, disable }) =>
-        disable ? colors.mono.medium : inverted ? colors.white : colors.black};
+    color: ${({ theme, inverted, disable }) =>
+        disable
+            ? getColors(theme).mono.medium
+            : inverted
+            ? getColors(theme).white
+            : getColors(theme).black};
 
     & > * {
-        color: ${({ inverted, disable }) =>
+        color: ${({ theme, inverted, disable }) =>
             disable
-                ? colors.mono.medium
+                ? getColors(theme).mono.medium
                 : inverted
-                ? colors.white
-                : colors.black};
+                ? getColors(theme).white
+                : getColors(theme).black};
     }
 
     &:hover {
@@ -169,7 +185,7 @@ const Icon = styled.div<{ color?: string }>`
     width: 35px;
     height: 35px;
 
-    color: ${({ color }) => color || colors['primary-2']};
+    color: ${({ theme, color }) => color || getColors(theme)['primary-2']};
 
     transition: transform 0.2s ease-in-out;
 

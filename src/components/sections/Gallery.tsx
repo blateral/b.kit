@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
 import Grid from '../base/Grid';
 import Section from '../base/Section';
 import Wrapper from '../base/Wrapper';
 import Image, { ImageProps } from '../blocks/Image';
-import { spacings, colors } from '../../utils/styles';
+import { getColors, spacings } from '../../utils/styles';
 
 const StyledImage = styled(Image)`
     width: 100%;
@@ -17,15 +17,17 @@ const Gallery: FC<{
     images?: Array<ImageProps & { size?: 'half' | 'full' }>;
     className?: string;
 }> = ({ isInverted, hasBack, images, className }) => {
+    const theme = useContext(ThemeContext);
+
     return (
         <Section
             addSeperation
             bgClamp="normal"
             bgColor={
                 isInverted
-                    ? colors.black
+                    ? getColors(theme).black
                     : hasBack
-                    ? colors.mono.light
+                    ? getColors(theme).mono?.light
                     : 'transparent'
             }
             className={className}

@@ -2,9 +2,9 @@ import * as React from 'react';
 import Section, { BgMode } from '../base/Section';
 import Wrapper from '../base/Wrapper';
 import Title from '../blocks/Title';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import Copy from '../typography/Copy';
-import { spacings, colors } from '../../utils/styles';
+import { spacings, getColors } from '../../utils/styles';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
@@ -101,13 +101,15 @@ const IconList: React.FC<{
     };
 
     const [showMore, setShowMore] = React.useState(false);
+    const theme = React.useContext(ThemeContext);
+
     return (
         <StyledSection
             bgColor={
                 isInverted
-                    ? colors.black
+                    ? getColors(theme).black
                     : bgMode
-                    ? colors.mono.light
+                    ? getColors(theme).mono.light
                     : 'transparent'
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
@@ -123,7 +125,11 @@ const IconList: React.FC<{
                 <ContentBlock
                     isCentered={isCentered}
                     type="copy-b"
-                    textColor={isInverted ? colors.white : colors.black}
+                    textColor={
+                        isInverted
+                            ? getColors(theme).white
+                            : getColors(theme).black
+                    }
                 >
                     {text}
                 </ContentBlock>
@@ -132,7 +138,11 @@ const IconList: React.FC<{
                     <Copy
                         type="copy"
                         size="medium"
-                        textColor={isInverted ? colors.white : colors.black}
+                        textColor={
+                            isInverted
+                                ? getColors(theme).white
+                                : getColors(theme).black
+                        }
                     >
                         <ItemContainer>
                             <Items isVisible isCentered={isCentered}>
