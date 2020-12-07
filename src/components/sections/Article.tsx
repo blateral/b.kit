@@ -103,29 +103,33 @@ const Article: React.FC<{
                 superTitle={superTitle}
                 isInverted={isInverted}
             />
-            <Content withAsideText={asideText && true}>
-                <ContentBlock
-                    type="copy"
-                    textColor={
-                        isInverted
-                            ? getColors(theme).white
-                            : getColors(theme).black
-                    }
-                    columns={withColumns}
-                >
-                    <div dangerouslySetInnerHTML={{ __html: text }} />
-                </ContentBlock>
-                <ContentBlock
-                    type="copy"
-                    textColor={
-                        isInverted
-                            ? getColors(theme).white
-                            : getColors(theme).black
-                    }
-                    isAside
-                >
-                    <div dangerouslySetInnerHTML={{ __html: asideText }} />
-                </ContentBlock>
+            <Content withAsideText={asideText ? true : false}>
+                {text && (
+                    <ContentBlock
+                        type="copy"
+                        textColor={
+                            isInverted
+                                ? getColors(theme).white
+                                : getColors(theme).black
+                        }
+                        columns={withColumns}
+                    >
+                        <div dangerouslySetInnerHTML={{ __html: text }} />
+                    </ContentBlock>
+                )}
+                {asideText && (
+                    <ContentBlock
+                        type="copy"
+                        textColor={
+                            isInverted
+                                ? getColors(theme).white
+                                : getColors(theme).black
+                        }
+                        isAside
+                    >
+                        <div dangerouslySetInnerHTML={{ __html: asideText }} />
+                    </ContentBlock>
+                )}
             </Content>
             {(primaryAction || secondaryAction) && (
                 <Actions>
