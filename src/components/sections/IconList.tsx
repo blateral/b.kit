@@ -55,7 +55,7 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
 
 const Actions = styled.div`
     & > * + * {
-        margin-left: ${spacings.spacer};
+        margin-left: ${spacings.spacer}px;
     }
 `;
 
@@ -105,6 +105,7 @@ const IconList: React.FC<{
 
     return (
         <StyledSection
+            addSeperation
             bgColor={
                 isInverted
                     ? getColors(theme).black
