@@ -52,6 +52,8 @@ interface ColorOptions {
     dark: string;
 }
 
+export type ColorOptionsType = keyof ColorOptions;
+
 export interface Colors {
     black: string;
     white: string;
@@ -73,6 +75,8 @@ export interface FontProps {
     size: [number, number];
     textTransform?: string;
 }
+
+export type FontPropsType = keyof FontProps;
 
 export interface FontOptions {
     small: FontProps;
@@ -259,14 +263,58 @@ const defaultFonts: Fonts = {
 };
 
 /***** Theme Helper *****/
-export const getColors = (theme: DefaultTheme) => {
-    return theme?.colors
-        ? ({ defaultColors, ...theme.colors } as Colors)
-        : defaultColors;
+export const getBaseTheme = () => {
+    return { colors: defaultColors, fonts: defaultFonts } as DefaultTheme;
 };
 
-export const getFonts = (theme: DefaultTheme) => {
-    return theme?.fonts
-        ? ({ defaultFonts, ...theme.fonts } as Fonts)
-        : defaultFonts;
+export const getTheme = (theme?: DefaultTheme) => {
+    return (theme && theme.colors && theme.fonts) || getBaseTheme();
+};
+
+export const getColors = (theme?: DefaultTheme) => {
+    return theme && theme.colors ? theme.colors : getBaseTheme().colors;
+};
+
+export const getFonts = (theme?: DefaultTheme) => {
+    return theme && theme.fonts ? theme.fonts : getBaseTheme().fonts;
+};
+
+/**
+ * @deprecated Since version 0.1.2 Will be deleted in version 0.2.0 Use getColors or get Fonts instead.
+ */
+export const getColor = (
+    theme: DefaultTheme,
+    type: ColorType,
+    option?: ColorOptionsType
+): string => {
+    // check if color settings are overwritten by external theme
+    if (option) {
+        return (theme?.colors?.[type]?.[option] ||
+            defaultColors[type][option]) as string;
+    } else {
+        return (theme?.colors?.[type] &&
+        typeof theme?.colors?.[type] !== 'object'
+            ? theme.colors?.[type]
+            : defaultColors[type]) as string;
+    }
+};
+
+/**
+ * @deprecated Since version 0.1.2 Will be deleted in version 0.2.0 Use getColors or get Fonts instead.
+ */
+export const getFont = (
+    theme: DefaultTheme,
+    type: FontType,
+    prop: FontPropsType,
+    size?: FontOptionType
+) => {
+    // check if font settings are overwritten by external theme
+    if (size) {
+        return (
+            theme?.fonts?.[type]?.[size]?.[prop] ||
+            defaultFonts[type][size][prop]
+        );
+    } else {
+        return theme?.fonts?.[type]?.[prop] || defaultFonts[type][prop];
+    }
 };

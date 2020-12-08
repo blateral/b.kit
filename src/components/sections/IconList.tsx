@@ -4,7 +4,7 @@ import Wrapper from '../base/Wrapper';
 import Title from '../blocks/Title';
 import styled, { ThemeContext } from 'styled-components';
 import Copy from '../typography/Copy';
-import { spacings, getColors } from '../../utils/styles';
+import { getColors as color, spacings } from '../../utils/styles';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
@@ -55,7 +55,7 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
 
 const Actions = styled.div`
     & > * + * {
-        margin-left: ${spacings.spacer};
+        margin-left: ${spacings.spacer}px;
     }
 `;
 
@@ -105,11 +105,12 @@ const IconList: React.FC<{
 
     return (
         <StyledSection
+            addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).black
+                    ? color(theme).black
                     : bgMode
-                    ? getColors(theme).mono.light
+                    ? color(theme).mono.light
                     : 'transparent'
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
@@ -126,9 +127,7 @@ const IconList: React.FC<{
                     isCentered={isCentered}
                     type="copy-b"
                     textColor={
-                        isInverted
-                            ? getColors(theme).white
-                            : getColors(theme).black
+                        isInverted ? color(theme).white : color(theme).black
                     }
                 >
                     {text}
@@ -139,9 +138,7 @@ const IconList: React.FC<{
                         type="copy"
                         size="medium"
                         textColor={
-                            isInverted
-                                ? getColors(theme).white
-                                : getColors(theme).black
+                            isInverted ? color(theme).white : color(theme).black
                         }
                     >
                         <ItemContainer>

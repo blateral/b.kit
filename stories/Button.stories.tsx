@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Button from '../src/components/buttons/Button';
 import ArrowRight from '../src/components/base/icons/ArrowRight';
-import { getColors } from '../src/utils/styles';
+import { getColor } from '../src/utils/styles';
 
 // Story Helper
 const Helper = styled.div<{ inverted?: boolean }>`
@@ -12,7 +12,7 @@ const Helper = styled.div<{ inverted?: boolean }>`
     width: 100%;
     padding: 20px;
     background-color: ${({ theme, inverted }) =>
-        inverted && getColors(theme).black};
+        inverted && getColor(theme, 'black')};
 `;
 
 storiesOf('Buttons / Button', module)

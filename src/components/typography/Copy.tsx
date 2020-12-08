@@ -1,12 +1,12 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 import {
-    getFonts,
     FontType,
     mq,
     spacings,
     withRange,
     FontOptionType,
+    getFonts as font,
 } from '../../utils/styles';
 
 type CopyType = Exclude<
@@ -67,19 +67,17 @@ const BaseStyles = styled.div<{
 `;
 
 const View = styled(BaseStyles)`
-    font-family: ${({ type, size, theme }) =>
-        getFonts(theme)[type][size].family};
-    font-weight: ${({ type, size, theme }) =>
-        getFonts(theme)[type][size].weight};
-    font-style: ${({ type, size, theme }) => getFonts(theme)[type][size].style};
+    font-family: ${({ type, size, theme }) => font(theme)[type][size].family};
+    font-weight: ${({ type, size, theme }) => font(theme)[type][size].weight};
+    font-style: ${({ type, size, theme }) => font(theme)[type][size].style};
     ${({ type, size, theme }) =>
-        withRange(getFonts(theme)[type][size].size, 'font-size')}
+        withRange(font(theme)[type][size].size, 'font-size')}
     line-height: ${({ type, size, theme }) =>
-        getFonts(theme)[type][size].lineHeight};
+        font(theme)[type][size].lineHeight};
     letter-spacing: ${({ type, size, theme }) =>
-        getFonts(theme)[type][size].letterSpacing};
+        font(theme)[type][size].letterSpacing};
     text-transform: ${({ type, size, theme }) =>
-        getFonts(theme)[type][size].textTransform};
+        font(theme)[type][size].textTransform};
 `;
 
 const Copy: React.FC<{

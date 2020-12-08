@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { FontType, getFonts, mq, withRange } from '../../utils/styles';
+import { FontType, getFonts as font, mq, withRange } from '../../utils/styles';
 
 type HeadingType = Exclude<
     FontType,
@@ -34,13 +34,13 @@ const BaseStyles = styled.h1<{
 `;
 
 const View = styled(BaseStyles)`
-    font-family: ${({ type, theme }) => getFonts(theme)[type].family};
-    font-weight: ${({ type, theme }) => getFonts(theme)[type].weight};
-    font-style: ${({ type, theme }) => getFonts(theme)[type].style};
-    ${({ type, theme }) => withRange(getFonts(theme)[type].size, 'font-size')}
-    line-height: ${({ type, theme }) => getFonts(theme)[type].lineHeight};
-    letter-spacing: ${({ type, theme }) => getFonts(theme)[type].letterSpacing};
-    text-transform: ${({ type, theme }) => getFonts(theme)[type].textTransform};
+    font-family: ${({ type, theme }) => font(theme)[type].family};
+    font-weight: ${({ type, theme }) => font(theme)[type].weight};
+    font-style: ${({ type, theme }) => font(theme)[type].style};
+    ${({ type, theme }) => withRange(font(theme)[type].size, 'font-size')}
+    line-height: ${({ type, theme }) => font(theme)[type].lineHeight};
+    letter-spacing: ${({ type, theme }) => font(theme)[type].letterSpacing};
+    text-transform: ${({ type, theme }) => font(theme)[type].textTransform};
 `;
 
 export type HeadlineTag =
