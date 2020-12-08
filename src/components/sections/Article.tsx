@@ -7,6 +7,12 @@ import Copy from '../typography/Copy';
 import { spacings, mq, getColor } from '../../utils/styles';
 import Wrapper from '../base/Wrapper';
 
+const StyledTitle = styled(Title)<{ withAsideText?: boolean }>`
+    @media ${mq.semilarge} {
+        max-width: ${({ withAsideText }) => (withAsideText ? '60%' : '50%')};
+    }
+`;
+
 const Content = styled.div<{ withAsideText?: boolean }>`
     :not(:first-child) {
         padding-top: ${spacings.nudge * 5}px;
@@ -21,7 +27,7 @@ const Content = styled.div<{ withAsideText?: boolean }>`
                 align-items: flex-start;
 
                 & > * + * {
-                    margin-left: ${spacings.spacer}px;
+                    margin-left: ${spacings.spacer * 3}px;
                 }
             }
         `}
@@ -36,17 +42,43 @@ const ContentBlock = styled(Copy)<{ isAside?: boolean }>`
     }
 
     :not(:first-child) {
-        padding-top: ${spacings.nudge * 5}px;
+        padding-top: ${({ isAside }) => (isAside ? '' : spacings.nudge * 5)};
     }
 
-    flex: ${({ isAside }) => (isAside ? '1 0 30%' : '1 0 70%')};
+    flex: ${({ isAside }) => (isAside ? '1 0 30%' : '1 0 60%')};
+
+    @media ${mq.semilarge} {
+        max-width: ${({ isAside }) => (isAside ? '100%' : '60%')};
+    }
 `;
 
 const Actions = styled.div`
+    flex-direction: column;
+    display: flex;
+    align-items: center;
     padding-top: ${spacings.spacer * 2}px;
+    min-width: 100%;
+
+    & > * {
+        flex: 1;
+    }
 
     & > * + * {
-        margin-left: ${spacings.spacer}px;
+        margin-top: ${spacings.spacer}px;
+    }
+
+    @media ${mq.semilarge} {
+        flex-direction: row;
+        padding: ${spacings.spacer}px 0;
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+
+        & > * + * {
+            margin-left: ${spacings.spacer}px;
+            margin-top: 0;
+        }
     }
 `;
 
@@ -100,10 +132,11 @@ const Article: React.FC<{
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <Title
+                <StyledTitle
                     title={title}
                     superTitle={superTitle}
                     isInverted={isInverted}
+                    withAsideText={asideText ? true : false}
                 />
                 <Content withAsideText={asideText ? true : false}>
                     {text && (
