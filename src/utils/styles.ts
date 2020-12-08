@@ -263,6 +263,25 @@ const defaultFonts: Fonts = {
 };
 
 /***** Theme Helper *****/
+export const getBaseTheme = () => {
+    return { colors: defaultColors, fonts: defaultFonts } as DefaultTheme;
+};
+
+export const getTheme = (theme?: DefaultTheme) => {
+    return (theme && theme.colors && theme.fonts) || getBaseTheme();
+};
+
+export const getColors = (theme?: DefaultTheme) => {
+    return theme && theme.colors ? theme.colors : getBaseTheme().colors;
+};
+
+export const getFonts = (theme?: DefaultTheme) => {
+    return theme && theme.fonts ? theme.fonts : getBaseTheme().fonts;
+};
+
+/**
+ * @deprecated Since version 0.1.2 Will be deleted in version 0.2.0 Use getColors or get Fonts instead.
+ */
 export const getColor = (
     theme: DefaultTheme,
     type: ColorType,
@@ -280,6 +299,9 @@ export const getColor = (
     }
 };
 
+/**
+ * @deprecated Since version 0.1.2 Will be deleted in version 0.2.0 Use getColors or get Fonts instead.
+ */
 export const getFont = (
     theme: DefaultTheme,
     type: FontType,

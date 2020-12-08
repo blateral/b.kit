@@ -8,7 +8,12 @@ import Copy from '../typography/Copy';
 import Title from '../blocks/Title';
 import Wrapper from '../base/Wrapper';
 import Section from '../base/Section';
-import { getColor, mq, spacings, withRange } from '../../utils/styles';
+import {
+    getColors as color,
+    mq,
+    spacings,
+    withRange,
+} from '../../utils/styles';
 
 const WideImage = styled(Image)<{ isMirrored?: boolean }>`
     position: relative;
@@ -143,9 +148,9 @@ const Teaser: FC<{
             bgClamp="normal"
             bgColor={
                 isInverted
-                    ? getColor(theme, 'black')
+                    ? color(theme).black
                     : hasBack
-                    ? getColor(theme, 'mono', 'light')
+                    ? color(theme).mono.light
                     : 'transparent'
             }
         >
@@ -178,8 +183,8 @@ const Teaser: FC<{
                                     type="copy-b"
                                     textColor={
                                         isInverted
-                                            ? getColor(theme, 'white')
-                                            : getColor(theme, 'black')
+                                            ? color(theme).white
+                                            : color(theme).black
                                     }
                                 >
                                     {intro}
@@ -189,8 +194,8 @@ const Teaser: FC<{
                                 <ContentBlock
                                     textColor={
                                         isInverted
-                                            ? getColor(theme, 'white')
-                                            : getColor(theme, 'black')
+                                            ? color(theme).white
+                                            : color(theme).black
                                     }
                                 >
                                     <div
@@ -204,8 +209,8 @@ const Teaser: FC<{
                                 <SubTextBlock
                                     textColor={
                                         isInverted
-                                            ? getColor(theme, 'white')
-                                            : getColor(theme, 'black')
+                                            ? color(theme).white
+                                            : color(theme).black
                                     }
                                     type="copy-i"
                                 >

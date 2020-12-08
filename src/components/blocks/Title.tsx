@@ -2,7 +2,12 @@ import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import Heading, { HeadlineTag } from '../typography/Heading';
-import { spacings, withRange, getFont, getColor } from '../../utils/styles';
+import {
+    spacings,
+    withRange,
+    getFonts as font,
+    getColors as color,
+} from '../../utils/styles';
 
 const View = styled.div<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
@@ -12,13 +17,13 @@ const SuperTitle = styled.div<{ textColor?: string }>`
     display: inline-block;
     ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding-bottom')};
 
-    font-family: ${({ theme }) => getFont(theme, 'super', 'family')};
-    font-weight: ${({ theme }) => getFont(theme, 'super', 'weight')};
-    font-style: ${({ theme }) => getFont(theme, 'super', 'style')};
-    ${({ theme }) => withRange(getFont(theme, 'super', 'size'), 'font-size')}
-    line-height: ${({ theme }) => getFont(theme, 'super', 'lineHeight')};
-    letter-spacing: ${({ theme }) => getFont(theme, 'super', 'letterSpacing')};
-    text-transform: ${({ theme }) => getFont(theme, 'super', 'textTransform')};
+    font-family: ${({ theme }) => font(theme).super.family};
+    font-weight: ${({ theme }) => font(theme).super.weight};
+    font-style: ${({ theme }) => font(theme).super.style};
+    ${({ theme }) => withRange(font(theme).super.size, 'font-size')}
+    line-height: ${({ theme }) => font(theme).super.lineHeight};
+    letter-spacing: ${({ theme }) => font(theme).super.letterSpacing};
+    text-transform: ${({ theme }) => font(theme).super.textTransform};
 
     color: ${({ textColor }) => textColor || 'inherit'};
 `;
@@ -38,9 +43,7 @@ const Title: FC<{
             {superTitle && (
                 <SuperTitle
                     textColor={
-                        isInverted
-                            ? getColor(theme, 'white')
-                            : getColor(theme, 'black')
+                        isInverted ? color(theme).white : color(theme).black
                     }
                 >
                     {superTitle}
@@ -50,9 +53,7 @@ const Title: FC<{
                 <Heading
                     size={2}
                     textColor={
-                        isInverted
-                            ? getColor(theme, 'white')
-                            : getColor(theme, 'black')
+                        isInverted ? color(theme).white : color(theme).black
                     }
                     as={titleAs}
                 >

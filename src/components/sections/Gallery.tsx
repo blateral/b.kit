@@ -5,7 +5,7 @@ import Grid from '../base/Grid';
 import Section from '../base/Section';
 import Wrapper from '../base/Wrapper';
 import Image, { ImageProps } from '../blocks/Image';
-import { getColor, spacings } from '../../utils/styles';
+import { getColors as color, spacings } from '../../utils/styles';
 
 const StyledImage = styled(Image)`
     width: 100%;
@@ -25,9 +25,9 @@ const Gallery: FC<{
             bgClamp="normal"
             bgColor={
                 isInverted
-                    ? getColor(theme, 'black')
+                    ? color(theme).black
                     : hasBack
-                    ? getColor(theme, 'mono', 'light')
+                    ? color(theme).mono.light
                     : 'transparent'
             }
             className={className}

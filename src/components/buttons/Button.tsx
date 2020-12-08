@@ -1,7 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { getColor, getFont, spacings, withRange } from '../../utils/styles';
+import {
+    getColors as color,
+    getFonts as font,
+    spacings,
+    withRange,
+} from '../../utils/styles';
 
 const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     min-height: 3em;
@@ -17,15 +22,13 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     align-items: center;
     vertical-align: middle;
 
-    font-family: ${({ theme }) => getFont(theme, 'copy', 'family', 'medium')};
-    ${({ theme }) =>
-        withRange(getFont(theme, 'copy', 'size', 'medium'), 'font-size')}
-    font-weight: ${({ theme }) => getFont(theme, 'copy', 'weight', 'medium')};
+    font-family: ${({ theme }) => font(theme).copy.medium.family};
+    ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
+    font-weight: ${({ theme }) => font(theme).copy.medium.weight};
     text-align: center;
     text-decoration: none;
     line-height: 1;
-    letter-spacing: ${({ theme }) =>
-        getFont(theme, 'copy', 'letterSpacing', 'medium')};
+    letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
 
     outline: none;
     border: none;
@@ -38,16 +41,16 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
 
     background-color: ${({ theme, inverted, disable }) =>
         disable
-            ? getColor(theme, 'mono', 'medium')
+            ? color(theme).mono.medium
             : inverted
-            ? getColor(theme, 'white')
-            : getColor(theme, 'black')};
+            ? color(theme).white
+            : color(theme).black};
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? getColor(theme, 'white')
+            ? color(theme).white
             : inverted
-            ? getColor(theme, 'black')
-            : getColor(theme, 'white')};
+            ? color(theme).black
+            : color(theme).white};
     text-align: left;
 
     transition: all ease-in-out 0.2s;
@@ -55,10 +58,10 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? getColor(theme, 'white')
+                ? color(theme).white
                 : inverted
-                ? getColor(theme, 'black')
-                : getColor(theme, 'white')};
+                ? color(theme).black
+                : color(theme).white};
     }
 
     & > :not(:last-child) {
@@ -83,27 +86,27 @@ const ViewGhost = styled(View)`
     border: solid 1px
         ${({ theme, inverted, disable }) =>
             disable
-                ? getColor(theme, 'mono', 'medium')
+                ? color(theme).mono.medium
                 : inverted
-                ? getColor(theme, 'white')
-                : getColor(theme, 'black')};
+                ? color(theme).white
+                : color(theme).black};
     box-shadow: none;
     background-color: transparent;
     text-align: center;
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? getColor(theme, 'mono', 'medium')
+            ? color(theme).mono.medium
             : inverted
-            ? getColor(theme, 'white')
-            : getColor(theme, 'black')};
+            ? color(theme).white
+            : color(theme).black};
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? getColor(theme, 'mono', 'medium')
+                ? color(theme).mono.medium
                 : inverted
-                ? getColor(theme, 'white')
-                : getColor(theme, 'black')};
+                ? color(theme).white
+                : color(theme).black};
     }
 
     &:hover {
@@ -179,7 +182,7 @@ const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
 
 Button.displayName = 'Button';
 
-const Icon = styled.div<{ color?: string }>`
+const Icon = styled.div<{ iconColor?: string }>`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -187,8 +190,8 @@ const Icon = styled.div<{ color?: string }>`
     width: 35px;
     height: 35px;
 
-    color: ${({ theme, color }) =>
-        color || getColor(theme, 'primary', 'medium')};
+    color: ${({ theme, iconColor }) =>
+        iconColor || color(theme).primary.medium};
 
     transition: transform 0.2s ease-in-out;
 
