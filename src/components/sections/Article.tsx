@@ -4,12 +4,12 @@ import styled, { ThemeContext, css } from 'styled-components';
 import Section, { BgMode } from '../base/Section';
 import Title from '../blocks/Title';
 import Copy from '../typography/Copy';
-import { spacings, mq, getColor } from '../../utils/styles';
+import { spacings, mq, getColors as color } from '../../utils/styles';
 import Wrapper from '../base/Wrapper';
 
-const StyledTitle = styled(Title)<{ withAsideText?: boolean }>`
+const StyledTitle = styled(Title)`
     @media ${mq.semilarge} {
-        max-width: ${({ withAsideText }) => (withAsideText ? '60%' : '50%')};
+        max-width: 50%;
     }
 `;
 
@@ -55,19 +55,19 @@ const ContentBlock = styled(Copy)<{ isAside?: boolean }>`
 const Actions = styled.div`
     flex-direction: column;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     padding-top: ${spacings.spacer * 2}px;
-    min-width: 100%;
+    width: 100%;
 
     & > * {
         flex: 1;
     }
 
     & > * + * {
-        margin-top: ${spacings.spacer}px;
+        margin-top: ${spacings.spacer * 0.5}px;
     }
 
-    @media ${mq.semilarge} {
+    @media ${mq.medium} {
         flex-direction: row;
         padding: ${spacings.spacer}px 0;
 
@@ -79,6 +79,11 @@ const Actions = styled.div`
             margin-left: ${spacings.spacer}px;
             margin-top: 0;
         }
+    }
+
+    @media ${mq.semilarge} {
+        max-width: 50%;
+        align-items: flex-start;
     }
 `;
 
@@ -94,7 +99,6 @@ const Article: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isInverted?: boolean;
-    withColumns?: boolean;
 }> = ({
     title,
     superTitle,
@@ -104,7 +108,6 @@ const Article: React.FC<{
     primaryAction,
     secondaryAction,
     isInverted,
-    withColumns,
 }) => {
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
@@ -124,9 +127,9 @@ const Article: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? getColor(theme, 'black')
+                    ? color(theme).black
                     : bgMode
-                    ? getColor(theme, 'mono', 'light')
+                    ? color(theme).mono.light
                     : 'transparent'
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
@@ -136,7 +139,6 @@ const Article: React.FC<{
                     title={title}
                     superTitle={superTitle}
                     isInverted={isInverted}
-                    withAsideText={asideText ? true : false}
                 />
                 <Content withAsideText={asideText ? true : false}>
                     {text && (
@@ -144,10 +146,9 @@ const Article: React.FC<{
                             type="copy"
                             textColor={
                                 isInverted
-                                    ? getColor(theme, 'white')
-                                    : getColor(theme, 'black')
+                                    ? color(theme).white
+                                    : color(theme).black
                             }
-                            columns={withColumns}
                         >
                             <div dangerouslySetInnerHTML={{ __html: text }} />
                         </ContentBlock>
@@ -157,8 +158,8 @@ const Article: React.FC<{
                             type="copy"
                             textColor={
                                 isInverted
-                                    ? getColor(theme, 'white')
-                                    : getColor(theme, 'black')
+                                    ? color(theme).white
+                                    : color(theme).black
                             }
                             isAside
                         >
