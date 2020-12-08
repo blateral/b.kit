@@ -9,8 +9,6 @@ export type BgMode =
     | 'larger-left'
     | 'larger-right';
 
-export type BgClampType = 'normal' | 'large';
-
 const getBackground = (mode: BgMode, bgColor: string) => {
     let bgValue = undefined;
 
@@ -63,7 +61,6 @@ const View = styled.section<{
 const Back = styled.div<{
     bgColor?: string;
     bgMode?: BgMode;
-    bgClamp?: BgClampType;
 }>`
     display: ${({ bgColor, bgMode }) => (bgColor && bgMode ? 'block' : 'none')};
     position: absolute;
@@ -71,12 +68,8 @@ const Back = styled.div<{
     right: 0;
     bottom: 0;
     left: 0;
-    max-width: ${({ bgClamp, bgMode }) =>
-        bgClamp
-            ? bgClamp === 'large' || bgMode === 'full'
-                ? spacings.wrapperLarge
-                : spacings.wrapper
-            : undefined}px;
+    max-width: ${({ bgMode }) =>
+        (bgMode === 'full' ? spacings.wrapperLarge : spacings.wrapper) + 'px'};
 
     background: ${({ bgColor }) => bgColor || undefined};
 
@@ -92,9 +85,8 @@ const Back = styled.div<{
 
     @media ${mq.xlarge} {
         :before {
-            content: ${({ bgMode, bgClamp }) =>
-                (bgClamp === 'normal' && bgMode === 'half-left') ||
-                bgMode === 'larger-left'
+            content: ${({ bgMode }) =>
+                bgMode === 'half-left' || bgMode === 'larger-left'
                     ? `""`
                     : undefined};
             position: absolute;
@@ -108,9 +100,8 @@ const Back = styled.div<{
         }
 
         :after {
-            content: ${({ bgMode, bgClamp }) =>
-                (bgClamp === 'normal' && bgMode === 'half-right') ||
-                bgMode === 'larger-right'
+            content: ${({ bgMode }) =>
+                bgMode === 'half-right' || bgMode === 'larger-right'
                     ? `""`
                     : undefined};
             position: absolute;
@@ -129,18 +120,9 @@ const Section: React.FC<{
     as?: 'header' | 'footer';
     bgColor?: string;
     bgMode?: BgMode;
-    bgClamp?: BgClampType;
     addSeperation?: boolean;
     className?: any;
-}> = ({
-    as,
-    bgColor,
-    bgMode = 'full',
-    bgClamp,
-    addSeperation,
-    className,
-    children,
-}) => {
+}> = ({ as, bgColor, bgMode = 'full', addSeperation, className, children }) => {
     return (
         <View
             as={as}
@@ -149,9 +131,7 @@ const Section: React.FC<{
             addSeperation={addSeperation}
             className={className}
         >
-            {bgColor && bgMode && (
-                <Back bgColor={bgColor} bgMode={bgMode} bgClamp={bgClamp} />
-            )}
+            {bgColor && bgMode && <Back bgColor={bgColor} bgMode={bgMode} />}
             {children}
         </View>
     );

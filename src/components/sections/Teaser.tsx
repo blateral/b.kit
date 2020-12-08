@@ -164,7 +164,6 @@ const Teaser: FC<{
     return (
         <Section
             addSeperation
-            bgClamp="normal"
             bgColor={
                 isInverted
                     ? color(theme).black
