@@ -10,7 +10,6 @@ const ImageCarousel: FC<
     Omit<CarouselProps, 'variableWidths'> & {
         bgMode?: 'full' | 'splitted';
         images?: ImageProps[];
-        isInverted?: boolean;
     }
 > = ({
     isInverted,
