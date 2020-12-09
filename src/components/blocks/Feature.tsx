@@ -8,7 +8,7 @@ import Image, { ImageProps as Props } from '../blocks/Image';
 const View = styled.div``;
 
 const ImageContainer = styled.div`
-    padding-bottom: ${spacings.spacer}px;
+    padding-bottom: ${spacings.spacer * 2}px;
 `;
 
 const StyledImage = styled(Image)`
@@ -18,7 +18,7 @@ const StyledImage = styled(Image)`
 
 const Content = styled.div`
     & + & {
-        padding-top: ${spacings.spacer}px;
+        padding-top: ${spacings.spacer * 2}px;
     }
 `;
 
@@ -26,6 +26,10 @@ const ContentBlock = styled(Copy)`
     & + & {
         padding-top: ${spacings.spacer}px;
     }
+`;
+
+const Desc = styled.div`
+    padding-top: ${spacings.spacer}px;
 `;
 
 const Actions = styled.div`
@@ -99,7 +103,7 @@ const Feature: React.FC<{
                     {title}
                 </ContentBlock>
                 <ContentBlock size="small" textColor={color(theme).black}>
-                    {description}
+                    <Desc> {description}</Desc>
                 </ContentBlock>
             </Content>
             <Content>
