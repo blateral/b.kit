@@ -13,7 +13,6 @@ const ImageContainer = styled.div`
 
 const StyledImage = styled(Image)`
     width: 100%;
-    display: block;
 `;
 
 const Content = styled.div`
@@ -91,9 +90,18 @@ const Feature: React.FC<{
     const theme = React.useContext(ThemeContext);
     return (
         <View>
-            <ImageContainer>
-                <StyledImage {...image} />
-            </ImageContainer>
+            {image && (
+                <ImageContainer>
+                    <StyledImage
+                        small={image.small}
+                        medium={image.medium}
+                        semilarge={image.semilarge}
+                        large={image.large}
+                        xlarge={image.xlarge}
+                        alt={image.alt}
+                    />
+                </ImageContainer>
+            )}
             <Content>
                 <ContentBlock
                     type="copy-b"
