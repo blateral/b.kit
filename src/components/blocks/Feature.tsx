@@ -2,13 +2,18 @@ import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { spacings, mq, getColors as color } from '../../utils/styles';
 
-import Section from '../base/Section';
-import Wrapper from '../base/Wrapper';
 import Copy from '../typography/Copy';
 import Image, { ImageProps as Props } from '../blocks/Image';
 
+const View = styled.div``;
+
 const ImageContainer = styled.div`
     padding-bottom: ${spacings.spacer}px;
+`;
+
+const StyledImage = styled(Image)`
+    width: 100%;
+    display: block;
 `;
 
 const Content = styled.div`
@@ -81,43 +86,41 @@ const Feature: React.FC<{
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <Section addSeperation>
-            <Wrapper clampWidth="normal" addWhitespace>
-                <ImageContainer>
-                    <Image {...image} />
-                </ImageContainer>
-                <Content>
-                    <ContentBlock
-                        type="copy-b"
-                        size="big"
-                        textColor={color(theme).black}
-                    >
-                        {title}
-                    </ContentBlock>
-                    <ContentBlock size="small" textColor={color(theme).black}>
-                        {description}
-                    </ContentBlock>
-                </Content>
-                <Content>
-                    <ContentBlock type="copy-b" textColor={color(theme).black}>
-                        {intro}
-                    </ContentBlock>
-                    <ContentBlock
-                        type="copy"
-                        size="medium"
-                        textColor={color(theme).black}
-                    >
-                        {text}
-                    </ContentBlock>
-                </Content>
-                {(primaryAction || secondaryAction) && (
-                    <Actions>
-                        {primaryAction && primaryAction(isInverted)}
-                        {secondaryAction && secondaryAction(isInverted)}
-                    </Actions>
-                )}
-            </Wrapper>
-        </Section>
+        <View>
+            <ImageContainer>
+                <StyledImage {...image} />
+            </ImageContainer>
+            <Content>
+                <ContentBlock
+                    type="copy-b"
+                    size="big"
+                    textColor={color(theme).black}
+                >
+                    {title}
+                </ContentBlock>
+                <ContentBlock size="small" textColor={color(theme).black}>
+                    {description}
+                </ContentBlock>
+            </Content>
+            <Content>
+                <ContentBlock type="copy-b" textColor={color(theme).black}>
+                    {intro}
+                </ContentBlock>
+                <ContentBlock
+                    type="copy"
+                    size="medium"
+                    textColor={color(theme).black}
+                >
+                    {text}
+                </ContentBlock>
+            </Content>
+            {(primaryAction || secondaryAction) && (
+                <Actions>
+                    {primaryAction && primaryAction(isInverted)}
+                    {secondaryAction && secondaryAction(isInverted)}
+                </Actions>
+            )}
+        </View>
     );
 };
 
