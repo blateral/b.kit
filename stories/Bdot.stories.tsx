@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { storiesOf } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import Bdot from '../src/components/blocks/Bdot';
 
-storiesOf('Blocks / Bdot', module).add('default', () => <Bdot />);
+export default {
+    title: 'Blocks/Bdot',
+    component: Bdot,
+} as Meta;
+
+export const Default = () => <Bdot />;

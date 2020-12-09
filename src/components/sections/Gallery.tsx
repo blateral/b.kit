@@ -16,13 +16,13 @@ const Gallery: FC<{
     hasBack?: boolean;
     images?: Array<ImageProps & { size?: 'half' | 'full' }>;
     className?: string;
-}> = ({ isInverted, hasBack, images, className }) => {
+}> = ({ isInverted = false, hasBack = false, images, className }) => {
     const theme = useContext(ThemeContext);
 
     return (
         <Section
             addSeperation
-            bgMode="half-left"
+            bgMode="full"
             bgColor={
                 isInverted
                     ? color(theme).black

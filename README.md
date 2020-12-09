@@ -1,4 +1,6 @@
-# b.kit - Library to b.uild awesome websites
+# b.kit - React component library to b.uild awesome websites
+
+[Storybook stories](https://blateral.github.io/b.kit)
 
 ## Table of contents
 

@@ -22,7 +22,12 @@ const Wrapper: React.FC<{
     addWhitespace?: boolean;
     clampWidth?: ClampWidthType;
     className?: string;
-}> = ({ addWhitespace, clampWidth, className, children }) => {
+}> = ({
+    addWhitespace = false,
+    clampWidth = 'normal',
+    className,
+    children,
+}) => {
     return (
         <View
             className={className}

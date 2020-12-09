@@ -74,7 +74,6 @@ const Back = styled.div<{
     background: ${({ bgColor }) => bgColor || undefined};
 
     margin: 0 auto;
-    z-index: -1;
 
     @media ${mq.semilarge} {
         background: ${({ bgColor, bgMode }) =>

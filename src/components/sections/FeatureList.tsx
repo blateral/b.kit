@@ -58,7 +58,7 @@ const FeatureList: React.FC<{
             case 'full':
                 return 'full';
             case 'splitted':
-                return 'larger-right';
+                return 'half-right';
             default:
                 return undefined;
         }
