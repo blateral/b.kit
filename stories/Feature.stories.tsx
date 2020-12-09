@@ -8,9 +8,9 @@ storiesOf('Blocks / Feature', module).add('default', () => {
         <Feature
             image={{
                 small: 'https://unsplash.it/640/480?image=700',
-                medium: 'https://unsplash.it/832/832?image=700',
-                large: 'https://unsplash.it/1440/1440?image=700',
-                xlarge: 'https://unsplash.it/1690/1680?image=700',
+                medium: 'https://unsplash.it/975/975?image=700',
+                large: 'https://unsplash.it/1200/1200?image=700',
+                xlarge: 'https://unsplash.it/1440/1440?image=700',
             }}
             title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
             description="Name/ Place/Position/ Telefon/Date"
