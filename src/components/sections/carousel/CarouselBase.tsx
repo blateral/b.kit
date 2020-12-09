@@ -29,12 +29,14 @@ const TopControls = styled.div`
     }
 `;
 
-const StyledControl = styled(Slider.Control)`
+const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
     border: none;
     outline: none;
     background: none;
     padding: 0 ${spacings.nudge * 3}px;
 
+    color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).white : color(theme).black};
     transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
 
     &:enabled {
@@ -47,6 +49,11 @@ const StyledControl = styled(Slider.Control)`
 
     &:enabled:active {
         transform: scale(0.95);
+    }
+
+    &:disabled {
+        color: ${({ theme, isInverted }) =>
+            isInverted ? color(theme).mono.dark : color(theme).mono.medium};
     }
 `;
 
@@ -103,28 +110,48 @@ const DotWrapper = styled.button`
     }
 `;
 
-const Dot = styled.div<{ isActive?: boolean }>`
+const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     height: 14px;
     width: 14px;
-    border: solid 1px ${({ theme }) => color(theme).black};
+    border: solid 1px
+        ${({ theme, isInverted }) =>
+            isInverted ? color(theme).white : color(theme).black};
     border-radius: 14px;
 
     transition: background-color 0.2s ease-in-out;
 
-    background-color: ${({ isActive, theme }) =>
-        isActive ? color(theme).black : 'transparent'};
+    background-color: ${({ isActive, isInverted, theme }) =>
+        isActive
+            ? isInverted
+                ? color(theme).white
+                : color(theme).black
+            : 'transparent'};
 `;
 
 export interface CarouselProps {
     mode?: '1.75' | '2.75';
     spacing?: 'normal' | 'large';
     variableWidths?: boolean;
+    isInverted?: boolean;
+    controlNext?: (isInverted?: boolean, isActive?: boolean) => React.ReactNode;
+    controlPrev?: (isInverted?: boolean, isActive?: boolean) => React.ReactNode;
+    dot?: (isInverted?: boolean, isActive?: boolean) => React.ReactNode;
+    beforeChange?: (currentStep: number, nextStep: number) => void;
+    afterChange?: (currentStep: number) => void;
+    onInit?: (steps: number) => void;
 }
 
 const CarouselBase: FC<CarouselProps> = ({
     mode,
     spacing,
     variableWidths,
+    isInverted,
+    controlNext,
+    controlPrev,
+    dot,
+    beforeChange,
+    afterChange,
+    onInit,
     children,
 }) => {
     return (
@@ -164,14 +191,29 @@ const CarouselBase: FC<CarouselProps> = ({
                         },
                     },
                 ]}
+                beforeChange={beforeChange}
+                afterChange={afterChange}
+                onInit={onInit}
             >
                 {React.Children.count(children) > 1 && (
                     <TopControls>
-                        <StyledControl type="prev">
-                            <ArrowLeftGhost />
+                        <StyledControl type="prev" isInverted={isInverted}>
+                            {(isActive) =>
+                                controlPrev ? (
+                                    controlPrev(isInverted, isActive)
+                                ) : (
+                                    <ArrowLeftGhost />
+                                )
+                            }
                         </StyledControl>
-                        <StyledControl type="next">
-                            <ArrowRightGhost />
+                        <StyledControl type="next" isInverted={isInverted}>
+                            {(isActive) =>
+                                controlNext ? (
+                                    controlNext(isInverted, isActive)
+                                ) : (
+                                    <ArrowRightGhost />
+                                )
+                            }
                         </StyledControl>
                     </TopControls>
                 )}
@@ -183,20 +225,39 @@ const CarouselBase: FC<CarouselProps> = ({
                 {React.Children.count(children) > 1 && (
                     <Footer>
                         <CtrlWrapperLeft>
-                            <StyledControl type="prev">
-                                <ArrowLeftGhost />
+                            <StyledControl type="prev" isInverted={isInverted}>
+                                {(isActive) =>
+                                    controlPrev ? (
+                                        controlPrev(isInverted, isActive)
+                                    ) : (
+                                        <ArrowLeftGhost />
+                                    )
+                                }
                             </StyledControl>
                         </CtrlWrapperLeft>
                         <StyledDotGroup>
                             {(i, isActive, onClick) => (
                                 <DotWrapper key={i} onClick={onClick}>
-                                    <Dot isActive={isActive} />
+                                    {dot ? (
+                                        dot(isInverted, isActive)
+                                    ) : (
+                                        <Dot
+                                            isActive={isActive}
+                                            isInverted={isInverted}
+                                        />
+                                    )}
                                 </DotWrapper>
                             )}
                         </StyledDotGroup>
                         <CtrlWrapperRight>
-                            <StyledControl type="next">
-                                <ArrowRightGhost />
+                            <StyledControl type="next" isInverted={isInverted}>
+                                {(isActive) =>
+                                    controlNext ? (
+                                        controlNext(isInverted, isActive)
+                                    ) : (
+                                        <ArrowRightGhost />
+                                    )
+                                }
                             </StyledControl>
                         </CtrlWrapperRight>
                     </Footer>

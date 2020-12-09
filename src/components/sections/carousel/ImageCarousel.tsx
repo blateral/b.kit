@@ -12,7 +12,19 @@ const ImageCarousel: FC<
         images?: ImageProps[];
         isInverted?: boolean;
     }
-> = ({ isInverted, mode, bgMode, spacing, images }) => {
+> = ({
+    isInverted,
+    mode,
+    bgMode,
+    spacing,
+    images,
+    controlNext,
+    controlPrev,
+    beforeChange,
+    afterChange,
+    onInit,
+    dot,
+}) => {
     const theme = React.useContext(ThemeContext);
 
     const getSectionBgMode = (): BgMode | undefined => {
@@ -29,10 +41,27 @@ const ImageCarousel: FC<
     return (
         <Section
             addSeperation
-            bgColor={bgMode ? color(theme).mono.light : undefined}
+            bgColor={
+                isInverted
+                    ? color(theme).black
+                    : bgMode
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <CarouselBase variableWidths mode={mode} spacing={spacing}>
+            <CarouselBase
+                variableWidths
+                mode={mode}
+                spacing={spacing}
+                isInverted={isInverted}
+                controlNext={controlNext}
+                controlPrev={controlPrev}
+                dot={dot}
+                beforeChange={beforeChange}
+                afterChange={afterChange}
+                onInit={onInit}
+            >
                 {images &&
                     images.map((img, i) => <FullWidthImg key={i} {...img} />)}
             </CarouselBase>

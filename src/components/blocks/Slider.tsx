@@ -77,6 +77,9 @@ const Slider: FC<
         clickSideOffset?: number;
         sameHeight?: boolean;
         fullHeight?: boolean;
+        beforeChange?: (currentStep: number, nextStep: number) => void;
+        afterChange?: (currentStep: number) => void;
+        onInit?: (steps: number) => void;
         className?: string;
     }
 > = ({
@@ -86,6 +89,9 @@ const Slider: FC<
     clickSideOffset = 0.2,
     fullHeight,
     sameHeight,
+    beforeChange,
+    afterChange,
+    onInit,
     className,
     children,
     ...rest
@@ -137,8 +143,10 @@ const Slider: FC<
         slidesToShow: 1,
         variableWidth: true,
         beforeChange: (current: number, next: number) => {
+            beforeChange && beforeChange(current, next);
             setCurrentStep(next);
         },
+        afterChange: afterChange,
         ...rest,
     };
 
@@ -187,6 +195,12 @@ const Slider: FC<
             setSteps(slides);
         }
     }, [slideCount, visibleSlides]);
+
+    useEffect(() => {
+        if (steps && steps > 0) {
+            onInit && onInit(steps);
+        }
+    }, [onInit, steps]);
 
     return (
         <SliderContext.Provider
@@ -390,6 +404,7 @@ const Control: FC<{
     type: 'next' | 'prev';
     onClick?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
     className?: string;
+    children?: (isActive?: boolean) => React.ReactNode;
 }> = ({ type, onClick, children, className }) => {
     return (
         <SliderContext.Consumer>
@@ -409,7 +424,12 @@ const Control: FC<{
                             : values.isOnFirstStep()
                     }
                 >
-                    {children}
+                    {children &&
+                        children(
+                            type === 'next'
+                                ? !values.isOnLastStep()
+                                : !values.isOnFirstStep()
+                        )}
                 </ControlView>
             )}
         </SliderContext.Consumer>
