@@ -110,21 +110,27 @@ const Feature: React.FC<{
                 >
                     {title}
                 </ContentBlock>
-                <ContentBlock size="small" textColor={color(theme).black}>
-                    <Desc> {description}</Desc>
-                </ContentBlock>
+                {description && (
+                    <ContentBlock size="small" textColor={color(theme).black}>
+                        <Desc
+                            dangerouslySetInnerHTML={{ __html: description }}
+                        />
+                    </ContentBlock>
+                )}
             </Content>
             <Content>
                 <ContentBlock type="copy-b" textColor={color(theme).black}>
                     {intro}
                 </ContentBlock>
-                <ContentBlock
-                    type="copy"
-                    size="medium"
-                    textColor={color(theme).black}
-                >
-                    {text}
-                </ContentBlock>
+                {text && (
+                    <ContentBlock
+                        type="copy"
+                        size="medium"
+                        textColor={color(theme).black}
+                    >
+                        <div dangerouslySetInnerHTML={{ __html: text }} />
+                    </ContentBlock>
+                )}
             </Content>
             {(primaryAction || secondaryAction) && (
                 <Actions>
