@@ -22,7 +22,7 @@ const Gallery: FC<{
     return (
         <Section
             addSeperation
-            bgClamp="normal"
+            bgMode="half-left"
             bgColor={
                 isInverted
                     ? color(theme).black
