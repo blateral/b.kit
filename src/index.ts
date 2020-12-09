@@ -9,8 +9,9 @@ import IconListSection from './components/sections/IconList';
 import ArticleSection from './components/sections/Article';
 import ImageCarouselSection from './components/sections/carousel/ImageCarousel';
 
-/***** Styled Component theme override *****/
+import Button from './components/buttons/Button';
 
+/***** Styled Component theme override *****/
 declare module 'styled-components' {
     export interface DefaultTheme {
         colors: Colors;
@@ -26,3 +27,6 @@ export const TeaserWide = TeaserWideSection;
 export const IconList = IconListSection;
 export const Article = ArticleSection;
 export const ImageCarousel = ImageCarouselSection;
+
+/***** Action exports *****/
+export { Button };
