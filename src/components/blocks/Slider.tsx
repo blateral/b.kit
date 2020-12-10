@@ -4,9 +4,6 @@ import styled, { css } from 'styled-components';
 import SlickSlider, { Settings } from 'react-slick';
 import { withRange } from '../../utils/styles';
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
 // Slider context
 interface SliderContextState {
     setSlider?: React.Dispatch<
