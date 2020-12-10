@@ -5,8 +5,7 @@ import { getColors as color, spacings, mq } from '../../utils/styles';
 
 import Section, { BgMode } from '../base/Section';
 import Wrapper from '../base/Wrapper';
-import Feature from '../blocks/Feature';
-import { ImageProps as Props } from '../blocks/Image';
+import Feature, { FeatureProps } from '../blocks/Feature';
 
 const ContentContainer = styled.div`
     & > * + * {
@@ -39,20 +38,11 @@ const ContentContainer = styled.div`
 `;
 
 const FeatureList: React.FC<{
-    featureContent?: {
-        image?: Props;
-        title?: string;
-        description?: string;
-        intro?: string;
-        text?: string;
-
-        primaryAction?: (isInverted?: boolean) => React.ReactNode;
-        secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-    }[];
-
-    bgMode?: 'full' | 'splitted';
     isInverted?: boolean;
-}> = ({ featureContent, bgMode, isInverted }) => {
+    features?: FeatureProps[];
+    bgMode?: 'full' | 'splitted';
+}> = ({ features, bgMode, isInverted = false }) => {
+    const theme = React.useContext(ThemeContext);
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
             case 'full':
@@ -64,7 +54,6 @@ const FeatureList: React.FC<{
         }
     };
 
-    const theme = React.useContext(ThemeContext);
     return (
         <Section
             addSeperation
@@ -79,34 +68,16 @@ const FeatureList: React.FC<{
         >
             <Wrapper addWhitespace clampWidth="normal">
                 <ContentContainer>
-                    {featureContent &&
-                        featureContent.map(
-                            (
-                                {
-                                    image,
-                                    title,
-                                    description,
-                                    intro,
-                                    text,
-                                    primaryAction,
-                                    secondaryAction,
-                                },
-                                i
-                            ) => {
-                                return (
-                                    <Feature
-                                        key={i}
-                                        image={image}
-                                        title={title}
-                                        description={description}
-                                        intro={intro}
-                                        text={text}
-                                        primaryAction={primaryAction}
-                                        secondaryAction={secondaryAction}
-                                    />
-                                );
-                            }
-                        )}
+                    {features &&
+                        features.map((feature, i) => {
+                            return (
+                                <Feature
+                                    key={i}
+                                    isInverted={isInverted}
+                                    {...feature}
+                                />
+                            );
+                        })}
                 </ContentContainer>
             </Wrapper>
         </Section>

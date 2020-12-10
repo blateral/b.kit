@@ -1,6 +1,11 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { spacings, mq, getColors as color } from '../../utils/styles';
+import {
+    spacings,
+    mq,
+    getColors as color,
+    withRange,
+} from '../../utils/styles';
 
 import Copy from '../typography/Copy';
 import Image, { ImageProps as Props } from '../blocks/Image';
@@ -17,18 +22,21 @@ const StyledImage = styled(Image)`
 
 const Content = styled.div`
     & + & {
-        padding-top: ${spacings.spacer * 2}px;
+        ${withRange(
+            [spacings.spacer * 1.5, spacings.spacer * 2],
+            'padding-top'
+        )}
     }
 `;
 
 const ContentBlock = styled(Copy)`
     & + & {
-        padding-top: ${spacings.spacer}px;
+        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
     }
 `;
 
 const Desc = styled.div`
-    padding-top: ${spacings.spacer}px;
+    ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
 `;
 
 const Actions = styled.div`
@@ -59,37 +67,39 @@ const Actions = styled.div`
             margin-top: 0;
         }
     }
-
-    @media ${mq.semilarge} {
-        max-width: 50%;
-        align-items: flex-start;
-    }
 `;
 
-const Feature: React.FC<{
+export interface FeatureProps {
+    isInverted?: boolean;
     title?: string;
     description?: string;
     intro?: string;
     text?: string;
     image?: Props;
-
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+}
 
-    isInverted?: boolean;
-}> = ({
+const Feature: React.FC<
+    FeatureProps & {
+        className?: string;
+    }
+> = ({
     title,
     description,
     intro,
     text,
     image,
-    isInverted,
+    isInverted = false,
     primaryAction,
     secondaryAction,
+    className,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const textColor = isInverted ? color(theme).white : color(theme).black;
+
     return (
-        <View>
+        <View className={className}>
             {image && (
                 <ImageContainer>
                     <StyledImage
@@ -103,15 +113,11 @@ const Feature: React.FC<{
                 </ImageContainer>
             )}
             <Content>
-                <ContentBlock
-                    type="copy-b"
-                    size="big"
-                    textColor={color(theme).black}
-                >
+                <ContentBlock type="copy-b" size="big" textColor={textColor}>
                     {title}
                 </ContentBlock>
                 {description && (
-                    <ContentBlock size="small" textColor={color(theme).black}>
+                    <ContentBlock size="small" textColor={textColor}>
                         <Desc
                             dangerouslySetInnerHTML={{ __html: description }}
                         />
@@ -119,14 +125,14 @@ const Feature: React.FC<{
                 )}
             </Content>
             <Content>
-                <ContentBlock type="copy-b" textColor={color(theme).black}>
+                <ContentBlock type="copy-b" textColor={textColor}>
                     {intro}
                 </ContentBlock>
                 {text && (
                     <ContentBlock
                         type="copy"
                         size="medium"
-                        textColor={color(theme).black}
+                        textColor={textColor}
                     >
                         <div dangerouslySetInnerHTML={{ __html: text }} />
                     </ContentBlock>
