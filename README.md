@@ -60,7 +60,7 @@ const customTheme = {
 
 ### Slider package
 
-> Some components like the `ImageCarousel` using the external `slick-carousel` package. To use them properly its important to install the `slick-carousel` package (also listed under peer dependenies) and import the related CSS files.
+> Some components like the `ImageCarousel` using the external `slick-carousel` and `react-slick` packages. To use them properly its important to install the packages (also listed under peer dependenies) and import the related CSS files.
 
 As imports (e.g. in Nextjs `_app.tsx`):
 
