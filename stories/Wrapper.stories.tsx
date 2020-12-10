@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { storiesOf } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 
 import Wrapper from '../src/components/base/Wrapper';
 
@@ -15,14 +15,19 @@ const ExampleContent = () => (
     </div>
 );
 
-storiesOf('Base / Wrapper', module)
-    .add('default', () => (
-        <Wrapper>
-            <ExampleContent />
-        </Wrapper>
-    ))
-    .add('with whitespace', () => (
-        <Wrapper addWhitespace>
-            <ExampleContent />
-        </Wrapper>
-    ));
+export default {
+    title: 'Base/Wrapper',
+    component: Wrapper,
+} as Meta;
+
+export const Default: Story = () => (
+    <Wrapper>
+        <ExampleContent />
+    </Wrapper>
+);
+
+export const WithWhitespace: Story = () => (
+    <Wrapper addWhitespace>
+        <ExampleContent />
+    </Wrapper>
+);

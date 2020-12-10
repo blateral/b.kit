@@ -113,7 +113,7 @@ const SubTextBlock = styled(ContentBlock)`
     }
 `;
 
-const Teaser: FC<{
+const TeaserWide: FC<{
     isInverted?: boolean;
     isMirrored?: boolean;
     hasBack?: boolean;
@@ -127,9 +127,9 @@ const Teaser: FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
-    isInverted,
-    isMirrored,
-    hasBack,
+    isInverted = false,
+    isMirrored = false,
+    hasBack = false,
     superTitle,
     title,
     titleAs,
@@ -145,7 +145,6 @@ const Teaser: FC<{
     return (
         <Section
             addSeperation
-            bgClamp="normal"
             bgColor={
                 isInverted
                     ? color(theme).black
@@ -232,4 +231,4 @@ const Teaser: FC<{
     );
 };
 
-export default Teaser;
+export default TeaserWide;

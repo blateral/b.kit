@@ -107,7 +107,7 @@ const Article: React.FC<{
     bgMode,
     primaryAction,
     secondaryAction,
-    isInverted,
+    isInverted = false,
 }) => {
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
