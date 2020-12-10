@@ -121,7 +121,14 @@ const Section: React.FC<{
     bgMode?: BgMode;
     addSeperation?: boolean;
     className?: any;
-}> = ({ as, bgColor, bgMode = 'full', addSeperation, className, children }) => {
+}> = ({
+    as,
+    bgColor,
+    bgMode = 'full',
+    addSeperation = false,
+    className,
+    children,
+}) => {
     return (
         <View
             as={as}

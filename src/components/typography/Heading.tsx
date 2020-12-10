@@ -63,7 +63,15 @@ const Heading: React.FC<{
     hasShadow?: boolean;
 
     className?: string;
-}> = ({ as, className, size, textColor, hyphens, hasShadow, children }) => {
+}> = ({
+    as,
+    className,
+    size,
+    textColor,
+    hyphens = false,
+    hasShadow = false,
+    children,
+}) => {
     let tag: HeadlineTag = 'h1';
     let type: HeadingType = 'heading-1';
 
