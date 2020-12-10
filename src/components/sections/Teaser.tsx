@@ -135,8 +135,8 @@ const Teaser: FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
-    isInverted,
-    isMirrored,
+    isInverted = false,
+    isMirrored = false,
     bgMode,
     superTitle,
     title,
