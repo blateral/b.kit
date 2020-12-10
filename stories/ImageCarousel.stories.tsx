@@ -9,21 +9,7 @@ export default {
     component: ImageCarousel,
 } as Meta;
 
-export const WithOneSlide: Story = () => (
-    <ImageCarousel
-        images={[
-            {
-                small: 'https://unsplash.it/520/415?image=400',
-                medium: 'https://unsplash.it/601/480?image=400',
-                large: 'https://unsplash.it/722/576?image=400',
-                xlarge: 'https://unsplash.it/802/640?image=400',
-                alt: 'Placeholder Image',
-            },
-        ]}
-    />
-);
-
-export const WithMultipleSlides: Story = () => (
+export const Default: Story = () => (
     <ImageCarousel
         images={[
             {
@@ -168,37 +154,6 @@ export const WithHalfBackground: Story = () => (
 
 export const WithLargeSpacing: Story = () => (
     <ImageCarousel
-        spacing="large"
-        bgMode="full"
-        images={[
-            {
-                small: 'https://unsplash.it/520/415?image=400',
-                medium: 'https://unsplash.it/601/480?image=400',
-                large: 'https://unsplash.it/722/576?image=400',
-                xlarge: 'https://unsplash.it/802/640?image=400',
-                alt: 'Placeholder Image',
-            },
-            {
-                small: 'https://unsplash.it/520/415?image=401',
-                medium: 'https://unsplash.it/601/480?image=401',
-                large: 'https://unsplash.it/722/576?image=401',
-                xlarge: 'https://unsplash.it/802/640?image=401',
-                alt: 'Placeholder Image',
-            },
-            {
-                small: 'https://unsplash.it/520/415?image=402',
-                medium: 'https://unsplash.it/601/480?image=402',
-                large: 'https://unsplash.it/722/576?image=402',
-                xlarge: 'https://unsplash.it/802/640?image=402',
-                alt: 'Placeholder Image',
-            },
-        ]}
-    />
-);
-
-export const WithMoreVisibleItems: Story = () => (
-    <ImageCarousel
-        mode="2.75"
         spacing="large"
         bgMode="full"
         images={[

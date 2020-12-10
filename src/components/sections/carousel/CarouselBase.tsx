@@ -11,6 +11,7 @@ import Wrapper from '../../base/Wrapper';
 import ArrowLeftGhost from '../../base/icons/ArrowLeftGhost';
 import ArrowRightGhost from '../../base/icons/ArrowRightGhost';
 import Slider from '../../blocks/Slider';
+import { ResponsiveObject } from 'react-slick';
 
 const View = styled(Wrapper)`
     position: relative;
@@ -61,8 +62,8 @@ const StyledSlides = styled(Slider.Slides)`
     margin-bottom: ${spacings.spacer * 1}px;
 
     @media ${mq.xlarge} {
-        left: 50%;
-        transform: translateX(-${spacings.wrapper / 2}px);
+        left: 20%;
+        width: 80%;
     }
 `;
 
@@ -129,7 +130,6 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
 `;
 
 export interface CarouselProps {
-    mode?: '1.75' | '2.75';
     spacing?: 'normal' | 'large';
     variableWidths?: boolean;
     isInverted?: boolean;
@@ -139,10 +139,11 @@ export interface CarouselProps {
     beforeChange?: (currentStep: number, nextStep: number) => void;
     afterChange?: (currentStep: number) => void;
     onInit?: (steps: number) => void;
+    responsive?: ResponsiveObject[];
+    slidesToShow?: number;
 }
 
 const CarouselBase: FC<CarouselProps> = ({
-    mode,
     spacing,
     variableWidths,
     isInverted,
@@ -152,6 +153,8 @@ const CarouselBase: FC<CarouselProps> = ({
     beforeChange,
     afterChange,
     onInit,
+    slidesToShow,
+    responsive,
     children,
 }) => {
     return (
@@ -164,33 +167,8 @@ const CarouselBase: FC<CarouselProps> = ({
                         ? { min: 30, max: 60 }
                         : { min: 20, max: 30 }
                 }
-                slidesToShow={
-                    React.Children.count(children) > 1
-                        ? mode === '2.75'
-                            ? 2.75
-                            : 1.75
-                        : 1
-                }
-                responsive={[
-                    {
-                        breakpoint: 832,
-                        settings: {
-                            slidesToShow:
-                                React.Children.count(children) > 1
-                                    ? mode === '2.75'
-                                        ? 2.25
-                                        : 1.25
-                                    : 1,
-                        },
-                    },
-                    {
-                        breakpoint: 640,
-                        settings: {
-                            slidesToShow:
-                                React.Children.count(children) > 1 ? 1.15 : 1,
-                        },
-                    },
-                ]}
+                slidesToShow={slidesToShow}
+                responsive={responsive}
                 beforeChange={beforeChange}
                 afterChange={afterChange}
                 onInit={onInit}
