@@ -141,7 +141,6 @@ export interface CarouselProps {
     onInit?: (steps: number) => void;
     responsive?: ResponsiveObject[];
     slidesToShow?: number;
-    slidesToScroll?: number;
 }
 
 const CarouselBase: FC<CarouselProps> = ({
@@ -155,7 +154,6 @@ const CarouselBase: FC<CarouselProps> = ({
     afterChange,
     onInit,
     slidesToShow,
-    slidesToScroll,
     responsive,
     children,
 }) => {
@@ -170,7 +168,6 @@ const CarouselBase: FC<CarouselProps> = ({
                         : { min: 20, max: 30 }
                 }
                 slidesToShow={slidesToShow}
-                slidesToScroll={slidesToScroll}
                 responsive={responsive}
                 beforeChange={beforeChange}
                 afterChange={afterChange}
