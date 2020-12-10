@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import TeaserWide from '../src/components/sections/TeaserWide';
 import Button from '../src/components/buttons/Button';
 
@@ -8,7 +8,7 @@ export default {
     component: TeaserWide,
 } as Meta;
 
-export const WithContent = () => (
+export const WithContent: Story = () => (
     <TeaserWide
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
@@ -23,7 +23,7 @@ export const WithContent = () => (
     />
 );
 
-export const WithSubText = () => (
+export const WithSubText: Story = () => (
     <TeaserWide
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
@@ -39,7 +39,7 @@ export const WithSubText = () => (
     />
 );
 
-export const WithHtmlInText = () => (
+export const WithHtmlInText: Story = () => (
     <TeaserWide
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
@@ -55,7 +55,7 @@ export const WithHtmlInText = () => (
     />
 );
 
-export const WithActions = () => (
+export const WithActions: Story = () => (
     <TeaserWide
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
@@ -81,7 +81,7 @@ export const WithActions = () => (
     />
 );
 
-export const Mirrored = () => (
+export const Mirrored: Story = () => (
     <TeaserWide
         isMirrored
         superTitle={'Lorem Ipsum Dolor'}
@@ -108,7 +108,7 @@ export const Mirrored = () => (
     />
 );
 
-export const Inverted = () => (
+export const Inverted: Story = () => (
     <TeaserWide
         isInverted
         superTitle={'Lorem Ipsum Dolor'}
@@ -135,7 +135,7 @@ export const Inverted = () => (
     />
 );
 
-export const WithBackground = () => (
+export const WithBackground: Story = () => (
     <TeaserWide
         hasBack
         superTitle={'Lorem Ipsum Dolor'}

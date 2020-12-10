@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Teaser from '../src/components/sections/Teaser';
 import Button from '../src/components/buttons/Button';
 
@@ -8,7 +8,7 @@ export default {
     component: Teaser,
 } as Meta;
 
-export const WithContent = () => (
+export const WithContent: Story = () => (
     <Teaser
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
@@ -23,7 +23,7 @@ export const WithContent = () => (
     />
 );
 
-export const WithSubText = () => (
+export const WithSubText: Story = () => (
     <Teaser
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
@@ -39,7 +39,7 @@ export const WithSubText = () => (
     />
 );
 
-export const WithHtmlInText = () => (
+export const WithHtmlInText: Story = () => (
     <Teaser
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
@@ -55,7 +55,7 @@ export const WithHtmlInText = () => (
     />
 );
 
-export const WithImageDescription = () => (
+export const WithImageDescription: Story = () => (
     <Teaser
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
@@ -73,7 +73,7 @@ export const WithImageDescription = () => (
     />
 );
 
-export const WithAction = () => (
+export const WithAction: Story = () => (
     <Teaser
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
@@ -101,7 +101,7 @@ export const WithAction = () => (
     />
 );
 
-export const Mirrored = () => (
+export const Mirrored: Story = () => (
     <Teaser
         isMirrored
         superTitle={'Lorem Ipsum Dolor'}
@@ -130,7 +130,7 @@ export const Mirrored = () => (
     />
 );
 
-export const Inverted = () => (
+export const Inverted: Story = () => (
     <Teaser
         isInverted
         superTitle={'Lorem Ipsum Dolor'}
@@ -159,7 +159,7 @@ export const Inverted = () => (
     />
 );
 
-export const WithBackground = () => (
+export const WithBackground: Story = () => (
     <Teaser
         bgMode="full"
         superTitle={'Lorem Ipsum Dolor'}
@@ -188,7 +188,7 @@ export const WithBackground = () => (
     />
 );
 
-export const WithSplittedBackground = () => (
+export const WithSplittedBackground: Story = () => (
     <Teaser
         bgMode="splitted"
         superTitle={'Lorem Ipsum Dolor'}
@@ -217,7 +217,7 @@ export const WithSplittedBackground = () => (
     />
 );
 
-export const WithMirroredAndSplittedBackground = () => (
+export const WithMirroredAndSplittedBackground: Story = () => (
     <Teaser
         isMirrored
         bgMode="splitted"
@@ -247,7 +247,7 @@ export const WithMirroredAndSplittedBackground = () => (
     />
 );
 
-export const WithImageFormatA = () => (
+export const WithImageFormatA: Story = () => (
     <Teaser
         bgMode="splitted"
         superTitle={'Lorem Ipsum Dolor'}
@@ -277,7 +277,7 @@ export const WithImageFormatA = () => (
 
 WithImageFormatA.storyName = 'With 4:3 image';
 
-export const WithImageFormatB = () => (
+export const WithImageFormatB: Story = () => (
     <Teaser
         bgMode="splitted"
         superTitle={'Lorem Ipsum Dolor'}

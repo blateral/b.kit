@@ -12,10 +12,10 @@ const ImageCarousel: FC<
         images?: ImageProps[];
     }
 > = ({
-    isInverted,
-    mode,
+    isInverted = false,
+    mode = '1.75',
     bgMode,
-    spacing,
+    spacing = 'normal',
     images,
     controlNext,
     controlPrev,

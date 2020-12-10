@@ -35,7 +35,14 @@ const Title: FC<{
     isInverted?: boolean;
     isCentered?: boolean;
     className?: string;
-}> = ({ superTitle, title, titleAs, isInverted, isCentered, className }) => {
+}> = ({
+    superTitle,
+    title,
+    titleAs,
+    isInverted = false,
+    isCentered = false,
+    className,
+}) => {
     const theme = useContext(ThemeContext);
 
     return (

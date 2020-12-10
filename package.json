@@ -25,7 +25,7 @@
     "homepage": "https://github.com/blateral/b.kit#readme",
     "husky": {
         "hooks": {
-            "pre-push": "yarn tc"
+            "pre-push": "yarn tc deploy-storybook"
         }
     },
     "devDependencies": {

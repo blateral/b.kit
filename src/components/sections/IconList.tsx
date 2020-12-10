@@ -84,8 +84,8 @@ const IconList: React.FC<{
     bgMode,
     primaryItems,
     secondaryItems,
-    isInverted,
-    isCentered,
+    isInverted = false,
+    isCentered = false,
     primaryAction,
     secondaryAction,
 }) => {

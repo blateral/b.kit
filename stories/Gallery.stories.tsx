@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Gallery from '../src/components/sections/Gallery';
 
 export default {
@@ -7,7 +7,7 @@ export default {
     component: Gallery,
 } as Meta;
 
-export const SingleImageFull = () => (
+export const SingleImageFull: Story = () => (
     <Gallery
         images={[
             {
@@ -20,7 +20,7 @@ export const SingleImageFull = () => (
     />
 );
 
-export const MultipleImages = () => (
+export const MultipleImages: Story = () => (
     <Gallery
         images={[
             {
@@ -39,7 +39,7 @@ export const MultipleImages = () => (
     />
 );
 
-export const SingeImageHalf = () => (
+export const SingeImageHalf: Story = () => (
     <Gallery
         images={[
             {
@@ -53,7 +53,7 @@ export const SingeImageHalf = () => (
     />
 );
 
-export const HalfImagesA = () => (
+export const HalfImagesA: Story = () => (
     <Gallery
         images={[
             {
@@ -75,7 +75,7 @@ export const HalfImagesA = () => (
 );
 HalfImagesA.storyName = 'Half images with ratio 4:3';
 
-export const HalfImagesB = () => (
+export const HalfImagesB: Story = () => (
     <Gallery
         images={[
             {
@@ -97,7 +97,7 @@ export const HalfImagesB = () => (
 );
 HalfImagesB.storyName = 'Half images with ratio 1:1';
 
-export const HalfImagesC = () => (
+export const HalfImagesC: Story = () => (
     <Gallery
         images={[
             {
@@ -119,7 +119,7 @@ export const HalfImagesC = () => (
 );
 HalfImagesC.storyName = 'Half images with ratio 3:4';
 
-export const MixedImages = () => (
+export const MixedImages: Story = () => (
     <Gallery
         images={[
             {
@@ -148,7 +148,7 @@ export const MixedImages = () => (
 );
 MixedImages.storyName = 'Mixed image widths';
 
-export const WithBackground: React.VFC = () => (
+export const WithBackground: Story = () => (
     <Gallery
         hasBack
         images={[
@@ -177,7 +177,7 @@ export const WithBackground: React.VFC = () => (
     />
 );
 
-export const Inverted: React.VFC = () => (
+export const Inverted: Story = () => (
     <Gallery
         isInverted
         images={[

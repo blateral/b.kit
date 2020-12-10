@@ -9,7 +9,7 @@ const Link: FC<
     LinkProps & {
         className?: string;
     }
-> = ({ isExternal, href, children, className }) => {
+> = ({ isExternal = false, href, children, className }) => {
     return (
         <a
             href={href}

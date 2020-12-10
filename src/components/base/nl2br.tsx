@@ -2,10 +2,10 @@ import * as React from 'react';
 
 const Nl2br: React.FC<{
     text: string;
-}> = (props) => {
+}> = ({ text }) => {
     return (
         <React.Fragment>
-            {props.text.split('\n').map((item, key) => {
+            {text.split('\n').map((item, key) => {
                 return (
                     <React.Fragment key={key}>
                         {item}

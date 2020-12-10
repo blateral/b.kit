@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 
 import Wrapper from '../src/components/base/Wrapper';
 
@@ -20,13 +20,13 @@ export default {
     component: Wrapper,
 } as Meta;
 
-export const Default = () => (
+export const Default: Story = () => (
     <Wrapper>
         <ExampleContent />
     </Wrapper>
 );
 
-export const WithWhitespace = () => (
+export const WithWhitespace: Story = () => (
     <Wrapper addWhitespace>
         <ExampleContent />
     </Wrapper>
