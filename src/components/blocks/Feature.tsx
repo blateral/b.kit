@@ -10,7 +10,9 @@ import {
 import Copy from '../typography/Copy';
 import Image, { ImageProps as Props } from '../blocks/Image';
 
-const View = styled.div``;
+const View = styled.div`
+    min-width: 270px;
+`;
 
 const ImageContainer = styled.div`
     padding-bottom: ${spacings.spacer * 2}px;

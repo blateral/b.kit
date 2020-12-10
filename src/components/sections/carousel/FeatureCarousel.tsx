@@ -1,21 +1,20 @@
 import React, { FC } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import { ThemeContext } from 'styled-components';
 
 import { getColors as color } from '../../../utils/styles';
-import Image, { ImageProps } from '../../blocks/Image';
 import Section, { BgMode } from '../../base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
+import Feature, { FeatureProps } from '../../blocks/Feature';
 
-const ImageCarousel: FC<
-    Omit<CarouselProps, 'variableWidths'> & {
+const FeatureCarousel: FC<
+    Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
         bgMode?: 'full' | 'splitted';
-        images?: ImageProps[];
+        features?: FeatureProps[];
     }
 > = ({
     isInverted = false,
     bgMode,
-    spacing = 'normal',
-    images,
+    features,
     controlNext,
     controlPrev,
     beforeChange,
@@ -24,7 +23,7 @@ const ImageCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const imageCount = images ? images.length : 0;
+    const featureCount = features ? features.length : 0;
 
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
@@ -50,8 +49,7 @@ const ImageCarousel: FC<
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
             <CarouselBase
-                variableWidths
-                spacing={spacing}
+                spacing="normal"
                 isInverted={isInverted}
                 controlNext={controlNext}
                 controlPrev={controlPrev}
@@ -59,31 +57,35 @@ const ImageCarousel: FC<
                 beforeChange={beforeChange}
                 afterChange={afterChange}
                 onInit={onInit}
-                slidesToShow={imageCount > 1 ? 2.75 : 1}
+                slidesToShow={featureCount > 1 ? 3 : 1}
                 responsive={[
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: featureCount > 1 ? 3 : 1,
+                        },
+                    },
                     {
                         breakpoint: 832,
                         settings: {
-                            slidesToShow: imageCount > 1 ? 2.25 : 1,
+                            slidesToShow: featureCount > 1 ? 2.25 : 1,
                         },
                     },
                     {
                         breakpoint: 640,
                         settings: {
-                            slidesToShow: imageCount > 1 ? 1.15 : 1,
+                            slidesToShow: featureCount > 1 ? 1.15 : 1,
                         },
                     },
                 ]}
             >
-                {images &&
-                    images.map((img, i) => <FullWidthImg key={i} {...img} />)}
+                {features &&
+                    features.map((feature, i) => (
+                        <Feature key={i} isInverted={isInverted} {...feature} />
+                    ))}
             </CarouselBase>
         </Section>
     );
 };
 
-const FullWidthImg = styled(Image)`
-    width: 100%;
-`;
-
-export default ImageCarousel;
+export default FeatureCarousel;
