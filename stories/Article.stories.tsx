@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Article from '../src/components/sections/Article';
 import Button from '../src/components/buttons/Button';
 
@@ -8,7 +8,7 @@ export default {
     component: Article,
 } as Meta;
 
-export const Default = () => (
+export const Default: Story = () => (
     <Article
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
@@ -26,7 +26,7 @@ export const Default = () => (
     />
 );
 
-export const WithAsideText = () => (
+export const WithAsideText: Story = () => (
     <Article
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
@@ -46,7 +46,7 @@ export const WithAsideText = () => (
     />
 );
 
-export const WithInverted = () => (
+export const Inverted: Story = () => (
     <Article
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
@@ -67,7 +67,7 @@ export const WithInverted = () => (
     />
 );
 
-export const WithBgColor = () => (
+export const WithBgColor: Story = () => (
     <Article
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"

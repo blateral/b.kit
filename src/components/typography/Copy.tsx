@@ -90,7 +90,7 @@ const Copy: React.FC<{
     type = 'copy',
     size = 'medium',
     textColor,
-    columns,
+    columns = false,
     className,
     children,
 }) => {

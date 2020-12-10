@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
 
 import Button from '../src/components/buttons/Button';
@@ -24,25 +24,25 @@ const Helper = styled.div`
     padding: 20px;
 `;
 
-export const Default = () => (
+export const Default: Story = () => (
     <Button.View as="button" onClick={console.log}>
         <Button.Label>Primary</Button.Label>
     </Button.View>
 );
 
-export const Link = () => (
+export const Link: Story = () => (
     <Button.View as="a" href="#" onClick={console.log}>
         <Button.Label>Primary</Button.Label>
     </Button.View>
 );
 
-export const ExternalLink = () => (
+export const ExternalLink: Story = () => (
     <Button.View as="a" href="#" isExternal onClick={console.log}>
         <Button.Label>Primary</Button.Label>
     </Button.View>
 );
 
-export const WithIcon = () => (
+export const WithIcon: Story = () => (
     <Button.View as="a" href="#" onClick={console.log}>
         <Button.Label>zum Haus St. Ulrich</Button.Label>
         <Button.Icon>
@@ -51,7 +51,7 @@ export const WithIcon = () => (
     </Button.View>
 );
 
-export const Disabled = () => (
+export const Disabled: Story = () => (
     <Button.View as="a" href="#" isDisabled onClick={console.log}>
         <Button.Label>zum Haus St. Ulrich</Button.Label>
         <Button.Icon>
@@ -60,7 +60,7 @@ export const Disabled = () => (
     </Button.View>
 );
 
-export const Inverted = () => (
+export const Inverted: Story = () => (
     <Button.View as="a" href="#" isInverted onClick={console.log}>
         <Button.Label>zum Haus St. Ulrich</Button.Label>
         <Button.Icon>
@@ -76,7 +76,7 @@ Inverted.parameters = {
     },
 };
 
-export const InvertedAndDisabled = () => (
+export const InvertedAndDisabled: Story = () => (
     <Button.View as="a" href="#" isInverted isDisabled onClick={console.log}>
         <Button.Label>zum Haus St. Ulrich</Button.Label>
         <Button.Icon>
@@ -92,13 +92,13 @@ InvertedAndDisabled.parameters = {
     },
 };
 
-export const Ghost = () => (
+export const Ghost: Story = () => (
     <Button.View type="ghost" as="a" href="#" onClick={console.log}>
         <Button.Label>zum Haus St. Ulrich</Button.Label>
     </Button.View>
 );
 
-export const GhostWithIcon = () => (
+export const GhostWithIcon: Story = () => (
     <Button.View type="ghost" as="a" href="#" onClick={console.log}>
         <Button.Label>zum Haus St. Ulrich</Button.Label>
         <Button.Icon>
@@ -107,7 +107,7 @@ export const GhostWithIcon = () => (
     </Button.View>
 );
 
-export const GhostDisabled = () => (
+export const GhostDisabled: Story = () => (
     <Button.View type="ghost" as="a" href="#" isDisabled onClick={console.log}>
         <Button.Label>zum Haus St. Ulrich</Button.Label>
         <Button.Icon>
@@ -116,7 +116,7 @@ export const GhostDisabled = () => (
     </Button.View>
 );
 
-export const GhostInverted = () => (
+export const GhostInverted: Story = () => (
     <Button.View type="ghost" as="a" href="#" isInverted onClick={console.log}>
         <Button.Label>zum Haus St. Ulrich</Button.Label>
         <Button.Icon>
@@ -132,7 +132,7 @@ GhostInverted.parameters = {
     },
 };
 
-export const GhostInvertedAndDisabled = () => (
+export const GhostInvertedAndDisabled: Story = () => (
     <Button.View
         type="ghost"
         as="a"
