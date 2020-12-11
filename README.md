@@ -43,7 +43,7 @@ Each component uses a default set of fallback styles that are bundled within the
 > Values like `undefined`, `null` or empty string are ignored.
 
 ```jsx
-import { ImageCarousel, Provider } from '@blateral/b.kit';
+import { ImageCarousel, LibThemeProvider } from '@blateral/b.kit';
 
 const customTheme = {
     colors: {
@@ -53,9 +53,9 @@ const customTheme = {
     },
 };
 
-<Provider theme={customTheme}>
+<LibThemeProvider theme={customTheme}>
     <ImageCarousel>...</ImageCarousel>
-</Provider>;
+</LibThemeProvider>;
 ```
 
 ### Slider package
