@@ -5,12 +5,16 @@
     "main": "lib/index.js",
     "module": "lib/index.es.js",
     "types": "lib/index.d.ts",
+    "files": [
+        "lib"
+    ],
     "scripts": {
         "build": "rollup -c",
         "watch": "rollup -c -w",
         "storybook": "start-storybook -p 9000 -c .storybook",
         "deploy-storybook": "storybook-to-ghpages",
-        "tc": "tsc --noEmit"
+        "tc": "tsc --noEmit",
+        "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz"
     },
     "repository": {
         "type": "git",
