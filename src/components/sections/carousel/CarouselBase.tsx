@@ -143,7 +143,7 @@ export interface CarouselProps {
     slidesToShow?: number;
 }
 
-const CarouselBase: FC<CarouselProps> = ({
+const CarouselBase: FC<CarouselProps & { className?: string }> = ({
     spacing,
     variableWidths,
     isInverted,
@@ -156,9 +156,10 @@ const CarouselBase: FC<CarouselProps> = ({
     slidesToShow,
     responsive,
     children,
+    className,
 }) => {
     return (
-        <View clampWidth="large">
+        <View clampWidth="large" className={className}>
             <Slider.Provider
                 variableWidth={variableWidths}
                 sameHeight={variableWidths}

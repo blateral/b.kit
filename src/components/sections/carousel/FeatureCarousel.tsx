@@ -1,10 +1,18 @@
 import React, { FC } from 'react';
-import { ThemeContext } from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color } from '../../../utils/styles';
+import { getColors as color, mq, spacings } from '../../../utils/styles';
 import Section, { BgMode } from '../../base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import Feature, { FeatureProps } from '../../blocks/Feature';
+
+const Carousel = styled(CarouselBase)`
+    padding: 0 ${spacings.spacer}px;
+
+    @media ${mq.xlarge} {
+        padding: 0;
+    }
+`;
 
 const FeatureCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
@@ -48,7 +56,7 @@ const FeatureCarousel: FC<
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <CarouselBase
+            <Carousel
                 spacing="normal"
                 isInverted={isInverted}
                 controlNext={controlNext}
@@ -83,7 +91,7 @@ const FeatureCarousel: FC<
                     features.map((feature, i) => (
                         <Feature key={i} isInverted={isInverted} {...feature} />
                     ))}
-            </CarouselBase>
+            </Carousel>
         </Section>
     );
 };
