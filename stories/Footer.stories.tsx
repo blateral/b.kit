@@ -10,6 +10,7 @@ import Facebook from '../src/components/base/icons/socials/Facebook';
 import LinkedIn from '../src/components/base/icons/socials/LinkedIn';
 import Xing from '../src/components/base/icons/socials/Xing';
 import Twitter from '../src/components/base/icons/socials/Twitter';
+import CompactForm from '../src/components/fields/CompactForm';
 
 const exampleContactData = (
     <>
@@ -126,45 +127,45 @@ export const WithNewsletterTitleAndText: Story = () => (
     />
 );
 
-// export const WithNewsletterForm: Story = () => (
-//     <Footer
-//         logo={{
-//             image: <img src="https://via.placeholder.com/208x65" />,
-//             link: '/',
-//         }}
-//         contactData={exampleContactData}
-//         siteLinks={[
-//             [
-//                 { href: '#', label: 'Aufgaben/Bereiche' },
-//                 { href: '#', label: 'Pflege' },
-//                 { href: '#', label: 'Wohnen', isActive: true },
-//                 { href: '#', label: 'Arbeiten & Mitwirken' },
-//                 { href: '#', label: 'Spenden' },
-//                 { href: '#', label: 'Stiftung' },
-//             ],
-//             [
-//                 { href: '#', label: 'Aufgaben/Bereiche' },
-//                 { href: '#', label: 'Pflege' },
-//                 { href: '#', label: 'Wohnen' },
-//                 { href: '#', label: 'Arbeiten & Mitwirken' },
-//                 { href: '#', label: 'Spenden' },
-//                 { href: '#', label: 'Stiftung' },
-//             ],
-//         ]}
-//         newsTitle="Newsletter"
-//         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
-//         newsForm={
-//             <CompactForm
-//                 isInverted
-//                 placeholder="Geben Sie Ihre E-Mail Adresse an"
-//                 buttonIcon={<ArrowRight />}
-//                 onSubmit={console.log}
-//                 onClick={console.log}
-//                 onBlur={console.log}
-//             />
-//         }
-//     />
-// );
+export const WithNewsletterForm: Story = () => (
+    <Footer
+        logo={{
+            image: <img src="https://via.placeholder.com/208x65" />,
+            link: '/',
+        }}
+        contactData={exampleContactData}
+        siteLinks={[
+            [
+                { href: '#', label: 'Aufgaben/Bereiche' },
+                { href: '#', label: 'Pflege' },
+                { href: '#', label: 'Wohnen', isActive: true },
+                { href: '#', label: 'Arbeiten & Mitwirken' },
+                { href: '#', label: 'Spenden' },
+                { href: '#', label: 'Stiftung' },
+            ],
+            [
+                { href: '#', label: 'Aufgaben/Bereiche' },
+                { href: '#', label: 'Pflege' },
+                { href: '#', label: 'Wohnen' },
+                { href: '#', label: 'Arbeiten & Mitwirken' },
+                { href: '#', label: 'Spenden' },
+                { href: '#', label: 'Stiftung' },
+            ],
+        ]}
+        newsTitle="Newsletter"
+        newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
+        newsForm={(isInverted) => (
+            <CompactForm
+                isInverted={isInverted}
+                placeholder="Geben Sie Ihre E-Mail Adresse an"
+                buttonIcon={<ArrowRight />}
+                onSubmit={console.log}
+                onClick={console.log}
+                onBlur={console.log}
+            />
+        )}
+    />
+);
 
 export const WithSocials: Story = () => (
     <Footer
@@ -193,16 +194,16 @@ export const WithSocials: Story = () => (
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
-        // newsForm={
-        //     <CompactForm
-        //         isInverted
-        //         placeholder="Geben Sie Ihre E-Mail Adresse an"
-        //         buttonIcon={<ArrowRight />}
-        //         onSubmit={console.log}
-        //         onClick={console.log}
-        //         onBlur={console.log}
-        //     />
-        // }
+        newsForm={(isInverted) => (
+            <CompactForm
+                isInverted={isInverted}
+                placeholder="Geben Sie Ihre E-Mail Adresse an"
+                buttonIcon={<ArrowRight />}
+                onSubmit={console.log}
+                onClick={console.log}
+                onBlur={console.log}
+            />
+        )}
         socials={[
             { href: '#', icon: <Facebook /> },
             { href: '#', icon: <LinkedIn /> },
@@ -218,7 +219,7 @@ export const WithColumnTopSpace: Story = () => (
             image: <img src="https://via.placeholder.com/208x65" />,
             link: '/',
         }}
-        columnTopSpace="50px"
+        columnTopSpace="40px"
         contactData={exampleContactData}
         siteLinks={[
             [
@@ -240,16 +241,16 @@ export const WithColumnTopSpace: Story = () => (
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
-        // newsForm={
-        //     <CompactForm
-        //         isInverted
-        //         placeholder="Geben Sie Ihre E-Mail Adresse an"
-        //         buttonIcon={<ArrowRight />}
-        //         onSubmit={console.log}
-        //         onClick={console.log}
-        //         onBlur={console.log}
-        //     />
-        // }
+        newsForm={(isInverted) => (
+            <CompactForm
+                isInverted={isInverted}
+                placeholder="Geben Sie Ihre E-Mail Adresse an"
+                buttonIcon={<ArrowRight />}
+                onSubmit={console.log}
+                onClick={console.log}
+                onBlur={console.log}
+            />
+        )}
         socials={[
             { href: '#', icon: <Facebook /> },
             { href: '#', icon: <LinkedIn /> },
@@ -265,7 +266,7 @@ export const WithBottomLinks: Story = () => (
             image: <img src="https://via.placeholder.com/208x65" />,
             link: '/',
         }}
-        columnTopSpace="50px"
+        columnTopSpace="40px"
         contactData={exampleContactData}
         siteLinks={[
             [
@@ -287,16 +288,16 @@ export const WithBottomLinks: Story = () => (
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
-        // newsForm={
-        //     <CompactForm
-        //         isInverted
-        //         placeholder="Geben Sie Ihre E-Mail Adresse an"
-        //         buttonIcon={<ArrowRight />}
-        //         onSubmit={console.log}
-        //         onClick={console.log}
-        //         onBlur={console.log}
-        //     />
-        // }
+        newsForm={(isInverted) => (
+            <CompactForm
+                isInverted={isInverted}
+                placeholder="Geben Sie Ihre E-Mail Adresse an"
+                buttonIcon={<ArrowRight />}
+                onSubmit={console.log}
+                onClick={console.log}
+                onBlur={console.log}
+            />
+        )}
         socials={[
             { href: '#', icon: <Facebook /> },
             { href: '#', icon: <LinkedIn /> },
@@ -317,7 +318,7 @@ export const Inverted: Story = () => (
             image: <img src="https://via.placeholder.com/208x65" />,
             link: '/',
         }}
-        columnTopSpace="50px"
+        columnTopSpace="40px"
         contactData={exampleContactData}
         siteLinks={[
             [
@@ -339,16 +340,16 @@ export const Inverted: Story = () => (
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
-        // newsForm={
-        //     <CompactForm
-        //         isInverted
-        //         placeholder="Geben Sie Ihre E-Mail Adresse an"
-        //         buttonIcon={<ArrowRight />}
-        //         onSubmit={console.log}
-        //         onClick={console.log}
-        //         onBlur={console.log}
-        //     />
-        // }
+        newsForm={(isInverted) => (
+            <CompactForm
+                isInverted={isInverted}
+                placeholder="Geben Sie Ihre E-Mail Adresse an"
+                buttonIcon={<ArrowRight />}
+                onSubmit={console.log}
+                onClick={console.log}
+                onBlur={console.log}
+            />
+        )}
         socials={[
             { href: '#', icon: <Facebook /> },
             { href: '#', icon: <LinkedIn /> },

@@ -123,7 +123,7 @@ const SiteLink = styled(StyledLink)`
     line-height: ${({ theme }) => font(theme)['copy-b'].medium.lineHeight};
 `;
 
-const LinkWrapper = styled.span<{ isActive?: boolean }>`
+const LinkWrapper = styled.span<{ isActive?: boolean; isInverted?: boolean }>`
     display: inline-block;
     position: relative;
     padding-bottom: 3px;
@@ -136,7 +136,8 @@ const LinkWrapper = styled.span<{ isActive?: boolean }>`
         height: 4px;
         width: 4px;
 
-        background-color: inherit;
+        background-color: ${({ theme, isInverted }) =>
+            isInverted ? color(theme).white : color(theme).black};
         border-radius: 4px;
 
         transform: translateY(-100%);
@@ -205,11 +206,11 @@ const Footer: FC<{
     >;
     newsTitle?: string;
     newsText?: string;
-    newsForm?: React.ReactNode;
+    newsForm?: (isInverted?: boolean) => React.ReactNode;
     socials?: Array<{ icon: React.ReactNode; href: string }>;
     bottomLinks?: { href: string; label?: string; isExternal?: boolean }[];
 }> = ({
-    isInverted,
+    isInverted = false,
     logo,
     columnTopSpace,
     contactData,
@@ -252,6 +253,7 @@ const Footer: FC<{
                                                 >
                                                     <LinkWrapper
                                                         isActive={link.isActive}
+                                                        isInverted={isInverted}
                                                     >
                                                         {link.label ||
                                                             link.href}
@@ -274,7 +276,7 @@ const Footer: FC<{
                                     />
                                 </Copy>
                             )}
-                            {newsForm && newsForm}
+                            {newsForm && newsForm(isInverted)}
                             {socials && (
                                 <SocialList
                                     isInverted={isInverted}
