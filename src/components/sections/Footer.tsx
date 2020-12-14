@@ -15,8 +15,9 @@ import Link, { LinkProps } from '../typography/Link';
 import Bdot from '../blocks/Bdot';
 import SocialList from '../blocks/SocialList';
 
-const MainView = styled(Wrapper)`
-    background-color: ${({ theme }) => color(theme).black};
+const MainView = styled(Wrapper)<{ isInverted?: boolean }>`
+    background-color: ${({ theme, isInverted }) =>
+        isInverted && color(theme).black};
 `;
 
 const StyledLink = styled(Link)`
@@ -25,7 +26,7 @@ const StyledLink = styled(Link)`
 `;
 
 /**** MAIN FOOTER CONTENT ****/
-const Content = styled.div`
+const Content = styled.div<{ isInverted?: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -33,7 +34,8 @@ const Content = styled.div`
     margin-left: -${spacings.spacer}px;
     margin-right: -${spacings.spacer}px;
 
-    color: ${({ theme }) => color(theme).white};
+    color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).white : color(theme).black};
 
     @media ${mq.medium} {
         flex-direction: row;
@@ -45,7 +47,7 @@ const Content = styled.div`
 
 const ContentBlock = styled.div<{
     direction?: 'row' | 'column';
-    topSpace?: number;
+    topSpace?: string;
 }>`
     flex: 1;
     display: flex;
@@ -134,7 +136,7 @@ const LinkWrapper = styled.span<{ isActive?: boolean }>`
         height: 4px;
         width: 4px;
 
-        background-color: ${({ theme }) => color(theme).white};
+        background-color: inherit;
         border-radius: 4px;
 
         transform: translateY(-100%);
@@ -191,11 +193,12 @@ const BottomView = styled(Wrapper)`
 
 /**** FOOTER SECTION ****/
 const Footer: FC<{
+    isInverted?: boolean;
     logo?: {
         image?: React.ReactNode;
         link?: string;
     };
-    columnTopSpace?: number;
+    columnTopSpace?: string;
     contactData?: React.ReactNode;
     siteLinks?: Array<
         Array<LinkProps & { label?: string; isActive?: boolean }>
@@ -206,6 +209,7 @@ const Footer: FC<{
     socials?: Array<{ icon: React.ReactNode; href: string }>;
     bottomLinks?: { href: string; label?: string; isExternal?: boolean }[];
 }> = ({
+    isInverted,
     logo,
     columnTopSpace,
     contactData,
@@ -218,9 +222,9 @@ const Footer: FC<{
 }) => {
     return (
         <Section as="footer">
-            <MainView addWhitespace clampWidth="large">
+            <MainView addWhitespace clampWidth="large" isInverted={isInverted}>
                 <Wrapper>
-                    <Content>
+                    <Content isInverted={isInverted}>
                         <ContentBlock>
                             {logo?.image && (
                                 <LogoLink href={logo?.link}>
@@ -273,7 +277,7 @@ const Footer: FC<{
                             {newsForm && newsForm}
                             {socials && (
                                 <SocialList
-                                    isInverted
+                                    isInverted={isInverted}
                                     items={socials.map((item) => {
                                         return {
                                             href: item.href,

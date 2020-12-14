@@ -10,8 +10,6 @@ import Facebook from '../src/components/base/icons/socials/Facebook';
 import LinkedIn from '../src/components/base/icons/socials/LinkedIn';
 import Xing from '../src/components/base/icons/socials/Xing';
 import Twitter from '../src/components/base/icons/socials/Twitter';
-import { spacings } from '../src/utils/styles';
-// import Logo from '../src/components/base/icons/logos/Logo';
 
 const exampleContactData = (
     <>
@@ -220,7 +218,7 @@ export const WithColumnTopSpace: Story = () => (
             image: <img src="https://via.placeholder.com/208x65" />,
             link: '/',
         }}
-        columnTopSpace={spacings.spacer}
+        columnTopSpace="50px"
         contactData={exampleContactData}
         siteLinks={[
             [
@@ -267,7 +265,59 @@ export const WithBottomLinks: Story = () => (
             image: <img src="https://via.placeholder.com/208x65" />,
             link: '/',
         }}
-        columnTopSpace={spacings.spacer}
+        columnTopSpace="50px"
+        contactData={exampleContactData}
+        siteLinks={[
+            [
+                { href: '#', label: 'Aufgaben/Bereiche' },
+                { href: '#', label: 'Pflege' },
+                { href: '#', label: 'Wohnen', isActive: true },
+                { href: '#', label: 'Arbeiten & Mitwirken' },
+                { href: '#', label: 'Spenden' },
+                { href: '#', label: 'Stiftung' },
+            ],
+            [
+                { href: '#', label: 'Aufgaben/Bereiche' },
+                { href: '#', label: 'Pflege' },
+                { href: '#', label: 'Wohnen' },
+                { href: '#', label: 'Arbeiten & Mitwirken' },
+                { href: '#', label: 'Spenden' },
+                { href: '#', label: 'Stiftung' },
+            ],
+        ]}
+        newsTitle="Newsletter"
+        newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
+        // newsForm={
+        //     <CompactForm
+        //         isInverted
+        //         placeholder="Geben Sie Ihre E-Mail Adresse an"
+        //         buttonIcon={<ArrowRight />}
+        //         onSubmit={console.log}
+        //         onClick={console.log}
+        //         onBlur={console.log}
+        //     />
+        // }
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Xing /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+        bottomLinks={[
+            { href: '/impressum', label: 'Impressum' },
+            { href: '/datenschutz', label: 'Datenschutz' },
+        ]}
+    />
+);
+
+export const Inverted: Story = () => (
+    <Footer
+        isInverted
+        logo={{
+            image: <img src="https://via.placeholder.com/208x65" />,
+            link: '/',
+        }}
+        columnTopSpace="50px"
         contactData={exampleContactData}
         siteLinks={[
             [
