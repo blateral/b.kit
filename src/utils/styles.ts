@@ -223,8 +223,8 @@ const defaultFonts: Fonts = {
     },
     'heading-4': {
         ...headingBase,
-        size: [32, 35],
-        lineHeight: '1.14',
+        size: [16, 19],
+        lineHeight: '1.5',
     },
     label: {
         small: {
