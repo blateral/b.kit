@@ -8,10 +8,6 @@ import Feature, { FeatureProps } from '../../blocks/Feature';
 
 const Carousel = styled(CarouselBase)`
     padding: 0 ${spacings.spacer}px;
-
-    @media ${mq.xlarge} {
-        padding: 0;
-    }
 `;
 
 const FeatureCarousel: FC<
