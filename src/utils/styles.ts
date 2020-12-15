@@ -218,7 +218,7 @@ const defaultFonts: Fonts = {
     },
     'heading-3': {
         ...headingBase,
-        size: [32, 35],
+        size: [19, 22],
         lineHeight: '1.14',
     },
     'heading-4': {
