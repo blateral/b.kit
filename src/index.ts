@@ -11,6 +11,9 @@ declare module 'styled-components' {
     }
 }
 
+/***** Functional exports *****/
+export { getColors, getFonts, getBaseTheme } from './utils/styles';
+
 /***** Component exports *****/
 export { default as LibThemeProvider } from './utils/LibThemeProvider';
 
@@ -24,9 +27,11 @@ export { default as FeatureList } from './components/sections/FeatureList';
 export { default as ImageCarousel } from './components/sections/carousel/ImageCarousel';
 export { default as FeatureCarousel } from './components/sections/carousel/FeatureCarousel';
 export { default as Footer } from './components/sections/Footer';
+export { default as Header } from './components/sections/header/Header';
 
 /***** Buttons *****/
 export { default as Button } from './components/buttons/Button';
 
 /***** Fields *****/
 export { default as ContactForm } from './components/fields/CompactForm';
+export { default as SearchInput } from './components/fields/SearchInput';
