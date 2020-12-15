@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
@@ -48,9 +48,11 @@
         "eslint": "^7.14.0",
         "eslint-plugin-react": "^7.21.5",
         "eslint-plugin-react-hooks": "^4.2.0",
+        "framer-motion": "^2.9.5",
         "husky": "^4.3.0",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
+        "react-slick": "0.27.1",
         "rollup": "^2.34.1",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-typescript2": "^0.29.0",
@@ -63,6 +65,7 @@
         "react-dom": "^17.0.1",
         "react-slick": "0.27.1",
         "slick-carousel": "1.8.1",
-        "styled-components": "^5.2.1"
+        "styled-components": "^5.2.1",
+        "framer-motion": "^2.9.5"
     }
 }

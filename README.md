@@ -8,7 +8,7 @@
     -   [Installation](#installation)
     -   [Imports](#imports)
     -   [Theming](#theming)
-    -   [Slider package](#slider-package)
+    -   [Optional packages](#optional-packages)
 -   [Developement](#developement)
     -   [Project architecture](#project-architecture)
     -   [Script commands](#script-commands)
@@ -58,9 +58,9 @@ const customTheme = {
 </LibThemeProvider>;
 ```
 
-### Slider package
+### Optional packages
 
-> Some components like the `ImageCarousel` using the external `slick-carousel` and `react-slick` packages. To use them properly its important to install the packages (also listed under peer dependenies) and import the related CSS files.
+> Some components like the `ImageCarousel` using the external `slick-carousel` and `react-slick` packages. To use them properly its important to install all packages (also listed under peer dependenies) and import the related CSS files.
 
 As imports (e.g. in Nextjs `_app.tsx`):
 

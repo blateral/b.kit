@@ -1,17 +1,13 @@
 import React, { FC } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, mq, spacings } from '../../../utils/styles';
+import { getColors as color, spacings } from '../../../utils/styles';
 import Section, { BgMode } from '../../base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import Feature, { FeatureProps } from '../../blocks/Feature';
 
 const Carousel = styled(CarouselBase)`
     padding: 0 ${spacings.spacer}px;
-
-    @media ${mq.xlarge} {
-        padding: 0;
-    }
 `;
 
 const FeatureCarousel: FC<

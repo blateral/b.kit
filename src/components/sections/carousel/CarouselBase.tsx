@@ -59,11 +59,13 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
 `;
 
 const StyledSlides = styled(Slider.Slides)`
-    margin-bottom: ${spacings.spacer * 1}px;
+    margin-bottom: ${spacings.spacer}px;
 
     @media ${mq.xlarge} {
-        left: 20%;
-        width: 80%;
+        margin-left: auto;
+        width: 100%;
+        max-width: ${spacings.wrapperLarge -
+        (spacings.wrapperLarge - spacings.wrapper) / 2}px;
     }
 `;
 

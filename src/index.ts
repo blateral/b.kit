@@ -1,19 +1,7 @@
-// Version: 0.2.4
+// Version: 0.2.5
 
 import 'styled-components';
 import { Colors, Fonts } from './utils/styles';
-
-import LibThemeProvider from './utils/LibThemeProvider';
-import Gallery from './components/sections/Gallery';
-import Teaser from './components/sections/Teaser';
-import TeaserWide from './components/sections/TeaserWide';
-import IconList from './components/sections/IconList';
-import Article from './components/sections/Article';
-import FeatureList from './components/sections/FeatureList';
-import ImageCarousel from './components/sections/carousel/ImageCarousel';
-import FeatureCarousel from './components/sections/carousel/FeatureCarousel';
-
-import Button from './components/buttons/Button';
 
 /***** Styled Component theme override *****/
 declare module 'styled-components' {
@@ -23,16 +11,27 @@ declare module 'styled-components' {
     }
 }
 
+/***** Functional exports *****/
+export { getColors, getFonts, getBaseTheme } from './utils/styles';
+
 /***** Component exports *****/
-export {
-    LibThemeProvider,
-    Gallery,
-    Teaser,
-    TeaserWide,
-    IconList,
-    Article,
-    FeatureList,
-    ImageCarousel,
-    FeatureCarousel,
-    Button,
-};
+export { default as LibThemeProvider } from './utils/LibThemeProvider';
+
+/***** Sections *****/
+export { default as Gallery } from './components/sections/Gallery';
+export { default as Teaser } from './components/sections/Teaser';
+export { default as TeaserWide } from './components/sections/TeaserWide';
+export { default as IconList } from './components/sections/IconList';
+export { default as Article } from './components/sections/Article';
+export { default as FeatureList } from './components/sections/FeatureList';
+export { default as ImageCarousel } from './components/sections/carousel/ImageCarousel';
+export { default as FeatureCarousel } from './components/sections/carousel/FeatureCarousel';
+export { default as Footer } from './components/sections/Footer';
+export { default as Header } from './components/sections/header/Header';
+
+/***** Buttons *****/
+export { default as Button } from './components/buttons/Button';
+
+/***** Fields *****/
+export { default as ContactForm } from './components/fields/CompactForm';
+export { default as SearchInput } from './components/fields/SearchInput';

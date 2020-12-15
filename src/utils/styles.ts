@@ -218,13 +218,13 @@ const defaultFonts: Fonts = {
     },
     'heading-3': {
         ...headingBase,
-        size: [32, 35],
+        size: [19, 22],
         lineHeight: '1.14',
     },
     'heading-4': {
         ...headingBase,
-        size: [32, 35],
-        lineHeight: '1.14',
+        size: [16, 19],
+        lineHeight: '1.5',
     },
     label: {
         small: {
