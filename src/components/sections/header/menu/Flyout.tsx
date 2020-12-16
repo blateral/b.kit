@@ -87,7 +87,7 @@ const Flyout: FC<{
 }> = ({ isOpen, contentTopSpace, isLarge, className, children }) => {
     return (
         <View isOpen={isOpen} className={className}>
-            <StyledWrapper clampWidth="large">
+            <StyledWrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <Content
                     isOpen={isOpen}
                     isLarge={isLarge}

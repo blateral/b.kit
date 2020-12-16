@@ -57,12 +57,6 @@ const TopBar = styled.div<{
         box-shadow 0.2s ease-in-out;
     transform: translate(0, ${({ isOpen }) => (!isOpen ? '-100%' : '0')});
     will-change: transform, background-color, padding, height, box-shadow;
-
-    @media ${mq.large} {
-        padding: ${({ isTop }) =>
-                isTop ? spacings.spacer * 1.5 : spacings.nudge * 3}px
-            ${(45 / spacings.wrapper) * 100 + '%'};
-    }
 `;
 
 const Backdrop = styled.div<{ isVisible?: boolean }>`
@@ -340,7 +334,7 @@ const Menu: FC<{
                 isOpen={isTopBarOpen || isMenuOpen}
                 isTop={showFullTopBar || isMenuOpen}
                 withAnim={withTopbarAnim}
-                clampWidth="large"
+                clampWidth="normal"
             >
                 <LeftCol isTop={showFullTopBar || isMenuOpen}>
                     <ToggleContainer
