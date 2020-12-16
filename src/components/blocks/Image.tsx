@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { mq } from '../../utils/styles';
+import { mq } from 'utils/styles';
 
 export interface ImageProps {
     alt?: string;

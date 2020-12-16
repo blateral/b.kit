@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { FontType, getFonts as font, mq, withRange } from '../../utils/styles';
+import { FontType, getFonts as font, mq, withRange } from 'utils/styles';
 
 type HeadingType = Exclude<
     FontType,

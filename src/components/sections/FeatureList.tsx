@@ -1,11 +1,10 @@
 import * as React from 'react';
-
 import styled, { ThemeContext } from 'styled-components';
-import { getColors as color, spacings, mq } from '../../utils/styles';
 
-import Section, { BgMode } from '../base/Section';
-import Wrapper from '../base/Wrapper';
-import Feature, { FeatureProps } from '../blocks/Feature';
+import { getColors as color, spacings, mq } from 'utils/styles';
+import Section, { BgMode } from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
+import Feature, { FeatureProps } from 'components/blocks/Feature';
 
 const ContentContainer = styled.div`
     & > * + * {

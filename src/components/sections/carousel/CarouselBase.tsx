@@ -1,16 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import {
-    mq,
-    spacings,
-    getColors as color,
-    withRange,
-} from '../../../utils/styles';
-import Wrapper from '../../base/Wrapper';
-import ArrowLeftGhost from '../../base/icons/ArrowLeftGhost';
-import ArrowRightGhost from '../../base/icons/ArrowRightGhost';
-import Slider from '../../blocks/Slider';
+import { mq, spacings, getColors as color, withRange } from 'utils/styles';
+import Wrapper from 'components/base/Wrapper';
+import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
+import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
+import Slider from 'components/blocks/Slider';
 import { ResponsiveObject } from 'react-slick';
 
 const View = styled(Wrapper)`

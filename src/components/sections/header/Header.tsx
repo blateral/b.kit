@@ -1,22 +1,17 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Heading, { HeadlineTag } from '../../../components/typography/Heading';
-import {
-    getColors as color,
-    mq,
-    spacings,
-    withRange,
-} from '../../../utils/styles';
-import Grid from '../../../components/base/Grid';
-import Wrapper from '../../../components/base/Wrapper';
+import Heading, { HeadlineTag } from 'components/typography/Heading';
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import Grid from 'components/base/Grid';
+import Wrapper from 'components/base/Wrapper';
 import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
 import HeaderPoster from './HeaderPoster';
-import useIE from '../../../utils/useIE';
+import useIE from 'utils/useIE';
 import Menu, {
     LogoProps,
     ToggleIconProps,
-} from '../../../components/sections/header/menu/Menu';
+} from 'components/sections/header/menu/Menu';
 import { NavGroup } from './menu/Flyout';
 
 interface HeaderImageProps {

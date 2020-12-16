@@ -1,14 +1,15 @@
-import Wrapper from '../../../../components/base/Wrapper';
-import Link, { LinkProps } from '../../../../components/typography/Link';
 import React, { FC } from 'react';
 import styled from 'styled-components';
+
+import Wrapper from 'components/base/Wrapper';
+import Link, { LinkProps } from 'components/typography/Link';
 import {
     getColors as color,
     getFonts as font,
     mq,
     spacings,
     withRange,
-} from '../../../../utils/styles';
+} from 'utils/styles';
 
 const View = styled.div<{ isOpen?: boolean }>`
     position: absolute;

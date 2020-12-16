@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import Link from '../typography/Link';
+import Link from 'components/typography/Link';
 
 const bdotColor = '#1fc2f4';
 

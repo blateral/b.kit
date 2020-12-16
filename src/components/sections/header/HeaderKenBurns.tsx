@@ -1,11 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { useMediaQuery } from '../../../utils/useMediaQuery';
-import { getBgImage } from '../../../utils/backgroundImage';
-import useInterval from '../../../utils/useInterval';
+import { useMediaQuery } from 'utils/useMediaQuery';
+import { getBgImage } from 'utils/backgroundImage';
+import useInterval from 'utils/useInterval';
+import { canUseWebP } from 'utils/usePoster';
 import { AnimatePresence, motion, usePresence } from 'framer-motion';
-import { canUseWebP } from '../../../utils/usePoster';
 
 export interface HeaderKenBurnsImageProps {
     small: string;

@@ -1,11 +1,11 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Grid from '../base/Grid';
-import Section from '../base/Section';
-import Wrapper from '../base/Wrapper';
-import Image, { ImageProps } from '../blocks/Image';
-import { getColors as color, spacings } from '../../utils/styles';
+import Grid from 'components/base/Grid';
+import Section from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
+import Image, { ImageProps } from 'components/blocks/Image';
+import { getColors as color, spacings } from 'utils/styles';
 
 const StyledImage = styled(Image)`
     width: 100%;

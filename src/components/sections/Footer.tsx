@@ -7,13 +7,13 @@ import {
     mq,
     spacings,
     withRange,
-} from '../../utils/styles';
-import Section from '../base/Section';
-import Wrapper from '../base/Wrapper';
-import Copy from '../typography/Copy';
-import Link, { LinkProps } from '../typography/Link';
-import Bdot from '../blocks/Bdot';
-import SocialList from '../blocks/SocialList';
+} from 'utils/styles';
+import Section from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
+import Copy from 'components/typography/Copy';
+import Link, { LinkProps } from 'components/typography/Link';
+import Bdot from 'components/blocks/Bdot';
+import SocialList from 'components/blocks/SocialList';
 
 const MainView = styled(Wrapper)<{ isInverted?: boolean }>`
     background-color: ${({ theme, isInverted }) =>

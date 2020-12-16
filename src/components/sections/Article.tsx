@@ -1,11 +1,11 @@
 import * as React from 'react';
 import styled, { ThemeContext, css } from 'styled-components';
 
-import Section, { BgMode } from '../base/Section';
-import Title from '../blocks/Title';
-import Copy from '../typography/Copy';
-import { spacings, mq, getColors as color } from '../../utils/styles';
-import Wrapper from '../base/Wrapper';
+import Section, { BgMode } from 'components/base/Section';
+import Title from 'components/blocks/Title';
+import Copy from 'components/typography/Copy';
+import Wrapper from 'components/base/Wrapper';
+import { spacings, mq, getColors as color } from 'utils/styles';
 
 const StyledTitle = styled(Title)`
     @media ${mq.semilarge} {

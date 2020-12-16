@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, spacings } from '../../../utils/styles';
-import Section, { BgMode } from '../../base/Section';
+import { getColors as color, spacings } from 'utils/styles';
+import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
-import Feature, { FeatureProps } from '../../blocks/Feature';
+import Feature, { FeatureProps } from 'components/blocks/Feature';
 
 const Carousel = styled(CarouselBase)`
     padding: 0 ${spacings.spacer}px;

@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color } from '../../../utils/styles';
-import Image, { ImageProps } from '../../blocks/Image';
-import Section, { BgMode } from '../../base/Section';
+import { getColors as color } from 'utils/styles';
+import Image, { ImageProps } from 'components/blocks/Image';
+import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 
 const ImageCarousel: FC<

@@ -1,14 +1,9 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import {
-    spacings,
-    mq,
-    getColors as color,
-    withRange,
-} from '../../utils/styles';
+import { spacings, mq, getColors as color, withRange } from 'utils/styles';
 
-import Copy from '../typography/Copy';
-import Image, { ImageProps as Props } from '../blocks/Image';
+import Copy from 'components/typography/Copy';
+import Image, { ImageProps as Props } from 'components/blocks/Image';
 
 const View = styled.div`
     min-width: 270px;

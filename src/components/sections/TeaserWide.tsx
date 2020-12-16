@@ -1,19 +1,14 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Grid from '../base/Grid';
-import { HeadlineTag } from '../typography/Heading';
-import Image, { ImageProps } from '../blocks/Image';
-import Copy from '../typography/Copy';
-import Title from '../blocks/Title';
-import Wrapper from '../base/Wrapper';
-import Section from '../base/Section';
-import {
-    getColors as color,
-    mq,
-    spacings,
-    withRange,
-} from '../../utils/styles';
+import Grid from 'components/base/Grid';
+import { HeadlineTag } from 'components/typography/Heading';
+import Image, { ImageProps } from 'components/blocks/Image';
+import Copy from 'components/typography/Copy';
+import Title from 'components/blocks/Title';
+import Wrapper from 'components/base/Wrapper';
+import Section from 'components/base/Section';
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 
 const WideImage = styled(Image)<{ isMirrored?: boolean }>`
     position: relative;
