@@ -3,9 +3,8 @@ import styled from 'styled-components';
 
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { getBgImage } from 'utils/backgroundImage';
-import useInterval from 'utils/useInterval';
 import { canUseWebP } from 'utils/usePoster';
-import { AnimatePresence, motion, usePresence } from 'framer-motion';
+import { FC, useEffect, useRef, useState } from 'react';
 
 export interface HeaderKenBurnsImageProps {
     small: string;
@@ -27,7 +26,7 @@ const AnimationContainer = styled.div`
     overflow: hidden;
 `;
 
-const PosterImage = styled(motion.div)`
+const PosterImage = styled.div`
     position: absolute;
     top: 0;
     left: 0;
@@ -39,61 +38,63 @@ const PosterImage = styled(motion.div)`
     background-position: center;
 `;
 
-const ScalingImage: React.FC<{ image: string }> = ({ image }) => {
-    const [isPresent, safeToRemove] = usePresence();
+const AnimationImage = styled.div<{ scale?: number; opacity?: number }>`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-    React.useEffect(() => {
-        !isPresent && setTimeout(safeToRemove, 3000);
-    }, [isPresent]);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    transition-property: opacity, transform;
+    transition-duration: ${({ scale }) => `2s, ${scale === 1 ? '0s' : '13s'}`};
+    transition-delay: ${({ scale }) =>
+        `${scale === 1 ? '1s' : '0s'}, ${scale === 1 ? '3s' : '0s'}`};
+
+    opacity: ${({ opacity }) => opacity && opacity};
+    transform: scale(${({ scale }) => scale || 1})
+        rotate(${({ scale }) => (scale !== 1 ? 0.04 : 0)}deg);
+
+    will-change: transform, opacity;
+`;
+
+const AnimationImages: FC<{
+    zoom?: number;
+    images: { id: number | string; image: string }[];
+}> = ({ zoom = 1.08, images }) => {
+    const intervalRef = useRef<number | null>();
+    const [activeImg, setActiveImg] = useState<number>(-1);
+
+    useEffect(() => {
+        const changeImage = () => {
+            setActiveImg((prev) => {
+                return (prev + 1) % images.length;
+            });
+        };
+
+        if (images.length <= 0) return;
+        changeImage();
+        if (intervalRef.current) window.clearInterval(intervalRef.current);
+        intervalRef.current = window.setInterval(changeImage, 10000);
+    }, [images]);
 
     return (
-        <PosterImage
-            initial={{ scale: 1, rotate: 0.04 }} // rotate fixes render performance in ff -> prevents ff from optimizing animation
-            animate={{ scale: 1.08, rotate: 0.04 }}
-            transition={{
-                duration: 13,
-                ease: 'linear',
-            }}
-            style={{
-                backgroundImage: `url(${image})`,
-            }}
-        />
-    );
-};
-
-const FadingImages: React.FC<{
-    images: { id: string | number; image: string }[];
-}> = ({ images }) => {
-    const [index, setIndex] = React.useState(0);
-    const [initialized, setInitialized] = React.useState(false);
-    useInterval(() => {
-        setIndex((i) => (i + 1) % images.length);
-        if (!initialized) {
-            setInitialized(true);
-        }
-    }, 10000);
-
-    return (
-        <AnimatePresence>
-            {images.map(
-                ({ image }, i) =>
-                    i === index && (
-                        <motion.div
-                            key={i}
-                            initial={{
-                                opacity: initialized ? 0 : 1,
-                                zIndex: 1,
-                            }} // translate fixes render performance in ff -> prevents ff from optimizing animation
-                            animate={{ opacity: 1, zIndex: 1 }}
-                            exit={{ opacity: 0, zIndex: 2 }}
-                            transition={{ duration: 3, ease: 'anticipate' }}
-                            style={{ willChange: 'opacity' }}
-                        >
-                            <ScalingImage image={image} />
-                        </motion.div>
-                    )
-            )}
-        </AnimatePresence>
+        <>
+            {images.map((img, i) => (
+                <AnimationImage
+                    key={i}
+                    style={{
+                        backgroundImage: `url(${img.image})`,
+                        zIndex: i,
+                    }}
+                    scale={i === activeImg ? zoom : 1}
+                    opacity={i === activeImg ? 1 : 0}
+                />
+            ))}
+        </>
     );
 };
 
@@ -119,7 +120,7 @@ const HeaderKenBurns: React.FC<{
     const currentMq = useMediaQuery(mqs) as KenBurnsMq | undefined;
 
     const [loadedImages, setLoadedImages] = React.useState<{
-        [key: string]: { id: string | number; image: string }[];
+        [key: string]: { id: number | string; image: string }[];
     }>({
         small: [],
         medium: [],
@@ -162,7 +163,7 @@ const HeaderKenBurns: React.FC<{
     return (
         <AnimationContainer className={className}>
             {currentMq && loadedImages[currentMq].length >= 2 ? (
-                <FadingImages images={loadedImages[currentMq]} />
+                <AnimationImages images={loadedImages[currentMq]} />
             ) : (
                 <PosterImage
                     style={{
