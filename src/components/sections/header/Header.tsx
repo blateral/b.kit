@@ -7,7 +7,6 @@ import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
 import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
 import HeaderPoster from './HeaderPoster';
-import useIE from 'utils/useIE';
 import Menu, {
     LogoProps,
     ToggleIconProps,
@@ -59,10 +58,8 @@ const Poster: FC<{
     images?: HeaderImageProps[];
     className?: string;
 }> = ({ images, className, children }) => {
-    const isIE = useIE();
-
     if (!images || images.length === 0) return <div>{children}</div>;
-    else if (images.length === 1 || isIE)
+    else if (images.length === 1)
         return (
             <HeaderPoster bgImage={images[0]} className={className}>
                 {children}
