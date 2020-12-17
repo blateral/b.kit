@@ -243,7 +243,7 @@ export const WithTitle: Story = () => (
     />
 );
 
-export const WithAction: Story = () => (
+export const WithActions: Story = () => (
     <Header
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -260,14 +260,13 @@ export const WithAction: Story = () => (
                 },
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }
@@ -299,14 +298,13 @@ export const WithMenu: Story = () => (
                 },
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }
@@ -339,14 +337,13 @@ export const WithMenuLogo: Story = () => (
                 },
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }
@@ -381,14 +378,13 @@ export const WithMenuActions: Story = () => (
                 },
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }
@@ -424,14 +420,13 @@ export const WithInvertedTopBar: Story = () => (
                 },
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }
@@ -468,14 +463,13 @@ export const WithInvertedNav: Story = () => (
                 },
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }
@@ -513,14 +507,13 @@ export const WithFullSizeMenu: Story = () => (
                 },
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }
@@ -558,14 +551,13 @@ export const SmallerHeaderSize: Story = () => (
                 },
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }
@@ -614,14 +606,13 @@ export const WithKenBurnsEffect: Story = () => (
                 xlarge: 'https://unsplash.it/2450/1320?id=3',
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }
@@ -671,14 +662,13 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
                 xlarge: 'https://unsplash.it/2450/1320?id=3',
             },
         ]}
-        action={
-            <Button.View
-                type="ghost"
-                as="a"
-                href="#"
-                isInverted
-                onClick={console.log}
-            >
+        primaryCta={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryCta={
+            <Button.View type="ghost" isInverted>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         }

@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Heading, { HeadlineTag } from 'components/typography/Heading';
+import { HeadlineTag } from 'components/typography/Heading';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
@@ -12,6 +12,8 @@ import Menu, {
     ToggleIconProps,
 } from 'components/sections/header/menu/Menu';
 import { NavGroup } from './menu/Flyout';
+import Actions from 'components/blocks/Actions';
+import Callout from 'components/typography/Callout';
 
 interface HeaderImageProps {
     small: string;
@@ -114,15 +116,20 @@ const StyledPoster = styled(Poster)<{ gradient?: string }>`
     }
 `;
 
-const Actions = styled.div`
+const StyledActions = styled(Actions)`
     ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+
+    @media ${mq.semilarge} {
+        max-width: 600px;
+    }
 `;
 
 const Header: FC<{
     size?: 'full' | 'small';
     title?: string;
     titleAs?: HeadlineTag;
-    action?: React.ReactNode;
+    primaryCta?: React.ReactNode;
+    secondaryCta?: React.ReactNode;
     menu?: {
         isLarge?: boolean;
         isTopInverted?: boolean;
@@ -140,10 +147,18 @@ const Header: FC<{
         socials?: Array<{ icon: React.ReactNode; href: string }>;
     };
     images?: HeaderImageProps[];
-}> = ({ size = 'full', title, titleAs, action, menu, images }) => {
+}> = ({
+    size = 'full',
+    title,
+    titleAs,
+    primaryCta,
+    secondaryCta,
+    menu,
+    images,
+}) => {
     const theme = useContext(ThemeContext);
     const gradient =
-        title || action
+        title || primaryCta || secondaryCta
             ? 'linear-gradient(3deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0) 60%), linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)'
             : 'linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)';
 
@@ -175,16 +190,21 @@ const Header: FC<{
                                     large={{ span: 18 / 28 }}
                                 >
                                     {title && (
-                                        <Heading
-                                            size={2}
+                                        <Callout
+                                            size="medium"
                                             as={titleAs}
                                             hasShadow
                                             textColor={color(theme).white}
                                         >
                                             {title}
-                                        </Heading>
+                                        </Callout>
                                     )}
-                                    {action && <Actions>{action}</Actions>}
+                                    {(primaryCta || secondaryCta) && (
+                                        <StyledActions
+                                            primary={primaryCta}
+                                            secondary={secondaryCta}
+                                        />
+                                    )}
                                 </Grid.Col>
                             </Grid.Row>
                         </Wrapper>

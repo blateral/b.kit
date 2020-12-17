@@ -5,6 +5,7 @@ import { getColors as color, spacings, mq } from '../../utils/styles';
 
 import Title from '../blocks/Title';
 import Copy from '../typography/Copy';
+import Actions from './Actions';
 
 const View = styled.div``;
 
@@ -14,35 +15,7 @@ const ContentBlock = styled(Copy)`
     }
 `;
 
-const Actions = styled.div`
-    flex-direction: column;
-    display: flex;
-    align-items: stretch;
-    padding-top: ${spacings.spacer * 2}px;
-    width: 100%;
-
-    & > * {
-        flex: 1;
-    }
-
-    & > * + * {
-        margin-top: ${spacings.spacer * 0.5}px;
-    }
-
-    @media ${mq.medium} {
-        flex-direction: row;
-        padding: ${spacings.spacer}px 0;
-
-        &:last-child {
-            padding-bottom: 0;
-        }
-
-        & > * + * {
-            margin-left: ${spacings.spacer}px;
-            margin-top: 0;
-        }
-    }
-
+const StyledActions = styled(Actions)`
     @media ${mq.semilarge} {
         max-width: 50%;
         align-items: flex-start;
@@ -85,10 +58,10 @@ const Intro: React.FC<{
                 </ContentBlock>
             )}
             {(primaryAction || secondaryAction) && (
-                <Actions>
-                    {primaryAction && primaryAction(isInverted)}
-                    {secondaryAction && secondaryAction(isInverted)}
-                </Actions>
+                <StyledActions
+                    primary={primaryAction && primaryAction(isInverted)}
+                    secondary={secondaryAction && secondaryAction(isInverted)}
+                />
             )}
         </View>
     );

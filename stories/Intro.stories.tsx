@@ -44,3 +44,10 @@ export const withInverted: Story = () => (
         isInverted
     />
 );
+
+withInverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};

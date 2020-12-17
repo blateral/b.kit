@@ -5,7 +5,8 @@ import Section, { BgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
+import Actions from 'components/blocks/Actions';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
@@ -54,9 +55,13 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     margin-left: -20px;
 `;
 
-const Actions = styled.div`
-    & > * + * {
-        margin-left: ${spacings.spacer}px;
+const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
+    position: relative;
+    left: ${({ isCentered }) => isCentered && '50%'};
+    transform: ${({ isCentered }) => isCentered && 'translateX(-50%)'};
+
+    @media ${mq.semilarge} {
+        max-width: 600px;
     }
 `;
 
@@ -170,10 +175,13 @@ const IconList: React.FC<{
                 </ListContainer>
 
                 {(primaryAction || secondaryAction) && (
-                    <Actions>
-                        {primaryAction && primaryAction(isInverted)}
-                        {secondaryAction && secondaryAction(isInverted)}
-                    </Actions>
+                    <StyledActions
+                        isCentered={isCentered}
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
+                    />
                 )}
             </Wrapper>
         </StyledSection>

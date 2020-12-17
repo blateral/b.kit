@@ -9,6 +9,7 @@ import Title from 'components/blocks/Title';
 import Wrapper from 'components/base/Wrapper';
 import Section, { BgMode } from 'components/base/Section';
 import { mq, spacings, withRange, getColors as color } from 'utils/styles';
+import Actions from 'components/blocks/Actions';
 
 const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
     display: flex;
@@ -76,26 +77,6 @@ const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
 const StyledTitle = styled(Title)`
     & + * {
         margin-top: ${spacings.nudge * 6}px;
-    }
-`;
-
-const Actions = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: ${spacings.spacer}px 0;
-    padding-top: ${spacings.spacer * 2}px;
-
-    &:last-child {
-        padding-bottom: 0;
-    }
-
-    & > * {
-        flex: 1;
-    }
-
-    & > * + * {
-        margin-left: ${spacings.spacer}px;
     }
 `;
 
@@ -245,11 +226,16 @@ const Teaser: FC<{
                                 </SubTextBlock>
                             )}
                             {(primaryAction || secondaryAction) && (
-                                <Actions>
-                                    {primaryAction && primaryAction(isInverted)}
-                                    {secondaryAction &&
-                                        secondaryAction(isInverted)}
-                                </Actions>
+                                <Actions
+                                    primary={
+                                        primaryAction &&
+                                        primaryAction(isInverted)
+                                    }
+                                    secondary={
+                                        secondaryAction &&
+                                        secondaryAction(isInverted)
+                                    }
+                                />
                             )}
                         </InfoWrapper>
                     </Grid.Col>
