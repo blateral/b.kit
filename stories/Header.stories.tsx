@@ -277,7 +277,6 @@ export const WithAction: Story = () => (
 export const WithMenu: Story = () => (
     <Header
         menu={{
-            isInverted: false,
             ...exampleNavItems,
             socials: [
                 { href: '#', icon: <Facebook /> },
@@ -317,7 +316,6 @@ export const WithMenu: Story = () => (
 export const WithMenuLogo: Story = () => (
     <Header
         menu={{
-            isInverted: false,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -358,7 +356,6 @@ export const WithMenuLogo: Story = () => (
 export const WithMenuActions: Story = () => (
     <Header
         menu={{
-            isInverted: false,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -398,10 +395,54 @@ export const WithMenuActions: Story = () => (
     />
 );
 
-export const WithInvertedMenu: Story = () => (
+export const WithInvertedTopBar: Story = () => (
     <Header
         menu={{
-            isInverted: true,
+            isTopInverted: true,
+            logo: { icon: logoFn, link: '#logoLink' },
+            ...exampleNavItems,
+            socials: [
+                { href: '#', icon: <Facebook /> },
+                { href: '#', icon: <LinkedIn /> },
+                { href: '#', icon: <Twitter /> },
+            ],
+            primaryCta: primaryCtaFn,
+            secondaryCta: secondaryCtaFn,
+        }}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        images={[
+            {
+                small: 'https://unsplash.it/660/1000?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                large: 'https://unsplash.it/1500/1320?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+                webp: {
+                    small: 'https://unsplash.it/660/1000.webp?id=1',
+                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    large: 'https://unsplash.it/1500/1320.webp?id=1',
+                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
+                },
+            },
+        ]}
+        action={
+            <Button.View
+                type="ghost"
+                as="a"
+                href="#"
+                isInverted
+                onClick={console.log}
+            >
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        }
+    />
+);
+
+export const WithInvertedNav: Story = () => (
+    <Header
+        menu={{
+            isTopInverted: true,
+            isNavInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -445,7 +486,8 @@ export const WithFullSizeMenu: Story = () => (
     <Header
         menu={{
             isLarge: true,
-            isInverted: true,
+            isTopInverted: true,
+            isNavInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -489,7 +531,8 @@ export const SmallerHeaderSize: Story = () => (
     <Header
         size="small"
         menu={{
-            isInverted: true,
+            isTopInverted: true,
+            isNavInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -532,7 +575,8 @@ export const SmallerHeaderSize: Story = () => (
 export const WithKenBurnsEffect: Story = () => (
     <Header
         menu={{
-            isInverted: true,
+            isTopInverted: true,
+            isNavInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -588,7 +632,8 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
     <Header
         size="small"
         menu={{
-            isInverted: true,
+            isTopInverted: true,
+            isNavInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [

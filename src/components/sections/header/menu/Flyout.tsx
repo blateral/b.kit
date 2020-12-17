@@ -29,17 +29,17 @@ const StyledWrapper = styled(Wrapper)`
     height: 100%;
 `;
 
-const Content = styled.div<{
+const Stage = styled.div<{
     isOpen?: boolean;
     isLarge?: boolean;
     topSpace?: number;
+    isInverted?: boolean;
 }>`
-    display: flex;
-    flex-direction: column;
     height: 100%;
     width: 100%;
 
-    background-color: ${({ theme }) => color(theme).white};
+    background-color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).black : color(theme).white};
 
     padding: ${spacings.spacer}px;
     padding-top: ${({ topSpace }) =>
@@ -59,12 +59,6 @@ const Content = styled.div<{
             topSpace ? topSpace : spacings.spacer}px;
     }
 
-    @media ${mq.large} {
-        padding-left: calc(${45 / spacings.wrapper} * 100vw);
-        padding-right: ${({ isLarge }) =>
-            isLarge && `calc(${45 / spacings.wrapper} * 100vw)`};
-    }
-
     &:after {
         content: ${({ isLarge }) => !isLarge && `""`};
         position: absolute;
@@ -75,26 +69,45 @@ const Content = styled.div<{
 
         transform: translateX(-100%);
 
-        background-color: ${({ theme }) => color(theme).white};
+        background-color: ${({ theme, isInverted }) =>
+            isInverted ? color(theme).black : color(theme).white};
     }
+`;
+
+const Content = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    max-width: ${spacings.wrapper}px;
+    margin: 0 auto;
 `;
 
 const Flyout: FC<{
     isOpen?: boolean;
     isLarge?: boolean;
+    isInverted?: boolean;
     contentTopSpace?: number;
     className?: string;
-}> = ({ isOpen, contentTopSpace, isLarge, className, children }) => {
+}> = ({
+    isOpen = false,
+    contentTopSpace,
+    isLarge = false,
+    isInverted = false,
+    className,
+    children,
+}) => {
     return (
         <View isOpen={isOpen} className={className}>
             <StyledWrapper clampWidth={isLarge ? 'large' : 'normal'}>
-                <Content
+                <Stage
                     isOpen={isOpen}
                     isLarge={isLarge}
+                    isInverted={isInverted}
                     topSpace={contentTopSpace}
                 >
-                    {children}
-                </Content>
+                    <Content>{children}</Content>
+                </Stage>
             </StyledWrapper>
         </View>
     );
@@ -134,9 +147,12 @@ const NavListView = styled.ul`
     }
 `;
 
-const Nav = styled.div`
+const Nav = styled.div<{ isInverted?: boolean }>`
+    width: 100%;
     height: 100%;
     overflow: auto;
+    color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).white : color(theme).black};
 `;
 
 const Group = styled.li`
@@ -147,7 +163,6 @@ const Group = styled.li`
 
     ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-right')};
 
-    color: ${({ theme }) => color(theme).black};
     hyphens: auto;
     overflow-wrap: break-word;
 
@@ -176,6 +191,7 @@ const ItemContainer = styled.ul`
     list-style: none;
     margin: 0;
     padding: 0;
+    color: inherit;
 `;
 
 const NavItem = styled.li<{ isSmall?: boolean }>`
@@ -198,7 +214,7 @@ const NavItem = styled.li<{ isSmall?: boolean }>`
             ? font(theme)['heading-4'].lineHeight
             : font(theme)['heading-3'].lineHeight};
 
-    color: ${({ theme }) => color(theme).black};
+    color: inherit;
     hyphens: auto;
     overflow-wrap: break-word;
     cursor: pointer;
@@ -224,7 +240,7 @@ const ItemLink = styled(Link)`
     left: 0;
 `;
 
-const ItemLabel = styled.label<{ isActive?: boolean }>`
+const ItemLabel = styled.label<{ isActive?: boolean; isInverted?: boolean }>`
     display: inline-block;
     position: relative;
     border-bottom: solid 2px transparent;
@@ -244,7 +260,8 @@ const ItemLabel = styled.label<{ isActive?: boolean }>`
         height: 6px;
         width: 6px;
 
-        background-color: ${({ theme }) => color(theme).black};
+        background-color: ${({ theme, isInverted }) =>
+            isInverted ? color(theme).white : color(theme).black};
         border-radius: 4px;
 
         transform: translateY(-50%);
@@ -252,17 +269,24 @@ const ItemLabel = styled.label<{ isActive?: boolean }>`
 `;
 
 const NavList: FC<{
+    isInverted?: boolean;
     activeNavItem?: string;
     navGroups?: NavGroup[];
     isLarge?: boolean;
     className?: string;
-}> = ({ activeNavItem, navGroups, isLarge, className }) => {
+}> = ({
+    isInverted = false,
+    activeNavItem,
+    navGroups,
+    isLarge = false,
+    className,
+}) => {
     const [activeGroup, activeItem] = activeNavItem
         ? activeNavItem?.split('.')
         : [];
 
     return (
-        <Nav>
+        <Nav isInverted={isInverted}>
             <NavListView className={className}>
                 {navGroups &&
                     navGroups.map((group, i) => (
@@ -297,6 +321,7 @@ const NavList: FC<{
                                                             group.id &&
                                                         activeItem === item.id
                                                     }
+                                                    isInverted={isInverted}
                                                 >
                                                     {item.label}
                                                 </ItemLabel>

@@ -99,6 +99,10 @@ const LeftCol = styled(MenuBarCol)`
     text-align: left;
 
     padding-top: ${({ isTop }) => (isTop ? spacings.spacer : 0)}px;
+
+    @media ${mq.xlarge} {
+        padding-left: ${spacings.spacer}px;
+    }
 `;
 
 const CenterCol = styled(MenuBarCol)`
@@ -122,6 +126,10 @@ const RightCol = styled(MenuBarCol)`
         & > * + * {
             margin-left: ${spacings.spacer}px;
         }
+    }
+
+    @media ${mq.xlarge} {
+        padding-right: ${spacings.spacer}px;
     }
 `;
 
@@ -183,10 +191,15 @@ const SocialContainer = styled.div<{ isLarge?: boolean }>`
     display: flex;
     justify-content: flex-start;
     padding-top: ${spacings.spacer}px;
+    padding-left: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
         justify-content: ${({ isLarge }) =>
             isLarge ? 'flex-end' : 'flex-start'};
+    }
+
+    @media ${mq.xlarge} {
+        padding-right: ${({ isLarge }) => isLarge && spacings.spacer}px;
     }
 `;
 
@@ -207,7 +220,8 @@ type MenuMq = 'small' | 'semilarge';
 
 const Menu: FC<{
     size?: 'small' | 'full';
-    isInverted?: boolean;
+    isTopInverted?: boolean;
+    isNavInverted?: boolean;
     withTopOffset?: boolean;
     hideOnScrollDown?: boolean;
     toggleIcons?: ToggleIconProps;
@@ -220,7 +234,8 @@ const Menu: FC<{
     socials?: Array<{ icon: React.ReactNode; href: string }>;
 }> = ({
     size = 'small',
-    isInverted = false,
+    isTopInverted = false,
+    isNavInverted = false,
     withTopOffset = false,
     hideOnScrollDown = false,
     toggleIcons,
@@ -287,9 +302,13 @@ const Menu: FC<{
         : isInOffset;
 
     const isTopBarInverted = () => {
-        if (isMenuOpen && (size === 'full' || currentMq === 'small'))
-            return false;
-        else return showFullTopBar || isMenuOpen || isInverted;
+        if (isMenuOpen && (size === 'full' || currentMq === 'small')) {
+            return isNavInverted;
+        } else return showFullTopBar || isMenuOpen || isTopInverted;
+    };
+
+    const isToggleInverted = () => {
+        return isMenuOpen ? isNavInverted : isTopBarInverted();
     };
 
     const getLogoHeight =
@@ -309,20 +328,25 @@ const Menu: FC<{
                 isOpen={isMenuOpen}
                 isLarge={size === 'full'}
                 contentTopSpace={getLogoHeight + 40}
+                isInverted={isNavInverted}
             >
                 {(size === 'full' ? currentMq === 'small' : true) && search && (
-                    <FlyoutSearchContainer>{search()}</FlyoutSearchContainer>
+                    <FlyoutSearchContainer>
+                        {search(isNavInverted)}
+                    </FlyoutSearchContainer>
                 )}
                 {navItems && (
                     <Flyout.NavList
                         activeNavItem={activeNavItem}
                         navGroups={navItems}
                         isLarge={size === 'full'}
+                        isInverted={isNavInverted}
                     />
                 )}
                 {socials && (
                     <SocialContainer isLarge={size === 'full'}>
                         <SocialList
+                            isInverted={isNavInverted}
                             items={socials.map((item) => {
                                 return {
                                     href: item.href,
@@ -334,7 +358,7 @@ const Menu: FC<{
                 )}
             </Flyout.View>
             <TopBar
-                isInverted={isInverted}
+                isInverted={isTopInverted}
                 isMenuOpen={isMenuOpen}
                 isOpen={isTopBarOpen || isMenuOpen}
                 isTop={showFullTopBar || isMenuOpen}
@@ -346,10 +370,8 @@ const Menu: FC<{
                         <ToggleContainer
                             onClick={() => setIsMenuOpen((prev) => !prev)}
                             iconColor={
-                                isTopBarInverted()
-                                    ? isMenuOpen
-                                        ? color(theme).black
-                                        : color(theme).white
+                                isToggleInverted()
+                                    ? color(theme).white
                                     : color(theme).black
                             }
                         >
