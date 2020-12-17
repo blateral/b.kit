@@ -206,7 +206,7 @@ export default {
         (Story) => (
             <div
                 style={{
-                    height: '100vh',
+                    height: '120vh',
                     width: '100%',
                 }}
             >
@@ -261,23 +261,8 @@ export const WithActions: Story = () => (
     />
 );
 
-export const Inverted: Story = () => (
-    <Menu
-        isInverted
-        withTopOffset
-        hideOnScrollDown
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryAction={primaryCtaFn}
-        secondaryAction={secondaryCtaFn}
-    />
-);
-
 export const WithSearchInput: Story = () => (
     <Menu
-        isInverted
         withTopOffset
         hideOnScrollDown
         logo={{
@@ -286,8 +271,9 @@ export const WithSearchInput: Story = () => (
         }}
         primaryAction={primaryCtaFn}
         secondaryAction={secondaryCtaFn}
-        search={() => (
+        search={(isInverted) => (
             <SearchInput
+                isInverted={isInverted}
                 placeholder="Search"
                 submitIcon={<Magnifier />}
                 onSubmit={() => console.log('submit')}
@@ -298,7 +284,6 @@ export const WithSearchInput: Story = () => (
 
 export const WithNavItems: Story = () => (
     <Menu
-        isInverted
         withTopOffset
         hideOnScrollDown
         logo={{
@@ -307,8 +292,9 @@ export const WithNavItems: Story = () => (
         }}
         primaryAction={primaryCtaFn}
         secondaryAction={secondaryCtaFn}
-        search={() => (
+        search={(isInverted) => (
             <SearchInput
+                isInverted={isInverted}
                 placeholder="Search"
                 submitIcon={<Magnifier />}
                 onSubmit={() => console.log('submit')}
@@ -320,7 +306,6 @@ export const WithNavItems: Story = () => (
 
 export const WithSocials: Story = () => (
     <Menu
-        isInverted
         withTopOffset
         hideOnScrollDown
         logo={{
@@ -329,8 +314,9 @@ export const WithSocials: Story = () => (
         }}
         primaryAction={primaryCtaFn}
         secondaryAction={secondaryCtaFn}
-        search={() => (
+        search={(isInverted) => (
             <SearchInput
+                isInverted={isInverted}
                 placeholder="Search"
                 submitIcon={<Magnifier />}
                 onSubmit={() => console.log('submit')}
@@ -348,7 +334,6 @@ export const WithSocials: Story = () => (
 export const WithFullWidthFlyout: Story = () => (
     <Menu
         size="full"
-        isInverted
         withTopOffset
         hideOnScrollDown
         logo={{
@@ -357,8 +342,96 @@ export const WithFullWidthFlyout: Story = () => (
         }}
         primaryAction={primaryCtaFn}
         secondaryAction={secondaryCtaFn}
-        search={() => (
+        search={(isInverted) => (
             <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        {...exampleNavItems}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+    />
+);
+
+export const InvertedTopBar: Story = () => (
+    <Menu
+        isTopInverted
+        withTopOffset
+        hideOnScrollDown
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        {...exampleNavItems}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+    />
+);
+
+export const InvertedNav: Story = () => (
+    <Menu
+        isTopInverted
+        isNavInverted
+        withTopOffset
+        hideOnScrollDown
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        {...exampleNavItems}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+    />
+);
+
+export const InvertedNavFull: Story = () => (
+    <Menu
+        size="full"
+        isTopInverted
+        isNavInverted
+        withTopOffset
+        hideOnScrollDown
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
                 placeholder="Search"
                 submitIcon={<Magnifier />}
                 onSubmit={() => console.log('submit')}
@@ -376,7 +449,7 @@ export const WithFullWidthFlyout: Story = () => (
 export const WithToggleIconVariation: Story = () => (
     <Menu
         size="full"
-        isInverted
+        isTopInverted
         withTopOffset
         hideOnScrollDown
         toggleIcons={{ opened: <StarGhost />, closed: <Star /> }}
@@ -386,8 +459,9 @@ export const WithToggleIconVariation: Story = () => (
         }}
         primaryAction={primaryCtaFn}
         secondaryAction={secondaryCtaFn}
-        search={() => (
+        search={(isInverted) => (
             <SearchInput
+                isInverted={isInverted}
                 placeholder="Search"
                 submitIcon={<Magnifier />}
                 onSubmit={() => console.log('submit')}

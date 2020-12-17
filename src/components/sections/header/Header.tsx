@@ -125,7 +125,8 @@ const Header: FC<{
     action?: React.ReactNode;
     menu?: {
         isLarge?: boolean;
-        isInverted?: boolean;
+        isTopInverted?: boolean;
+        isNavInverted?: boolean;
         toggleIcons?: ToggleIconProps;
         logo?: LogoProps;
         primaryCta?: (
@@ -151,7 +152,8 @@ const Header: FC<{
             {menu && (
                 <Menu
                     size={menu?.isLarge ? 'full' : 'small'}
-                    isInverted={menu?.isInverted}
+                    isTopInverted={menu?.isTopInverted}
+                    isNavInverted={menu?.isNavInverted}
                     hideOnScrollDown
                     withTopOffset
                     toggleIcons={menu?.toggleIcons}
