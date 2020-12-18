@@ -73,7 +73,7 @@ const VideoView = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
                 bottom: 0;
                 right: 0;
                 background-color: ${({ theme }) => color(theme).mono.medium};
-                opacity: ${({ bgImage }) => (bgImage ? '0.3' : '0')};
+                opacity: ${bgImage ? '0.3' : '0'};
 
                 pointer-events: none;
             }
