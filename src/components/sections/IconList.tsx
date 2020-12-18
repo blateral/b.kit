@@ -57,6 +57,7 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
 
 const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
     position: relative;
+    padding-top: ${spacings.spacer * 2}px;
     left: ${({ isCentered }) => isCentered && '50%'};
     transform: ${({ isCentered }) => isCentered && 'translateX(-50%)'};
 

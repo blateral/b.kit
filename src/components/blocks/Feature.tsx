@@ -37,6 +37,10 @@ const Desc = styled.div`
     ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
 `;
 
+const StyledActions = styled(Actions)`
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
+`;
+
 export interface FeatureProps {
     isInverted?: boolean;
     title?: string;
@@ -107,7 +111,7 @@ const Feature: React.FC<
                 )}
             </Content>
             {(primaryAction || secondaryAction) && (
-                <Actions
+                <StyledActions
                     primary={primaryAction && primaryAction(isInverted)}
                     secondary={secondaryAction && secondaryAction(isInverted)}
                 />

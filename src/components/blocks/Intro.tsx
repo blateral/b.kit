@@ -1,7 +1,12 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, spacings, mq } from '../../utils/styles';
+import {
+    getColors as color,
+    spacings,
+    mq,
+    withRange,
+} from '../../utils/styles';
 
 import Title from '../blocks/Title';
 import Copy from '../typography/Copy';
@@ -16,6 +21,8 @@ const ContentBlock = styled(Copy)`
 `;
 
 const StyledActions = styled(Actions)`
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
+
     @media ${mq.semilarge} {
         max-width: 50%;
         align-items: flex-start;

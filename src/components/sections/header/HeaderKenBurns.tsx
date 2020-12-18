@@ -92,7 +92,7 @@ const AnimationImages: FC<{
                     key={i}
                     style={{
                         backgroundImage: `url(${img.image})`,
-                        zIndex: i,
+                        zIndex: i === activeImg ? 1 : 0,
                     }}
                     scale={i === activeImg ? zoom : 1}
                     opacity={i === activeImg ? 1 : 0}

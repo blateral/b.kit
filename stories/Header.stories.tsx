@@ -260,16 +260,16 @@ export const WithActions: Story = () => (
                 },
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );
 
@@ -298,16 +298,16 @@ export const WithMenu: Story = () => (
                 },
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );
 
@@ -337,16 +337,16 @@ export const WithMenuLogo: Story = () => (
                 },
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );
 
@@ -378,16 +378,16 @@ export const WithMenuActions: Story = () => (
                 },
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );
 
@@ -420,16 +420,16 @@ export const WithInvertedTopBar: Story = () => (
                 },
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );
 
@@ -463,16 +463,16 @@ export const WithInvertedNav: Story = () => (
                 },
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );
 
@@ -507,16 +507,16 @@ export const WithFullSizeMenu: Story = () => (
                 },
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );
 
@@ -551,16 +551,16 @@ export const SmallerHeaderSize: Story = () => (
                 },
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );
 
@@ -606,16 +606,16 @@ export const WithKenBurnsEffect: Story = () => (
                 xlarge: 'https://unsplash.it/2450/1320?id=3',
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );
 
@@ -662,15 +662,15 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
                 xlarge: 'https://unsplash.it/2450/1320?id=3',
             },
         ]}
-        primaryCta={
-            <Button.View isInverted>
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryCta={
-            <Button.View type="ghost" isInverted>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
-        }
+        )}
     />
 );

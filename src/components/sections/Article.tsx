@@ -54,6 +54,8 @@ const ContentBlock = styled(Copy)<{ isAside?: boolean }>`
 `;
 
 const StyledActions = styled(Actions)`
+    padding-top: ${spacings.spacer * 2}px;
+
     @media ${mq.semilarge} {
         max-width: 50%;
     }

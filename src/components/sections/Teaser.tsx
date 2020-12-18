@@ -97,6 +97,10 @@ const SubTextBlock = styled(ContentBlock)`
     }
 `;
 
+const StyledActions = styled(Actions)`
+    padding-top: ${spacings.spacer * 2}px;
+`;
+
 const Teaser: FC<{
     isInverted?: boolean;
     isMirrored?: boolean;
@@ -226,7 +230,7 @@ const Teaser: FC<{
                                 </SubTextBlock>
                             )}
                             {(primaryAction || secondaryAction) && (
-                                <Actions
+                                <StyledActions
                                     primary={
                                         primaryAction &&
                                         primaryAction(isInverted)

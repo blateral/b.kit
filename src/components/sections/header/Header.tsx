@@ -30,9 +30,8 @@ interface HeaderImageProps {
     };
 }
 
-const View = styled.header<{ size?: number }>`
+const View = styled.header`
     position: relative;
-    height: ${({ size }) => (size ? size * 100 + 'vh' : '100vh')};
 `;
 
 const HeaderWrapper = styled(Wrapper)`
@@ -42,17 +41,54 @@ const HeaderWrapper = styled(Wrapper)`
 `;
 
 const PosterContent = styled.div`
-    max-width: 270px;
+    position: relative;
+    display: none;
     width: 100%;
     margin: auto;
-    position: relative;
     z-index: 3;
     text-align: center;
 
-    @media ${mq.medium} {
+    @media ${mq.semilarge} {
+        display: block;
         max-width: none;
         margin-left: 0;
         text-align: left;
+    }
+`;
+
+const PosterContentMobile = styled(PosterContent)`
+    display: block;
+    padding-top: ${spacings.spacer * 4}px;
+
+    @media ${mq.semilarge} {
+        display: none;
+    }
+`;
+
+const Badge = styled.div`
+    position: relative;
+    height: 234px;
+    width: 234px;
+    margin-left: auto;
+    margin-right: ${spacings.spacer}px;
+    margin-top: -173px;
+    background-color: red;
+    z-index: 3;
+
+    @media ${mq.semilarge} {
+        margin-right: ${spacings.spacer * 4}px;
+    }
+
+    @media ${mq.xlarge} {
+        width: 392px;
+        height: 392px;
+        margin-left: 0;
+        margin-top: -300px;
+
+        right: -50%;
+        transform: translate(
+            ${spacings.wrapper / 2 - (392 + spacings.spacer * 3)}px
+        );
     }
 `;
 
@@ -82,14 +118,15 @@ const Poster: FC<{
         );
 };
 
-const StyledPoster = styled(Poster)<{ gradient?: string }>`
+const StyledPoster = styled(Poster)<{ gradient?: string; size?: number }>`
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
+    min-height: ${({ size }) => (size ? size * 100 + 'vh' : '100vh')};
 
-    ${withRange([spacings.spacer * 2, spacings.spacer * 4.5], 'padding-top')};
+    ${withRange([spacings.spacer * 7, spacings.spacer * 8], 'padding-top')};
     ${withRange(
         [spacings.spacer * 2, spacings.spacer * 4.5],
         'padding-bottom'
@@ -117,7 +154,7 @@ const StyledPoster = styled(Poster)<{ gradient?: string }>`
 `;
 
 const StyledActions = styled(Actions)`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
 
     @media ${mq.semilarge} {
         max-width: 600px;
@@ -128,19 +165,15 @@ const Header: FC<{
     size?: 'full' | 'small';
     title?: string;
     titleAs?: HeadlineTag;
-    primaryCta?: React.ReactNode;
-    secondaryCta?: React.ReactNode;
+    primaryCta?: (isInverted?: boolean) => React.ReactNode;
+    secondaryCta?: (isInverted?: boolean) => React.ReactNode;
     menu?: {
         isLarge?: boolean;
         isTopInverted?: boolean;
         isNavInverted?: boolean;
         toggleIcons?: ToggleIconProps;
         logo?: LogoProps;
-        primaryCta?: (
-            isInverted?: boolean,
-            href?: string,
-            label?: string
-        ) => React.ReactNode;
+        primaryCta?: (isInverted?: boolean) => React.ReactNode;
         secondaryCta?: (isInverted?: boolean) => React.ReactNode;
         activeNavItem?: string;
         navItems?: NavGroup[];
@@ -163,7 +196,7 @@ const Header: FC<{
             : 'linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)';
 
     return (
-        <View size={size === 'small' ? 0.7 : 1}>
+        <View>
             {menu && (
                 <Menu
                     size={menu?.isLarge ? 'full' : 'small'}
@@ -181,13 +214,17 @@ const Header: FC<{
                 />
             )}
             <HeaderWrapper clampWidth="large">
-                <StyledPoster images={images} gradient={gradient}>
-                    <PosterContent>
-                        <Wrapper addWhitespace>
+                <StyledPoster
+                    images={images}
+                    gradient={gradient}
+                    size={size === 'small' ? 0.7 : 1}
+                >
+                    <Wrapper addWhitespace>
+                        <PosterContent>
                             <Grid.Row gutter={0}>
                                 <Grid.Col
-                                    medium={{ span: 20 / 28 }}
-                                    large={{ span: 18 / 28 }}
+                                    medium={{ span: 16 / 28 }}
+                                    large={{ span: 15 / 28 }}
                                 >
                                     {title && (
                                         <Callout
@@ -201,16 +238,42 @@ const Header: FC<{
                                     )}
                                     {(primaryCta || secondaryCta) && (
                                         <StyledActions
-                                            primary={primaryCta}
-                                            secondary={secondaryCta}
+                                            primary={
+                                                primaryCta && primaryCta(true)
+                                            }
+                                            secondary={
+                                                secondaryCta &&
+                                                secondaryCta(true)
+                                            }
                                         />
                                     )}
                                 </Grid.Col>
                             </Grid.Row>
-                        </Wrapper>
-                    </PosterContent>
+                        </PosterContent>
+                    </Wrapper>
                 </StyledPoster>
+                <Badge />
             </HeaderWrapper>
+            <PosterContentMobile>
+                <Wrapper addWhitespace>
+                    {title && (
+                        <Callout
+                            size="small"
+                            as={titleAs}
+                            hasShadow
+                            textColor={color(theme).black}
+                        >
+                            {title}
+                        </Callout>
+                    )}
+                    {(primaryCta || secondaryCta) && (
+                        <StyledActions
+                            primary={primaryCta && primaryCta(false)}
+                            secondary={secondaryCta && secondaryCta(false)}
+                        />
+                    )}
+                </Wrapper>
+            </PosterContentMobile>
         </View>
     );
 };

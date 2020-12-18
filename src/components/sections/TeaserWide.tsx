@@ -9,6 +9,7 @@ import Title from 'components/blocks/Title';
 import Wrapper from 'components/base/Wrapper';
 import Section from 'components/base/Section';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import Actions from 'components/blocks/Actions';
 
 const WideImage = styled(Image)<{ isMirrored?: boolean }>`
     position: relative;
@@ -71,24 +72,8 @@ const StyledTitle = styled(Title)`
     }
 `;
 
-const Actions = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: ${spacings.spacer}px 0;
+const StyledActions = styled(Actions)`
     padding-top: ${spacings.spacer * 2}px;
-
-    &:last-child {
-        padding-bottom: 0;
-    }
-
-    & > * {
-        flex: 1;
-    }
-
-    & > * + * {
-        margin-left: ${spacings.spacer}px;
-    }
 `;
 
 const ContentBlock = styled(Copy)`
@@ -212,11 +197,16 @@ const TeaserWide: FC<{
                                 </SubTextBlock>
                             )}
                             {(primaryAction || secondaryAction) && (
-                                <Actions>
-                                    {primaryAction && primaryAction(isInverted)}
-                                    {secondaryAction &&
-                                        secondaryAction(isInverted)}
-                                </Actions>
+                                <StyledActions
+                                    primary={
+                                        primaryAction &&
+                                        primaryAction(isInverted)
+                                    }
+                                    secondary={
+                                        secondaryAction &&
+                                        secondaryAction(isInverted)
+                                    }
+                                />
                             )}
                         </InfoWrapper>
                     </Grid.Col>
