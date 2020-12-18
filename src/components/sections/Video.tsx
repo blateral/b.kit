@@ -61,8 +61,9 @@ const VideoView = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
             bgImage ? `url("${bgImage.xlarge}")` : ''};
     }
 
-    ${({ isActive }) =>
+    ${({ isActive, bgImage }) =>
         !isActive &&
+        bgImage &&
         css`
             &:before {
                 content: '';
