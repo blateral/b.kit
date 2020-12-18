@@ -196,6 +196,7 @@ const CrossPromotion: React.FC<{
 
     main?: Array<PosterProps>;
     aside?: Array<PosterProps>;
+    isMirrored?: boolean;
 
     bgMode?: 'full' | 'splitted';
 
@@ -213,6 +214,7 @@ const CrossPromotion: React.FC<{
     aside,
     isInverted,
     bgMode,
+    isMirrored,
 }) => {
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
@@ -256,24 +258,44 @@ const CrossPromotion: React.FC<{
                 <Grid.Row>
                     <Grid.Col xlarge={{ span: 26 / 28, move: 1 / 28 }}>
                         {aside ? (
-                            <FlexGrid>
-                                <FlexGridCol>
-                                    {main &&
-                                        main.map((item, i) => (
+                            isMirrored ? (
+                                <FlexGrid>
+                                    <FlexGridCol>
+                                        {main &&
+                                            main.map((item, i) => (
+                                                <PosterContainer key={i}>
+                                                    <Poster {...item} />
+                                                </PosterContainer>
+                                            ))}
+                                    </FlexGridCol>
+
+                                    <FlexGridCol>
+                                        {aside.map((item, i) => (
                                             <PosterContainer key={i}>
                                                 <Poster {...item} />
                                             </PosterContainer>
                                         ))}
-                                </FlexGridCol>
-
-                                <FlexGridCol>
-                                    {aside.map((item, i) => (
-                                        <PosterContainer key={i}>
-                                            <Poster {...item} />
-                                        </PosterContainer>
-                                    ))}
-                                </FlexGridCol>
-                            </FlexGrid>
+                                    </FlexGridCol>
+                                </FlexGrid>
+                            ) : (
+                                <FlexGrid>
+                                    <FlexGridCol>
+                                        {aside.map((item, i) => (
+                                            <PosterContainer key={i}>
+                                                <Poster {...item} />
+                                            </PosterContainer>
+                                        ))}
+                                    </FlexGridCol>
+                                    <FlexGridCol>
+                                        {main &&
+                                            main.map((item, i) => (
+                                                <PosterContainer key={i}>
+                                                    <Poster {...item} />
+                                                </PosterContainer>
+                                            ))}
+                                    </FlexGridCol>
+                                </FlexGrid>
+                            )
                         ) : (
                             <Grid.Row>
                                 {main &&
