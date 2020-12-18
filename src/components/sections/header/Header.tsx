@@ -58,24 +58,25 @@ const PosterContent = styled.div`
 
 const PosterContentMobile = styled(PosterContent)`
     display: block;
-    padding-top: ${spacings.spacer * 4}px;
+    padding-top: ${spacings.spacer * 2}px;
 
     @media ${mq.semilarge} {
         display: none;
     }
 `;
 
-const Badge = styled.div`
+const Badge = styled.div<{ showOnMobile?: boolean }>`
+    display: ${({ showOnMobile }) => (showOnMobile ? 'block' : 'none')};
     position: relative;
     height: 234px;
     width: 234px;
     margin-left: auto;
     margin-right: ${spacings.spacer}px;
     margin-top: -173px;
-    background-color: red;
     z-index: 3;
 
     @media ${mq.semilarge} {
+        display: block;
         margin-right: ${spacings.spacer * 4}px;
     }
 
@@ -180,6 +181,10 @@ const Header: FC<{
         socials?: Array<{ icon: React.ReactNode; href: string }>;
     };
     images?: HeaderImageProps[];
+    badge?: {
+        content: React.ReactNode;
+        showOnMobile?: boolean;
+    };
 }> = ({
     size = 'full',
     title,
@@ -188,6 +193,7 @@ const Header: FC<{
     secondaryCta,
     menu,
     images,
+    badge,
 }) => {
     const theme = useContext(ThemeContext);
     const gradient =
@@ -252,7 +258,11 @@ const Header: FC<{
                         </PosterContent>
                     </Wrapper>
                 </StyledPoster>
-                <Badge />
+                {badge && badge.content && (
+                    <Badge showOnMobile={badge.showOnMobile}>
+                        {badge.content}
+                    </Badge>
+                )}
             </HeaderWrapper>
             <PosterContentMobile>
                 <Wrapper addWhitespace>
@@ -260,7 +270,6 @@ const Header: FC<{
                         <Callout
                             size="small"
                             as={titleAs}
-                            hasShadow
                             textColor={color(theme).black}
                         >
                             {title}
