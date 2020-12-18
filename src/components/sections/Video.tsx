@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Section from '../base/Section';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { ThemeContext, css } from 'styled-components';
 import {
     mq,
     getColors as color,
@@ -23,7 +23,7 @@ const IntroBlock = styled.div`
     padding-bottom: ${spacings.spacer * 2}px;
 `;
 
-const VideoView = styled.div<{ bgImage?: ImageProps }>`
+const VideoView = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
     text-align: center;
 
     cursor: pointer;
@@ -61,35 +61,41 @@ const VideoView = styled.div<{ bgImage?: ImageProps }>`
             bgImage ? `url("${bgImage.xlarge}")` : ''};
     }
 
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background-color:${({ theme }) => color(theme).mono.medium};
-        opacity:  ${({ bgImage }) => (bgImage ? '0.3' : '0')};
-        
+    ${({ isActive }) =>
+        !isActive &&
+        css`
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background-color: ${({ theme }) => color(theme).mono.medium};
+                opacity: ${({ bgImage }) => (bgImage ? '0.3' : '0')};
 
-        pointer-events: none;
+                pointer-events: none;
+            }
+
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                pointer-events: none;
+
+                background: linear-gradient(
+                    358.19deg,
+                    rgba(29, 34, 35, 0.52) 12.37%,
+                    rgba(29, 34, 35, 0) 59.02%
+                );
+            }
+        `}
 
     
-    }
-
-    &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        pointer-events: none;
-
-        background: linear-gradient(358.19deg, rgba(29, 34, 35, 0.52) 12.37%, rgba(29, 34, 35, 0) 59.02%);
-
-    }
 `;
 
 const VideoControls = styled.div`
@@ -156,6 +162,7 @@ const Video: React.FC<{
                 <VideoView
                     onClick={() => setIsActive(true)}
                     bgImage={isActive ? undefined : bgImage}
+                    isActive={isActive}
                 >
                     {!isActive && <VideoControls>Icon</VideoControls>}
                     {isActive && (
