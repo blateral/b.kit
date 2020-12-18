@@ -22,16 +22,6 @@ export const SingleImageFull: Story = () => (
                 superTitle: 'Haus St. Franziskus',
                 text:
                     'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-                primaryAction: (isInverted) => {
-                    <Button.View isInverted={isInverted}>
-                        <Button.Label>Primary</Button.Label>
-                    </Button.View>;
-                },
-                secondaryAction: (isInverted) => {
-                    <Button.View isInverted={isInverted}>
-                        <Button.Label>Secondary</Button.Label>
-                    </Button.View>;
-                },
             },
         ]}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
