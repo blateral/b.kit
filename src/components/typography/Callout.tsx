@@ -11,7 +11,7 @@ const BaseStyles = styled.h1<{
 }>`
     margin: 0;
     padding: 0;
-    color: ${({ textColor }) => textColor};
+    color: ${({ textColor }) => textColor || 'inherit'};
 
     hyphens: auto;
     overflow-wrap: break-word;

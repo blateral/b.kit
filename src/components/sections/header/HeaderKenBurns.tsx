@@ -79,6 +79,10 @@ const AnimationImages: FC<{
         changeImage();
         if (intervalRef.current) window.clearInterval(intervalRef.current);
         intervalRef.current = window.setInterval(changeImage, 10000);
+
+        return () => {
+            if (intervalRef.current) window.clearInterval(intervalRef.current);
+        };
     }, [images]);
 
     return (
