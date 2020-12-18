@@ -80,7 +80,7 @@ const PosterContainer = styled.div`
 
 const View = styled.div<{
     onClick?: () => void;
-    bgImage: ImageProps;
+    bgImage?: ImageProps;
 }>`
     width: 100%;
     min-height: ${(100 / 16) * 9}vw;
@@ -95,13 +95,14 @@ const View = styled.div<{
     align-items: flex-start;
     position: relative;
 
-    background-image: url('${({ bgImage }) => bgImage.small}');
+    background-image: url('${({ bgImage }) => bgImage && bgImage.small}');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 
     @media ${mq.medium} {
-        background-image: ${({ bgImage }) => `url("${bgImage.medium}")`} }
+        background-image: ${({ bgImage }) =>
+            `url("${bgImage && bgImage.medium}")`} }
 
     @media ${mq.semilarge} {
         min-height: 100%;
@@ -257,11 +258,12 @@ const CrossPromotion: React.FC<{
                         {aside ? (
                             <FlexGrid>
                                 <FlexGridCol>
-                                    {main.map((item, i) => (
-                                        <PosterContainer key={i}>
-                                            <Poster {...item} />
-                                        </PosterContainer>
-                                    ))}
+                                    {main &&
+                                        main.map((item, i) => (
+                                            <PosterContainer key={i}>
+                                                <Poster {...item} />
+                                            </PosterContainer>
+                                        ))}
                                 </FlexGridCol>
 
                                 <FlexGridCol>
@@ -279,7 +281,8 @@ const CrossPromotion: React.FC<{
                                         <Grid.Col
                                             medium={{
                                                 span:
-                                                    (image.image.size === 'half'
+                                                    (image.image?.size ===
+                                                    'half'
                                                         ? 14
                                                         : 28) / 28,
                                             }}
