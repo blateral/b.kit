@@ -24,7 +24,7 @@ const StyledActions = styled(Actions)`
 
 const Intro: React.FC<{
     title: string;
-    superTitle: string;
+    superTitle?: string;
     text?: string;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
