@@ -29,7 +29,7 @@
     "homepage": "https://github.com/blateral/b.kit#readme",
     "husky": {
         "hooks": {
-            "pre-push": "yarn tc && if git-branch-is master; then yarn deploy-storybook;"
+            "pre-push": "yarn tc && if git-branch-is master; then yarn deploy-storybook; fi"
         }
     },
     "devDependencies": {
