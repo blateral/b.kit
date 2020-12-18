@@ -197,7 +197,7 @@ export default {
     component: Header,
     decorators: [
         (Story) => (
-            <div style={{ height: '300vh', width: '100%' }}>
+            <div style={{ height: '120vh', width: '100%' }}>
                 <Story />
             </div>
         ),
@@ -517,6 +517,109 @@ export const WithFullSizeMenu: Story = () => (
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         )}
+    />
+);
+
+export const WithBadge: Story = () => (
+    <Header
+        menu={{
+            isTopInverted: true,
+            isNavInverted: true,
+            logo: { icon: logoFn, link: '#logoLink' },
+            ...exampleNavItems,
+            socials: [
+                { href: '#', icon: <Facebook /> },
+                { href: '#', icon: <LinkedIn /> },
+                { href: '#', icon: <Twitter /> },
+            ],
+            primaryCta: primaryCtaFn,
+            secondaryCta: secondaryCtaFn,
+        }}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        images={[
+            {
+                small: 'https://unsplash.it/660/1000?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                large: 'https://unsplash.it/1500/1320?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+                webp: {
+                    small: 'https://unsplash.it/660/1000.webp?id=1',
+                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    large: 'https://unsplash.it/1500/1320.webp?id=1',
+                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
+                },
+            },
+        ]}
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        )}
+        badge={{
+            content: (
+                <img
+                    src="https://via.placeholder.com/392x392/?text=badge"
+                    style={{ height: '100%', width: '100%' }}
+                />
+            ),
+        }}
+    />
+);
+
+export const WithBadgeOnMobile: Story = () => (
+    <Header
+        menu={{
+            isTopInverted: true,
+            isNavInverted: true,
+            logo: { icon: logoFn, link: '#logoLink' },
+            ...exampleNavItems,
+            socials: [
+                { href: '#', icon: <Facebook /> },
+                { href: '#', icon: <LinkedIn /> },
+                { href: '#', icon: <Twitter /> },
+            ],
+            primaryCta: primaryCtaFn,
+            secondaryCta: secondaryCtaFn,
+        }}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        images={[
+            {
+                small: 'https://unsplash.it/660/1000?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                large: 'https://unsplash.it/1500/1320?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+                webp: {
+                    small: 'https://unsplash.it/660/1000.webp?id=1',
+                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    large: 'https://unsplash.it/1500/1320.webp?id=1',
+                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
+                },
+            },
+        ]}
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryCta={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        )}
+        badge={{
+            content: (
+                <img
+                    src="https://via.placeholder.com/392x392/?text=badge"
+                    style={{ height: '100%', width: '100%' }}
+                />
+            ),
+            showOnMobile: true,
+        }}
     />
 );
 

@@ -34,6 +34,7 @@ const TopBar = styled.div<{
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
     padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
     margin: 0 auto;
+    overflow: hidden;
 
     background-color: ${({ theme, isInverted, isTop, isMenuOpen }) =>
         isInverted
