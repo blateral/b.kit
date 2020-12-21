@@ -6,7 +6,9 @@
     "module": "lib/index.es.js",
     "types": "lib/index.d.ts",
     "files": [
-        "lib"
+        "lib/index.js",
+        "lib/components",
+        "lib/utils"
     ],
     "scripts": {
         "build": "rollup -c",

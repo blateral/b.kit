@@ -31,6 +31,6 @@
             }
         ]
     },
-    "exclude": ["node_modules", "lib", "stories"],
+    "exclude": ["node_modules", "lib"],
     "include": ["src"]
 }

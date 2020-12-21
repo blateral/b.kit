@@ -62,8 +62,8 @@ const CrossPromotion: React.FC<{
     superTitle?: string;
     text?: string;
 
-    main?: Array<PromotionCardProps & { size: 'full' | 'half' }>;
-    aside?: Array<PromotionCardProps & { size: 'full' | 'half' }>;
+    main?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
+    aside?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
     isMirrored?: boolean;
 
     bgMode?: 'full' | 'splitted';
