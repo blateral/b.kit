@@ -3,7 +3,6 @@ import styled, { ThemeContext } from 'styled-components';
 
 import Section, { BgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
@@ -13,19 +12,6 @@ const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
 
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
-`;
-
-const ContentBlock = styled(Copy)<{ isCentered?: boolean }>`
-    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
-
-    ul {
-        padding-left: 0;
-        list-style-position: inside;
-    }
-
-    :not(:first-child) {
-        padding-top: ${spacings.nudge * 5}px;
-    }
 `;
 
 const ListContainer = styled.div`
