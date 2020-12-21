@@ -108,7 +108,7 @@ const Iframe = styled.iframe`
 `;
 
 const Video: React.FC<{
-    title: string;
+    title?: string;
     superTitle?: string;
     text?: string;
 
@@ -140,16 +140,18 @@ const Video: React.FC<{
             addSeperation
         >
             <Wrapper addWhitespace>
-                <IntroBlock>
-                    <Intro
-                        title={title}
-                        superTitle={superTitle}
-                        text={text}
-                        primaryAction={primaryAction}
-                        secondaryAction={secondaryAction}
-                        isInverted={isInverted}
-                    />
-                </IntroBlock>
+                {title && (
+                    <IntroBlock>
+                        <Intro
+                            title={title}
+                            superTitle={superTitle}
+                            text={text}
+                            primaryAction={primaryAction}
+                            secondaryAction={secondaryAction}
+                            isInverted={isInverted}
+                        />
+                    </IntroBlock>
+                )}
                 <VideoView
                     onClick={() => setIsActive(true)}
                     bgImage={isActive ? undefined : bgImage}

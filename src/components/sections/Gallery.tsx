@@ -17,8 +17,8 @@ const StyledImage = styled(Image)`
 `;
 
 const Gallery: FC<{
-    title: string;
-    superTitle: string;
+    title?: string;
+    superTitle?: string;
     text?: string;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;

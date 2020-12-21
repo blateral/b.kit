@@ -12,6 +12,21 @@ export const Default: Story = () => (
     <Intro
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
+    />
+);
+
+export const WithText: Story = () => (
+    <Intro
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+    />
+);
+
+export const WithActions: Story = () => (
+    <Intro
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>

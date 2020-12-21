@@ -1,16 +1,11 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import {
-    getColors as color,
-    spacings,
-    mq,
-    withRange,
-} from '../../utils/styles';
+import { getColors as color, spacings, mq, withRange } from 'utils/styles';
 
-import Title from '../blocks/Title';
-import Copy from '../typography/Copy';
-import Actions from './Actions';
+import Title from 'components/blocks/Title';
+import Copy from 'components/typography/Copy';
+import Actions from 'components/blocks/Actions';
 
 const View = styled.div<{ isCentered?: boolean }>`
     width: 100%;

@@ -61,6 +61,23 @@ export default {
 
 export const Default: Story = () => (
     <IconList
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        )}
+        primaryItems={Items}
+        secondaryItems={Items}
+    />
+);
+
+export const WithIntro: Story = () => (
+    <IconList
         title="Lorem ipsum dolor sit amet."
         superTitle="Lorem, ipsum dolor."
         text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"

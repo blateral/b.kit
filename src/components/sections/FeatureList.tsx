@@ -35,6 +35,9 @@ const ContentContainer = styled.div<{ isHalf?: boolean }>`
     }
 
     @media ${mq.large} {
+        padding-right: ${({ isHalf }) => isHalf && '7%'};
+        padding-left: ${({ isHalf }) => isHalf && '7%'};
+
         & > * {
             flex: ${({ isHalf }) => (isHalf ? '1 0 50%' : '1 0 33.33%')};
             max-width: ${({ isHalf }) => (isHalf ? '50%' : '33.33%')};
@@ -43,8 +46,8 @@ const ContentContainer = styled.div<{ isHalf?: boolean }>`
 `;
 
 const FeatureList: React.FC<{
-    title: string;
-    superTitle: string;
+    title?: string;
+    superTitle?: string;
     text?: string;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -89,16 +92,18 @@ const FeatureList: React.FC<{
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
             <Wrapper addWhitespace clampWidth="normal">
-                <IntroBlock>
-                    <Intro
-                        title={title}
-                        superTitle={superTitle}
-                        text={text}
-                        isInverted={isInverted}
-                        secondaryAction={secondaryAction}
-                        primaryAction={primaryAction}
-                    />
-                </IntroBlock>
+                {title && (
+                    <IntroBlock>
+                        <Intro
+                            title={title}
+                            superTitle={superTitle}
+                            text={text}
+                            isInverted={isInverted}
+                            secondaryAction={secondaryAction}
+                            primaryAction={primaryAction}
+                        />
+                    </IntroBlock>
+                )}
                 {features && (
                     <ContentContainer
                         isHalf={features.length % 2 == 0 ? true : false}

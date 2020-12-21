@@ -18,6 +18,19 @@ export const SingleImageFull: Story = () => (
                 xlarge: 'https://unsplash.it/1440/710?image=400',
             },
         ]}
+    />
+);
+
+export const WithIntro: Story = () => (
+    <Gallery
+        images={[
+            {
+                small: 'https://unsplash.it/500/246?image=400',
+                medium: 'https://unsplash.it/640/315?image=400',
+                large: 'https://unsplash.it/1024/504?image=400',
+                xlarge: 'https://unsplash.it/1440/710?image=400',
+            },
+        ]}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
