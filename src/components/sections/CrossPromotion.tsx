@@ -52,24 +52,6 @@ const PosterContainer = styled.div`
 
     color: ${({ theme }) => color(theme).white};
 
-    &:before {
-        content: '';
-        width: 0px;
-        display: block;
-
-        @media ${mq.semilarge} {
-            min-height: ${(50 / 16) * 9}vw;
-        }
-
-        @media ${mq.xlarge} {
-            min-height: ${(((100 / 28) * 13) / 16) * 9}vw;
-        }
-
-        @media ${mq.xxlarge} {
-            min-height: ${(((spacings.wrapperLarge / 28) * 13) / 16) * 9}px;
-        }
-    }
-
     & + & {
         margin-top: ${spacings.spacer}px;
     }
@@ -98,8 +80,8 @@ const CrossPromotion: React.FC<{
     secondaryAction,
     main,
     aside,
-    isInverted = false,
     bgMode,
+    isInverted = false,
     isMirrored = false,
 }) => {
     const getSectionBgMode = (): BgMode | undefined => {
@@ -187,7 +169,7 @@ const CrossPromotion: React.FC<{
                                 {main &&
                                     main.map((card, i) => (
                                         <Grid.Col
-                                            medium={{
+                                            semilarge={{
                                                 span:
                                                     (card.size === 'half'
                                                         ? 14

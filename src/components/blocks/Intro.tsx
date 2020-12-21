@@ -7,12 +7,12 @@ import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 
-const View = styled.div<{ isCentered?: boolean }>`
+const View = styled.div<{ isCentered?: boolean; clampText?: boolean }>`
     width: 100%;
     margin: ${({ isCentered }) => isCentered && '0 auto'};
 
     @media ${mq.large} {
-        max-width: 65%;
+        max-width: ${({ clampText }) => clampText && '65%'};
     }
 `;
 
@@ -41,6 +41,7 @@ const Intro: React.FC<{
 
     isInverted?: boolean;
     isCentered?: boolean;
+    clampText?: boolean;
     className?: string;
 }> = ({
     title,
@@ -50,11 +51,16 @@ const Intro: React.FC<{
     secondaryAction,
     isInverted = false,
     isCentered = false,
+    clampText = true,
     className,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <View isCentered={isCentered} className={className}>
+        <View
+            isCentered={isCentered}
+            clampText={clampText}
+            className={className}
+        >
             <Title
                 title={title}
                 superTitle={superTitle}

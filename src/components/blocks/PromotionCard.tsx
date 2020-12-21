@@ -56,7 +56,7 @@ const IntroContainer = styled.div`
     padding-left: ${spacings.spacer * 2}px;
     padding-right: ${spacings.spacer * 2}px;
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
-    ${withRange([spacings.spacer, spacings.spacer * 5], 'padding-bottom')};
+    ${withRange([spacings.spacer, spacings.spacer * 4], 'padding-bottom')};
 
     display: flex;
     flex-direction: column;
@@ -102,6 +102,7 @@ const PromotionCard: FC<PromotionCardProps> = ({
                         isInverted
                         secondaryAction={() => secondaryAction}
                         primaryAction={() => primaryAction}
+                        clampText={false}
                     />
                 </IntroContainer>
             )}
