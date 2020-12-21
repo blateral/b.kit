@@ -1,19 +1,16 @@
 import * as React from 'react';
-import styled, { ThemeContext, css } from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 
-import {
-    getColors as color,
-    spacings,
-    mq,
-    withRange,
-} from '../../utils/styles';
+import { getColors as color, spacings, mq } from 'utils/styles';
 
-import Grid from '../base/Grid';
-import Section, { BgMode } from '../base/Section';
-import Wrapper from '../base/Wrapper';
+import Grid from 'components/base/Grid';
+import Section, { BgMode } from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
 
-import { ImageProps } from '../blocks/Image';
-import Intro from '../blocks/Intro';
+import Intro from 'components/blocks/Intro';
+import PromotionCard, {
+    PromotionCardProps,
+} from 'components/blocks/PromotionCard';
 
 const IntroBlock = styled.div`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -78,124 +75,13 @@ const PosterContainer = styled.div`
     }
 `;
 
-const View = styled.div<{
-    onClick?: () => void;
-    bgImage?: ImageProps;
-}>`
-    width: 100%;
-    min-height: ${(100 / 16) * 9}vw;
-    padding-left: ${spacings.spacer}px;
-    padding-right: ${spacings.spacer}px;
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-bottom')};
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    position: relative;
-
-    background-image: url('${({ bgImage }) => bgImage && bgImage.small}');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    @media ${mq.medium} {
-        background-image: ${({ bgImage }) =>
-            `url("${bgImage && bgImage.medium}")`} }
-
-    @media ${mq.semilarge} {
-        min-height: 100%;
-    }
-
-
-    /* required to align items at flex-end in ie11 */
-    &:before {
-        content: '';
-        display: block;
-        flex: 1 0 0px;
-    }
-
-    &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background: linear-gradient(
-            3deg,
-            rgba(0, 0, 0, 0.25) 0%,
-            rgba(0, 0, 0, 0.15) 30%,
-            rgba(0, 0, 0, 0) 50%
-        );
-        pointer-events: none;
-    }
-
-    ${({ onClick }) =>
-        onClick &&
-        css`
-            transition: 0.2s;
-            cursor: pointer;
-
-            &:hover {
-                box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
-            }
-        `}
-    `;
-
-const ViewContainer = styled.div`
-    position: relative;
-    z-index: 1;
-`;
-
-export interface PosterProps {
-    image?: ImageProps & { size?: 'half' | 'full' };
-
-    title: string;
+const CrossPromotion: React.FC<{
+    title?: string;
     superTitle?: string;
     text?: string;
 
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
-    isInverted?: boolean;
-}
-
-const Poster: React.FC<PosterProps> = ({
-    image,
-    superTitle,
-    text,
-    primaryAction,
-    secondaryAction,
-    title,
-}) => {
-    return (
-        <View bgImage={image}>
-            <ViewContainer>
-                <IntroBlock>
-                    <Intro
-                        title={title}
-                        superTitle={superTitle}
-                        text={text}
-                        isInverted
-                        secondaryAction={secondaryAction}
-                        primaryAction={primaryAction}
-                    />
-                </IntroBlock>
-            </ViewContainer>
-        </View>
-    );
-};
-
-const CrossPromotion: React.FC<{
-    title: string;
-    superTitle: string;
-    text?: string;
-
-    main?: Array<PosterProps>;
-    aside?: Array<PosterProps>;
+    main?: Array<PromotionCardProps & { size: 'full' | 'half' }>;
+    aside?: Array<PromotionCardProps & { size: 'full' | 'half' }>;
     isMirrored?: boolean;
 
     bgMode?: 'full' | 'splitted';
@@ -212,16 +98,16 @@ const CrossPromotion: React.FC<{
     secondaryAction,
     main,
     aside,
-    isInverted,
+    isInverted = false,
     bgMode,
-    isMirrored,
+    isMirrored = false,
 }) => {
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
             case 'full':
                 return 'full';
             case 'splitted':
-                return 'larger-right';
+                return 'half-right';
             default:
                 return undefined;
         }
@@ -256,23 +142,23 @@ const CrossPromotion: React.FC<{
                 )}
 
                 <Grid.Row>
-                    <Grid.Col xlarge={{ span: 26 / 28, move: 1 / 28 }}>
+                    <Grid.Col>
                         {aside ? (
                             isMirrored ? (
                                 <FlexGrid>
                                     <FlexGridCol>
                                         {main &&
-                                            main.map((item, i) => (
+                                            main.map((card, i) => (
                                                 <PosterContainer key={i}>
-                                                    <Poster {...item} />
+                                                    <PromotionCard {...card} />
                                                 </PosterContainer>
                                             ))}
                                     </FlexGridCol>
 
                                     <FlexGridCol>
-                                        {aside.map((item, i) => (
+                                        {aside.map((card, i) => (
                                             <PosterContainer key={i}>
-                                                <Poster {...item} />
+                                                <PromotionCard {...card} />
                                             </PosterContainer>
                                         ))}
                                     </FlexGridCol>
@@ -280,17 +166,17 @@ const CrossPromotion: React.FC<{
                             ) : (
                                 <FlexGrid>
                                     <FlexGridCol>
-                                        {aside.map((item, i) => (
+                                        {aside.map((card, i) => (
                                             <PosterContainer key={i}>
-                                                <Poster {...item} />
+                                                <PromotionCard {...card} />
                                             </PosterContainer>
                                         ))}
                                     </FlexGridCol>
                                     <FlexGridCol>
                                         {main &&
-                                            main.map((item, i) => (
+                                            main.map((card, i) => (
                                                 <PosterContainer key={i}>
-                                                    <Poster {...item} />
+                                                    <PromotionCard {...card} />
                                                 </PosterContainer>
                                             ))}
                                     </FlexGridCol>
@@ -299,19 +185,18 @@ const CrossPromotion: React.FC<{
                         ) : (
                             <Grid.Row>
                                 {main &&
-                                    main.map((image, i) => (
+                                    main.map((card, i) => (
                                         <Grid.Col
                                             medium={{
                                                 span:
-                                                    (image.image?.size ===
-                                                    'half'
+                                                    (card.size === 'half'
                                                         ? 14
                                                         : 28) / 28,
                                             }}
                                             key={i}
                                         >
                                             <PosterContainer key={i}>
-                                                <Poster {...image} />
+                                                <PromotionCard {...card} />
                                             </PosterContainer>
                                         </Grid.Col>
                                     ))}

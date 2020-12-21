@@ -41,19 +41,20 @@ const Intro: React.FC<{
 
     isInverted?: boolean;
     isCentered?: boolean;
+    className?: string;
 }> = ({
     title,
     superTitle,
     text,
     primaryAction,
     secondaryAction,
-
     isInverted = false,
     isCentered = false,
+    className,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <View isCentered={isCentered}>
+        <View isCentered={isCentered} className={className}>
             <Title
                 title={title}
                 superTitle={superTitle}
