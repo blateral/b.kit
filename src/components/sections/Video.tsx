@@ -13,7 +13,7 @@ const IntroBlock = styled.div`
     padding-bottom: ${spacings.spacer * 2}px;
 `;
 
-const VideoView = styled.div<{ bgImage?: ImageProps }>`
+const VideoView = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
     text-align: center;
 
     cursor: pointer;
@@ -49,7 +49,7 @@ const VideoView = styled.div<{ bgImage?: ImageProps }>`
     }
 
     &:before {
-        content: '';
+        content: ${({ isActive, bgImage }) => !isActive && bgImage && '""'};
         position: absolute;
         top: 0;
         left: 0;
@@ -63,7 +63,7 @@ const VideoView = styled.div<{ bgImage?: ImageProps }>`
     }
 
     &:after {
-        content: '';
+        content: ${({ isActive, bgImage }) => !isActive && bgImage && '""'};
         display: block;
         position: absolute;
         top: 0;
@@ -153,6 +153,7 @@ const Video: React.FC<{
                 <VideoView
                     onClick={() => setIsActive(true)}
                     bgImage={isActive ? undefined : bgImage}
+                    isActive={isActive}
                 >
                     {!isActive && (
                         <VideoControls>{playIcon || <Play />}</VideoControls>
