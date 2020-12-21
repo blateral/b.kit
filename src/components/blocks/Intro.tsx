@@ -12,7 +12,14 @@ import Title from '../blocks/Title';
 import Copy from '../typography/Copy';
 import Actions from './Actions';
 
-const View = styled.div``;
+const View = styled.div<{ isCentered?: boolean }>`
+    width: 100%;
+    margin: ${({ isCentered }) => isCentered && '0 auto'};
+
+    @media ${mq.large} {
+        max-width: 65%;
+    }
+`;
 
 const ContentBlock = styled(Copy)`
     :not(:first-child) {
@@ -38,6 +45,7 @@ const Intro: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isInverted?: boolean;
+    isCentered?: boolean;
 }> = ({
     title,
     superTitle,
@@ -46,17 +54,20 @@ const Intro: React.FC<{
     secondaryAction,
 
     isInverted = false,
+    isCentered = false,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <View>
+        <View isCentered={isCentered}>
             <Title
                 title={title}
                 superTitle={superTitle}
                 isInverted={isInverted}
+                isCentered={isCentered}
             />
             {text && (
                 <ContentBlock
+                    type="copy-b"
                     textColor={
                         isInverted ? color(theme).white : color(theme).black
                     }

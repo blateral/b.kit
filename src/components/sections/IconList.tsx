@@ -7,6 +7,7 @@ import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
+import Intro from 'components/blocks/Intro';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
@@ -124,22 +125,15 @@ const IconList: React.FC<{
             isCentered={isCentered}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <Title
-                    title={title}
-                    superTitle={superTitle}
-                    isInverted={isInverted}
-                    isCentered={isCentered}
-                />
-                <ContentBlock
-                    isCentered={isCentered}
-                    type="copy-b"
-                    textColor={
-                        isInverted ? color(theme).white : color(theme).black
-                    }
-                >
-                    {text}
-                </ContentBlock>
-
+                {title && (
+                    <Intro
+                        title={title}
+                        superTitle={superTitle}
+                        text={text}
+                        isInverted={isInverted}
+                        isCentered={isCentered}
+                    />
+                )}
                 <ListContainer>
                     <Copy
                         type="copy"

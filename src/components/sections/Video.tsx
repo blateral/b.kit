@@ -1,23 +1,13 @@
-import * as React from 'react';
-import Section from '../base/Section';
+import React, { useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import {
-    mq,
-    getColors as color,
-    withRange,
-    spacings,
-} from '../../utils/styles';
-import Intro from '../blocks/Intro';
-import Wrapper from '../base/Wrapper';
 
-interface ImageProps {
-    small: string;
-    medium?: string;
-    semilarge?: string;
-    large?: string;
-    xlarge?: string;
-    alt?: string;
-}
+import Section from 'components/base/Section';
+import { mq, getColors as color, spacings } from 'utils/styles';
+import Intro from 'components/blocks/Intro';
+import Wrapper from 'components/base/Wrapper';
+import { ImageProps } from 'components/blocks/Image';
+
+import Play from 'components/base/icons/Play';
 
 const IntroBlock = styled.div`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -28,9 +18,6 @@ const VideoView = styled.div<{ bgImage?: ImageProps }>`
 
     cursor: pointer;
     position: relative;
-
-    /* ${withRange([spacings.spacer * 3, 250], 'padding-top')}
-    ${withRange([spacings.spacer * 3, 250], 'padding-bottom')} */
 
     padding-bottom: 56.25%;
 
@@ -73,8 +60,6 @@ const VideoView = styled.div<{ bgImage?: ImageProps }>`
         
 
         pointer-events: none;
-
-    
     }
 
     &:after {
@@ -94,10 +79,22 @@ const VideoView = styled.div<{ bgImage?: ImageProps }>`
 
 const VideoControls = styled.div`
     position: absolute;
-
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    color: ${({ theme }) => color(theme).black};
+
+    & > * {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    ${VideoView}:hover > & > * {
+        transform: scale(1.05);
+    }
+
+    ${VideoView}:active > & > * {
+        transform: scale(0.95);
+    }
 `;
 
 const Iframe = styled.iframe`
@@ -117,6 +114,7 @@ const Video: React.FC<{
 
     bgImage: ImageProps;
     embedId: string;
+    playIcon?: React.ReactChild;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -128,14 +126,13 @@ const Video: React.FC<{
     text,
     primaryAction,
     secondaryAction,
-    isInverted,
+    isInverted = false,
     bgImage,
     embedId,
+    playIcon,
 }) => {
-    const [isActive, setIsActive] = React.useState(false);
-    console.log(isActive);
-
-    const theme = React.useContext(ThemeContext);
+    const [isActive, setIsActive] = useState(false);
+    const theme = useContext(ThemeContext);
 
     return (
         <Section
@@ -157,7 +154,9 @@ const Video: React.FC<{
                     onClick={() => setIsActive(true)}
                     bgImage={isActive ? undefined : bgImage}
                 >
-                    {!isActive && <VideoControls>Icon</VideoControls>}
+                    {!isActive && (
+                        <VideoControls>{playIcon || <Play />}</VideoControls>
+                    )}
                     {isActive && (
                         <Iframe
                             id="ytplayer"
