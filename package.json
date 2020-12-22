@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
@@ -12,7 +12,7 @@
         "build": "rollup -c",
         "watch": "rollup -c -w",
         "storybook": "start-storybook -p 9000 -c .storybook",
-        "deploy-storybook": "storybook-to-ghpages",
+        "deploy-storybook": "if git-branch-is master; then yarn storybook-to-ghpages; fi",
         "tc": "tsc --noEmit",
         "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz"
     },
@@ -29,7 +29,7 @@
     "homepage": "https://github.com/blateral/b.kit#readme",
     "husky": {
         "hooks": {
-            "pre-push": "yarn tc && if git-branch-is master; then yarn deploy-storybook; fi"
+            "pre-push": "yarn tc && yarn deploy-storybook"
         }
     },
     "devDependencies": {
