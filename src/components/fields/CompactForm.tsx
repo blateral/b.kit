@@ -4,28 +4,31 @@ import styled from 'styled-components';
 import {
     getColors as color,
     getFonts as font,
+    mq,
     spacings,
     withRange,
 } from 'utils/styles';
 
-const View = styled.form<{ isInverted?: boolean }>`
+const View = styled.form`
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
-    border: solid 1px ${({ theme }) => color(theme).mono.light};
-    color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).white : color(theme).black};
+    color: ${({ theme }) => color(theme).mono.dark};
+
+    @media ${mq.medium} {
+        flex-direction: row;
+    }
 `;
 
 const InputField = styled.input`
     display: block;
     width: 100%;
     height: 100%;
-    padding: ${spacings.nudge * 3}px ${spacings.nudge * 3.5}px;
+    padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 3.5}px;
     color: inherit;
 
-    background-color: transparent;
+    background-color: ${({ theme }) => color(theme).mono.light};
     box-shadow: none;
     border: none;
     border-right: none;
@@ -48,9 +51,11 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 65px;
+    width: 100%;
+    height: 50px;
 
-    margin: -2px;
+    margin-top: ${spacings.spacer * 0.5}px;
+
     background-color: ${({ theme, isInverted }) =>
         isInverted ? color(theme).white : color(theme).black};
     color: ${({ theme, isInverted }) =>
@@ -60,7 +65,12 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
     border: none;
     user-select: none;
     cursor: pointer;
-    /* transition: all ease-in-out 0.2s; */
+    transition: all ease-in-out 0.2s;
+
+    @media ${mq.medium} {
+        width: 100px;
+        margin-top: 0;
+    }
 
     &:hover {
         transform: scale(1.05);
@@ -104,7 +114,6 @@ const CompactForm: FC<{
     return (
         <View
             onSubmit={onSubmit}
-            isInverted={isInverted}
             method={method}
             action={action}
             className={className}

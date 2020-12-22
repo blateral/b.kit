@@ -3,7 +3,6 @@ import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
 
 import CompactForm from 'components/fields/CompactForm';
-import ArrowRight from 'components/base/icons/ArrowRight';
 
 const Helper = styled.div`
     height: 150px;
@@ -35,7 +34,7 @@ export const Default: Story = () => (
 export const WithButton: Story = () => (
     <CompactForm
         placeholder="Geben Sie Ihre E-Mail Adresse an"
-        buttonIcon={<ArrowRight />}
+        buttonIcon={'Primary'}
         onSubmit={console.log}
         onClick={console.log}
         onBlur={console.log}
@@ -46,7 +45,7 @@ export const Inverted: Story = () => (
     <CompactForm
         isInverted
         placeholder="Geben Sie Ihre E-Mail Adresse an"
-        buttonIcon={<ArrowRight />}
+        buttonIcon={'Primary'}
         onSubmit={console.log}
         onClick={console.log}
         onBlur={console.log}

@@ -52,8 +52,8 @@ const ContentBlock = styled.div<{
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-width: 300px;
     align-items: center;
+    text-align: center;
 
     padding: ${spacings.spacer}px;
 
@@ -65,6 +65,8 @@ const ContentBlock = styled.div<{
         flex-direction: ${({ direction }) => direction || 'column'};
         align-items: flex-start;
         padding-top: ${({ topSpace }) => topSpace && topSpace};
+        text-align: left;
+        min-width: 330px;
     }
 `;
 
@@ -83,6 +85,8 @@ const ContactData = styled(Copy)`
 
     @media ${mq.medium} {
         text-align: left;
+        margin-top: auto;
+        padding: ${spacings.nudge * 2}px 0;
     }
 `;
 
@@ -162,14 +166,11 @@ const LinkWrapper = styled.span<{ isActive?: boolean; isInverted?: boolean }>`
     }
 `;
 
-const FooterTitle = styled.div`
-    font-weight: ${({ theme }) => font(theme)['heading-4'].family};
-    font-family: ${({ theme }) => font(theme)['heading-4'].family};
-    ${({ theme }) => withRange(font(theme)['heading-4'].size, 'font-size')}
-    line-height: ${({ theme }) => font(theme)['heading-4'].lineHeight};
+/**** BOTTOM FOOTER CONTENT ****/
+const BottomWrapper = styled(Wrapper)`
+    background-color: ${({ theme }) => color(theme).mono.light};
 `;
 
-/**** BOTTOM FOOTER CONTENT ****/
 const BottomView = styled(Wrapper)`
     display: flex;
     flex-direction: row;
@@ -180,7 +181,6 @@ const BottomView = styled(Wrapper)`
     padding-top: ${spacings.nudge * 1.5}px;
     padding-bottom: ${spacings.nudge * 1.5}px;
 
-    background-color: ${({ theme }) => color(theme).white};
     color: ${({ theme }) => color(theme).black};
 
     & > * + * {
@@ -209,6 +209,7 @@ const Footer: FC<{
     newsForm?: (isInverted?: boolean) => React.ReactNode;
     socials?: Array<{ icon: React.ReactNode; href: string }>;
     bottomLinks?: { href: string; label?: string; isExternal?: boolean }[];
+    brandIcon?: React.ReactNode;
 }> = ({
     isInverted = false,
     logo,
@@ -220,6 +221,7 @@ const Footer: FC<{
     newsForm,
     socials,
     bottomLinks,
+    brandIcon,
 }) => {
     return (
         <Section as="footer">
@@ -265,7 +267,7 @@ const Footer: FC<{
                         </ContentBlock>
                         <ContentBlock topSpace={logo && columnTopSpace}>
                             {newsTitle && (
-                                <FooterTitle>{newsTitle}</FooterTitle>
+                                <Copy type="copy-b">{newsTitle}</Copy>
                             )}
                             {newsText && (
                                 <Copy size="small">
@@ -294,24 +296,26 @@ const Footer: FC<{
             </MainView>
 
             {bottomLinks && (
-                <BottomView addWhitespace>
-                    {bottomLinks.map((link, i) => {
-                        if (link.href) {
-                            return (
-                                <StyledLink
-                                    key={i}
-                                    isExternal={link.isExternal}
-                                    href={link.href}
-                                >
-                                    <Copy size="small">
-                                        {link.label || link.href}
-                                    </Copy>
-                                </StyledLink>
-                            );
-                        } else return null;
-                    })}
-                    <Bdot />
-                </BottomView>
+                <BottomWrapper clampWidth="large">
+                    <BottomView addWhitespace>
+                        {bottomLinks.map((link, i) => {
+                            if (link.href) {
+                                return (
+                                    <StyledLink
+                                        key={i}
+                                        isExternal={link.isExternal}
+                                        href={link.href}
+                                    >
+                                        <Copy size="small">
+                                            {link.label || link.href}
+                                        </Copy>
+                                    </StyledLink>
+                                );
+                            } else return null;
+                        })}
+                        {brandIcon ? brandIcon : <Bdot />}
+                    </BottomView>
+                </BottomWrapper>
             )}
         </Section>
     );

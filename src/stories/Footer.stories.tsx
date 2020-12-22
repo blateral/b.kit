@@ -3,8 +3,6 @@ import { Meta, Story } from '@storybook/react';
 
 import Link from 'components/typography/Link';
 import Footer from 'components/sections/Footer';
-// import CompactForm from '../src/components/fields/CompactForm';
-import ArrowRight from 'components/base/icons/ArrowRight';
 
 import Facebook from 'components/base/icons/socials/Facebook';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
@@ -62,7 +60,7 @@ export const WithContactData: Story = () => (
 export const WithLogo: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/208x65" />,
+            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
             link: '/',
         }}
         contactData={exampleContactData}
@@ -72,7 +70,7 @@ export const WithLogo: Story = () => (
 export const WithSiteLinks: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/208x65" />,
+            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
             link: '/',
         }}
         contactData={exampleContactData}
@@ -100,7 +98,7 @@ export const WithSiteLinks: Story = () => (
 export const WithNewsletterTitleAndText: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/208x65" />,
+            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
             link: '/',
         }}
         contactData={exampleContactData}
@@ -130,7 +128,7 @@ export const WithNewsletterTitleAndText: Story = () => (
 export const WithNewsletterForm: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/208x65" />,
+            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
             link: '/',
         }}
         contactData={exampleContactData}
@@ -158,7 +156,7 @@ export const WithNewsletterForm: Story = () => (
             <CompactForm
                 isInverted={isInverted}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
-                buttonIcon={<ArrowRight />}
+                buttonIcon={'Primary'}
                 onSubmit={console.log}
                 onClick={console.log}
                 onBlur={console.log}
@@ -170,7 +168,7 @@ export const WithNewsletterForm: Story = () => (
 export const WithSocials: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/208x65" />,
+            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
             link: '/',
         }}
         contactData={exampleContactData}
@@ -198,7 +196,7 @@ export const WithSocials: Story = () => (
             <CompactForm
                 isInverted={isInverted}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
-                buttonIcon={<ArrowRight />}
+                buttonIcon={'Primary'}
                 onSubmit={console.log}
                 onClick={console.log}
                 onBlur={console.log}
@@ -216,7 +214,7 @@ export const WithSocials: Story = () => (
 export const WithColumnTopSpace: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/208x65" />,
+            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
             link: '/',
         }}
         columnTopSpace="40px"
@@ -245,7 +243,7 @@ export const WithColumnTopSpace: Story = () => (
             <CompactForm
                 isInverted={isInverted}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
-                buttonIcon={<ArrowRight />}
+                buttonIcon={'Primary'}
                 onSubmit={console.log}
                 onClick={console.log}
                 onBlur={console.log}
@@ -263,7 +261,7 @@ export const WithColumnTopSpace: Story = () => (
 export const WithBottomLinks: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/208x65" />,
+            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
             link: '/',
         }}
         columnTopSpace="40px"
@@ -292,7 +290,7 @@ export const WithBottomLinks: Story = () => (
             <CompactForm
                 isInverted={isInverted}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
-                buttonIcon={<ArrowRight />}
+                buttonIcon={'Primary'}
                 onSubmit={console.log}
                 onClick={console.log}
                 onBlur={console.log}
@@ -315,7 +313,7 @@ export const Inverted: Story = () => (
     <Footer
         isInverted
         logo={{
-            image: <img src="https://via.placeholder.com/208x65" />,
+            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
             link: '/',
         }}
         columnTopSpace="40px"
@@ -344,7 +342,7 @@ export const Inverted: Story = () => (
             <CompactForm
                 isInverted={isInverted}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
-                buttonIcon={<ArrowRight />}
+                buttonIcon={'Primary'}
                 onSubmit={console.log}
                 onClick={console.log}
                 onBlur={console.log}
