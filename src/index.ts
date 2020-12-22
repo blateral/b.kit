@@ -24,8 +24,13 @@ export { default as TeaserWide } from 'components/sections/TeaserWide';
 export { default as IconList } from 'components/sections/IconList';
 export { default as Article } from 'components/sections/Article';
 export { default as FeatureList } from 'components/sections/FeatureList';
+export { default as CrossPromotion } from 'components/sections/CrossPromotion';
+export { default as Poster } from 'components/sections/Poster';
+export { default as Video } from 'components/sections/Video';
 export { default as ImageCarousel } from 'components/sections/carousel/ImageCarousel';
 export { default as FeatureCarousel } from 'components/sections/carousel/FeatureCarousel';
+export { default as PromotionCarousel } from 'components/sections/carousel/PromotionCarousel';
+export { default as VideoCarousel } from 'components/sections/carousel/VideoCarousel';
 export { default as Footer } from 'components/sections/Footer';
 export { default as Header } from 'components/sections/header/Header';
 
