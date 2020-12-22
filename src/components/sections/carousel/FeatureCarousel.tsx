@@ -1,14 +1,10 @@
 import React, { FC } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import { ThemeContext } from 'styled-components';
 
-import { getColors as color, spacings } from '../../../utils/styles';
-import Section, { BgMode } from '../../base/Section';
+import { getColors as color } from 'utils/styles';
+import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
-import Feature, { FeatureProps } from '../../blocks/Feature';
-
-const Carousel = styled(CarouselBase)`
-    padding: 0 ${spacings.spacer}px;
-`;
+import Feature, { FeatureProps } from 'components/blocks/Feature';
 
 const FeatureCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
@@ -16,6 +12,11 @@ const FeatureCarousel: FC<
         features?: FeatureProps[];
     }
 > = ({
+    title,
+    superTitle,
+    text,
+    primaryAction,
+    secondaryAction,
     isInverted = false,
     bgMode,
     features,
@@ -27,7 +28,7 @@ const FeatureCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const featureCount = features ? features.length : 0;
+    const featureCount = features?.length || 0;
 
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
@@ -52,7 +53,12 @@ const FeatureCarousel: FC<
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <Carousel
+            <CarouselBase
+                title={title}
+                superTitle={superTitle}
+                text={text}
+                primaryAction={primaryAction}
+                secondaryAction={secondaryAction}
                 spacing="normal"
                 isInverted={isInverted}
                 controlNext={controlNext}
@@ -87,7 +93,7 @@ const FeatureCarousel: FC<
                     features.map((feature, i) => (
                         <Feature key={i} isInverted={isInverted} {...feature} />
                     ))}
-            </Carousel>
+            </CarouselBase>
         </Section>
     );
 };

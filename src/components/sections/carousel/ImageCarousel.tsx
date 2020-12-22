@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color } from '../../../utils/styles';
-import Image, { ImageProps } from '../../blocks/Image';
-import Section, { BgMode } from '../../base/Section';
+import { getColors as color } from 'utils/styles';
+import Image, { ImageProps } from 'components/blocks/Image';
+import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 
 const ImageCarousel: FC<
@@ -12,6 +12,11 @@ const ImageCarousel: FC<
         images?: ImageProps[];
     }
 > = ({
+    title,
+    superTitle,
+    text,
+    primaryAction,
+    secondaryAction,
     isInverted = false,
     bgMode,
     spacing = 'normal',
@@ -24,7 +29,7 @@ const ImageCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const imageCount = images ? images.length : 0;
+    const imageCount = images?.length || 0;
 
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
@@ -50,6 +55,11 @@ const ImageCarousel: FC<
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
             <CarouselBase
+                title={title}
+                superTitle={superTitle}
+                text={text}
+                primaryAction={primaryAction}
+                secondaryAction={secondaryAction}
                 variableWidths
                 spacing={spacing}
                 isInverted={isInverted}

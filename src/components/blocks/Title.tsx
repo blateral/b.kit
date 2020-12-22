@@ -1,13 +1,13 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Heading, { HeadlineTag } from '../typography/Heading';
+import Heading, { HeadlineTag } from 'components/typography/Heading';
 import {
     spacings,
     withRange,
     getFonts as font,
     getColors as color,
-} from '../../utils/styles';
+} from 'utils/styles';
 
 const View = styled.div<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};

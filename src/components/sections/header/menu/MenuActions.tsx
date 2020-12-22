@@ -7,7 +7,7 @@ import {
     mq,
     spacings,
     withRange,
-} from '../../../../utils/styles';
+} from 'utils/styles';
 import styled from 'styled-components';
 import { FC, forwardRef } from 'react';
 

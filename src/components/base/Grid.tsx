@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { spacings, mq } from '../../utils/styles';
+import { spacings, mq } from 'utils/styles';
 
 export interface ColPropsSettings {
     /** Normalisierte Werte zwischen 0 und 1: z.B.  12 von 28 Spalten (12 / 28) */

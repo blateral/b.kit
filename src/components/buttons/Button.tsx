@@ -6,7 +6,7 @@ import {
     getFonts as font,
     spacings,
     withRange,
-} from '../../utils/styles';
+} from 'utils/styles';
 
 const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     min-height: 3em;

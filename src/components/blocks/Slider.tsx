@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import SlickSlider, { Settings } from 'react-slick';
-import { withRange } from '../../utils/styles';
+import { withRange } from 'utils/styles';
 
 // Slider context
 interface SliderContextState {

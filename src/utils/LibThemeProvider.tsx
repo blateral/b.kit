@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 
-import { getBaseTheme } from './styles';
+import { getBaseTheme } from 'utils/styles';
 
 type RecursivePartial<T> = {
     [P in keyof T]?: RecursivePartial<T[P]>;

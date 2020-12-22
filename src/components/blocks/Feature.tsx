@@ -1,14 +1,10 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import {
-    spacings,
-    mq,
-    getColors as color,
-    withRange,
-} from '../../utils/styles';
+import { spacings, getColors as color, withRange } from 'utils/styles';
 
-import Copy from '../typography/Copy';
-import Image, { ImageProps as Props } from '../blocks/Image';
+import Copy from 'components/typography/Copy';
+import Image, { ImageProps as Props } from 'components/blocks/Image';
+import Actions from './Actions';
 
 const View = styled.div`
     min-width: 270px;
@@ -41,34 +37,8 @@ const Desc = styled.div`
     ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
 `;
 
-const Actions = styled.div`
-    flex-direction: column;
-    display: flex;
-    align-items: stretch;
-    padding-top: ${spacings.spacer * 2}px;
-    width: 100%;
-
-    & > * {
-        flex: 1;
-    }
-
-    & > * + * {
-        margin-top: ${spacings.spacer * 0.5}px;
-    }
-
-    @media ${mq.medium} {
-        flex-direction: row;
-        padding: ${spacings.spacer}px 0;
-
-        &:last-child {
-            padding-bottom: 0;
-        }
-
-        & > * + * {
-            margin-left: ${spacings.spacer}px;
-            margin-top: 0;
-        }
-    }
+const StyledActions = styled(Actions)`
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
 `;
 
 export interface FeatureProps {
@@ -141,10 +111,10 @@ const Feature: React.FC<
                 )}
             </Content>
             {(primaryAction || secondaryAction) && (
-                <Actions>
-                    {primaryAction && primaryAction(isInverted)}
-                    {secondaryAction && secondaryAction(isInverted)}
-                </Actions>
+                <StyledActions
+                    primary={primaryAction && primaryAction(isInverted)}
+                    secondary={secondaryAction && secondaryAction(isInverted)}
+                />
             )}
         </View>
     );

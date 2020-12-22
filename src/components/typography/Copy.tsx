@@ -7,7 +7,7 @@ import {
     withRange,
     FontOptionType,
     getFonts as font,
-} from '../../utils/styles';
+} from 'utils/styles';
 
 type CopyType = Exclude<
     FontType,

@@ -245,19 +245,19 @@ const defaultFonts: Fonts = {
     },
     callout: {
         small: {
-            ...copyBase,
-            lineHeight: '1.53',
-            size: [11, 13],
+            ...headingBase,
+            lineHeight: '1.14',
+            size: [33, 35],
         },
         medium: {
-            ...copyBase,
-            lineHeight: '1.43',
-            size: [14, 16],
+            ...headingBase,
+            lineHeight: '1.18',
+            size: [50, 55],
         },
         big: {
-            ...copyBase,
+            ...headingBase,
             lineHeight: '1.18',
-            size: [20, 22],
+            size: [60, 62],
         },
     },
 };

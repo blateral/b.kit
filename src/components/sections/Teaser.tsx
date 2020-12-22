@@ -1,19 +1,15 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Grid from '../base/Grid';
-import { HeadlineTag } from '../typography/Heading';
-import Image, { ImageProps } from '../blocks/Image';
-import Copy from '../typography/Copy';
-import Title from '../blocks/Title';
-import Wrapper from '../base/Wrapper';
-import Section, { BgMode } from '../base/Section';
-import {
-    mq,
-    spacings,
-    withRange,
-    getColors as color,
-} from '../../utils/styles';
+import Grid from 'components/base/Grid';
+import { HeadlineTag } from 'components/typography/Heading';
+import Image, { ImageProps } from 'components/blocks/Image';
+import Copy from 'components/typography/Copy';
+import Title from 'components/blocks/Title';
+import Wrapper from 'components/base/Wrapper';
+import Section, { BgMode } from 'components/base/Section';
+import { mq, spacings, withRange, getColors as color } from 'utils/styles';
+import Actions from 'components/blocks/Actions';
 
 const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
     display: flex;
@@ -84,26 +80,6 @@ const StyledTitle = styled(Title)`
     }
 `;
 
-const Actions = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: ${spacings.spacer}px 0;
-    padding-top: ${spacings.spacer * 2}px;
-
-    &:last-child {
-        padding-bottom: 0;
-    }
-
-    & > * {
-        flex: 1;
-    }
-
-    & > * + * {
-        margin-left: ${spacings.spacer}px;
-    }
-`;
-
 const ContentBlock = styled(Copy)`
     ul {
         padding-left: 0;
@@ -119,6 +95,10 @@ const SubTextBlock = styled(ContentBlock)`
     :not(:first-child) {
         padding-top: ${spacings.nudge * 3}px;
     }
+`;
+
+const StyledActions = styled(Actions)`
+    padding-top: ${spacings.spacer * 2}px;
 `;
 
 const Teaser: FC<{
@@ -250,11 +230,16 @@ const Teaser: FC<{
                                 </SubTextBlock>
                             )}
                             {(primaryAction || secondaryAction) && (
-                                <Actions>
-                                    {primaryAction && primaryAction(isInverted)}
-                                    {secondaryAction &&
-                                        secondaryAction(isInverted)}
-                                </Actions>
+                                <StyledActions
+                                    primary={
+                                        primaryAction &&
+                                        primaryAction(isInverted)
+                                    }
+                                    secondary={
+                                        secondaryAction &&
+                                        secondaryAction(isInverted)
+                                    }
+                                />
                             )}
                         </InfoWrapper>
                     </Grid.Col>

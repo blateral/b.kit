@@ -1,10 +1,12 @@
 import * as React from 'react';
-import Section, { BgMode } from '../base/Section';
-import Wrapper from '../base/Wrapper';
-import Title from '../blocks/Title';
 import styled, { ThemeContext } from 'styled-components';
-import Copy from '../typography/Copy';
-import { getColors as color, spacings } from '../../utils/styles';
+
+import Section, { BgMode } from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
+import Copy from 'components/typography/Copy';
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import Actions from 'components/blocks/Actions';
+import Intro from 'components/blocks/Intro';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
@@ -12,22 +14,14 @@ const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
 `;
 
-const ContentBlock = styled(Copy)<{ isCentered?: boolean }>`
-    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
-
-    ul {
-        padding-left: 0;
-        list-style-position: inside;
-    }
-
-    :not(:first-child) {
-        padding-top: ${spacings.nudge * 5}px;
-    }
-`;
-
 const ListContainer = styled.div`
-    margin-top: ${spacings.spacer * 1.75}px;
-    margin-bottom: ${spacings.spacer * 1.75}px;
+    &:not(:first-child) {
+        ${withRange([spacings.spacer, spacings.spacer * 1.75], 'margin-top')}
+    }
+
+    &:not(:last-child) {
+        ${withRange([spacings.spacer, spacings.spacer * 1.75], 'margin-bottom')}
+    }
 `;
 
 const ItemContainer = styled.div`
@@ -53,9 +47,14 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     margin-left: -20px;
 `;
 
-const Actions = styled.div`
-    & > * + * {
-        margin-left: ${spacings.spacer}px;
+const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
+    position: relative;
+    padding-top: ${spacings.spacer * 2}px;
+    left: ${({ isCentered }) => isCentered && '50%'};
+    transform: ${({ isCentered }) => isCentered && 'translateX(-50%)'};
+
+    @media ${mq.semilarge} {
+        max-width: 600px;
     }
 `;
 
@@ -117,22 +116,15 @@ const IconList: React.FC<{
             isCentered={isCentered}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <Title
-                    title={title}
-                    superTitle={superTitle}
-                    isInverted={isInverted}
-                    isCentered={isCentered}
-                />
-                <ContentBlock
-                    isCentered={isCentered}
-                    type="copy-b"
-                    textColor={
-                        isInverted ? color(theme).white : color(theme).black
-                    }
-                >
-                    {text}
-                </ContentBlock>
-
+                {title && (
+                    <Intro
+                        title={title}
+                        superTitle={superTitle}
+                        text={text}
+                        isInverted={isInverted}
+                        isCentered={isCentered}
+                    />
+                )}
                 <ListContainer>
                     <Copy
                         type="copy"
@@ -169,10 +161,13 @@ const IconList: React.FC<{
                 </ListContainer>
 
                 {(primaryAction || secondaryAction) && (
-                    <Actions>
-                        {primaryAction && primaryAction(isInverted)}
-                        {secondaryAction && secondaryAction(isInverted)}
-                    </Actions>
+                    <StyledActions
+                        isCentered={isCentered}
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
+                    />
                 )}
             </Wrapper>
         </StyledSection>

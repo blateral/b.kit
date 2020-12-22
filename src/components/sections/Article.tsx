@@ -1,11 +1,12 @@
 import * as React from 'react';
 import styled, { ThemeContext, css } from 'styled-components';
 
-import Section, { BgMode } from '../base/Section';
-import Title from '../blocks/Title';
-import Copy from '../typography/Copy';
-import { spacings, mq, getColors as color } from '../../utils/styles';
-import Wrapper from '../base/Wrapper';
+import Section, { BgMode } from 'components/base/Section';
+import Title from 'components/blocks/Title';
+import Copy from 'components/typography/Copy';
+import Wrapper from 'components/base/Wrapper';
+import { spacings, mq, getColors as color } from 'utils/styles';
+import Actions from 'components/blocks/Actions';
 
 const StyledTitle = styled(Title)`
     @media ${mq.semilarge} {
@@ -52,38 +53,11 @@ const ContentBlock = styled(Copy)<{ isAside?: boolean }>`
     }
 `;
 
-const Actions = styled.div`
-    flex-direction: column;
-    display: flex;
-    align-items: stretch;
+const StyledActions = styled(Actions)`
     padding-top: ${spacings.spacer * 2}px;
-    width: 100%;
-
-    & > * {
-        flex: 1;
-    }
-
-    & > * + * {
-        margin-top: ${spacings.spacer * 0.5}px;
-    }
-
-    @media ${mq.medium} {
-        flex-direction: row;
-        padding: ${spacings.spacer}px 0;
-
-        &:last-child {
-            padding-bottom: 0;
-        }
-
-        & > * + * {
-            margin-left: ${spacings.spacer}px;
-            margin-top: 0;
-        }
-    }
 
     @media ${mq.semilarge} {
         max-width: 50%;
-        align-items: flex-start;
     }
 `;
 
@@ -170,10 +144,12 @@ const Article: React.FC<{
                     )}
                 </Content>
                 {(primaryAction || secondaryAction) && (
-                    <Actions>
-                        {primaryAction && primaryAction(isInverted)}
-                        {secondaryAction && secondaryAction(isInverted)}
-                    </Actions>
+                    <StyledActions
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
+                    />
                 )}
             </Wrapper>
         </Section>

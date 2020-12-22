@@ -1,32 +1,46 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import {
-    mq,
-    spacings,
-    getColors as color,
-    withRange,
-} from '../../../utils/styles';
-import Wrapper from '../../base/Wrapper';
-import ArrowLeftGhost from '../../base/icons/ArrowLeftGhost';
-import ArrowRightGhost from '../../base/icons/ArrowRightGhost';
-import Slider from '../../blocks/Slider';
+import { mq, spacings, getColors as color, withRange } from 'utils/styles';
+import Wrapper from 'components/base/Wrapper';
+import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
+import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
+import Slider from 'components/blocks/Slider';
 import { ResponsiveObject } from 'react-slick';
+import Intro from 'components/blocks/Intro';
 
 const View = styled(Wrapper)`
     position: relative;
     overflow: hidden;
+
+    @media ${mq.xlarge} {
+        padding: 0;
+    }
+`;
+
+const Head = styled(Wrapper)`
+    display: flex;
+    flex-direction: row;
+`;
+
+const IntroBlock = styled.div`
+    ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
 `;
 
 const TopControls = styled.div`
     display: none;
     text-align: right;
     max-width: ${spacings.wrapper}px;
-    margin: 0 auto;
-    ${withRange([spacings.spacer * 0.5, spacings.spacer], 'margin-bottom')};
+    margin-left: auto;
+    ${withRange(
+        [spacings.spacer * 0.5, spacings.spacer * 1.5],
+        'margin-bottom'
+    )};
 
     @media ${mq.semilarge} {
-        display: block;
+        display: flex;
+        flex-direction: row;
+        align-self: flex-end;
     }
 `;
 
@@ -132,6 +146,13 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
 `;
 
 export interface CarouselProps {
+    title?: string;
+    superTitle?: string;
+    text?: string;
+
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+
     spacing?: 'normal' | 'large';
     variableWidths?: boolean;
     isInverted?: boolean;
@@ -146,6 +167,11 @@ export interface CarouselProps {
 }
 
 const CarouselBase: FC<CarouselProps & { className?: string }> = ({
+    title,
+    superTitle,
+    text,
+    primaryAction,
+    secondaryAction,
     spacing,
     variableWidths,
     isInverted,
@@ -176,28 +202,43 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                 afterChange={afterChange}
                 onInit={onInit}
             >
-                {React.Children.count(children) > 1 && (
-                    <TopControls>
-                        <StyledControl type="prev" isInverted={isInverted}>
-                            {(isActive) =>
-                                controlPrev ? (
-                                    controlPrev(isInverted, isActive)
-                                ) : (
-                                    <ArrowLeftGhost />
-                                )
-                            }
-                        </StyledControl>
-                        <StyledControl type="next" isInverted={isInverted}>
-                            {(isActive) =>
-                                controlNext ? (
-                                    controlNext(isInverted, isActive)
-                                ) : (
-                                    <ArrowRightGhost />
-                                )
-                            }
-                        </StyledControl>
-                    </TopControls>
-                )}
+                <Head clampWidth="normal" addWhitespace>
+                    {title && (
+                        <IntroBlock>
+                            <Intro
+                                title={title}
+                                superTitle={superTitle}
+                                text={text}
+                                isInverted={isInverted}
+                                secondaryAction={secondaryAction}
+                                primaryAction={primaryAction}
+                            />
+                        </IntroBlock>
+                    )}
+                    {React.Children.count(children) > 1 && (
+                        <TopControls>
+                            <StyledControl type="prev" isInverted={isInverted}>
+                                {(isActive) =>
+                                    controlPrev ? (
+                                        controlPrev(isInverted, isActive)
+                                    ) : (
+                                        <ArrowLeftGhost />
+                                    )
+                                }
+                            </StyledControl>
+                            <StyledControl type="next" isInverted={isInverted}>
+                                {(isActive) =>
+                                    controlNext ? (
+                                        controlNext(isInverted, isActive)
+                                    ) : (
+                                        <ArrowRightGhost />
+                                    )
+                                }
+                            </StyledControl>
+                        </TopControls>
+                    )}
+                </Head>
+
                 <StyledSlides>
                     {React.Children.map(children, (child, i) => (
                         <Slider.Slide key={i}>{child}</Slider.Slide>

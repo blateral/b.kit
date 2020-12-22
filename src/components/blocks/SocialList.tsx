@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, spacings } from '../../utils/styles';
-import Link from '../typography/Link';
+import { getColors as color, spacings } from 'utils/styles';
+import Link from 'components/typography/Link';
 
 const View = styled.div`
     display: flex;
