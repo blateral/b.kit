@@ -4,12 +4,12 @@ import { ThemeContext } from 'styled-components';
 import { getColors as color } from 'utils/styles';
 import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
-import Feature, { FeatureProps } from 'components/blocks/Feature';
+import VideoCard, { VideoCardProps } from 'components/blocks/VideoCard';
 
-const FeatureCarousel: FC<
+const VideoCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
         bgMode?: 'full' | 'splitted';
-        features?: FeatureProps[];
+        videos?: VideoCardProps[];
     }
 > = ({
     title,
@@ -19,7 +19,7 @@ const FeatureCarousel: FC<
     secondaryAction,
     isInverted = false,
     bgMode,
-    features,
+    videos,
     controlNext,
     controlPrev,
     beforeChange,
@@ -28,7 +28,7 @@ const FeatureCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const featureCount = features?.length || 0;
+    const featureCount = videos?.length || 0;
 
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
@@ -67,18 +67,18 @@ const FeatureCarousel: FC<
                 beforeChange={beforeChange}
                 afterChange={afterChange}
                 onInit={onInit}
-                slidesToShow={featureCount > 1 ? 3 : 1}
+                slidesToShow={featureCount > 1 ? 2.75 : 1}
                 responsive={[
                     {
                         breakpoint: 1024,
                         settings: {
-                            slidesToShow: featureCount > 1 ? 3 : 1,
+                            slidesToShow: featureCount > 1 ? 2.25 : 1,
                         },
                     },
                     {
                         breakpoint: 832,
                         settings: {
-                            slidesToShow: featureCount > 1 ? 2.25 : 1,
+                            slidesToShow: featureCount > 1 ? 1.15 : 1,
                         },
                     },
                     {
@@ -89,13 +89,11 @@ const FeatureCarousel: FC<
                     },
                 ]}
             >
-                {features &&
-                    features.map((feature, i) => (
-                        <Feature key={i} isInverted={isInverted} {...feature} />
-                    ))}
+                {videos &&
+                    videos.map((video, i) => <VideoCard key={i} {...video} />)}
             </CarouselBase>
         </Section>
     );
 };
 
-export default FeatureCarousel;
+export default VideoCarousel;

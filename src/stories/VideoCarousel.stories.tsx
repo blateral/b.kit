@@ -2,98 +2,64 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import FeatureCarousel from 'components/sections/carousel/FeatureCarousel';
-import Button from 'components/buttons/Button';
 import ArrowRight from 'components/base/icons/ArrowRight';
+import { VideoCardProps } from 'components/blocks/VideoCard';
+import VideoCarousel from 'components/sections/carousel/VideoCarousel';
+import { Button } from 'index';
 
-const actions = {
-    primaryAction: (isInverted?: boolean) => (
-        <Button.View isInverted={isInverted}>
-            <Button.Label>Primary</Button.Label>
-        </Button.View>
-    ),
-    secondaryAction: (isInverted?: boolean) => (
-        <Button.View type="ghost" isInverted={isInverted}>
-            <Button.Label>Secondary</Button.Label>
-        </Button.View>
-    ),
-};
-
-const features = [
+const videos = [
     {
-        image: {
-            small: 'https://unsplash.it/502/376?image=700',
-            medium: 'https://unsplash.it/600/600?image=700',
-            large: 'https://unsplash.it/314/314?image=700',
-            xlarge: 'https://unsplash.it/453/453?image=700',
+        bgImage: {
+            small: 'http://unsplash.it/640/480',
+            medium: 'http://unsplash.it/1024/576',
+            large: 'http://unsplash.it/1440/810',
+            xlarge: 'http://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
         },
-        title:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
-        description: 'Name/ Place/Position/ Telefon/Date',
-        intro:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-        text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
-        ...actions,
+        embedId: 'NpEaa2P7qZI',
     },
     {
-        image: {
-            small: 'https://unsplash.it/502/376?image=701',
-            medium: 'https://unsplash.it/600/600?image=701',
-            large: 'https://unsplash.it/314/314?image=701',
-            xlarge: 'https://unsplash.it/453/453?image=701',
+        bgImage: {
+            small: 'http://unsplash.it/640/480',
+            medium: 'http://unsplash.it/1024/576',
+            large: 'http://unsplash.it/1440/810',
+            xlarge: 'http://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
         },
-        title:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
-        description: 'Name/ Place/Position/ Telefon/Date',
-        intro:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-        text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
-        ...actions,
+        embedId: 'NpEaa2P7qZI',
     },
     {
-        image: {
-            small: 'https://unsplash.it/502/376?image=702',
-            medium: 'https://unsplash.it/600/600?image=702',
-            large: 'https://unsplash.it/314/314?image=702',
-            xlarge: 'https://unsplash.it/453/453?image=702',
+        bgImage: {
+            small: 'http://unsplash.it/640/480',
+            medium: 'http://unsplash.it/1024/576',
+            large: 'http://unsplash.it/1440/810',
+            xlarge: 'http://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
         },
-        title:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
-        description: 'Name/ Place/Position/ Telefon/Date',
-        intro:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-        text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
-        ...actions,
+        embedId: 'NpEaa2P7qZI',
     },
     {
-        image: {
-            small: 'https://unsplash.it/502/376?image=703',
-            medium: 'https://unsplash.it/600/600?image=703',
-            large: 'https://unsplash.it/314/314?image=703',
-            xlarge: 'https://unsplash.it/453/453?image=703',
+        bgImage: {
+            small: 'http://unsplash.it/640/480',
+            medium: 'http://unsplash.it/1024/576',
+            large: 'http://unsplash.it/1440/810',
+            xlarge: 'http://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
         },
-        title:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
-        description: 'Name/ Place/Position/ Telefon/Date',
-        intro:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-        text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
-        ...actions,
+        embedId: 'NpEaa2P7qZI',
     },
-];
+] as VideoCardProps[];
 
 export default {
-    title: 'Sections/Carousels/FeatureCarousel',
+    title: 'Sections/Carousels/VideoCarousel',
     component: FeatureCarousel,
 } as Meta;
 
-export const Default: Story = () => <FeatureCarousel features={features} />;
+export const Default: Story = () => <VideoCarousel videos={videos} />;
 
 export const WithIntro: Story = () => (
-    <FeatureCarousel
+    <VideoCarousel
+        videos={videos}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -107,13 +73,13 @@ export const WithIntro: Story = () => (
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         )}
-        features={features}
     />
 );
 
 export const Inverted: Story = () => (
-    <FeatureCarousel
+    <VideoCarousel
         isInverted
+        videos={videos}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -127,13 +93,13 @@ export const Inverted: Story = () => (
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         )}
-        features={features}
     />
 );
 
 export const WithBackground: Story = () => (
-    <FeatureCarousel
+    <VideoCarousel
         bgMode="full"
+        videos={videos}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -147,13 +113,13 @@ export const WithBackground: Story = () => (
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         )}
-        features={features}
     />
 );
 
 export const WithHalfBackground: Story = () => (
-    <FeatureCarousel
+    <VideoCarousel
         bgMode="splitted"
+        videos={videos}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -167,14 +133,13 @@ export const WithHalfBackground: Story = () => (
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         )}
-        features={features}
     />
 );
 
 export const WithHandlers: Story = () => (
-    <FeatureCarousel
+    <VideoCarousel
         bgMode="full"
-        features={features}
+        videos={videos}
         onInit={(steps) => console.log('carousel has ' + steps + ' steps')}
         beforeChange={(current) => console.log('before step: ' + current)}
         afterChange={(current) => console.log('after step: ' + current)}
@@ -195,9 +160,9 @@ export const WithHandlers: Story = () => (
 );
 
 export const WithCustomControls: Story = () => (
-    <FeatureCarousel
+    <VideoCarousel
         bgMode="full"
-        features={features}
+        videos={videos}
         controlNext={() => <ArrowRight />}
         controlPrev={() => <ArrowRight />}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
@@ -217,9 +182,9 @@ export const WithCustomControls: Story = () => (
 );
 
 export const WithCustomDots: Story = () => (
-    <FeatureCarousel
+    <VideoCarousel
         bgMode="full"
-        features={features}
+        videos={videos}
         dot={(isInverted, isActive) => (
             <ArrowRight iconColor={isActive ? 'red' : 'grey'} />
         )}
