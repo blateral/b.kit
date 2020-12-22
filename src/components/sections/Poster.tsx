@@ -1,18 +1,20 @@
 import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 
-import { spacings, withRange } from 'utils/styles';
+import Section from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Intro from './Intro';
+import { spacings, withRange } from 'utils/styles';
+import Intro from 'components/blocks/Intro';
 
-const View = styled.div<{
-    onClick?: () => void;
+const PosterContainer = styled.div<{
+    hasContent?: boolean;
 }>`
     position: relative;
     width: 100%;
 
     &:after {
-        content: '';
+        content: ${({ hasContent }) => hasContent && '""'};
         display: block;
         position: absolute;
         top: 0;
@@ -42,10 +44,10 @@ const View = styled.div<{
 
 const StyledImage = styled(Image)`
     width: 100%;
-    min-height: 300px;
+    min-height: 500px;
 `;
 
-const IntroContainer = styled.div`
+const IntroContainer = styled(Wrapper)`
     position: absolute;
     top: 0;
     right: 0;
@@ -54,8 +56,6 @@ const IntroContainer = styled.div`
     overflow: auto;
     z-index: 1;
 
-    padding-left: ${spacings.spacer * 2}px;
-    padding-right: ${spacings.spacer * 2}px;
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
     ${withRange([spacings.spacer, spacings.spacer * 4], 'padding-bottom')};
 
@@ -72,43 +72,36 @@ const IntroContainer = styled.div`
     }
 `;
 
-export interface PromotionCardProps {
+const Poster: FC<{
     image: ImageProps;
     title?: string;
     superTitle?: string;
     text?: string;
     primaryAction?: React.ReactNode;
     secondaryAction?: React.ReactNode;
-    onClick?: () => void;
-}
-
-const PromotionCard: FC<PromotionCardProps> = ({
-    image,
-    title,
-    superTitle,
-    text,
-    primaryAction,
-    secondaryAction,
-    onClick,
-}) => {
+}> = ({ title, superTitle, text, primaryAction, secondaryAction, image }) => {
     return (
-        <View onClick={onClick}>
-            <StyledImage {...image} coverSpace />
-            {title && (
-                <IntroContainer>
-                    <Intro
-                        title={title}
-                        superTitle={superTitle}
-                        text={text}
-                        isInverted
-                        secondaryAction={() => secondaryAction}
-                        primaryAction={() => primaryAction}
-                        clampText={text !== undefined}
-                    />
-                </IntroContainer>
-            )}
-        </View>
+        <Section>
+            <Wrapper clampWidth="large">
+                <PosterContainer hasContent={title !== undefined}>
+                    <StyledImage {...image} coverSpace />
+                    {title && (
+                        <IntroContainer addWhitespace>
+                            <Intro
+                                title={title}
+                                superTitle={superTitle}
+                                text={text}
+                                isInverted
+                                secondaryAction={() => secondaryAction}
+                                primaryAction={() => primaryAction}
+                                clampText={text !== undefined}
+                            />
+                        </IntroContainer>
+                    )}
+                </PosterContainer>
+            </Wrapper>
+        </Section>
     );
 };
 
-export default PromotionCard;
+export default Poster;
