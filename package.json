@@ -14,7 +14,8 @@
         "storybook": "start-storybook -p 9000 -c .storybook",
         "deploy-storybook": "if git-branch-is master; then yarn storybook-to-ghpages; fi",
         "tc": "tsc --noEmit",
-        "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz"
+        "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
+        "publish": "yarn tc && yarn build && yarn publish"
     },
     "repository": {
         "type": "git",
