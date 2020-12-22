@@ -10,6 +10,7 @@ const View = styled.div<{
 }>`
     position: relative;
     width: 100%;
+    min-height: 300px;
 
     &:after {
         content: '';

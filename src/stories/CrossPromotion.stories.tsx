@@ -110,7 +110,7 @@ export const TwoHalfCardsRatioA: Story = () => (
                     small: 'https://unsplash.it/290/290?image=409',
                     medium: 'https://unsplash.it/660/660?image=409',
                     large: 'https://unsplash.it/512/512?image=409',
-                    xLarge: 'https://unsplash.it/710/710?image=409',
+                    xlarge: 'https://unsplash.it/710/710?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -120,7 +120,7 @@ export const TwoHalfCardsRatioA: Story = () => (
                     small: 'https://unsplash.it/290/290?image=410',
                     medium: 'https://unsplash.it/660/660?image=410',
                     large: 'https://unsplash.it/512/512?image=410',
-                    xLarge: 'https://unsplash.it/710/710?image=410',
+                    xlarge: 'https://unsplash.it/710/710?image=410',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -379,6 +379,61 @@ export const Inverted: Story = () => (
                     xlarge: 'https://unsplash.it/710/533?image=410',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+        ]}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        )}
+    />
+);
+
+export const WithClickHandlers: Story = () => (
+    <CrossPromotion
+        main={[
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/290/217?image=411',
+                    medium: 'https://unsplash.it/660/492?image=411',
+                    large: 'https://unsplash.it/710/947?image=411',
+                    xlarge: 'https://unsplash.it/710/947?image=411',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                onClick: () => console.log('click card'),
+            },
+        ]}
+        aside={[
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/290/217?image=409',
+                    medium: 'https://unsplash.it/660/492?image=409',
+                    large: 'https://unsplash.it/512/383?image=409',
+                    xlarge: 'https://unsplash.it/710/533?image=409',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                onClick: () => console.log('click card'),
+            },
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/290/217?image=410',
+                    medium: 'https://unsplash.it/660/492?image=410',
+                    large: 'https://unsplash.it/512/383?image=410',
+                    xlarge: 'https://unsplash.it/710/533?image=410',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                onClick: () => console.log('click card'),
             },
         ]}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"

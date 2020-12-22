@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import FeatureCarousel from 'components/sections/carousel/FeatureCarousel';
 import ArrowRight from 'components/base/icons/ArrowRight';
 import { VideoCardProps } from 'components/blocks/VideoCard';
 import VideoCarousel from 'components/sections/carousel/VideoCarousel';
@@ -52,7 +51,7 @@ const videos = [
 
 export default {
     title: 'Sections/Carousels/VideoCarousel',
-    component: FeatureCarousel,
+    component: VideoCarousel,
 } as Meta;
 
 export const Default: Story = () => <VideoCarousel videos={videos} />;

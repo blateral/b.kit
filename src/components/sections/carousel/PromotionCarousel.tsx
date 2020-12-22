@@ -2,14 +2,16 @@ import React, { FC } from 'react';
 import { ThemeContext } from 'styled-components';
 
 import { getColors as color } from 'utils/styles';
-import Section, { BgMode } from 'components/base/Section';
+import Section from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
-import VideoCard, { VideoCardProps } from 'components/blocks/VideoCard';
+import PromotionCard, {
+    PromotionCardProps,
+} from 'components/blocks/PromotionCard';
 
-const VideoCarousel: FC<
+const PromotionCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
-        bgMode?: 'full' | 'splitted';
-        videos?: VideoCardProps[];
+        hasBack?: boolean;
+        promotions?: PromotionCardProps[];
     }
 > = ({
     title,
@@ -18,8 +20,8 @@ const VideoCarousel: FC<
     primaryAction,
     secondaryAction,
     isInverted = false,
-    bgMode,
-    videos,
+    hasBack,
+    promotions,
     controlNext,
     controlPrev,
     beforeChange,
@@ -28,18 +30,7 @@ const VideoCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const videoCount = videos?.length || 0;
-
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'half-right';
-            default:
-                return undefined;
-        }
-    };
+    const promotionCount = promotions?.length || 0;
 
     return (
         <Section
@@ -47,11 +38,11 @@ const VideoCarousel: FC<
             bgColor={
                 isInverted
                     ? color(theme).black
-                    : bgMode
+                    : hasBack
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? 'full' : undefined}
         >
             <CarouselBase
                 title={title}
@@ -67,33 +58,35 @@ const VideoCarousel: FC<
                 beforeChange={beforeChange}
                 afterChange={afterChange}
                 onInit={onInit}
-                slidesToShow={videoCount > 1 ? 2.75 : 1}
+                slidesToShow={promotionCount > 1 ? 2.75 : 1}
                 responsive={[
                     {
                         breakpoint: 1024,
                         settings: {
-                            slidesToShow: videoCount > 1 ? 2.25 : 1,
+                            slidesToShow: promotionCount > 1 ? 2.25 : 1,
                         },
                     },
                     {
                         breakpoint: 832,
                         settings: {
-                            slidesToShow: videoCount > 1 ? 1.15 : 1,
+                            slidesToShow: promotionCount > 1 ? 1.15 : 1,
                         },
                     },
                     {
                         breakpoint: 640,
                         settings: {
-                            slidesToShow: videoCount > 1 ? 1.15 : 1,
+                            slidesToShow: promotionCount > 1 ? 1.15 : 1,
                         },
                     },
                 ]}
             >
-                {videos &&
-                    videos.map((video, i) => <VideoCard key={i} {...video} />)}
+                {promotions &&
+                    promotions.map((promotion, i) => (
+                        <PromotionCard key={i} {...promotion} />
+                    ))}
             </CarouselBase>
         </Section>
     );
 };
 
-export default VideoCarousel;
+export default PromotionCarousel;
