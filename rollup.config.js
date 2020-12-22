@@ -26,6 +26,9 @@ export default {
         commonjs(),
         typescript({
             typescript: ttypescript,
+            tsconfigOverride: {
+                exclude: ['src/stories'],
+            },
         }),
     ],
 };
