@@ -36,9 +36,9 @@ const exampleFeaturesUneven = generateItemList<FeatureProps>(
     (item, i) => ({
         ...item,
         image: {
-            small: 'https://unsplash.it/502/376?image=70' + i,
-            medium: 'https://unsplash.it/600/600?image=70' + i,
-            large: 'https://unsplash.it/413/413?image=70' + i,
+            small: 'https://unsplash.it/599/450?image=70' + i,
+            medium: 'https://unsplash.it/789/789?image=70' + i,
+            large: 'https://unsplash.it/591/591?image=70' + i,
             xlarge: 'https://unsplash.it/592/592?image=70' + i,
         },
     })
@@ -50,9 +50,9 @@ const exampleFeaturesEven = generateItemList<FeatureProps>(
     (item, i) => ({
         ...item,
         image: {
-            small: 'https://unsplash.it/502/376?image=70' + i,
-            medium: 'https://unsplash.it/600/600?image=70' + i,
-            large: 'https://unsplash.it/413/413?image=70' + i,
+            small: 'https://unsplash.it/599/450?image=70' + i,
+            medium: 'https://unsplash.it/789/789?image=70' + i,
+            large: 'https://unsplash.it/591/591?image=70' + i,
             xlarge: 'https://unsplash.it/592/592?image=70' + i,
         },
     })
@@ -68,9 +68,9 @@ export const Default: Story = () => (
         features={exampleFeaturesUneven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/502/376?image=70' + i,
-                medium: 'https://unsplash.it/600/600?image=70' + i,
-                large: 'https://unsplash.it/413/413?image=70' + i,
+                small: 'https://unsplash.it/599/450?image=70' + i,
+                medium: 'https://unsplash.it/789/789?image=70' + i,
+                large: 'https://unsplash.it/591/591?image=70' + i,
                 xlarge: 'https://unsplash.it/592/592?image=70' + i,
             },
         }))}
@@ -82,9 +82,9 @@ export const WithIntro: Story = () => (
         features={exampleFeaturesUneven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/502/376?image=70' + i,
-                medium: 'https://unsplash.it/600/600?image=70' + i,
-                large: 'https://unsplash.it/413/413?image=70' + i,
+                small: 'https://unsplash.it/599/450?image=70' + i,
+                medium: 'https://unsplash.it/789/789?image=70' + i,
+                large: 'https://unsplash.it/591/591?image=70' + i,
                 xlarge: 'https://unsplash.it/592/592?image=70' + i,
             },
         }))}
@@ -104,14 +104,70 @@ export const WithIntro: Story = () => (
     />
 );
 
+export const ImgRatioA: Story = () => (
+    <FeatureList
+        features={exampleFeaturesUneven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/599/450?image=70' + i,
+                medium: 'https://unsplash.it/688/593?image=70' + i,
+                large: 'https://unsplash.it/591/444?image=70' + i,
+                xlarge: 'https://unsplash.it/592/445?image=70' + i,
+            },
+        }))}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        )}
+    />
+);
+ImgRatioA.storyName = 'Image ratio 4:3';
+
+export const ImgRatioB: Story = () => (
+    <FeatureList
+        features={exampleFeaturesUneven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/599/450?image=70' + i,
+                medium: 'https://unsplash.it/791/1070?image=70' + i,
+                large: 'https://unsplash.it/591/801?image=70' + i,
+                xlarge: 'https://unsplash.it/592/802?image=70' + i,
+            },
+        }))}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        )}
+    />
+);
+ImgRatioB.storyName = 'Image ratio 3:4';
+
 export const EvenAmountOfFeatures: Story = () => (
     <FeatureList
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/502/376?image=70' + i,
-                medium: 'https://unsplash.it/600/600?image=70' + i,
-                large: 'https://unsplash.it/413/413?image=70' + i,
+                small: 'https://unsplash.it/599/450?image=70' + i,
+                medium: 'https://unsplash.it/789/789?image=70' + i,
+                large: 'https://unsplash.it/591/591?image=70' + i,
                 xlarge: 'https://unsplash.it/592/592?image=70' + i,
             },
         }))}
@@ -137,9 +193,9 @@ export const WithBackground: Story = () => (
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/502/376?image=70' + i,
-                medium: 'https://unsplash.it/600/600?image=70' + i,
-                large: 'https://unsplash.it/413/413?image=70' + i,
+                small: 'https://unsplash.it/599/450?image=70' + i,
+                medium: 'https://unsplash.it/789/789?image=70' + i,
+                large: 'https://unsplash.it/591/591?image=70' + i,
                 xlarge: 'https://unsplash.it/592/592?image=70' + i,
             },
         }))}
@@ -165,9 +221,9 @@ export const WithSplittedBackground: Story = () => (
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/502/376?image=70' + i,
-                medium: 'https://unsplash.it/600/600?image=70' + i,
-                large: 'https://unsplash.it/413/413?image=70' + i,
+                small: 'https://unsplash.it/599/450?image=70' + i,
+                medium: 'https://unsplash.it/789/789?image=70' + i,
+                large: 'https://unsplash.it/591/591?image=70' + i,
                 xlarge: 'https://unsplash.it/592/592?image=70' + i,
             },
         }))}
@@ -194,9 +250,9 @@ export const Inverted: Story = () => (
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/502/376?image=70' + i,
-                medium: 'https://unsplash.it/600/600?image=70' + i,
-                large: 'https://unsplash.it/413/413?image=70' + i,
+                small: 'https://unsplash.it/599/450?image=70' + i,
+                medium: 'https://unsplash.it/789/789?image=70' + i,
+                large: 'https://unsplash.it/591/591?image=70' + i,
                 xlarge: 'https://unsplash.it/592/592?image=70' + i,
             },
         }))}
