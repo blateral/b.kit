@@ -264,7 +264,10 @@ const defaultFonts: Fonts = {
 
 /***** Theme Helper *****/
 export const getBaseTheme = () => {
-    return { colors: defaultColors, fonts: defaultFonts } as DefaultTheme;
+    return {
+        colors: { ...defaultColors },
+        fonts: { ...defaultFonts },
+    } as DefaultTheme;
 };
 
 export const getTheme = (theme?: DefaultTheme) => {

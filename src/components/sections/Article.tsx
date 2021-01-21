@@ -43,7 +43,7 @@ const ContentBlock = styled(Copy)<{ isAside?: boolean }>`
     }
 
     :not(:first-child) {
-        padding-top: ${({ isAside }) => (isAside ? '' : spacings.nudge * 5)};
+        padding-top: ${({ isAside }) => (isAside ? spacings.nudge * 4 : '0')}px;
     }
 
     flex: ${({ isAside }) => (isAside ? '1 0 30%' : '1 0 60%')};

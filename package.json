@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "0.2.8",
+    "version": "0.2.9",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
@@ -15,7 +15,7 @@
         "deploy-storybook": "if git-branch-is master; then yarn storybook-to-ghpages; fi",
         "tc": "tsc --noEmit",
         "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
-        "publish": "yarn tc && yarn build && yarn publish"
+        "deploy": "yarn tc && yarn build && yarn publish"
     },
     "repository": {
         "type": "git",

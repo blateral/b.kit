@@ -11,7 +11,7 @@ import PromotionCard, {
 const PromotionCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
         hasBack?: boolean;
-        promotions?: PromotionCardProps[];
+        promotions?: Omit<PromotionCardProps, 'text'>[];
     }
 > = ({
     title,
