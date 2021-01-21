@@ -5,57 +5,36 @@ import ArrowRight from 'components/base/icons/ArrowRight';
 import Button from 'components/buttons/Button';
 import PromotionCarousel from 'components/sections/carousel/PromotionCarousel';
 import { PromotionCardProps } from 'components/blocks/PromotionCard';
+import { generateItemList } from 'utils/storyHelpers';
 
-const promotions = [
-    {
+const examplePromotion: Omit<PromotionCardProps, 'text'> = {
+    superTitle: 'Haus St. Franziskus',
+    title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+    image: {
+        small: 'https://unsplash.it/553/553',
+        medium: 'https://unsplash.it/441/441',
+        large: 'https://unsplash.it/507/507',
+        xlarge: 'https://unsplash.it/680/680',
+        alt: 'Image Placeholder',
+    },
+};
+
+const examplePromotions = generateItemList<Omit<PromotionCardProps, 'text'>>(
+    examplePromotion,
+    4,
+    (item, i) => ({
+        ...item,
         superTitle: 'Haus St. Franziskus',
         title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-        text:
-            'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
         image: {
-            small: 'https://unsplash.it/290/290?image=408',
-            medium: 'https://unsplash.it/660/660?image=408',
-            large: 'https://unsplash.it/512/512?image=408',
-            xlarge: 'https://unsplash.it/710/710?image=408',
+            small: `${item.image.small}?image=40${i}`,
+            medium: `${item.image.medium}?image=40${i}`,
+            large: `${item.image.large}?image=40${i}`,
+            xlarge: `${item.image.xlarge}?image=40${i}`,
+            alt: 'Image Placeholder ' + i,
         },
-    },
-    {
-        superTitle: 'Haus St. Franziskus',
-        title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-        text:
-            'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-        image: {
-            small: 'https://unsplash.it/290/290?image=409',
-            medium: 'https://unsplash.it/660/660?image=409',
-            large: 'https://unsplash.it/512/512?image=409',
-            xlarge: 'https://unsplash.it/710/710?image=409',
-        },
-    },
-    {
-        superTitle: 'Haus St. Franziskus',
-        title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-        text:
-            'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-        image: {
-            small: 'https://unsplash.it/290/290?image=410',
-            medium: 'https://unsplash.it/660/660?image=410',
-            large: 'https://unsplash.it/512/512?image=410',
-            xlarge: 'https://unsplash.it/710/710?image=410',
-        },
-    },
-    {
-        superTitle: 'Haus St. Franziskus',
-        title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-        text:
-            'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-        image: {
-            small: 'https://unsplash.it/290/290?image=411',
-            medium: 'https://unsplash.it/660/660?image=411',
-            large: 'https://unsplash.it/512/512?image=411',
-            xlarge: 'https://unsplash.it/710/710?image=411',
-        },
-    },
-] as PromotionCardProps[];
+    })
+);
 
 export default {
     title: 'Sections/Carousels/PromotionCarousel',
@@ -63,12 +42,32 @@ export default {
 } as Meta;
 
 export const Default: Story = () => (
-    <PromotionCarousel promotions={promotions} />
+    <PromotionCarousel
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/553?image=40' + i,
+                medium: 'https://unsplash.it/441/441?image=40' + i,
+                large: 'https://unsplash.it/507/507?image=40' + i,
+                xlarge: 'https://unsplash.it/680/680?image=40' + i,
+                alt: 'Image Placeholder ' + i,
+            },
+        }))}
+    />
 );
 
 export const WithIntro: Story = () => (
     <PromotionCarousel
-        promotions={promotions}
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/553?image=40' + i,
+                medium: 'https://unsplash.it/441/441?image=40' + i,
+                large: 'https://unsplash.it/507/507?image=40' + i,
+                xlarge: 'https://unsplash.it/680/680?image=40' + i,
+                alt: 'Image Placeholder ' + i,
+            },
+        }))}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -88,7 +87,16 @@ export const WithIntro: Story = () => (
 export const Inverted: Story = () => (
     <PromotionCarousel
         isInverted
-        promotions={promotions}
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/553?image=40' + i,
+                medium: 'https://unsplash.it/441/441?image=40' + i,
+                large: 'https://unsplash.it/507/507?image=40' + i,
+                xlarge: 'https://unsplash.it/680/680?image=40' + i,
+                alt: 'Image Placeholder ' + i,
+            },
+        }))}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -108,7 +116,16 @@ export const Inverted: Story = () => (
 export const WithBackground: Story = () => (
     <PromotionCarousel
         hasBack
-        promotions={promotions}
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/553?image=40' + i,
+                medium: 'https://unsplash.it/441/441?image=40' + i,
+                large: 'https://unsplash.it/507/507?image=40' + i,
+                xlarge: 'https://unsplash.it/680/680?image=40' + i,
+                alt: 'Image Placeholder ' + i,
+            },
+        }))}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -128,7 +145,16 @@ export const WithBackground: Story = () => (
 export const WithHandlers: Story = () => (
     <PromotionCarousel
         hasBack
-        promotions={promotions}
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/553?image=40' + i,
+                medium: 'https://unsplash.it/441/441?image=40' + i,
+                large: 'https://unsplash.it/507/507?image=40' + i,
+                xlarge: 'https://unsplash.it/680/680?image=40' + i,
+                alt: 'Image Placeholder ' + i,
+            },
+        }))}
         onInit={(steps) => console.log('carousel has ' + steps + ' steps')}
         beforeChange={(current) => console.log('before step: ' + current)}
         afterChange={(current) => console.log('after step: ' + current)}
@@ -151,7 +177,16 @@ export const WithHandlers: Story = () => (
 export const WithCustomControls: Story = () => (
     <PromotionCarousel
         hasBack
-        promotions={promotions}
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/553?image=40' + i,
+                medium: 'https://unsplash.it/441/441?image=40' + i,
+                large: 'https://unsplash.it/507/507?image=40' + i,
+                xlarge: 'https://unsplash.it/680/680?image=40' + i,
+                alt: 'Image Placeholder ' + i,
+            },
+        }))}
         controlNext={() => <ArrowRight />}
         controlPrev={() => <ArrowRight />}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
@@ -173,7 +208,16 @@ export const WithCustomControls: Story = () => (
 export const WithCustomDots: Story = () => (
     <PromotionCarousel
         hasBack
-        promotions={promotions}
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/553?image=40' + i,
+                medium: 'https://unsplash.it/441/441?image=40' + i,
+                large: 'https://unsplash.it/507/507?image=40' + i,
+                xlarge: 'https://unsplash.it/680/680?image=40' + i,
+                alt: 'Image Placeholder ' + i,
+            },
+        }))}
         dot={(isInverted, isActive) => (
             <ArrowRight iconColor={isActive ? 'red' : 'grey'} />
         )}
@@ -209,56 +253,16 @@ export const WithRatioA: Story = () => (
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         )}
-        promotions={[
-            {
-                superTitle: 'Haus St. Franziskus',
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-                image: {
-                    small: 'https://unsplash.it/290/217?image=408',
-                    medium: 'https://unsplash.it/660/492?image=408',
-                    large: 'https://unsplash.it/512/383?image=408',
-                    xlarge: 'https://unsplash.it/710/533?image=408',
-                },
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/415?image=40' + i,
+                medium: 'https://unsplash.it/441/331?image=40' + i,
+                large: 'https://unsplash.it/507/381?image=40' + i,
+                xlarge: 'https://unsplash.it/680/510?image=40' + i,
+                alt: 'Image Placeholder ' + i,
             },
-            {
-                superTitle: 'Haus St. Franziskus',
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-                image: {
-                    small: 'https://unsplash.it/290/217?image=409',
-                    medium: 'https://unsplash.it/660/492?image=409',
-                    large: 'https://unsplash.it/512/383?image=409',
-                    xlarge: 'https://unsplash.it/710/533?image=409',
-                },
-            },
-            {
-                superTitle: 'Haus St. Franziskus',
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-                image: {
-                    small: 'https://unsplash.it/290/217?image=410',
-                    medium: 'https://unsplash.it/660/492?image=410',
-                    large: 'https://unsplash.it/512/383?image=410',
-                    xlarge: 'https://unsplash.it/710/533?image=410',
-                },
-            },
-            {
-                superTitle: 'Haus St. Franziskus',
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-                image: {
-                    small: 'https://unsplash.it/290/217?image=411',
-                    medium: 'https://unsplash.it/660/492?image=411',
-                    large: 'https://unsplash.it/512/383?image=411',
-                    xlarge: 'https://unsplash.it/710/533?image=411',
-                },
-            },
-        ]}
+        }))}
     />
 );
 
@@ -280,56 +284,16 @@ export const WithRatioB: Story = () => (
                 <Button.Label>Secondary</Button.Label>
             </Button.View>
         )}
-        promotions={[
-            {
-                superTitle: 'Haus St. Franziskus',
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-                image: {
-                    small: 'https://unsplash.it/710/947?image=408',
-                    medium: 'https://unsplash.it/749/999?image=408',
-                    large: 'https://unsplash.it/512/682?image=408',
-                    xlarge: 'https://unsplash.it/710/947?image=408',
-                },
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/736?image=40' + i,
+                medium: 'https://unsplash.it/441/587?image=40' + i,
+                large: 'https://unsplash.it/507/675?image=40' + i,
+                xlarge: 'https://unsplash.it/680/905?image=40' + i,
+                alt: 'Image Placeholder ' + i,
             },
-            {
-                superTitle: 'Haus St. Franziskus',
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-                image: {
-                    small: 'https://unsplash.it/710/947?image=409',
-                    medium: 'https://unsplash.it/749/999?image=409',
-                    large: 'https://unsplash.it/512/682?image=409',
-                    xlarge: 'https://unsplash.it/710/947?image=409',
-                },
-            },
-            {
-                superTitle: 'Haus St. Franziskus',
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-                image: {
-                    small: 'https://unsplash.it/710/947?image=410',
-                    medium: 'https://unsplash.it/749/999?image=410',
-                    large: 'https://unsplash.it/512/682?image=410',
-                    xlarge: 'https://unsplash.it/710/947?image=410',
-                },
-            },
-            {
-                superTitle: 'Haus St. Franziskus',
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-                image: {
-                    small: 'https://unsplash.it/710/947?image=411',
-                    medium: 'https://unsplash.it/749/999?image=411',
-                    large: 'https://unsplash.it/512/682?image=411',
-                    xlarge: 'https://unsplash.it/710/947?image=411',
-                },
-            },
-        ]}
+        }))}
     />
 );
 

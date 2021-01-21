@@ -22,10 +22,10 @@ const actions = {
 
 const exampleFeature: FeatureProps = {
     image: {
-        small: 'https://unsplash.it/502/376?image=700',
-        medium: 'https://unsplash.it/600/600?image=700',
-        large: 'https://unsplash.it/314/314?image=700',
-        xlarge: 'https://unsplash.it/453/453?image=700',
+        small: 'https://unsplash.it/502/376',
+        medium: 'https://unsplash.it/600/600',
+        large: 'https://unsplash.it/314/314',
+        xlarge: 'https://unsplash.it/453/453',
     },
     title:
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
@@ -43,10 +43,10 @@ const exampleFeatures = generateItemList<FeatureProps>(
     (item, i) => ({
         ...item,
         image: {
-            small: 'https://unsplash.it/502/376?image=70' + i,
-            medium: 'https://unsplash.it/600/600?image=70' + i,
-            large: 'https://unsplash.it/314/314?image=70' + i,
-            xlarge: 'https://unsplash.it/453/453?image=70' + i,
+            small: `${item.image?.small}?image=70${i}`,
+            medium: `${item.image?.medium}?image=70${i}`,
+            large: `${item.image?.large}?image=70${i}`,
+            xlarge: `${item.image?.xlarge}?image=70${i}`,
         },
     })
 );
