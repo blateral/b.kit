@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import FeatureList from 'components/sections/FeatureList';
 import Button from 'components/buttons/Button';
+import { FeatureProps } from 'components/blocks/Feature';
+import { generateItemList } from 'utils/storyHelpers';
 
 const actions = {
     primaryAction: (isInverted?: boolean) => (
@@ -17,7 +19,7 @@ const actions = {
     ),
 };
 
-const Feature = {
+const exampleFeature: FeatureProps = {
     title:
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
     description: 'Name/ Place/Position/ Telefon/Date',
@@ -28,103 +30,64 @@ const Feature = {
     ...actions,
 };
 
-const FeaturesUneven = [
-    {
-        ...Feature,
+const exampleFeaturesUneven = generateItemList<FeatureProps>(
+    exampleFeature,
+    5,
+    (item, i) => ({
+        ...item,
         image: {
-            small: 'https://unsplash.it/502/376?image=700',
-            medium: 'https://unsplash.it/600/600?image=700',
-            large: 'https://unsplash.it/413/413?image=700',
-            xlarge: 'https://unsplash.it/592/592?image=700',
+            small: 'https://unsplash.it/502/376?image=70' + i,
+            medium: 'https://unsplash.it/600/600?image=70' + i,
+            large: 'https://unsplash.it/413/413?image=70' + i,
+            xlarge: 'https://unsplash.it/592/592?image=70' + i,
         },
-    },
-    {
-        ...Feature,
-        image: {
-            small: 'https://unsplash.it/502/376?image=701',
-            medium: 'https://unsplash.it/600/600?image=701',
-            large: 'https://unsplash.it/413/413?image=701',
-            xlarge: 'https://unsplash.it/592/592?image=701',
-        },
-    },
-    {
-        ...Feature,
-        image: {
-            small: 'https://unsplash.it/502/376?image=702',
-            medium: 'https://unsplash.it/600/600?image=702',
-            large: 'https://unsplash.it/413/413?image=702',
-            xlarge: 'https://unsplash.it/592/592?image=702',
-        },
-    },
-    {
-        ...Feature,
-        image: {
-            small: 'https://unsplash.it/502/376?image=703',
-            medium: 'https://unsplash.it/600/600?image=703',
-            large: 'https://unsplash.it/413/413?image=703',
-            xlarge: 'https://unsplash.it/592/592?image=703',
-        },
-    },
-    {
-        ...Feature,
-        image: {
-            small: 'https://unsplash.it/502/376?image=704',
-            medium: 'https://unsplash.it/600/600?image=704',
-            large: 'https://unsplash.it/413/413?image=704',
-            xlarge: 'https://unsplash.it/592/592?image=704',
-        },
-    },
-];
+    })
+);
 
-const FeaturesEven = [
-    {
-        ...Feature,
+const exampleFeaturesEven = generateItemList<FeatureProps>(
+    exampleFeature,
+    4,
+    (item, i) => ({
+        ...item,
         image: {
-            small: 'https://unsplash.it/502/376?image=700',
-            medium: 'https://unsplash.it/600/600?image=700',
-            large: 'https://unsplash.it/413/413?image=700',
-            xlarge: 'https://unsplash.it/592/592?image=700',
+            small: 'https://unsplash.it/502/376?image=70' + i,
+            medium: 'https://unsplash.it/600/600?image=70' + i,
+            large: 'https://unsplash.it/413/413?image=70' + i,
+            xlarge: 'https://unsplash.it/592/592?image=70' + i,
         },
-    },
-    {
-        ...Feature,
-        image: {
-            small: 'https://unsplash.it/502/376?image=701',
-            medium: 'https://unsplash.it/600/600?image=701',
-            large: 'https://unsplash.it/413/413?image=701',
-            xlarge: 'https://unsplash.it/592/592?image=701',
-        },
-    },
-    {
-        ...Feature,
-        image: {
-            small: 'https://unsplash.it/502/376?image=702',
-            medium: 'https://unsplash.it/600/600?image=702',
-            large: 'https://unsplash.it/413/413?image=702',
-            xlarge: 'https://unsplash.it/592/592?image=702',
-        },
-    },
-    {
-        ...Feature,
-        image: {
-            small: 'https://unsplash.it/502/376?image=703',
-            medium: 'https://unsplash.it/600/600?image=703',
-            large: 'https://unsplash.it/413/413?image=703',
-            xlarge: 'https://unsplash.it/592/592?image=703',
-        },
-    },
-];
+    })
+);
 
 export default {
     title: 'Sections/FeatureList',
     component: FeatureList,
 } as Meta;
 
-export const Default: Story = () => <FeatureList features={FeaturesUneven} />;
+export const Default: Story = () => (
+    <FeatureList
+        features={exampleFeaturesUneven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/502/376?image=70' + i,
+                medium: 'https://unsplash.it/600/600?image=70' + i,
+                large: 'https://unsplash.it/413/413?image=70' + i,
+                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+            },
+        }))}
+    />
+);
 
 export const WithIntro: Story = () => (
     <FeatureList
-        features={FeaturesUneven}
+        features={exampleFeaturesUneven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/502/376?image=70' + i,
+                medium: 'https://unsplash.it/600/600?image=70' + i,
+                large: 'https://unsplash.it/413/413?image=70' + i,
+                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+            },
+        }))}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -143,7 +106,15 @@ export const WithIntro: Story = () => (
 
 export const EvenAmountOfFeatures: Story = () => (
     <FeatureList
-        features={FeaturesEven}
+        features={exampleFeaturesEven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/502/376?image=70' + i,
+                medium: 'https://unsplash.it/600/600?image=70' + i,
+                large: 'https://unsplash.it/413/413?image=70' + i,
+                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+            },
+        }))}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -163,7 +134,15 @@ export const EvenAmountOfFeatures: Story = () => (
 export const WithBackground: Story = () => (
     <FeatureList
         bgMode="full"
-        features={FeaturesEven}
+        features={exampleFeaturesEven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/502/376?image=70' + i,
+                medium: 'https://unsplash.it/600/600?image=70' + i,
+                large: 'https://unsplash.it/413/413?image=70' + i,
+                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+            },
+        }))}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -183,7 +162,15 @@ export const WithBackground: Story = () => (
 export const WithSplittedBackground: Story = () => (
     <FeatureList
         bgMode="splitted"
-        features={FeaturesEven}
+        features={exampleFeaturesEven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/502/376?image=70' + i,
+                medium: 'https://unsplash.it/600/600?image=70' + i,
+                large: 'https://unsplash.it/413/413?image=70' + i,
+                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+            },
+        }))}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -204,7 +191,15 @@ export const Inverted: Story = () => (
     <FeatureList
         isInverted
         bgMode="splitted"
-        features={FeaturesEven}
+        features={exampleFeaturesEven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/502/376?image=70' + i,
+                medium: 'https://unsplash.it/600/600?image=70' + i,
+                large: 'https://unsplash.it/413/413?image=70' + i,
+                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+            },
+        }))}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
