@@ -98,7 +98,9 @@ const Feature: React.FC<
             </Content>
             <Content>
                 <ContentBlock type="copy-b" textColor={textColor}>
-                    {intro}
+                    {intro && (
+                        <div dangerouslySetInnerHTML={{ __html: intro }} />
+                    )}
                 </ContentBlock>
                 {text && (
                     <ContentBlock

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Link from 'components/typography/Link';
 import Footer from 'components/sections/Footer';
 
 import Facebook from 'components/base/icons/socials/Facebook';
@@ -10,57 +9,35 @@ import Xing from 'components/base/icons/socials/Xing';
 import Twitter from 'components/base/icons/socials/Twitter';
 import CompactForm from 'components/fields/CompactForm';
 
-const exampleContactData = (
-    <>
-        Max Mustermann GmbH
-        <br />
-        Musterstraße 15-17
-        <br />
-        12345 Musterstadt
-        <br />
-        <br />
-        Tel. +49 2302 2233-223
-        <br />
-        Fax +49 2302 2233-223
-        <br />
-        <Link isExternal href="max-mustermann@examplemail.com">
-            max-mustermann@examplemail.com
-        </Link>
-    </>
-);
-
+const exampleContactData = `
+    Max Mustermann GmbH
+    <br />
+    Musterstraße 15-17
+    <br />
+    12345 Musterstadt
+    <br />
+    <br />
+    Tel. +49 2302 2233-223
+    <br />
+    Fax +49 2302 2233-223
+    <br />
+    <a href="mailto:max-mustermann@examplemail.com">
+        max-mustermann@examplemail.com
+    </a>
+`;
 export default {
     title: 'Sections/Footer',
     component: Footer,
 } as Meta;
 
 export const WithContactData: Story = () => (
-    <Footer
-        contactData={
-            <>
-                Max Mustermann GmbH
-                <br />
-                Musterstraße 15-17
-                <br />
-                12345 Musterstadt
-                <br />
-                <br />
-                Tel. +49 2302 2233-223
-                <br />
-                Fax +49 2302 2233-223
-                <br />
-                <Link isExternal href="max-mustermann@examplemail.com">
-                    max-mustermann@examplemail.com
-                </Link>
-            </>
-        }
-    />
+    <Footer contactData={exampleContactData} />
 );
 
 export const WithLogo: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
+            img: 'https://via.placeholder.com/289x77?text=Logo',
             link: '/',
         }}
         contactData={exampleContactData}
@@ -70,27 +47,62 @@ export const WithLogo: Story = () => (
 export const WithSiteLinks: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
+            img: 'https://via.placeholder.com/289x77?text=Logo',
             link: '/',
         }}
         contactData={exampleContactData}
         siteLinks={[
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen', isActive: true },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen' },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+        ]}
+    />
+);
+
+export const WithMoreSiteLinks: Story = () => (
+    <Footer
+        logo={{
+            img: 'https://via.placeholder.com/289x77?text=Logo',
+            link: '/',
+        }}
+        contactData={exampleContactData}
+        siteLinks={[
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen' },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+        ]}
+    />
+);
+
+export const WithUnevenSiteLinks: Story = () => (
+    <Footer
+        logo={{
+            img: 'https://via.placeholder.com/289x77?text=Logo',
+            link: '/',
+        }}
+        contactData={exampleContactData}
+        siteLinks={[
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen' },
         ]}
     />
 );
@@ -98,27 +110,23 @@ export const WithSiteLinks: Story = () => (
 export const WithNewsletterTitleAndText: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
+            img: 'https://via.placeholder.com/289x77?text=Logo',
             link: '/',
         }}
         contactData={exampleContactData}
         siteLinks={[
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen', isActive: true },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen' },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen' },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
@@ -128,27 +136,23 @@ export const WithNewsletterTitleAndText: Story = () => (
 export const WithNewsletterForm: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
+            img: 'https://via.placeholder.com/289x77?text=Logo',
             link: '/',
         }}
         contactData={exampleContactData}
         siteLinks={[
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen', isActive: true },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen' },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen' },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
@@ -168,27 +172,23 @@ export const WithNewsletterForm: Story = () => (
 export const WithSocials: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
+            img: 'https://via.placeholder.com/289x77?text=Logo',
             link: '/',
         }}
         contactData={exampleContactData}
         siteLinks={[
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen', isActive: true },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen' },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen' },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
@@ -214,28 +214,24 @@ export const WithSocials: Story = () => (
 export const WithColumnTopSpace: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
+            img: 'https://via.placeholder.com/289x77?text=Logo',
             link: '/',
         }}
         columnTopSpace="40px"
         contactData={exampleContactData}
         siteLinks={[
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen', isActive: true },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen' },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen' },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
@@ -261,28 +257,24 @@ export const WithColumnTopSpace: Story = () => (
 export const WithBottomLinks: Story = () => (
     <Footer
         logo={{
-            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
+            img: 'https://via.placeholder.com/289x77?text=Logo',
             link: '/',
         }}
         columnTopSpace="40px"
         contactData={exampleContactData}
         siteLinks={[
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen', isActive: true },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen' },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen' },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
@@ -313,28 +305,24 @@ export const Inverted: Story = () => (
     <Footer
         isInverted
         logo={{
-            image: <img src="https://via.placeholder.com/289x77?text=Logo" />,
+            img: 'https://via.placeholder.com/289x77?text=Logo',
             link: '/',
         }}
         columnTopSpace="40px"
         contactData={exampleContactData}
         siteLinks={[
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen', isActive: true },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
-            [
-                { href: '#', label: 'Aufgaben/Bereiche' },
-                { href: '#', label: 'Pflege' },
-                { href: '#', label: 'Wohnen' },
-                { href: '#', label: 'Arbeiten & Mitwirken' },
-                { href: '#', label: 'Spenden' },
-                { href: '#', label: 'Stiftung' },
-            ],
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen' },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
         ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}

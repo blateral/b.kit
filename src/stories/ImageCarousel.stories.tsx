@@ -13,7 +13,7 @@ export default {
 } as Meta;
 
 const exampleImage: ImageProps = {
-    small: 'https://unsplash.it/553/553',
+    small: 'https://unsplash.it/553/431',
     medium: 'https://unsplash.it/357/357',
     large: 'https://unsplash.it/507/507',
     xlarge: 'https://unsplash.it/680/680',
@@ -37,7 +37,7 @@ export const Default: Story = () => (
     <ImageCarousel
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/553?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/357?image=40' + i,
             large: 'https://unsplash.it/507/507?image=40' + i,
             xlarge: 'https://unsplash.it/680/680?image=40' + i,
@@ -63,7 +63,7 @@ export const WithIntro: Story = () => (
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/553?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/357?image=40' + i,
             large: 'https://unsplash.it/507/507?image=40' + i,
             xlarge: 'https://unsplash.it/680/680?image=40' + i,
@@ -157,7 +157,7 @@ export const ImageRatioB: Story = () => (
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/738?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/476?image=40' + i,
             large: 'https://unsplash.it/507/676?image=40' + i,
             xlarge: 'https://unsplash.it/680/906?image=40' + i,
@@ -185,7 +185,7 @@ export const Inverted: Story = () => (
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/553?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/357?image=40' + i,
             large: 'https://unsplash.it/507/507?image=40' + i,
             xlarge: 'https://unsplash.it/680/680?image=40' + i,
@@ -212,7 +212,7 @@ export const WithBackground: Story = () => (
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/553?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/357?image=40' + i,
             large: 'https://unsplash.it/507/507?image=40' + i,
             xlarge: 'https://unsplash.it/680/680?image=40' + i,
@@ -239,7 +239,7 @@ export const WithHalfBackground: Story = () => (
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/553?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/357?image=40' + i,
             large: 'https://unsplash.it/507/507?image=40' + i,
             xlarge: 'https://unsplash.it/680/680?image=40' + i,
@@ -267,7 +267,7 @@ export const WithLargeSpacing: Story = () => (
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/553?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/357?image=40' + i,
             large: 'https://unsplash.it/507/507?image=40' + i,
             xlarge: 'https://unsplash.it/680/680?image=40' + i,
@@ -297,7 +297,7 @@ export const WithHandlers: Story = () => (
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/553?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/357?image=40' + i,
             large: 'https://unsplash.it/507/507?image=40' + i,
             xlarge: 'https://unsplash.it/680/680?image=40' + i,
@@ -326,7 +326,7 @@ export const WithCustomControls: Story = () => (
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/553?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/357?image=40' + i,
             large: 'https://unsplash.it/507/507?image=40' + i,
             xlarge: 'https://unsplash.it/680/680?image=40' + i,
@@ -356,7 +356,7 @@ export const WithCustomDots: Story = () => (
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
-            small: 'https://unsplash.it/553/553?image=40' + i,
+            small: 'https://unsplash.it/553/431?image=40' + i,
             medium: 'https://unsplash.it/357/357?image=40' + i,
             large: 'https://unsplash.it/507/507?image=40' + i,
             xlarge: 'https://unsplash.it/680/680?image=40' + i,
