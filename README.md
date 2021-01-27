@@ -121,9 +121,12 @@ Inside library project:
 
 -   Install yalc globally: `yarn global add yalc`
 -   Run `yalc publish` to publish library into local yalc store.
+-   Run `yalc push` to push changes to all installations
 
 Inside project that should use the library:
 
 -   Run `yalc add <repository-name>` in target lokal repository to link library from yalc store.
--   Use `yalc update` or `yalc update <repository-name>` to update all linked packages
--   use `yalc remove <repository-name>` to remove linked package
+-   Use `yalc update` or `yalc update <repository-name>` to update all linked packages.
+-   use `yalc remove <repository-name>` to remove linked package.
+
+    Before each push to git `yalc check` performs a check to ensure that all linked packages are removed from package.json. To delete package linking from package.json but not from yalc.lock `yalc retreat [--all]` / `yalc restore`

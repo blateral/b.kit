@@ -30,8 +30,7 @@
     "homepage": "https://github.com/blateral/b.kit#readme",
     "husky": {
         "hooks": {
-            "pre-push": "yarn tc && yarn deploy-storybook",
-            "pre-commit": "yalc check || echo Skipping yalc check"
+            "pre-push": "yarn tc && yarn deploy-storybook"
         }
     },
     "devDependencies": {
