@@ -196,14 +196,12 @@ const BottomView = styled(Wrapper)`
 const Footer: FC<{
     isInverted?: boolean;
     logo?: {
-        image?: React.ReactNode;
+        img?: string;
         link?: string;
     };
     columnTopSpace?: string;
-    contactData?: React.ReactNode;
-    siteLinks?: Array<
-        Array<LinkProps & { label?: string; isActive?: boolean }>
-    >;
+    contactData?: string;
+    siteLinks?: Array<LinkProps & { label?: string; isActive?: boolean }>;
     newsTitle?: string;
     newsText?: string;
     newsForm?: (isInverted?: boolean) => React.ReactNode;
@@ -223,20 +221,34 @@ const Footer: FC<{
     bottomLinks,
     brandIcon,
 }) => {
+    // setup siteLinks columns
+    const siteLinksColLeft =
+        siteLinks && siteLinks.length > 6
+            ? siteLinks?.slice(0, Math.ceil(siteLinks.length / 2))
+            : siteLinks;
+    const siteLinksColRight =
+        siteLinks && siteLinks.length > 6
+            ? siteLinks?.slice(Math.ceil(siteLinks.length / 2))
+            : undefined;
+
     return (
         <Section as="footer">
             <MainView addWhitespace clampWidth="large" isInverted={isInverted}>
                 <Wrapper>
                     <Content isInverted={isInverted}>
                         <ContentBlock>
-                            {logo?.image && (
+                            {logo?.img && (
                                 <LogoLink href={logo?.link}>
-                                    {logo.image}
+                                    <img src={logo?.img} />
                                 </LogoLink>
                             )}
                             {contactData && (
                                 <ContactData size="small">
-                                    {contactData}
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: contactData,
+                                        }}
+                                    />
                                 </ContactData>
                             )}
                         </ContentBlock>
@@ -244,26 +256,34 @@ const Footer: FC<{
                             direction="row"
                             topSpace={logo && columnTopSpace}
                         >
-                            {siteLinks &&
-                                siteLinks.map((linkList, i) => (
-                                    <SiteLinksView key={i}>
-                                        {linkList &&
-                                            linkList.map((link, linkIndex) => (
-                                                <SiteLink
-                                                    key={linkIndex}
-                                                    href={link.href}
-                                                >
-                                                    <LinkWrapper
-                                                        isActive={link.isActive}
-                                                        isInverted={isInverted}
-                                                    >
-                                                        {link.label ||
-                                                            link.href}
-                                                    </LinkWrapper>
-                                                </SiteLink>
-                                            ))}
-                                    </SiteLinksView>
-                                ))}
+                            {siteLinksColLeft && (
+                                <SiteLinksView>
+                                    {siteLinksColLeft.map((link, i) => (
+                                        <SiteLink key={i} href={link.href}>
+                                            <LinkWrapper
+                                                isActive={link.isActive}
+                                                isInverted={isInverted}
+                                            >
+                                                {link.label || link.href}
+                                            </LinkWrapper>
+                                        </SiteLink>
+                                    ))}
+                                </SiteLinksView>
+                            )}
+                            {siteLinksColRight && (
+                                <SiteLinksView>
+                                    {siteLinksColRight.map((link, i) => (
+                                        <SiteLink key={i} href={link.href}>
+                                            <LinkWrapper
+                                                isActive={link.isActive}
+                                                isInverted={isInverted}
+                                            >
+                                                {link.label || link.href}
+                                            </LinkWrapper>
+                                        </SiteLink>
+                                    ))}
+                                </SiteLinksView>
+                            )}
                         </ContentBlock>
                         <ContentBlock topSpace={logo && columnTopSpace}>
                             {newsTitle && (

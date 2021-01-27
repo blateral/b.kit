@@ -74,7 +74,7 @@ const Intro: React.FC<{
                         isInverted ? color(theme).white : color(theme).black
                     }
                 >
-                    {text}
+                    <div dangerouslySetInnerHTML={{ __html: text }} />
                 </ContentBlock>
             )}
             {(primaryAction || secondaryAction) && (
