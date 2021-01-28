@@ -24,6 +24,7 @@ const Head = styled(Wrapper)`
 `;
 
 const IntroBlock = styled.div`
+    flex: 1;
     ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
 `;
 
