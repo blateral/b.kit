@@ -11,9 +11,9 @@ export default {
 export const Default: Story = () => (
     <Poster
         image={{
-            small: 'https://unsplash.it/680/300?image=409',
-            medium: 'https://unsplash.it/680/300?image=409',
-            large: 'https://unsplash.it/1024/364?image=409',
+            small: 'https://unsplash.it/639/500?image=409',
+            medium: 'https://unsplash.it/1023/500?image=409',
+            large: 'https://unsplash.it/1439/511?image=409',
             xlarge: 'https://unsplash.it/2400/854?image=409',
         }}
     />
@@ -25,9 +25,9 @@ export const WithContent: Story = () => (
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
         image={{
-            small: 'https://unsplash.it/304/500?image=409',
-            medium: 'https://unsplash.it/680/600?image=409',
-            large: 'https://unsplash.it/1024/600?image=409',
+            small: 'https://unsplash.it/639/500?image=409',
+            medium: 'https://unsplash.it/1023/500?image=409',
+            large: 'https://unsplash.it/1439/511?image=409',
             xlarge: 'https://unsplash.it/2400/854?image=409',
         }}
         primaryAction={
