@@ -69,11 +69,11 @@ const Gallery: FC<{
 }) => {
     const theme = useContext(ThemeContext);
 
-    const isPrevImgFull = (images: ImageType[], currentIndex: number) => {
-        const newIndex = --currentIndex;
-        if (images && images[newIndex]) return images[newIndex]?.isFull;
-        else return false;
-    };
+    // const isPrevImgFull = (images: ImageType[], currentIndex: number) => {
+    //     const newIndex = --currentIndex;
+    //     if (images && images[newIndex]) return images[newIndex]?.isFull;
+    //     else return false;
+    // };
 
     const isNextImgFull = (images: ImageType[], currentIndex: number) => {
         const newIndex = ++currentIndex;
