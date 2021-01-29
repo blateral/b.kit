@@ -1,4 +1,4 @@
-// Version: 0.2.11
+// Version: 0.3.0
 
 import 'styled-components';
 import { Colors, Fonts } from 'utils/styles';
@@ -38,5 +38,5 @@ export { default as Header } from 'components/sections/header/Header';
 export { default as Button } from 'components/buttons/Button';
 
 /***** Fields *****/
-export { default as ContactForm } from 'components/fields/CompactForm';
+export { default as CompactForm } from 'components/fields/CompactForm';
 export { default as SearchInput } from 'components/fields/SearchInput';
