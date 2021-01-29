@@ -74,7 +74,10 @@ const Slider: FC<
         clickSideOffset?: number;
         sameHeight?: boolean;
         fullHeight?: boolean;
-        beforeChange?: (currentStep: number, nextStep: number) => void;
+        beforeChange?: (props: {
+            currentStep: number;
+            nextStep: number;
+        }) => void;
         afterChange?: (currentStep: number) => void;
         onInit?: (steps: number) => void;
         className?: string;
@@ -140,7 +143,8 @@ const Slider: FC<
         slidesToShow: 1,
         variableWidth: true,
         beforeChange: (current: number, next: number) => {
-            beforeChange && beforeChange(current, next);
+            beforeChange &&
+                beforeChange({ currentStep: current, nextStep: next });
             setCurrentStep(next);
         },
         afterChange: afterChange,

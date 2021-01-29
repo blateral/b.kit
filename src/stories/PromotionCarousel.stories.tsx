@@ -218,7 +218,7 @@ export const WithCustomDots: Story = () => (
                 alt: 'Image Placeholder ' + i,
             },
         }))}
-        dot={(isInverted, isActive) => (
+        dot={({ isActive }) => (
             <ArrowRight iconColor={isActive ? 'red' : 'grey'} />
         )}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"

@@ -157,10 +157,19 @@ export interface CarouselProps {
     spacing?: 'normal' | 'large';
     variableWidths?: boolean;
     isInverted?: boolean;
-    controlNext?: (isInverted?: boolean, isActive?: boolean) => React.ReactNode;
-    controlPrev?: (isInverted?: boolean, isActive?: boolean) => React.ReactNode;
-    dot?: (isInverted?: boolean, isActive?: boolean) => React.ReactNode;
-    beforeChange?: (currentStep: number, nextStep: number) => void;
+    controlNext?: (props: {
+        isInverted?: boolean;
+        isActive?: boolean;
+    }) => React.ReactNode;
+    controlPrev?: (props: {
+        isInverted?: boolean;
+        isActive?: boolean;
+    }) => React.ReactNode;
+    dot?: (props: {
+        isInverted?: boolean;
+        isActive?: boolean;
+    }) => React.ReactNode;
+    beforeChange?: (props: { currentStep: number; nextStep: number }) => void;
     afterChange?: (currentStep: number) => void;
     onInit?: (steps: number) => void;
     responsive?: ResponsiveObject[];
@@ -221,7 +230,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             <StyledControl type="prev" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlPrev ? (
-                                        controlPrev(isInverted, isActive)
+                                        controlPrev({ isInverted, isActive })
                                     ) : (
                                         <ArrowLeftGhost />
                                     )
@@ -230,7 +239,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             <StyledControl type="next" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlNext ? (
-                                        controlNext(isInverted, isActive)
+                                        controlNext({ isInverted, isActive })
                                     ) : (
                                         <ArrowRightGhost />
                                     )
@@ -251,7 +260,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             <StyledControl type="prev" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlPrev ? (
-                                        controlPrev(isInverted, isActive)
+                                        controlPrev({ isInverted, isActive })
                                     ) : (
                                         <ArrowLeftGhost />
                                     )
@@ -262,7 +271,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             {(i, isActive, onClick) => (
                                 <DotWrapper key={i} onClick={onClick}>
                                     {dot ? (
-                                        dot(isInverted, isActive)
+                                        dot({ isInverted, isActive })
                                     ) : (
                                         <Dot
                                             isActive={isActive}
@@ -276,7 +285,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             <StyledControl type="next" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlNext ? (
-                                        controlNext(isInverted, isActive)
+                                        controlNext({ isInverted, isActive })
                                     ) : (
                                         <ArrowRightGhost />
                                     )

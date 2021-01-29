@@ -338,7 +338,7 @@ export const WithCustomControls: Story = () => (
 export const WithCustomDots: Story = () => (
     <ImageCarousel
         bgMode="full"
-        dot={(isInverted, isActive) => (
+        dot={({ isActive }) => (
             <ArrowRight iconColor={isActive ? 'red' : 'grey'} />
         )}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
