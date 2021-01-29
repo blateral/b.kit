@@ -115,14 +115,18 @@ To publish all stories to Github Pages enter:
 
 ## Local library testing
 
-For local testing you can import the library package with a simlink. Call `yarn link` inside the library root directory and `yarn link "path-to/@blateral/b.kit"` inside the test project root directory. Peer dependencies like React, ReactDom and StyledComponents only allowing one instance at a time. Because the local b.kit library project has fully installed packages it is neccessary to use the same instances in the example test project. To do so you can link them in the `package.json`:
+## Local Testing
 
-```json
-    "dependencies": {
-        "react": "link:../b.kit/node_modules/react",
-        "react-dom": "link:../b.kit/node_modules/react-dom",
-        "styled-components": "link:../b.kit/node_modules/styled-components"
-    },
-```
+Inside library project:
 
-> Due to the behaviour of simlinks after a library rebuild sometimes the library types are not fully updated and available in the test project. To fix this you can relink the package or change the content of the entry `index.ts` file on every build.
+-   Install yalc globally: `yarn global add yalc`
+-   Run `yalc publish` to publish library into local yalc store.
+-   Run `yalc push` to push changes to all installations
+
+Inside project that should use the library:
+
+-   Run `yalc add <repository-name>` in target lokal repository to link library from yalc store.
+-   Use `yalc update` or `yalc update <repository-name>` to update all linked packages.
+-   use `yalc remove <repository-name>` to remove linked package.
+
+    Before each push to git `yalc check` performs a check to ensure that all linked packages are removed from package.json. To delete package linking from package.json but not from yalc.lock `yalc retreat [--all]` / `yalc restore`

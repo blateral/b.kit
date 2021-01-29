@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { spacings } from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 
 export type ClampWidthType = 'normal' | 'large';
 
@@ -15,7 +15,13 @@ const View = styled.div<{
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 ${({ addWhitespace }) => (addWhitespace ? spacings.spacer : 0)}px;
+    padding: 0
+        ${({ addWhitespace }) => (addWhitespace ? spacings.nudge * 2 : 0)}px;
+
+    @media ${mq.medium} {
+        padding: 0
+            ${({ addWhitespace }) => (addWhitespace ? spacings.spacer : 0)}px;
+    }
 `;
 
 const Wrapper: React.FC<{

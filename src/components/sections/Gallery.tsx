@@ -1,20 +1,48 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Grid from 'components/base/Grid';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 import Intro from 'components/blocks/Intro';
 
 const IntroBlock = styled.div`
     padding-bottom: ${spacings.spacer * 2}px;
 `;
 
-const StyledImage = styled(Image)`
+const ImgContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
+
+    @media ${mq.semilarge} {
+        margin-left: ${spacings.spacer * -1}px;
+        width: calc(100% + ${spacings.spacer}px);
+    }
 `;
+
+const ImgWrapper = styled.div<{ isFull?: boolean }>`
+    flex: 0 100%;
+    padding-top: ${spacings.nudge * 2}px;
+
+    picture > img {
+        width: 100%;
+    }
+
+    @media ${mq.semilarge} {
+        flex: 0 ${({ isFull }) => (isFull ? 100 : 50)}%;
+        padding-left: ${spacings.spacer}px;
+        padding-top: ${spacings.spacer}px;
+
+        /* &:last-child:nth-child(odd) {
+            flex: 0 100%;
+        } */
+    }
+`;
+
+type ImageType = ImageProps & { isFull?: boolean };
 
 const Gallery: FC<{
     title?: string;
@@ -26,7 +54,7 @@ const Gallery: FC<{
 
     isInverted?: boolean;
     hasBack?: boolean;
-    images?: Array<ImageProps & { size?: 'half' | 'full' }>;
+    images?: Array<ImageType>;
     className?: string;
 }> = ({
     isInverted = false,
@@ -40,6 +68,27 @@ const Gallery: FC<{
     secondaryAction,
 }) => {
     const theme = useContext(ThemeContext);
+
+    // const isPrevImgFull = (images: ImageType[], currentIndex: number) => {
+    //     const newIndex = --currentIndex;
+    //     if (images && images[newIndex]) return images[newIndex]?.isFull;
+    //     else return false;
+    // };
+
+    const isNextImgFull = (images: ImageType[], currentIndex: number) => {
+        const newIndex = ++currentIndex;
+        if (images && images[newIndex]) return images[newIndex]?.isFull;
+        else return false;
+    };
+
+    // map images to fill always full width
+    images = images?.map((img, i, array) => {
+        if (!img.isFull) {
+            img.isFull =
+                (i % 2 === 0 && isNextImgFull(array, i)) || array.length === 1;
+        }
+        return img;
+    });
 
     return (
         <Section
@@ -67,24 +116,14 @@ const Gallery: FC<{
                         />
                     </IntroBlock>
                 )}
-                <Grid.Row
-                    gutter={
-                        images && (images.length <= 1 ? 0 : spacings.nudge * 2)
-                    }
-                >
+                <ImgContainer>
                     {images &&
-                        images.map((image, i) => (
-                            <Grid.Col
-                                medium={{
-                                    span:
-                                        (image.size === 'half' ? 14 : 28) / 28,
-                                }}
-                                key={i}
-                            >
-                                <StyledImage {...image} />
-                            </Grid.Col>
+                        images.map((img, i) => (
+                            <ImgWrapper key={i} isFull={img.isFull}>
+                                <Image {...img} />
+                            </ImgWrapper>
                         ))}
-                </Grid.Row>
+                </ImgContainer>
             </Wrapper>
         </Section>
     );
