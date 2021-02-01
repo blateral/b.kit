@@ -15,7 +15,7 @@ declare module 'styled-components' {
 export { getColors, getFonts, getBaseTheme } from 'utils/styles';
 
 /***** Component exports *****/
-export { default as LibThemeProvider } from 'utils/LibThemeProvider';
+export * from 'utils/LibThemeProvider';
 
 /***** Sections *****/
 export { default as Gallery } from 'components/sections/Gallery';

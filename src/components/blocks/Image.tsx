@@ -56,6 +56,7 @@ const Image: React.FC<
                 srcSet={small}
                 alt={alt || ''}
                 coverSpace={coverSpace}
+                loading="lazy"
                 className={className}
             />
         </Picture>
