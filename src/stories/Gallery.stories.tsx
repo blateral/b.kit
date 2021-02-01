@@ -155,10 +155,10 @@ export const RatioC: Story = () => (
                 xlarge: 'https://unsplash.it/690/920?image=400',
             },
             {
-                small: 'https://unsplash.it/610/457?image=401',
-                medium: 'https://unsplash.it/315/420?image=401',
-                large: 'https://unsplash.it/507/676?image=401',
-                xlarge: 'https://unsplash.it/710/947?image=401',
+                small: 'https://unsplash.it/419/313?image=400',
+                medium: 'https://unsplash.it/481/642?image=400',
+                large: 'https://unsplash.it/689/919?image=400',
+                xlarge: 'https://unsplash.it/690/920?image=400',
             },
         ]}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
