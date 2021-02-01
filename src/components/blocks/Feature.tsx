@@ -8,6 +8,7 @@ import Actions from './Actions';
 
 const View = styled.div`
     min-width: 270px;
+    padding-bottom: ${spacings.nudge}px;
 `;
 
 const ImageContainer = styled.div`
@@ -18,7 +19,10 @@ const StyledImage = styled(Image)`
     width: 100%;
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ addWhitespace?: boolean }>`
+    padding: 0
+        ${({ addWhitespace }) => addWhitespace && spacings.nudge * 2 + 'px'};
+
     & + & {
         ${withRange(
             [spacings.spacer * 1.5, spacings.spacer * 2],
@@ -37,7 +41,9 @@ const Desc = styled.div`
     ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
 `;
 
-const StyledActions = styled(Actions)`
+const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
+    padding: 0
+        ${({ addWhitespace }) => addWhitespace && spacings.nudge * 2 + 'px'};
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
 `;
 
@@ -48,6 +54,7 @@ export interface FeatureProps {
     intro?: string;
     text?: string;
     image?: Props;
+    addWhitespace?: boolean;
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }
@@ -62,6 +69,7 @@ const Feature: React.FC<
     intro,
     text,
     image,
+    addWhitespace = false,
     isInverted = false,
     primaryAction,
     secondaryAction,
@@ -84,7 +92,7 @@ const Feature: React.FC<
                     />
                 </ImageContainer>
             )}
-            <Content>
+            <Content addWhitespace={addWhitespace}>
                 <ContentBlock type="copy-b" size="big" textColor={textColor}>
                     {title}
                 </ContentBlock>
@@ -96,7 +104,7 @@ const Feature: React.FC<
                     </ContentBlock>
                 )}
             </Content>
-            <Content>
+            <Content addWhitespace={addWhitespace}>
                 <ContentBlock type="copy-b" textColor={textColor}>
                     {intro && (
                         <div dangerouslySetInnerHTML={{ __html: intro }} />
@@ -114,6 +122,7 @@ const Feature: React.FC<
             </Content>
             {(primaryAction || secondaryAction) && (
                 <StyledActions
+                    addWhitespace={addWhitespace}
                     primary={primaryAction && primaryAction(isInverted)}
                     secondary={secondaryAction && secondaryAction(isInverted)}
                 />
