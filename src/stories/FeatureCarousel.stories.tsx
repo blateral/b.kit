@@ -21,6 +21,7 @@ const actions = {
 };
 
 const exampleFeature: FeatureProps = {
+    addWhitespace: true,
     image: {
         small: 'https://unsplash.it/502/376',
         medium: 'https://unsplash.it/600/600',

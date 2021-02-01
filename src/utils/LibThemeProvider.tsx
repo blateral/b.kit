@@ -3,14 +3,11 @@ import { DefaultTheme, ThemeProvider } from 'styled-components';
 
 import { getBaseTheme } from 'utils/styles';
 
-type RecursivePartial<T> = {
-    [P in keyof T]?: RecursivePartial<T[P]>;
+export type Theme<T> = {
+    [P in keyof T]?: Theme<T[P]>;
 };
 
-const assignTo = (
-    target: DefaultTheme,
-    source: RecursivePartial<DefaultTheme>
-) => {
+const assignTo = (target: DefaultTheme, source: Theme<DefaultTheme>) => {
     Object.keys(source).forEach((key) => {
         const sourceVal = source[key];
         const targetVal = target[key];
@@ -25,11 +22,9 @@ const assignTo = (
     return target;
 };
 
-const LibThemeProvider: FC<{
-    theme: RecursivePartial<DefaultTheme>;
+export const LibThemeProvider: FC<{
+    theme: Theme<DefaultTheme>;
 }> = ({ theme, children }) => {
     const combinedTheme = assignTo(getBaseTheme(), theme);
     return <ThemeProvider theme={combinedTheme}>{children}</ThemeProvider>;
 };
-
-export default LibThemeProvider;
