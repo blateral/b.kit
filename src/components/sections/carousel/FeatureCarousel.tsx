@@ -91,7 +91,12 @@ const FeatureCarousel: FC<
             >
                 {features &&
                     features.map((feature, i) => (
-                        <Feature key={i} isInverted={isInverted} {...feature} />
+                        <Feature
+                            key={i}
+                            addWhitespace
+                            isInverted={isInverted}
+                            {...feature}
+                        />
                     ))}
             </CarouselBase>
         </Section>
