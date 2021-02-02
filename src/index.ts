@@ -40,3 +40,21 @@ export { default as Button } from 'components/buttons/Button';
 /***** Fields *****/
 export { default as CompactForm } from 'components/fields/CompactForm';
 export { default as SearchInput } from 'components/fields/SearchInput';
+
+/***** Icons *****/
+export { default as ArrowRightIcon } from 'components/base/icons/ArrowRight';
+export { default as ArrowLeftGhostIcon } from 'components/base/icons/ArrowLeftGhost';
+export { default as ArrowRightGhostIcon } from 'components/base/icons/ArrowRightGhost';
+export { default as CrossIcon } from 'components/base/icons/Cross';
+export { default as CrossSmallIcon } from 'components/base/icons/CrossSmall';
+export { default as MagnifierIcon } from 'components/base/icons/Magnifier';
+export { default as MenuBurgerIcon } from 'components/base/icons/MenuBurger';
+export { default as PlayIcon } from 'components/base/icons/Play';
+export { default as StarIcon } from 'components/base/icons/Star';
+export { default as StarGhostIcon } from 'components/base/icons/StarGhost';
+
+/***** Social Icons *****/
+export { default as FacebookIcon } from 'components/base/icons/socials/Facebook';
+export { default as LinkedInIcon } from 'components/base/icons/socials/LinkedIn';
+export { default as TwitterIcon } from 'components/base/icons/socials/Twitter';
+export { default as XingIcon } from 'components/base/icons/socials/Xing';
