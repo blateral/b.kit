@@ -326,9 +326,9 @@ export const WithImageFormatC: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
-            small: 'https://unsplash.it/619/619',
-            medium: 'https://unsplash.it/791/791',
-            semilarge: 'https://unsplash.it/883/883',
+            small: 'https://unsplash.it/619/464',
+            medium: 'https://unsplash.it/977/734',
+            semilarge: 'https://unsplash.it/791/594',
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             description:
