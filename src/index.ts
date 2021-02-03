@@ -58,4 +58,5 @@ export { default as FacebookIcon } from 'components/base/icons/socials/Facebook'
 export { default as LinkedInIcon } from 'components/base/icons/socials/LinkedIn';
 export { default as TwitterIcon } from 'components/base/icons/socials/Twitter';
 export { default as XingIcon } from 'components/base/icons/socials/Xing';
+export { default as InstagramIcon } from 'components/base/icons/socials/Instagram';
 export { default as YoutubeIcon } from 'components/base/icons/socials/Youtube';
