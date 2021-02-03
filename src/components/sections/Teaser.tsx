@@ -172,7 +172,11 @@ const Teaser: FC<{
                                             : color(theme).black
                                     }
                                 >
-                                    {image.description}
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: image.description,
+                                        }}
+                                    />
                                 </ImgDescMobile>
                             )}
                         </ImgWrapper>
@@ -265,7 +269,11 @@ const Teaser: FC<{
                                         : color(theme).black
                                 }
                             >
-                                {image.description}
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: image.description,
+                                    }}
+                                ></div>
                             </ImgDescDesktop>
                         )}
                     </Grid.Col>
