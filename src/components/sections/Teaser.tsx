@@ -230,7 +230,11 @@ const Teaser: FC<{
                                     }
                                     type="copy-i"
                                 >
-                                    {subText}
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: subText,
+                                        }}
+                                    />
                                 </SubTextBlock>
                             )}
                             {(primaryAction || secondaryAction) && (
