@@ -6,8 +6,9 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Intro from './Intro';
 
 const View = styled.div<{
-    onClick?: () => void;
+    clickable?: boolean;
 }>`
+    display: block;
     position: relative;
     width: 100%;
 
@@ -28,8 +29,8 @@ const View = styled.div<{
         pointer-events: none;
     }
 
-    ${({ onClick }) =>
-        onClick &&
+    ${({ clickable }) =>
+        clickable &&
         css`
             transition: box-shadow 0.2s ease-in-out;
             cursor: pointer;
@@ -43,6 +44,15 @@ const View = styled.div<{
 const StyledImage = styled(Image)`
     width: 100%;
     min-height: 300px;
+`;
+
+const LinkHelper = styled.a`
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 `;
 
 const IntroContainer = styled.div`
@@ -77,6 +87,7 @@ export interface PromotionCardProps {
     title?: string;
     superTitle?: string;
     text?: string;
+    href?: string;
     primaryAction?: React.ReactNode;
     secondaryAction?: React.ReactNode;
     onClick?: () => void;
@@ -87,15 +98,17 @@ const PromotionCard: FC<PromotionCardProps> = ({
     title,
     superTitle,
     text,
+    href,
     primaryAction,
     secondaryAction,
     onClick,
 }) => {
     return (
-        <View onClick={onClick}>
+        <View onClick={onClick} clickable={onClick || href ? true : false}>
             <StyledImage {...image} coverSpace />
             {title && (
                 <IntroContainer>
+                    <LinkHelper href={href} />
                     <Intro
                         title={title}
                         superTitle={superTitle}
