@@ -3,12 +3,12 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import ArrowRight from 'components/base/icons/ArrowRight';
 import Button from 'components/buttons/Button';
-import PromotionCarousel from 'components/sections/carousel/PromotionCarousel';
-import { PromotionCardProps } from 'components/blocks/PromotionCard';
+import PromotionCarousel, {
+    PromotionCarouselItem,
+} from 'components/sections/carousel/PromotionCarousel';
 import { generateItemList } from 'utils/storyHelpers';
 
-const examplePromotion: Omit<PromotionCardProps, 'text'> = {
-    superTitle: 'Haus St. Franziskus',
+const examplePromotion: PromotionCarouselItem = {
     title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
     image: {
         small: 'https://unsplash.it/553/553',
@@ -19,12 +19,11 @@ const examplePromotion: Omit<PromotionCardProps, 'text'> = {
     },
 };
 
-const examplePromotions = generateItemList<Omit<PromotionCardProps, 'text'>>(
+const examplePromotions = generateItemList<PromotionCarouselItem>(
     examplePromotion,
     4,
     (item, i) => ({
         ...item,
-        superTitle: 'Haus St. Franziskus',
         title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
         image: {
             small: `${item.image.small}?image=40${i}`,
@@ -115,7 +114,36 @@ export const Inverted: Story = () => (
 
 export const WithBackground: Story = () => (
     <PromotionCarousel
-        hasBack
+        bgMode="full"
+        promotions={examplePromotions.map((promotion, i) => ({
+            ...promotion,
+            image: {
+                small: 'https://unsplash.it/553/553?image=40' + i,
+                medium: 'https://unsplash.it/441/441?image=40' + i,
+                large: 'https://unsplash.it/507/507?image=40' + i,
+                xlarge: 'https://unsplash.it/680/680?image=40' + i,
+                alt: 'Image Placeholder ' + i,
+            },
+        }))}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        )}
+    />
+);
+
+export const WithSplittedBackground: Story = () => (
+    <PromotionCarousel
+        bgMode="splitted"
         promotions={examplePromotions.map((promotion, i) => ({
             ...promotion,
             image: {
@@ -144,7 +172,7 @@ export const WithBackground: Story = () => (
 
 export const WithHandlers: Story = () => (
     <PromotionCarousel
-        hasBack
+        bgMode="full"
         promotions={examplePromotions.map((promotion, i) => ({
             ...promotion,
             image: {
@@ -176,7 +204,7 @@ export const WithHandlers: Story = () => (
 
 export const WithCustomControls: Story = () => (
     <PromotionCarousel
-        hasBack
+        bgMode="full"
         promotions={examplePromotions.map((promotion, i) => ({
             ...promotion,
             image: {
@@ -207,7 +235,7 @@ export const WithCustomControls: Story = () => (
 
 export const WithCustomDots: Story = () => (
     <PromotionCarousel
-        hasBack
+        bgMode="full"
         promotions={examplePromotions.map((promotion, i) => ({
             ...promotion,
             image: {
@@ -239,7 +267,7 @@ export const WithCustomDots: Story = () => (
 
 export const WithRatioA: Story = () => (
     <PromotionCarousel
-        hasBack
+        bgMode="full"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -270,7 +298,7 @@ WithRatioA.storyName = 'With ratio 4:3';
 
 export const WithRatioB: Story = () => (
     <PromotionCarousel
-        hasBack
+        bgMode="full"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
