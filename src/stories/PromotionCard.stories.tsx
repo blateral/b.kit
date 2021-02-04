@@ -56,6 +56,30 @@ export const WithActions: Story = () => (
     />
 );
 
+export const WithLink: Story = () => (
+    <PromotionCard
+        superTitle="Haus St. Franziskus"
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        image={{
+            small: 'https://unsplash.it/338/253?image=409',
+            medium: 'https://unsplash.it/722/541?image=409',
+            large: 'https://unsplash.it/958/718?image=409',
+        }}
+        primaryAction={
+            <Button.View isInverted>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondaryAction={
+            <Button.View type="ghost" isInverted>
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        }
+        href="#0"
+    />
+);
+
 export const WithClickHandler: Story = () => (
     <PromotionCard
         superTitle="Haus St. Franziskus"

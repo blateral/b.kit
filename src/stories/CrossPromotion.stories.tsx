@@ -14,10 +14,10 @@ export const SingleImageFull: Story = () => (
             {
                 size: 'full',
                 image: {
-                    small: 'https://unsplash.it/640/447?image=409',
-                    medium: 'https://unsplash.it/640/447?image=409',
-                    large: 'https://unsplash.it/984/580?image=409',
-                    xlarge: 'https://unsplash.it/1440/850?image=409',
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/824?image=409',
+                    xlarge: 'https://unsplash.it/1400/826?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
                 superTitle: 'Haus St. Franziskus',
@@ -34,55 +34,15 @@ export const WithIntro: Story = () => (
             {
                 size: 'full',
                 image: {
-                    small: 'https://unsplash.it/640/447?image=409',
-                    medium: 'https://unsplash.it/640/447?image=409',
-                    large: 'https://unsplash.it/984/580?image=409',
-                    xlarge: 'https://unsplash.it/1440/850?image=409',
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/824?image=409',
+                    xlarge: 'https://unsplash.it/1400/826?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
                 superTitle: 'Haus St. Franziskus',
                 text:
                     'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-            },
-        ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
-        )}
-    />
-);
-
-export const TwoHalfCards: Story = () => (
-    <CrossPromotion
-        main={[
-            {
-                size: 'half',
-                image: {
-                    small: 'https://unsplash.it/290/217?image=409',
-                    medium: 'https://unsplash.it/660/492?image=409',
-                    large: 'https://unsplash.it/512/383?image=409',
-                    xlarge: 'https://unsplash.it/710/533?image=409',
-                },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-            },
-            {
-                size: 'half',
-                image: {
-                    small: 'https://unsplash.it/290/217?image=410',
-                    medium: 'https://unsplash.it/660/492?image=410',
-                    large: 'https://unsplash.it/512/383?image=410',
-                    xlarge: 'https://unsplash.it/710/533?image=410',
-                },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
         ]}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
@@ -107,20 +67,22 @@ export const TwoHalfCardsRatioA: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/290?image=409',
-                    medium: 'https://unsplash.it/660/660?image=409',
-                    large: 'https://unsplash.it/512/512?image=409',
-                    xlarge: 'https://unsplash.it/710/710?image=409',
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/791/593?image=409',
+                    semilarge: 'https://unsplash.it/481/481?image=409',
+                    large: 'https://unsplash.it/686/686?image=409',
+                    xlarge: 'https://unsplash.it/690/690?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/290?image=410',
-                    medium: 'https://unsplash.it/660/660?image=410',
-                    large: 'https://unsplash.it/512/512?image=410',
-                    xlarge: 'https://unsplash.it/710/710?image=410',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/481/481?image=410',
+                    large: 'https://unsplash.it/686/686?image=410',
+                    xlarge: 'https://unsplash.it/690/690?image=410',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -149,20 +111,22 @@ export const TwoHalfCardsRatioB: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/710/947?image=410',
-                    medium: 'https://unsplash.it/749/999?image=410',
-                    large: 'https://unsplash.it/512/682?image=410',
-                    xlarge: 'https://unsplash.it/710/947?image=410',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/1054?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    xlarge: 'https://unsplash.it/790/1055?image=410',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/710/947?image=410',
-                    medium: 'https://unsplash.it/749/999?image=410',
-                    large: 'https://unsplash.it/512/682?image=410',
-                    xlarge: 'https://unsplash.it/710/947?image=410',
+                    small: 'https://unsplash.it/619/464?image=411',
+                    medium: 'https://unsplash.it/791/592?image=411',
+                    semilarge: 'https://unsplash.it/689/1054?image=411',
+                    large: 'https://unsplash.it/790/1054?image=411',
+                    xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -185,16 +149,59 @@ export const TwoHalfCardsRatioB: Story = () => (
 
 TwoHalfCardsRatioB.storyName = 'Two half cards with ratio 3x4';
 
+export const TwoHalfCardsRatioC: Story = () => (
+    <CrossPromotion
+        main={[
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+        ]}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <Button.View type="ghost" isInverted={isInverted}>
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
+        )}
+    />
+);
+
+TwoHalfCardsRatioC.storyName = 'Two half cards with ratio 4x3';
+
 export const MixedImages: Story = () => (
     <CrossPromotion
         main={[
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=411',
-                    medium: 'https://unsplash.it/660/492?image=411',
-                    large: 'https://unsplash.it/710/947?image=411',
-                    xlarge: 'https://unsplash.it/710/947?image=411',
+                    small: 'https://unsplash.it/619/464?image=411',
+                    medium: 'https://unsplash.it/791/592?image=411',
+                    semilarge: 'https://unsplash.it/689/1054?image=411',
+                    large: 'https://unsplash.it/790/1054?image=411',
+                    xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -203,20 +210,20 @@ export const MixedImages: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=409',
-                    medium: 'https://unsplash.it/660/492?image=409',
-                    large: 'https://unsplash.it/512/383?image=409',
-                    xlarge: 'https://unsplash.it/710/533?image=409',
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=410',
-                    medium: 'https://unsplash.it/660/492?image=410',
-                    large: 'https://unsplash.it/512/383?image=410',
-                    xlarge: 'https://unsplash.it/710/533?image=410',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -244,10 +251,11 @@ export const WithBackground: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=411',
-                    medium: 'https://unsplash.it/660/492?image=411',
-                    large: 'https://unsplash.it/710/947?image=411',
-                    xlarge: 'https://unsplash.it/710/947?image=411',
+                    small: 'https://unsplash.it/619/464?image=411',
+                    medium: 'https://unsplash.it/791/592?image=411',
+                    semilarge: 'https://unsplash.it/689/1054?image=411',
+                    large: 'https://unsplash.it/790/1054?image=411',
+                    xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -256,20 +264,20 @@ export const WithBackground: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=409',
-                    medium: 'https://unsplash.it/660/492?image=409',
-                    large: 'https://unsplash.it/512/383?image=409',
-                    xlarge: 'https://unsplash.it/710/533?image=409',
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=410',
-                    medium: 'https://unsplash.it/660/492?image=410',
-                    large: 'https://unsplash.it/512/383?image=410',
-                    xlarge: 'https://unsplash.it/710/533?image=410',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -297,10 +305,11 @@ export const WithSplittedBackground: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=411',
-                    medium: 'https://unsplash.it/660/492?image=411',
-                    large: 'https://unsplash.it/710/947?image=411',
-                    xlarge: 'https://unsplash.it/710/947?image=411',
+                    small: 'https://unsplash.it/619/464?image=411',
+                    medium: 'https://unsplash.it/791/592?image=411',
+                    semilarge: 'https://unsplash.it/689/1054?image=411',
+                    large: 'https://unsplash.it/790/1054?image=411',
+                    xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -309,20 +318,20 @@ export const WithSplittedBackground: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=409',
-                    medium: 'https://unsplash.it/660/492?image=409',
-                    large: 'https://unsplash.it/512/383?image=409',
-                    xlarge: 'https://unsplash.it/710/533?image=409',
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=410',
-                    medium: 'https://unsplash.it/660/492?image=410',
-                    large: 'https://unsplash.it/512/383?image=410',
-                    xlarge: 'https://unsplash.it/710/533?image=410',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -351,10 +360,11 @@ export const Inverted: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=411',
-                    medium: 'https://unsplash.it/660/492?image=411',
-                    large: 'https://unsplash.it/710/947?image=411',
-                    xlarge: 'https://unsplash.it/710/947?image=411',
+                    small: 'https://unsplash.it/619/464?image=411',
+                    medium: 'https://unsplash.it/791/592?image=411',
+                    semilarge: 'https://unsplash.it/689/1054?image=411',
+                    large: 'https://unsplash.it/790/1054?image=411',
+                    xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -363,20 +373,20 @@ export const Inverted: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=409',
-                    medium: 'https://unsplash.it/660/492?image=409',
-                    large: 'https://unsplash.it/512/383?image=409',
-                    xlarge: 'https://unsplash.it/710/533?image=409',
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=410',
-                    medium: 'https://unsplash.it/660/492?image=410',
-                    large: 'https://unsplash.it/512/383?image=410',
-                    xlarge: 'https://unsplash.it/710/533?image=410',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
@@ -403,37 +413,35 @@ export const WithClickHandlers: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=411',
-                    medium: 'https://unsplash.it/660/492?image=411',
-                    large: 'https://unsplash.it/710/947?image=411',
-                    xlarge: 'https://unsplash.it/710/947?image=411',
+                    small: 'https://unsplash.it/619/464?image=411',
+                    medium: 'https://unsplash.it/791/592?image=411',
+                    semilarge: 'https://unsplash.it/689/1054?image=411',
+                    large: 'https://unsplash.it/790/1054?image=411',
+                    xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                onClick: () => console.log('click card'),
             },
         ]}
         aside={[
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=409',
-                    medium: 'https://unsplash.it/660/492?image=409',
-                    large: 'https://unsplash.it/512/383?image=409',
-                    xlarge: 'https://unsplash.it/710/533?image=409',
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                onClick: () => console.log('click card'),
             },
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/290/217?image=410',
-                    medium: 'https://unsplash.it/660/492?image=410',
-                    large: 'https://unsplash.it/512/383?image=410',
-                    xlarge: 'https://unsplash.it/710/533?image=410',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                onClick: () => console.log('click card'),
             },
         ]}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
