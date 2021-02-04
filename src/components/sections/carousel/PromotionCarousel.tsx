@@ -2,16 +2,21 @@ import React, { FC } from 'react';
 import { ThemeContext } from 'styled-components';
 
 import { getColors as color } from 'utils/styles';
-import Section from 'components/base/Section';
+import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import PromotionCard, {
     PromotionCardProps,
 } from 'components/blocks/PromotionCard';
 
+export type PromotionCarouselItem = Omit<
+    PromotionCardProps,
+    'text' | 'superTitle' | 'text'
+>;
+
 const PromotionCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
-        hasBack?: boolean;
-        promotions?: Omit<PromotionCardProps, 'text'>[];
+        bgMode?: 'full' | 'splitted';
+        promotions?: PromotionCarouselItem[];
     }
 > = ({
     title,
@@ -20,7 +25,7 @@ const PromotionCarousel: FC<
     primaryAction,
     secondaryAction,
     isInverted = false,
-    hasBack,
+    bgMode,
     promotions,
     controlNext,
     controlPrev,
@@ -32,17 +37,28 @@ const PromotionCarousel: FC<
     const theme = React.useContext(ThemeContext);
     const promotionCount = promotions?.length || 0;
 
+    const getSectionBgMode = (): BgMode | undefined => {
+        switch (bgMode) {
+            case 'full':
+                return 'full';
+            case 'splitted':
+                return 'half-right';
+            default:
+                return undefined;
+        }
+    };
+
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
                     ? color(theme).black
-                    : hasBack
+                    : bgMode
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? 'full' : undefined}
+            bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
             <CarouselBase
                 title={title}
