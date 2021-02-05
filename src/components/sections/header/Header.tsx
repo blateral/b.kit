@@ -162,24 +162,26 @@ const StyledActions = styled(Actions)`
     }
 `;
 
+export interface HeaderMenuProps {
+    isLarge?: boolean;
+    isTopInverted?: boolean;
+    isNavInverted?: boolean;
+    toggleIcons?: ToggleIconProps;
+    logo?: LogoProps;
+    primaryCta?: (isInverted?: boolean) => React.ReactNode;
+    secondaryCta?: (isInverted?: boolean) => React.ReactNode;
+    activeNavItem?: string;
+    navItems?: NavGroup[];
+    socials?: Array<{ icon: React.ReactNode; href: string }>;
+}
+
 const Header: FC<{
     size?: 'full' | 'small';
     title?: string;
     titleAs?: HeadlineTag;
     primaryCta?: (isInverted?: boolean) => React.ReactNode;
     secondaryCta?: (isInverted?: boolean) => React.ReactNode;
-    menu?: {
-        isLarge?: boolean;
-        isTopInverted?: boolean;
-        isNavInverted?: boolean;
-        toggleIcons?: ToggleIconProps;
-        logo?: LogoProps;
-        primaryCta?: (isInverted?: boolean) => React.ReactNode;
-        secondaryCta?: (isInverted?: boolean) => React.ReactNode;
-        activeNavItem?: string;
-        navItems?: NavGroup[];
-        socials?: Array<{ icon: React.ReactNode; href: string }>;
-    };
+    menu?: HeaderMenuProps;
     images?: HeaderImageProps[];
     badge?: {
         content: React.ReactNode;

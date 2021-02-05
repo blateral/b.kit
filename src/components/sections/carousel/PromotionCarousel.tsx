@@ -10,7 +10,7 @@ import PromotionCard, {
 
 export type PromotionCarouselItem = Omit<
     PromotionCardProps,
-    'text' | 'superTitle' | 'text'
+    'text' | 'superTitle' | 'text' | 'primaryAction' | 'secondaryAction'
 >;
 
 const PromotionCarousel: FC<

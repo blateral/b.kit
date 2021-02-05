@@ -1,4 +1,4 @@
-/***** Version: 0.3.6 *****/
+/***** Version: 0.3.7 *****/
 
 import 'styled-components';
 import { Colors, Fonts } from 'utils/styles';
@@ -36,6 +36,7 @@ export { default as Header } from 'components/sections/header/Header';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
+export { default as MenuAction } from 'components/sections/header/menu/MenuActions';
 
 /***** Fields *****/
 export { default as CompactForm } from 'components/fields/CompactForm';

@@ -219,7 +219,7 @@ export interface ToggleIconProps {
 
 type MenuMq = 'small' | 'semilarge';
 
-const Menu: FC<{
+interface MenuProps {
     size?: 'small' | 'full';
     isTopInverted?: boolean;
     isNavInverted?: boolean;
@@ -233,7 +233,9 @@ const Menu: FC<{
     activeNavItem?: string;
     navItems?: NavGroup[];
     socials?: Array<{ icon: React.ReactNode; href: string }>;
-}> = ({
+}
+
+const Menu: FC<MenuProps> = ({
     size = 'small',
     isTopInverted = false,
     isNavInverted = false,
