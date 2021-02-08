@@ -8,6 +8,7 @@ import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Slider from 'components/blocks/Slider';
 import { ResponsiveObject } from 'react-slick';
 import Intro from 'components/blocks/Intro';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const View = styled(Wrapper)`
     position: relative;
@@ -148,7 +149,9 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
 
 export interface CarouselProps {
     title?: string;
+    titleAs?: HeadlineTag;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     text?: string;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -178,7 +181,9 @@ export interface CarouselProps {
 
 const CarouselBase: FC<CarouselProps & { className?: string }> = ({
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     text,
     primaryAction,
     secondaryAction,
@@ -217,7 +222,9 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                         <IntroBlock>
                             <Intro
                                 title={title}
+                                titleAs={titleAs}
                                 superTitle={superTitle}
+                                superTitleAs={superTitleAs}
                                 text={text}
                                 isInverted={isInverted}
                                 secondaryAction={secondaryAction}

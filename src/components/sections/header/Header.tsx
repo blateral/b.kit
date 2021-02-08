@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { HeadlineTag } from 'components/typography/Heading';
+import { HeadlineTag } from 'components/typography/Callout';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';

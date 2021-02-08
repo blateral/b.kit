@@ -6,6 +6,7 @@ import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import { spacings, withRange } from 'utils/styles';
 import Intro from 'components/blocks/Intro';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const PosterContainer = styled.div<{
     hasContent?: boolean;
@@ -75,11 +76,22 @@ const IntroContainer = styled(Wrapper)`
 const Poster: FC<{
     image: ImageProps;
     title?: string;
+    titleAs?: HeadlineTag;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     text?: string;
     primaryAction?: React.ReactNode;
     secondaryAction?: React.ReactNode;
-}> = ({ title, superTitle, text, primaryAction, secondaryAction, image }) => {
+}> = ({
+    title,
+    titleAs,
+    superTitle,
+    superTitleAs,
+    text,
+    primaryAction,
+    secondaryAction,
+    image,
+}) => {
     return (
         <Section>
             <Wrapper clampWidth="large">
@@ -89,7 +101,9 @@ const Poster: FC<{
                         <IntroContainer addWhitespace>
                             <Intro
                                 title={title}
+                                titleAs={titleAs}
                                 superTitle={superTitle}
+                                superTitleAs={superTitleAs}
                                 text={text}
                                 isInverted
                                 secondaryAction={() => secondaryAction}

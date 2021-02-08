@@ -11,6 +11,7 @@ import Intro from 'components/blocks/Intro';
 import PromotionCard, {
     PromotionCardProps,
 } from 'components/blocks/PromotionCard';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const IntroBlock = styled.div`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -59,7 +60,9 @@ const PosterContainer = styled.div`
 
 const CrossPromotion: React.FC<{
     title?: string;
+    titleAs?: HeadlineTag;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     text?: string;
 
     main?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
@@ -74,7 +77,9 @@ const CrossPromotion: React.FC<{
     isInverted?: boolean;
 }> = ({
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     text,
     primaryAction,
     secondaryAction,
@@ -114,7 +119,9 @@ const CrossPromotion: React.FC<{
                     <IntroBlock>
                         <Intro
                             title={title}
+                            titleAs={titleAs}
                             superTitle={superTitle}
+                            superTitleAs={superTitleAs}
                             text={text}
                             isInverted={isInverted}
                             secondaryAction={secondaryAction}

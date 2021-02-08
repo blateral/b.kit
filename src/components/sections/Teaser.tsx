@@ -106,6 +106,7 @@ const Teaser: FC<{
     isMirrored?: boolean;
     bgMode?: 'full' | 'splitted';
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     title?: string;
     titleAs?: HeadlineTag;
     image?: Omit<ImageProps, 'coverSpace'> & { description?: string };
@@ -119,6 +120,7 @@ const Teaser: FC<{
     isMirrored = false,
     bgMode,
     superTitle,
+    superTitleAs,
     title,
     titleAs,
     image,
@@ -193,6 +195,7 @@ const Teaser: FC<{
                                 title={title}
                                 titleAs={titleAs}
                                 superTitle={superTitle}
+                                superTitleAs={superTitleAs}
                             />
                             {intro && (
                                 <ContentBlock

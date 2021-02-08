@@ -6,6 +6,7 @@ import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import Intro from 'components/blocks/Intro';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const IntroBlock = styled.div`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -46,7 +47,9 @@ type ImageType = ImageProps & { isFull?: boolean };
 
 const Gallery: FC<{
     title?: string;
+    titleAs?: HeadlineTag;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     text?: string;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -62,7 +65,9 @@ const Gallery: FC<{
     images,
     className,
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     text,
     primaryAction,
     secondaryAction,
@@ -108,7 +113,9 @@ const Gallery: FC<{
                     <IntroBlock>
                         <Intro
                             title={title}
+                            titleAs={titleAs}
                             superTitle={superTitle}
+                            superTitleAs={superTitleAs}
                             text={text}
                             isInverted={isInverted}
                             secondaryAction={secondaryAction}

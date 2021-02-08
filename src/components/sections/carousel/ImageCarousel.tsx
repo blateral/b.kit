@@ -13,7 +13,9 @@ const ImageCarousel: FC<
     }
 > = ({
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     text,
     primaryAction,
     secondaryAction,
@@ -56,7 +58,9 @@ const ImageCarousel: FC<
         >
             <CarouselBase
                 title={title}
+                titleAs={titleAs}
                 superTitle={superTitle}
+                superTitleAs={superTitleAs}
                 text={text}
                 primaryAction={primaryAction}
                 secondaryAction={secondaryAction}

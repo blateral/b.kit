@@ -13,7 +13,9 @@ const VideoCarousel: FC<
     }
 > = ({
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     text,
     primaryAction,
     secondaryAction,
@@ -55,7 +57,9 @@ const VideoCarousel: FC<
         >
             <CarouselBase
                 title={title}
+                titleAs={titleAs}
                 superTitle={superTitle}
+                superTitleAs={superTitleAs}
                 text={text}
                 primaryAction={primaryAction}
                 secondaryAction={secondaryAction}
