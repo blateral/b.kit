@@ -7,6 +7,7 @@ import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
 import { spacings, mq, getColors as color } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const StyledTitle = styled(Title)`
     @media ${mq.semilarge} {
@@ -63,7 +64,9 @@ const StyledActions = styled(Actions)`
 
 const Article: React.FC<{
     title?: string;
+    titleAs?: HeadlineTag;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     text?: string;
     asideText?: string;
 
@@ -75,7 +78,9 @@ const Article: React.FC<{
     isInverted?: boolean;
 }> = ({
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     text,
     asideText,
     bgMode,
@@ -111,7 +116,9 @@ const Article: React.FC<{
             <Wrapper clampWidth="normal" addWhitespace>
                 <StyledTitle
                     title={title}
+                    titleAs={titleAs}
                     superTitle={superTitle}
+                    superTitleAs={superTitleAs}
                     isInverted={isInverted}
                 />
                 <Content withAsideText={asideText ? true : false}>

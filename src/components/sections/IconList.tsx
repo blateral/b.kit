@@ -7,6 +7,7 @@ import Copy from 'components/typography/Copy';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Intro from 'components/blocks/Intro';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
@@ -67,7 +68,9 @@ const Item = styled.img`
 
 const IconList: React.FC<{
     title?: string;
+    titleAs?: HeadlineTag;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     text?: string;
     bgMode?: 'full' | 'splitted';
     primaryItems?: { src: string; alt?: string }[];
@@ -78,7 +81,9 @@ const IconList: React.FC<{
     isCentered?: boolean;
 }> = ({
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     text,
     bgMode,
     primaryItems,
@@ -119,7 +124,9 @@ const IconList: React.FC<{
                 {title && (
                     <Intro
                         title={title}
+                        titleAs={titleAs}
                         superTitle={superTitle}
+                        superTitleAs={superTitleAs}
                         text={text}
                         isInverted={isInverted}
                         isCentered={isCentered}

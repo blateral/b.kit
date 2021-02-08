@@ -6,6 +6,7 @@ import Section, { BgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
 import Intro from 'components/blocks/Intro';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const IntroBlock = styled.div`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -47,7 +48,9 @@ const ContentContainer = styled.div<{ isHalf?: boolean }>`
 
 const FeatureList: React.FC<{
     title?: string;
+    titleAs?: HeadlineTag;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     text?: string;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -61,7 +64,9 @@ const FeatureList: React.FC<{
     bgMode,
     isInverted = false,
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     text,
     primaryAction,
     secondaryAction,
@@ -96,7 +101,9 @@ const FeatureList: React.FC<{
                     <IntroBlock>
                         <Intro
                             title={title}
+                            titleAs={titleAs}
                             superTitle={superTitle}
+                            superTitleAs={superTitleAs}
                             text={text}
                             isInverted={isInverted}
                             secondaryAction={secondaryAction}

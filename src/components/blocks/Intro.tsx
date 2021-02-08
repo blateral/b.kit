@@ -6,6 +6,7 @@ import { getColors as color, spacings, mq, withRange } from 'utils/styles';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const View = styled.div<{ isCentered?: boolean; clampText?: boolean }>`
     width: 100%;
@@ -33,7 +34,9 @@ const StyledActions = styled(Actions)`
 
 const Intro: React.FC<{
     title: string;
+    titleAs?: HeadlineTag;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     text?: string;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -45,7 +48,9 @@ const Intro: React.FC<{
     className?: string;
 }> = ({
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     text,
     primaryAction,
     secondaryAction,
@@ -63,7 +68,9 @@ const Intro: React.FC<{
         >
             <Title
                 title={title}
+                titleAs={titleAs}
                 superTitle={superTitle}
+                superTitleAs={superTitleAs}
                 isInverted={isInverted}
                 isCentered={isCentered}
             />

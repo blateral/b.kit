@@ -30,6 +30,7 @@ const SuperTitle = styled.div<{ textColor?: string }>`
 
 const Title: FC<{
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     title?: string;
     titleAs?: HeadlineTag;
     isInverted?: boolean;
@@ -37,6 +38,7 @@ const Title: FC<{
     className?: string;
 }> = ({
     superTitle,
+    superTitleAs,
     title,
     titleAs,
     isInverted = false,
@@ -52,6 +54,7 @@ const Title: FC<{
                     textColor={
                         isInverted ? color(theme).white : color(theme).black
                     }
+                    as={superTitleAs}
                 >
                     {superTitle}
                 </SuperTitle>

@@ -98,6 +98,7 @@ const TeaserWide: FC<{
     isMirrored?: boolean;
     hasBack?: boolean;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     title?: string;
     titleAs?: HeadlineTag;
     image?: Omit<ImageProps, 'coverSpace'> & { description?: string };
@@ -111,6 +112,7 @@ const TeaserWide: FC<{
     isMirrored = false,
     hasBack = false,
     superTitle,
+    superTitleAs,
     title,
     titleAs,
     image,
@@ -156,6 +158,7 @@ const TeaserWide: FC<{
                                 title={title}
                                 titleAs={titleAs}
                                 superTitle={superTitle}
+                                superTitleAs={superTitleAs}
                             />
                             {intro && (
                                 <ContentBlock
