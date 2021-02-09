@@ -168,19 +168,19 @@ const SearchContainer = styled.div<{ isVisible?: boolean }>`
     }
 `;
 
-const LogoLink = styled(Link)<{ logoHeight?: number; logoWidth?: number }>`
+const LogoLink = styled(Link)<{ logoHeight?: number }>`
     display: inline-block;
     position: relative;
     height: ${({ logoHeight }) => logoHeight && logoHeight}px;
-    width: ${({ logoWidth }) => logoWidth && logoWidth}px;
+    width: auto;
 
     color: ${({ theme }) => color(theme).white};
     transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
     will-change: height, width;
 
     & > * {
+        max-height: 100%;
         height: 100%;
-        width: 100%;
     }
 `;
 
@@ -205,11 +205,19 @@ const SocialContainer = styled.div<{ isLarge?: boolean }>`
 `;
 
 export interface LogoProps {
-    icon?: (isInverted?: boolean) => React.ReactNode;
-    iconTop?: (isInverted?: boolean) => React.ReactNode;
+    icon?: (props: {
+        isInverted?: boolean;
+        size?: 'full' | 'small';
+    }) => React.ReactNode;
     link?: string;
-    size?: { height: number; width: number };
-    sizeTop?: { height: number; width: number };
+    /**
+     * Multiplier for small logo height.
+     */
+    heightMultSmall?: number;
+    /**
+     * Multiplier for full logo height.
+     */
+    heightMultFull?: number;
 }
 
 export interface ToggleIconProps {
@@ -259,19 +267,16 @@ const Menu: FC<MenuProps> = ({
     const mqs: MenuMq[] = ['small', 'semilarge'];
     const currentMq = useMediaQuery(mqs) as MenuMq | undefined;
 
-    const logoSizes = {
-        small: {
-            height: logo?.size?.height || 69,
-            width: logo?.sizeTop?.width || 64,
-        },
-        large: {
-            height: logo?.size?.height || 115,
-            width: logo?.size?.width || 107,
-        },
+    // generate logo heights
+    const multFull = logo?.heightMultFull || 1;
+    const multSmall = logo?.heightMultSmall || 1;
+    const logoHeights = {
+        heightSmall: 69 * multSmall,
+        heightFull: 115 * multFull,
     };
 
     const { isTop, isInOffset, scrollDirection } = useScroll(
-        withTopOffset ? logoSizes.large.height : 0,
+        withTopOffset ? logoHeights.heightFull : 0,
         () => {
             setTopBarOpen(hideOnScrollDown ? false : true);
             setTopBarSize('small');
@@ -300,29 +305,35 @@ const Menu: FC<MenuProps> = ({
         document.body.style.overflow = isMenuOpen ? 'hidden' : 'visible';
     }, [isMenuOpen]);
 
-    const showFullTopBar = hideOnScrollDown
-        ? topBarSize === 'large'
-        : isInOffset;
+    const showFullTopBar =
+        (hideOnScrollDown ? topBarSize === 'large' : isInOffset) || isMenuOpen;
 
     const isTopBarInverted = () => {
         if (isMenuOpen && (size === 'full' || currentMq === 'small')) {
             return isNavInverted;
-        } else return showFullTopBar || isMenuOpen || isTopInverted;
+        } else return showFullTopBar || isTopInverted;
     };
 
     const isToggleInverted = () => {
         return isMenuOpen ? isNavInverted : isTopBarInverted();
     };
 
-    const getLogoHeight =
-        showFullTopBar || isMenuOpen
-            ? currentMq === 'small' || (isMenuOpen && size === 'full')
-                ? logoSizes.large.height * 0.8
-                : logoSizes.large.height
-            : logoSizes.small.height;
+    const isLogoFull = showFullTopBar
+        ? (currentMq === 'small' && isMenuOpen) ||
+          (isMenuOpen && size === 'full')
+            ? false
+            : true
+        : false;
+
+    const getLogoHeight = showFullTopBar
+        ? (currentMq === 'small' && isMenuOpen) ||
+          (isMenuOpen && size === 'full')
+            ? logoHeights.heightSmall * 1.2
+            : logoHeights.heightFull
+        : logoHeights.heightSmall;
 
     return (
-        <View isMenuOpen={isMenuOpen} isTop={showFullTopBar || isMenuOpen}>
+        <View isMenuOpen={isMenuOpen} isTop={showFullTopBar}>
             <Backdrop
                 isVisible={isMenuOpen}
                 onClick={() => setIsMenuOpen(false)}
@@ -364,12 +375,12 @@ const Menu: FC<MenuProps> = ({
                 isInverted={isTopInverted}
                 isMenuOpen={isMenuOpen}
                 isOpen={isTopBarOpen || isMenuOpen}
-                isTop={showFullTopBar || isMenuOpen}
+                isTop={showFullTopBar}
                 withAnim={withTopbarAnim}
                 clampWidth="large"
             >
                 <TopBarContent clampWidth="normal">
-                    <LeftCol isTop={showFullTopBar || isMenuOpen}>
+                    <LeftCol isTop={showFullTopBar}>
                         <ToggleContainer
                             onClick={() => setIsMenuOpen((prev) => !prev)}
                             iconColor={
@@ -388,26 +399,21 @@ const Menu: FC<MenuProps> = ({
                             </SearchContainer>
                         )}
                     </LeftCol>
-                    <CenterCol isTop={showFullTopBar || isMenuOpen}>
+                    <CenterCol isTop={showFullTopBar}>
                         {logo && (
                             <LogoLink
                                 href={logo.link}
                                 logoHeight={getLogoHeight}
-                                logoWidth={
-                                    showFullTopBar || isMenuOpen
-                                        ? logoSizes.large.width
-                                        : logoSizes.small.width
-                                }
                             >
-                                {logo.iconTop && (showFullTopBar || isMenuOpen)
-                                    ? logo.iconTop &&
-                                      logo.iconTop(isTopBarInverted())
-                                    : logo.icon &&
-                                      logo.icon(isTopBarInverted())}
+                                {logo.icon &&
+                                    logo.icon({
+                                        isInverted: isTopBarInverted(),
+                                        size: isLogoFull ? 'full' : 'small',
+                                    })}
                             </LogoLink>
                         )}
                     </CenterCol>
-                    <RightCol isTop={showFullTopBar || isMenuOpen}>
+                    <RightCol isTop={showFullTopBar}>
                         {secondaryAction && secondaryAction(isTopBarInverted())}
                         {primaryAction && primaryAction(isTopBarInverted())}
                     </RightCol>

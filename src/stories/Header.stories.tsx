@@ -13,14 +13,24 @@ import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
 
-const logoFn = (isInverted: boolean) => {
+const logoFn = ({
+    isInverted,
+    size,
+}: {
+    isInverted: boolean;
+    size?: 'full' | 'small';
+}) => {
     if (isInverted)
         return (
-            <img src="https://via.placeholder.com/107x115/000000/FFFFFF/?text=logo" />
+            <img
+                src={`https://via.placeholder.com/107x115/000000/FFFFFF/?text=${size}`}
+            />
         );
     else
         return (
-            <img src="https://via.placeholder.com/107x115/FFFFFF/000000/?text=logo" />
+            <img
+                src={`https://via.placeholder.com/107x115/FFFFFF/000000/?text=${size}`}
+            />
         );
 };
 
