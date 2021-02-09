@@ -83,7 +83,7 @@ const Backdrop = styled.div<{ isVisible?: boolean }>`
     transition: background-color 0.2s ease-in-out;
 `;
 
-const MenuBarCol = styled.div<{ isTop?: boolean }>`
+const MenuBarCol = styled.div<{ isTop?: boolean; logoHeight?: number }>`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -99,7 +99,10 @@ const LeftCol = styled(MenuBarCol)`
     align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
     text-align: left;
 
-    padding-top: ${({ isTop }) => (isTop ? spacings.spacer : 0)}px;
+    padding-top: ${({ isTop, logoHeight }) =>
+        isTop && logoHeight
+            ? Math.min(spacings.spacer, logoHeight * 0.17)
+            : 0}px;
 
     @media ${mq.xlarge} {
         padding-left: ${spacings.spacer}px;
@@ -117,7 +120,10 @@ const RightCol = styled(MenuBarCol)`
     align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
     text-align: right;
 
-    padding-top: ${({ isTop }) => (isTop ? spacings.spacer : 0)}px;
+    padding-top: ${({ isTop, logoHeight }) =>
+        isTop && logoHeight
+            ? Math.min(spacings.spacer, logoHeight * 0.17)
+            : 0}px;
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
@@ -319,14 +325,14 @@ const Menu: FC<MenuProps> = ({
     };
 
     const isLogoFull = showFullTopBar
-        ? (currentMq === 'small' && isMenuOpen) ||
+        ? (currentMq === 'small' ? true : isMenuOpen) ||
           (isMenuOpen && size === 'full')
             ? false
             : true
         : false;
 
     const getLogoHeight = showFullTopBar
-        ? (currentMq === 'small' && isMenuOpen) ||
+        ? (currentMq === 'small' ? true : isMenuOpen) ||
           (isMenuOpen && size === 'full')
             ? logoHeights.heightSmall * 1.2
             : logoHeights.heightFull
@@ -380,7 +386,7 @@ const Menu: FC<MenuProps> = ({
                 clampWidth="large"
             >
                 <TopBarContent clampWidth="normal">
-                    <LeftCol isTop={showFullTopBar}>
+                    <LeftCol isTop={showFullTopBar} logoHeight={getLogoHeight}>
                         <ToggleContainer
                             onClick={() => setIsMenuOpen((prev) => !prev)}
                             iconColor={
@@ -413,7 +419,7 @@ const Menu: FC<MenuProps> = ({
                             </LogoLink>
                         )}
                     </CenterCol>
-                    <RightCol isTop={showFullTopBar}>
+                    <RightCol isTop={showFullTopBar} logoHeight={getLogoHeight}>
                         {secondaryAction && secondaryAction(isTopBarInverted())}
                         {primaryAction && primaryAction(isTopBarInverted())}
                     </RightCol>
