@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
 import {
     getColors as color,
@@ -21,14 +21,14 @@ const View = styled.form`
     }
 `;
 
-const InputField = styled.input`
+const InputField = styled.input<{ backColor?: string }>`
     display: block;
     width: 100%;
     height: 100%;
     padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 3.5}px;
     color: inherit;
 
-    background-color: ${({ theme }) => color(theme).mono.light};
+    background-color: ${({ backColor }) => backColor && backColor};
     box-shadow: none;
     border: none;
     border-right: none;
@@ -52,7 +52,7 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 50px;
+    height: 49px;
 
     margin-top: ${spacings.spacer * 0.5}px;
 
@@ -97,6 +97,7 @@ const CompactForm: FC<{
     onClick?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     onFocus?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
+    backgroundStyle?: 'white' | 'grey';
     className?: string;
 }> = ({
     isInverted = false,
@@ -109,8 +110,11 @@ const CompactForm: FC<{
     onClick,
     onBlur,
     onFocus,
+    backgroundStyle = 'grey',
     className,
 }) => {
+    const theme = useContext(ThemeContext);
+
     return (
         <View
             onSubmit={onSubmit}
@@ -124,6 +128,11 @@ const CompactForm: FC<{
                 onClick={onClick}
                 onBlur={onBlur}
                 onFocus={onFocus}
+                backColor={
+                    backgroundStyle === 'grey' || isInverted
+                        ? color(theme).mono.light
+                        : color(theme).white
+                }
             />
             {buttonIcon && (
                 <SubmitBtn isInverted={isInverted}>{buttonIcon}</SubmitBtn>
