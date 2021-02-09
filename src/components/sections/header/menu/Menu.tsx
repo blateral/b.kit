@@ -100,7 +100,9 @@ const LeftCol = styled(MenuBarCol)`
     text-align: left;
 
     padding-top: ${({ isTop, logoHeight }) =>
-        isTop && logoHeight ? logoHeight * 0.17 : 0}px;
+        isTop && logoHeight
+            ? Math.min(spacings.spacer, logoHeight * 0.17)
+            : 0}px;
 
     @media ${mq.xlarge} {
         padding-left: ${spacings.spacer}px;
@@ -119,7 +121,9 @@ const RightCol = styled(MenuBarCol)`
     text-align: right;
 
     padding-top: ${({ isTop, logoHeight }) =>
-        isTop && logoHeight ? logoHeight * 0.17 : 0}px;
+        isTop && logoHeight
+            ? Math.min(spacings.spacer, logoHeight * 0.17)
+            : 0}px;
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
