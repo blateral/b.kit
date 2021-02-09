@@ -25,6 +25,7 @@ const InputField = styled.input<{ backColor?: string }>`
     display: block;
     width: 100%;
     height: 100%;
+    max-height: 49px;
     padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 3.5}px;
     color: inherit;
 
