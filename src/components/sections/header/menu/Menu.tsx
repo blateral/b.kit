@@ -267,7 +267,7 @@ const Menu: FC<MenuProps> = ({
     const theme = useContext(ThemeContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isTopBarOpen, setTopBarOpen] = useState(true);
-    const [topBarSize, setTopBarSize] = useState<'small' | 'large'>('small');
+    const [topBarSize, setTopBarSize] = useState<'small' | 'large'>('large');
     const [withTopbarAnim, setTopBarAnim] = useState(true);
 
     const mqs: MenuMq[] = ['small', 'semilarge'];
