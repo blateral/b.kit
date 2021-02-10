@@ -11,6 +11,8 @@ import MenuBurger from 'components/base/icons/MenuBurger';
 import Play from 'components/base/icons/Play';
 import Star from 'components/base/icons/Star';
 import StarGhost from 'components/base/icons/StarGhost';
+import Phone from 'components/base/icons/Phone';
+import Mail from 'components/base/icons/Mail';
 import Facebook from 'components/base/icons/socials/Facebook';
 import Instagram from 'components/base/icons/socials/Instagram';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
@@ -36,6 +38,8 @@ export default {
         Twitter,
         LinkedIn,
         Youtube,
+        Phone,
+        Mail,
     },
     decorators: [
         (Story) => (
@@ -75,6 +79,12 @@ IconStar.storyName = 'Star';
 
 export const IconStarGhost: Story = () => <StarGhost />;
 IconStarGhost.storyName = 'Star ghost';
+
+export const IconPhone: Story = () => <Phone />;
+IconPhone.storyName = 'Phone';
+
+export const IconMail: Story = () => <Mail />;
+IconMail.storyName = 'Mail';
 
 export const IconFacebook: Story = () => <Facebook />;
 IconFacebook.storyName = 'Facebook logo';

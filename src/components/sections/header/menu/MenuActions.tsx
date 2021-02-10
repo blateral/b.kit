@@ -153,8 +153,10 @@ const MenuAction: FC<BtnProps | LinkProps> = forwardRef((props, ref) => {
                 ref={ref}
                 as={props.as as any}
                 href={(props as LinkProps).href}
-                target={(props as LinkProps).isExternal && '_blank'}
-                rel={(props as LinkProps).isExternal && 'noopener noreferrer'}
+                target={(props as LinkProps).isExternal ? '_blank' : ''}
+                rel={
+                    (props as LinkProps).isExternal ? 'noopener noreferrer' : ''
+                }
                 isInverted={props.isInverted}
                 disable={props.isDisabled}
                 onClick={props.onClick}

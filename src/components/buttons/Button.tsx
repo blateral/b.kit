@@ -164,9 +164,11 @@ const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
                     ref={ref}
                     as={props.as as any}
                     href={(props as LinkProps).href}
-                    target={(props as LinkProps).isExternal && '_blank'}
+                    target={(props as LinkProps).isExternal ? '_blank' : ''}
                     rel={
-                        (props as LinkProps).isExternal && 'noopener noreferrer'
+                        (props as LinkProps).isExternal
+                            ? 'noopener noreferrer'
+                            : ''
                     }
                     inverted={props.isInverted}
                     disable={props.isDisabled}
