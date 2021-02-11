@@ -23,6 +23,10 @@ const View = styled.div<{ isMirrored?: boolean }>`
         flex-direction: ${({ isMirrored }) =>
             isMirrored ? 'row-reverse' : 'row'};
         align-items: stretch;
+
+        & > * {
+            max-width: 300px;
+        }
     }
 `;
 

@@ -131,11 +131,11 @@ interface Props {
     className?: string;
 }
 
-type BtnProps = Props & {
+export type BtnProps = Props & {
     as?: 'button';
 };
 
-type LinkProps = Props & {
+export type LinkProps = Props & {
     as?: 'a';
     href?: string;
     isExternal?: boolean;
