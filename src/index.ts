@@ -12,7 +12,13 @@ declare module 'styled-components' {
 }
 
 /***** Functional exports *****/
-export { getColors, getFonts, getBaseTheme } from 'utils/styles';
+export {
+    getColors,
+    getFonts,
+    getBaseTheme,
+    withRange,
+    spacings,
+} from 'utils/styles';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
