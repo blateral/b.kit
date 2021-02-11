@@ -1,4 +1,4 @@
-/***** Version: 0.3.11 *****/
+/***** Version: 0.3.12 *****/
 
 import 'styled-components';
 import { Colors, Fonts } from 'utils/styles';
@@ -12,7 +12,13 @@ declare module 'styled-components' {
 }
 
 /***** Functional exports *****/
-export { getColors, getFonts, getBaseTheme } from 'utils/styles';
+export {
+    getColors,
+    getFonts,
+    getBaseTheme,
+    withRange,
+    spacings,
+} from 'utils/styles';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
