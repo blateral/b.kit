@@ -32,8 +32,9 @@ const TopBar = styled.div<{
 }>`
     max-width: ${({ clampWidth }) =>
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
-    padding: ${spacings.nudge * 2}px ${spacings.nudge * 2}px ${spacings.nudge}px
-        ${spacings.nudge * 2}px;
+    padding: ${({ isTop, isOpen }) =>
+            !isTop && isOpen ? spacings.nudge : spacings.nudge * 2}px
+        ${spacings.nudge * 2}px ${spacings.nudge}px ${spacings.nudge * 2}px;
     margin: 0 auto;
     overflow: hidden;
 
@@ -58,8 +59,9 @@ const TopBar = styled.div<{
     will-change: transform, background-color, padding, height, box-shadow;
 
     @media ${mq.medium} {
-        padding: ${spacings.nudge * 7}px ${spacings.spacer}px
-            ${spacings.nudge * 3}px ${spacings.spacer}px;
+        padding: ${({ isTop, isOpen }) =>
+                !isTop && isOpen ? spacings.nudge * 3 : spacings.nudge * 7}px
+            ${spacings.spacer}px ${spacings.nudge * 3}px ${spacings.spacer}px;
     }
 `;
 
