@@ -55,8 +55,8 @@ interface ColorOptions {
 export type ColorOptionsType = keyof ColorOptions;
 
 export interface Colors {
-    black: string;
-    white: string;
+    dark: string;
+    light: string;
     mono: ColorOptions;
     primary: ColorOptions;
     secondary: ColorOptions;
@@ -74,6 +74,8 @@ export interface FontProps {
     letterSpacing?: string;
     size: [number, number];
     textTransform?: string;
+    color?: string;
+    colorInverted?: string;
 }
 
 export type FontPropsType = keyof FontProps;
@@ -103,8 +105,8 @@ export type FontType = keyof Fonts;
 
 /***** Colors *****/
 const defaultColors: Colors = {
-    black: '#000000',
-    white: '#ffffff',
+    dark: '#000000',
+    light: '#ffffff',
     mono: {
         light: '#F0F0F0',
         medium: '#C8C8C8',
@@ -135,6 +137,8 @@ const copyBase: FontProps = {
     lineHeight: '1.53',
     letterSpacing: '0',
     size: [10, 13],
+    color: defaultColors.dark,
+    colorInverted: defaultColors.light,
 };
 
 const headingBase: FontProps = {
@@ -144,6 +148,8 @@ const headingBase: FontProps = {
     lineHeight: '1.1',
     letterSpacing: '0',
     size: [38, 40],
+    color: defaultColors.dark,
+    colorInverted: defaultColors.light,
 };
 
 const defaultFonts: Fonts = {

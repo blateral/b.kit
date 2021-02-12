@@ -12,6 +12,7 @@ import StarGhost from 'components/base/icons/StarGhost';
 import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const logoFn = ({
     isInverted,
@@ -276,9 +277,9 @@ export const WithActions: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -314,9 +315,9 @@ export const WithMenu: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -353,9 +354,9 @@ export const WithMenuLogo: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -394,9 +395,9 @@ export const WithMenuActions: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -436,9 +437,9 @@ export const WithInvertedTopBar: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -479,9 +480,9 @@ export const WithInvertedNav: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -523,9 +524,9 @@ export const WithFullSizeMenu: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -566,9 +567,9 @@ export const WithBadge: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         badge={{
             content: (
@@ -617,9 +618,9 @@ export const WithBadgeOnMobile: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         badge={{
             content: (
@@ -670,9 +671,9 @@ export const SmallerHeaderSize: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -725,9 +726,9 @@ export const WithKenBurnsEffect: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -781,9 +782,9 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
             </Button.View>
         )}
         secondaryCta={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );

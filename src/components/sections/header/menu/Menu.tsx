@@ -39,7 +39,7 @@ const TopBar = styled.div<{
     background-color: ${({ theme, isInverted, isTop, isMenuOpen }) =>
         isInverted
             ? `rgba(0, 0, 0, ${!isTop && !isMenuOpen ? 0.3 : 0})`
-            : !isTop && !isMenuOpen && color(theme).white};
+            : !isTop && !isMenuOpen && color(theme).light};
 
     box-shadow: 0px 4px 4px
         ${({ isInverted, isTop, isMenuOpen, isOpen }) =>
@@ -88,7 +88,7 @@ const MenuBarCol = styled.div<{ isTop?: boolean; logoHeight?: number }>`
     flex-direction: row;
     align-items: center;
     position: relative;
-    color: ${({ theme }) => color(theme).white};
+    color: ${({ theme }) => color(theme).light};
 
     transition: padding-top 0.2s ease-in-out;
 `;
@@ -180,7 +180,7 @@ const LogoLink = styled(Link)<{ logoHeight?: number }>`
     height: ${({ logoHeight }) => logoHeight && logoHeight}px;
     width: auto;
 
-    color: ${({ theme }) => color(theme).white};
+    color: ${({ theme }) => color(theme).light};
     transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
     will-change: height, width;
 
@@ -391,8 +391,8 @@ const Menu: FC<MenuProps> = ({
                             onClick={() => setIsMenuOpen((prev) => !prev)}
                             iconColor={
                                 isToggleInverted()
-                                    ? color(theme).white
-                                    : color(theme).black
+                                    ? color(theme).light
+                                    : color(theme).dark
                             }
                         >
                             {isMenuOpen

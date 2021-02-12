@@ -17,7 +17,7 @@ import SocialList from 'components/blocks/SocialList';
 
 const MainView = styled(Wrapper)<{ isInverted?: boolean }>`
     background-color: ${({ theme, isInverted }) =>
-        isInverted && color(theme).black};
+        isInverted && color(theme).dark};
 `;
 
 const StyledLink = styled(Link)`
@@ -35,7 +35,7 @@ const Content = styled.div<{ isInverted?: boolean }>`
     margin-right: -${spacings.spacer}px;
 
     color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).white : color(theme).black};
+        isInverted ? color(theme).light : color(theme).dark};
 
     @media ${mq.medium} {
         flex-direction: row;
@@ -127,7 +127,7 @@ const SiteLink = styled(StyledLink)`
     line-height: ${({ theme }) => font(theme)['copy-b'].medium.lineHeight};
 `;
 
-const LinkWrapper = styled.span<{ isActive?: boolean; isInverted?: boolean }>`
+const LinkWrapper = styled(Copy)<{ isActive?: boolean; isInverted?: boolean }>`
     display: inline-block;
     position: relative;
     padding-bottom: 3px;
@@ -141,7 +141,7 @@ const LinkWrapper = styled.span<{ isActive?: boolean; isInverted?: boolean }>`
         width: 4px;
 
         background-color: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).white : color(theme).black};
+            isInverted ? color(theme).light : color(theme).dark};
         border-radius: 4px;
 
         transform: translateY(-100%);
@@ -181,7 +181,7 @@ const BottomView = styled(Wrapper)`
     padding-top: ${spacings.nudge * 1.5}px;
     padding-bottom: ${spacings.nudge * 1.5}px;
 
-    color: ${({ theme }) => color(theme).black};
+    color: ${({ theme }) => color(theme).dark};
 
     & > * + * {
         margin-left: ${spacings.spacer}px;
@@ -243,7 +243,10 @@ const Footer: FC<{
                                 </LogoLink>
                             )}
                             {contactData && (
-                                <ContactData size="small">
+                                <ContactData
+                                    size="small"
+                                    isInverted={isInverted}
+                                >
                                     <div
                                         dangerouslySetInnerHTML={{
                                             __html: contactData,
@@ -261,6 +264,7 @@ const Footer: FC<{
                                     {siteLinksColLeft.map((link, i) => (
                                         <SiteLink key={i} href={link.href}>
                                             <LinkWrapper
+                                                type="copy-b"
                                                 isActive={link.isActive}
                                                 isInverted={isInverted}
                                             >
@@ -275,6 +279,7 @@ const Footer: FC<{
                                     {siteLinksColRight.map((link, i) => (
                                         <SiteLink key={i} href={link.href}>
                                             <LinkWrapper
+                                                type="copy-b"
                                                 isActive={link.isActive}
                                                 isInverted={isInverted}
                                             >
@@ -287,10 +292,12 @@ const Footer: FC<{
                         </ContentBlock>
                         <ContentBlock topSpace={logo && columnTopSpace}>
                             {newsTitle && (
-                                <Copy type="copy-b">{newsTitle}</Copy>
+                                <Copy type="copy-b" isInverted={isInverted}>
+                                    {newsTitle}
+                                </Copy>
                             )}
                             {newsText && (
-                                <Copy size="small">
+                                <Copy size="small" isInverted={isInverted}>
                                     <div
                                         dangerouslySetInnerHTML={{
                                             __html: newsText,

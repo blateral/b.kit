@@ -112,7 +112,7 @@ const IconList: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).black
+                    ? color(theme).dark
                     : bgMode
                     ? color(theme).mono.light
                     : 'transparent'
@@ -133,13 +133,7 @@ const IconList: React.FC<{
                     />
                 )}
                 <ListContainer>
-                    <Copy
-                        type="copy"
-                        size="medium"
-                        textColor={
-                            isInverted ? color(theme).white : color(theme).black
-                        }
-                    >
+                    <Copy type="copy" size="medium" isInverted={isInverted}>
                         <ItemContainer>
                             <Items isVisible isCentered={isCentered}>
                                 {primaryItems?.map(({ src, alt }, i) => {

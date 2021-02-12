@@ -101,7 +101,7 @@ const Gallery: FC<{
             bgMode="full"
             bgColor={
                 isInverted
-                    ? color(theme).black
+                    ? color(theme).dark
                     : hasBack
                     ? color(theme).mono.light
                     : 'transparent'

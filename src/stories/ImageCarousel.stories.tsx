@@ -3,9 +3,10 @@ import { Meta, Story } from '@storybook/react';
 
 import ImageCarousel from 'components/sections/carousel/ImageCarousel';
 import ArrowRight from 'components/base/icons/ArrowRight';
-import { Button } from 'index';
 import { ImageProps } from 'components/blocks/Image';
 import { generateItemList } from 'utils/storyHelpers';
+import ButtonGhost from 'components/buttons/ButtonGhost';
+import Button from 'components/buttons/Button';
 
 export default {
     title: 'Sections/Carousels/ImageCarousel',
@@ -57,9 +58,9 @@ export const WithIntro: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
@@ -83,9 +84,9 @@ export const DifferentSlideWidths: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={[
             {
@@ -124,9 +125,9 @@ export const ImageRatioA: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
@@ -151,9 +152,9 @@ export const ImageRatioB: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
@@ -179,9 +180,9 @@ export const Inverted: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
@@ -206,9 +207,9 @@ export const WithBackground: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
@@ -233,9 +234,9 @@ export const WithHalfBackground: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
@@ -261,9 +262,9 @@ export const WithLargeSpacing: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
@@ -291,9 +292,9 @@ export const WithHandlers: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
@@ -320,9 +321,9 @@ export const WithCustomControls: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,
@@ -350,9 +351,9 @@ export const WithCustomDots: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,

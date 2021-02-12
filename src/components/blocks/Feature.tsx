@@ -1,6 +1,6 @@
 import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
-import { spacings, getColors as color, withRange } from 'utils/styles';
+import styled from 'styled-components';
+import { spacings, withRange } from 'utils/styles';
 
 import Copy from 'components/typography/Copy';
 import Image, { ImageProps as Props } from 'components/blocks/Image';
@@ -75,9 +75,6 @@ const Feature: React.FC<
     secondaryAction,
     className,
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const textColor = isInverted ? color(theme).white : color(theme).black;
-
     return (
         <View className={className}>
             {image && (
@@ -93,11 +90,11 @@ const Feature: React.FC<
                 </ImageContainer>
             )}
             <Content addWhitespace={addWhitespace}>
-                <ContentBlock type="copy-b" size="big" textColor={textColor}>
+                <ContentBlock type="copy-b" size="big" isInverted={isInverted}>
                     {title}
                 </ContentBlock>
                 {description && (
-                    <ContentBlock size="small" textColor={textColor}>
+                    <ContentBlock size="small" isInverted={isInverted}>
                         <Desc
                             dangerouslySetInnerHTML={{ __html: description }}
                         />
@@ -105,7 +102,7 @@ const Feature: React.FC<
                 )}
             </Content>
             <Content addWhitespace={addWhitespace}>
-                <ContentBlock type="copy-b" textColor={textColor}>
+                <ContentBlock type="copy-b" isInverted={isInverted}>
                     {intro && (
                         <div dangerouslySetInnerHTML={{ __html: intro }} />
                     )}
@@ -114,7 +111,7 @@ const Feature: React.FC<
                     <ContentBlock
                         type="copy"
                         size="medium"
-                        textColor={textColor}
+                        isInverted={isInverted}
                     >
                         <div dangerouslySetInnerHTML={{ __html: text }} />
                     </ContentBlock>

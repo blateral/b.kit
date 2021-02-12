@@ -129,7 +129,7 @@ const TeaserWide: FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).black
+                    ? color(theme).dark
                     : hasBack
                     ? color(theme).mono.light
                     : 'transparent'
@@ -163,23 +163,13 @@ const TeaserWide: FC<{
                             {intro && (
                                 <ContentBlock
                                     type="copy-b"
-                                    textColor={
-                                        isInverted
-                                            ? color(theme).white
-                                            : color(theme).black
-                                    }
+                                    isInverted={isInverted}
                                 >
                                     {intro}
                                 </ContentBlock>
                             )}
                             {text && (
-                                <ContentBlock
-                                    textColor={
-                                        isInverted
-                                            ? color(theme).white
-                                            : color(theme).black
-                                    }
-                                >
+                                <ContentBlock isInverted={isInverted}>
                                     <div
                                         dangerouslySetInnerHTML={{
                                             __html: text,
@@ -189,11 +179,7 @@ const TeaserWide: FC<{
                             )}
                             {subText && (
                                 <SubTextBlock
-                                    textColor={
-                                        isInverted
-                                            ? color(theme).white
-                                            : color(theme).black
-                                    }
+                                    isInverted={isInverted}
                                     type="copy-i"
                                 >
                                     <div

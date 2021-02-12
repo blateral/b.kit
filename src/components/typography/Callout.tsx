@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, ThemeContext } from 'styled-components';
 import { FontOptionType, getFonts as font, mq, withRange } from 'utils/styles';
 
 // Styles
@@ -41,7 +41,7 @@ const View = styled(BaseStyles)`
         font(theme).callout[size].textTransform};
 `;
 
-export type HeadlineTag =
+export type CalloutTag =
     | 'h1'
     | 'h2'
     | 'h3'
@@ -52,7 +52,8 @@ export type HeadlineTag =
     | 'div';
 
 const Callout: React.FC<{
-    as?: HeadlineTag;
+    isInverted?: boolean;
+    as?: CalloutTag;
     size?: FontOptionType;
     textColor?: string;
     hyphens?: boolean;
@@ -60,6 +61,7 @@ const Callout: React.FC<{
 
     className?: string;
 }> = ({
+    isInverted,
     as = 'h2',
     className,
     size = 'medium',
@@ -68,11 +70,18 @@ const Callout: React.FC<{
     hasShadow = false,
     children,
 }) => {
+    const theme = React.useContext(ThemeContext);
+    const fontSettings = font(theme)?.callout?.[size];
+
     return (
         <View
             as={as}
             size={size}
-            textColor={textColor}
+            textColor={
+                textColor || isInverted
+                    ? fontSettings.colorInverted
+                    : fontSettings.color
+            }
             hyphens={hyphens}
             hasShadow={hasShadow}
             className={className}

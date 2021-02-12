@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Gallery from 'components/sections/Gallery';
 import Button from 'components/buttons/Button';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/Gallery',
@@ -40,9 +41,9 @@ export const WithIntro: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -72,9 +73,9 @@ export const MultipleImages: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -104,9 +105,9 @@ export const RatioA: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -137,9 +138,9 @@ export const RatioB: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -170,9 +171,9 @@ export const RatioC: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -215,9 +216,9 @@ export const MixedImages: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -261,9 +262,9 @@ export const MixedFirstFull: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -307,9 +308,9 @@ export const MixedSecondFull: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -353,9 +354,9 @@ export const MixedThirdFull: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -393,9 +394,9 @@ export const WithBackground: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -432,9 +433,9 @@ export const Inverted: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );

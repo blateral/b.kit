@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Feature from 'components/blocks/Feature';
 import Button from 'components/buttons/Button';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Blocks/Feature',
@@ -68,9 +69,9 @@ export const WithActions: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -94,9 +95,9 @@ export const WithWhitespace: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -121,9 +122,9 @@ export const Inverted: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );

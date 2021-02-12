@@ -6,6 +6,7 @@ import FeatureCarousel from 'components/sections/carousel/FeatureCarousel';
 import Button from 'components/buttons/Button';
 import ArrowRight from 'components/base/icons/ArrowRight';
 import { FeatureProps } from 'components/blocks/Feature';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const actions = {
     primaryAction: (isInverted?: boolean) => (
@@ -14,9 +15,9 @@ const actions = {
         </Button.View>
     ),
     secondaryAction: (isInverted?: boolean) => (
-        <Button.View type="ghost" isInverted={isInverted}>
-            <Button.Label>Secondary</Button.Label>
-        </Button.View>
+        <ButtonGhost.View isInverted={isInverted}>
+            <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+        </ButtonGhost.View>
     ),
 };
 
@@ -84,9 +85,9 @@ export const WithIntro: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         features={exampleFeatures.map((feature, i) => {
             return {
@@ -113,9 +114,9 @@ export const ImageRatioA: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         features={exampleFeatures.map((feature, i) => {
             return {
@@ -143,9 +144,9 @@ export const ImageRatioB: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         features={exampleFeatures.map((feature, i) => {
             return {
@@ -174,9 +175,9 @@ export const Inverted: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         features={exampleFeatures.map((feature, i) => {
             return {
@@ -204,9 +205,9 @@ export const WithBackground: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         features={exampleFeatures.map((feature, i) => {
             return {
@@ -234,9 +235,9 @@ export const WithHalfBackground: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         features={exampleFeatures.map((feature, i) => {
             return {
@@ -267,9 +268,9 @@ export const WithHandlers: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         features={exampleFeatures.map((feature, i) => {
             return {
@@ -299,9 +300,9 @@ export const WithCustomControls: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         features={exampleFeatures.map((feature, i) => {
             return {
@@ -332,9 +333,9 @@ export const WithCustomDots: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         features={exampleFeatures.map((feature, i) => {
             return {

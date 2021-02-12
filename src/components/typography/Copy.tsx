@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, ThemeContext } from 'styled-components';
 import {
     FontType,
     mq,
@@ -81,12 +81,14 @@ const View = styled(BaseStyles)`
 `;
 
 const Copy: React.FC<{
+    isInverted?: boolean;
     textColor?: string;
     type?: CopyType;
     size?: FontOptionType;
     columns?: boolean;
     className?: string;
 }> = ({
+    isInverted,
     type = 'copy',
     size = 'medium',
     textColor,
@@ -94,11 +96,18 @@ const Copy: React.FC<{
     className,
     children,
 }) => {
+    const theme = React.useContext(ThemeContext);
+    const fontSettings = font(theme)?.[type]?.[size];
+
     return (
         <View
             type={type}
             size={size}
-            textColor={textColor}
+            textColor={
+                textColor || isInverted
+                    ? fontSettings.colorInverted
+                    : fontSettings.color
+            }
             columns={columns}
             className={className}
         >

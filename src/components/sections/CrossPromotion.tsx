@@ -51,8 +51,6 @@ const PosterContainer = styled.div`
 
     flex: 1 0 auto;
 
-    color: ${({ theme }) => color(theme).white};
-
     & + & {
         margin-top: ${spacings.spacer}px;
     }
@@ -107,7 +105,7 @@ const CrossPromotion: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).black
+                    ? color(theme).dark
                     : bgMode
                     ? color(theme).mono.light
                     : 'transparent'

@@ -21,15 +21,15 @@ export const Default: Story = () => <Heading>Lorem Ipsum Dolor Sit</Heading>;
 
 export const WithSize: Story = () => (
     <>
-        <Heading size={1}>Lorem Ipsum Dolor Sit</Heading>
+        <Heading size="heading-1">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading size={2}>Lorem Ipsum Dolor Sit</Heading>
+        <Heading size="heading-2">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading size={3}>Lorem Ipsum Dolor Sit</Heading>
+        <Heading size="heading-3">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading size={4}>Lorem Ipsum Dolor Sit</Heading>
+        <Heading size="heading-4">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading size={5}>Lorem Ipsum Dolor Sit</Heading>
+        <Heading size="super">Lorem Ipsum Dolor Sit</Heading>
     </>
 );
 

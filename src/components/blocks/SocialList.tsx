@@ -36,7 +36,7 @@ const StyledLink = styled(Link)<{ textColor?: string }>`
     display: block;
     padding: ${spacings.nudge * 2}px ${spacings.nudge * 1.5}px;
     margin: -${spacings.nudge * 2}px -${spacings.nudge * 1.5}px;
-    color: ${({ theme, textColor }) => textColor || color(theme).black};
+    color: ${({ theme, textColor }) => textColor || color(theme).dark};
 `;
 
 const SocialList: FC<{
@@ -56,8 +56,8 @@ const SocialList: FC<{
                             href={item.href}
                             textColor={
                                 isInverted
-                                    ? color(theme).white
-                                    : color(theme).black
+                                    ? color(theme).light
+                                    : color(theme).dark
                             }
                         >
                             {item.icon}

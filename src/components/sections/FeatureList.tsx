@@ -89,7 +89,7 @@ const FeatureList: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).black
+                    ? color(theme).dark
                     : bgMode
                     ? color(theme).mono.light
                     : 'transparent'

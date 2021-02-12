@@ -74,7 +74,7 @@ const VideoControls = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: ${({ theme }) => color(theme).black};
+    color: ${({ theme }) => color(theme).dark};
 
     & > * {
         transition: transform 0.2s ease-in-out;

@@ -4,6 +4,7 @@ import Video from 'components/sections/Video';
 
 import Button from 'components/buttons/Button';
 import Play from 'components/base/icons/Play';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/Video',
@@ -18,9 +19,9 @@ export const Default: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         bgImage={{
             small: 'http://unsplash.it/640/480',
@@ -44,9 +45,9 @@ export const WithIntro: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         bgImage={{
             small: 'http://unsplash.it/640/480',
@@ -70,9 +71,9 @@ export const Inverted: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         bgImage={{
             small: 'https://unsplash.it/640/480',
@@ -97,9 +98,9 @@ export const WithCustomPlayIcon: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
         bgImage={{
             small: 'https://unsplash.it/640/480',

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import PromotionCard from 'components/blocks/PromotionCard';
 import Button from 'components/buttons/Button';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Blocks/PromotionCard',
@@ -49,9 +50,9 @@ export const WithActions: Story = () => (
             </Button.View>
         }
         secondaryAction={
-            <Button.View type="ghost" isInverted>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         }
     />
 );
@@ -72,9 +73,9 @@ export const WithLink: Story = () => (
             </Button.View>
         }
         secondaryAction={
-            <Button.View type="ghost" isInverted>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         }
         href="#0"
     />
@@ -96,9 +97,9 @@ export const WithClickHandler: Story = () => (
             </Button.View>
         }
         secondaryAction={
-            <Button.View type="ghost" isInverted>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         }
         onClick={() => console.log('click')}
     />

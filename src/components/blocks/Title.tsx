@@ -1,31 +1,15 @@
-import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
 import Heading, { HeadlineTag } from 'components/typography/Heading';
-import {
-    spacings,
-    withRange,
-    getFonts as font,
-    getColors as color,
-} from 'utils/styles';
+import { spacings, withRange } from 'utils/styles';
 
 const View = styled.div<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
-`;
 
-const SuperTitle = styled.div<{ textColor?: string }>`
-    display: inline-block;
-    ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding-bottom')};
-
-    font-family: ${({ theme }) => font(theme).super.family};
-    font-weight: ${({ theme }) => font(theme).super.weight};
-    font-style: ${({ theme }) => font(theme).super.style};
-    ${({ theme }) => withRange(font(theme).super.size, 'font-size')}
-    line-height: ${({ theme }) => font(theme).super.lineHeight};
-    letter-spacing: ${({ theme }) => font(theme).super.letterSpacing};
-    text-transform: ${({ theme }) => font(theme).super.textTransform};
-
-    color: ${({ textColor }) => textColor || 'inherit'};
+    & > * + * {
+        ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding-top')};
+    }
 `;
 
 const Title: FC<{
@@ -45,28 +29,15 @@ const Title: FC<{
     isCentered = false,
     className,
 }) => {
-    const theme = useContext(ThemeContext);
-
     return (
         <View isCentered={isCentered} className={className}>
             {superTitle && (
-                <SuperTitle
-                    textColor={
-                        isInverted ? color(theme).white : color(theme).black
-                    }
-                    as={superTitleAs}
-                >
+                <Heading as={superTitleAs} size="super" isInverted={isInverted}>
                     {superTitle}
-                </SuperTitle>
+                </Heading>
             )}
             {title && (
-                <Heading
-                    size={2}
-                    textColor={
-                        isInverted ? color(theme).white : color(theme).black
-                    }
-                    as={titleAs}
-                >
+                <Heading as={titleAs} size="heading-2" isInverted={isInverted}>
                     {title}
                 </Heading>
             )}
