@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { spacings, withRange } from 'utils/styles';
+import { mq, spacings, withRange } from 'utils/styles';
 
 import Copy from 'components/typography/Copy';
 import Image, { ImageProps as Props } from 'components/blocks/Image';
@@ -31,6 +31,12 @@ const Content = styled.div<{ addWhitespace?: boolean }>`
     }
 `;
 
+const ArticleContent = styled(Content)`
+    @media ${mq.medium} {
+        max-width: 80%;
+    }
+`;
+
 const ContentBlock = styled(Copy)`
     & + & {
         ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
@@ -45,6 +51,12 @@ const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
     padding: 0
         ${({ addWhitespace }) => addWhitespace && spacings.nudge * 2 + 'px'};
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
+
+    @media ${mq.medium} {
+        & > * {
+            max-width: 50%;
+        }
+    }
 `;
 
 export interface FeatureProps {
@@ -101,7 +113,7 @@ const Feature: React.FC<
                     </ContentBlock>
                 )}
             </Content>
-            <Content addWhitespace={addWhitespace}>
+            <ArticleContent addWhitespace={addWhitespace}>
                 <ContentBlock type="copy-b" isInverted={isInverted}>
                     {intro && (
                         <div dangerouslySetInnerHTML={{ __html: intro }} />
@@ -116,7 +128,7 @@ const Feature: React.FC<
                         <div dangerouslySetInnerHTML={{ __html: text }} />
                     </ContentBlock>
                 )}
-            </Content>
+            </ArticleContent>
             {(primaryAction || secondaryAction) && (
                 <StyledActions
                     addWhitespace={addWhitespace}
