@@ -224,7 +224,7 @@ const Header: FC<{
                 <StyledPoster
                     images={images}
                     gradient={gradient}
-                    size={size === 'small' ? 0.7 : 1}
+                    size={size === 'small' ? 0.8 : 1}
                 >
                     <Wrapper addWhitespace>
                         <PosterContent>
