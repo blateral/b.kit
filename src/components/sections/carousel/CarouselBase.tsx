@@ -53,7 +53,7 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
     padding: 0 ${spacings.nudge * 3}px;
 
     color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).white : color(theme).black};
+        isInverted ? color(theme).light : color(theme).dark};
     transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
 
     &:enabled {
@@ -134,7 +134,7 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     width: 14px;
     border: solid 1px
         ${({ theme, isInverted }) =>
-            isInverted ? color(theme).white : color(theme).black};
+            isInverted ? color(theme).light : color(theme).dark};
     border-radius: 14px;
 
     transition: background-color 0.2s ease-in-out;
@@ -142,8 +142,8 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     background-color: ${({ isActive, isInverted, theme }) =>
         isActive
             ? isInverted
-                ? color(theme).white
-                : color(theme).black
+                ? color(theme).light
+                : color(theme).dark
             : 'transparent'};
 `;
 

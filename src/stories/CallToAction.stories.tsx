@@ -4,6 +4,7 @@ import CallToAction from 'components/sections/CallToActions';
 import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
 import { Button, CompactForm } from 'index';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/CallToAction',
@@ -72,9 +73,9 @@ export const WithActions: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -103,9 +104,9 @@ export const IsInverted: Story = () => (
             </Button.View>
         )}
         secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );

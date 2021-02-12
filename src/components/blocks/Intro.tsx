@@ -1,7 +1,7 @@
 import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 
-import { getColors as color, spacings, mq, withRange } from 'utils/styles';
+import { spacings, mq, withRange } from 'utils/styles';
 
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
@@ -59,7 +59,6 @@ const Intro: React.FC<{
     clampText = true,
     className,
 }) => {
-    const theme = React.useContext(ThemeContext);
     return (
         <View
             isCentered={isCentered}
@@ -75,12 +74,7 @@ const Intro: React.FC<{
                 isCentered={isCentered}
             />
             {text && (
-                <ContentBlock
-                    type="copy-b"
-                    textColor={
-                        isInverted ? color(theme).white : color(theme).black
-                    }
-                >
+                <ContentBlock type="copy-b" isInverted={isInverted}>
                     <div dangerouslySetInnerHTML={{ __html: text }} />
                 </ContentBlock>
             )}

@@ -46,7 +46,7 @@ const Video: React.FC<{
 
     return (
         <Section
-            bgColor={isInverted ? color(theme).black : 'transparent'}
+            bgColor={isInverted ? color(theme).dark : 'transparent'}
             addSeperation
         >
             <Wrapper addWhitespace>

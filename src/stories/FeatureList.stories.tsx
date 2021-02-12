@@ -5,6 +5,7 @@ import FeatureList from 'components/sections/FeatureList';
 import Button from 'components/buttons/Button';
 import { FeatureProps } from 'components/blocks/Feature';
 import { generateItemList } from 'utils/storyHelpers';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const actions = {
     primaryAction: (isInverted?: boolean) => (
@@ -13,9 +14,9 @@ const actions = {
         </Button.View>
     ),
     secondaryAction: (isInverted?: boolean) => (
-        <Button.View type="ghost" isInverted={isInverted}>
-            <Button.Label>Secondary</Button.Label>
-        </Button.View>
+        <ButtonGhost.View isInverted={isInverted}>
+            <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+        </ButtonGhost.View>
     ),
 };
 
@@ -96,10 +97,10 @@ export const WithIntro: Story = () => (
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+        secondaryAction={(isInverted?: boolean) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -123,10 +124,10 @@ export const ImgRatioA: Story = () => (
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+        secondaryAction={(isInverted?: boolean) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -151,10 +152,10 @@ export const ImgRatioB: Story = () => (
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+        secondaryAction={(isInverted?: boolean) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -179,10 +180,10 @@ export const EvenAmountOfFeatures: Story = () => (
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+        secondaryAction={(isInverted?: boolean) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -207,10 +208,10 @@ export const WithBackground: Story = () => (
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+        secondaryAction={(isInverted?: boolean) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -235,10 +236,10 @@ export const WithSplittedBackground: Story = () => (
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+        secondaryAction={(isInverted?: boolean) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -264,10 +265,10 @@ export const Inverted: Story = () => (
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
-            <Button.View type="ghost" isInverted={isInverted}>
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+        secondaryAction={(isInverted?: boolean) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         )}
     />
 );

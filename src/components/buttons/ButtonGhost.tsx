@@ -31,7 +31,14 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
 
     outline: none;
-    border: none;
+    box-shadow: none;
+    border: solid 1px
+        ${({ theme, inverted, disable }) =>
+            disable
+                ? color(theme).mono.medium
+                : inverted
+                ? color(theme).light
+                : color(theme).dark};
     user-select: none;
     cursor: pointer;
 
@@ -39,29 +46,24 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
 
     will-change: transform;
 
-    background-color: ${({ theme, inverted, disable }) =>
+    background-color: transparent;
+    color: ${({ theme, inverted, disable }) =>
         disable
             ? color(theme).mono.medium
             : inverted
             ? color(theme).light
             : color(theme).dark};
-    color: ${({ theme, inverted, disable }) =>
-        disable
-            ? color(theme).light
-            : inverted
-            ? color(theme).dark
-            : color(theme).light};
-    text-align: left;
+    text-align: center;
 
     transition: all ease-in-out 0.2s;
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).light
+                ? color(theme).mono.medium
                 : inverted
-                ? color(theme).dark
-                : color(theme).light};
+                ? color(theme).light
+                : color(theme).dark};
     }
 
     & > :not(:last-child) {
@@ -69,7 +71,7 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     }
 
     &:hover {
-        transform: scale(1.02);
+        transform: scale(1.04);
     }
 
     &:focus {
@@ -99,7 +101,7 @@ export type LinkProps = Props & {
     isExternal?: boolean;
 };
 
-const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
+const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
     (props, ref) => {
         if (props.as === 'button') {
             return (
@@ -138,7 +140,7 @@ const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
     }
 );
 
-Button.displayName = 'Button';
+ButtonGhost.displayName = 'Button Ghost';
 
 const Icon = styled.div<{ iconColor?: string }>`
     display: flex;
@@ -162,4 +164,4 @@ const Label = styled.span`
     display: inline-block;
 `;
 
-export default { View: Button, Label: Label, Icon: Icon };
+export default { View: ButtonGhost, Label: Label, Icon: Icon };

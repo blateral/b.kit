@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Link from 'components/typography/Link';
 import { ScrollDirection, useScroll } from 'utils/useScroll';
 import Wrapper, { ClampWidthType } from 'components/base/Wrapper';
@@ -32,14 +32,15 @@ const TopBar = styled.div<{
 }>`
     max-width: ${({ clampWidth }) =>
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
-    padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
+    padding: ${spacings.nudge * 2}px ${spacings.nudge * 2}px ${spacings.nudge}px
+        ${spacings.nudge * 2}px;
     margin: 0 auto;
     overflow: hidden;
 
     background-color: ${({ theme, isInverted, isTop, isMenuOpen }) =>
         isInverted
             ? `rgba(0, 0, 0, ${!isTop && !isMenuOpen ? 0.3 : 0})`
-            : !isTop && !isMenuOpen && color(theme).white};
+            : !isTop && !isMenuOpen && color(theme).light};
 
     box-shadow: 0px 4px 4px
         ${({ isInverted, isTop, isMenuOpen, isOpen }) =>
@@ -55,6 +56,11 @@ const TopBar = styled.div<{
         box-shadow 0.2s ease-in-out;
     transform: translate(0, ${({ isOpen }) => (!isOpen ? '-100%' : '0')});
     will-change: transform, background-color, padding, height, box-shadow;
+
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 7}px ${spacings.spacer}px
+            ${spacings.nudge * 3}px ${spacings.spacer}px;
+    }
 `;
 
 const TopBarContent = styled(Wrapper)`
@@ -88,7 +94,7 @@ const MenuBarCol = styled.div<{ isTop?: boolean; logoHeight?: number }>`
     flex-direction: row;
     align-items: center;
     position: relative;
-    color: ${({ theme }) => color(theme).white};
+    color: ${({ theme }) => color(theme).light};
 
     transition: padding-top 0.2s ease-in-out;
 `;
@@ -99,10 +105,12 @@ const LeftCol = styled(MenuBarCol)`
     align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
     text-align: left;
 
-    padding-top: ${({ isTop, logoHeight }) =>
+    /* padding-top: ${({ isTop, logoHeight }) =>
         isTop && logoHeight
             ? Math.min(spacings.spacer, logoHeight * 0.17)
-            : 0}px;
+            : 0}px; */
+
+    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
 
     @media ${mq.xlarge} {
         padding-left: ${spacings.spacer}px;
@@ -120,10 +128,12 @@ const RightCol = styled(MenuBarCol)`
     align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
     text-align: right;
 
-    padding-top: ${({ isTop, logoHeight }) =>
+    /* padding-top: ${({ isTop, logoHeight }) =>
         isTop && logoHeight
             ? Math.min(spacings.spacer, logoHeight * 0.17)
-            : 0}px;
+            : 0}px; */
+    
+    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
@@ -180,7 +190,7 @@ const LogoLink = styled(Link)<{ logoHeight?: number }>`
     height: ${({ logoHeight }) => logoHeight && logoHeight}px;
     width: auto;
 
-    color: ${({ theme }) => color(theme).white};
+    color: ${({ theme }) => color(theme).light};
     transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
     will-change: height, width;
 
@@ -391,8 +401,8 @@ const Menu: FC<MenuProps> = ({
                             onClick={() => setIsMenuOpen((prev) => !prev)}
                             iconColor={
                                 isToggleInverted()
-                                    ? color(theme).white
-                                    : color(theme).black
+                                    ? color(theme).light
+                                    : color(theme).dark
                             }
                         >
                             {isMenuOpen

@@ -1,7 +1,13 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import {
+    getColors as color,
+    getFonts as font,
+    mq,
+    spacings,
+    withRange,
+} from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -90,7 +96,9 @@ const Decorator = styled.div<{ isInverted?: boolean }>`
     margin-bottom: ${spacings.nudge * 1.5}px;
 
     color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).white : color(theme).black};
+        isInverted
+            ? font(theme)['copy-b'].big.colorInverted
+            : font(theme)['copy-b'].big.color};
 
     @media ${mq.medium} {
         margin-bottom: 0;
@@ -131,32 +139,16 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
     avatar,
     className,
 }) => {
-    const theme = useContext(ThemeContext);
-
     return (
         <ContactView className={className}>
             {avatar && <Avatar src={avatar?.src} alt={avatar?.alt} />}
             <Info>
                 {name && (
                     <div>
-                        <Copy
-                            type="copy-b"
-                            textColor={
-                                isInverted
-                                    ? color(theme).white
-                                    : color(theme).black
-                            }
-                        >
+                        <Copy type="copy-b" isInverted={isInverted}>
                             {name}
                         </Copy>
-                        <Copy
-                            type="copy"
-                            textColor={
-                                isInverted
-                                    ? color(theme).white
-                                    : color(theme).black
-                            }
-                        >
+                        <Copy type="copy" isInverted={isInverted}>
                             {description}
                         </Copy>
                     </div>
@@ -171,11 +163,7 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
                                 <AddressLabel
                                     type="copy-b"
                                     size="big"
-                                    textColor={
-                                        isInverted
-                                            ? color(theme).white
-                                            : color(theme).black
-                                    }
+                                    isInverted={isInverted}
                                 >
                                     <div
                                         dangerouslySetInnerHTML={{
@@ -258,7 +246,7 @@ export const CallToAction: FC<{
     return (
         <StyledSection
             addSeperation
-            bgColor={isInverted ? color(theme).black : color(theme).mono.light}
+            bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
             <StyledWrapper clampWidth="normal">
                 {title && (

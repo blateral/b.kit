@@ -39,7 +39,7 @@ const Stage = styled.div<{
     width: 100%;
 
     background-color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).black : color(theme).white};
+        isInverted ? color(theme).dark : color(theme).light};
 
     padding: ${spacings.spacer}px;
     padding-top: ${({ topSpace }) =>
@@ -70,7 +70,7 @@ const Stage = styled.div<{
         transform: translateX(-100%);
 
         background-color: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).black : color(theme).white};
+            isInverted ? color(theme).dark : color(theme).light};
     }
 `;
 
@@ -152,7 +152,7 @@ const Nav = styled.div<{ isInverted?: boolean }>`
     height: 100%;
     overflow: auto;
     color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).white : color(theme).black};
+        isInverted ? color(theme).light : color(theme).dark};
 `;
 
 const Group = styled.li`
@@ -261,7 +261,7 @@ const ItemLabel = styled.label<{ isActive?: boolean; isInverted?: boolean }>`
         width: 6px;
 
         background-color: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).white : color(theme).black};
+            isInverted ? color(theme).light : color(theme).dark};
         border-radius: 4px;
 
         transform: translateY(-50%);

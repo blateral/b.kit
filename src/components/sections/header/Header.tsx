@@ -1,8 +1,8 @@
-import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
-import { HeadlineTag } from 'components/typography/Callout';
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import { CalloutTag } from 'components/typography/Callout';
+import { mq, spacings, withRange } from 'utils/styles';
 import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
 import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
@@ -178,7 +178,7 @@ export interface HeaderMenuProps {
 const Header: FC<{
     size?: 'full' | 'small';
     title?: string;
-    titleAs?: HeadlineTag;
+    titleAs?: CalloutTag;
     primaryCta?: (isInverted?: boolean) => React.ReactNode;
     secondaryCta?: (isInverted?: boolean) => React.ReactNode;
     menu?: HeaderMenuProps;
@@ -197,7 +197,6 @@ const Header: FC<{
     images,
     badge,
 }) => {
-    const theme = useContext(ThemeContext);
     const gradient =
         title || primaryCta || secondaryCta
             ? 'linear-gradient(3deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0) 60%), linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)'
@@ -225,7 +224,7 @@ const Header: FC<{
                 <StyledPoster
                     images={images}
                     gradient={gradient}
-                    size={size === 'small' ? 0.7 : 1}
+                    size={size === 'small' ? 0.8 : 1}
                 >
                     <Wrapper addWhitespace>
                         <PosterContent>
@@ -239,7 +238,7 @@ const Header: FC<{
                                             size="medium"
                                             as={titleAs}
                                             hasShadow
-                                            textColor={color(theme).white}
+                                            isInverted
                                         >
                                             {title}
                                         </Callout>
@@ -269,11 +268,7 @@ const Header: FC<{
             <PosterContentMobile>
                 <Wrapper addWhitespace>
                     {title && (
-                        <Callout
-                            size="small"
-                            as={titleAs}
-                            textColor={color(theme).black}
-                        >
+                        <Callout size="small" as={titleAs} isInverted={false}>
                             {title}
                         </Callout>
                     )}

@@ -35,14 +35,7 @@ const Content = styled.div<{ withAsideText?: boolean }>`
         `}
 `;
 
-const ContentBlock = styled(Copy)<{ isAside?: boolean }>`
-    text-align: left;
-
-    ul {
-        padding-left: 0;
-        list-style-position: inside;
-    }
-
+const ContentBlock = styled.div<{ isAside?: boolean }>`
     :not(:first-child) {
         padding-top: ${({ isAside }) => (isAside ? spacings.nudge * 4 : '0')}px;
     }
@@ -51,6 +44,15 @@ const ContentBlock = styled(Copy)<{ isAside?: boolean }>`
 
     @media ${mq.semilarge} {
         max-width: ${({ isAside }) => (isAside ? '100%' : '60%')};
+    }
+`;
+
+const ContentText = styled(Copy)`
+    text-align: left;
+
+    ul {
+        padding-left: 0;
+        list-style-position: inside;
     }
 `;
 
@@ -67,6 +69,7 @@ const Article: React.FC<{
     titleAs?: HeadlineTag;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
+    intro?: string;
     text?: string;
     asideText?: string;
 
@@ -81,6 +84,7 @@ const Article: React.FC<{
     titleAs,
     superTitle,
     superTitleAs,
+    intro,
     text,
     asideText,
     bgMode,
@@ -106,7 +110,7 @@ const Article: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).black
+                    ? color(theme).dark
                     : bgMode
                     ? color(theme).mono.light
                     : 'transparent'
@@ -122,31 +126,32 @@ const Article: React.FC<{
                     isInverted={isInverted}
                 />
                 <Content withAsideText={asideText ? true : false}>
-                    {text && (
-                        <ContentBlock
-                            type="copy"
-                            textColor={
-                                isInverted
-                                    ? color(theme).white
-                                    : color(theme).black
-                            }
-                        >
-                            <div dangerouslySetInnerHTML={{ __html: text }} />
-                        </ContentBlock>
-                    )}
+                    <ContentBlock>
+                        {intro && (
+                            <ContentText type="copy-b" isInverted={isInverted}>
+                                <div
+                                    dangerouslySetInnerHTML={{ __html: intro }}
+                                />
+                            </ContentText>
+                        )}
+                        {text && (
+                            <ContentText type="copy" isInverted={isInverted}>
+                                <div
+                                    dangerouslySetInnerHTML={{ __html: text }}
+                                />
+                            </ContentText>
+                        )}
+                    </ContentBlock>
+
                     {asideText && (
-                        <ContentBlock
-                            type="copy"
-                            textColor={
-                                isInverted
-                                    ? color(theme).white
-                                    : color(theme).black
-                            }
-                            isAside
-                        >
-                            <div
-                                dangerouslySetInnerHTML={{ __html: asideText }}
-                            />
+                        <ContentBlock isAside>
+                            <ContentText type="copy" isInverted={isInverted}>
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: asideText,
+                                    }}
+                                />
+                            </ContentText>
                         </ContentBlock>
                     )}
                 </Content>

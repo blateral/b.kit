@@ -148,7 +148,7 @@ const Teaser: FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).black
+                    ? color(theme).dark
                     : bgMode
                     ? color(theme).mono.light
                     : 'transparent'
@@ -168,11 +168,7 @@ const Teaser: FC<{
                             {image?.description && (
                                 <ImgDescMobile
                                     size="small"
-                                    textColor={
-                                        isInverted
-                                            ? color(theme).white
-                                            : color(theme).black
-                                    }
+                                    isInverted={isInverted}
                                 >
                                     <div
                                         dangerouslySetInnerHTML={{
@@ -200,23 +196,13 @@ const Teaser: FC<{
                             {intro && (
                                 <ContentBlock
                                     type="copy-b"
-                                    textColor={
-                                        isInverted
-                                            ? color(theme).white
-                                            : color(theme).black
-                                    }
+                                    isInverted={isInverted}
                                 >
                                     {intro}
                                 </ContentBlock>
                             )}
                             {text && (
-                                <ContentBlock
-                                    textColor={
-                                        isInverted
-                                            ? color(theme).white
-                                            : color(theme).black
-                                    }
-                                >
+                                <ContentBlock isInverted={isInverted}>
                                     <div
                                         dangerouslySetInnerHTML={{
                                             __html: text,
@@ -226,11 +212,7 @@ const Teaser: FC<{
                             )}
                             {subText && (
                                 <SubTextBlock
-                                    textColor={
-                                        isInverted
-                                            ? color(theme).white
-                                            : color(theme).black
-                                    }
+                                    isInverted={isInverted}
                                     type="copy-i"
                                 >
                                     <div
@@ -270,11 +252,7 @@ const Teaser: FC<{
                         {image?.description && (
                             <ImgDescDesktop
                                 size="small"
-                                textColor={
-                                    isInverted
-                                        ? color(theme).white
-                                        : color(theme).black
-                                }
+                                isInverted={isInverted}
                             >
                                 <div
                                     dangerouslySetInnerHTML={{

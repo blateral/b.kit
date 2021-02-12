@@ -1,10 +1,10 @@
 import * as React from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, ThemeContext } from 'styled-components';
 import { FontType, getFonts as font, mq, withRange } from 'utils/styles';
 
 type HeadingType = Exclude<
     FontType,
-    'copy' | 'copy-i' | 'copy-b' | 'super' | 'label' | 'callout'
+    'copy' | 'copy-i' | 'copy-b' | 'label' | 'callout'
 >;
 
 // Styles
@@ -53,11 +53,10 @@ export type HeadlineTag =
     | 'span'
     | 'div';
 
-export type HeadlineSize = 1 | 2 | 3 | 4 | 5;
-
 const Heading: React.FC<{
     as?: HeadlineTag;
-    size?: HeadlineSize;
+    isInverted?: boolean;
+    size?: HeadingType;
     textColor?: string;
     hyphens?: boolean;
     hasShadow?: boolean;
@@ -65,41 +64,48 @@ const Heading: React.FC<{
     className?: string;
 }> = ({
     as,
+    isInverted,
     className,
-    size,
+    size = 'heading-2',
     textColor,
     hyphens = false,
     hasShadow = false,
     children,
 }) => {
-    let tag: HeadlineTag = 'h1';
-    let type: HeadingType = 'heading-1';
+    const theme = React.useContext(ThemeContext);
+    let tag: HeadlineTag = 'h2';
 
     switch (size) {
         default:
-        case 1:
+        case 'heading-1':
             tag = 'h1';
-            type = 'heading-1';
             break;
-        case 2:
+        case 'heading-2':
             tag = 'h2';
-            type = 'heading-2';
             break;
-        case 3:
+        case 'heading-3':
             tag = 'h3';
-            type = 'heading-3';
             break;
-        case 4:
+        case 'heading-4':
             tag = 'h4';
-            type = 'heading-4';
+            break;
+        case 'super':
+            tag = 'div';
             break;
     }
+
+    // get font settings from global context
+    const fontSettings = font(theme)?.[size];
 
     return (
         <View
             as={as || tag}
-            type={type}
-            textColor={textColor}
+            type={size}
+            textColor={
+                textColor || isInverted
+                    ? fontSettings.colorInverted
+                    : fontSettings.color
+            }
             hyphens={hyphens}
             hasShadow={hasShadow}
             className={className}
@@ -111,7 +117,7 @@ const Heading: React.FC<{
 
 Heading.defaultProps = {
     as: 'h2',
-    size: 2,
+    size: 'heading-2',
 };
 
 export default Heading;

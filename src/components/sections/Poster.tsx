@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import { spacings, withRange } from 'utils/styles';
+import { mq, spacings, withRange } from 'utils/styles';
 import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 
@@ -13,6 +13,11 @@ const PosterContainer = styled.div<{
 }>`
     position: relative;
     width: 100%;
+    max-height: 500px;
+
+    @media ${mq.medium} {
+        max-height: 900px;
+    }
 
     &:after {
         content: ${({ hasContent }) => hasContent && '""'};
@@ -75,14 +80,17 @@ const IntroContainer = styled(Wrapper)`
 
 const Poster: FC<{
     image: ImageProps;
+    isInverted?: boolean;
     title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     text?: string;
-    primaryAction?: React.ReactNode;
-    secondaryAction?: React.ReactNode;
+
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
+    isInverted = false,
     title,
     titleAs,
     superTitle,
@@ -105,9 +113,9 @@ const Poster: FC<{
                                 superTitle={superTitle}
                                 superTitleAs={superTitleAs}
                                 text={text}
-                                isInverted
-                                secondaryAction={() => secondaryAction}
-                                primaryAction={() => primaryAction}
+                                isInverted={isInverted}
+                                secondaryAction={secondaryAction}
+                                primaryAction={primaryAction}
                                 clampText={text !== undefined}
                             />
                         </IntroContainer>

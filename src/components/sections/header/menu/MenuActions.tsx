@@ -51,9 +51,9 @@ const View = styled.a<{
     will-change: transform;
 
     background-color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).black : color(theme).white};
+        isInverted ? color(theme).dark : color(theme).light};
     color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).white : color(theme).black};
+        isInverted ? color(theme).light : color(theme).dark};
     text-align: left;
 
     transition: all ease-in-out 0.2s;
@@ -61,7 +61,7 @@ const View = styled.a<{
     & > * {
         color: ${({ theme, disable, isInverted }) =>
             disable &&
-            (isInverted ? color(theme).white : color(theme).black) +
+            (isInverted ? color(theme).light : color(theme).dark) +
                 '!important'};
     }
 
@@ -91,7 +91,7 @@ const View = styled.a<{
 const ViewGhost = styled(View)`
     border: solid 1px
         ${({ theme, isInverted }) =>
-            isInverted ? color(theme).white : color(theme).black};
+            isInverted ? color(theme).light : color(theme).dark};
     box-shadow: none;
     background-color: transparent;
     font-weight: 400;

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Actions from 'components/blocks/Actions';
 import Button from 'components/buttons/Button';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Blocks/Actions',
@@ -16,9 +17,9 @@ export const Default: Story = () => (
             </Button.View>
         }
         secondary={
-            <Button.View type="ghost">
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         }
     />
 );
@@ -32,9 +33,9 @@ export const Mirrored: Story = () => (
             </Button.View>
         }
         secondary={
-            <Button.View type="ghost">
-                <Button.Label>Secondary</Button.Label>
-            </Button.View>
+            <ButtonGhost.View>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
         }
     />
 );

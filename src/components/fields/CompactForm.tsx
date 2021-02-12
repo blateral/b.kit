@@ -58,9 +58,9 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
     margin-top: ${spacings.spacer * 0.5}px;
 
     background-color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).white : color(theme).black};
+        isInverted ? color(theme).light : color(theme).dark};
     color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).black : color(theme).white};
+        isInverted ? color(theme).dark : color(theme).light};
 
     outline: none;
     border: none;
@@ -132,7 +132,7 @@ const CompactForm: FC<{
                 backColor={
                     backgroundStyle === 'grey' || isInverted
                         ? color(theme).mono.light
-                        : color(theme).white
+                        : color(theme).light
                 }
             />
             {buttonIcon && (
