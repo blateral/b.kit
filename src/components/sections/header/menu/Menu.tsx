@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Link from 'components/typography/Link';
 import { ScrollDirection, useScroll } from 'utils/useScroll';
 import Wrapper, { ClampWidthType } from 'components/base/Wrapper';
@@ -32,7 +32,8 @@ const TopBar = styled.div<{
 }>`
     max-width: ${({ clampWidth }) =>
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
-    padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
+    padding: ${spacings.nudge * 7}px ${spacings.spacer}px
+        ${spacings.nudge * 3}px ${spacings.spacer}px;
     margin: 0 auto;
     overflow: hidden;
 
@@ -99,10 +100,12 @@ const LeftCol = styled(MenuBarCol)`
     align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
     text-align: left;
 
-    padding-top: ${({ isTop, logoHeight }) =>
+    /* padding-top: ${({ isTop, logoHeight }) =>
         isTop && logoHeight
             ? Math.min(spacings.spacer, logoHeight * 0.17)
-            : 0}px;
+            : 0}px; */
+
+    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
 
     @media ${mq.xlarge} {
         padding-left: ${spacings.spacer}px;
@@ -120,10 +123,12 @@ const RightCol = styled(MenuBarCol)`
     align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
     text-align: right;
 
-    padding-top: ${({ isTop, logoHeight }) =>
+    /* padding-top: ${({ isTop, logoHeight }) =>
         isTop && logoHeight
             ? Math.min(spacings.spacer, logoHeight * 0.17)
-            : 0}px;
+            : 0}px; */
+    
+    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
