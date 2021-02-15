@@ -33,6 +33,7 @@ const BaseStyles = styled.h1<{
     textColor?: string;
     type: HeadingType;
 }>`
+    display: inline-block;
     margin: 0;
     padding: 0;
     ${({ textColor }) =>
