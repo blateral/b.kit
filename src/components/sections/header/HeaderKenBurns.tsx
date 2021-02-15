@@ -64,8 +64,7 @@ const AnimationImage = styled.div<{ scale?: number; opacity?: number }>`
 const AnimationImages: FC<{
     zoom?: number;
     images: { id: number | string; image: string }[];
-    imageCount: number;
-}> = ({ zoom = 1.08, images, imageCount }) => {
+}> = ({ zoom = 1.08, images }) => {
     const intervalRef = useRef<number | null>();
     const [activeImg, setActiveImg] = useState<number>(-1);
 
@@ -76,15 +75,15 @@ const AnimationImages: FC<{
             });
         };
 
-        if (images.length < imageCount) return;
-        changeImage();
+        // changeImage();
+        window.setTimeout(changeImage, 200);
         if (intervalRef.current) window.clearInterval(intervalRef.current);
         intervalRef.current = window.setInterval(changeImage, 10000);
 
         return () => {
             if (intervalRef.current) window.clearInterval(intervalRef.current);
         };
-    }, [imageCount, images]);
+    }, [images]);
 
     return (
         <>
@@ -173,10 +172,7 @@ const HeaderKenBurns: React.FC<{
     return (
         <AnimationContainer className={className}>
             {currentMq && loadedImages[currentMq].length >= images.length ? (
-                <AnimationImages
-                    images={loadedImages[currentMq]}
-                    imageCount={images.length}
-                />
+                <AnimationImages images={loadedImages[currentMq]} />
             ) : (
                 <PosterImage
                     style={{

@@ -32,14 +32,26 @@ const Title: FC<{
     return (
         <View isCentered={isCentered} className={className}>
             {superTitle && (
-                <Heading as={superTitleAs} size="super" isInverted={isInverted}>
-                    {superTitle}
-                </Heading>
+                <div>
+                    <Heading
+                        as={superTitleAs}
+                        size="super"
+                        isInverted={isInverted}
+                    >
+                        {superTitle}
+                    </Heading>
+                </div>
             )}
             {title && (
-                <Heading as={titleAs} size="heading-2" isInverted={isInverted}>
-                    {title}
-                </Heading>
+                <div>
+                    <Heading
+                        as={titleAs}
+                        size="heading-2"
+                        isInverted={isInverted}
+                    >
+                        {title}
+                    </Heading>
+                </div>
             )}
         </View>
     );
