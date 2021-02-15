@@ -9,6 +9,9 @@ const View = styled.div<{ isMirrored?: boolean }>`
     flex-direction: ${({ isMirrored }) =>
         isMirrored ? 'column-reverse' : 'column'};
 
+    justify-content: ${({ isMirrored }) =>
+        isMirrored ? 'flex-end' : 'flex-start'};
+
     margin-top: -${spacings.spacer * 0.5}px;
     margin-left: -${spacings.spacer}px;
     width: calc(100% + ${spacings.spacer}px);
