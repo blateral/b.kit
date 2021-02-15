@@ -25,7 +25,11 @@ const customTheme = {
     //             },
     //         },
     //         'heading-2': {
-    //             color: 'yellow',
+    //             color: `linear-gradient(
+    //                 89.07deg,
+    //                 #407199 24.08%,
+    //                 #a8dde0 116.66%
+    //             )`,
     //             colorInverted: 'spark',
     //         },
     //         super: {
