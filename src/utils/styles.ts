@@ -293,5 +293,5 @@ export const getColors = (theme?: DefaultTheme) => {
 export const getFonts = (theme?: DefaultTheme) => {
     return theme && theme.fonts?.types
         ? theme.fonts.types
-        : getBaseTheme().fonts;
+        : getBaseTheme().fonts.types;
 };
