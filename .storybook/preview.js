@@ -2,31 +2,40 @@ import { LibThemeProvider } from '../src/utils/LibThemeProvider';
 
 const customTheme = {
     // fonts: {
-    //     copy: {
-    //         medium: {
-    //             color: 'blue',
-    //             colorInverted: 'green',
-    //         },
-    //         small: {
-    //             color: 'olive',
-    //             colorInverted: 'green',
-    //         },
+    //     base: {
+    //         family: 'MS Comic Sans',
     //     },
-    //     'copy-b': {
-    //         medium: {
-    //             color: 'red',
+    //     types: {
+    //         copy: {
+    //             medium: {
+    //                 color: 'blue',
+    //                 colorInverted: 'green',
+    //             },
+    //             small: {
+    //                 color: 'olive',
+    //                 colorInverted: 'green',
+    //             },
     //         },
-    //         big: {
-    //             color: 'orange',
+    //         'copy-b': {
+    //             medium: {
+    //                 color: 'red',
+    //             },
+    //             big: {
+    //                 color: 'orange',
+    //             },
     //         },
-    //     },
-    //     'heading-2': {
-    //         color: 'yellow',
-    //         colorInverted: 'spark',
-    //     },
-    //     super: {
-    //         color: 'magenta',
-    //         colorInverted: 'cyan',
+    //         'heading-2': {
+    //             color: `linear-gradient(
+    //                 89.07deg,
+    //                 #407199 24.08%,
+    //                 #a8dde0 116.66%
+    //             )`,
+    //             colorInverted: 'spark',
+    //         },
+    //         super: {
+    //             color: 'magenta',
+    //             colorInverted: 'cyan',
+    //         },
     //     },
     // },
 };

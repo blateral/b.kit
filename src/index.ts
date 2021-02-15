@@ -1,13 +1,16 @@
-/***** Version: 0.4.1 *****/
+/***** Version: 0.4.2 *****/
 
 import 'styled-components';
-import { Colors, Fonts } from 'utils/styles';
+import { Colors, FontBase, Fonts } from 'utils/styles';
 
 /***** Styled Component theme override *****/
 declare module 'styled-components' {
     export interface DefaultTheme {
         colors: Colors;
-        fonts: Fonts;
+        fonts: {
+            base?: FontBase;
+            types: Fonts;
+        };
     }
 }
 

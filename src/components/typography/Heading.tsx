@@ -7,6 +7,25 @@ type HeadingType = Exclude<
     'copy' | 'copy-i' | 'copy-b' | 'label' | 'callout'
 >;
 
+/**
+ * Generate css attributes to style gradient text color
+ * @param textColor
+ */
+const GradientColor = (textColor?: string) => {
+    return css`
+        color: ${() => {
+            const color = textColor?.match(/[0-9A-F]{6}/gi)?.[0];
+            return color ? '#' + color : '';
+        }};
+        @supports (-webkit-text-stroke: thin) {
+            background: ${textColor};
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    `;
+};
+
 // Styles
 const BaseStyles = styled.h1<{
     hyphens?: boolean;
@@ -16,7 +35,12 @@ const BaseStyles = styled.h1<{
 }>`
     margin: 0;
     padding: 0;
-    color: ${({ textColor }) => textColor};
+    ${({ textColor }) =>
+        textColor?.indexOf('gradient') !== -1
+            ? GradientColor(textColor)
+            : css`
+                  color: ${textColor};
+              `};
 
     hyphens: auto;
     overflow-wrap: break-word;

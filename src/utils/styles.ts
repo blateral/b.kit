@@ -103,6 +103,11 @@ export interface Fonts {
 
 export type FontType = keyof Fonts;
 
+/**
+ * Base font styles for all font types
+ */
+export type FontBase = FontProps;
+
 /***** Colors *****/
 const defaultColors: Colors = {
     dark: '#000000',
@@ -137,6 +142,7 @@ const copyBase: FontProps = {
     lineHeight: '1.53',
     letterSpacing: '0',
     size: [10, 13],
+    textTransform: '',
     color: defaultColors.dark,
     colorInverted: defaultColors.light,
 };
@@ -272,7 +278,7 @@ const defaultFonts: Fonts = {
 export const getBaseTheme = () => {
     return {
         colors: { ...defaultColors },
-        fonts: { ...defaultFonts },
+        fonts: { types: { ...defaultFonts } },
     } as DefaultTheme;
 };
 
@@ -285,5 +291,7 @@ export const getColors = (theme?: DefaultTheme) => {
 };
 
 export const getFonts = (theme?: DefaultTheme) => {
-    return theme && theme.fonts ? theme.fonts : getBaseTheme().fonts;
+    return theme && theme.fonts?.types
+        ? theme.fonts.types
+        : getBaseTheme().fonts.types;
 };
