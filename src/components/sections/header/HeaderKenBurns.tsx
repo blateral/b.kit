@@ -64,7 +64,8 @@ const AnimationImage = styled.div<{ scale?: number; opacity?: number }>`
 const AnimationImages: FC<{
     zoom?: number;
     images: { id: number | string; image: string }[];
-}> = ({ zoom = 1.08, images }) => {
+    imageCount: number;
+}> = ({ zoom = 1.08, images, imageCount }) => {
     const intervalRef = useRef<number | null>();
     const [activeImg, setActiveImg] = useState<number>(-1);
 
@@ -75,7 +76,7 @@ const AnimationImages: FC<{
             });
         };
 
-        if (images.length <= 0) return;
+        if (images.length < imageCount) return;
         changeImage();
         if (intervalRef.current) window.clearInterval(intervalRef.current);
         intervalRef.current = window.setInterval(changeImage, 10000);
@@ -83,7 +84,7 @@ const AnimationImages: FC<{
         return () => {
             if (intervalRef.current) window.clearInterval(intervalRef.current);
         };
-    }, [images]);
+    }, [imageCount, images]);
 
     return (
         <>
@@ -146,28 +147,36 @@ const HeaderKenBurns: React.FC<{
                     for (const item of items) {
                         const x = await item;
 
-                        setLoadedImages((prev) => ({
-                            ...prev,
-                            [currentMq]: [
-                                ...prev[currentMq],
-                                {
-                                    id: x.i,
-                                    image: x.url,
-                                },
-                            ],
-                        }));
+                        setLoadedImages((prev) => {
+                            // check if image id already exists in array
+                            if (!prev[currentMq].find((e) => e.id === x.i)) {
+                                return {
+                                    ...prev,
+                                    [currentMq]: [
+                                        ...prev[currentMq],
+                                        {
+                                            id: x.i,
+                                            image: x.url,
+                                        },
+                                    ],
+                                };
+                            } else return prev;
+                        });
                     }
                 };
 
                 resolve(preloadImages(requestedImages));
             }
         }
-    }, [currentMq]);
+    }, [currentMq, images, loadedImages]);
 
     return (
         <AnimationContainer className={className}>
-            {currentMq && loadedImages[currentMq].length >= 2 ? (
-                <AnimationImages images={loadedImages[currentMq]} />
+            {currentMq && loadedImages[currentMq].length >= images.length ? (
+                <AnimationImages
+                    images={loadedImages[currentMq]}
+                    imageCount={images.length}
+                />
             ) : (
                 <PosterImage
                     style={{
