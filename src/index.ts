@@ -21,6 +21,7 @@ export {
     getBaseTheme,
     withRange,
     spacings,
+    mq,
 } from 'utils/styles';
 
 /***** Component exports *****/
