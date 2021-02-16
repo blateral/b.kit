@@ -1,4 +1,4 @@
-/***** Version: 0.4.4 *****/
+/***** Version: 0.4.5 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts } from 'utils/styles';
@@ -21,6 +21,7 @@ export {
     getBaseTheme,
     withRange,
     spacings,
+    mq,
 } from 'utils/styles';
 
 /***** Component exports *****/
