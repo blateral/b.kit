@@ -181,10 +181,20 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
 
 const StyledSection = styled(Section)`
     padding: ${spacings.spacer * 3}px ${spacings.nudge * 2}px;
+    padding-top: ${spacings.spacer * 2}px;
     text-align: center;
 
     @media ${mq.medium} {
         padding: ${spacings.spacer * 3}px ${spacings.spacer}px;
+        padding-top: ${spacings.spacer * 2}px;
+    }
+`;
+
+const StyledIntro = styled(Intro)`
+    @media ${mq.semilarge} {
+        & > *:first-child {
+            min-height: 110px;
+        }
     }
 `;
 
@@ -219,6 +229,21 @@ const NewsletterWrapper = styled.div`
     }
 `;
 
+const Badge = styled.div<{ showOnMobile?: boolean }>`
+    display: ${({ showOnMobile }) => (showOnMobile ? 'block' : 'none')};
+    position: relative;
+    height: 241px;
+    width: 241px;
+    margin-left: auto;
+    margin-bottom: -110px;
+    z-index: 3;
+
+    @media ${mq.xlarge} {
+        display: block;
+        margin-right: ${1440 * (1 / 28) + 'px'};
+    }
+`;
+
 export const CallToAction: FC<{
     isInverted?: boolean;
     title?: string;
@@ -227,6 +252,11 @@ export const CallToAction: FC<{
     superTitleAs?: HeadlineTag;
     text?: string;
     contact?: ContactBoxProps;
+
+    badge?: {
+        content: React.ReactNode;
+        showOnMobile?: boolean;
+    };
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -239,6 +269,7 @@ export const CallToAction: FC<{
     superTitleAs,
     text,
     contact,
+    badge,
     primaryAction,
     secondaryAction,
     newsForm,
@@ -251,9 +282,14 @@ export const CallToAction: FC<{
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
             <Wrapper clampWidth="normal">
+                {badge && badge.content && (
+                    <Badge showOnMobile={badge.showOnMobile}>
+                        {badge.content}
+                    </Badge>
+                )}
                 <Content>
                     {title && (
-                        <Intro
+                        <StyledIntro
                             isCentered
                             isInverted={isInverted}
                             title={title}
