@@ -188,10 +188,12 @@ const StyledSection = styled(Section)`
     }
 `;
 
-const StyledWrapper = styled(Wrapper)`
+const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: ${(17 / 28) * spacings.wrapper}px;
+    margin: 0 auto;
 
     & > * + * {
         ${withRange([spacings.spacer * 1, spacings.spacer * 1.5], 'margin-top')}
@@ -248,41 +250,44 @@ export const CallToAction: FC<{
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
-            <StyledWrapper clampWidth="normal">
-                {title && (
-                    <Intro
-                        isCentered
-                        isInverted={isInverted}
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                    />
-                )}
-                {contact && (
-                    <StyledContactBox
-                        isInverted={isInverted}
-                        name={contact.name}
-                        description={contact.description}
-                        addresses={contact.addresses}
-                        avatar={contact.avatar}
-                    />
-                )}
-                {(primaryAction || secondaryAction) && (
-                    <StyledActions
-                        primary={primaryAction && primaryAction(isInverted)}
-                        secondary={
-                            secondaryAction && secondaryAction(isInverted)
-                        }
-                    />
-                )}
-                {newsForm && (
-                    <NewsletterWrapper>
-                        {newsForm(isInverted)}
-                    </NewsletterWrapper>
-                )}
-            </StyledWrapper>
+            <Wrapper clampWidth="normal">
+                <Content>
+                    {title && (
+                        <Intro
+                            isCentered
+                            isInverted={isInverted}
+                            title={title}
+                            titleAs={titleAs}
+                            superTitle={superTitle}
+                            superTitleAs={superTitleAs}
+                            text={text}
+                        />
+                    )}
+                    {contact && (
+                        <StyledContactBox
+                            isInverted={isInverted}
+                            name={contact.name}
+                            description={contact.description}
+                            addresses={contact.addresses}
+                            avatar={contact.avatar}
+                        />
+                    )}
+                    {(primaryAction || secondaryAction) && (
+                        <StyledActions
+                            isCentered
+                            primary={primaryAction && primaryAction(isInverted)}
+                            secondary={
+                                secondaryAction && secondaryAction(isInverted)
+                            }
+                        />
+                    )}
+                    {newsForm && (
+                        <NewsletterWrapper>
+                            {newsForm(isInverted)}
+                        </NewsletterWrapper>
+                    )}
+                </Content>
+            </Wrapper>
         </StyledSection>
     );
 };
