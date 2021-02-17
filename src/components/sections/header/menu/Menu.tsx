@@ -12,7 +12,12 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import Flyout, { NavGroup } from './Flyout';
 import SocialList from 'components/blocks/SocialList';
 
-const View = styled.div<{ isMenuOpen?: boolean; isTop?: boolean }>`
+const View = styled.div<{
+    isMenuOpen?: boolean;
+    isTop?: boolean;
+    isTopBarOpen?: boolean;
+    withAnim?: boolean;
+}>`
     position: ${({ isTop, isMenuOpen }) =>
         isTop && !isMenuOpen ? 'absolute' : 'fixed'};
     top: 0;
@@ -20,6 +25,14 @@ const View = styled.div<{ isMenuOpen?: boolean; isTop?: boolean }>`
     right: 0;
     width: 100%;
     z-index: 10;
+    pointer-events: ${({ isTopBarOpen }) => (isTopBarOpen ? 'all' : 'none')};
+    transform: translate(
+        0,
+        ${({ isTopBarOpen }) => (!isTopBarOpen ? '-100%' : '0')}
+    );
+
+    transition: transform ${({ withAnim }) => (withAnim ? 0.2 : 0)}s ease-in-out;
+    will-change: transform;
 `;
 
 const TopBar = styled.div<{
@@ -27,7 +40,6 @@ const TopBar = styled.div<{
     isMenuOpen?: boolean;
     isOpen?: boolean;
     isTop?: boolean;
-    withAnim?: boolean;
     clampWidth?: ClampWidthType;
 }>`
     max-width: ${({ clampWidth }) =>
@@ -52,11 +64,8 @@ const TopBar = styled.div<{
                 : 'transparent'};
 
     transition: height 0.2s ease-in-out, background-color 0.2s ease-in-out,
-        padding 0.2s ease-in-out,
-        transform ${({ withAnim }) => (withAnim ? 0.2 : 0)}s ease-in-out,
-        box-shadow 0.2s ease-in-out;
-    transform: translate(0, ${({ isOpen }) => (!isOpen ? '-100%' : '0')});
-    will-change: transform, background-color, padding, height, box-shadow;
+        padding 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    will-change: background-color, padding, height, box-shadow;
 
     @media ${mq.medium} {
         padding: ${({ isTop, isOpen }) =>
@@ -351,7 +360,12 @@ const Menu: FC<MenuProps> = ({
         : logoHeights.heightSmall;
 
     return (
-        <View isMenuOpen={isMenuOpen} isTop={showFullTopBar}>
+        <View
+            isMenuOpen={isMenuOpen}
+            isTop={showFullTopBar}
+            isTopBarOpen={isTopBarOpen}
+            withAnim={withTopbarAnim}
+        >
             <Backdrop
                 isVisible={isMenuOpen}
                 onClick={() => setIsMenuOpen(false)}
@@ -394,7 +408,6 @@ const Menu: FC<MenuProps> = ({
                 isMenuOpen={isMenuOpen}
                 isOpen={isTopBarOpen || isMenuOpen}
                 isTop={showFullTopBar}
-                withAnim={withTopbarAnim}
                 clampWidth="large"
             >
                 <TopBarContent clampWidth="normal">
