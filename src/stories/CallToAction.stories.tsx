@@ -107,14 +107,12 @@ export const WithBadge: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        badge={{
-            content: (
-                <img
-                    src="https://via.placeholder.com/392x392/?text=badge"
-                    style={{ height: '100%', width: '100%' }}
-                />
-            ),
-        }}
+        badge={
+            <img
+                src="https://via.placeholder.com/392x392/?text=badge"
+                style={{ height: '100%', width: '100%' }}
+            />
+        }
     />
 );
 
@@ -146,14 +144,12 @@ export const IsInverted: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        badge={{
-            content: (
-                <img
-                    src="https://via.placeholder.com/392x392/?text=badge"
-                    style={{ height: '100%', width: '100%' }}
-                />
-            ),
-        }}
+        badge={
+            <img
+                src="https://via.placeholder.com/392x392/?text=badge"
+                style={{ height: '100%', width: '100%' }}
+            />
+        }
     />
 );
 
@@ -173,14 +169,12 @@ export const WithNewsletterForm: Story = () => (
                 backgroundStyle="white"
             />
         )}
-        badge={{
-            content: (
-                <img
-                    src="https://via.placeholder.com/392x392/?text=badge"
-                    style={{ height: '100%', width: '100%' }}
-                />
-            ),
-        }}
+        badge={
+            <img
+                src="https://via.placeholder.com/392x392/?text=badge"
+                style={{ height: '100%', width: '100%' }}
+            />
+        }
     />
 );
 
@@ -201,13 +195,11 @@ export const WithNewsletterFormInverted: Story = () => (
                 backgroundStyle="white"
             />
         )}
-        badge={{
-            content: (
-                <img
-                    src="https://via.placeholder.com/392x392/?text=badge"
-                    style={{ height: '100%', width: '100%' }}
-                />
-            ),
-        }}
+        badge={
+            <img
+                src="https://via.placeholder.com/392x392/?text=badge"
+                style={{ height: '100%', width: '100%' }}
+            />
+        }
     />
 );

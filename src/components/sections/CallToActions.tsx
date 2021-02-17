@@ -229,8 +229,8 @@ const NewsletterWrapper = styled.div`
     }
 `;
 
-const Badge = styled.div<{ showOnMobile?: boolean }>`
-    display: ${({ showOnMobile }) => (showOnMobile ? 'block' : 'none')};
+const Badge = styled.div`
+    display: none;
     position: relative;
     height: 241px;
     width: 241px;
@@ -253,10 +253,7 @@ export const CallToAction: FC<{
     text?: string;
     contact?: ContactBoxProps;
 
-    badge?: {
-        content: React.ReactNode;
-        showOnMobile?: boolean;
-    };
+    badge?: React.ReactNode;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -282,11 +279,7 @@ export const CallToAction: FC<{
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
             <Wrapper clampWidth="normal">
-                {badge && badge.content && (
-                    <Badge showOnMobile={badge.showOnMobile}>
-                        {badge.content}
-                    </Badge>
-                )}
+                {badge && <Badge>{badge}</Badge>}
                 <Content>
                     {title && (
                         <StyledIntro
