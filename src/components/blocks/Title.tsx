@@ -5,6 +5,7 @@ import Heading, { HeadlineTag } from 'components/typography/Heading';
 import { spacings, withRange } from 'utils/styles';
 
 const View = styled.div<{ isCentered?: boolean }>`
+    display: inline-block;
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
 
     & > * + * {
