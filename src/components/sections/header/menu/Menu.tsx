@@ -45,8 +45,8 @@ const TopBar = styled.div<{
     max-width: ${({ clampWidth }) =>
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
     padding: ${({ isTop, isOpen }) =>
-            !isTop && isOpen ? spacings.nudge : spacings.nudge * 2}px
-        ${spacings.nudge * 2}px ${spacings.nudge}px ${spacings.nudge * 2}px;
+            !isTop && isOpen ? spacings.nudge : spacings.spacer}px
+        ${spacings.spacer}px ${spacings.nudge}px ${spacings.spacer}px;
     margin: 0 auto;
     overflow: hidden;
 
@@ -70,7 +70,8 @@ const TopBar = styled.div<{
     @media ${mq.medium} {
         padding: ${({ isTop, isOpen }) =>
                 !isTop && isOpen ? spacings.nudge * 3 : spacings.nudge * 7}px
-            ${spacings.spacer}px ${spacings.nudge * 3}px ${spacings.spacer}px;
+            ${spacings.spacer}px ${spacings.nudge * 3}px
+            ${(1 / 28) * spacings.wrapper}px;
     }
 `;
 
@@ -100,7 +101,10 @@ const Backdrop = styled.div<{ isVisible?: boolean }>`
     transition: background-color 0.2s ease-in-out;
 `;
 
-const MenuBarCol = styled.div<{ isTop?: boolean; logoHeight?: number }>`
+const MenuBarCol = styled.div<{
+    isTop?: boolean;
+    logoHeight?: number;
+}>`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -116,12 +120,9 @@ const LeftCol = styled(MenuBarCol)`
     align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
     text-align: left;
 
-    /* padding-top: ${({ isTop, logoHeight }) =>
-        isTop && logoHeight
-            ? Math.min(spacings.spacer, logoHeight * 0.17)
-            : 0}px; */
-
-    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
+    ${({ isTop }) =>
+        isTop &&
+        withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
 
     @media ${mq.xlarge} {
         padding-left: ${spacings.spacer}px;
@@ -139,12 +140,9 @@ const RightCol = styled(MenuBarCol)`
     align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
     text-align: right;
 
-    /* padding-top: ${({ isTop, logoHeight }) =>
-        isTop && logoHeight
-            ? Math.min(spacings.spacer, logoHeight * 0.17)
-            : 0}px; */
-    
-    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
+    ${({ isTop }) =>
+        isTop &&
+        withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
@@ -331,13 +329,14 @@ const Menu: FC<MenuProps> = ({
         document.body.style.overflow = isMenuOpen ? 'hidden' : 'visible';
     }, [isMenuOpen]);
 
-    const showFullTopBar =
-        (hideOnScrollDown ? topBarSize === 'large' : isInOffset) || isMenuOpen;
+    const showFullTopBar = hideOnScrollDown
+        ? topBarSize === 'large'
+        : isInOffset;
 
     const isTopBarInverted = () => {
         if (isMenuOpen && (size === 'full' || currentMq === 'small')) {
             return isNavInverted;
-        } else return showFullTopBar || isTopInverted;
+        } else return isMenuOpen || showFullTopBar || isTopInverted;
     };
 
     const isToggleInverted = () => {
@@ -429,7 +428,7 @@ const Menu: FC<MenuProps> = ({
                             </SearchContainer>
                         )}
                     </LeftCol>
-                    <CenterCol isTop={showFullTopBar}>
+                    <CenterCol>
                         {logo && (
                             <LogoLink
                                 href={logo.link}

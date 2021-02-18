@@ -47,12 +47,14 @@ const PosterContent = styled.div`
     margin: auto;
     z-index: 3;
     text-align: center;
+    padding: 0 ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
         display: block;
         max-width: none;
         margin-left: 0;
         text-align: left;
+        padding-left: ${(1 / 28) * spacings.wrapper}px;
     }
 `;
 
@@ -226,7 +228,7 @@ const Header: FC<{
                     gradient={gradient}
                     size={size === 'small' ? 0.8 : 1}
                 >
-                    <Wrapper addWhitespace>
+                    <Wrapper>
                         <PosterContent>
                             <Grid.Row gutter={0}>
                                 <Grid.Col

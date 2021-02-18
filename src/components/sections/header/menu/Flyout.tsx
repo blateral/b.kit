@@ -48,6 +48,7 @@ const Stage = styled.div<{
     pointer-events: all;
 
     @media ${mq.medium} {
+        padding-left: ${(1 / 28) * spacings.wrapper}px;
         margin-top: ${({ isLarge }) => isLarge && 0};
     }
 
