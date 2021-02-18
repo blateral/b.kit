@@ -219,7 +219,6 @@ const SocialContainer = styled.div<{ isLarge?: boolean }>`
     display: flex;
     justify-content: flex-start;
     padding-top: ${spacings.spacer}px;
-    padding-left: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
         justify-content: ${({ isLarge }) =>

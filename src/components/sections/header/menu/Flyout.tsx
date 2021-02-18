@@ -133,9 +133,10 @@ const NavListView = styled.ul`
     list-style: none;
     padding: 0;
     margin: 0;
+    ${withRange([spacings.nudge * 3, spacings.spacer], 'padding-top')};
 
     & > * {
-        ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+        ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-top')};
     }
 
     @media ${mq.medium} {
@@ -148,9 +149,12 @@ const NavListView = styled.ul`
 `;
 
 const Nav = styled.div<{ isInverted?: boolean }>`
-    width: 100%;
+    width: calc(100% + ${spacings.spacer}px);
     height: 100%;
-    overflow: auto;
+    overflow-y: auto;
+    margin-left: -${spacings.spacer}px;
+    padding-left: ${spacings.spacer}px;
+
     color: ${({ theme, isInverted }) =>
         isInverted ? color(theme).light : color(theme).dark};
 `;
@@ -167,14 +171,13 @@ const Group = styled.li`
     overflow-wrap: break-word;
 
     &:not(:last-child) {
-        ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-bottom')};
+        ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-bottom')};
     }
 `;
 
 const GroupLabel = styled.label`
     display: block;
     height: 30px;
-    padding-left: ${spacings.spacer}px;
     padding-bottom: ${spacings.nudge * 2}px;
 `;
 
@@ -198,7 +201,6 @@ const NavItem = styled.li<{ isSmall?: boolean }>`
     position: relative;
     margin: 0;
     padding-bottom: ${spacings.nudge}px;
-    padding-left: ${spacings.spacer}px;
 
     font-family: ${({ theme }) => font(theme)['heading-3'].family};
     ${({ theme, isSmall }) =>
@@ -255,7 +257,7 @@ const ItemLabel = styled.label<{ isActive?: boolean; isInverted?: boolean }>`
     &:before {
         content: ${({ isActive }) => (isActive ? `""` : undefined)};
         position: absolute;
-        left: -15px;
+        left: -13px;
         top: 50%;
         height: 6px;
         width: 6px;
