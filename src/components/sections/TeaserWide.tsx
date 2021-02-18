@@ -36,33 +36,21 @@ const WideImage = styled(Image)<{ isMirrored?: boolean }>`
 `;
 
 const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
+    padding-left: ${spacings.nudge * 2}px;
+    padding-right: ${spacings.nudge * 2}px;
     padding-top: ${spacings.nudge}px;
     padding-bottom: ${spacings.nudge * 2}px;
 
     @media ${mq.semilarge} {
         ${withRange([spacings.spacer * 3, spacings.spacer * 4], 'padding-top')}
 
-        ${({ isMirrored }) =>
-            withRange(
-                [
-                    isMirrored ? 0 : spacings.spacer,
-                    isMirrored ? spacings.spacer * 2.5 : spacings.spacer,
-                ],
-                'padding-right'
-            )};
-
+        padding-right: ${({ isMirrored }) =>
+            isMirrored ? spacings.spacer * 1.5 : (1 / 28) * spacings.wrapper}px;
         padding-bottom: ${spacings.nudge * 6}px;
         padding-left: ${({ isMirrored }) =>
-            !isMirrored ? spacings.spacer * 2.5 : spacings.spacer}px;
-
-        ${({ isMirrored }) =>
-            withRange(
-                [
-                    !isMirrored ? 0 : spacings.spacer,
-                    !isMirrored ? spacings.spacer * 2.5 : spacings.spacer,
-                ],
-                'padding-left'
-            )};
+            !isMirrored
+                ? spacings.spacer * 1.5
+                : (1 / 28) * spacings.wrapper}px;
     }
 `;
 
@@ -138,7 +126,7 @@ const TeaserWide: FC<{
             {image && (
                 <WideImage coverSpace {...image} isMirrored={isMirrored} />
             )}
-            <Wrapper clampWidth="normal" addWhitespace>
+            <Wrapper clampWidth="normal">
                 <Grid.Row gutter={spacings.spacer}>
                     <Grid.Col
                         semilarge={{

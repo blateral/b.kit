@@ -33,7 +33,7 @@ const Content = styled.div<{ addWhitespace?: boolean }>`
 
 const ArticleContent = styled(Content)`
     @media ${mq.medium} {
-        max-width: 80%;
+        max-width: 95%;
     }
 `;
 

@@ -14,7 +14,13 @@ import PromotionCard, {
 import { HeadlineTag } from 'components/typography/Heading';
 
 const IntroBlock = styled.div`
+    padding-left: ${spacings.nudge * 2}px;
+    padding-right: ${spacings.nudge * 2}px;
     padding-bottom: ${spacings.spacer * 2}px;
+
+    @media ${mq.medium} {
+        padding-left: ${(1 / 28) * spacings.wrapper}px;
+    }
 `;
 
 const FlexGrid = styled.div`
@@ -112,7 +118,7 @@ const CrossPromotion: React.FC<{
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <Wrapper clampWidth="normal" addWhitespace>
+            <Wrapper clampWidth="normal">
                 {title && (
                     <IntroBlock>
                         <Intro
