@@ -9,7 +9,13 @@ import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 
 const IntroBlock = styled.div`
+    padding-left: ${spacings.nudge * 2}px;
+    padding-right: ${spacings.nudge * 2}px;
     padding-bottom: ${spacings.spacer * 2}px;
+
+    @media ${mq.medium} {
+        padding-left: ${(1 / 28) * spacings.wrapper}px;
+    }
 `;
 
 const ContentContainer = styled.div<{ isHalf?: boolean }>`
@@ -96,7 +102,7 @@ const FeatureList: React.FC<{
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <Wrapper addWhitespace clampWidth="normal">
+            <Wrapper clampWidth="normal">
                 {title && (
                     <IntroBlock>
                         <Intro
@@ -121,6 +127,7 @@ const FeatureList: React.FC<{
                                     <Feature
                                         key={i}
                                         isInverted={isInverted}
+                                        addWhitespace
                                         {...feature}
                                     />
                                 );

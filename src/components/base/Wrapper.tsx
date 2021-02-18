@@ -19,8 +19,10 @@ const View = styled.div<{
         ${({ addWhitespace }) => (addWhitespace ? spacings.nudge * 2 : 0)}px;
 
     @media ${mq.medium} {
-        padding: 0
-            ${({ addWhitespace }) => (addWhitespace ? spacings.spacer : 0)}px;
+        padding-left: ${({ addWhitespace }) =>
+            addWhitespace ? (1 / 28) * spacings.wrapper : 0}px;
+        padding-right: ${({ addWhitespace }) =>
+            addWhitespace ? spacings.spacer : 0}px;
     }
 `;
 

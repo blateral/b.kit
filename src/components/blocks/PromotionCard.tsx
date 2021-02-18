@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 
-import { spacings, withRange } from 'utils/styles';
+import { mq, spacings, withRange } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Intro from './Intro';
 
@@ -64,8 +64,8 @@ const IntroContainer = styled.div`
     overflow: auto;
     z-index: 1;
 
-    padding-left: ${spacings.spacer * 2}px;
-    padding-right: ${spacings.spacer * 2}px;
+    padding-left: ${spacings.spacer}px;
+    padding-right: ${spacings.spacer}px;
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
     ${withRange([spacings.spacer, spacings.spacer * 4], 'padding-bottom')};
 
@@ -79,6 +79,11 @@ const IntroContainer = styled.div`
         content: '';
         display: block;
         flex: 1 0 0px;
+    }
+
+    @media ${mq.medium} {
+        padding-left: ${(1 / 28) * spacings.wrapper}px;
+        padding-right: ${spacings.spacer * 2}px;
     }
 `;
 
