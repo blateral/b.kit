@@ -20,6 +20,13 @@ const View = styled.div<{
 
     @media ${mq.medium} {
         padding-left: ${({ addWhitespace }) =>
+            addWhitespace ? spacings.spacer : 0}px;
+        padding-right: ${({ addWhitespace }) =>
+            addWhitespace ? spacings.spacer : 0}px;
+    }
+
+    @media ${mq.semilarge} {
+        padding-left: ${({ addWhitespace }) =>
             addWhitespace ? (1 / 28) * spacings.wrapper : 0}px;
         padding-right: ${({ addWhitespace }) =>
             addWhitespace ? spacings.spacer : 0}px;
