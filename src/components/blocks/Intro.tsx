@@ -18,8 +18,12 @@ const StyledTitle = styled(Title)<{ clampTitle?: boolean }>`
         clampTitle && (13 / 28) * spacings.wrapper + 'px'};
 `;
 
-const ContentBlock = styled(Copy)<{ clampText?: boolean }>`
-    display: inline-block;
+const ContentBlock = styled(Copy)<{
+    clampText?: boolean;
+    isCentered?: boolean;
+}>`
+    display: block;
+    margin: ${({ isCentered }) => isCentered && '0 auto'};
     max-width: ${({ clampText }) =>
         clampText && (19 / 28) * spacings.wrapper + 'px'};
 
@@ -81,6 +85,7 @@ const Intro: React.FC<{
                 <ContentBlock
                     type="copy-b"
                     isInverted={isInverted}
+                    isCentered={isCentered}
                     clampText={clampText}
                 >
                     <div dangerouslySetInnerHTML={{ __html: text }} />
