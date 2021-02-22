@@ -50,6 +50,13 @@ const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
     padding-top: ${spacings.nudge}px;
     padding-bottom: ${spacings.nudge * 2}px;
 
+    @media ${mq.medium} {
+        ${withRange([spacings.spacer * 3, spacings.spacer * 4], 'padding-top')}
+
+        padding-right: ${spacings.spacer}px;
+        padding-left: ${spacings.spacer}px;
+    }
+
     @media ${mq.semilarge} {
         ${withRange([spacings.spacer * 3, spacings.spacer * 4], 'padding-top')}
 
