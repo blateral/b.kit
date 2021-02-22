@@ -61,8 +61,15 @@ const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
         ${withRange([spacings.spacer * 3, spacings.spacer * 4], 'padding-top')}
 
         padding-right: ${({ isMirrored }) =>
-            isMirrored ? spacings.spacer * 1.5 : (1 / 28) * spacings.wrapper}px;
+            isMirrored ? spacings.spacer * 1.5 + 'px' : (1 / 28) * 100 + '%'};
         padding-bottom: ${spacings.nudge * 6}px;
+        padding-left: ${({ isMirrored }) =>
+            !isMirrored ? spacings.spacer * 1.5 + 'px' : (1 / 28) * 100 + '%'};
+    }
+
+    @media ${mq.xlarge} {
+        padding-right: ${({ isMirrored }) =>
+            isMirrored ? spacings.spacer * 1.5 : (1 / 28) * spacings.wrapper}px;
         padding-left: ${({ isMirrored }) =>
             !isMirrored
                 ? spacings.spacer * 1.5
