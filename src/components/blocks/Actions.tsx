@@ -28,6 +28,7 @@ const View = styled.div<{ isCentered?: boolean; isMirrored?: boolean }>`
         align-items: stretch;
 
         & > * {
+            min-width: 0px;
             max-width: 300px;
         }
     }
