@@ -46,7 +46,7 @@ const TopBar = styled.div<{
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
     padding: ${({ isTop, isOpen }) =>
             !isTop && isOpen ? spacings.nudge : spacings.spacer}px
-        ${spacings.spacer}px ${spacings.nudge}px ${spacings.spacer}px;
+        0 ${spacings.nudge}px 0;
     margin: 0 auto;
     overflow: hidden;
 
@@ -70,15 +70,7 @@ const TopBar = styled.div<{
     @media ${mq.medium} {
         padding: ${({ isTop, isOpen }) =>
                 !isTop && isOpen ? spacings.nudge * 3 : spacings.nudge * 7}px
-            ${spacings.spacer}px ${spacings.nudge * 3}px ${spacings.spacer}px;
-    }
-
-    @media ${mq.semilarge} {
-        padding-left: ${(1 / 28) * 100}%;
-    }
-
-    @media ${mq.xlarge} {
-        padding-left: ${(1 / 28) * spacings.wrapper}px;
+            0 ${spacings.nudge * 3}px 0;
     }
 `;
 
@@ -88,6 +80,22 @@ const TopBarContent = styled(Wrapper)`
     flex-direction: row;
     width: 100%;
     height: 100%;
+
+    padding: 0 ${({ addWhitespace }) => (addWhitespace ? spacings.spacer : 0)}px;
+
+    @media ${mq.semilarge} {
+        padding-left: ${({ addWhitespace }) =>
+            addWhitespace ? (1 / 28) * 100 : 0}%;
+        padding-right: ${({ addWhitespace }) =>
+            addWhitespace ? spacings.spacer : 0}px;
+    }
+
+    @media ${mq.xlarge} {
+        padding-left: ${({ addWhitespace }) =>
+            addWhitespace ? (1 / 28) * spacings.wrapper : 0}px;
+        padding-right: ${({ addWhitespace }) =>
+            addWhitespace ? spacings.spacer : 0}px;
+    }
 `;
 
 const Backdrop = styled.div<{ isVisible?: boolean }>`
@@ -415,7 +423,7 @@ const Menu: FC<MenuProps> = ({
                 isTop={showFullTopBar}
                 clampWidth="large"
             >
-                <TopBarContent clampWidth="normal">
+                <TopBarContent clampWidth="normal" addWhitespace>
                     <LeftCol isTop={showFullTopBar} logoHeight={getLogoHeight}>
                         <ToggleContainer
                             onClick={() => setIsMenuOpen((prev) => !prev)}
