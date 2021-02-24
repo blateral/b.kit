@@ -303,6 +303,11 @@ export const CallToAction: FC<{
                             avatar={contact.avatar}
                         />
                     )}
+                    {newsForm && (
+                        <NewsletterWrapper>
+                            {newsForm(isInverted)}
+                        </NewsletterWrapper>
+                    )}
                     {(primaryAction || secondaryAction) && (
                         <StyledActions
                             isCentered
@@ -311,11 +316,6 @@ export const CallToAction: FC<{
                                 secondaryAction && secondaryAction(isInverted)
                             }
                         />
-                    )}
-                    {newsForm && (
-                        <NewsletterWrapper>
-                            {newsForm(isInverted)}
-                        </NewsletterWrapper>
                     )}
                 </Content>
             </Wrapper>

@@ -21,6 +21,8 @@ const MainView = styled(Wrapper)<{ isInverted?: boolean }>`
 `;
 
 const StyledLink = styled(Link)`
+    display: inline-block;
+    padding: ${spacings.nudge * 0.5}px 0;
     color: inherit;
     text-decoration: underline;
 `;
@@ -173,10 +175,12 @@ const BottomWrapper = styled(Wrapper)`
 
 const BottomView = styled(Wrapper)`
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 100%;
+    min-height: 41px;
 
     padding-top: ${spacings.nudge * 1.5}px;
     padding-bottom: ${spacings.nudge * 1.5}px;
