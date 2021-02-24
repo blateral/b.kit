@@ -84,6 +84,7 @@ const Address = styled.div`
     @media ${mq.medium} {
         justify-content: flex-start;
         flex-direction: row;
+        padding: ${spacings.nudge}px ${spacings.nudge}px ${spacings.nudge}px 0;
 
         & > *:not(:first-child) {
             margin-left: ${spacings.spacer}px;
