@@ -93,6 +93,7 @@ const Address = styled.div`
 
 const Decorator = styled.div<{ isInverted?: boolean }>`
     flex: 1;
+    width: 25px;
     margin-bottom: ${spacings.nudge * 1.5}px;
 
     color: ${({ theme, isInverted }) =>
