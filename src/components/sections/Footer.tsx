@@ -237,8 +237,8 @@ const Footer: FC<{
 
     return (
         <Section as="footer">
-            <MainView addWhitespace clampWidth="large" isInverted={isInverted}>
-                <Wrapper>
+            <MainView clampWidth="large" isInverted={isInverted}>
+                <Wrapper addWhitespace>
                     <Content isInverted={isInverted}>
                         <ContentBlock>
                             {logo?.img && (
