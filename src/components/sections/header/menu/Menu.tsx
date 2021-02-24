@@ -28,7 +28,8 @@ const View = styled.div<{
     pointer-events: ${({ isTopBarOpen }) => (isTopBarOpen ? 'all' : 'none')};
     transform: translate(
         0,
-        ${({ isTopBarOpen }) => (!isTopBarOpen ? '-100%' : '0')}
+        ${({ isTopBarOpen, isMenuOpen }) =>
+            !isTopBarOpen && !isMenuOpen ? '-100%' : '0'}
     );
 
     transition: transform ${({ withAnim }) => (withAnim ? 0.2 : 0)}s ease-in-out;
