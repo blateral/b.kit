@@ -132,8 +132,8 @@ const Section: React.FC<{
     return (
         <View
             as={as}
-            data-ident={bgColor || 'plain'}
-            indent={bgColor || 'plain'}
+            data-ident={bgColor && bgMode === 'full' ? bgColor : 'plain'}
+            indent={bgColor && bgMode === 'full' ? bgColor : 'plain'}
             addSeperation={addSeperation}
             className={className}
         >
