@@ -8,14 +8,8 @@ import Feature, { FeatureProps } from 'components/blocks/Feature';
 import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 
-const IntroBlock = styled.div`
-    padding-left: ${spacings.nudge * 2}px;
-    padding-right: ${spacings.nudge * 2}px;
+const StyledIntro = styled(Intro)`
     padding-bottom: ${spacings.spacer * 2}px;
-
-    @media ${mq.medium} {
-        padding-left: ${(1 / 28) * spacings.wrapper}px;
-    }
 `;
 
 const ContentContainer = styled.div<{ isHalf?: boolean }>`
@@ -102,21 +96,21 @@ const FeatureList: React.FC<{
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
+            {title && (
+                <Wrapper addWhitespace>
+                    <StyledIntro
+                        title={title}
+                        titleAs={titleAs}
+                        superTitle={superTitle}
+                        superTitleAs={superTitleAs}
+                        text={text}
+                        isInverted={isInverted}
+                        secondaryAction={secondaryAction}
+                        primaryAction={primaryAction}
+                    />
+                </Wrapper>
+            )}
             <Wrapper clampWidth="normal">
-                {title && (
-                    <IntroBlock>
-                        <Intro
-                            title={title}
-                            titleAs={titleAs}
-                            superTitle={superTitle}
-                            superTitleAs={superTitleAs}
-                            text={text}
-                            isInverted={isInverted}
-                            secondaryAction={secondaryAction}
-                            primaryAction={primaryAction}
-                        />
-                    </IntroBlock>
-                )}
                 {features && (
                     <ContentContainer
                         isHalf={features.length % 2 == 0 ? true : false}

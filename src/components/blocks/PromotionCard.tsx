@@ -81,9 +81,12 @@ const IntroContainer = styled.div`
         flex: 1 0 0px;
     }
 
-    @media ${mq.medium} {
+    @media ${mq.semilarge} {
+        padding-left: calc(${1 / 28} * 100vw);
+    }
+
+    @media ${mq.xlarge} {
         padding-left: ${(1 / 28) * spacings.wrapper}px;
-        padding-right: ${spacings.spacer * 2}px;
     }
 `;
 
