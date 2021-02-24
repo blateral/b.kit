@@ -70,8 +70,15 @@ const TopBar = styled.div<{
     @media ${mq.medium} {
         padding: ${({ isTop, isOpen }) =>
                 !isTop && isOpen ? spacings.nudge * 3 : spacings.nudge * 7}px
-            ${spacings.spacer}px ${spacings.nudge * 3}px
-            ${(1 / 28) * spacings.wrapper}px;
+            ${spacings.spacer}px ${spacings.nudge * 3}px ${spacings.spacer}px;
+    }
+
+    @media ${mq.semilarge} {
+        padding-left: ${(1 / 28) * 100}%;
+    }
+
+    @media ${mq.xlarge} {
+        padding-left: ${(1 / 28) * spacings.wrapper}px;
     }
 `;
 
@@ -124,9 +131,9 @@ const LeftCol = styled(MenuBarCol)`
         isTop &&
         withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
 
-    @media ${mq.xlarge} {
+    /* @media ${mq.xlarge} {
         padding-left: ${spacings.spacer}px;
-    }
+    } */
 `;
 
 const CenterCol = styled(MenuBarCol)`
@@ -154,9 +161,9 @@ const RightCol = styled(MenuBarCol)`
         }
     }
 
-    @media ${mq.xlarge} {
+    /* @media ${mq.xlarge} {
         padding-right: ${spacings.spacer}px;
-    }
+    } */
 `;
 
 const ToggleContainer = styled.div<{ iconColor?: string }>`

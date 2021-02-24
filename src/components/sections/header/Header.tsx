@@ -54,6 +54,10 @@ const PosterContent = styled.div`
         max-width: none;
         margin-left: 0;
         text-align: left;
+        padding-left: ${(1 / 28) * 100}%;
+    }
+
+    @media ${mq.xlarge} {
         padding-left: ${(1 / 28) * spacings.wrapper}px;
     }
 `;

@@ -84,6 +84,7 @@ const Address = styled.div`
     @media ${mq.medium} {
         justify-content: flex-start;
         flex-direction: row;
+        padding: ${spacings.nudge}px ${spacings.nudge}px ${spacings.nudge}px 0;
 
         & > *:not(:first-child) {
             margin-left: ${spacings.spacer}px;
@@ -93,6 +94,7 @@ const Address = styled.div`
 
 const Decorator = styled.div<{ isInverted?: boolean }>`
     flex: 1;
+    width: 25px;
     margin-bottom: ${spacings.nudge * 1.5}px;
 
     color: ${({ theme, isInverted }) =>
@@ -301,6 +303,11 @@ export const CallToAction: FC<{
                             avatar={contact.avatar}
                         />
                     )}
+                    {newsForm && (
+                        <NewsletterWrapper>
+                            {newsForm(isInverted)}
+                        </NewsletterWrapper>
+                    )}
                     {(primaryAction || secondaryAction) && (
                         <StyledActions
                             isCentered
@@ -309,11 +316,6 @@ export const CallToAction: FC<{
                                 secondaryAction && secondaryAction(isInverted)
                             }
                         />
-                    )}
-                    {newsForm && (
-                        <NewsletterWrapper>
-                            {newsForm(isInverted)}
-                        </NewsletterWrapper>
                     )}
                 </Content>
             </Wrapper>

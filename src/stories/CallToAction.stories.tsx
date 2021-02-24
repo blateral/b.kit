@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import CallToAction from 'components/sections/CallToActions';
+import CallToAction from 'components/sections/CallToAction';
 import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
 import { Button, CompactForm } from 'index';
