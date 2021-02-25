@@ -16,7 +16,7 @@ const ImageContainer = styled.div`
 `;
 
 const StyledImage = styled(Image)`
-    width: 100%;
+    // width: 100%;
 `;
 
 const Content = styled.div<{ addWhitespace?: boolean }>`
@@ -66,6 +66,7 @@ export interface FeatureProps {
     intro?: string;
     text?: string;
     image?: Props;
+
     addWhitespace?: boolean;
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -98,6 +99,7 @@ const Feature: React.FC<
                         large={image.large}
                         xlarge={image.xlarge}
                         alt={image.alt}
+                        coverSpace={image.coverSpace}
                     />
                 </ImageContainer>
             )}

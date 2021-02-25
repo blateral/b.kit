@@ -65,6 +65,7 @@ const PosterContent = styled.div`
 const PosterContentMobile = styled(PosterContent)`
     display: block;
     padding-top: ${spacings.spacer * 2}px;
+    ${withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-bottom')}
 
     @media ${mq.semilarge} {
         display: none;

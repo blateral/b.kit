@@ -16,7 +16,6 @@ const View = styled.div<{
     isMenuOpen?: boolean;
     isTop?: boolean;
     isTopBarOpen?: boolean;
-    withAnim?: boolean;
 }>`
     position: ${({ isTop, isMenuOpen }) =>
         isTop && !isMenuOpen ? 'absolute' : 'fixed'};
@@ -26,13 +25,6 @@ const View = styled.div<{
     width: 100%;
     z-index: 10;
     pointer-events: ${({ isTopBarOpen }) => (isTopBarOpen ? 'all' : 'none')};
-    transform: translate(
-        0,
-        ${({ isTopBarOpen }) => (!isTopBarOpen ? '-100%' : '0')}
-    );
-
-    transition: transform ${({ withAnim }) => (withAnim ? 0.2 : 0)}s ease-in-out;
-    will-change: transform;
 `;
 
 const TopBar = styled.div<{
@@ -41,6 +33,7 @@ const TopBar = styled.div<{
     isOpen?: boolean;
     isTop?: boolean;
     clampWidth?: ClampWidthType;
+    withAnim?: boolean;
 }>`
     max-width: ${({ clampWidth }) =>
         clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
@@ -63,9 +56,15 @@ const TopBar = styled.div<{
                 ? `rgba(0, 0, 0, 0.13)`
                 : 'transparent'};
 
-    transition: height 0.2s ease-in-out, background-color 0.2s ease-in-out,
+    transform: translate(
+        0,
+        ${({ isOpen, isMenuOpen }) => (!isOpen && !isMenuOpen ? '-100%' : '0')}
+    );
+
+    transition: transform ${({ withAnim }) => (withAnim ? 0.2 : 0)}s ease-in-out,
+        height 0.2s ease-in-out, background-color 0.2s ease-in-out,
         padding 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    will-change: background-color, padding, height, box-shadow;
+    will-change: transform, background-color, padding, height, box-shadow;
 
     @media ${mq.medium} {
         padding: ${({ isTop, isOpen }) =>
@@ -377,7 +376,6 @@ const Menu: FC<MenuProps> = ({
             isMenuOpen={isMenuOpen}
             isTop={showFullTopBar}
             isTopBarOpen={isTopBarOpen}
-            withAnim={withTopbarAnim}
         >
             <Backdrop
                 isVisible={isMenuOpen}
@@ -421,6 +419,7 @@ const Menu: FC<MenuProps> = ({
                 isMenuOpen={isMenuOpen}
                 isOpen={isTopBarOpen || isMenuOpen}
                 isTop={showFullTopBar}
+                withAnim={withTopbarAnim}
                 clampWidth="large"
             >
                 <TopBarContent clampWidth="normal" addWhitespace>
