@@ -18,6 +18,7 @@ const Img = styled.img<{ coverSpace?: boolean }>`
     ${({ coverSpace }) =>
         coverSpace &&
         css`
+            width: 100%;
             object-fit: cover;
             object-position: center;
         `}
