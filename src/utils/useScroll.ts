@@ -18,14 +18,15 @@ export const useScroll = (
     const lastScrollPos = useRef<number>(0);
 
     useEffect(() => {
+        if (typeof window === 'undefined') return;
         const handleScroll = () => {
-            setIsTop(window.scrollY <= 1);
-            setIsInOffset(window.scrollY <= 1 + topOffset);
+            setIsTop(window.pageYOffset <= 1);
+            setIsInOffset(window.pageYOffset <= 1 + topOffset);
 
             if (lastScrollPos.current) {
                 // check if top offset is left
                 if (
-                    window.scrollY > 1 + topOffset &&
+                    window.pageYOffset > 1 + topOffset &&
                     lastScrollPos.current <= 1 + topOffset
                 ) {
                     onLeftOffset && onLeftOffset();
@@ -33,22 +34,22 @@ export const useScroll = (
 
                 // check if top offset was joined
                 if (
-                    window.scrollY <= 1 + topOffset &&
+                    window.pageYOffset <= 1 + topOffset &&
                     lastScrollPos.current > 1 + topOffset
                 ) {
                     onEnterOffset && onEnterOffset();
                 }
 
                 setScrollDirection((prev) => {
-                    if (window.scrollY <= 1) return ScrollDirection.DOWN;
-                    return window.scrollY > lastScrollPos.current
+                    if (window.pageYOffset <= 1) return ScrollDirection.DOWN;
+                    return window.pageYOffset > lastScrollPos.current
                         ? ScrollDirection.DOWN
-                        : window.scrollY < lastScrollPos.current
+                        : window.pageYOffset < lastScrollPos.current
                         ? ScrollDirection.UP
                         : prev;
                 });
             }
-            lastScrollPos.current = window.scrollY;
+            lastScrollPos.current = window.pageYOffset;
         };
 
         handleScroll();
