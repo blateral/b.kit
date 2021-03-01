@@ -9,6 +9,7 @@ import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
 import HeaderPoster from './HeaderPoster';
 import Menu, {
     LogoProps,
+    MenuMq,
     ToggleIconProps,
 } from 'components/sections/header/menu/Menu';
 import { NavGroup } from './menu/Flyout';
@@ -175,8 +176,14 @@ export interface HeaderMenuProps {
     isNavInverted?: boolean;
     toggleIcons?: ToggleIconProps;
     logo?: LogoProps;
-    primaryCta?: (isInverted?: boolean) => React.ReactNode;
-    secondaryCta?: (isInverted?: boolean) => React.ReactNode;
+    primaryCta?: (props: {
+        isInverted?: boolean;
+        currentMq: MenuMq;
+    }) => React.ReactNode;
+    secondaryCta?: (props: {
+        isInverted?: boolean;
+        currentMq: MenuMq;
+    }) => React.ReactNode;
     activeNavItem?: string;
     navItems?: NavGroup[];
     socials?: Array<{ icon: React.ReactNode; href: string }>;

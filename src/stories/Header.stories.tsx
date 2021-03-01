@@ -5,7 +5,6 @@ import { Meta, Story } from '@storybook/react';
 import Header from 'components/sections/header/Header';
 import Button from 'components/buttons/Button';
 import ArrowRight from 'components/base/icons/ArrowRight';
-import MenuAction from 'components/sections/header/menu/MenuActions';
 import Star from 'components/base/icons/Star';
 import StarGhost from 'components/base/icons/StarGhost';
 
@@ -13,6 +12,7 @@ import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
 import ButtonGhost from 'components/buttons/ButtonGhost';
+import { MenuMq } from 'components/sections/header/menu/Menu';
 
 const logoFn = ({
     isInverted,
@@ -35,38 +35,52 @@ const logoFn = ({
         );
 };
 
-const primaryCtaFn = (isInverted: boolean) => (
-    <MenuAction.View
-        type="default"
-        isInverted={!isInverted}
-        as="a"
-        href="#"
-        onClick={console.log}
-        breakAt="medium"
-    >
-        <MenuAction.Label visibleOn="desktop">Primary CTA</MenuAction.Label>
-        <MenuAction.Icon visibleOn="desktop">
-            <ArrowRight />
-        </MenuAction.Icon>
-        <MenuAction.Icon visibleOn="mobile">
-            <Star />
-        </MenuAction.Icon>
-    </MenuAction.View>
+const primaryCtaFn = ({
+    isInverted,
+    currentMq,
+}: {
+    isInverted?: boolean;
+    currentMq: MenuMq;
+}) => (
+    <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
+        {currentMq === 'semilarge' && (
+            <>
+                <Button.Label>zum Haus St. Ulrich</Button.Label>
+                <Button.Icon>
+                    <ArrowRight />
+                </Button.Icon>
+            </>
+        )}
+        {currentMq === 'small' && (
+            <Button.Icon>
+                <Star />
+            </Button.Icon>
+        )}
+    </Button.View>
 );
 
-const secondaryCtaFn = (isInverted: boolean) => (
-    <MenuAction.View
-        type="ghost"
-        isInverted={isInverted}
+const secondaryCtaFn = ({
+    isInverted,
+    currentMq,
+}: {
+    isInverted?: boolean;
+    currentMq: MenuMq;
+}) => (
+    <ButtonGhost.View
         as="a"
         href="#"
+        isInverted={isInverted}
         onClick={console.log}
     >
-        <MenuAction.Label visibleOn="desktop">Secondary</MenuAction.Label>
-        <MenuAction.Icon visibleOn="mobile">
-            <StarGhost iconColor={isInverted ? 'white' : 'black'} />
-        </MenuAction.Icon>
-    </MenuAction.View>
+        {currentMq === 'semilarge' && (
+            <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+        )}
+        {currentMq === 'small' && (
+            <ButtonGhost.Icon>
+                <StarGhost />
+            </ButtonGhost.Icon>
+        )}
+    </ButtonGhost.View>
 );
 
 const exampleNavItems = {

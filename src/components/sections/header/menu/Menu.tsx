@@ -158,6 +158,10 @@ const RightCol = styled(MenuBarCol)`
         isTop &&
         withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
 
+    & > * {
+        min-width: auto;
+    }
+
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
     }
@@ -263,7 +267,7 @@ export interface ToggleIconProps {
     opened: React.ReactNode;
 }
 
-type MenuMq = 'small' | 'semilarge';
+export type MenuMq = 'small' | 'semilarge';
 
 interface MenuProps {
     size?: 'small' | 'full';
@@ -274,8 +278,14 @@ interface MenuProps {
     toggleIcons?: ToggleIconProps;
     search?: (isInverted?: boolean) => React.ReactNode;
     logo?: LogoProps;
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    primaryAction?: (props: {
+        isInverted?: boolean;
+        currentMq?: MenuMq;
+    }) => React.ReactNode;
+    secondaryAction?: (props: {
+        isInverted?: boolean;
+        currentMq?: MenuMq;
+    }) => React.ReactNode;
     activeNavItem?: string;
     navItems?: NavGroup[];
     socials?: Array<{ icon: React.ReactNode; href: string }>;
@@ -457,8 +467,16 @@ const Menu: FC<MenuProps> = ({
                         )}
                     </CenterCol>
                     <RightCol isTop={showFullTopBar} logoHeight={getLogoHeight}>
-                        {secondaryAction && secondaryAction(isTopBarInverted())}
-                        {primaryAction && primaryAction(isTopBarInverted())}
+                        {secondaryAction &&
+                            secondaryAction({
+                                isInverted: isTopBarInverted(),
+                                currentMq,
+                            })}
+                        {primaryAction &&
+                            primaryAction({
+                                isInverted: isTopBarInverted(),
+                                currentMq,
+                            })}
                     </RightCol>
                 </TopBarContent>
             </TopBar>
