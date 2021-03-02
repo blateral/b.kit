@@ -163,14 +163,17 @@ export interface CarouselProps {
     controlNext?: (props: {
         isInverted?: boolean;
         isActive?: boolean;
+        name?: string;
     }) => React.ReactNode;
     controlPrev?: (props: {
         isInverted?: boolean;
         isActive?: boolean;
+        name?: string;
     }) => React.ReactNode;
     dot?: (props: {
         isInverted?: boolean;
         isActive?: boolean;
+        index?: number;
     }) => React.ReactNode;
     beforeChange?: (props: { currentStep: number; nextStep: number }) => void;
     afterChange?: (currentStep: number) => void;
@@ -237,7 +240,11 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             <StyledControl type="prev" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlPrev ? (
-                                        controlPrev({ isInverted, isActive })
+                                        controlPrev({
+                                            isInverted,
+                                            isActive,
+                                            name: 'control_prev_head',
+                                        })
                                     ) : (
                                         <ArrowLeftGhost />
                                     )
@@ -246,7 +253,11 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             <StyledControl type="next" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlNext ? (
-                                        controlNext({ isInverted, isActive })
+                                        controlNext({
+                                            isInverted,
+                                            isActive,
+                                            name: 'control_next_head',
+                                        })
                                     ) : (
                                         <ArrowRightGhost />
                                     )
@@ -267,7 +278,11 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             <StyledControl type="prev" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlPrev ? (
-                                        controlPrev({ isInverted, isActive })
+                                        controlPrev({
+                                            isInverted,
+                                            isActive,
+                                            name: 'control_prev_footer',
+                                        })
                                     ) : (
                                         <ArrowLeftGhost />
                                     )
@@ -278,7 +293,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             {(i, isActive, onClick) => (
                                 <DotWrapper key={i} onClick={onClick}>
                                     {dot ? (
-                                        dot({ isInverted, isActive })
+                                        dot({ isInverted, isActive, index: i })
                                     ) : (
                                         <Dot
                                             isActive={isActive}
@@ -292,7 +307,11 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                             <StyledControl type="next" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlNext ? (
-                                        controlNext({ isInverted, isActive })
+                                        controlNext({
+                                            isInverted,
+                                            isActive,
+                                            name: 'control_next_footer',
+                                        })
                                     ) : (
                                         <ArrowRightGhost />
                                     )
