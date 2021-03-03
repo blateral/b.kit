@@ -178,6 +178,7 @@ export interface HeaderNavProps {
     logo?: LogoProps;
     hideTopbarOnScrollDown?: boolean;
     withTopbarOffset?: boolean;
+    hideTopbarBackUnderMenu?: boolean;
     primaryCta?: (props: {
         isInverted?: boolean;
         currentMq: TopBarMq;
@@ -224,6 +225,9 @@ const Header: FC<{
         <View>
             {navigation && (
                 <TopBar
+                    isBackVisible={
+                        navigation?.hideTopbarBackUnderMenu ? !isMenuOpen : true
+                    }
                     isInverted={navigation?.isTopbarInverted}
                     logo={navigation?.logo}
                     hideOnScrollDown={navigation?.hideTopbarOnScrollDown}

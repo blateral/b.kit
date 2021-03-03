@@ -14,6 +14,7 @@ const View = styled.div<{
     isOpen?: boolean;
     isInverted?: boolean;
     animated?: boolean;
+    isBackVisible?: boolean;
 }>`
     position: ${({ isLarge }) => (isLarge ? 'absolute' : 'fixed')};
     top: 0;
@@ -28,14 +29,16 @@ const View = styled.div<{
     margin: 0 auto;
     overflow: hidden;
 
-    background-color: ${({ theme, isInverted, isLarge }) =>
-        isInverted
-            ? !isLarge && `rgba(0, 0, 0, ${!isLarge ? 0.3 : 0})`
-            : !isLarge && color(theme).light};
+    background-color: ${({ theme, isInverted, isLarge, isBackVisible }) =>
+        isBackVisible
+            ? isInverted
+                ? !isLarge && `rgba(0, 0, 0, ${!isLarge ? 0.3 : 0})`
+                : !isLarge && color(theme).light
+            : 'transparent'};
 
     box-shadow: 0px 4px 4px
-        ${({ isInverted, isLarge, isOpen }) =>
-            isInverted
+        ${({ isInverted, isLarge, isOpen, isBackVisible }) =>
+            isInverted || !isBackVisible
                 ? `transparent`
                 : isOpen && !isLarge
                 ? `rgba(0, 0, 0, 0.13)`
@@ -184,6 +187,7 @@ export type TopBarMq = 'small' | 'semilarge';
 
 const TopBar: FC<{
     isVisible?: boolean;
+    isBackVisible?: boolean;
     isInverted?: boolean;
     hideOnScrollDown?: boolean;
     withTopOffset?: boolean;
@@ -204,6 +208,7 @@ const TopBar: FC<{
     isInverted = false,
     hideOnScrollDown = true,
     withTopOffset = true,
+    isBackVisible = true,
     onToggleClick,
     toggleIcon,
     logo,
@@ -253,13 +258,14 @@ const TopBar: FC<{
     }, [isTop]);
 
     // check if top bar is inverted
-    const isBarInverted = isLarge || isInverted;
+    const isBarInverted = isLarge || isInverted || !isBackVisible;
 
     return (
         <View
             ref={viewRef}
             isInverted={isInverted}
             isVisible={isVisible}
+            isBackVisible={isBackVisible}
             isOpen={isOpen}
             isLarge={isLarge}
             animated={isAnimated}
