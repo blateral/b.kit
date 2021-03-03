@@ -10,7 +10,6 @@ import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
-    text-align: center;
     margin: 0 auto;
 
     @media ${mq.semilarge} {
@@ -20,13 +19,18 @@ const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     }
 `;
 
-const ListContainer = styled.div`
+const ListContainer = styled.div<{ isCentered?: boolean }>`
+    text-align: center;
     &:not(:first-child) {
         ${withRange([spacings.spacer, spacings.spacer * 1.75], 'margin-top')}
     }
 
     &:not(:last-child) {
         ${withRange([spacings.spacer, spacings.spacer * 1.75], 'margin-bottom')}
+    }
+
+    @media ${mq.semilarge} {
+        text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
     }
 `;
 
@@ -157,7 +161,7 @@ const IconList: React.FC<{
                         isCentered={isCentered}
                     />
                 )}
-                <ListContainer>
+                <ListContainer isCentered={isCentered}>
                     <Copy type="copy" size="medium" isInverted={isInverted}>
                         <ItemContainer>
                             <Items
