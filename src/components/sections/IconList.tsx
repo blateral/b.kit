@@ -10,9 +10,14 @@ import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
-    margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
+    text-align: center;
+    margin: 0 auto;
 
-    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+    @media ${mq.semilarge} {
+        margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
+
+        text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+    }
 `;
 
 const ListContainer = styled.div`
@@ -41,11 +46,18 @@ const ShowMore = styled.span`
 
 const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
-    align-items: ${({ isCentered }) => (isCentered ? 'center' : 'flex-start')};
-    justify-content: ${({ isCentered }) =>
-        isCentered ? 'center' : 'flex-start'};
+    align-items: center;
+    justify-content: center;
+
     flex-wrap: wrap;
     margin-left: -20px;
+
+    @media ${mq.semilarge} {
+        align-items: ${({ isCentered }) =>
+            isCentered ? 'center' : 'flex-start'};
+        justify-content: ${({ isCentered }) =>
+            isCentered ? 'center' : 'flex-start'};
+    }
 `;
 
 const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
