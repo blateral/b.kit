@@ -10,9 +10,14 @@ import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
-    margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
+    text-align: center;
+    margin: 0 auto;
 
-    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+    @media ${mq.semilarge} {
+        margin: ${({ isCentered }) => (isCentered ? '0 auto' : '0')};
+
+        text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+    }
 `;
 
 const ListContainer = styled.div`
@@ -41,29 +46,51 @@ const ShowMore = styled.span`
 
 const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
-    align-items: ${({ isCentered }) => (isCentered ? 'center' : 'flex-start')};
-    justify-content: ${({ isCentered }) =>
-        isCentered ? 'center' : 'flex-start'};
+    align-items: center;
+    justify-content: center;
+
     flex-wrap: wrap;
     margin-left: -20px;
+
+    @media ${mq.semilarge} {
+        align-items: ${({ isCentered }) =>
+            isCentered ? 'center' : 'flex-start'};
+        justify-content: ${({ isCentered }) =>
+            isCentered ? 'center' : 'flex-start'};
+    }
 `;
 
 const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
     position: relative;
     padding-top: ${spacings.spacer * 2}px;
-    left: ${({ isCentered }) => isCentered && '50%'};
-    transform: ${({ isCentered }) => isCentered && 'translateX(-50%)'};
+    /* left: ${({ isCentered }) => isCentered && '50%'};
+    transform: ${({ isCentered }) => isCentered && 'translateX(-50%)'}; */
+
 
     @media ${mq.semilarge} {
+    margin: ${({ isCentered }) => isCentered && '0 auto'};
         max-width: 600px;
     }
 `;
 
-const Item = styled.img`
+const Item = styled.img<{ isVisible?: boolean; index: number }>`
     display: block;
 
     padding-left: 20px;
     padding-top: 20px;
+
+    display: ${({ index, isVisible }) =>
+        isVisible || index < 6 ? 'block' : 'none'};
+
+    @media ${mq.semilarge} {
+        display: ${({ index, isVisible }) =>
+            isVisible || index < 8 ? 'block' : 'none'};
+    }
+
+    @media ${mq.large} {
+        display: ${({ index, isVisible }) =>
+            isVisible || index < 10 ? 'block' : 'none'};
+    }
 `;
 
 const IconList: React.FC<{
@@ -73,8 +100,7 @@ const IconList: React.FC<{
     superTitleAs?: HeadlineTag;
     text?: string;
     bgMode?: 'full' | 'splitted';
-    primaryItems?: { src: string; alt?: string }[];
-    secondaryItems?: { src: string; alt?: string }[];
+    items: { src: string; alt?: string }[];
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     isInverted?: boolean;
@@ -86,8 +112,7 @@ const IconList: React.FC<{
     superTitleAs,
     text,
     bgMode,
-    primaryItems,
-    secondaryItems,
+    items,
     isInverted = false,
     isCentered = false,
     primaryAction,
@@ -135,17 +160,20 @@ const IconList: React.FC<{
                 <ListContainer>
                     <Copy type="copy" size="medium" isInverted={isInverted}>
                         <ItemContainer>
-                            <Items isVisible isCentered={isCentered}>
-                                {primaryItems?.map(({ src, alt }, i) => {
-                                    return <Item key={i} src={src} alt={alt} />;
-                                })}
-                            </Items>
                             <Items
-                                isVisible={showMore === true}
+                                isVisible={!showMore ? true : showMore === true}
                                 isCentered={isCentered}
                             >
-                                {secondaryItems?.map(({ src, alt }, i) => {
-                                    return <Item key={i} src={src} alt={alt} />;
+                                {items.map(({ src, alt }, i) => {
+                                    return (
+                                        <Item
+                                            isVisible={showMore}
+                                            index={i}
+                                            key={i}
+                                            src={src}
+                                            alt={alt}
+                                        />
+                                    );
                                 })}
                             </Items>
                         </ItemContainer>
