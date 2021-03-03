@@ -256,7 +256,6 @@ export const WithDifferentLogoHeight: Story = () => (
     <Menu
         logo={{
             icon: logoFn,
-            heightMultFull: 1.5,
             link: '#logoLink',
         }}
     />
