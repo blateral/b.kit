@@ -63,10 +63,12 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
 const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
     position: relative;
     padding-top: ${spacings.spacer * 2}px;
-    left: ${({ isCentered }) => isCentered && '50%'};
-    transform: ${({ isCentered }) => isCentered && 'translateX(-50%)'};
+    /* left: ${({ isCentered }) => isCentered && '50%'};
+    transform: ${({ isCentered }) => isCentered && 'translateX(-50%)'}; */
+
 
     @media ${mq.semilarge} {
+    margin: ${({ isCentered }) => isCentered && '0 auto'};
         max-width: 600px;
     }
 `;
