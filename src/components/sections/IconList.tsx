@@ -59,11 +59,24 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
     }
 `;
 
-const Item = styled.img`
+const Item = styled.img<{ isVisible?: boolean; index: number }>`
     display: block;
 
     padding-left: 20px;
     padding-top: 20px;
+
+    display: ${({ index, isVisible }) =>
+        isVisible || index < 6 ? 'block' : 'none'};
+
+    @media ${mq.semilarge} {
+        display: ${({ index, isVisible }) =>
+            isVisible || index < 8 ? 'block' : 'none'};
+    }
+
+    @media ${mq.large} {
+        display: ${({ index, isVisible }) =>
+            isVisible || index < 10 ? 'block' : 'none'};
+    }
 `;
 
 const IconList: React.FC<{
@@ -73,8 +86,7 @@ const IconList: React.FC<{
     superTitleAs?: HeadlineTag;
     text?: string;
     bgMode?: 'full' | 'splitted';
-    primaryItems?: { src: string; alt?: string }[];
-    secondaryItems?: { src: string; alt?: string }[];
+    items: { src: string; alt?: string }[];
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     isInverted?: boolean;
@@ -86,8 +98,7 @@ const IconList: React.FC<{
     superTitleAs,
     text,
     bgMode,
-    primaryItems,
-    secondaryItems,
+    items,
     isInverted = false,
     isCentered = false,
     primaryAction,
@@ -135,17 +146,20 @@ const IconList: React.FC<{
                 <ListContainer>
                     <Copy type="copy" size="medium" isInverted={isInverted}>
                         <ItemContainer>
-                            <Items isVisible isCentered={isCentered}>
-                                {primaryItems?.map(({ src, alt }, i) => {
-                                    return <Item key={i} src={src} alt={alt} />;
-                                })}
-                            </Items>
                             <Items
-                                isVisible={showMore === true}
+                                isVisible={!showMore ? true : showMore === true}
                                 isCentered={isCentered}
                             >
-                                {secondaryItems?.map(({ src, alt }, i) => {
-                                    return <Item key={i} src={src} alt={alt} />;
+                                {items.map(({ src, alt }, i) => {
+                                    return (
+                                        <Item
+                                            isVisible={showMore}
+                                            index={i}
+                                            key={i}
+                                            src={src}
+                                            alt={alt}
+                                        />
+                                    );
                                 })}
                             </Items>
                         </ItemContainer>
