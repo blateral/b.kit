@@ -7,7 +7,7 @@ import Star from 'components/base/icons/Star';
 import StarGhost from 'components/base/icons/StarGhost';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import TopBar, { TopBarMq } from 'components/sections/header/menu/TopBar';
+import TopBar, { TopBarMq } from 'components/sections/header/TopBar';
 
 const logoFn = ({
     isInverted,
@@ -175,7 +175,7 @@ export const WithToggleIconVariation: Story = () => (
         isInverted
         withTopOffset
         hideOnScrollDown
-        toggleIcon={({ isInverted }) => (
+        toggleIcon={(isInverted) => (
             <Star iconColor={isInverted ? '#fff' : '#000'} />
         )}
         logo={{

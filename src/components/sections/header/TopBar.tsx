@@ -50,8 +50,9 @@ const View = styled.div<{
                 animated ? 'transform 0.3s cubic-bezier(.71,0,.29,1),' : ''}
             height 0.2s ease-in-out,
         background-color 0.2s ease-in-out, padding 0.2s ease-in-out,
-        box-shadow 0.2s ease-in-out;
-    will-change: transform, background-color, padding, height, box-shadow;
+        box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    will-change: transform, background-color, padding, height, box-shadow,
+        opacity;
 
     @media ${mq.medium} {
         padding: ${({ isLarge, isOpen }) =>
@@ -187,7 +188,7 @@ const TopBar: FC<{
     hideOnScrollDown?: boolean;
     withTopOffset?: boolean;
     onToggleClick?: () => void;
-    toggleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+    toggleIcon?: (isInverted?: boolean) => React.ReactNode;
     logo?: LogoProps;
     primaryAction?: (props: {
         isInverted?: boolean;
@@ -273,9 +274,7 @@ const TopBar: FC<{
                         }
                     >
                         {toggleIcon ? (
-                            toggleIcon({
-                                isInverted: isBarInverted,
-                            })
+                            toggleIcon(isBarInverted)
                         ) : (
                             <StyledMenuBurger
                                 iconColor={

@@ -12,7 +12,7 @@ import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import { MenuMq } from 'components/sections/header/menu/Menu';
+import { TopBarMq } from 'components/sections/header/TopBar';
 
 const logoFn = ({
     isInverted,
@@ -40,7 +40,7 @@ const primaryCtaFn = ({
     currentMq,
 }: {
     isInverted?: boolean;
-    currentMq: MenuMq;
+    currentMq: TopBarMq;
 }) => (
     <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
         {currentMq === 'semilarge' && (
@@ -64,7 +64,7 @@ const secondaryCtaFn = ({
     currentMq,
 }: {
     isInverted?: boolean;
-    currentMq: MenuMq;
+    currentMq: TopBarMq;
 }) => (
     <ButtonGhost.View
         as="a"
@@ -300,7 +300,7 @@ export const WithActions: Story = () => (
 
 export const WithMenu: Story = () => (
     <Header
-        menu={{
+        navigation={{
             ...exampleNavItems,
             socials: [
                 { href: '#', icon: <Facebook /> },
@@ -338,7 +338,7 @@ export const WithMenu: Story = () => (
 
 export const WithMenuLogo: Story = () => (
     <Header
-        menu={{
+        navigation={{
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -377,7 +377,7 @@ export const WithMenuLogo: Story = () => (
 
 export const WithMenuActions: Story = () => (
     <Header
-        menu={{
+        navigation={{
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -418,8 +418,8 @@ export const WithMenuActions: Story = () => (
 
 export const WithInvertedTopBar: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
+        navigation={{
+            isTopbarInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -460,9 +460,9 @@ export const WithInvertedTopBar: Story = () => (
 
 export const WithInvertedNav: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -503,10 +503,10 @@ export const WithInvertedNav: Story = () => (
 
 export const WithFullSizeMenu: Story = () => (
     <Header
-        menu={{
-            isLarge: true,
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isLargeMenu: true,
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -547,9 +547,9 @@ export const WithFullSizeMenu: Story = () => (
 
 export const WithBadge: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -598,9 +598,9 @@ export const WithBadge: Story = () => (
 
 export const WithBadgeOnMobile: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -651,9 +651,9 @@ export const WithBadgeOnMobile: Story = () => (
 export const SmallerHeaderSize: Story = () => (
     <Header
         size="small"
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -694,9 +694,9 @@ export const SmallerHeaderSize: Story = () => (
 
 export const WithKenBurnsEffect: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -750,9 +750,9 @@ export const WithKenBurnsEffect: Story = () => (
 export const WithKenBurnsEffectSmallerSize: Story = () => (
     <Header
         size="small"
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [

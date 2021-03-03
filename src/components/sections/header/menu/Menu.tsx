@@ -1,34 +1,22 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC, useEffect } from 'react';
+import styled from 'styled-components';
 
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import Link from 'components/typography/Link';
-import { ScrollDirection, useScroll } from 'utils/useScroll';
-import Wrapper, { ClampWidthType } from 'components/base/Wrapper';
+import { mq, spacings } from 'utils/styles';
 
-import MenuBurger from 'components/base/icons/MenuBurger';
 import Cross from 'components/base/icons/Cross';
-import { useMediaQuery } from 'utils/useMediaQuery';
 import Flyout, { NavGroup } from './Flyout';
 import SocialList from 'components/blocks/SocialList';
-import TopBar, { LogoProps } from './TopBar';
 
-const View = styled.div<{
-    isMenuOpen?: boolean;
-    isTop?: boolean;
-    isTopBarOpen?: boolean;
-}>`
-    position: ${({ isTop, isMenuOpen }) =>
-        isTop && !isMenuOpen ? 'absolute' : 'fixed'};
+const View = styled.div`
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
     z-index: 10;
-    pointer-events: ${({ isTopBarOpen }) => (isTopBarOpen ? 'all' : 'none')};
 `;
 
-const Backdrop = styled.div<{ isVisible?: boolean }>`
+const Backdrop = styled.div<{ isVisible?: boolean; opacity?: number }>`
     position: absolute;
     top: 0;
     right: 0;
@@ -39,7 +27,7 @@ const Backdrop = styled.div<{ isVisible?: boolean }>`
         0,
         0,
         0,
-        ${({ isVisible }) => (isVisible ? 0.4 : 0)}
+        ${({ isVisible, opacity }) => (isVisible ? opacity : 0)}
     );
 
     pointer-events: ${({ isVisible }) => !isVisible && 'none'};
@@ -86,109 +74,49 @@ const SocialContainer = styled.div<{ isLarge?: boolean }>`
         padding-right: ${({ isLarge }) => isLarge && spacings.spacer}px;
     }
 `;
-
-export interface ToggleIconProps {
-    closed: React.ReactNode;
-    opened: React.ReactNode;
-}
 interface MenuProps {
+    isOpen?: boolean;
     size?: 'small' | 'full';
-    isTopInverted?: boolean;
-    isNavInverted?: boolean;
-    withTopOffset?: boolean;
-    hideOnScrollDown?: boolean;
-    toggleIcons?: ToggleIconProps;
+    isInverted?: boolean;
+    backdropOpacity?: number;
     search?: (isInverted?: boolean) => React.ReactNode;
-    logo?: LogoProps;
-    primaryAction?: (props: {
-        isInverted?: boolean;
-        currentMq?: MenuMq;
-    }) => React.ReactNode;
-    secondaryAction?: (props: {
-        isInverted?: boolean;
-        currentMq?: MenuMq;
-    }) => React.ReactNode;
     activeNavItem?: string;
     navItems?: NavGroup[];
     socials?: Array<{ icon: React.ReactNode; href: string }>;
+    onCloseClick?: () => void;
 }
 
 const Menu: FC<MenuProps> = ({
+    isOpen = false,
     size = 'small',
-    isTopInverted = false,
-    isNavInverted = false,
-    withTopOffset = false,
-    hideOnScrollDown = false,
-    toggleIcons,
+    isInverted = false,
+    backdropOpacity = 0.4,
     search,
-    logo,
-    primaryAction,
-    secondaryAction,
     activeNavItem,
     navItems,
     socials,
+    onCloseClick,
 }) => {
-    const theme = useContext(ThemeContext);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isTopBarOpen, setTopBarOpen] = useState(true);
-    const [topBarSize, setTopBarSize] = useState<'small' | 'large'>('large');
-    const [withTopbarAnim, setTopBarAnim] = useState(true);
-
-    // generate logo heights
-    // const multFull = logo?.heightMultFull || 1;
-    // const multSmall = logo?.heightMultSmall || 1;
-    // const logoHeights = {
-    //     heightSmall: 69 * multSmall,
-    //     heightFull: 115 * multFull,
-    // };
-
     useEffect(() => {
-        document.body.style.overflow = isMenuOpen ? 'hidden' : 'visible';
-    }, [isMenuOpen]);
-
-    // const showFullTopBar = hideOnScrollDown
-    //     ? topBarSize === 'large'
-    //     : isInOffset;
-
-    // const isTopBarInverted = () => {
-    //     if (isMenuOpen && (size === 'full' || currentMq === 'small')) {
-    //         return isNavInverted;
-    //     } else return isMenuOpen || showFullTopBar || isTopInverted;
-    // };
-
-    // const isToggleInverted = () => {
-    //     return isMenuOpen ? isNavInverted : isTopBarInverted();
-    // };
-
-    // const isLogoFull = showFullTopBar
-    //     ? (currentMq === 'small' ? true : isMenuOpen) ||
-    //       (isMenuOpen && size === 'full')
-    //         ? false
-    //         : true
-    //     : false;
-
-    // const getLogoHeight = showFullTopBar
-    //     ? (currentMq === 'small' ? true : isMenuOpen) ||
-    //       (isMenuOpen && size === 'full')
-    //         ? logoHeights.heightSmall * 1.2
-    //         : logoHeights.heightFull
-    //     : logoHeights.heightSmall;
+        document.body.style.overflow = isOpen ? 'hidden' : 'visible';
+    }, [isOpen]);
 
     return (
-        <View isMenuOpen={isMenuOpen} isTop={false} isTopBarOpen={isTopBarOpen}>
+        <View>
             <Backdrop
-                isVisible={isMenuOpen}
-                onClick={() => setIsMenuOpen(false)}
+                isVisible={isOpen}
+                opacity={backdropOpacity}
+                onClick={onCloseClick}
             />
             <Flyout.View
-                isOpen={isMenuOpen}
+                isOpen={isOpen}
                 isLarge={size === 'full'}
                 contentTopSpace={100}
-                isInverted={isNavInverted}
+                isInverted={isInverted}
             >
-                {(size === 'full' ? currentMq === 'small' : true) && search && (
+                {search && (
                     <FlyoutSearchContainer>
-                        {search(isNavInverted)}
+                        {search(isInverted)}
                     </FlyoutSearchContainer>
                 )}
                 {navItems && (
@@ -196,13 +124,13 @@ const Menu: FC<MenuProps> = ({
                         activeNavItem={activeNavItem}
                         navGroups={navItems}
                         isLarge={size === 'full'}
-                        isInverted={isNavInverted}
+                        isInverted={isInverted}
                     />
                 )}
                 {socials && (
                     <SocialContainer isLarge={size === 'full'}>
                         <SocialList
-                            isInverted={isNavInverted}
+                            isInverted={isInverted}
                             items={socials.map((item) => {
                                 return {
                                     href: item.href,
@@ -213,67 +141,6 @@ const Menu: FC<MenuProps> = ({
                     </SocialContainer>
                 )}
             </Flyout.View>
-            <TopBar
-                isVisible={true}
-                isInverted={isTopInverted}
-                hideOnScrollDown={hideOnScrollDown}
-            />
-            {/* <TopBar
-                isInverted={isTopInverted}
-                isMenuOpen={isMenuOpen}
-                isOpen={isTopBarOpen || isMenuOpen}
-                isTop={showFullTopBar}
-                withAnim={withTopbarAnim}
-                clampWidth="large"
-            >
-                <TopBarContent clampWidth="normal" addWhitespace>
-                    <LeftCol isTop={showFullTopBar} logoHeight={getLogoHeight}>
-                        <ToggleContainer
-                            onClick={() => setIsMenuOpen((prev) => !prev)}
-                            iconColor={
-                                isToggleInverted()
-                                    ? color(theme).light
-                                    : color(theme).dark
-                            }
-                        >
-                            {isMenuOpen
-                                ? toggleIcons?.opened || <StyledClose />
-                                : toggleIcons?.closed || <StyledMenuBurger />}
-                        </ToggleContainer>
-                        {size === 'full' && search && (
-                            <SearchContainer isVisible={isMenuOpen}>
-                                {search(isTopBarInverted())}
-                            </SearchContainer>
-                        )}
-                    </LeftCol>
-                    <CenterCol>
-                        {logo && (
-                            <LogoLink
-                                href={logo.link}
-                                logoHeight={getLogoHeight}
-                            >
-                                {logo.icon &&
-                                    logo.icon({
-                                        isInverted: isTopBarInverted(),
-                                        size: isLogoFull ? 'full' : 'small',
-                                    })}
-                            </LogoLink>
-                        )}
-                    </CenterCol>
-                    <RightCol isTop={showFullTopBar} logoHeight={getLogoHeight}>
-                        {secondaryAction &&
-                            secondaryAction({
-                                isInverted: isTopBarInverted(),
-                                currentMq,
-                            })}
-                        {primaryAction &&
-                            primaryAction({
-                                isInverted: isTopBarInverted(),
-                                currentMq,
-                            })}
-                    </RightCol>
-                </TopBarContent>
-            </TopBar> */}
         </View>
     );
 };
