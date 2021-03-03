@@ -2,8 +2,6 @@ import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { mq, spacings } from 'utils/styles';
-
-import Cross from 'components/base/icons/Cross';
 import Flyout, { NavGroup } from './Flyout';
 import SocialList from 'components/blocks/SocialList';
 
@@ -34,32 +32,6 @@ const Backdrop = styled.div<{ isVisible?: boolean; opacity?: number }>`
     transition: background-color 0.2s ease-in-out;
 `;
 
-const StyledClose = styled(Cross)`
-    margin-top: ${spacings.nudge}px;
-`;
-
-const SearchContainer = styled.div<{ isVisible?: boolean }>`
-    display: none;
-    width: 100%;
-    max-width: 420px;
-    padding-top: ${spacings.nudge}px;
-    padding-left: ${spacings.spacer * 3}px;
-    padding-right: ${spacings.spacer * 2}px;
-
-    transition: opacity 0.2s ease-in-out;
-    will-change: opacity;
-
-    @media ${mq.semilarge} {
-        display: block;
-        opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
-        pointer-events: ${({ isVisible }) => (isVisible ? 'all' : 'none')};
-    }
-`;
-
-const FlyoutSearchContainer = styled.div`
-    padding: ${spacings.nudge * 3}px 0;
-`;
-
 const SocialContainer = styled.div<{ isLarge?: boolean }>`
     display: flex;
     justify-content: flex-start;
@@ -79,6 +51,7 @@ interface MenuProps {
     size?: 'small' | 'full';
     isInverted?: boolean;
     backdropOpacity?: number;
+    toggleIcon?: (isInverted?: boolean) => React.ReactNode;
     search?: (isInverted?: boolean) => React.ReactNode;
     activeNavItem?: string;
     navItems?: NavGroup[];
@@ -91,6 +64,7 @@ const Menu: FC<MenuProps> = ({
     size = 'small',
     isInverted = false,
     backdropOpacity = 0.4,
+    toggleIcon,
     search,
     activeNavItem,
     navItems,
@@ -113,12 +87,10 @@ const Menu: FC<MenuProps> = ({
                 isLarge={size === 'full'}
                 contentTopSpace={100}
                 isInverted={isInverted}
+                onCloseClick={onCloseClick}
+                toggleIcon={toggleIcon}
+                search={search}
             >
-                {search && (
-                    <FlyoutSearchContainer>
-                        {search(isInverted)}
-                    </FlyoutSearchContainer>
-                )}
                 {navItems && (
                     <Flyout.NavList
                         activeNavItem={activeNavItem}

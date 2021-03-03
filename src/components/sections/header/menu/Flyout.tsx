@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
 import Wrapper from 'components/base/Wrapper';
 import Link, { LinkProps } from 'components/typography/Link';
@@ -10,6 +10,7 @@ import {
     spacings,
     withRange,
 } from 'utils/styles';
+import Cross from 'components/base/icons/Cross';
 
 const View = styled.div<{ isOpen?: boolean }>`
     position: absolute;
@@ -20,8 +21,9 @@ const View = styled.div<{ isOpen?: boolean }>`
     overflow: hidden;
     pointer-events: none;
 
-    transform: translate(${({ isOpen }) => (isOpen ? 0 : -100)}%);
-    transition: transform 0.2s ease-in-out;
+    transform: translate(${({ isOpen }) => (isOpen ? '0%' : '-100%')});
+
+    transition: transform 0.2s cubic-bezier(0.71, 0, 0.29, 1);
     will-change: transform;
 `;
 
@@ -89,20 +91,56 @@ const Content = styled.div`
     margin: 0 auto;
 `;
 
+const Header = styled.div`
+    display: flex;
+`;
+
+const HeaderCol = styled.div``;
+
+const HeaderLeft = styled(HeaderCol)``;
+
+const HeaderCenter = styled(HeaderCol)``;
+
+const HeaderRight = styled(HeaderCol)``;
+
+const ToggleContainer = styled.div<{ iconColor?: string }>`
+    cursor: pointer;
+    padding: ${spacings.nudge * 2}px;
+    margin: -${spacings.nudge * 2}px;
+
+    color: ${({ iconColor }) => iconColor && iconColor};
+`;
+
+const StyledMenuClose = styled(Cross)`
+    margin-top: ${spacings.nudge}px;
+`;
+
+const FlyoutSearchContainer = styled.div`
+    padding: ${spacings.nudge * 3}px 0;
+`;
+
 const Flyout: FC<{
     isOpen?: boolean;
     isLarge?: boolean;
     isInverted?: boolean;
+    toggleIcon?: (isInverted?: boolean) => React.ReactNode;
+    search?: (isInverted?: boolean) => React.ReactNode;
     contentTopSpace?: number;
+    onCloseClick?: () => void;
     className?: string;
 }> = ({
     isOpen = false,
     contentTopSpace,
     isLarge = false,
     isInverted = false,
+    toggleIcon,
+    search,
+    onCloseClick,
     className,
     children,
 }) => {
+    const theme = useContext(ThemeContext);
+
     return (
         <View isOpen={isOpen} className={className}>
             <StyledWrapper clampWidth={isLarge ? 'large' : 'normal'}>
@@ -112,7 +150,40 @@ const Flyout: FC<{
                     isInverted={isInverted}
                     topSpace={contentTopSpace}
                 >
-                    <Content>{children}</Content>
+                    <Content>
+                        <Header>
+                            <HeaderLeft>
+                                <ToggleContainer
+                                    onClick={onCloseClick}
+                                    iconColor={
+                                        isInverted
+                                            ? color(theme).light
+                                            : color(theme).dark
+                                    }
+                                >
+                                    {toggleIcon ? (
+                                        toggleIcon(isInverted)
+                                    ) : (
+                                        <StyledMenuClose
+                                            iconColor={
+                                                isInverted
+                                                    ? color(theme).light
+                                                    : color(theme).dark
+                                            }
+                                        />
+                                    )}
+                                </ToggleContainer>
+                                {search && (
+                                    <FlyoutSearchContainer>
+                                        {search(isInverted)}
+                                    </FlyoutSearchContainer>
+                                )}
+                            </HeaderLeft>
+                            <HeaderCenter>center</HeaderCenter>
+                            <HeaderRight>right</HeaderRight>
+                        </Header>
+                        {children}
+                    </Content>
                 </Stage>
             </StyledWrapper>
         </View>
