@@ -3,87 +3,12 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
 import Menu from 'components/sections/header/menu/Menu';
-import ArrowRight from 'components/base/icons/ArrowRight';
-import Star from 'components/base/icons/Star';
-import StarGhost from 'components/base/icons/StarGhost';
 import SearchInput from 'components/fields/SearchInput';
 import Magnifier from 'components/base/icons/Magnifier';
 
 import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
-import Button from 'components/buttons/Button';
-import ButtonGhost from 'components/buttons/ButtonGhost';
-import { TopBarMq } from 'components/sections/header/TopBar';
-
-const logoFn = ({
-    isInverted,
-    size,
-}: {
-    isInverted: boolean;
-    size?: 'full' | 'small';
-}) => {
-    if (isInverted)
-        return (
-            <img
-                src={`https://via.placeholder.com/107x115/000000/FFFFFF/?text=${size}`}
-            />
-        );
-    else
-        return (
-            <img
-                src={`https://via.placeholder.com/107x115/FFFFFF/000000/?text=${size}`}
-            />
-        );
-};
-
-const primaryCtaFn = ({
-    isInverted,
-    currentMq,
-}: {
-    isInverted?: boolean;
-    currentMq?: TopBarMq;
-}) => (
-    <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
-        {currentMq === 'semilarge' && (
-            <>
-                <Button.Label>zum Haus St. Ulrich</Button.Label>
-                <Button.Icon>
-                    <ArrowRight />
-                </Button.Icon>
-            </>
-        )}
-        {currentMq === 'small' && (
-            <Button.Icon>
-                <Star />
-            </Button.Icon>
-        )}
-    </Button.View>
-);
-
-const secondaryCtaFn = ({
-    isInverted,
-    currentMq,
-}: {
-    isInverted?: boolean;
-    currentMq?: TopBarMq;
-}) => (
-    <ButtonGhost.View
-        as="a"
-        href="#"
-        isInverted={isInverted}
-        onClick={console.log}
-    >
-        {currentMq === 'semilarge' && (
-            <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
-        )}
-        {currentMq === 'small' && (
-            <ButtonGhost.Icon>
-                <StarGhost />
-            </ButtonGhost.Icon>
-        )}
-    </ButtonGhost.View>
-);
 
 const exampleNavItems = {
     activeNavItem: 'navGroup2.activeb',

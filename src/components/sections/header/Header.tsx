@@ -173,6 +173,7 @@ export interface HeaderNavProps {
     isTopbarInverted?: boolean;
     activeNavItem?: string;
     navItems?: NavGroup[];
+    backdropOpacity?: number;
     socials?: Array<{ icon: React.ReactNode; href: string }>;
     logo?: LogoProps;
     hideTopbarOnScrollDown?: boolean;
@@ -236,6 +237,7 @@ const Header: FC<{
             {navigation && (
                 <Menu
                     isOpen={isMenuOpen}
+                    backdropOpacity={navigation?.backdropOpacity}
                     size={navigation?.isLargeMenu ? 'full' : 'small'}
                     isInverted={navigation?.isMenuInverted}
                     activeNavItem={navigation?.activeNavItem}

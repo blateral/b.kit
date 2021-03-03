@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Section, { BgMode } from 'components/base/Section';
 import styled, { ThemeContext } from 'styled-components';
-import { getColors, spacings } from 'utils/styles';
+import { getColors, spacings, withRange } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
@@ -10,7 +10,7 @@ const FactsContainer = styled.ul`
     padding: 0;
     margin: 0;
 
-    padding-top: ${spacings.spacer * 3}px;
+    ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-top')}
 
     list-style-type: none;
 `;
