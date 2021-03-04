@@ -195,6 +195,8 @@ const ScrollArea = styled.div`
     overflow-y: auto;
 
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
+    margin-left: -${spacings.spacer}px;
+    padding-left: ${spacings.spacer}px;
 `;
 
 type FlyoutMq = 'semilarge' | 'large';
