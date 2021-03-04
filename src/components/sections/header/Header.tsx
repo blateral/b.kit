@@ -11,7 +11,7 @@ import Menu from 'components/sections/header/menu/Menu';
 import { NavGroup } from './menu/Flyout';
 import Actions from 'components/blocks/Actions';
 import Callout from 'components/typography/Callout';
-import TopBar, { LogoProps } from './TopBar';
+import TopBar from './TopBar';
 
 interface HeaderImageProps {
     small: string;
@@ -167,6 +167,19 @@ const StyledActions = styled(Actions)`
     }
 `;
 
+export interface LogoProps {
+    icon?: (props: {
+        isInverted?: boolean;
+        size?: 'full' | 'small';
+        name?: string;
+    }) => React.ReactNode;
+    link?: string;
+    /**
+     * Full logo height in pixel
+     */
+    logoHeightFull?: number;
+}
+
 export interface HeaderNavProps {
     isLargeMenu?: boolean;
     isMenuInverted?: boolean;
@@ -182,10 +195,12 @@ export interface HeaderNavProps {
     primaryCta?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
+        name?: string;
     }) => React.ReactNode;
     secondaryCta?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
+        name?: string;
     }) => React.ReactNode;
     search?: (isInverted?: boolean) => React.ReactNode;
     openMenuIcon?: (isInverted?: boolean) => React.ReactNode;

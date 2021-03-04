@@ -1,8 +1,9 @@
 import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import { mq, spacings } from 'utils/styles';
-import Flyout, { LogoProps, NavGroup } from './Flyout';
+import Flyout, { NavGroup } from './Flyout';
 import SocialList from 'components/blocks/SocialList';
+import { LogoProps } from '../Header';
 
 const View = styled.div`
     position: fixed;
@@ -55,10 +56,12 @@ interface MenuProps {
     primaryAction?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
+        name?: string;
     }) => React.ReactNode;
     secondaryAction?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
+        name?: string;
     }) => React.ReactNode;
     search?: (isInverted?: boolean) => React.ReactNode;
     activeNavItem?: string;

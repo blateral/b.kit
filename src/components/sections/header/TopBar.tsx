@@ -7,6 +7,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color, mq, withRange } from 'utils/styles';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { ScrollDirection, useScroll } from 'utils/useScroll';
+import { LogoProps } from './Header';
 
 const View = styled.div<{
     isVisible?: boolean;
@@ -170,18 +171,6 @@ const LogoLink = styled(Link)<{ logoHeight?: number }>`
     }
 `;
 
-export interface LogoProps {
-    icon?: (props: {
-        isInverted?: boolean;
-        size?: 'full' | 'small';
-    }) => React.ReactNode;
-    link?: string;
-    /**
-     * Full logo height in pixel
-     */
-    logoHeightFull?: number;
-}
-
 type TopBarMq = 'semilarge' | 'large';
 
 const TopBar: FC<{
@@ -196,10 +185,12 @@ const TopBar: FC<{
     primaryAction?: (props: {
         isInverted?: boolean;
         size?: 'mobile' | 'desktop';
+        name?: string;
     }) => React.ReactNode;
     secondaryAction?: (props: {
         isInverted?: boolean;
         size?: 'mobile' | 'desktop';
+        name?: string;
     }) => React.ReactNode;
     className?: string;
 }> = ({
@@ -302,6 +293,7 @@ const TopBar: FC<{
                             {logo.icon &&
                                 logo.icon({
                                     isInverted: isBarInverted,
+                                    name: 'topbar_logo',
                                     size:
                                         currentMq !== 'large' || !isLarge
                                             ? 'small'
@@ -314,11 +306,13 @@ const TopBar: FC<{
                     {secondaryAction &&
                         secondaryAction({
                             isInverted: isBarInverted,
+                            name: 'topbar_secondaryCta',
                             size: currentMq === 'large' ? 'desktop' : 'mobile',
                         })}
                     {primaryAction &&
                         primaryAction({
                             isInverted: isBarInverted,
+                            name: 'topbar_primaryCta',
                             size: currentMq === 'large' ? 'desktop' : 'mobile',
                         })}
                 </RightCol>

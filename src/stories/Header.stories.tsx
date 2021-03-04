@@ -12,6 +12,8 @@ import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
 import ButtonGhost from 'components/buttons/ButtonGhost';
+import SearchInput from 'components/fields/SearchInput';
+import Magnifier from 'components/base/icons/Magnifier';
 
 const logoFn = ({
     isInverted,
@@ -301,7 +303,7 @@ export const WithActions: Story = () => (
     />
 );
 
-export const WithMenu: Story = () => (
+export const WithTopBarAndMenu: Story = () => (
     <Header
         navigation={{
             ...exampleNavItems,
@@ -310,6 +312,14 @@ export const WithMenu: Story = () => (
                 { href: '#', icon: <LinkedIn /> },
                 { href: '#', icon: <Twitter /> },
             ],
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -339,7 +349,7 @@ export const WithMenu: Story = () => (
     />
 );
 
-export const WithMenuLogo: Story = () => (
+export const WithTopBarLogo: Story = () => (
     <Header
         navigation={{
             logo: { icon: logoFn, link: '#logoLink' },
@@ -349,6 +359,14 @@ export const WithMenuLogo: Story = () => (
                 { href: '#', icon: <LinkedIn /> },
                 { href: '#', icon: <Twitter /> },
             ],
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -378,7 +396,7 @@ export const WithMenuLogo: Story = () => (
     />
 );
 
-export const WithMenuActions: Story = () => (
+export const WithTopBarActions: Story = () => (
     <Header
         navigation={{
             logo: { icon: logoFn, link: '#logoLink' },
@@ -390,6 +408,14 @@ export const WithMenuActions: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -432,6 +458,14 @@ export const HideTopbarBackgroundUnderMenu: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -474,6 +508,14 @@ export const WithInvertedTopBar: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -517,6 +559,14 @@ export const WithInvertedNav: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -561,6 +611,14 @@ export const WithFullSizeMenu: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -604,6 +662,14 @@ export const WithBadge: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -655,6 +721,14 @@ export const WithBadgeOnMobile: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -708,6 +782,14 @@ export const SmallerHeaderSize: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -751,6 +833,14 @@ export const WithKenBurnsEffect: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -807,6 +897,14 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[

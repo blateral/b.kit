@@ -12,6 +12,7 @@ import {
 } from 'utils/styles';
 import Cross from 'components/base/icons/Cross';
 import { useMediaQuery } from 'utils/useMediaQuery';
+import { LogoProps } from '../Header';
 
 const View = styled.div<{ isOpen?: boolean }>`
     position: absolute;
@@ -160,7 +161,7 @@ const SearchContainer = styled.div<{ isLarge?: boolean }>`
     justify-content: center;
     width: 100%;
     padding-right: ${spacings.spacer}px;
-    ${withRange([spacings.spacer * 1.5, spacings.spacer * 2], 'padding-left')}
+    ${withRange([spacings.nudge * 2, spacings.spacer * 2], 'padding-left')}
 
     @media ${mq.semilarge} {
         
@@ -196,18 +197,6 @@ const ScrollArea = styled.div`
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
 `;
 
-export interface LogoProps {
-    icon?: (props: {
-        isInverted?: boolean;
-        size?: 'full' | 'small';
-    }) => React.ReactNode;
-    link?: string;
-    /**
-     * Full logo height in pixel
-     */
-    logoHeightFull?: number;
-}
-
 type FlyoutMq = 'semilarge' | 'large';
 
 const Flyout: FC<{
@@ -219,10 +208,12 @@ const Flyout: FC<{
     primaryAction?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
+        name?: string;
     }) => React.ReactNode;
     secondaryAction?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
+        name?: string;
     }) => React.ReactNode;
     search?: (isInverted?: boolean) => React.ReactNode;
     onCloseClick?: () => void;
@@ -299,6 +290,7 @@ const Flyout: FC<{
                                                     {logo.icon &&
                                                         logo.icon({
                                                             isInverted: isInverted,
+                                                            name: 'menu_logo',
                                                             size:
                                                                 currentMq !==
                                                                 'large'
@@ -312,6 +304,7 @@ const Flyout: FC<{
                                             {secondaryAction &&
                                                 secondaryAction({
                                                     isInverted,
+                                                    name: 'menu_secondaryCta',
                                                     size:
                                                         currentMq === 'large'
                                                             ? 'desktop'
@@ -320,6 +313,7 @@ const Flyout: FC<{
                                             {primaryAction &&
                                                 primaryAction({
                                                     isInverted,
+                                                    name: 'menu_primaryCta',
                                                     size:
                                                         currentMq === 'large'
                                                             ? 'desktop'
