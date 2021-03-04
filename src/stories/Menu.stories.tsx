@@ -9,6 +9,11 @@ import Magnifier from 'components/base/icons/Magnifier';
 import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
+import Button from 'components/buttons/Button';
+import ArrowRight from 'components/base/icons/ArrowRight';
+import Star from 'components/base/icons/Star';
+import ButtonGhost from 'components/buttons/ButtonGhost';
+import StarGhost from 'components/base/icons/StarGhost';
 
 const exampleNavItems = {
     activeNavItem: 'navGroup2.activeb',
@@ -144,6 +149,79 @@ const exampleNavItems = {
     ],
 };
 
+const logoFn = ({
+    isInverted,
+    size,
+}: {
+    isInverted: boolean;
+    size?: 'full' | 'small';
+}) => {
+    if (isInverted)
+        return (
+            <img
+                src={`https://via.placeholder.com/${
+                    size === 'full' ? '425' : '107'
+                }x115/000000/FFFFFF/?text=${size}`}
+            />
+        );
+    else
+        return (
+            <img
+                src={`https://via.placeholder.com/${
+                    size === 'full' ? '425' : '107'
+                }x115/FFFFFF/000000/?text=${size}`}
+            />
+        );
+};
+
+const primaryCtaFn = ({
+    isInverted,
+    size,
+}: {
+    isInverted?: boolean;
+    size?: 'desktop' | 'mobile';
+}) => (
+    <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
+        {size === 'desktop' && (
+            <>
+                <Button.Label>zum Haus St. Ulrich</Button.Label>
+                <Button.Icon>
+                    <ArrowRight />
+                </Button.Icon>
+            </>
+        )}
+        {size === 'mobile' && (
+            <Button.Icon>
+                <Star />
+            </Button.Icon>
+        )}
+    </Button.View>
+);
+
+const secondaryCtaFn = ({
+    isInverted,
+    size,
+}: {
+    isInverted?: boolean;
+    size?: 'desktop' | 'mobile';
+}) => (
+    <ButtonGhost.View
+        as="a"
+        href="#"
+        isInverted={isInverted}
+        onClick={console.log}
+    >
+        {size === 'desktop' && (
+            <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+        )}
+        {size === 'mobile' && (
+            <ButtonGhost.Icon>
+                <StarGhost />
+            </ButtonGhost.Icon>
+        )}
+    </ButtonGhost.View>
+);
+
 export default {
     title: 'Sections/Header/Menu',
     component: Menu,
@@ -222,6 +300,10 @@ export const WithFullWidthFlyout: Story = () => (
     <Menu
         isOpen
         size="full"
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
         search={(isInverted) => (
             <SearchInput
                 isInverted={isInverted}
@@ -230,6 +312,8 @@ export const WithFullWidthFlyout: Story = () => (
                 onSubmit={() => console.log('submit')}
             />
         )}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
         {...exampleNavItems}
         socials={[
             { href: '#', icon: <Facebook /> },
@@ -265,6 +349,10 @@ export const InvertedFull: Story = () => (
         isOpen
         size="full"
         isInverted
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
         search={(isInverted) => (
             <SearchInput
                 isInverted={isInverted}
@@ -273,6 +361,8 @@ export const InvertedFull: Story = () => (
                 onSubmit={() => console.log('submit')}
             />
         )}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
         {...exampleNavItems}
         socials={[
             { href: '#', icon: <Facebook /> },

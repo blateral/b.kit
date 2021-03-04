@@ -11,6 +11,7 @@ import {
     withRange,
 } from 'utils/styles';
 import Cross from 'components/base/icons/Cross';
+import { useMediaQuery } from 'utils/useMediaQuery';
 
 const View = styled.div<{ isOpen?: boolean }>`
     position: absolute;
@@ -34,7 +35,6 @@ const StyledWrapper = styled(Wrapper)`
 const Stage = styled.div<{
     isOpen?: boolean;
     isLarge?: boolean;
-    topSpace?: number;
     isInverted?: boolean;
 }>`
     height: 100%;
@@ -42,29 +42,11 @@ const Stage = styled.div<{
 
     background-color: ${({ theme, isInverted }) =>
         isInverted ? color(theme).dark : color(theme).light};
-
-    padding: ${spacings.spacer}px;
-    padding-top: ${({ topSpace }) =>
-        topSpace ? topSpace * 0.85 : spacings.spacer}px;
-
     pointer-events: all;
-
-    @media ${mq.medium} {
-        padding-left: ${spacings.spacer}px;
-        margin-top: ${({ isLarge }) => isLarge && 0};
-    }
 
     @media ${mq.semilarge} {
         width: ${({ isLarge }) => !isLarge && '40vw'};
         max-width: ${({ isLarge }) => (isLarge ? undefined : '500px')};
-
-        padding-top: ${({ topSpace }) =>
-            topSpace ? topSpace : spacings.spacer}px;
-        padding-left: ${(1 / 28) * 100}%;
-    }
-
-    @media ${mq.xlarge} {
-        padding-left: ${(1 / 28) * spacings.wrapper}px;
     }
 
     &:after {
@@ -82,6 +64,18 @@ const Stage = styled.div<{
     }
 `;
 
+const Header = styled.div`
+    display: flex;
+    max-width: ${spacings.wrapper}px;
+
+    padding-top: ${spacings.spacer}px;
+    padding-bottom: ${spacings.nudge}px;
+
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 7}px 0 ${spacings.nudge * 3}px 0;
+    }
+`;
+
 const Content = styled.div`
     display: flex;
     flex-direction: column;
@@ -89,19 +83,68 @@ const Content = styled.div`
     width: 100%;
     max-width: ${spacings.wrapper}px;
     margin: 0 auto;
+    padding: 0 ${spacings.spacer}px;
+
+    @media ${mq.medium} {
+        padding-bottom: ${spacings.nudge * 3}px;
+    }
+
+    @media ${mq.semilarge} {
+        padding-left: ${(1 / 28) * 100}%;
+        padding-left: max(${spacings.spacer}px, ${(1 / 28) * 100}vw);
+    }
+
+    @media ${mq.xlarge} {
+        padding-left: ${(1 / 28) * spacings.wrapper}px;
+        padding-right: ${spacings.spacer}px;
+    }
 `;
 
-const Header = styled.div`
+const HeaderCol = styled.div`
     display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    position: relative;
+    color: ${({ theme }) => color(theme).light};
+
+    transition: padding-top 0.2s ease-in-out;
 `;
 
-const HeaderCol = styled.div``;
+const LeftCol = styled(HeaderCol)`
+    flex: 1;
+    justify-content: flex-start;
+    align-self: flex-start;
+    text-align: left;
 
-const HeaderLeft = styled(HeaderCol)``;
+    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
+`;
 
-const HeaderCenter = styled(HeaderCol)``;
+const CenterCol = styled(HeaderCol)`
+    padding: 0 ${spacings.nudge * 2}px;
+    text-align: center;
+`;
 
-const HeaderRight = styled(HeaderCol)``;
+const RightCol = styled(HeaderCol)`
+    flex: 1;
+    justify-content: flex-end;
+    text-align: right;
+
+    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
+
+    & > * {
+        min-width: auto;
+    }
+
+    & > * + * {
+        margin-left: ${spacings.nudge * 3}px;
+    }
+
+    @media ${mq.semilarge} {
+        & > * + * {
+            margin-left: ${spacings.spacer}px;
+        }
+    }
+`;
 
 const ToggleContainer = styled.div<{ iconColor?: string }>`
     cursor: pointer;
@@ -115,31 +158,79 @@ const StyledMenuClose = styled(Cross)`
     margin-top: ${spacings.nudge}px;
 `;
 
-const FlyoutSearchContainer = styled.div`
-    padding: ${spacings.nudge * 3}px 0;
+const SearchContainer = styled.div<{ isLarge?: boolean }>`
+    width: 100%;
+    ${withRange([spacings.spacer * 1.5, spacings.spacer * 2], 'padding-left')}
+
+    @media ${mq.semilarge} {
+        max-width: ${({ isLarge }) => isLarge && '355px'};
+        padding-right: ${spacings.spacer}px;
+    }
 `;
+
+const LogoLink = styled(Link)<{ logoHeight?: number }>`
+    display: inline-block;
+    position: relative;
+    height: ${({ logoHeight }) => logoHeight && logoHeight}px;
+    width: auto;
+
+    color: ${({ theme }) => color(theme).light};
+    transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+    will-change: height, width;
+
+    & > * {
+        max-height: 100%;
+        height: 100%;
+    }
+`;
+
+export interface LogoProps {
+    icon?: (props: {
+        isInverted?: boolean;
+        size?: 'full' | 'small';
+    }) => React.ReactNode;
+    link?: string;
+    /**
+     * Full logo height in pixel
+     */
+    logoHeightFull?: number;
+}
+
+type FlyoutMq = 'semilarge' | 'large';
 
 const Flyout: FC<{
     isOpen?: boolean;
     isLarge?: boolean;
     isInverted?: boolean;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
+    logo?: LogoProps;
+    primaryAction?: (props: {
+        isInverted?: boolean;
+        size?: 'desktop' | 'mobile';
+    }) => React.ReactNode;
+    secondaryAction?: (props: {
+        isInverted?: boolean;
+        size?: 'desktop' | 'mobile';
+    }) => React.ReactNode;
     search?: (isInverted?: boolean) => React.ReactNode;
-    contentTopSpace?: number;
     onCloseClick?: () => void;
     className?: string;
 }> = ({
     isOpen = false,
-    contentTopSpace,
     isLarge = false,
     isInverted = false,
     toggleIcon,
+    logo,
+    primaryAction,
+    secondaryAction,
     search,
     onCloseClick,
     className,
     children,
 }) => {
     const theme = useContext(ThemeContext);
+    const mqs: FlyoutMq[] = ['semilarge', 'large'];
+    const currentMq = useMediaQuery(mqs) as FlyoutMq | undefined;
 
     return (
         <View isOpen={isOpen} className={className}>
@@ -148,11 +239,10 @@ const Flyout: FC<{
                     isOpen={isOpen}
                     isLarge={isLarge}
                     isInverted={isInverted}
-                    topSpace={contentTopSpace}
                 >
                     <Content>
                         <Header>
-                            <HeaderLeft>
+                            <LeftCol>
                                 <ToggleContainer
                                     onClick={onCloseClick}
                                     iconColor={
@@ -174,13 +264,58 @@ const Flyout: FC<{
                                     )}
                                 </ToggleContainer>
                                 {search && (
-                                    <FlyoutSearchContainer>
+                                    <SearchContainer isLarge={isLarge}>
                                         {search(isInverted)}
-                                    </FlyoutSearchContainer>
+                                    </SearchContainer>
                                 )}
-                            </HeaderLeft>
-                            <HeaderCenter>center</HeaderCenter>
-                            <HeaderRight>right</HeaderRight>
+                            </LeftCol>
+                            {isLarge &&
+                                (currentMq === 'semilarge' ||
+                                    currentMq === 'large') && (
+                                    <>
+                                        <CenterCol>
+                                            {logo && (
+                                                <LogoLink
+                                                    href={logo.link}
+                                                    logoHeight={
+                                                        isLarge
+                                                            ? logo.logoHeightFull ||
+                                                              100
+                                                            : 70
+                                                    }
+                                                >
+                                                    {logo.icon &&
+                                                        logo.icon({
+                                                            isInverted: isInverted,
+                                                            size:
+                                                                currentMq !==
+                                                                'large'
+                                                                    ? 'small'
+                                                                    : 'full',
+                                                        })}
+                                                </LogoLink>
+                                            )}
+                                        </CenterCol>
+                                        <RightCol>
+                                            {secondaryAction &&
+                                                secondaryAction({
+                                                    isInverted,
+                                                    size:
+                                                        currentMq === 'large'
+                                                            ? 'desktop'
+                                                            : 'mobile',
+                                                })}
+                                            {primaryAction &&
+                                                primaryAction({
+                                                    isInverted,
+                                                    size:
+                                                        currentMq === 'large'
+                                                            ? 'desktop'
+                                                            : 'mobile',
+                                                })}
+                                        </RightCol>
+                                    </>
+                                )}
                         </Header>
                         {children}
                     </Content>
@@ -202,7 +337,7 @@ export interface NavGroup {
     }[];
 }
 
-const NavListView = styled.ul`
+const NavListView = styled.ul<{ isLarge?: boolean }>`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -217,10 +352,10 @@ const NavListView = styled.ul`
     }
 
     @media ${mq.medium} {
-        flex-direction: row;
+        flex-direction: ${({ isLarge }) => (isLarge ? 'row' : 'column')};
 
         & > * {
-            flex: 1 0 260px;
+            flex: ${({ isLarge }) => (isLarge ? '1 0 260px' : '1')};
         }
     }
 `;
@@ -366,7 +501,7 @@ const NavList: FC<{
 
     return (
         <Nav isInverted={isInverted}>
-            <NavListView className={className}>
+            <NavListView isLarge={isLarge} className={className}>
                 {navGroups &&
                     navGroups.map((group, i) => (
                         <Group key={i}>

@@ -12,7 +12,6 @@ import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import { TopBarMq } from 'components/sections/header/TopBar';
 
 const logoFn = ({
     isInverted,
@@ -24,26 +23,30 @@ const logoFn = ({
     if (isInverted)
         return (
             <img
-                src={`https://via.placeholder.com/107x115/000000/FFFFFF/?text=${size}`}
+                src={`https://via.placeholder.com/${
+                    size === 'full' ? '425' : '107'
+                }x115/000000/FFFFFF/?text=${size}`}
             />
         );
     else
         return (
             <img
-                src={`https://via.placeholder.com/107x115/FFFFFF/000000/?text=${size}`}
+                src={`https://via.placeholder.com/${
+                    size === 'full' ? '425' : '107'
+                }x115/FFFFFF/000000/?text=${size}`}
             />
         );
 };
 
 const primaryCtaFn = ({
     isInverted,
-    currentMq,
+    size,
 }: {
     isInverted?: boolean;
-    currentMq: TopBarMq;
+    size?: 'desktop' | 'mobile';
 }) => (
     <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
-        {currentMq === 'semilarge' && (
+        {size === 'desktop' && (
             <>
                 <Button.Label>zum Haus St. Ulrich</Button.Label>
                 <Button.Icon>
@@ -51,7 +54,7 @@ const primaryCtaFn = ({
                 </Button.Icon>
             </>
         )}
-        {currentMq === 'small' && (
+        {size === 'mobile' && (
             <Button.Icon>
                 <Star />
             </Button.Icon>
@@ -61,10 +64,10 @@ const primaryCtaFn = ({
 
 const secondaryCtaFn = ({
     isInverted,
-    currentMq,
+    size,
 }: {
     isInverted?: boolean;
-    currentMq: TopBarMq;
+    size?: 'desktop' | 'mobile';
 }) => (
     <ButtonGhost.View
         as="a"
@@ -72,10 +75,10 @@ const secondaryCtaFn = ({
         isInverted={isInverted}
         onClick={console.log}
     >
-        {currentMq === 'semilarge' && (
+        {size === 'desktop' && (
             <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
         )}
-        {currentMq === 'small' && (
+        {size === 'mobile' && (
             <ButtonGhost.Icon>
                 <StarGhost />
             </ButtonGhost.Icon>

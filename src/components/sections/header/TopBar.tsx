@@ -90,7 +90,6 @@ const Content = styled(Wrapper)`
 
 const Column = styled.div<{
     isTop?: boolean;
-    logoHeight?: number;
 }>`
     display: flex;
     flex-direction: row;
@@ -183,7 +182,7 @@ export interface LogoProps {
     logoHeightFull?: number;
 }
 
-export type TopBarMq = 'small' | 'semilarge';
+type TopBarMq = 'semilarge' | 'large';
 
 const TopBar: FC<{
     isVisible?: boolean;
@@ -196,11 +195,11 @@ const TopBar: FC<{
     logo?: LogoProps;
     primaryAction?: (props: {
         isInverted?: boolean;
-        currentMq?: TopBarMq;
+        size?: 'mobile' | 'desktop';
     }) => React.ReactNode;
     secondaryAction?: (props: {
         isInverted?: boolean;
-        currentMq?: TopBarMq;
+        size?: 'mobile' | 'desktop';
     }) => React.ReactNode;
     className?: string;
 }> = ({
@@ -222,7 +221,7 @@ const TopBar: FC<{
     const [isLarge, setIsLarge] = useState(true);
     const [isAnimated, setIsAnimated] = useState(false);
 
-    const mqs: TopBarMq[] = ['small', 'semilarge'];
+    const mqs: TopBarMq[] = ['semilarge', 'large'];
     const currentMq = useMediaQuery(mqs) as TopBarMq | undefined;
 
     const { isTop, isInOffset, scrollDirection, setTopOffset } = useScroll({});
@@ -303,7 +302,10 @@ const TopBar: FC<{
                             {logo.icon &&
                                 logo.icon({
                                     isInverted: isBarInverted,
-                                    size: isLarge ? 'full' : 'small',
+                                    size:
+                                        currentMq !== 'large' || !isLarge
+                                            ? 'small'
+                                            : 'full',
                                 })}
                         </LogoLink>
                     )}
@@ -312,10 +314,13 @@ const TopBar: FC<{
                     {secondaryAction &&
                         secondaryAction({
                             isInverted: isBarInverted,
-                            currentMq,
+                            size: currentMq === 'large' ? 'desktop' : 'mobile',
                         })}
                     {primaryAction &&
-                        primaryAction({ isInverted: isBarInverted, currentMq })}
+                        primaryAction({
+                            isInverted: isBarInverted,
+                            size: currentMq === 'large' ? 'desktop' : 'mobile',
+                        })}
                 </RightCol>
             </Content>
         </View>

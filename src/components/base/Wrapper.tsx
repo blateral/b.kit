@@ -28,6 +28,16 @@ const View = styled.div<{
     @media ${mq.semilarge} {
         padding-left: ${({ addWhitespace }) =>
             addWhitespace ? (1 / 28) * 100 : 0}%;
+        padding-left: ${({ addWhitespace }) =>
+            addWhitespace
+                ? `
+                      max(
+                          ${spacings.spacer}px,
+                          ${(1 / 28) * 100}%
+                      );
+                  `
+                : 0};
+
         padding-right: ${({ addWhitespace }) =>
             addWhitespace ? spacings.spacer : 0}px;
     }

@@ -1,8 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
-
 import { mq, spacings } from 'utils/styles';
-import Flyout, { NavGroup } from './Flyout';
+import Flyout, { LogoProps, NavGroup } from './Flyout';
 import SocialList from 'components/blocks/SocialList';
 
 const View = styled.div`
@@ -52,6 +51,15 @@ interface MenuProps {
     isInverted?: boolean;
     backdropOpacity?: number;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
+    logo?: LogoProps;
+    primaryAction?: (props: {
+        isInverted?: boolean;
+        size?: 'desktop' | 'mobile';
+    }) => React.ReactNode;
+    secondaryAction?: (props: {
+        isInverted?: boolean;
+        size?: 'desktop' | 'mobile';
+    }) => React.ReactNode;
     search?: (isInverted?: boolean) => React.ReactNode;
     activeNavItem?: string;
     navItems?: NavGroup[];
@@ -65,6 +73,9 @@ const Menu: FC<MenuProps> = ({
     isInverted = false,
     backdropOpacity = 0.4,
     toggleIcon,
+    logo,
+    primaryAction,
+    secondaryAction,
     search,
     activeNavItem,
     navItems,
@@ -85,10 +96,12 @@ const Menu: FC<MenuProps> = ({
             <Flyout.View
                 isOpen={isOpen}
                 isLarge={size === 'full'}
-                contentTopSpace={100}
                 isInverted={isInverted}
                 onCloseClick={onCloseClick}
                 toggleIcon={toggleIcon}
+                logo={logo}
+                primaryAction={primaryAction}
+                secondaryAction={secondaryAction}
                 search={search}
             >
                 {navItems && (

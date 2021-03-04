@@ -11,7 +11,7 @@ import Menu from 'components/sections/header/menu/Menu';
 import { NavGroup } from './menu/Flyout';
 import Actions from 'components/blocks/Actions';
 import Callout from 'components/typography/Callout';
-import TopBar, { LogoProps, TopBarMq } from './TopBar';
+import TopBar, { LogoProps } from './TopBar';
 
 interface HeaderImageProps {
     small: string;
@@ -181,11 +181,11 @@ export interface HeaderNavProps {
     hideTopbarBackUnderMenu?: boolean;
     primaryCta?: (props: {
         isInverted?: boolean;
-        currentMq: TopBarMq;
+        size?: 'desktop' | 'mobile';
     }) => React.ReactNode;
     secondaryCta?: (props: {
         isInverted?: boolean;
-        currentMq: TopBarMq;
+        size?: 'desktop' | 'mobile';
     }) => React.ReactNode;
     search?: (isInverted?: boolean) => React.ReactNode;
     openMenuIcon?: (isInverted?: boolean) => React.ReactNode;
@@ -221,6 +221,12 @@ const Header: FC<{
             ? 'linear-gradient(3deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0) 60%), linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)'
             : 'linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)';
 
+    const sharedProps = {
+        logo: navigation?.logo,
+        primaryAction: navigation?.primaryCta,
+        secondaryAction: navigation?.secondaryCta,
+    };
+
     return (
         <View>
             {navigation && (
@@ -229,13 +235,11 @@ const Header: FC<{
                         navigation?.hideTopbarBackUnderMenu ? !isMenuOpen : true
                     }
                     isInverted={navigation?.isTopbarInverted}
-                    logo={navigation?.logo}
                     hideOnScrollDown={navigation?.hideTopbarOnScrollDown}
                     withTopOffset={navigation?.withTopbarOffset}
-                    primaryAction={navigation?.primaryCta}
-                    secondaryAction={navigation?.secondaryCta}
                     toggleIcon={navigation?.openMenuIcon}
                     onToggleClick={() => setIsMenuOpen(true)}
+                    {...sharedProps}
                 />
             )}
             {navigation && (
@@ -249,6 +253,7 @@ const Header: FC<{
                     socials={navigation?.socials}
                     search={navigation?.search}
                     onCloseClick={() => setIsMenuOpen(false)}
+                    {...sharedProps}
                 />
             )}
             <HeaderWrapper clampWidth="large">
