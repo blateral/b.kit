@@ -69,34 +69,31 @@ const Header = styled.div`
     max-width: ${spacings.wrapper}px;
 
     padding-top: ${spacings.spacer}px;
-    padding-bottom: ${spacings.nudge}px;
+    padding-bottom: ${spacings.nudge * 2}px;
 
     @media ${mq.medium} {
         padding: ${spacings.nudge * 7}px 0 ${spacings.nudge * 3}px 0;
     }
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ isLarge?: boolean }>`
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
     max-width: ${spacings.wrapper}px;
     margin: 0 auto;
-    padding: 0 ${spacings.spacer}px;
-
-    @media ${mq.medium} {
-        padding-bottom: ${spacings.nudge * 3}px;
-    }
+    padding-left: ${spacings.spacer}px;
+    padding-bottom: ${spacings.nudge * 3}px;
 
     @media ${mq.semilarge} {
         padding-left: ${(1 / 28) * 100}%;
         padding-left: max(${spacings.spacer}px, ${(1 / 28) * 100}vw);
+        padding-right: ${({ isLarge }) => isLarge && spacings.spacer + 'px'};
     }
 
     @media ${mq.xlarge} {
         padding-left: ${(1 / 28) * spacings.wrapper}px;
-        padding-right: ${spacings.spacer}px;
     }
 `;
 
@@ -159,12 +156,17 @@ const StyledMenuClose = styled(Cross)`
 `;
 
 const SearchContainer = styled.div<{ isLarge?: boolean }>`
+    display: flex;
+    justify-content: center;
     width: 100%;
+    padding-right: ${spacings.spacer}px;
     ${withRange([spacings.spacer * 1.5, spacings.spacer * 2], 'padding-left')}
 
     @media ${mq.semilarge} {
-        max-width: ${({ isLarge }) => isLarge && '355px'};
-        padding-right: ${spacings.spacer}px;
+        
+        & > * {
+            max-width: ${({ isLarge }) => isLarge && '355px'};
+        }
     }
 `;
 
@@ -182,6 +184,16 @@ const LogoLink = styled(Link)<{ logoHeight?: number }>`
         max-height: 100%;
         height: 100%;
     }
+`;
+
+const ScrollArea = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    overflow-y: auto;
+
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
 `;
 
 export interface LogoProps {
@@ -240,7 +252,7 @@ const Flyout: FC<{
                     isLarge={isLarge}
                     isInverted={isInverted}
                 >
-                    <Content>
+                    <Content isLarge={isLarge}>
                         <Header>
                             <LeftCol>
                                 <ToggleContainer
@@ -317,7 +329,7 @@ const Flyout: FC<{
                                     </>
                                 )}
                         </Header>
-                        {children}
+                        <ScrollArea>{children}</ScrollArea>
                     </Content>
                 </Stage>
             </StyledWrapper>
@@ -345,7 +357,6 @@ const NavListView = styled.ul<{ isLarge?: boolean }>`
     list-style: none;
     padding: 0;
     margin: 0;
-    ${withRange([spacings.nudge * 3, spacings.spacer], 'padding-top')};
 
     & > * {
         ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-top')};
@@ -362,8 +373,6 @@ const NavListView = styled.ul<{ isLarge?: boolean }>`
 
 const Nav = styled.div<{ isInverted?: boolean }>`
     width: calc(100% + ${spacings.spacer}px);
-    height: 100%;
-    overflow-y: auto;
     margin-left: -${spacings.spacer}px;
     padding-left: ${spacings.spacer}px;
 
