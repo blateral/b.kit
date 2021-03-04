@@ -9,6 +9,7 @@ const View = styled.div`
     flex-direction: row;
     align-items: center;
     padding: ${spacings.nudge * 2}px 0;
+    overflow: hidden;
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
