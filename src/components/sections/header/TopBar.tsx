@@ -94,6 +94,7 @@ const Column = styled.div<{
 }>`
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     position: relative;
     color: ${({ theme }) => color(theme).light};
@@ -113,6 +114,7 @@ const LeftCol = styled(Column)`
 `;
 
 const CenterCol = styled(Column)`
+    display: flex;
     align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
     padding: 0 ${spacings.nudge * 2}px;
     text-align: center;
@@ -156,7 +158,8 @@ const StyledMenuBurger = styled(MenuBurger)`
 `;
 
 const LogoLink = styled(Link)<{ logoHeight?: number }>`
-    display: inline-block;
+    display: flex;
+    justify-content: center;
     position: relative;
     height: ${({ logoHeight }) => logoHeight && logoHeight}px;
     width: auto;

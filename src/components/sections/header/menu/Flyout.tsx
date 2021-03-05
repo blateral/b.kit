@@ -161,7 +161,7 @@ const SearchContainer = styled.div<{ isLarge?: boolean }>`
     justify-content: center;
     width: 100%;
     padding-right: ${spacings.spacer}px;
-    ${withRange([spacings.nudge * 2, spacings.spacer * 2], 'padding-left')}
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-left')}
 
     @media ${mq.semilarge} {
         
@@ -172,7 +172,8 @@ const SearchContainer = styled.div<{ isLarge?: boolean }>`
 `;
 
 const LogoLink = styled(Link)<{ logoHeight?: number }>`
-    display: inline-block;
+    display: flex;
+    justify-content: center;
     position: relative;
     height: ${({ logoHeight }) => logoHeight && logoHeight}px;
     width: auto;
