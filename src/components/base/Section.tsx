@@ -120,22 +120,13 @@ const Section: React.FC<{
     bgColor?: string;
     bgMode?: BgMode;
     addSeperation?: boolean;
-    className?: any;
-}> = ({
-    as,
-    bgColor,
-    bgMode = 'full',
-    addSeperation = false,
-    className,
-    children,
-}) => {
+}> = ({ as, bgColor, bgMode = 'full', addSeperation = false, children }) => {
     return (
         <View
             as={as}
             data-ident={bgColor && bgMode === 'full' ? bgColor : 'plain'}
             indent={bgColor && bgMode === 'full' ? bgColor : 'plain'}
             addSeperation={addSeperation}
-            className={className}
         >
             {bgColor && bgMode && <Back bgColor={bgColor} bgMode={bgMode} />}
             {children}
