@@ -196,6 +196,11 @@ const ScrollArea = styled.div`
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
     margin-left: -${spacings.spacer}px;
     padding-left: ${spacings.spacer}px;
+
+    & > * {
+        flex: 1 1 auto;
+        flex-shrink: 0;
+    }
 `;
 
 type FlyoutMq = 'semilarge' | 'large';
@@ -358,7 +363,8 @@ const NavListView = styled.ul<{ isLarge?: boolean }>`
     }
 `;
 
-const Nav = styled.div<{ isInverted?: boolean }>`
+const Nav = styled.nav<{ isInverted?: boolean }>`
+    display: block;
     width: calc(100% + ${spacings.spacer}px);
     margin-left: -${spacings.spacer}px;
     padding-left: ${spacings.spacer}px;
@@ -368,6 +374,7 @@ const Nav = styled.div<{ isInverted?: boolean }>`
 `;
 
 const Group = styled.li`
+    flex: 1 1 auto;
     font-family: ${({ theme }) => font(theme).copy.medium.family};
     ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
     font-weight: 300;
