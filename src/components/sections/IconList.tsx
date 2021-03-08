@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section, { BgMode } from 'components/base/Section';
+import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
@@ -43,9 +43,22 @@ const ItemContainer = styled.div`
     text-align: center;
 `;
 
-const ShowMore = styled.span`
+const ShowMore = styled.span<{ itemCount?: number }>`
     text-decoration: underline;
     cursor: pointer;
+
+    display: ${({ itemCount }) =>
+        itemCount && itemCount > 6 ? 'block' : 'none'};
+
+    @media ${mq.semilarge} {
+        display: ${({ itemCount }) =>
+            itemCount && itemCount > 8 ? 'block' : 'none'};
+    }
+
+    @media ${mq.large} {
+        display: ${({ itemCount }) =>
+            itemCount && itemCount > 10 ? 'block' : 'none'};
+    }
 `;
 
 const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
@@ -103,7 +116,7 @@ const IconList: React.FC<{
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     text?: string;
-    bgMode?: 'full' | 'splitted';
+    hasBack?: boolean;
     items: { src: string; alt?: string }[];
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -115,24 +128,13 @@ const IconList: React.FC<{
     superTitle,
     superTitleAs,
     text,
-    bgMode,
+    hasBack,
     items,
     isInverted = false,
     isCentered = false,
     primaryAction,
     secondaryAction,
 }) => {
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'larger-right';
-            default:
-                return undefined;
-        }
-    };
-
     const [showMore, setShowMore] = React.useState(false);
     const theme = React.useContext(ThemeContext);
 
@@ -142,11 +144,10 @@ const IconList: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : bgMode
+                    : hasBack
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
             isCentered={isCentered}
         >
             <Wrapper clampWidth="normal" addWhitespace>
@@ -182,11 +183,8 @@ const IconList: React.FC<{
                             </Items>
                         </ItemContainer>
                         <ShowMore
-                            onClick={() =>
-                                !showMore
-                                    ? setShowMore(true)
-                                    : setShowMore(false)
-                            }
+                            itemCount={items.length}
+                            onClick={() => setShowMore((prev) => !prev)}
                         >
                             {showMore ? 'weniger anzeigen' : 'weitere anzeigen'}
                         </ShowMore>
