@@ -171,12 +171,10 @@ const SearchContainer = styled.div<{ isLarge?: boolean }>`
     }
 `;
 
-const LogoLink = styled(Link)<{ logoHeight?: number }>`
+const LogoLink = styled(Link)`
     display: flex;
     justify-content: center;
     position: relative;
-    height: ${({ logoHeight }) => logoHeight && logoHeight}px;
-    width: auto;
 
     color: ${({ theme }) => color(theme).light};
     transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
@@ -281,15 +279,7 @@ const Flyout: FC<{
                                     <>
                                         <CenterCol>
                                             {logo && (
-                                                <LogoLink
-                                                    href={logo.link}
-                                                    logoHeight={
-                                                        isLarge
-                                                            ? logo.logoHeightFull ||
-                                                              100
-                                                            : 70
-                                                    }
-                                                >
+                                                <LogoLink href={logo.link}>
                                                     {logo.icon &&
                                                         logo.icon({
                                                             isInverted: isInverted,

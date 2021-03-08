@@ -601,6 +601,57 @@ export const WithFullSizeMenu: Story = () => (
         navigation={{
             isLargeMenu: true,
             isTopbarInverted: true,
+            logo: { icon: logoFn, link: '#logoLink' },
+            ...exampleNavItems,
+            socials: [
+                { href: '#', icon: <Facebook /> },
+                { href: '#', icon: <LinkedIn /> },
+                { href: '#', icon: <Twitter /> },
+            ],
+            primaryCta: primaryCtaFn,
+            secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
+        }}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        images={[
+            {
+                small: 'https://unsplash.it/660/792?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                large: 'https://unsplash.it/1596/860?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+                webp: {
+                    small: 'https://unsplash.it/660/792.webp?id=1',
+                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    large: 'https://unsplash.it/1596/860.webp?id=1',
+                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
+                },
+            },
+        ]}
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryCta={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+export const WithFullSizeMenuInverted: Story = () => (
+    <Header
+        navigation={{
+            isLargeMenu: true,
+            isTopbarInverted: true,
             isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,

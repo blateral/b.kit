@@ -116,16 +116,6 @@ export const WithLogo: Story = () => (
     />
 );
 
-export const WithDifferentLogoHeight: Story = () => (
-    <TopBar
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-            logoHeightFull: 150,
-        }}
-    />
-);
-
 export const WithScrollTriggerDelay: Story = () => (
     <TopBar
         withTopOffset

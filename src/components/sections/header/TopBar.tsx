@@ -53,7 +53,7 @@ const View = styled.div<{
     transition: ${({ animated }) =>
                 animated ? 'transform 0.3s cubic-bezier(.71,0,.29,1),' : ''}
             height 0.2s ease-in-out,
-        background-color 0.2s ease-in-out, padding 0.2s ease-in-out,
+        background-color 0.3s ease-in-out, padding 0.2s ease-in-out,
         box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
     will-change: transform, background-color, padding, height, box-shadow,
         opacity;
@@ -161,7 +161,7 @@ const LogoLink = styled(Link)<{ logoHeight?: number }>`
     display: flex;
     justify-content: center;
     position: relative;
-    height: ${({ logoHeight }) => logoHeight && logoHeight}px;
+    height: ${({ logoHeight }) => logoHeight && logoHeight + 'px'};
     width: auto;
 
     color: ${({ theme }) => color(theme).light};
@@ -289,9 +289,7 @@ const TopBar: FC<{
                     {logo && (
                         <LogoLink
                             href={logo.link}
-                            logoHeight={
-                                isLarge ? logo.logoHeightFull || 100 : 70
-                            }
+                            logoHeight={!isLarge ? 70 : undefined}
                         >
                             {logo.icon &&
                                 logo.icon({

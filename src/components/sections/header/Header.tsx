@@ -174,10 +174,6 @@ export interface LogoProps {
         name?: string;
     }) => React.ReactNode;
     link?: string;
-    /**
-     * Full logo height in pixel
-     */
-    logoHeightFull?: number;
 }
 
 export interface HeaderNavProps {
