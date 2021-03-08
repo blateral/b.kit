@@ -5,11 +5,16 @@ export enum ScrollDirection {
     DOWN,
 }
 
-export const useScroll = (
-    topOffset = 0,
-    onLeftOffset?: () => void,
-    onEnterOffset?: () => void
-) => {
+export const useScroll = ({
+    initialTopOffset = 0,
+    onLeftOffset,
+    onEnterOffset,
+}: {
+    initialTopOffset?: number;
+    onLeftOffset?: () => void;
+    onEnterOffset?: () => void;
+}) => {
+    const [topOffset, setTopOffset] = useState<number>(initialTopOffset);
     const [isTop, setIsTop] = useState<boolean>(true);
     const [isInOffset, setIsInOffset] = useState<boolean>(true);
     const [scrollDirection, setScrollDirection] = useState<ScrollDirection>(
@@ -70,5 +75,7 @@ export const useScroll = (
         isTop,
         isInOffset,
         scrollDirection,
+        setTopOffset,
+        topOffset,
     };
 };

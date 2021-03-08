@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { CalloutTag } from 'components/typography/Callout';
@@ -7,14 +7,11 @@ import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
 import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
 import HeaderPoster from './HeaderPoster';
-import Menu, {
-    LogoProps,
-    MenuMq,
-    ToggleIconProps,
-} from 'components/sections/header/menu/Menu';
+import Menu from 'components/sections/header/menu/Menu';
 import { NavGroup } from './menu/Flyout';
 import Actions from 'components/blocks/Actions';
 import Callout from 'components/typography/Callout';
+import TopBar from './TopBar';
 
 interface HeaderImageProps {
     small: string;
@@ -170,23 +167,40 @@ const StyledActions = styled(Actions)`
     }
 `;
 
-export interface HeaderMenuProps {
-    isLarge?: boolean;
-    isTopInverted?: boolean;
-    isNavInverted?: boolean;
-    toggleIcons?: ToggleIconProps;
+export interface LogoProps {
+    icon?: (props: {
+        isInverted?: boolean;
+        size?: 'full' | 'small';
+        name?: string;
+    }) => React.ReactNode;
+    link?: string;
+}
+
+export interface HeaderNavProps {
+    isLargeMenu?: boolean;
+    isMenuInverted?: boolean;
+    isTopbarInverted?: boolean;
+    activeNavItem?: string;
+    navItems?: NavGroup[];
+    backdropOpacity?: number;
+    socials?: Array<{ icon: React.ReactNode; href: string }>;
     logo?: LogoProps;
+    hideTopbarOnScrollDown?: boolean;
+    withTopbarOffset?: boolean;
+    hideTopbarBackUnderMenu?: boolean;
     primaryCta?: (props: {
         isInverted?: boolean;
-        currentMq: MenuMq;
+        size?: 'desktop' | 'mobile';
+        name?: string;
     }) => React.ReactNode;
     secondaryCta?: (props: {
         isInverted?: boolean;
-        currentMq: MenuMq;
+        size?: 'desktop' | 'mobile';
+        name?: string;
     }) => React.ReactNode;
-    activeNavItem?: string;
-    navItems?: NavGroup[];
-    socials?: Array<{ icon: React.ReactNode; href: string }>;
+    search?: (isInverted?: boolean) => React.ReactNode;
+    openMenuIcon?: (isInverted?: boolean) => React.ReactNode;
+    closeMenuIcon?: (isInverted?: boolean) => React.ReactNode;
 }
 
 const Header: FC<{
@@ -195,7 +209,8 @@ const Header: FC<{
     titleAs?: CalloutTag;
     primaryCta?: (isInverted?: boolean) => React.ReactNode;
     secondaryCta?: (isInverted?: boolean) => React.ReactNode;
-    menu?: HeaderMenuProps;
+
+    navigation?: HeaderNavProps;
     images?: HeaderImageProps[];
     badge?: {
         content: React.ReactNode;
@@ -207,31 +222,49 @@ const Header: FC<{
     titleAs,
     primaryCta,
     secondaryCta,
-    menu,
+    navigation,
     images,
     badge,
 }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const gradient =
         title || primaryCta || secondaryCta
             ? 'linear-gradient(3deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0) 60%), linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)'
             : 'linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)';
 
+    const sharedProps = {
+        logo: navigation?.logo,
+        primaryAction: navigation?.primaryCta,
+        secondaryAction: navigation?.secondaryCta,
+    };
+
     return (
         <View>
-            {menu && (
+            {navigation && (
+                <TopBar
+                    isBackVisible={
+                        navigation?.hideTopbarBackUnderMenu ? !isMenuOpen : true
+                    }
+                    isInverted={navigation?.isTopbarInverted}
+                    hideOnScrollDown={navigation?.hideTopbarOnScrollDown}
+                    withTopOffset={navigation?.withTopbarOffset}
+                    toggleIcon={navigation?.openMenuIcon}
+                    onToggleClick={() => setIsMenuOpen(true)}
+                    {...sharedProps}
+                />
+            )}
+            {navigation && (
                 <Menu
-                    size={menu?.isLarge ? 'full' : 'small'}
-                    isTopInverted={menu?.isTopInverted}
-                    isNavInverted={menu?.isNavInverted}
-                    hideOnScrollDown
-                    withTopOffset
-                    toggleIcons={menu?.toggleIcons}
-                    logo={menu?.logo}
-                    primaryAction={menu?.primaryCta}
-                    secondaryAction={menu?.secondaryCta}
-                    activeNavItem={menu?.activeNavItem}
-                    navItems={menu?.navItems}
-                    socials={menu?.socials}
+                    isOpen={isMenuOpen}
+                    backdropOpacity={navigation?.backdropOpacity}
+                    size={navigation?.isLargeMenu ? 'full' : 'small'}
+                    isInverted={navigation?.isMenuInverted}
+                    activeNavItem={navigation?.activeNavItem}
+                    navItems={navigation?.navItems}
+                    socials={navigation?.socials}
+                    search={navigation?.search}
+                    onCloseClick={() => setIsMenuOpen(false)}
+                    {...sharedProps}
                 />
             )}
             <HeaderWrapper clampWidth="large">

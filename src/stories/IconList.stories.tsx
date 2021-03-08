@@ -53,6 +53,54 @@ const Items = [
         src: '//placehold.it/200x70',
         alt: '',
     },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
+    {
+        src: '//placehold.it/200x70',
+        alt: '',
+    },
 ];
 
 export default {
@@ -72,8 +120,7 @@ export const Default: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        primaryItems={Items}
-        secondaryItems={Items}
+        items={Items}
     />
 );
 
@@ -92,8 +139,27 @@ export const WithIntro: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        primaryItems={Items}
-        secondaryItems={Items}
+        items={Items}
+    />
+);
+
+export const WithBackground: Story = () => (
+    <IconList
+        hasBack
+        title="Lorem ipsum dolor sit amet."
+        superTitle="Lorem, ipsum dolor."
+        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+        items={Items}
     />
 );
 
@@ -112,8 +178,7 @@ export const Inverted: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        primaryItems={Items}
-        secondaryItems={Items}
+        items={Items}
         isInverted
     />
 );
@@ -133,9 +198,7 @@ export const Centered: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        primaryItems={Items}
-        secondaryItems={Items}
         isCentered
-        bgMode="full"
+        items={Items}
     />
 );

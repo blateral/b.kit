@@ -12,7 +12,8 @@ import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import { MenuMq } from 'components/sections/header/menu/Menu';
+import SearchInput from 'components/fields/SearchInput';
+import Magnifier from 'components/base/icons/Magnifier';
 
 const logoFn = ({
     isInverted,
@@ -24,26 +25,30 @@ const logoFn = ({
     if (isInverted)
         return (
             <img
-                src={`https://via.placeholder.com/107x115/000000/FFFFFF/?text=${size}`}
+                src={`https://via.placeholder.com/${
+                    size === 'full' ? '425' : '107'
+                }x115/000000/FFFFFF/?text=${size}`}
             />
         );
     else
         return (
             <img
-                src={`https://via.placeholder.com/107x115/FFFFFF/000000/?text=${size}`}
+                src={`https://via.placeholder.com/${
+                    size === 'full' ? '425' : '107'
+                }x115/FFFFFF/000000/?text=${size}`}
             />
         );
 };
 
 const primaryCtaFn = ({
     isInverted,
-    currentMq,
+    size,
 }: {
     isInverted?: boolean;
-    currentMq: MenuMq;
+    size?: 'desktop' | 'mobile';
 }) => (
     <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
-        {currentMq === 'semilarge' && (
+        {size === 'desktop' && (
             <>
                 <Button.Label>zum Haus St. Ulrich</Button.Label>
                 <Button.Icon>
@@ -51,7 +56,7 @@ const primaryCtaFn = ({
                 </Button.Icon>
             </>
         )}
-        {currentMq === 'small' && (
+        {size === 'mobile' && (
             <Button.Icon>
                 <Star />
             </Button.Icon>
@@ -61,10 +66,10 @@ const primaryCtaFn = ({
 
 const secondaryCtaFn = ({
     isInverted,
-    currentMq,
+    size,
 }: {
     isInverted?: boolean;
-    currentMq: MenuMq;
+    size?: 'desktop' | 'mobile';
 }) => (
     <ButtonGhost.View
         as="a"
@@ -72,10 +77,10 @@ const secondaryCtaFn = ({
         isInverted={isInverted}
         onClick={console.log}
     >
-        {currentMq === 'semilarge' && (
+        {size === 'desktop' && (
             <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
         )}
-        {currentMq === 'small' && (
+        {size === 'mobile' && (
             <ButtonGhost.Icon>
                 <StarGhost />
             </ButtonGhost.Icon>
@@ -298,15 +303,23 @@ export const WithActions: Story = () => (
     />
 );
 
-export const WithMenu: Story = () => (
+export const WithTopBarAndMenu: Story = () => (
     <Header
-        menu={{
+        navigation={{
             ...exampleNavItems,
             socials: [
                 { href: '#', icon: <Facebook /> },
                 { href: '#', icon: <LinkedIn /> },
                 { href: '#', icon: <Twitter /> },
             ],
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -336,9 +349,9 @@ export const WithMenu: Story = () => (
     />
 );
 
-export const WithMenuLogo: Story = () => (
+export const WithTopBarLogo: Story = () => (
     <Header
-        menu={{
+        navigation={{
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -346,6 +359,14 @@ export const WithMenuLogo: Story = () => (
                 { href: '#', icon: <LinkedIn /> },
                 { href: '#', icon: <Twitter /> },
             ],
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -375,9 +396,9 @@ export const WithMenuLogo: Story = () => (
     />
 );
 
-export const WithMenuActions: Story = () => (
+export const WithTopBarActions: Story = () => (
     <Header
-        menu={{
+        navigation={{
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -387,6 +408,64 @@ export const WithMenuActions: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
+        }}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        images={[
+            {
+                small: 'https://unsplash.it/660/792?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                large: 'https://unsplash.it/1596/860?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+                webp: {
+                    small: 'https://unsplash.it/660/792.webp?id=1',
+                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    large: 'https://unsplash.it/1596/860.webp?id=1',
+                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
+                },
+            },
+        ]}
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryCta={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+export const HideTopbarBackgroundUnderMenu: Story = () => (
+    <Header
+        navigation={{
+            hideTopbarBackUnderMenu: true,
+            logo: { icon: logoFn, link: '#logoLink' },
+            ...exampleNavItems,
+            socials: [
+                { href: '#', icon: <Facebook /> },
+                { href: '#', icon: <LinkedIn /> },
+                { href: '#', icon: <Twitter /> },
+            ],
+            primaryCta: primaryCtaFn,
+            secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -418,8 +497,8 @@ export const WithMenuActions: Story = () => (
 
 export const WithInvertedTopBar: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
+        navigation={{
+            isTopbarInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -429,6 +508,14 @@ export const WithInvertedTopBar: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -460,9 +547,9 @@ export const WithInvertedTopBar: Story = () => (
 
 export const WithInvertedNav: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -472,6 +559,14 @@ export const WithInvertedNav: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -503,10 +598,9 @@ export const WithInvertedNav: Story = () => (
 
 export const WithFullSizeMenu: Story = () => (
     <Header
-        menu={{
-            isLarge: true,
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isLargeMenu: true,
+            isTopbarInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -516,6 +610,66 @@ export const WithFullSizeMenu: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
+        }}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        images={[
+            {
+                small: 'https://unsplash.it/660/792?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                large: 'https://unsplash.it/1596/860?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+                webp: {
+                    small: 'https://unsplash.it/660/792.webp?id=1',
+                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    large: 'https://unsplash.it/1596/860.webp?id=1',
+                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
+                },
+            },
+        ]}
+        primaryCta={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryCta={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+export const WithFullSizeMenuInverted: Story = () => (
+    <Header
+        navigation={{
+            isLargeMenu: true,
+            isTopbarInverted: true,
+            isMenuInverted: true,
+            logo: { icon: logoFn, link: '#logoLink' },
+            ...exampleNavItems,
+            socials: [
+                { href: '#', icon: <Facebook /> },
+                { href: '#', icon: <LinkedIn /> },
+                { href: '#', icon: <Twitter /> },
+            ],
+            primaryCta: primaryCtaFn,
+            secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -547,9 +701,9 @@ export const WithFullSizeMenu: Story = () => (
 
 export const WithBadge: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -559,6 +713,14 @@ export const WithBadge: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -598,9 +760,9 @@ export const WithBadge: Story = () => (
 
 export const WithBadgeOnMobile: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -610,6 +772,14 @@ export const WithBadgeOnMobile: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -651,9 +821,9 @@ export const WithBadgeOnMobile: Story = () => (
 export const SmallerHeaderSize: Story = () => (
     <Header
         size="small"
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -663,6 +833,14 @@ export const SmallerHeaderSize: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -694,9 +872,9 @@ export const SmallerHeaderSize: Story = () => (
 
 export const WithKenBurnsEffect: Story = () => (
     <Header
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -706,6 +884,14 @@ export const WithKenBurnsEffect: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
@@ -750,9 +936,9 @@ export const WithKenBurnsEffect: Story = () => (
 export const WithKenBurnsEffectSmallerSize: Story = () => (
     <Header
         size="small"
-        menu={{
-            isTopInverted: true,
-            isNavInverted: true,
+        navigation={{
+            isTopbarInverted: true,
+            isMenuInverted: true,
             logo: { icon: logoFn, link: '#logoLink' },
             ...exampleNavItems,
             socials: [
@@ -762,6 +948,14 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
             ],
             primaryCta: primaryCtaFn,
             secondaryCta: secondaryCtaFn,
+            search: (isInverted) => (
+                <SearchInput
+                    isInverted={isInverted}
+                    placeholder="Search"
+                    submitIcon={<Magnifier />}
+                    onSubmit={() => console.log('submit')}
+                />
+            ),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[

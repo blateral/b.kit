@@ -2,10 +2,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Menu, { MenuMq } from 'components/sections/header/menu/Menu';
-import ArrowRight from 'components/base/icons/ArrowRight';
-import Star from 'components/base/icons/Star';
-import StarGhost from 'components/base/icons/StarGhost';
+import Menu from 'components/sections/header/menu/Menu';
 import SearchInput from 'components/fields/SearchInput';
 import Magnifier from 'components/base/icons/Magnifier';
 
@@ -13,76 +10,10 @@ import Facebook from 'components/base/icons/socials/Facebook';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
 import Button from 'components/buttons/Button';
+import ArrowRight from 'components/base/icons/ArrowRight';
+import Star from 'components/base/icons/Star';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-
-const logoFn = ({
-    isInverted,
-    size,
-}: {
-    isInverted: boolean;
-    size?: 'full' | 'small';
-}) => {
-    if (isInverted)
-        return (
-            <img
-                src={`https://via.placeholder.com/107x115/000000/FFFFFF/?text=${size}`}
-            />
-        );
-    else
-        return (
-            <img
-                src={`https://via.placeholder.com/107x115/FFFFFF/000000/?text=${size}`}
-            />
-        );
-};
-
-const primaryCtaFn = ({
-    isInverted,
-    currentMq,
-}: {
-    isInverted?: boolean;
-    currentMq: MenuMq;
-}) => (
-    <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
-        {currentMq === 'semilarge' && (
-            <>
-                <Button.Label>zum Haus St. Ulrich</Button.Label>
-                <Button.Icon>
-                    <ArrowRight />
-                </Button.Icon>
-            </>
-        )}
-        {currentMq === 'small' && (
-            <Button.Icon>
-                <Star />
-            </Button.Icon>
-        )}
-    </Button.View>
-);
-
-const secondaryCtaFn = ({
-    isInverted,
-    currentMq,
-}: {
-    isInverted?: boolean;
-    currentMq: MenuMq;
-}) => (
-    <ButtonGhost.View
-        as="a"
-        href="#"
-        isInverted={isInverted}
-        onClick={console.log}
-    >
-        {currentMq === 'semilarge' && (
-            <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
-        )}
-        {currentMq === 'small' && (
-            <ButtonGhost.Icon>
-                <StarGhost />
-            </ButtonGhost.Icon>
-        )}
-    </ButtonGhost.View>
-);
+import StarGhost from 'components/base/icons/StarGhost';
 
 const exampleNavItems = {
     activeNavItem: 'navGroup2.activeb',
@@ -218,6 +149,79 @@ const exampleNavItems = {
     ],
 };
 
+const logoFn = ({
+    isInverted,
+    size,
+}: {
+    isInverted: boolean;
+    size?: 'full' | 'small';
+}) => {
+    if (isInverted)
+        return (
+            <img
+                src={`https://via.placeholder.com/${
+                    size === 'full' ? '425' : '107'
+                }x115/000000/FFFFFF/?text=${size}`}
+            />
+        );
+    else
+        return (
+            <img
+                src={`https://via.placeholder.com/${
+                    size === 'full' ? '425' : '107'
+                }x115/FFFFFF/000000/?text=${size}`}
+            />
+        );
+};
+
+const primaryCtaFn = ({
+    isInverted,
+    size,
+}: {
+    isInverted?: boolean;
+    size?: 'desktop' | 'mobile';
+}) => (
+    <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
+        {size === 'desktop' && (
+            <>
+                <Button.Label>zum Haus St. Ulrich</Button.Label>
+                <Button.Icon>
+                    <ArrowRight />
+                </Button.Icon>
+            </>
+        )}
+        {size === 'mobile' && (
+            <Button.Icon>
+                <Star />
+            </Button.Icon>
+        )}
+    </Button.View>
+);
+
+const secondaryCtaFn = ({
+    isInverted,
+    size,
+}: {
+    isInverted?: boolean;
+    size?: 'desktop' | 'mobile';
+}) => (
+    <ButtonGhost.View
+        as="a"
+        href="#"
+        isInverted={isInverted}
+        onClick={console.log}
+    >
+        {size === 'desktop' && (
+            <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+        )}
+        {size === 'mobile' && (
+            <ButtonGhost.Icon>
+                <StarGhost />
+            </ButtonGhost.Icon>
+        )}
+    </ButtonGhost.View>
+);
+
 export default {
     title: 'Sections/Header/Menu',
     component: Menu,
@@ -241,71 +245,11 @@ export default {
     ],
 } as Meta;
 
-export const Default: Story = () => <Menu />;
-
-export const WithLogo: Story = () => (
-    <Menu
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-    />
-);
-
-export const WithDifferentLogoHeight: Story = () => (
-    <Menu
-        logo={{
-            icon: logoFn,
-            heightMultFull: 1.5,
-            link: '#logoLink',
-        }}
-    />
-);
-
-export const WithScrollTriggerDelay: Story = () => (
-    <Menu
-        withTopOffset
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-    />
-);
-
-export const HideTopBarOnScrollDown: Story = () => (
-    <Menu
-        withTopOffset
-        hideOnScrollDown
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-    />
-);
-
-export const WithActions: Story = () => (
-    <Menu
-        withTopOffset
-        hideOnScrollDown
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryAction={primaryCtaFn}
-        secondaryAction={secondaryCtaFn}
-    />
-);
+export const Default: Story = () => <Menu isOpen />;
 
 export const WithSearchInput: Story = () => (
     <Menu
-        withTopOffset
-        hideOnScrollDown
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryAction={primaryCtaFn}
-        secondaryAction={secondaryCtaFn}
+        isOpen
         search={(isInverted) => (
             <SearchInput
                 isInverted={isInverted}
@@ -319,14 +263,7 @@ export const WithSearchInput: Story = () => (
 
 export const WithNavItems: Story = () => (
     <Menu
-        withTopOffset
-        hideOnScrollDown
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryAction={primaryCtaFn}
-        secondaryAction={secondaryCtaFn}
+        isOpen
         search={(isInverted) => (
             <SearchInput
                 isInverted={isInverted}
@@ -341,14 +278,7 @@ export const WithNavItems: Story = () => (
 
 export const WithSocials: Story = () => (
     <Menu
-        withTopOffset
-        hideOnScrollDown
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryAction={primaryCtaFn}
-        secondaryAction={secondaryCtaFn}
+        isOpen
         search={(isInverted) => (
             <SearchInput
                 isInverted={isInverted}
@@ -368,15 +298,35 @@ export const WithSocials: Story = () => (
 
 export const WithFullWidthFlyout: Story = () => (
     <Menu
+        isOpen
         size="full"
-        withTopOffset
-        hideOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
         }}
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
         primaryAction={primaryCtaFn}
         secondaryAction={secondaryCtaFn}
+        {...exampleNavItems}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+    />
+);
+
+export const Inverted: Story = () => (
+    <Menu
+        isOpen
+        isInverted
         search={(isInverted) => (
             <SearchInput
                 isInverted={isInverted}
@@ -394,76 +344,15 @@ export const WithFullWidthFlyout: Story = () => (
     />
 );
 
-export const InvertedTopBar: Story = () => (
+export const InvertedFull: Story = () => (
     <Menu
-        isTopInverted
-        withTopOffset
-        hideOnScrollDown
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryAction={primaryCtaFn}
-        secondaryAction={secondaryCtaFn}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        {...exampleNavItems}
-        socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
-        ]}
-    />
-);
-
-export const InvertedNav: Story = () => (
-    <Menu
-        isTopInverted
-        isNavInverted
-        withTopOffset
-        hideOnScrollDown
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryAction={primaryCtaFn}
-        secondaryAction={secondaryCtaFn}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        {...exampleNavItems}
-        socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
-        ]}
-    />
-);
-
-export const InvertedNavFull: Story = () => (
-    <Menu
+        isOpen
         size="full"
-        isTopInverted
-        isNavInverted
-        withTopOffset
-        hideOnScrollDown
+        isInverted
         logo={{
             icon: logoFn,
             link: '#logoLink',
         }}
-        primaryAction={primaryCtaFn}
-        secondaryAction={secondaryCtaFn}
         search={(isInverted) => (
             <SearchInput
                 isInverted={isInverted}
@@ -472,36 +361,8 @@ export const InvertedNavFull: Story = () => (
                 onSubmit={() => console.log('submit')}
             />
         )}
-        {...exampleNavItems}
-        socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
-        ]}
-    />
-);
-
-export const WithToggleIconVariation: Story = () => (
-    <Menu
-        size="full"
-        isTopInverted
-        withTopOffset
-        hideOnScrollDown
-        toggleIcons={{ opened: <StarGhost />, closed: <Star /> }}
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
         primaryAction={primaryCtaFn}
         secondaryAction={secondaryCtaFn}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
         {...exampleNavItems}
         socials={[
             { href: '#', icon: <Facebook /> },

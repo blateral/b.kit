@@ -26,6 +26,12 @@ export const Default: Story = () => (
     </Wrapper>
 );
 
+export const ClampOnLargeWrapper: Story = () => (
+    <Wrapper clampWidth="large">
+        <ExampleContent />
+    </Wrapper>
+);
+
 export const WithWhitespace: Story = () => (
     <Wrapper addWhitespace>
         <ExampleContent />

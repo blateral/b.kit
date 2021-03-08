@@ -36,8 +36,11 @@ const StyledActions = styled(Actions)`
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
 
     @media ${mq.semilarge} {
-        max-width: ${(9 / 28) * spacings.wrapper + 'px'};
         align-items: flex-start;
+
+        & > * {
+            max-width: 300px;
+        }
     }
 `;
 

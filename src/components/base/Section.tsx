@@ -120,7 +120,7 @@ const Section: React.FC<{
     bgColor?: string;
     bgMode?: BgMode;
     addSeperation?: boolean;
-    className?: any;
+    className?: string;
 }> = ({
     as,
     bgColor,
