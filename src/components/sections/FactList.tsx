@@ -1,10 +1,11 @@
 import * as React from 'react';
-import Section, { BgMode } from 'components/base/Section';
+import Section from 'components/base/Section';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, spacings, withRange } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const FactsContainer = styled.ul`
     padding: 0;
@@ -48,16 +49,18 @@ const Text = styled(Copy)`
 
 const FactList: React.FC<{
     title?: string;
+    titleAs?: HeadlineTag;
     superTitle?: string;
+    superTitleAs?: HeadlineTag;
     intro?: string;
 
-    facts: {
+    facts?: {
         label?: string;
         text?: string;
         icon?: { src: string; alt?: string };
     }[];
 
-    bgMode?: 'full' | 'splitted';
+    hasBack?: boolean;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -65,25 +68,16 @@ const FactList: React.FC<{
     isInverted?: boolean;
 }> = ({
     title,
+    titleAs,
     superTitle,
+    superTitleAs,
     intro,
     facts,
-    bgMode,
+    hasBack,
     primaryAction,
     secondaryAction,
     isInverted,
 }) => {
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'larger-right';
-            default:
-                return undefined;
-        }
-    };
-
     const theme = React.useContext(ThemeContext);
     return (
         <Section
@@ -91,44 +85,49 @@ const FactList: React.FC<{
             bgColor={
                 isInverted
                     ? getColors(theme).dark
-                    : bgMode
+                    : hasBack
                     ? getColors(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (
                     <Intro
                         title={title}
+                        titleAs={titleAs}
                         superTitle={superTitle}
+                        superTitleAs={superTitleAs}
                         text={intro}
                         primaryAction={primaryAction}
                         secondaryAction={secondaryAction}
                         isInverted={isInverted}
                     />
                 )}
-                <FactsContainer>
-                    {facts.map(({ label, text, icon }, i) => {
-                        return (
-                            <FactsItem key={i} hasText={!!text}>
-                                {icon && <Icon src={icon.src} alt={icon.alt} />}
-                                <ContentBlock>
-                                    <Copy type="copy-b">{label}</Copy>
-                                    {text && (
-                                        <Text type="copy">
-                                            <div
-                                                dangerouslySetInnerHTML={{
-                                                    __html: text,
-                                                }}
-                                            />
-                                        </Text>
+                {facts && (
+                    <FactsContainer>
+                        {facts.map(({ label, text, icon }, i) => {
+                            return (
+                                <FactsItem key={i} hasText={!!text}>
+                                    {icon && (
+                                        <Icon src={icon.src} alt={icon.alt} />
                                     )}
-                                </ContentBlock>
-                            </FactsItem>
-                        );
-                    })}
-                </FactsContainer>
+                                    <ContentBlock>
+                                        <Copy type="copy-b">{label}</Copy>
+                                        {text && (
+                                            <Text type="copy">
+                                                <div
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: text,
+                                                    }}
+                                                />
+                                            </Text>
+                                        )}
+                                    </ContentBlock>
+                                </FactsItem>
+                            );
+                        })}
+                    </FactsContainer>
+                )}
             </Wrapper>
         </Section>
     );

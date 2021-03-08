@@ -218,7 +218,9 @@ const StyledContactBox = styled(ContactBox)`
 
 const StyledActions = styled(Actions)`
     @media ${mq.semilarge} {
-        max-width: 600px;
+        & > * {
+            max-width: 300px;
+        }
     }
 `;
 

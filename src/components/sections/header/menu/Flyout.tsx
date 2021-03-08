@@ -161,10 +161,9 @@ const SearchContainer = styled.div<{ isLarge?: boolean }>`
     justify-content: center;
     width: 100%;
     padding-right: ${spacings.spacer}px;
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-left')}
+    padding-left: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
-        
         & > * {
             max-width: ${({ isLarge }) => isLarge && '355px'};
         }
