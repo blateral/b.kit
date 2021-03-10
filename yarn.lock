@@ -964,6 +964,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.6.3":
+  version "7.13.10"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.13.10.tgz#47d42a57b6095f4468da440388fdbad8bebf0d7d"
+  integrity sha512-4QPkjJq6Ns3V/RgpEahRk+AGfL0eO6RHHtTWoNNr5mO49G6B5+X6d6THgWEAvTrznU5xYpbAlVKRYcsCgh/Akw==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.10.4", "@babel/template@^7.12.7":
   version "7.12.7"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.12.7.tgz#c817233696018e39fbb6c491d2fb684e05ed43bc"
@@ -1292,11 +1299,6 @@
     invariant "^2.2.3"
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
-
-"@react-leaflet/core@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@react-leaflet/core/-/core-1.0.2.tgz#39c6a73f61c666d5dcf673741cea2672fa4bbae1"
-  integrity sha512-QbleYZTMcgujAEyWGki8Lx6cXQqWkNtQlqf5c7NImlIp8bKW66bFpez/6EVatW7+p9WKBOEOVci/9W7WW70EZg==
 
 "@rollup/plugin-commonjs@^17.0.0":
   version "17.0.0"
@@ -2288,7 +2290,7 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.6.tgz#f4c7ec43e81b319a9815115031709f26987891f0"
   integrity sha512-3c+yGKvVP5Y9TYBEibGNR+kLtijnj7mYrXRg+WpFb2X9xm04g/DXYkfg4hmzJQosc9snFNUPkbYIhu+KAm6jJw==
 
-"@types/leaflet@^1.5.23":
+"@types/leaflet@*":
   version "1.5.23"
   resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.5.23.tgz#159823a8c86a50383f0c9d9b9dac2af01fa7603b"
   integrity sha512-S/xpuwjZuwYMP+4ZzQ10PX0Jy+0XmwPeojtjqhbca9UXaINdoru91Qm/DUUXyh4qYm3CP6Vher06l/UcA9tUKQ==
@@ -2385,6 +2387,14 @@
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.0.tgz#b3b691eb956c4b3401777ee67b900cb28415d95a"
   integrity sha512-lUqY7OlkF/RbNtD5nIq7ot8NquXrdFrjSOR6+w9a9RFQevGi1oZO1dcJbXMeONAPKtZ2UrZOEJ5UOCVsxbLk/g==
   dependencies:
+    "@types/react" "*"
+
+"@types/react-leaflet@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@types/react-leaflet/-/react-leaflet-2.5.0.tgz#7d99d4eb985f752c65603d72f86ae6e18b2de213"
+  integrity sha512-oS0rVwRLnTK0WbvLYqQaZoUw7CBHBe3Z4yop4GxbzX3DVYroo9fQQNzowmxASD0TExSXn1DLNGm7EywgC3zkPg==
+  dependencies:
+    "@types/leaflet" "*"
     "@types/react" "*"
 
 "@types/react-native@*":
@@ -5326,6 +5336,11 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+fast-deep-equal@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
+  integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
+
 fast-deep-equal@^3.1.1:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
@@ -7042,10 +7057,10 @@ lazy-universal-dotenv@^3.0.1:
     dotenv "^8.0.0"
     dotenv-expand "^5.1.0"
 
-leaflet@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.7.1.tgz#10d684916edfe1bf41d688a3b97127c0322a2a19"
-  integrity sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw==
+leaflet@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.5.1.tgz#9afb9d963d66c870066b1342e7a06f92840f46bf"
+  integrity sha512-ekM9KAeG99tYisNBg0IzEywAlp0hYI5XRipsqRXyRTeuU8jcuntilpp+eFf5gaE0xubc9RuSNIVtByEKwqFV0w==
 
 levn@^0.4.1:
   version "0.4.1"
@@ -8686,12 +8701,20 @@ react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-leaflet@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-3.1.0.tgz#42deb5e454518016eff8bc85511ae58812f910f5"
-  integrity sha512-kdZS8NYbYFPmkQr7zSDR2gkKGFeWvkxqoqcmZEckzHL4d5c85dJ2gbbqhaPDpmWWgaRw9O29uA/77qpKmK4mTQ==
+react-leaflet-universal@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-leaflet-universal/-/react-leaflet-universal-2.2.1.tgz#4458cb9be578ba41658d3fcca3bcc0b674630c32"
+  integrity sha512-5eXeAylLcHQSjD06DV6Po98NntShXVI47Kj+uZQSG0byfJDbbFOHFPCLcVZa7kY/TAqXuQq8BK4RyV7kPhf70A==
+
+react-leaflet@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-2.5.0.tgz#834cc9fdf9385e2b30e90e6d71533e2f961d93f7"
+  integrity sha512-G7GPnXtiJIyTQg77RKzrPq2vnv4lsDz1/XHu5P8+eAAZILngVHzcYCG81G39Hcc0UL8Pqspk8b86OauDGqy0OA==
   dependencies:
-    "@react-leaflet/core" "^1.0.2"
+    "@babel/runtime" "^7.6.3"
+    fast-deep-equal "^2.0.1"
+    hoist-non-react-statics "^3.3.0"
+    warning "^4.0.3"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"

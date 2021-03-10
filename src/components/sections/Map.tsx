@@ -1,52 +1,140 @@
-import { LeafletWrapperProps } from 'components/blocks/LeafletWrapper';
-import React, { FC, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import Grid from 'components/base/Grid';
+import Section from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
+import Intro from 'components/blocks/Intro';
+import LeafletMap from 'components/blocks/LeafletMap';
+import { HeadlineTag } from 'components/typography/Heading';
+import React, { FC, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
+import { mq, spacings, getColors as color } from 'utils/styles';
 
-// import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-
-const View = styled.div`
+const StyledSection = styled(Section)`
     position: relative;
+    min-height: 500px;
     z-index: 0;
+`;
 
-    & > * {
-        height: 700px;
+const MapContainer = styled(LeafletMap)<{ isMirrored?: boolean }>`
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+
+    @media ${mq.semilarge} {
+        position: absolute;
+        width: 50%;
+        left: ${({ isMirrored }) => (isMirrored ? 'auto' : '50%')};
+        right: ${({ isMirrored }) => (isMirrored ? '50%' : 'auto')};
+
+        transform: translateX(
+            ${({ isMirrored }) => (isMirrored ? '100%' : '-100%')}
+        );
+    }
+
+    @media ${mq.xlarge} {
+        max-width: ${spacings.wrapperLarge / 2}px;
     }
 `;
 
-export interface MapMarker {
-    position: { lat: number; lng: number };
-    icon?: React.ReactNode;
+export interface MapLocation {
+    id: string;
+    position: {
+        lat: number;
+        lng: number;
+    };
+    icon?: {
+        url: string;
+        anchor?: [number, number];
+    };
+    meta?: {
+        title?: string;
+        superTitle?: string;
+        contact?: Array<{ icon?: React.ReactNode; label?: string }>;
+    };
 }
 
 const Map: FC<{
-    markers?: MapMarker;
-}> = () => {
-    // const [map, setMap] = useState<FC<LeafletWrapperProps> | null>(null);
-    const mapRef = useRef<FC<LeafletWrapperProps> | null>(null);
-    const [isLoaded, setLoaded] = useState(false);
-    // const MapWrapper: FC<LeafletWrapperProps> | null = null;
+    isInverted?: boolean;
+    isMirrored?: boolean;
+    title?: string;
+    titleAs?: HeadlineTag;
+    superTitle?: string;
+    superTitleAs?: HeadlineTag;
+    locations?: Array<MapLocation>;
 
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            import('../blocks/LeafletWrapper').then((module) => {
-                console.log(module.default);
-                // setMap(module.default);
-                mapRef.current = module.default;
-                setLoaded(true);
-            });
-        }
-    }, []);
-
-    const MapWrapper = mapRef.current;
+    primaryAction?: (props: {
+        isInverted?: boolean;
+        label?: string;
+    }) => React.ReactNode;
+    secondaryAction?: (isInverted?: boolean, label?: string) => React.ReactNode;
+    controlNext?: (props: {
+        isInverted?: boolean;
+        isActive?: boolean;
+        name?: string;
+    }) => React.ReactNode;
+    controlPrev?: (props: {
+        isInverted?: boolean;
+        isActive?: boolean;
+        name?: string;
+    }) => React.ReactNode;
+}> = ({
+    isInverted,
+    isMirrored,
+    title,
+    titleAs,
+    superTitle,
+    superTitleAs,
+    locations,
+}) => {
+    const theme = useContext(ThemeContext);
+    // const [getLocations, setLocations] = useState(locations);
 
     return (
-        <View>
-            {isLoaded && MapWrapper ? (
-                <MapWrapper mapProps={{ center: [51.505, -0.09], zoom: 13 }} />
-            ) : (
-                'Cant load map wrapper'
-            )}
-        </View>
+        <StyledSection
+            bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
+        >
+            <MapContainer
+                isMirrored={isMirrored}
+                markers={locations?.map(({ id, position, icon }) => {
+                    return {
+                        id,
+                        position: {
+                            lat: position.lat,
+                            lng: position.lng,
+                        },
+                        icon,
+                    };
+                })}
+            />
+            <Wrapper clampWidth="normal">
+                <Grid.Row gutter={spacings.spacer}>
+                    <Grid.Col
+                        semilarge={{
+                            span: 14 / 28,
+                            move: (isMirrored ? 14 : 0) / 28,
+                        }}
+                    ></Grid.Col>
+                    <Grid.Col
+                        semilarge={{
+                            span: 14 / 28,
+                            move: (isMirrored ? -14 : 0) / 28,
+                        }}
+                    >
+                        {title && (
+                            <Intro
+                                isInverted={isInverted}
+                                title={title}
+                                titleAs={titleAs}
+                                superTitle={superTitle}
+                                superTitleAs={superTitleAs}
+                            />
+                        )}
+                    </Grid.Col>
+                </Grid.Row>
+            </Wrapper>
+        </StyledSection>
     );
 };
 

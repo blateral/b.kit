@@ -186,7 +186,7 @@ As CDN link (e.g. in Storybook `preview-head.html` or NextJs's `_document.tsx`):
 
 #### Map
 
-> The Map component is made up with `leaflet` and `react-leaflet`. Therefore both packages must be installed to properly use all map features.
+> The Map component is made up with `leaflet` and `react-leaflet` (for better SSR behaviour assisted by `react-leaflet-universal`). Therefore all three packages must be installed to properly use all map features.
 
 To diplaying the map in the right way you should also import the leaflet CSS styles:
 
