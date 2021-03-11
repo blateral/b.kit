@@ -1,12 +1,29 @@
-import { LayerGroup, Map, Marker, MarkerOptions } from 'leaflet';
+import { FeatureGroup, Map, Marker, MarkerOptions } from 'leaflet';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { spacings, getColors as color } from 'utils/styles';
 
-const MapContainer = styled.div``;
+const MapContainer = styled.div`
+    position: relative;
+    z-index: 0;
+`;
+
+const FylToCtrlContainer = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+
+    margin-top: ${spacings.spacer}px;
+    margin-right: ${spacings.spacer}px;
+    color: ${({ theme }) => color(theme).dark};
+
+    cursor: pointer;
+`;
 
 export interface LeafletMapMarker {
     id: string;
-    position: { lat: number; lng: number };
+    position: [number, number];
     icon?: {
         url: string;
         size: [number, number];
@@ -22,15 +39,19 @@ const LeafletMap: FC<{
     url?: string;
     attribution?: string;
     markers?: Array<LeafletMapMarker>;
-    center: {
-        lat: number;
-        lng: number;
-    };
+    center: [number, number];
     zoom?: number;
     touchZoom?: boolean;
     scrollWheelZoom?: boolean;
     onlyScrollOnFocus?: boolean;
-    onMarkerClick?: (markerId: string) => void;
+    allMarkersVisible?: boolean;
+    fitBoundsPadding?: [number, number];
+    /** If markers has been clicked. Return true if map should pan to marker. */
+    onMarkerClick?: (markerId: string) => boolean;
+    onFlyToClick?: () =>
+        | { position: [number, number]; zoom?: number }
+        | undefined;
+    flyToControl?: React.ReactNode;
     className?: string;
 }> = ({
     containerRef,
@@ -42,7 +63,11 @@ const LeafletMap: FC<{
     touchZoom = false,
     scrollWheelZoom = false,
     onlyScrollOnFocus = true,
+    allMarkersVisible = false,
+    fitBoundsPadding = [20, 20], // 0 = TopLeft, 1 = BottomRight
     onMarkerClick,
+    onFlyToClick,
+    flyToControl,
     className,
 }) => {
     const cRef = useRef<HTMLDivElement | null>(null);
@@ -50,7 +75,7 @@ const LeafletMap: FC<{
     // leaflet ref
     const [L, setLeaflet] = useState<any>(null);
     const [map, setMap] = useState<Map | null>(null);
-    const [markersLayer, setMarkersLayer] = useState<LayerGroup<any> | null>(
+    const [markersLayer, setMarkersLayer] = useState<FeatureGroup<any> | null>(
         null
     );
 
@@ -63,7 +88,7 @@ const LeafletMap: FC<{
 
                 // setup map
                 const map = leaflet.map(cElement, {
-                    center: [center.lat, center.lng],
+                    center: center,
                     zoom: zoom,
                     touchZoom: touchZoom,
                     scrollWheelZoom: scrollWheelZoom,
@@ -90,7 +115,7 @@ const LeafletMap: FC<{
                     .addTo(map);
 
                 // setup layer for markers
-                const markersLayer = new leaflet.LayerGroup();
+                const markersLayer = new leaflet.FeatureGroup();
                 markersLayer.addTo(map);
                 setMarkersLayer(markersLayer);
             }
@@ -113,6 +138,7 @@ const LeafletMap: FC<{
 
             markers?.forEach(({ position, icon, id }) => {
                 if (!icon || !position) return;
+
                 const markerIcon = L.icon({
                     iconUrl: icon?.url,
 
@@ -123,13 +149,18 @@ const LeafletMap: FC<{
                     // popupAnchor: [0, -16], // point from which the popup should open relative to the iconAnchor
                 });
 
-                const marker: Marker = L.marker([position.lat, position.lng], {
+                const marker: Marker = L.marker(position, {
                     icon: markerIcon,
                     riseOnHover: true,
                 } as MarkerOptions).addTo(map);
 
                 marker.on('click', () => {
-                    onMarkerClick && onMarkerClick(id);
+                    if (onMarkerClick) {
+                        const zoomTo = onMarkerClick(id);
+                        if (zoomTo) {
+                            map?.panTo(position);
+                        }
+                    }
                 });
 
                 // add marker to markers layer
@@ -138,7 +169,42 @@ const LeafletMap: FC<{
         }
     }, [L, map, markers, markersLayer, onMarkerClick]);
 
-    return <MapContainer ref={cRef} className={className} />;
+    useEffect(() => {
+        const showAllMarkers = () => {
+            if (allMarkersVisible && map && markersLayer) {
+                map.fitBounds(markersLayer.getBounds(), {
+                    padding: L.point(fitBoundsPadding),
+                });
+            }
+        };
+
+        if (markersLayer) {
+            // make sure that all markers are visible
+            showAllMarkers();
+        }
+    }, [L, allMarkersVisible, map, fitBoundsPadding, markersLayer]);
+
+    return (
+        <MapContainer ref={cRef} className={className}>
+            {flyToControl && (
+                <FylToCtrlContainer
+                    onClick={(ev) => {
+                        ev.stopPropagation();
+                        if (map && onFlyToClick) {
+                            const target = onFlyToClick();
+                            // if target returned fly to it
+                            if (target?.position && target?.zoom)
+                                map.flyTo(target.position, target.zoom);
+                            else if (target?.position && !target?.zoom)
+                                map.panTo(target.position);
+                        }
+                    }}
+                >
+                    {flyToControl}
+                </FylToCtrlContainer>
+            )}
+        </MapContainer>
+    );
 };
 
 export default LeafletMap;
