@@ -46,8 +46,7 @@ const LeafletMap: FC<{
     onlyScrollOnFocus?: boolean;
     allMarkersVisible?: boolean;
     fitBoundsPadding?: [number, number];
-    /** If markers has been clicked. Return true if map should pan to marker. */
-    onMarkerClick?: (markerId: string) => boolean;
+    onMarkerClick?: (markerId: string) => void;
     onFlyToClick?: () =>
         | { position: [number, number]; zoom?: number }
         | undefined;
@@ -155,12 +154,7 @@ const LeafletMap: FC<{
                 } as MarkerOptions).addTo(map);
 
                 marker.on('click', () => {
-                    if (onMarkerClick) {
-                        const zoomTo = onMarkerClick(id);
-                        if (zoomTo) {
-                            map?.panTo(position);
-                        }
-                    }
+                    onMarkerClick && onMarkerClick(id);
                 });
 
                 // add marker to markers layer
@@ -183,6 +177,10 @@ const LeafletMap: FC<{
             showAllMarkers();
         }
     }, [L, allMarkersVisible, map, fitBoundsPadding, markersLayer]);
+
+    useEffect(() => {
+        if (center && map) map.panTo(center);
+    }, [center, map]);
 
     return (
         <MapContainer ref={cRef} className={className}>

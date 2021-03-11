@@ -4,6 +4,7 @@ import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
 import Intro from 'components/blocks/Intro';
 import LeafletMap from 'components/blocks/LeafletMap';
+import Slider, { SliderContext } from 'components/blocks/Slider';
 import { HeadlineTag } from 'components/typography/Heading';
 import React, { FC, useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
@@ -42,6 +43,20 @@ const MapContainer = styled(LeafletMap)<{ isMirrored?: boolean }>`
 
 const CardWrapper = styled(Wrapper)`
     pointer-events: none;
+`;
+
+const SliderWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    pointer-events: all;
+
+    .slick-slide div {
+        outline: none;
+    }
+
+    .slick-initialized .slick-slide.slick-active {
+        z-index: 1;
+    }
 `;
 
 const LocationInfoCard = styled.div<{ isMirrored?: boolean }>`
@@ -136,8 +151,6 @@ const Map: FC<{
     allMarkersVisible?: boolean;
     /** Map container padding for show all markers */
     fitBoundsPadding?: [number, number];
-    /** Pan to marker on click. Value is the zoom value */
-    panToMarkerOnClick?: boolean;
 
     primaryAction?: (props: {
         isInverted?: boolean;
@@ -168,7 +181,6 @@ const Map: FC<{
     locations,
     allMarkersVisible = false,
     fitBoundsPadding,
-    panToMarkerOnClick,
     primaryAction,
     secondaryAction,
     flyToControl,
@@ -177,103 +189,160 @@ const Map: FC<{
     const [activeLocation, setActiveLocation] = useState<string>(
         initialLocation || ''
     );
+    const [mapCenter, setMapCenter] = useState<[number, number]>(center);
 
     return (
         <StyledSection
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
-            <MapContainer
-                center={center}
-                zoom={zoom}
-                isMirrored={isMirrored}
-                onMarkerClick={(markerId) => {
-                    setActiveLocation(markerId);
-                    return panToMarkerOnClick || false;
-                }}
-                flyToControl={flyToControl}
-                onFlyToClick={() => {
-                    const location = locations?.find(
-                        (loc) => loc.id === activeLocation
-                    );
-                    if (location) {
-                        return {
-                            position: location.position,
-                            zoom: flyToZoom,
-                        };
-                    } else return undefined;
-                }}
-                allMarkersVisible={allMarkersVisible}
-                fitBoundsPadding={fitBoundsPadding}
-                markers={locations?.map(
-                    ({ id, position, icon, iconActive }) => {
-                        return {
-                            id,
-                            position: position,
-                            icon:
-                                id === activeLocation
-                                    ? iconActive || icon
-                                    : icon,
-                        };
+            <Slider.Provider
+                fade={true}
+                swipe={false}
+                slidesToShow={1}
+                variableWidth={false}
+                sameHeight={true}
+                clickSideOffset={0}
+                responsive={[
+                    {
+                        breakpoint: 832,
+                        settings: {
+                            fade: false,
+                            swipe: true,
+                        },
+                    },
+                ]}
+                beforeChange={({ nextStep }) => {
+                    if (locations && locations[nextStep]) {
+                        setActiveLocation(locations[nextStep].id);
+                        setMapCenter(locations[nextStep].position);
                     }
-                )}
-            />
-            <CardWrapper clampWidth="normal">
-                <Grid.Row gutter={spacings.spacer}>
-                    <Grid.Col
-                        semilarge={{
-                            span: 14 / 28,
-                            move: (isMirrored ? 14 : 0) / 28,
-                        }}
-                    ></Grid.Col>
-                    <Grid.Col
-                        semilarge={{
-                            span: 14 / 28,
-                            move: (isMirrored ? -14 : 0) / 28,
-                        }}
-                    >
-                        {locations?.map(({ id, meta }, i) => {
-                            if (id === activeLocation && meta?.title) {
-                                return (
-                                    <LocationInfoCard
-                                        key={i}
-                                        isMirrored={isMirrored}
-                                    >
-                                        <CardHeader>
-                                            <Intro
-                                                isInverted={isInverted}
-                                                title={meta.title}
-                                                superTitle={meta?.superTitle}
-                                            />
-                                        </CardHeader>
-                                        {(primaryAction || secondaryAction) && (
-                                            <StyledActions
-                                                primary={
-                                                    meta?.primaryLabel &&
-                                                    primaryAction &&
-                                                    primaryAction({
-                                                        isInverted,
-                                                        label:
-                                                            meta?.primaryLabel,
-                                                    })
-                                                }
-                                                secondary={
-                                                    meta?.secondaryLabel &&
-                                                    secondaryAction &&
-                                                    secondaryAction({
-                                                        isInverted,
-                                                        label:
-                                                            meta?.secondaryLabel,
-                                                    })
-                                                }
-                                            />
-                                        )}
-                                    </LocationInfoCard>
+                }}
+                // beforeChange={beforeChange}
+                // afterChange={afterChange}
+                // onInit={onInit}
+            >
+                <SliderContext.Consumer>
+                    {({ goToStep }) => (
+                        <MapContainer
+                            center={mapCenter}
+                            zoom={zoom}
+                            isMirrored={isMirrored}
+                            onMarkerClick={(markerId) => {
+                                setActiveLocation(markerId);
+
+                                // move slider to step
+                                const locIndex = locations?.findIndex(
+                                    (loc) => loc.id === markerId
                                 );
-                            } else return;
-                        })}
-                    </Grid.Col>
-                </Grid.Row>
-            </CardWrapper>
+
+                                if (locIndex !== undefined && locIndex !== -1)
+                                    goToStep(locIndex);
+
+                                // pan map center to marker position
+                                const location = locations?.find(
+                                    (loc) => loc.id === markerId
+                                );
+                                if (location) setMapCenter(location.position);
+                            }}
+                            flyToControl={flyToControl}
+                            onFlyToClick={() => {
+                                const location = locations?.find(
+                                    (loc) => loc.id === activeLocation
+                                );
+                                if (location) {
+                                    return {
+                                        position: location.position,
+                                        zoom: flyToZoom,
+                                    };
+                                } else return undefined;
+                            }}
+                            allMarkersVisible={allMarkersVisible}
+                            fitBoundsPadding={fitBoundsPadding}
+                            markers={locations?.map(
+                                ({ id, position, icon, iconActive }) => {
+                                    return {
+                                        id,
+                                        position: position,
+                                        icon:
+                                            id === activeLocation
+                                                ? iconActive || icon
+                                                : icon,
+                                    };
+                                }
+                            )}
+                        />
+                    )}
+                </SliderContext.Consumer>
+
+                <CardWrapper clampWidth="normal">
+                    <Grid.Row gutter={spacings.spacer}>
+                        <Grid.Col
+                            semilarge={{
+                                span: 14 / 28,
+                                move: (isMirrored ? 14 : 0) / 28,
+                            }}
+                        ></Grid.Col>
+                        <Grid.Col
+                            semilarge={{
+                                span: 14 / 28,
+                                move: (isMirrored ? -14 : 0) / 28,
+                            }}
+                        >
+                            <SliderWrapper>
+                                <Slider.Control type="prev">
+                                    {() => <span>prev</span>}
+                                </Slider.Control>
+                                <Slider.Control type="next">
+                                    {() => <span>next</span>}
+                                </Slider.Control>
+                                <Slider.Slides>
+                                    {locations?.map(({ meta }, i) => (
+                                        <LocationInfoCard
+                                            key={i}
+                                            isMirrored={isMirrored}
+                                        >
+                                            {meta?.title && (
+                                                <CardHeader>
+                                                    <Intro
+                                                        isInverted={isInverted}
+                                                        title={meta.title}
+                                                        superTitle={
+                                                            meta?.superTitle
+                                                        }
+                                                    />
+                                                </CardHeader>
+                                            )}
+                                            {(primaryAction ||
+                                                secondaryAction) && (
+                                                <StyledActions
+                                                    primary={
+                                                        meta?.primaryLabel &&
+                                                        primaryAction &&
+                                                        primaryAction({
+                                                            isInverted,
+                                                            label:
+                                                                meta?.primaryLabel,
+                                                        })
+                                                    }
+                                                    secondary={
+                                                        meta?.secondaryLabel &&
+                                                        secondaryAction &&
+                                                        secondaryAction({
+                                                            isInverted,
+                                                            label:
+                                                                meta?.secondaryLabel,
+                                                        })
+                                                    }
+                                                />
+                                            )}
+                                        </LocationInfoCard>
+                                    ))}
+                                </Slider.Slides>
+                            </SliderWrapper>
+                        </Grid.Col>
+                    </Grid.Row>
+                </CardWrapper>
+            </Slider.Provider>
         </StyledSection>
     );
 };

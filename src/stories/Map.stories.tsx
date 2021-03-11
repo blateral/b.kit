@@ -93,16 +93,6 @@ export const ShowAllMarkersOnLoad: Story = () => (
     />
 );
 
-export const ZoomToClickedMarker: Story = () => (
-    <Map
-        initialLocation="Sipplingen"
-        locations={exampleLocations}
-        allMarkersVisible
-        fitBoundsPadding={[30, 30]}
-        panToMarkerOnClick
-    />
-);
-
 export const WithFlyToControl: Story = () => (
     <Map
         initialLocation="Sipplingen"
@@ -111,7 +101,6 @@ export const WithFlyToControl: Story = () => (
         flyToZoom={12}
         allMarkersVisible
         fitBoundsPadding={[30, 30]}
-        panToMarkerOnClick
     />
 );
 
@@ -123,7 +112,6 @@ export const WithActions: Story = () => (
         flyToZoom={12}
         allMarkersVisible
         fitBoundsPadding={[30, 30]}
-        panToMarkerOnClick
         primaryAction={({ isInverted, label }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>{label}</Button.Label>
@@ -146,7 +134,6 @@ export const Mirrored: Story = () => (
         flyToZoom={12}
         allMarkersVisible
         fitBoundsPadding={[30, 30]}
-        panToMarkerOnClick
         primaryAction={({ isInverted, label }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>{label}</Button.Label>
@@ -169,7 +156,6 @@ export const Inverted: Story = () => (
         flyToZoom={12}
         allMarkersVisible
         fitBoundsPadding={[30, 30]}
-        panToMarkerOnClick
         primaryAction={({ isInverted, label }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>{label}</Button.Label>
