@@ -4,7 +4,7 @@ import Wrapper from 'components/base/Wrapper';
 import Intro from 'components/blocks/Intro';
 import LeafletMap from 'components/blocks/LeafletMap';
 import { HeadlineTag } from 'components/typography/Heading';
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { mq, spacings, getColors as color } from 'utils/styles';
 
@@ -38,16 +38,20 @@ const MapContainer = styled(LeafletMap)<{ isMirrored?: boolean }>`
     }
 `;
 
+export interface LocationIcon {
+    url: string;
+    size: [number, number];
+    anchor: [number, number];
+}
+
 export interface MapLocation {
     id: string;
     position: {
         lat: number;
         lng: number;
     };
-    icon?: {
-        url: string;
-        anchor?: [number, number];
-    };
+    icon?: LocationIcon;
+    iconActive?: LocationIcon;
     meta?: {
         title?: string;
         superTitle?: string;
@@ -62,6 +66,7 @@ const Map: FC<{
     titleAs?: HeadlineTag;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
+    activeLocationId?: string;
     locations?: Array<MapLocation>;
 
     primaryAction?: (props: {
@@ -86,9 +91,13 @@ const Map: FC<{
     titleAs,
     superTitle,
     superTitleAs,
+    activeLocationId,
     locations,
 }) => {
     const theme = useContext(ThemeContext);
+    const [activeLocation, setActiveLocation] = useState<string>(
+        activeLocationId || ''
+    );
     // const [getLocations, setLocations] = useState(locations);
 
     return (
@@ -96,17 +105,27 @@ const Map: FC<{
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
             <MapContainer
+                center={{
+                    lat: 51.505,
+                    lng: -0.09,
+                }}
                 isMirrored={isMirrored}
-                markers={locations?.map(({ id, position, icon }) => {
-                    return {
-                        id,
-                        position: {
-                            lat: position.lat,
-                            lng: position.lng,
-                        },
-                        icon,
-                    };
-                })}
+                onMarkerClick={(markerId) => setActiveLocation(markerId)}
+                markers={locations?.map(
+                    ({ id, position, icon, iconActive }) => {
+                        return {
+                            id,
+                            position: {
+                                lat: position.lat,
+                                lng: position.lng,
+                            },
+                            icon:
+                                id === activeLocation
+                                    ? iconActive || icon
+                                    : icon,
+                        };
+                    }
+                )}
             />
             <Wrapper clampWidth="normal">
                 <Grid.Row gutter={spacings.spacer}>
