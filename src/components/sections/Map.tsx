@@ -108,7 +108,7 @@ const InfoCardView = styled.div`
     pointer-events: all;
 `;
 
-const LocatioInfoCard: FC<{
+const LocationInfoCard: FC<{
     isInverted?: boolean;
     location: MapLocation;
     primaryAction?: (props: {
@@ -378,7 +378,7 @@ const Map: FC<{
                                     <>
                                         <Slider.Slides>
                                             {locations?.map((location, i) => (
-                                                <LocatioInfoCard
+                                                <LocationInfoCard
                                                     key={i}
                                                     isInverted={isInverted}
                                                     location={location}
@@ -430,7 +430,7 @@ const Map: FC<{
                                     </>
                                 )}
                                 {locations && locations.length === 1 && (
-                                    <LocatioInfoCard
+                                    <LocationInfoCard
                                         isInverted={isInverted}
                                         location={locations[0]}
                                         primaryAction={primaryAction}
