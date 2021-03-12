@@ -5,6 +5,9 @@ import Map, { MapLocation } from 'components/sections/Map';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 import FlyTo from 'components/base/icons/FlyTo';
+import Phone from 'components/base/icons/Phone';
+import Mail from 'components/base/icons/Mail';
+import Youtube from 'components/base/icons/socials/Youtube';
 
 export default {
     title: 'Sections/Map',
@@ -23,6 +26,15 @@ const exampleLocations: MapLocation[] = [
             superTitle: 'Anfahrt und Kontakt',
             primaryLabel: 'Primary',
             secondaryLabel: 'Secondary',
+            contact: [
+                { icon: <Phone />, label: '9879534957943' },
+                {
+                    icon: <Mail />,
+                    label:
+                        '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
+                },
+                { icon: <Youtube />, label: '9879534957943' },
+            ],
         },
         position: [47.79678, 9.09737],
         icon: {
@@ -41,6 +53,14 @@ const exampleLocations: MapLocation[] = [
             superTitle: 'Standort',
             primaryLabel: 'Finde uns!',
             secondaryLabel: 'Contact',
+            contact: [
+                { icon: <Phone />, label: '9879534957943' },
+                {
+                    icon: <Mail />,
+                    label:
+                        '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
+                },
+            ],
         },
         icon: {
             size: [20, 28],

@@ -107,6 +107,62 @@ const SliderWrapper = styled.div<{ isMirrored?: boolean }>`
 const InfoCardView = styled.div`
     min-height: 100px;
     pointer-events: all;
+
+    & > * + * {
+        ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')}
+    }
+`;
+
+const CardHeader = styled.div`
+    display: flex;
+`;
+
+const StyledActions = styled(Actions)`
+    padding-left: ${spacings.nudge}px;
+    padding-right: ${spacings.nudge}px;
+    padding-bottom: ${spacings.nudge}px;
+
+    @media ${mq.medium} {
+        & > * {
+            max-width: 50%;
+        }
+    }
+`;
+
+const ContactList = styled.ul<{ isInverted?: boolean }>`
+    padding: 0;
+    list-style-type: none;
+    color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).light : color(theme).dark};
+
+    a {
+        color: inherit;
+    }
+
+    li {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+
+        span:first-child {
+            flex: 0 0 40px;
+            max-width: 40px;
+
+            & > * {
+                max-width: 100%;
+            }
+        }
+
+        span + span {
+            margin-left: ${spacings.nudge * 3}px;
+        }
+    }
+
+    li + li {
+        margin-top: ${spacings.nudge * 3}px;
+    }
 `;
 
 const LocationInfoCard: FC<{
@@ -132,6 +188,22 @@ const LocationInfoCard: FC<{
                     />
                 </CardHeader>
             )}
+            {location.meta?.contact && (
+                <ContactList isInverted={isInverted}>
+                    {location.meta?.contact
+                        ?.filter((c) => c.label)
+                        .map((contact, i) => (
+                            <li key={i}>
+                                <span>{contact.icon}</span>
+                                <span
+                                    dangerouslySetInnerHTML={{
+                                        __html: contact.label || '',
+                                    }}
+                                />
+                            </li>
+                        ))}
+                </ContactList>
+            )}
             {(primaryAction || secondaryAction) && (
                 <StyledActions
                     primary={
@@ -155,21 +227,6 @@ const LocationInfoCard: FC<{
         </InfoCardView>
     );
 };
-
-const CardHeader = styled.div`
-    display: flex;
-`;
-
-const StyledActions = styled(Actions)`
-    padding: ${spacings.nudge}px;
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
-
-    @media ${mq.medium} {
-        & > * {
-            max-width: 50%;
-        }
-    }
-`;
 
 const Controls = styled.div`
     display: flex;
