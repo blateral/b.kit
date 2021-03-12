@@ -84,6 +84,35 @@ export const ShowAllMarkersOnLoad: Story = () => (
     />
 );
 
+export const WithSingleLocation: Story = () => (
+    <Map
+        initialLocation="Sipplingen"
+        locations={[
+            {
+                id: 'Sipplingen',
+                meta: {
+                    title: `b.lateral GmbH & Co. KG </br>
+                    Lenzensteig 3 </br>
+                    78354 Sipplingen </br>
+                    am Bodensee </br>
+                    Deutschland`,
+                    superTitle: 'Anfahrt und Kontakt',
+                    primaryLabel: 'Primary',
+                    secondaryLabel: 'Secondary',
+                },
+                position: [47.79678, 9.09737],
+                icon: {
+                    size: [20, 28],
+                    anchor: [10, 28],
+                    sizeActive: [50, 70],
+                    anchorActive: [25, 70],
+                    url: '/images/Marker.svg',
+                },
+            },
+        ]}
+    />
+);
+
 export const WithFlyToControl: Story = () => (
     <Map
         initialLocation="Sipplingen"

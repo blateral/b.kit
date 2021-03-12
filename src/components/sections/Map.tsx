@@ -1,4 +1,6 @@
 import Grid from 'components/base/Grid';
+import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
+import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
@@ -45,25 +47,15 @@ const CardWrapper = styled(Wrapper)`
     pointer-events: none;
 `;
 
-const SliderWrapper = styled.div`
+const SliderWrapper = styled.div<{ isMirrored?: boolean }>`
+    display: flex;
+    flex-direction: row;
     position: relative;
     width: 100%;
     pointer-events: all;
 
-    .slick-slide div {
-        outline: none;
-    }
-
-    .slick-initialized .slick-slide.slick-active {
-        z-index: 1;
-    }
-`;
-
-const LocationInfoCard = styled.div<{ isMirrored?: boolean }>`
-    min-height: 100px;
     padding: ${spacings.nudge * 3}px ${spacings.nudge * 3}px
         ${spacings.spacer * 2}px ${spacings.nudge * 3}px;
-    pointer-events: all;
 
     @media ${mq.medium} {
         padding: ${spacings.nudge * 3}px ${spacings.spacer}px
@@ -101,19 +93,124 @@ const LocationInfoCard = styled.div<{ isMirrored?: boolean }>`
                   )
                 : `padding-left: ${(1 / 28) * spacings.wrapper}px`};
     }
+
+    .slick-slide div {
+        outline: none;
+    }
+
+    .slick-initialized .slick-slide.slick-active {
+        z-index: 1;
+    }
 `;
+
+const InfoCardView = styled.div`
+    min-height: 100px;
+    pointer-events: all;
+`;
+
+const LocatioInfoCard: FC<{
+    isInverted?: boolean;
+    location: MapLocation;
+    primaryAction?: (props: {
+        isInverted?: boolean;
+        label?: string;
+    }) => React.ReactNode;
+    secondaryAction?: (props: {
+        isInverted?: boolean;
+        label?: string;
+    }) => React.ReactNode;
+}> = ({ isInverted, location, primaryAction, secondaryAction }) => {
+    return (
+        <InfoCardView>
+            {location.meta?.title && (
+                <CardHeader>
+                    <Intro
+                        isInverted={isInverted}
+                        title={location.meta.title}
+                        superTitle={location.meta?.superTitle}
+                    />
+                </CardHeader>
+            )}
+            {(primaryAction || secondaryAction) && (
+                <StyledActions
+                    primary={
+                        location.meta?.primaryLabel &&
+                        primaryAction &&
+                        primaryAction({
+                            isInverted,
+                            label: location.meta?.primaryLabel,
+                        })
+                    }
+                    secondary={
+                        location.meta?.secondaryLabel &&
+                        secondaryAction &&
+                        secondaryAction({
+                            isInverted,
+                            label: location.meta?.secondaryLabel,
+                        })
+                    }
+                />
+            )}
+        </InfoCardView>
+    );
+};
 
 const CardHeader = styled.div`
     display: flex;
 `;
 
 const StyledActions = styled(Actions)`
+    padding: ${spacings.nudge}px;
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
 
     @media ${mq.medium} {
         & > * {
             max-width: 50%;
         }
+    }
+`;
+
+const Controls = styled.div`
+    display: none;
+    text-align: right;
+    margin-left: auto;
+
+    @media ${mq.semilarge} {
+        display: flex;
+        flex-direction: column;
+        align-self: flex-start;
+
+        & > * + * {
+            margin-top: ${spacings.nudge * 3}px;
+        }
+    }
+`;
+
+const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0 ${spacings.nudge * 3}px;
+
+    color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).light : color(theme).dark};
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+    &:enabled {
+        cursor: pointer;
+    }
+
+    &:enabled:hover {
+        transform: scale(1.05);
+    }
+
+    &:enabled:active {
+        transform: scale(0.95);
+    }
+
+    &:disabled {
+        color: ${({ theme, isInverted }) =>
+            isInverted ? color(theme).mono.dark : color(theme).mono.medium};
     }
 `;
 
@@ -186,6 +283,8 @@ const Map: FC<{
     primaryAction,
     secondaryAction,
     flyToControl,
+    controlNext,
+    controlPrev,
 }) => {
     const theme = useContext(ThemeContext);
     const [activeLocation, setActiveLocation] = useState<string>(
@@ -221,8 +320,9 @@ const Map: FC<{
                 <SliderContext.Consumer>
                     {({ goToStep }) => (
                         <MapContainer
-                            onReady={({ showAll }) => {
+                            onReady={({ showAll, goTo }) => {
                                 if (allMarkersOnInit) showAll();
+                                else goTo();
                             }}
                             center={center}
                             zoom={zoom}
@@ -273,56 +373,70 @@ const Map: FC<{
                                 move: (isMirrored ? -14 : 0) / 28,
                             }}
                         >
-                            <SliderWrapper>
-                                <Slider.Control type="prev">
-                                    {() => <span>prev</span>}
-                                </Slider.Control>
-                                <Slider.Control type="next">
-                                    {() => <span>next</span>}
-                                </Slider.Control>
-                                <Slider.Slides>
-                                    {locations?.map(({ meta }, i) => (
-                                        <LocationInfoCard
-                                            key={i}
-                                            isMirrored={isMirrored}
-                                        >
-                                            {meta?.title && (
-                                                <CardHeader>
-                                                    <Intro
-                                                        isInverted={isInverted}
-                                                        title={meta.title}
-                                                        superTitle={
-                                                            meta?.superTitle
-                                                        }
-                                                    />
-                                                </CardHeader>
-                                            )}
-                                            {(primaryAction ||
-                                                secondaryAction) && (
-                                                <StyledActions
-                                                    primary={
-                                                        meta?.primaryLabel &&
-                                                        primaryAction &&
-                                                        primaryAction({
-                                                            isInverted,
-                                                            label:
-                                                                meta?.primaryLabel,
-                                                        })
+                            <SliderWrapper isMirrored={isMirrored}>
+                                {locations && locations.length > 1 && (
+                                    <>
+                                        <Slider.Slides>
+                                            {locations?.map((location, i) => (
+                                                <LocatioInfoCard
+                                                    key={i}
+                                                    isInverted={isInverted}
+                                                    location={location}
+                                                    primaryAction={
+                                                        primaryAction
                                                     }
-                                                    secondary={
-                                                        meta?.secondaryLabel &&
-                                                        secondaryAction &&
-                                                        secondaryAction({
-                                                            isInverted,
-                                                            label:
-                                                                meta?.secondaryLabel,
-                                                        })
+                                                    secondaryAction={
+                                                        secondaryAction
                                                     }
                                                 />
-                                            )}
-                                        </LocationInfoCard>
-                                    ))}
-                                </Slider.Slides>
+                                            ))}
+                                        </Slider.Slides>
+                                        <Controls>
+                                            <StyledControl
+                                                type="prev"
+                                                isInverted={isInverted}
+                                            >
+                                                {(isActive) =>
+                                                    controlPrev ? (
+                                                        controlPrev({
+                                                            isInverted,
+                                                            isActive,
+                                                            name:
+                                                                'control_prev_head',
+                                                        })
+                                                    ) : (
+                                                        <ArrowLeftGhost />
+                                                    )
+                                                }
+                                            </StyledControl>
+                                            <StyledControl
+                                                type="next"
+                                                isInverted={isInverted}
+                                            >
+                                                {(isActive) =>
+                                                    controlNext ? (
+                                                        controlNext({
+                                                            isInverted,
+                                                            isActive,
+                                                            name:
+                                                                'control_next_head',
+                                                        })
+                                                    ) : (
+                                                        <ArrowRightGhost />
+                                                    )
+                                                }
+                                            </StyledControl>
+                                        </Controls>
+                                    </>
+                                )}
+                                {locations && locations.length === 1 && (
+                                    <LocatioInfoCard
+                                        isInverted={isInverted}
+                                        location={locations[0]}
+                                        primaryAction={primaryAction}
+                                        secondaryAction={secondaryAction}
+                                    />
+                                )}
                             </SliderWrapper>
                         </Grid.Col>
                     </Grid.Row>

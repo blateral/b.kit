@@ -169,6 +169,7 @@ const LeafletMap: FC<{
          */
         const flyToPosition = (position?: [number, number], zoom?: number) => {
             if (position) map?.flyTo(position, zoom);
+            else flyToActive(zoom);
         };
 
         /**
