@@ -48,20 +48,15 @@ export type SlickSliderSettings = Pick<
     Settings,
     | 'responsive'
     | 'draggable'
-    | 'infinite'
     | 'speed'
     | 'slidesToShow'
     | 'slidesToScroll'
     | 'variableWidth'
     | 'autoplay'
     | 'autoplaySpeed'
+    | 'fade'
+    | 'swipe'
 >;
-
-// Slider Wrapper
-const View = styled.div`
-    position: relative;
-    width: 100%;
-`;
 
 const Slider: FC<
     SlickSliderSettings & {
@@ -80,7 +75,6 @@ const Slider: FC<
         }) => void;
         afterChange?: (currentStep: number) => void;
         onInit?: (steps: number) => void;
-        className?: string;
     }
 > = ({
     initialStep = 0,
@@ -92,7 +86,6 @@ const Slider: FC<
     beforeChange,
     afterChange,
     onInit,
-    className,
     children,
     ...rest
 }) => {
@@ -142,6 +135,8 @@ const Slider: FC<
         slidesToScroll: 1,
         slidesToShow: 1,
         variableWidth: true,
+        fade: false,
+        swipe: true,
         beforeChange: (current: number, next: number) => {
             beforeChange &&
                 beforeChange({ currentStep: current, nextStep: next });
@@ -163,7 +158,8 @@ const Slider: FC<
                     if (settings[i].breakpoint === cBreakpoint) {
                         const { slidesToShow } = settings[i]
                             .settings as Settings;
-                        setVisibleSlides(slidesToShow);
+
+                        if (slidesToShow) setVisibleSlides(slidesToShow);
                         break;
                     }
                 }
@@ -223,7 +219,7 @@ const Slider: FC<
                 isOnLastStep: isOnLastStep,
             }}
         >
-            <View className={className}>{children}</View>
+            {children}
         </SliderContext.Provider>
     );
 };
@@ -301,6 +297,7 @@ const Slides: FC<{
     };
 
     const handleClick = (ev: React.MouseEvent) => {
+        if (context.clickSideOffset <= 0) return;
         ev.stopPropagation();
         if (!viewRef) return;
 

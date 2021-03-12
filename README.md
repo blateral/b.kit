@@ -15,6 +15,7 @@ See the up to date [Storybook stories](https://blateral.github.io/b.kit) of each
         -   [Fonts](#fonts)
         -   [Using styles](#using-styles)
     -   [Optional packages](#optional-packages)
+        -   [Carousels](#Carousels)
 -   [Developement](#developement)
     -   [Project architecture](#project-architecture)
     -   [Script commands](#script-commands)
@@ -156,6 +157,8 @@ getFonts(theme).copy.small;
 
 ### Optional packages
 
+#### Carousels
+
 > Some components like the `ImageCarousel` using the external `slick-carousel` and `react-slick` packages. To use them properly its important to install all packages (also listed under peer dependenies) and import the related CSS files.
 
 As imports (e.g. in Nextjs `_app.tsx`):
@@ -165,7 +168,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 ```
 
-As CDN link (e.g. in Storybook `preview-head.html`):
+As CDN link (e.g. in Storybook `preview-head.html` or NextJs's `_document.tsx`):
 
 ```jsx
 <link
@@ -178,6 +181,27 @@ As CDN link (e.g. in Storybook `preview-head.html`):
     rel="stylesheet"
     type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+/>
+```
+
+#### Map
+
+> The Map component is made up with `leaflet`. Therefore the NPM Leaflet package must be installed to properly use all map features.
+
+To diplaying the map in the right way you should also import the leaflet CSS styles:
+
+As imports (e.g. in Nextjs `_app.tsx`):
+
+```jsx
+import 'leaflet/dist/leaflet.css';
+```
+
+As CDN link (e.g. in Storybook `preview-head.html` or NextJs's `_document.tsx`):
+
+```jsx
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 />
 ```
 

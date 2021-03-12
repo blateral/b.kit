@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
@@ -11,7 +11,7 @@
     "scripts": {
         "build": "rollup -c",
         "watch": "rollup -c -w",
-        "storybook": "start-storybook -p 9000 -c .storybook",
+        "storybook": "start-storybook -s ./public -p 9000 -c .storybook",
         "deploy-storybook": "if git-branch-is master; then yarn storybook-to-ghpages; fi",
         "tc": "tsc --noEmit",
         "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
@@ -44,6 +44,7 @@
         "@storybook/theming": "^6.1.11",
         "@types/react": "^17.0.0",
         "@types/react-dom": "^17.0.0",
+        "@types/react-leaflet": "2.5.0",
         "@types/react-slick": "0.23.4",
         "@types/styled-components": "^5.1.4",
         "@typescript-eslint/eslint-plugin": "^4.8.2",
@@ -54,11 +55,13 @@
         "eslint-plugin-react-hooks": "^4.2.0",
         "git-branch-is": "^4.0.0",
         "husky": "^4.3.0",
+        "leaflet": "1.7.1",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-slick": "0.27.1",
         "rollup": "^2.34.1",
         "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-terser": "^7.0.2",
         "rollup-plugin-typescript2": "^0.29.0",
         "slick-carousel": "1.8.1",
         "styled-components": "^5.2.1",
@@ -66,6 +69,7 @@
         "typescript": "^4.1.2"
     },
     "peerDependencies": {
+        "leaflet": "1.7.1",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-slick": "0.27.1",

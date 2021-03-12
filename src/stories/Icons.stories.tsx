@@ -13,6 +13,7 @@ import Star from 'components/base/icons/Star';
 import StarGhost from 'components/base/icons/StarGhost';
 import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
+import FlyTo from 'components/base/icons/FlyTo';
 import Facebook from 'components/base/icons/socials/Facebook';
 import Instagram from 'components/base/icons/socials/Instagram';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
@@ -40,6 +41,7 @@ export default {
         Youtube,
         Phone,
         Mail,
+        FlyTo,
     },
     decorators: [
         (Story) => (
@@ -85,6 +87,9 @@ IconPhone.storyName = 'Phone';
 
 export const IconMail: Story = () => <Mail />;
 IconMail.storyName = 'Mail';
+
+export const IconFlyTo: Story = () => <FlyTo />;
+IconFlyTo.storyName = 'Fly to';
 
 export const IconFacebook: Story = () => <Facebook />;
 IconFacebook.storyName = 'Facebook logo';

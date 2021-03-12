@@ -40,7 +40,9 @@ const Title: FC<{
                         size="super"
                         isInverted={isInverted}
                     >
-                        {superTitle}
+                        <span
+                            dangerouslySetInnerHTML={{ __html: superTitle }}
+                        />
                     </Heading>
                 </div>
             )}
@@ -51,7 +53,7 @@ const Title: FC<{
                         size="heading-2"
                         isInverted={isInverted}
                     >
-                        {title}
+                        <span dangerouslySetInnerHTML={{ __html: title }} />
                     </Heading>
                 </div>
             )}
