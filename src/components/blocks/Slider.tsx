@@ -158,7 +158,8 @@ const Slider: FC<
                     if (settings[i].breakpoint === cBreakpoint) {
                         const { slidesToShow } = settings[i]
                             .settings as Settings;
-                        setVisibleSlides(slidesToShow);
+
+                        if (slidesToShow) setVisibleSlides(slidesToShow);
                         break;
                     }
                 }

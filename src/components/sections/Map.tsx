@@ -49,7 +49,7 @@ const CardWrapper = styled(Wrapper)`
 
 const SliderWrapper = styled.div<{ isMirrored?: boolean }>`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     position: relative;
     width: 100%;
     pointer-events: all;
@@ -63,6 +63,7 @@ const SliderWrapper = styled.div<{ isMirrored?: boolean }>`
     }
 
     @media ${mq.semilarge} {
+        flex-direction: row;
         ${withRange([spacings.spacer * 3, spacings.spacer * 5], 'padding-top')};
         ${withRange(
             [spacings.spacer * 3, spacings.spacer * 5],
@@ -171,14 +172,16 @@ const StyledActions = styled(Actions)`
 `;
 
 const Controls = styled.div`
-    display: none;
-    text-align: right;
-    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    text-align: center;
 
     @media ${mq.semilarge} {
-        display: flex;
         flex-direction: column;
         align-self: flex-start;
+        margin-left: auto;
+        text-align: right;
 
         & > * + * {
             margin-top: ${spacings.nudge * 3}px;
@@ -186,7 +189,53 @@ const Controls = styled.div`
     }
 `;
 
+const StyledDotGroup = styled(Slider.DotGroup)`
+    display: flex;
+    flex-direction: row;
+    padding-top: ${spacings.spacer * 1.5}px;
+    padding-left: ${spacings.spacer * 1.5}px;
+    padding-right: ${spacings.spacer * 1.5}px;
+
+    @media ${mq.semilarge} {
+        display: none;
+        padding: 0;
+    }
+`;
+
+const DotWrapper = styled.button`
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+
+    padding: ${spacings.nudge * 2}px;
+    margin: -${spacings.nudge * 2}px;
+
+    & + & {
+        margin-left: ${spacings.nudge * 1.5}px;
+    }
+`;
+
+const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
+    height: 14px;
+    width: 14px;
+    border: solid 1px
+        ${({ theme, isInverted }) =>
+            isInverted ? color(theme).light : color(theme).dark};
+    border-radius: 14px;
+
+    transition: background-color 0.2s ease-in-out;
+
+    background-color: ${({ isActive, isInverted, theme }) =>
+        isActive
+            ? isInverted
+                ? color(theme).light
+                : color(theme).dark
+            : 'transparent'};
+`;
+
 const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
+    display: none;
     border: none;
     outline: none;
     background: none;
@@ -211,6 +260,10 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
     &:disabled {
         color: ${({ theme, isInverted }) =>
             isInverted ? color(theme).mono.dark : color(theme).mono.medium};
+    }
+
+    @media ${mq.semilarge} {
+        display: block;
     }
 `;
 
@@ -270,6 +323,11 @@ const Map: FC<{
         isActive?: boolean;
         name?: string;
     }) => React.ReactNode;
+    dot?: (props: {
+        isInverted?: boolean;
+        isActive?: boolean;
+        index?: number;
+    }) => React.ReactNode;
 }> = ({
     isInverted = false,
     isMirrored = false,
@@ -285,6 +343,7 @@ const Map: FC<{
     flyToControl,
     controlNext,
     controlPrev,
+    dot,
 }) => {
     const theme = useContext(ThemeContext);
     const [activeLocation, setActiveLocation] = useState<string>(
@@ -426,6 +485,31 @@ const Map: FC<{
                                                     )
                                                 }
                                             </StyledControl>
+                                            <StyledDotGroup>
+                                                {(i, isActive, onClick) => (
+                                                    <DotWrapper
+                                                        key={i}
+                                                        onClick={onClick}
+                                                    >
+                                                        {dot ? (
+                                                            dot({
+                                                                isInverted,
+                                                                isActive,
+                                                                index: i,
+                                                            })
+                                                        ) : (
+                                                            <Dot
+                                                                isActive={
+                                                                    isActive
+                                                                }
+                                                                isInverted={
+                                                                    isInverted
+                                                                }
+                                                            />
+                                                        )}
+                                                    </DotWrapper>
+                                                )}
+                                            </StyledDotGroup>
                                         </Controls>
                                     </>
                                 )}
