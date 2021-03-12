@@ -121,13 +121,15 @@ export interface LocationIcon {
     url: string;
     size: [number, number];
     anchor: [number, number];
+
+    sizeActive: [number, number];
+    anchorActive: [number, number];
 }
 
 export interface MapLocation {
     id: string;
     position: [number, number];
     icon?: LocationIcon;
-    iconActive?: LocationIcon;
     meta?: {
         title?: string;
         titleAs?: HeadlineTag;
@@ -148,7 +150,7 @@ const Map: FC<{
     initialLocation?: string;
     locations?: Array<MapLocation>;
     /** Show all markers on first load */
-    allMarkersVisible?: boolean;
+    allMarkersOnInit?: boolean;
     /** Map container padding for show all markers */
     fitBoundsPadding?: [number, number];
 
@@ -179,7 +181,7 @@ const Map: FC<{
     flyToZoom,
     initialLocation,
     locations,
-    allMarkersVisible = false,
+    allMarkersOnInit = false,
     fitBoundsPadding,
     primaryAction,
     secondaryAction,
@@ -189,7 +191,6 @@ const Map: FC<{
     const [activeLocation, setActiveLocation] = useState<string>(
         initialLocation || ''
     );
-    const [mapCenter, setMapCenter] = useState<[number, number]>(center);
 
     return (
         <StyledSection
@@ -214,19 +215,19 @@ const Map: FC<{
                 beforeChange={({ nextStep }) => {
                     if (locations && locations[nextStep]) {
                         setActiveLocation(locations[nextStep].id);
-                        setMapCenter(locations[nextStep].position);
                     }
                 }}
-                // beforeChange={beforeChange}
-                // afterChange={afterChange}
-                // onInit={onInit}
             >
                 <SliderContext.Consumer>
                     {({ goToStep }) => (
                         <MapContainer
-                            center={mapCenter}
+                            onReady={({ showAll }) => {
+                                if (allMarkersOnInit) showAll();
+                            }}
+                            center={center}
                             zoom={zoom}
                             isMirrored={isMirrored}
+                            activeMarkerId={activeLocation}
                             onMarkerClick={(markerId) => {
                                 setActiveLocation(markerId);
 
@@ -237,39 +238,23 @@ const Map: FC<{
 
                                 if (locIndex !== undefined && locIndex !== -1)
                                     goToStep(locIndex);
-
-                                // pan map center to marker position
-                                const location = locations?.find(
-                                    (loc) => loc.id === markerId
-                                );
-                                if (location) setMapCenter(location.position);
                             }}
                             flyToControl={flyToControl}
-                            onFlyToClick={() => {
-                                const location = locations?.find(
-                                    (loc) => loc.id === activeLocation
-                                );
-                                if (location) {
-                                    return {
-                                        position: location.position,
-                                        zoom: flyToZoom,
-                                    };
-                                } else return undefined;
+                            onFlyToClick={(goTo) => {
+                                // pan and zoom to active location
+                                goTo(flyToZoom);
                             }}
-                            allMarkersVisible={allMarkersVisible}
                             fitBoundsPadding={fitBoundsPadding}
                             markers={locations?.map(
-                                ({ id, position, icon, iconActive }) => {
+                                ({ id, position, icon }) => {
                                     return {
                                         id,
-                                        position: position,
-                                        icon:
-                                            id === activeLocation
-                                                ? iconActive || icon
-                                                : icon,
+                                        position,
+                                        icon,
                                     };
                                 }
                             )}
+                            onActiveMarkerChanged={({ goTo }) => goTo()}
                         />
                     )}
                 </SliderContext.Consumer>

@@ -28,11 +28,8 @@ const exampleLocations: MapLocation[] = [
         icon: {
             size: [20, 28],
             anchor: [10, 28],
-            url: '/images/Marker.svg',
-        },
-        iconActive: {
-            size: [50, 70],
-            anchor: [25, 70],
+            sizeActive: [50, 70],
+            anchorActive: [25, 70],
             url: '/images/Marker.svg',
         },
     },
@@ -48,11 +45,8 @@ const exampleLocations: MapLocation[] = [
         icon: {
             size: [20, 28],
             anchor: [10, 28],
-            url: '/images/Marker.svg',
-        },
-        iconActive: {
-            size: [50, 70],
-            anchor: [25, 70],
+            sizeActive: [50, 70],
+            anchorActive: [25, 70],
             url: '/images/Marker.svg',
         },
     },
@@ -68,11 +62,8 @@ const exampleLocations: MapLocation[] = [
         icon: {
             size: [20, 28],
             anchor: [10, 28],
-            url: '/images/Marker.svg',
-        },
-        iconActive: {
-            size: [50, 70],
-            anchor: [25, 70],
+            sizeActive: [50, 70],
+            anchorActive: [25, 70],
             url: '/images/Marker.svg',
         },
     },
@@ -88,7 +79,7 @@ export const ShowAllMarkersOnLoad: Story = () => (
     <Map
         initialLocation="Sipplingen"
         locations={exampleLocations}
-        allMarkersVisible
+        allMarkersOnInit
         fitBoundsPadding={[30, 30]}
     />
 );
@@ -99,7 +90,7 @@ export const WithFlyToControl: Story = () => (
         locations={exampleLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
-        allMarkersVisible
+        allMarkersOnInit
         fitBoundsPadding={[30, 30]}
     />
 );
@@ -110,7 +101,7 @@ export const WithActions: Story = () => (
         locations={exampleLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
-        allMarkersVisible
+        allMarkersOnInit
         fitBoundsPadding={[30, 30]}
         primaryAction={({ isInverted, label }) => (
             <Button.View isInverted={isInverted}>
@@ -132,7 +123,7 @@ export const Mirrored: Story = () => (
         locations={exampleLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
-        allMarkersVisible
+        allMarkersOnInit
         fitBoundsPadding={[30, 30]}
         primaryAction={({ isInverted, label }) => (
             <Button.View isInverted={isInverted}>
@@ -154,7 +145,7 @@ export const Inverted: Story = () => (
         locations={exampleLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
-        allMarkersVisible
+        allMarkersOnInit
         fitBoundsPadding={[30, 30]}
         primaryAction={({ isInverted, label }) => (
             <Button.View isInverted={isInverted}>

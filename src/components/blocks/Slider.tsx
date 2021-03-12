@@ -48,7 +48,6 @@ export type SlickSliderSettings = Pick<
     Settings,
     | 'responsive'
     | 'draggable'
-    | 'infinite'
     | 'speed'
     | 'slidesToShow'
     | 'slidesToScroll'
