@@ -509,23 +509,6 @@ const Map: FC<{
                                         </Slider.Slides>
                                         <Controls>
                                             <StyledControl
-                                                type="prev"
-                                                isInverted={isInverted}
-                                            >
-                                                {(isActive) =>
-                                                    controlPrev ? (
-                                                        controlPrev({
-                                                            isInverted,
-                                                            isActive,
-                                                            name:
-                                                                'control_prev_head',
-                                                        })
-                                                    ) : (
-                                                        <ArrowLeftGhost />
-                                                    )
-                                                }
-                                            </StyledControl>
-                                            <StyledControl
                                                 type="next"
                                                 isInverted={isInverted}
                                             >
@@ -539,6 +522,23 @@ const Map: FC<{
                                                         })
                                                     ) : (
                                                         <ArrowRightGhost />
+                                                    )
+                                                }
+                                            </StyledControl>
+                                            <StyledControl
+                                                type="prev"
+                                                isInverted={isInverted}
+                                            >
+                                                {(isActive) =>
+                                                    controlPrev ? (
+                                                        controlPrev({
+                                                            isInverted,
+                                                            isActive,
+                                                            name:
+                                                                'control_prev_head',
+                                                        })
+                                                    ) : (
+                                                        <ArrowLeftGhost />
                                                     )
                                                 }
                                             </StyledControl>
