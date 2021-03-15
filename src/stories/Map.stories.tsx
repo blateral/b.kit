@@ -42,7 +42,7 @@ const exampleLocations: MapLocation[] = [
             anchor: [10, 28],
             sizeActive: [50, 70],
             anchorActive: [25, 70],
-            url: '/images/Marker.svg',
+            url: '/Marker.svg',
         },
     },
     {
@@ -67,7 +67,7 @@ const exampleLocations: MapLocation[] = [
             anchor: [10, 28],
             sizeActive: [50, 70],
             anchorActive: [25, 70],
-            url: '/images/Marker.svg',
+            url: '/Marker.svg',
         },
     },
     {
@@ -84,7 +84,7 @@ const exampleLocations: MapLocation[] = [
             anchor: [10, 28],
             sizeActive: [50, 70],
             anchorActive: [25, 70],
-            url: '/images/Marker.svg',
+            url: '/Marker.svg',
         },
     },
 ];
@@ -126,7 +126,7 @@ export const WithSingleLocation: Story = () => (
                     anchor: [10, 28],
                     sizeActive: [50, 70],
                     anchorActive: [25, 70],
-                    url: '/images/Marker.svg',
+                    url: '/Marker.svg',
                 },
             },
         ]}
