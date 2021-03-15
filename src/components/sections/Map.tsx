@@ -147,8 +147,8 @@ const ContactList = styled.ul<{ isInverted?: boolean }>`
         margin: 0;
 
         span:first-child {
-            flex: 0 0 40px;
-            max-width: 40px;
+            flex: 0 0 30px;
+            max-width: 30px;
 
             & > * {
                 max-width: 100%;
@@ -156,7 +156,7 @@ const ContactList = styled.ul<{ isInverted?: boolean }>`
         }
 
         span + span {
-            margin-left: ${spacings.nudge * 3}px;
+            margin-left: ${spacings.nudge * 2.5}px;
         }
     }
 
