@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
@@ -8,6 +9,7 @@ import FlyTo from 'components/base/icons/FlyTo';
 import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
 import Youtube from 'components/base/icons/socials/Youtube';
+import ArrowRight from 'components/base/icons/ArrowRight';
 
 export default {
     title: 'Sections/Map',
@@ -24,8 +26,16 @@ const exampleLocations: MapLocation[] = [
                 am Bodensee </br>
                 Deutschland`,
             superTitle: 'Anfahrt und Kontakt',
-            primaryLabel: 'Primary',
-            secondaryLabel: 'Secondary',
+            primaryAction: (isInverted) => (
+                <Button.View isInverted={isInverted}>
+                    <Button.Label>Primär</Button.Label>
+                </Button.View>
+            ),
+            secondaryAction: (isInverted) => (
+                <ButtonGhost.View isInverted={isInverted}>
+                    <ButtonGhost.Label>Sekundär</ButtonGhost.Label>
+                </ButtonGhost.View>
+            ),
             contact: [
                 { icon: <Phone />, label: '9879534957943' },
                 {
@@ -51,8 +61,16 @@ const exampleLocations: MapLocation[] = [
         meta: {
             title: 'Standort Paris',
             superTitle: 'Standort',
-            primaryLabel: 'Finde uns!',
-            secondaryLabel: 'Contact',
+            primaryAction: (isInverted) => (
+                <Button.View isInverted={isInverted}>
+                    <Button.Label>Find us</Button.Label>
+                </Button.View>
+            ),
+            secondaryAction: (isInverted) => (
+                <ButtonGhost.View isInverted={isInverted}>
+                    <ButtonGhost.Label>Contact</ButtonGhost.Label>
+                </ButtonGhost.View>
+            ),
             contact: [
                 { icon: <Phone />, label: '9879534957943' },
                 {
@@ -76,8 +94,16 @@ const exampleLocations: MapLocation[] = [
         meta: {
             title: 'Standort Hamburg',
             superTitle: 'Location',
-            primaryLabel: 'Finde uns!',
-            secondaryLabel: 'Contact',
+            primaryAction: (isInverted) => (
+                <Button.View isInverted={isInverted}>
+                    <Button.Label>Finde uns</Button.Label>
+                </Button.View>
+            ),
+            secondaryAction: (isInverted) => (
+                <ButtonGhost.View isInverted={isInverted}>
+                    <ButtonGhost.Label>Kontakt</ButtonGhost.Label>
+                </ButtonGhost.View>
+            ),
         },
         icon: {
             size: [20, 28],
@@ -117,8 +143,16 @@ export const WithSingleLocation: Story = () => (
                     am Bodensee </br>
                     Deutschland`,
                     superTitle: 'Anfahrt und Kontakt',
-                    primaryLabel: 'Primary',
-                    secondaryLabel: 'Secondary',
+                    primaryAction: (isInverted) => (
+                        <Button.View isInverted={isInverted}>
+                            <Button.Label>Primary</Button.Label>
+                        </Button.View>
+                    ),
+                    secondaryAction: (isInverted) => (
+                        <ButtonGhost.View isInverted={isInverted}>
+                            <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+                        </ButtonGhost.View>
+                    ),
                 },
                 position: [47.79678, 9.09737],
                 icon: {
@@ -144,27 +178,6 @@ export const WithFlyToControl: Story = () => (
     />
 );
 
-export const WithActions: Story = () => (
-    <Map
-        initialLocation="Sipplingen"
-        locations={exampleLocations}
-        flyToControl={<FlyTo />}
-        flyToZoom={12}
-        allMarkersOnInit
-        fitBoundsPadding={[30, 30]}
-        primaryAction={({ isInverted, label }) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>{label}</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={({ isInverted, label }) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>{label}</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-    />
-);
-
 export const Mirrored: Story = () => (
     <Map
         isMirrored
@@ -174,16 +187,6 @@ export const Mirrored: Story = () => (
         flyToZoom={12}
         allMarkersOnInit
         fitBoundsPadding={[30, 30]}
-        primaryAction={({ isInverted, label }) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>{label}</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={({ isInverted, label }) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>{label}</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -196,15 +199,32 @@ export const Inverted: Story = () => (
         flyToZoom={12}
         allMarkersOnInit
         fitBoundsPadding={[30, 30]}
-        primaryAction={({ isInverted, label }) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>{label}</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={({ isInverted, label }) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>{label}</ButtonGhost.Label>
-            </ButtonGhost.View>
+    />
+);
+
+export const WithCustomControls: Story = () => (
+    <Map
+        initialLocation="Sipplingen"
+        locations={exampleLocations}
+        flyToControl={<FlyTo />}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
+        controlNext={() => <ArrowRight />}
+        controlPrev={() => <ArrowRight />}
+    />
+);
+
+export const WithCustomDots: Story = () => (
+    <Map
+        initialLocation="Sipplingen"
+        locations={exampleLocations}
+        flyToControl={<FlyTo />}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
+        dot={({ isActive }) => (
+            <ArrowRight iconColor={isActive ? 'red' : 'grey'} />
         )}
     />
 );

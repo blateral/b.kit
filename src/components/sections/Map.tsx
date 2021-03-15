@@ -7,6 +7,7 @@ import Actions from 'components/blocks/Actions';
 import Intro from 'components/blocks/Intro';
 import LeafletMap from 'components/blocks/LeafletMap';
 import Slider, { SliderContext } from 'components/blocks/Slider';
+import Copy from 'components/typography/Copy';
 import { HeadlineTag } from 'components/typography/Heading';
 import React, { FC, useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
@@ -145,38 +146,35 @@ const ContactList = styled.ul<{ isInverted?: boolean }>`
         align-items: center;
         padding: 0;
         margin: 0;
-
-        span:first-child {
-            flex: 0 0 30px;
-            max-width: 30px;
-
-            & > * {
-                max-width: 100%;
-            }
-        }
-
-        span + span {
-            margin-left: ${spacings.nudge * 2.5}px;
-        }
     }
 
     li + li {
         margin-top: ${spacings.nudge * 3}px;
+    }
+
+    span:first-child {
+        flex: 0 0 30px;
+        max-width: 30px;
+
+        & > * {
+            max-width: 100%;
+        }
+    }
+`;
+
+const ContactListLabel = styled(Copy)`
+    margin-left: ${spacings.nudge * 2.5}px;
+
+    * {
+        margin: 0;
+        padding: 0;
     }
 `;
 
 const LocationInfoCard: FC<{
     isInverted?: boolean;
     location: MapLocation;
-    primaryAction?: (props: {
-        isInverted?: boolean;
-        label?: string;
-    }) => React.ReactNode;
-    secondaryAction?: (props: {
-        isInverted?: boolean;
-        label?: string;
-    }) => React.ReactNode;
-}> = ({ isInverted, location, primaryAction, secondaryAction }) => {
+}> = ({ isInverted, location }) => {
     return (
         <InfoCardView>
             {location.meta?.title && (
@@ -184,43 +182,40 @@ const LocationInfoCard: FC<{
                     <Intro
                         isInverted={isInverted}
                         title={location.meta.title}
+                        titleAs={location.meta.titleAs}
                         superTitle={location.meta?.superTitle}
+                        superTitleAs={location.meta?.superTitleAs}
                     />
                 </CardHeader>
             )}
-            {location.meta?.contact && (
+            {location.meta?.contact && location.meta.contact.length > 0 && (
                 <ContactList isInverted={isInverted}>
                     {location.meta?.contact
                         ?.filter((c) => c.label)
                         .map((contact, i) => (
                             <li key={i}>
                                 <span>{contact.icon}</span>
-                                <span
-                                    dangerouslySetInnerHTML={{
-                                        __html: contact.label || '',
-                                    }}
-                                />
+                                <ContactListLabel isInverted={isInverted}>
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: contact.label || '',
+                                        }}
+                                    />
+                                </ContactListLabel>
                             </li>
                         ))}
                 </ContactList>
             )}
-            {(primaryAction || secondaryAction) && (
+            {(location?.meta?.primaryAction ||
+                location?.meta?.secondaryAction) && (
                 <StyledActions
                     primary={
-                        location.meta?.primaryLabel &&
-                        primaryAction &&
-                        primaryAction({
-                            isInverted,
-                            label: location.meta?.primaryLabel,
-                        })
+                        location?.meta?.primaryAction &&
+                        location.meta.primaryAction(isInverted)
                     }
                     secondary={
-                        location.meta?.secondaryLabel &&
-                        secondaryAction &&
-                        secondaryAction({
-                            isInverted,
-                            label: location.meta?.secondaryLabel,
-                        })
+                        location?.meta?.secondaryAction &&
+                        location.meta.secondaryAction(isInverted)
                     }
                 />
             )}
@@ -341,10 +336,10 @@ export interface MapLocation {
         title?: string;
         titleAs?: HeadlineTag;
         superTitle?: string;
-        superTitleAs?: string;
+        superTitleAs?: HeadlineTag;
         contact?: Array<{ icon?: React.ReactNode; label?: string }>;
-        primaryLabel?: string;
-        secondaryLabel?: string;
+        primaryAction?: (isInverted?: boolean) => React.ReactNode;
+        secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     };
 }
 
@@ -360,15 +355,6 @@ const Map: FC<{
     allMarkersOnInit?: boolean;
     /** Map container padding for show all markers */
     fitBoundsPadding?: [number, number];
-
-    primaryAction?: (props: {
-        isInverted?: boolean;
-        label?: string;
-    }) => React.ReactNode;
-    secondaryAction?: (props: {
-        isInverted?: boolean;
-        label?: string;
-    }) => React.ReactNode;
     flyToControl?: React.ReactNode;
     controlNext?: (props: {
         isInverted?: boolean;
@@ -395,8 +381,6 @@ const Map: FC<{
     locations,
     allMarkersOnInit = false,
     fitBoundsPadding,
-    primaryAction,
-    secondaryAction,
     flyToControl,
     controlNext,
     controlPrev,
@@ -498,33 +482,10 @@ const Map: FC<{
                                                     key={i}
                                                     isInverted={isInverted}
                                                     location={location}
-                                                    primaryAction={
-                                                        primaryAction
-                                                    }
-                                                    secondaryAction={
-                                                        secondaryAction
-                                                    }
                                                 />
                                             ))}
                                         </Slider.Slides>
                                         <Controls>
-                                            <StyledControl
-                                                type="prev"
-                                                isInverted={isInverted}
-                                            >
-                                                {(isActive) =>
-                                                    controlPrev ? (
-                                                        controlPrev({
-                                                            isInverted,
-                                                            isActive,
-                                                            name:
-                                                                'control_prev_head',
-                                                        })
-                                                    ) : (
-                                                        <ArrowLeftGhost />
-                                                    )
-                                                }
-                                            </StyledControl>
                                             <StyledControl
                                                 type="next"
                                                 isInverted={isInverted}
@@ -539,6 +500,23 @@ const Map: FC<{
                                                         })
                                                     ) : (
                                                         <ArrowRightGhost />
+                                                    )
+                                                }
+                                            </StyledControl>
+                                            <StyledControl
+                                                type="prev"
+                                                isInverted={isInverted}
+                                            >
+                                                {(isActive) =>
+                                                    controlPrev ? (
+                                                        controlPrev({
+                                                            isInverted,
+                                                            isActive,
+                                                            name:
+                                                                'control_prev_head',
+                                                        })
+                                                    ) : (
+                                                        <ArrowLeftGhost />
                                                     )
                                                 }
                                             </StyledControl>
@@ -574,8 +552,6 @@ const Map: FC<{
                                     <LocationInfoCard
                                         isInverted={isInverted}
                                         location={locations[0]}
-                                        primaryAction={primaryAction}
-                                        secondaryAction={secondaryAction}
                                     />
                                 )}
                             </SliderWrapper>
