@@ -178,17 +178,6 @@ export const WithFlyToControl: Story = () => (
     />
 );
 
-export const WithActions: Story = () => (
-    <Map
-        initialLocation="Sipplingen"
-        locations={exampleLocations}
-        flyToControl={<FlyTo />}
-        flyToZoom={12}
-        allMarkersOnInit
-        fitBoundsPadding={[30, 30]}
-    />
-);
-
 export const Mirrored: Story = () => (
     <Map
         isMirrored
