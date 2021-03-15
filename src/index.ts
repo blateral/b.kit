@@ -64,8 +64,12 @@ export { default as CrossSmallIcon } from 'components/base/icons/CrossSmall';
 export { default as MagnifierIcon } from 'components/base/icons/Magnifier';
 export { default as MenuBurgerIcon } from 'components/base/icons/MenuBurger';
 export { default as PlayIcon } from 'components/base/icons/Play';
+export { default as FlyToIcon } from 'components/base/icons/FlyTo';
 export { default as StarIcon } from 'components/base/icons/Star';
 export { default as StarGhostIcon } from 'components/base/icons/StarGhost';
+export { default as MailIcon } from 'components/base/icons/Mail';
+export { default as PhoneIcon } from 'components/base/icons/Phone';
+export { default as RouteIcon } from 'components/base/icons/Route';
 
 /***** Social Icons *****/
 export { default as FacebookIcon } from 'components/base/icons/socials/Facebook';

@@ -12,6 +12,7 @@ import Play from 'components/base/icons/Play';
 import Star from 'components/base/icons/Star';
 import StarGhost from 'components/base/icons/StarGhost';
 import Phone from 'components/base/icons/Phone';
+import Route from 'components/base/icons/Route';
 import Mail from 'components/base/icons/Mail';
 import FlyTo from 'components/base/icons/FlyTo';
 import Facebook from 'components/base/icons/socials/Facebook';
@@ -42,6 +43,7 @@ export default {
         Phone,
         Mail,
         FlyTo,
+        Route,
     },
     decorators: [
         (Story) => (
@@ -87,6 +89,9 @@ IconPhone.storyName = 'Phone';
 
 export const IconMail: Story = () => <Mail />;
 IconMail.storyName = 'Mail';
+
+export const IconRoute: Story = () => <Route />;
+IconRoute.storyName = 'Routing';
 
 export const IconFlyTo: Story = () => <FlyTo />;
 IconFlyTo.storyName = 'Fly to';
