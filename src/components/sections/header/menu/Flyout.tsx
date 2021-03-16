@@ -332,12 +332,14 @@ export interface NavGroup {
     id: string;
     name?: string;
     isSmall?: boolean;
-    items?: {
-        id?: string;
-        label?: string;
-        link?: LinkProps;
-        onClick?: (id?: string, fullId?: string) => void;
-    }[];
+    items?: NavItem[];
+}
+
+export interface NavItem {
+    id?: string;
+    label?: string;
+    link?: LinkProps;
+    onClick?: (id?: string, fullId?: string) => void;
 }
 
 const NavListView = styled.ul<{ isLarge?: boolean }>`

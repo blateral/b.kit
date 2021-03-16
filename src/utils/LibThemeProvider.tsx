@@ -50,10 +50,12 @@ const assignFontBase = (
  * @param source Theme object that should be assigned to target
  */
 const assignTo = (target: DefaultTheme, source: Theme) => {
+    const output = { ...target };
+
     Object.keys(source).forEach((key) => {
         const sourceVal = source[key];
         const targetVal = target[key];
-        target[key] =
+        output[key] =
             targetVal &&
             sourceVal &&
             typeof targetVal === 'object' &&
@@ -61,7 +63,7 @@ const assignTo = (target: DefaultTheme, source: Theme) => {
                 ? assignTo(targetVal, sourceVal)
                 : sourceVal;
     });
-    return target;
+    return output;
 };
 
 export const LibThemeProvider: FC<{
