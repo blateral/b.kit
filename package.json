@@ -12,7 +12,8 @@
         "build": "rollup -c",
         "watch": "rollup -c -w",
         "storybook": "start-storybook -s ./public -p 9000 -c .storybook",
-        "deploy-storybook": "if git-branch-is master; then yarn storybook-to-ghpages -s build-storybook; fi",
+        "deploy-storybook": "if git-branch-is master; then yarn storybook-to-ghpages; fi",
+        "build-storybook": "build-storybook -s public",
         "tc": "tsc --noEmit",
         "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
         "deploy": "yarn tc && yarn build && yarn publish"
