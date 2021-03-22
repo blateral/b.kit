@@ -52,7 +52,7 @@ const exampleLocations: MapLocation[] = [
             anchor: [10, 28],
             sizeActive: [50, 70],
             anchorActive: [25, 70],
-            url: '/Marker.svg',
+            url: '/assets/images/Marker.svg',
         },
     },
     {
@@ -85,7 +85,7 @@ const exampleLocations: MapLocation[] = [
             anchor: [10, 28],
             sizeActive: [50, 70],
             anchorActive: [25, 70],
-            url: '/Marker.svg',
+            url: '/assets/images/Marker.svg',
         },
     },
     {
@@ -110,7 +110,7 @@ const exampleLocations: MapLocation[] = [
             anchor: [10, 28],
             sizeActive: [50, 70],
             anchorActive: [25, 70],
-            url: '/Marker.svg',
+            url: '/assets/images/Marker.svg',
         },
     },
 ];
