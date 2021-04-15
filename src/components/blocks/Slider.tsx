@@ -56,6 +56,7 @@ export type SlickSliderSettings = Pick<
     | 'autoplaySpeed'
     | 'fade'
     | 'swipe'
+    | 'infinite' // not fully working yet
 >;
 
 const Slider: FC<
@@ -107,23 +108,25 @@ const Slider: FC<
     const nextStep = () => {
         if (sliderRef) {
             let prev = currentStep;
-            sliderRef.slickGoTo(prev >= slideCount - 1 ? prev : ++prev);
+            if (slickSettings.infinite) sliderRef.slickGoTo(++prev);
+            else sliderRef.slickGoTo(prev >= slideCount - 1 ? prev : ++prev);
         }
     };
 
     const previousStep = () => {
         if (sliderRef) {
             let prev = currentStep;
+            if (slickSettings.infinite) sliderRef.slickGoTo(--prev);
             sliderRef.slickGoTo(prev <= 0 ? prev : --prev);
         }
     };
 
     const isOnFirstStep = (): boolean => {
-        return currentStep === 0;
+        return slickSettings.infinite ? false : currentStep === 0;
     };
 
     const isOnLastStep = (): boolean => {
-        return currentStep >= steps - 1;
+        return slickSettings.infinite ? false : currentStep >= steps - 1;
     };
 
     // slick settings
