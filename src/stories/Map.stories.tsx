@@ -11,6 +11,8 @@ import Mail from 'components/base/icons/Mail';
 import Youtube from 'components/base/icons/socials/Youtube';
 import ArrowRight from 'components/base/icons/ArrowRight';
 
+import marker from '../../public/images/Marker.svg';
+
 export default {
     title: 'Sections/Map',
     component: Map,
@@ -52,7 +54,7 @@ const exampleLocations: MapLocation[] = [
             anchor: [10, 28],
             sizeActive: [50, 70],
             anchorActive: [25, 70],
-            url: '/images/Marker.svg',
+            url: marker,
         },
     },
     {
@@ -85,7 +87,7 @@ const exampleLocations: MapLocation[] = [
             anchor: [10, 28],
             sizeActive: [50, 70],
             anchorActive: [25, 70],
-            url: '/images/Marker.svg',
+            url: marker,
         },
     },
     {
@@ -110,7 +112,7 @@ const exampleLocations: MapLocation[] = [
             anchor: [10, 28],
             sizeActive: [50, 70],
             anchorActive: [25, 70],
-            url: '/images/Marker.svg',
+            url: marker,
         },
     },
 ];
