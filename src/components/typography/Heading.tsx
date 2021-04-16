@@ -97,6 +97,7 @@ const Heading: React.FC<{
     textColor?: string;
     hyphens?: boolean;
     hasShadow?: boolean;
+    innerHTML?: string;
 
     className?: string;
 }> = ({
@@ -107,6 +108,7 @@ const Heading: React.FC<{
     textColor,
     hyphens = false,
     hasShadow = false,
+    innerHTML,
     children,
 }) => {
     const theme = React.useContext(ThemeContext);
@@ -145,6 +147,9 @@ const Heading: React.FC<{
             }
             hyphens={hyphens}
             hasShadow={hasShadow}
+            dangerouslySetInnerHTML={
+                innerHTML ? { __html: innerHTML } : undefined
+            }
             className={className}
         >
             {children}

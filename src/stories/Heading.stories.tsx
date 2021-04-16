@@ -19,6 +19,10 @@ export default {
 
 export const Default: Story = () => <Heading>Lorem Ipsum Dolor Sit</Heading>;
 
+export const WithInnerHTML: Story = () => (
+    <Heading innerHTML="Lorem Ipsum Dolor Sit <br /> Ipsum Sit " />
+);
+
 export const WithSize: Story = () => (
     <>
         <Heading size="heading-1">Lorem Ipsum Dolor Sit</Heading>
