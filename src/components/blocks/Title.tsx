@@ -36,25 +36,21 @@ const Title: FC<{
             {superTitle && (
                 <div>
                     <Heading
-                        as={superTitleAs}
+                        as={superTitleAs || 'h2'}
                         size="super"
                         isInverted={isInverted}
-                    >
-                        <span
-                            dangerouslySetInnerHTML={{ __html: superTitle }}
-                        />
-                    </Heading>
+                        innerHTML={superTitle}
+                    />
                 </div>
             )}
             {title && (
                 <div>
                     <Heading
-                        as={titleAs}
+                        as={titleAs || 'h3'}
                         size="heading-2"
                         isInverted={isInverted}
-                    >
-                        <span dangerouslySetInnerHTML={{ __html: title }} />
-                    </Heading>
+                        innerHTML={title}
+                    />
                 </div>
             )}
         </View>

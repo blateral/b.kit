@@ -90,9 +90,8 @@ const Intro: React.FC<{
                     isInverted={isInverted}
                     isCentered={isCentered}
                     clampText={clampText}
-                >
-                    <div dangerouslySetInnerHTML={{ __html: text }} />
-                </ContentBlock>
+                    innerHTML={text}
+                />
             )}
             {(primaryAction || secondaryAction) && (
                 <StyledActions

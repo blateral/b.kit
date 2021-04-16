@@ -178,13 +178,8 @@ const Teaser: FC<{
                                 <ImgDescMobile
                                     size="small"
                                     isInverted={isInverted}
-                                >
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: image.description,
-                                        }}
-                                    />
-                                </ImgDescMobile>
+                                    innerHTML={image.description}
+                                />
                             )}
                         </ImgWrapper>
                     </Grid.Col>
@@ -206,30 +201,21 @@ const Teaser: FC<{
                                 <ContentBlock
                                     type="copy-b"
                                     isInverted={isInverted}
-                                >
-                                    {intro}
-                                </ContentBlock>
+                                    innerHTML={intro}
+                                />
                             )}
                             {text && (
-                                <ContentBlock isInverted={isInverted}>
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: text,
-                                        }}
-                                    />
-                                </ContentBlock>
+                                <ContentBlock
+                                    isInverted={isInverted}
+                                    innerHTML={text}
+                                />
                             )}
                             {subText && (
                                 <SubTextBlock
                                     isInverted={isInverted}
                                     type="copy-i"
-                                >
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: subText,
-                                        }}
-                                    />
-                                </SubTextBlock>
+                                    innerHTML={subText}
+                                />
                             )}
                             {(primaryAction || secondaryAction) && (
                                 <StyledActions
@@ -262,13 +248,8 @@ const Teaser: FC<{
                             <ImgDescDesktop
                                 size="small"
                                 isInverted={isInverted}
-                            >
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: image.description,
-                                    }}
-                                ></div>
-                            </ImgDescDesktop>
+                                innerHTML={image.description}
+                            />
                         )}
                     </Grid.Col>
                     <Grid.Col

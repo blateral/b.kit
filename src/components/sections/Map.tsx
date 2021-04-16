@@ -195,13 +195,10 @@ const LocationInfoCard: FC<{
                         .map((contact, i) => (
                             <li key={i}>
                                 <span>{contact.icon}</span>
-                                <ContactListLabel isInverted={isInverted}>
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: contact.label || '',
-                                        }}
-                                    />
-                                </ContactListLabel>
+                                <ContactListLabel
+                                    isInverted={isInverted}
+                                    innerHTML={contact.label}
+                                />
                             </li>
                         ))}
                 </ContactList>
