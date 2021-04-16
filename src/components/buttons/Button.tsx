@@ -100,38 +100,45 @@ export type LinkProps = Props & {
 };
 
 const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
-    (props, ref) => {
-        if (props.as === 'button') {
+    (
+        { as, isInverted, isDisabled, onClick, className, children, ...rest },
+        ref
+    ) => {
+        if (as === 'button') {
             return (
                 <View
                     ref={ref}
-                    as={props.as as any}
-                    inverted={props.isInverted}
-                    disable={props.isDisabled}
-                    onClick={props.onClick}
-                    className={props.className}
+                    as={as as any}
+                    inverted={isInverted}
+                    disable={isDisabled}
+                    onClick={onClick}
+                    className={className}
+                    {...rest}
                 >
-                    {props.children}
+                    {children}
                 </View>
             );
         } else {
             return (
                 <View
                     ref={ref}
-                    as={props.as as any}
-                    href={(props as LinkProps).href}
-                    target={(props as LinkProps).isExternal ? '_blank' : ''}
-                    rel={
-                        (props as LinkProps).isExternal
-                            ? 'noopener noreferrer'
-                            : ''
+                    as={as as any}
+                    href={(rest as LinkProps).href}
+                    target={
+                        (rest as LinkProps).isExternal ? '_blank' : undefined
                     }
-                    inverted={props.isInverted}
-                    disable={props.isDisabled}
-                    onClick={props.onClick}
-                    className={props.className}
+                    rel={
+                        (rest as LinkProps).isExternal
+                            ? 'noopener noreferrer'
+                            : undefined
+                    }
+                    inverted={isInverted}
+                    disable={isDisabled}
+                    onClick={onClick}
+                    className={className}
+                    {...rest}
                 >
-                    {props.children}
+                    {children}
                 </View>
             );
         }

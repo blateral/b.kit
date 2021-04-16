@@ -1,3 +1,5 @@
+import Actions from 'components/blocks/Actions';
+import Copy from 'components/typography/Copy';
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Cookie, getCookie, setCookie } from 'utils/cookie-consent/cookie';
@@ -7,7 +9,7 @@ import {
     isUrlInWhitelist,
     updateConsentStatusElements,
 } from 'utils/cookie-consent/mutations';
-import { getColors as color } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 
 const Stage = styled.div<{ zIndex?: number; bgOpacity?: number }>`
     position: fixed;
@@ -21,10 +23,10 @@ const Stage = styled.div<{ zIndex?: number; bgOpacity?: number }>`
 
 const View = styled.div`
     box-sizing: border-box;
-    max-width: 780px;
+    max-width: 850px;
     width: 100vw;
     max-height: 100vh;
-    padding: 20px;
+    padding: ${spacings.spacer}px ${spacings.spacer * 1.5}px;
     position: fixed;
     bottom: 0;
     left: 50%;
@@ -32,13 +34,25 @@ const View = styled.div`
     text-align: center;
 
     background-color: ${({ theme }) => color(theme).light};
-    box-shadow: 0 2 44px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 44px rgba(0, 0, 0, 0.3);
+
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
+    }
+
+    @media ${mq.semilarge} {
+        bottom: ${spacings.spacer * 1.5}px;
+    }
+
+    @media ${mq.medium} {
+        padding: ${spacings.spacer * 2}px;
+    }
 `;
 
 export interface CookieConfig {
     cookieName?: string;
 
-    /** URL's that should excluded from consent */
+    /** URL's that should be excluded from consent */
     urlWhitelist?: string[];
     consentAcceptStatusMsg?: string;
     consentDeclineStatusMsg?: string;
@@ -173,16 +187,57 @@ const CookieConsent: FC<
     );
 };
 
+/** Example Cookie icon */
+export const CookieIcon = styled.img`
+    display: block;
+    margin: 0 auto;
+`;
+
+/** Example Cookie title */
+const TitleView = styled(Copy)`
+    max-width: 670px;
+    margin-left: auto;
+    margin-right: auto;
+`;
+
+export const CookieTitle: FC<{
+    innerHTML?: string;
+    className?: string;
+}> = ({ innerHTML, className, children }) => {
+    return (
+        <TitleView
+            size="big"
+            type="copy-b"
+            innerHTML={innerHTML}
+            className={className}
+        >
+            {children}
+        </TitleView>
+    );
+};
+
+/** Example Cookie title */
+const TextView = styled(Copy)`
+    max-width: 670px;
+    margin-left: auto;
+    margin-right: auto;
+`;
+
+export const CookieText: FC<{
+    innerHTML?: string;
+    className?: string;
+}> = ({ innerHTML, className, children }) => {
+    return (
+        <TextView innerHTML={innerHTML} className={className}>
+            {children}
+        </TextView>
+    );
+};
+
+/** Example Cookie actions */
+export const CookieActions = styled(Actions)`
+    max-width: 670px;
+    margin-top: ${spacings.spacer * 1.5}px;
+`;
+
 export default CookieConsent;
-
-// text= 'Wir verwenden Cookies, um Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="impressum">Impressum</a> und <a href="datenschutz">Datenschutz</a>.',
-// labelAccept: 'Cookies akzeptieren';
-// labelDecline: 'Cookies ablehnen';
-
-// consentAcceptStatusMsg: 'Akzeptiert am %DATE% um %TIME% Uhr';
-// consentDeclineStatusMsg: 'Abgelehnt am %DATE% um %TIME% Uhr';
-// noCookieStatusMsg: '-';
-// dateFormat: 'dd.mm.yy';
-// timeFormat: 'hh:mm';
-// lifetime: 365;
-// localeKey: 'de'
