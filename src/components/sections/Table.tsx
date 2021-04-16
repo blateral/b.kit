@@ -6,7 +6,6 @@ import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import Table from 'components/blocks/Table';
 
 const TableBlock = styled.div``;
 
