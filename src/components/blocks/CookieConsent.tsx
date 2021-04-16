@@ -81,7 +81,7 @@ export interface CookieConsentData {
     updatedAt: number;
 }
 
-const CookieConsent: FC<
+export const CookieConsent: FC<
     CookieConfig & {
         className?: string;
         children?: (props: RenderProps) => React.ReactElement;

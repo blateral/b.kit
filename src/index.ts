@@ -56,7 +56,13 @@ export { default as CompactForm } from 'components/fields/CompactForm';
 export { default as SearchInput } from 'components/fields/SearchInput';
 
 /***** Special blocks *****/
-export { default as CookieConsent } from 'components/blocks/CookieConsent';
+export {
+    default as CookieConsent,
+    CookieIcon,
+    CookieTitle,
+    CookieText,
+    CookieActions,
+} from 'components/blocks/CookieConsent';
 
 /***** Icons *****/
 export { default as ArrowRightIcon } from 'components/base/icons/ArrowRight';
