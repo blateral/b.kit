@@ -114,13 +114,10 @@ const FactList: React.FC<{
                                     <ContentBlock>
                                         <Copy type="copy-b">{label}</Copy>
                                         {text && (
-                                            <Text type="copy">
-                                                <div
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: text,
-                                                    }}
-                                                />
-                                            </Text>
+                                            <Text
+                                                type="copy"
+                                                innerHTML={text}
+                                            />
                                         )}
                                     </ContentBlock>
                                 </FactsItem>

@@ -86,6 +86,7 @@ const Copy: React.FC<{
     type?: CopyType;
     size?: FontOptionType;
     columns?: boolean;
+    innerHTML?: string;
     className?: string;
 }> = ({
     isInverted,
@@ -93,6 +94,7 @@ const Copy: React.FC<{
     size = 'medium',
     textColor,
     columns = false,
+    innerHTML,
     className,
     children,
 }) => {
@@ -109,6 +111,9 @@ const Copy: React.FC<{
                     : fontSettings.color
             }
             columns={columns}
+            dangerouslySetInnerHTML={
+                innerHTML ? { __html: innerHTML } : undefined
+            }
             className={className}
         >
             {children}

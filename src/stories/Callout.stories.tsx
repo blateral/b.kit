@@ -19,6 +19,10 @@ export default {
 
 export const Default: Story = () => <Callout>Lorem Ipsum Dolor Sit</Callout>;
 
+export const WithInnerHTML: Story = () => (
+    <Callout innerHTML="Lorem Ipsum Dolor Sit <br /> Dolor Sit" />
+);
+
 export const WithSize: Story = () => (
     <>
         <Callout size="medium">Lorem Ipsum Dolor Sit</Callout>
