@@ -6,14 +6,14 @@ import CookieConsent, {
     CookieIcon,
     CookieText,
     CookieTitle,
-} from 'components/sections/CookieConsent';
+} from 'components/blocks/CookieConsent';
 
 import cookieImg from '../../public/images/Cookie.png';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
-    title: 'Sections/CookieConsent',
+    title: 'Blocks/CookieConsent',
     component: CookieConsent,
 } as Meta;
 
