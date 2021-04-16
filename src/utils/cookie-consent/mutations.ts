@@ -1,4 +1,4 @@
-import { CookieConsentData } from 'components/sections/CookieConsent';
+import { CookieConsentData } from 'components/blocks/CookieConsent';
 import { Cookie } from './cookie';
 import { StatusFormatter } from './formatter';
 
