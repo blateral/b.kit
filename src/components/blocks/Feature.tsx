@@ -116,19 +116,20 @@ const Feature: React.FC<
                 )}
             </Content>
             <ArticleContent addWhitespace={addWhitespace}>
-                <ContentBlock type="copy-b" isInverted={isInverted}>
-                    {intro && (
-                        <div dangerouslySetInnerHTML={{ __html: intro }} />
-                    )}
-                </ContentBlock>
+                {intro && (
+                    <ContentBlock
+                        type="copy-b"
+                        isInverted={isInverted}
+                        innerHTML={intro}
+                    />
+                )}
                 {text && (
                     <ContentBlock
                         type="copy"
                         size="medium"
                         isInverted={isInverted}
-                    >
-                        <div dangerouslySetInnerHTML={{ __html: text }} />
-                    </ContentBlock>
+                        innerHTML={text}
+                    />
                 )}
             </ArticleContent>
             {(primaryAction || secondaryAction) && (

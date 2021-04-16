@@ -250,13 +250,8 @@ const Footer: FC<{
                                 <ContactData
                                     size="small"
                                     isInverted={isInverted}
-                                >
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: contactData,
-                                        }}
-                                    />
-                                </ContactData>
+                                    innerHTML={contactData}
+                                />
                             )}
                         </ContentBlock>
                         <ContentBlock
@@ -301,13 +296,11 @@ const Footer: FC<{
                                 </Copy>
                             )}
                             {newsText && (
-                                <Copy size="small" isInverted={isInverted}>
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: newsText,
-                                        }}
-                                    />
-                                </Copy>
+                                <Copy
+                                    size="small"
+                                    isInverted={isInverted}
+                                    innerHTML={newsText}
+                                />
                             )}
                             {newsForm && newsForm(isInverted)}
                             {socials && (

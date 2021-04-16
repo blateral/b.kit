@@ -150,9 +150,13 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
                         <Copy type="copy-b" isInverted={isInverted}>
                             {name}
                         </Copy>
-                        <Copy type="copy" isInverted={isInverted}>
-                            {description}
-                        </Copy>
+                        {description && (
+                            <Copy
+                                type="copy"
+                                isInverted={isInverted}
+                                innerHTML={description}
+                            />
+                        )}
                     </div>
                 )}
                 <div>
@@ -166,13 +170,8 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
                                     type="copy-b"
                                     size="big"
                                     isInverted={isInverted}
-                                >
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: address.label,
-                                        }}
-                                    />
-                                </AddressLabel>
+                                    innerHTML={address.label}
+                                />
                             </Address>
                         ))}
                 </div>

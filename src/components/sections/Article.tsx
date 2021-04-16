@@ -128,30 +128,28 @@ const Article: React.FC<{
                 <Content withAsideText={asideText ? true : false}>
                     <ContentBlock>
                         {intro && (
-                            <ContentText type="copy-b" isInverted={isInverted}>
-                                <div
-                                    dangerouslySetInnerHTML={{ __html: intro }}
-                                />
-                            </ContentText>
+                            <ContentText
+                                type="copy-b"
+                                isInverted={isInverted}
+                                innerHTML={intro}
+                            />
                         )}
                         {text && (
-                            <ContentText type="copy" isInverted={isInverted}>
-                                <div
-                                    dangerouslySetInnerHTML={{ __html: text }}
-                                />
-                            </ContentText>
+                            <ContentText
+                                type="copy"
+                                isInverted={isInverted}
+                                innerHTML={text}
+                            />
                         )}
                     </ContentBlock>
 
                     {asideText && (
                         <ContentBlock isAside>
-                            <ContentText type="copy" isInverted={isInverted}>
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: asideText,
-                                    }}
-                                />
-                            </ContentText>
+                            <ContentText
+                                type="copy"
+                                isInverted={isInverted}
+                                innerHTML={asideText}
+                            />
                         </ContentBlock>
                     )}
                 </Content>
