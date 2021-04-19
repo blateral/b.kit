@@ -3,18 +3,18 @@ import { Meta, Story } from '@storybook/react';
 
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import TableSection from 'components/sections/Table';
-import Table from 'components/blocks/Table';
+import Table from 'components/sections/Table';
+import TableBlock from 'components/blocks/TableBlock';
 
 export default {
-    title: 'Sections / TableSek',
-    components: TableSection,
+    title: 'Sections / Table',
+    components: Table,
 } as Meta;
 
 export const Default: Story = () => (
-    <TableSection
+    <Table
         tableItems={(IsInverted) => (
-            <Table
+            <TableBlock
                 isInverted={IsInverted}
                 rowTitle={[
                     'Table Headline',
@@ -62,7 +62,7 @@ export const Default: Story = () => (
 );
 
 export const WithIntro: Story = () => (
-    <TableSection
+    <Table
         title="Lorem ipsum dolor sit amet."
         superTitle="Lorem, ipsum dolor."
         text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
@@ -77,7 +77,7 @@ export const WithIntro: Story = () => (
             </ButtonGhost.View>
         )}
         tableItems={(isInverted) => (
-            <Table
+            <TableBlock
                 isInverted={isInverted}
                 rowTitle={[
                     'Table Headline',
@@ -125,7 +125,7 @@ export const WithIntro: Story = () => (
 );
 
 export const WithTableGroups: Story = () => (
-    <TableSection
+    <Table
         title="Lorem ipsum dolor sit amet."
         superTitle="Lorem, ipsum dolor."
         text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
@@ -140,7 +140,7 @@ export const WithTableGroups: Story = () => (
             </ButtonGhost.View>
         )}
         tableItems={(IsInverted) => (
-            <Table
+            <TableBlock
                 isInverted={IsInverted}
                 rowTitle={[
                     'Table Headline',
@@ -188,7 +188,7 @@ export const WithTableGroups: Story = () => (
 );
 
 export const IsInverted: Story = () => (
-    <TableSection
+    <Table
         title="Lorem ipsum dolor sit amet."
         superTitle="Lorem, ipsum dolor."
         text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
@@ -203,7 +203,7 @@ export const IsInverted: Story = () => (
             </ButtonGhost.View>
         )}
         tableItems={(IsInverted) => (
-            <Table
+            <TableBlock
                 isInverted={IsInverted}
                 rowTitle={[
                     'Table Headline',

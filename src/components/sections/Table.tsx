@@ -9,7 +9,7 @@ import Wrapper from 'components/base/Wrapper';
 
 const TableBlock = styled.div``;
 
-const TableSection: React.FC<{
+const Table: React.FC<{
     title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
@@ -32,7 +32,6 @@ const TableSection: React.FC<{
     tableItems,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const tableArray = React.Children.toArray(tableItems);
     return (
         <Section
             addSeperation
@@ -50,12 +49,10 @@ const TableSection: React.FC<{
                     />
                 )}
 
-                {tableArray.map((item, index) => {
-                    return <TableBlock key={index}>{item}</TableBlock>;
-                })}
+                <TableBlock>{tableItems}</TableBlock>
             </Wrapper>
         </Section>
     );
 };
 
-export default TableSection;
+export default Table;

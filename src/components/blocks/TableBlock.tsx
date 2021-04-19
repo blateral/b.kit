@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import Copy from '../typography/Copy';
 import { getColors as color } from 'utils/styles';
 
@@ -16,7 +16,9 @@ const TableBody = styled.table`
     width: 100%;
     max-width: 100%;
     margin-top: 15px;
+
     border-collapse: collapse;
+    border-spacing: 0;
 
     :first-child {
         background-color: ${({ theme }) => color(theme).light};
@@ -36,8 +38,11 @@ const TableHead = styled.th`
     }
 `;
 
-const TableRow = styled.tr`
+const TableRow = styled.tr<{ isInverted?: boolean }>`
     & + & {
+        border-top: 3px solid
+            ${({ isInverted, theme }) =>
+                isInverted ? color(theme).dark : color(theme).mono.light};
         margin: 5px;
     }
 `;
@@ -48,14 +53,14 @@ const TableData = styled.td<{ isInverted?: boolean }>`
     box-sizing: content-box;
 
     background-color: ${({ isInverted, theme }) =>
-        isInverted ? color(theme).mono.dark : color(theme).mono.light};
+        isInverted ? '#333' : color(theme).mono.light};
 
     :last-child {
         padding-right: 50px;
     }
 `;
 
-const Table: React.FC<{
+const TableBlock: React.FC<{
     tableTitle?: string;
     rowTitle: string[];
     row: {
@@ -63,6 +68,7 @@ const Table: React.FC<{
     }[];
     isInverted?: boolean;
 }> = ({ row, tableTitle, rowTitle, isInverted }) => {
+    const theme = React.useContext(ThemeContext);
     return (
         <div>
             {tableTitle && (
@@ -72,18 +78,28 @@ const Table: React.FC<{
             )}
             <TableContainer>
                 <TableBody>
-                    <TableRow>
-                        {rowTitle.map((item, ii) => (
-                            <TableHead key={ii}>{item}</TableHead>
-                        ))}
+                    <TableRow isInverted={isInverted}>
+                        {rowTitle.map((item, ii) => {
+                            return <TableHead key={ii}>{item}</TableHead>;
+                        })}
                     </TableRow>
                     {row.map(({ cols }, i) => (
-                        <TableRow key={i}>
-                            {cols.map((itemText, ii) => (
-                                <TableData key={ii} isInverted={isInverted}>
-                                    <Text>{itemText}</Text>
-                                </TableData>
-                            ))}
+                        <TableRow key={i} isInverted={isInverted}>
+                            {cols.map((itemText, ii) => {
+                                return (
+                                    <TableData key={ii} isInverted={isInverted}>
+                                        <Text
+                                            textColor={
+                                                isInverted
+                                                    ? color(theme).light
+                                                    : color(theme).dark
+                                            }
+                                        >
+                                            {itemText}
+                                        </Text>
+                                    </TableData>
+                                );
+                            })}
                         </TableRow>
                     ))}
                 </TableBody>
@@ -92,4 +108,4 @@ const Table: React.FC<{
     );
 };
 
-export default Table;
+export default TableBlock;
