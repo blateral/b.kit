@@ -68,14 +68,12 @@ export interface TabelProps {
     isInverted?: boolean;
 }
 
-const TableBlock: React.FC<{
-    tableTitle?: string;
-    rowTitle: string[];
-    row: {
-        cols: string[];
-    }[];
-    isInverted?: boolean;
-}> = ({ row, tableTitle, rowTitle, isInverted }) => {
+const TableBlock: React.FC<TabelProps> = ({
+    row,
+    tableTitle,
+    rowTitle,
+    isInverted,
+}) => {
     return (
         <div>
             {tableTitle && (
