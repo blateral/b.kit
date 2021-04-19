@@ -61,7 +61,7 @@ const TableData = styled.td<{ isInverted?: boolean }>`
 
 export interface TabelProps {
     tableTitle?: string;
-    rowTitle: string[];
+    rowTitle?: string[];
     row: {
         cols: string[];
     }[];
@@ -83,11 +83,13 @@ const TableBlock: React.FC<TabelProps> = ({
             )}
             <TableContainer>
                 <TableBody>
-                    <TableRow isInverted={isInverted}>
-                        {rowTitle.map((item, ii) => {
-                            return <TableHead key={ii}>{item}</TableHead>;
-                        })}
-                    </TableRow>
+                    {rowTitle && (
+                        <TableRow isInverted={isInverted}>
+                            {rowTitle.map((item, ii) => {
+                                return <TableHead key={ii}>{item}</TableHead>;
+                            })}
+                        </TableRow>
+                    )}
                     {row.map(({ cols }, i) => (
                         <TableRow key={i} isInverted={isInverted}>
                             {cols.map((itemText, ii) => {
