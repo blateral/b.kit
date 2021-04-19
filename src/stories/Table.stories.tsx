@@ -4,7 +4,6 @@ import { Meta, Story } from '@storybook/react';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 import Table from 'components/sections/Table';
-import TableBlock from 'components/blocks/TableBlock';
 
 export default {
     title: 'Sections / Table',
@@ -13,16 +12,15 @@ export default {
 
 export const Default: Story = () => (
     <Table
-        tableItems={(IsInverted) => (
-            <TableBlock
-                isInverted={IsInverted}
-                rowTitle={[
+        tableItems={[
+            {
+                rowTitle: [
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
-                ]}
-                row={[
+                ],
+                row: [
                     {
                         cols: [
                             'Lorem ipsum dolor sit amet',
@@ -55,9 +53,9 @@ export const Default: Story = () => (
                             'Lorem ipsum dolor sit amet',
                         ],
                     },
-                ]}
-            />
-        )}
+                ],
+            },
+        ]}
     />
 );
 
@@ -76,16 +74,15 @@ export const WithIntro: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        tableItems={(isInverted) => (
-            <TableBlock
-                isInverted={isInverted}
-                rowTitle={[
+        tableItems={[
+            {
+                rowTitle: [
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
-                ]}
-                row={[
+                ],
+                row: [
                     {
                         cols: [
                             'Lorem ipsum dolor sit amet',
@@ -118,9 +115,9 @@ export const WithIntro: Story = () => (
                             'Lorem ipsum dolor sit amet',
                         ],
                     },
-                ]}
-            />
-        )}
+                ],
+            },
+        ]}
     />
 );
 
@@ -139,16 +136,16 @@ export const WithTableGroups: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        tableItems={(IsInverted) => (
-            <TableBlock
-                isInverted={IsInverted}
-                rowTitle={[
+        tableItems={[
+            {
+                tableTitle: 'Gruppe 1',
+                rowTitle: [
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
-                ]}
-                row={[
+                ],
+                row: [
                     {
                         cols: [
                             'Lorem ipsum dolor sit amet',
@@ -181,9 +178,52 @@ export const WithTableGroups: Story = () => (
                             'Lorem ipsum dolor sit amet',
                         ],
                     },
-                ]}
-            />
-        )}
+                ],
+            },
+            {
+                tableTitle: 'Gruppe 2',
+                rowTitle: [
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+        ]}
     />
 );
 
@@ -202,16 +242,16 @@ export const IsInverted: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        tableItems={(IsInverted) => (
-            <TableBlock
-                isInverted={IsInverted}
-                rowTitle={[
+        tableItems={[
+            {
+                tableTitle: 'Gruppe 1',
+                rowTitle: [
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
-                ]}
-                row={[
+                ],
+                row: [
                     {
                         cols: [
                             'Lorem ipsum dolor sit amet',
@@ -244,9 +284,52 @@ export const IsInverted: Story = () => (
                             'Lorem ipsum dolor sit amet',
                         ],
                     },
-                ]}
-            />
-        )}
+                ],
+            },
+            {
+                tableTitle: 'Gruppe 2',
+                rowTitle: [
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+        ]}
         isInverted
     />
 );

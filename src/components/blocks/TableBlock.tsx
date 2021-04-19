@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 import Copy from '../typography/Copy';
 import { getColors as color } from 'utils/styles';
 
@@ -52,13 +52,21 @@ const TableData = styled.td<{ isInverted?: boolean }>`
     min-width: 60px;
     box-sizing: content-box;
 
-    background-color: ${({ isInverted, theme }) =>
-        isInverted ? '#333' : color(theme).mono.light};
+    background-color: ${({ isInverted }) => (isInverted ? '#333' : '#F6F6F6')};
 
     :last-child {
         padding-right: 50px;
     }
 `;
+
+export interface TabelProps {
+    tableTitle?: string;
+    rowTitle: string[];
+    row: {
+        cols: string[];
+    }[];
+    isInverted?: boolean;
+}
 
 const TableBlock: React.FC<{
     tableTitle?: string;
@@ -68,7 +76,6 @@ const TableBlock: React.FC<{
     }[];
     isInverted?: boolean;
 }> = ({ row, tableTitle, rowTitle, isInverted }) => {
-    const theme = React.useContext(ThemeContext);
     return (
         <div>
             {tableTitle && (
@@ -88,13 +95,7 @@ const TableBlock: React.FC<{
                             {cols.map((itemText, ii) => {
                                 return (
                                     <TableData key={ii} isInverted={isInverted}>
-                                        <Text
-                                            textColor={
-                                                isInverted
-                                                    ? color(theme).light
-                                                    : color(theme).dark
-                                            }
-                                        >
+                                        <Text isInverted={isInverted}>
                                             {itemText}
                                         </Text>
                                     </TableData>
