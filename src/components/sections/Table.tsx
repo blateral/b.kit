@@ -6,7 +6,7 @@ import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import TableBlock, { TabelProps } from 'components/blocks/TableBlock';
+import TableBlock, { TableProps } from 'components/blocks/TableBlock';
 
 const TableWrapper = styled.div<{ withSeperation?: boolean }>`
     ${({ withSeperation }) =>
@@ -25,7 +25,7 @@ const Table: React.FC<{
     superTitleAs?: HeadlineTag;
     text?: string;
 
-    tableItems: TabelProps[];
+    tableItems: TableProps[];
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;

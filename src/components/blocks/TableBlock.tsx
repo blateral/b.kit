@@ -1,11 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import Copy from '../typography/Copy';
-import { getColors as color } from 'utils/styles';
-
-const Text = styled(Copy)`
-    font-weight: 700;
-`;
+import { getColors as color, spacings } from 'utils/styles';
 
 const TableContainer = styled.div`
     max-width: 100%;
@@ -17,11 +13,13 @@ const TableBody = styled.table`
     max-width: 100%;
     margin-top: 15px;
 
-    border-collapse: collapse;
-    border-spacing: 0;
+    /* border-collapse: collapse;
+    border-spacing: 0; */
+    border-collapse: separate;
+    border-spacing: 0 ${spacings.nudge}px;
 
     :first-child {
-        background-color: ${({ theme }) => color(theme).light};
+        // background-color: ${({ theme }) => color(theme).light};
     }
 `;
 
@@ -29,37 +27,39 @@ const TableHead = styled.th`
     text-align: left;
     color: ${({ theme }) => color(theme).dark};
     background-color: ${({ theme }) => color(theme).light};
-    padding: 15px 10px 15px 10px;
+    padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px
+        ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px;
     min-width: 60px;
     box-sizing: content-box;
 
     :last-child {
-        padding-right: 50px;
+        padding-right: ${spacings.spacer * 2.5}px;
     }
 `;
 
 const TableRow = styled.tr<{ isInverted?: boolean }>`
     & + & {
-        border-top: 3px solid
+        /* border-top: 3px solid
             ${({ isInverted, theme }) =>
-                isInverted ? color(theme).dark : color(theme).light};
-        margin: 5px;
+            isInverted ? color(theme).dark : color(theme).light};
+        margin: 5px; */
     }
 `;
 
 const TableData = styled.td<{ isInverted?: boolean }>`
-    padding: 15px 10px 15px 10px;
+    padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px
+        ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px;
     min-width: 60px;
     box-sizing: content-box;
 
     background-color: ${({ isInverted }) => (isInverted ? '#333' : '#F6F6F6')};
 
     :last-child {
-        padding-right: 50px;
+        padding-right: ${spacings.spacer * 2.5}px;
     }
 `;
 
-export interface TabelProps {
+export interface TableProps {
     tableTitle?: string;
     rowTitle?: string[];
     row: {
@@ -68,7 +68,7 @@ export interface TabelProps {
     isInverted?: boolean;
 }
 
-const TableBlock: React.FC<TabelProps> = ({
+const TableBlock: React.FC<TableProps> = ({
     row,
     tableTitle,
     rowTitle,
@@ -90,14 +90,15 @@ const TableBlock: React.FC<TabelProps> = ({
                             })}
                         </TableRow>
                     )}
+
                     {row.map(({ cols }, i) => (
                         <TableRow key={i} isInverted={isInverted}>
                             {cols.map((itemText, ii) => {
                                 return (
                                     <TableData key={ii} isInverted={isInverted}>
-                                        <Text isInverted={isInverted}>
+                                        <Copy isInverted={isInverted}>
                                             {itemText}
-                                        </Text>
+                                        </Copy>
                                     </TableData>
                                 );
                             })}
