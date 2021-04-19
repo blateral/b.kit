@@ -42,7 +42,7 @@ const TableRow = styled.tr<{ isInverted?: boolean }>`
     & + & {
         border-top: 3px solid
             ${({ isInverted, theme }) =>
-                isInverted ? color(theme).dark : color(theme).mono.light};
+                isInverted ? color(theme).dark : color(theme).light};
         margin: 5px;
     }
 `;
