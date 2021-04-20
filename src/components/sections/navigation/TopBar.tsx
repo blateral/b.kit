@@ -7,7 +7,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color, mq, withRange } from 'utils/styles';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { ScrollDirection, useScroll } from 'utils/useScroll';
-import { LogoProps } from './Header';
+import { LogoProps } from './Navigation';
 
 const View = styled.div<{
     isVisible?: boolean;
@@ -199,8 +199,8 @@ const TopBar: FC<{
 }> = ({
     isVisible = true,
     isInverted = false,
-    hideOnScrollDown = true,
-    withTopOffset = true,
+    hideOnScrollDown = false,
+    withTopOffset = false,
     isBackVisible = true,
     onToggleClick,
     toggleIcon,

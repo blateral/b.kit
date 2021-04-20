@@ -7,7 +7,7 @@ import Star from 'components/base/icons/Star';
 import StarGhost from 'components/base/icons/StarGhost';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import TopBar from 'components/sections/header/TopBar';
+import TopBar from 'components/sections/navigation/TopBar';
 
 const logoFn = ({
     isInverted,
@@ -83,7 +83,7 @@ const secondaryCtaFn = ({
 );
 
 export default {
-    title: 'Sections/Header/TopBar',
+    title: 'Sections/Navigation/TopBar',
     component: TopBar,
     parameters: {
         backgrounds: {

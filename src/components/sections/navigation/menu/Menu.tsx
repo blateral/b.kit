@@ -1,9 +1,9 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { mq, spacings } from 'utils/styles';
 import Flyout, { NavGroup } from './Flyout';
 import SocialList from 'components/blocks/SocialList';
-import { LogoProps } from '../Header';
+import { LogoProps } from '../Navigation';
 
 const View = styled.div`
     position: fixed;
@@ -85,10 +85,6 @@ const Menu: FC<MenuProps> = ({
     socials,
     onCloseClick,
 }) => {
-    useEffect(() => {
-        document.body.style.overflow = isOpen ? 'hidden' : 'visible';
-    }, [isOpen]);
-
     return (
         <View>
             <Backdrop
