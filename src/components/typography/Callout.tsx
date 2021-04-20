@@ -87,7 +87,7 @@ const Callout: React.FC<{
             hyphens={hyphens}
             hasShadow={hasShadow}
             dangerouslySetInnerHTML={
-                innerHTML ? { __html: innerHTML } : undefined
+                innerHTML && !children ? { __html: innerHTML } : undefined
             }
             className={className}
         >
