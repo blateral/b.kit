@@ -11,6 +11,11 @@ export interface LogoProps {
         name?: string;
     }) => React.ReactNode;
     link?: string;
+    scale?: {
+        // icon scale factor
+        mobile?: number;
+        desktop?: number;
+    };
 }
 
 export interface NavProps {
@@ -22,6 +27,8 @@ export interface NavProps {
     backdropOpacity?: number;
     socials?: Array<{ icon: React.ReactNode; href: string }>;
     logo?: LogoProps;
+    /** Allow overflow of topbar over content if page is on top */
+    allowTopbarOverflow?: boolean;
     /** Hide topbar if page is scrolled down. Open it if page is scrolled up. */
     hideTopbarOnScrollDown?: boolean;
     /** Wait until page has been scrolled over top offset before activate topbar open/close functionality */
@@ -55,6 +62,7 @@ const Navigation: FC<NavProps> = ({
     primaryCta,
     secondaryCta,
     isTopbarInverted,
+    allowTopbarOverflow,
     hideTopbarBackUnderMenu,
     hideTopbarOnScrollDown,
     withTopbarOffset,
@@ -79,6 +87,7 @@ const Navigation: FC<NavProps> = ({
                 isInverted={isTopbarInverted}
                 hideOnScrollDown={hideTopbarOnScrollDown}
                 withTopOffset={withTopbarOffset}
+                allowTopOverlow={allowTopbarOverflow}
                 toggleIcon={openMenuIcon}
                 onToggleClick={() => setIsMenuOpen(true)}
                 {...sharedProps}

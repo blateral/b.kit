@@ -116,6 +116,19 @@ export const WithLogo: Story = () => (
     />
 );
 
+export const WithCustomLogoScale: Story = () => (
+    <TopBar
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+            scale: {
+                desktop: 1.5,
+                mobile: 0.5,
+            },
+        }}
+    />
+);
+
 export const WithScrollTriggerDelay: Story = () => (
     <TopBar
         withTopOffset
@@ -139,6 +152,20 @@ export const HideTopBarOnScrollDown: Story = () => (
 
 export const WithActions: Story = () => (
     <TopBar
+        withTopOffset
+        hideOnScrollDown
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
+    />
+);
+
+export const PreventTopOverflow: Story = () => (
+    <TopBar
+        allowTopOverlow={false}
         withTopOffset
         hideOnScrollDown
         logo={{

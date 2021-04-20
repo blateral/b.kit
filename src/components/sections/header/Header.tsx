@@ -144,6 +144,7 @@ const StyledPoster = styled(Poster)<{ gradient?: string; size?: number }>`
         right: 0;
         bottom: 0;
         background-image: ${({ gradient }) => gradient || undefined};
+        pointer-events: none;
         z-index: 2;
     }
 
@@ -171,6 +172,7 @@ const Header: FC<{
     primaryCta?: (isInverted?: boolean) => React.ReactNode;
     secondaryCta?: (isInverted?: boolean) => React.ReactNode;
     images?: HeaderImageProps[];
+    withTopGradient?: boolean;
     badge?: {
         content: React.ReactNode;
         showOnMobile?: boolean;
@@ -182,6 +184,7 @@ const Header: FC<{
     primaryCta,
     secondaryCta,
     images,
+    withTopGradient = true,
     badge,
 }) => {
     const gradient =
@@ -194,7 +197,7 @@ const Header: FC<{
             <HeaderWrapper clampWidth="large">
                 <StyledPoster
                     images={images}
-                    gradient={gradient}
+                    gradient={withTopGradient ? gradient : undefined}
                     size={size === 'small' ? 0.8 : 1}
                 >
                     <Wrapper>

@@ -278,6 +278,20 @@ export const WithInvertedTopbar: Story = () => (
     />
 );
 
+export const PreventTopbarOverflow: Story = () => (
+    <Navigation
+        allowTopbarOverflow={false}
+        withTopbarOffset
+        hideTopbarOnScrollDown
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryCta={primaryCtaFn}
+        secondaryCta={secondaryCtaFn}
+    />
+);
+
 export const WithMenuNavItems: Story = () => (
     <Navigation
         withTopbarOffset
