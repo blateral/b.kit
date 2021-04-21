@@ -68,7 +68,7 @@ export const useEqualSheetHeight = (props: {
             // set height of all items in row to the highest value
             if (rowHeights.length > 1 && highest) {
                 for (let x = 0; x < rowHeights.length; x++) {
-                    const index = x + y * rowHeights.length;
+                    const index = x + y * itemsPerRow;
                     const el = refs[index].current.querySelector(selector);
 
                     if (el) {

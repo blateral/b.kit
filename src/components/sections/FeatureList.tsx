@@ -7,6 +7,7 @@ import Wrapper from 'components/base/Wrapper';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
 import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
+import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
 const StyledIntro = styled(Intro)`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -72,6 +73,24 @@ const FeatureList: React.FC<{
     secondaryAction,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const featureCount = features?.length || 0;
+
+    const cardRefs = useEqualSheetHeight({
+        listLength: featureCount,
+        identifiers: [
+            '[data-sheet="title"]',
+            '[data-sheet="desc"]',
+            '[data-sheet="intro"]',
+            '[data-sheet="text"]',
+        ],
+        responsive: {
+            small: 1,
+            medium: 1,
+            semilarge: 2,
+            large: featureCount % 2 === 0 ? 2 : 3,
+            xlarge: featureCount % 2 === 0 ? 2 : 3,
+        },
+    });
 
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
@@ -113,17 +132,18 @@ const FeatureList: React.FC<{
             <Wrapper clampWidth="normal">
                 {features && (
                     <ContentContainer
-                        isHalf={features.length % 2 == 0 ? true : false}
+                        isHalf={features.length % 2 === 0 ? true : false}
                     >
                         {features &&
                             features.map((feature, i) => {
                                 return (
-                                    <Feature
-                                        key={i}
-                                        isInverted={isInverted}
-                                        addWhitespace
-                                        {...feature}
-                                    />
+                                    <div key={i} ref={cardRefs[i]}>
+                                        <Feature
+                                            isInverted={isInverted}
+                                            addWhitespace
+                                            {...feature}
+                                        />
+                                    </div>
                                 );
                             })}
                     </ContentContainer>
