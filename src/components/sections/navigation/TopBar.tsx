@@ -259,13 +259,13 @@ const TopBar: FC<{
     }, [hideOnScrollDown, isInOffset, scrollDirection]);
 
     useEffect(() => {
-        if (!isInOffset) {
+        if (!isInOffset || (!withTopOffset && !isTop)) {
             setIsLarge((prev) => {
                 if (prev) setIsAnimated(false);
                 return false;
             });
         }
-    }, [isInOffset, isLarge]);
+    }, [isInOffset, isLarge, isTop, withTopOffset]);
 
     useEffect(() => {
         if (isTop) setIsLarge(true);

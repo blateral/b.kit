@@ -11,7 +11,7 @@ import TableBlock, { TableProps } from 'components/blocks/TableBlock';
 const TableWrapper = styled.div<{ withSeperation?: boolean }>`
     ${({ withSeperation }) =>
         withSeperation &&
-        withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-top')};
+        withRange([spacings.spacer, spacings.spacer * 4], 'padding-top')};
 
     & + & {
         ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
