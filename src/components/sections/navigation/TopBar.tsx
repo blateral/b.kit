@@ -26,6 +26,7 @@ const View = styled.div<{
     isOpen?: boolean;
     isInverted?: boolean;
     animated?: boolean;
+    allowOffset?: boolean;
     isBackVisible?: boolean;
 }>`
     position: ${({ isLarge }) => (isLarge ? 'absolute' : 'fixed')};
@@ -41,11 +42,18 @@ const View = styled.div<{
     margin: 0 auto;
     overflow: hidden;
 
-    background-color: ${({ theme, isInverted, isLarge, isBackVisible }) =>
+    background-color: ${({
+        theme,
+        isInverted,
+        isLarge,
+        isBackVisible,
+        allowOffset,
+    }) =>
         isBackVisible
             ? isInverted
-                ? !isLarge && `rgba(0, 0, 0, ${!isLarge ? 0.3 : 0})`
-                : !isLarge && color(theme).light
+                ? (!isLarge || !allowOffset) &&
+                  `rgba(0, 0, 0, ${!isLarge ? 0.3 : 0})`
+                : (!isLarge || !allowOffset) && color(theme).light
             : 'transparent'};
 
     box-shadow: 0px 4px 4px
@@ -264,7 +272,8 @@ const TopBar: FC<{
     }, [isTop]);
 
     // check if top bar is inverted
-    const isBarInverted = isLarge || isInverted || !isBackVisible;
+    const isBarInverted =
+        (isLarge && allowTopOverlow) || isInverted || !isBackVisible;
 
     const logoScale =
         (currentMq === 'large' ? logo?.scale?.desktop : logo?.scale?.mobile) ||
@@ -282,6 +291,7 @@ const TopBar: FC<{
                 isOpen={isOpen}
                 isLarge={isLarge}
                 animated={isAnimated}
+                allowOffset={allowTopOverlow}
                 className={className}
             >
                 <Content clampWidth="normal" addWhitespace>
