@@ -1,26 +1,29 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import Copy from '../typography/Copy';
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 
 const TableContainer = styled.div`
-    max-width: 100%;
-    overflow: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin-right: -${spacings.spacer}px;
+
+    @media ${mq.semilarge} {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: pre-wrap;
+        margin-right: 0px;
+    }
 `;
 
 const TableBody = styled.table`
     width: 100%;
     max-width: 100%;
-    margin-top: 15px;
+    margin-top: ${spacings.nudge * 2}px;
 
-    /* border-collapse: collapse;
-    border-spacing: 0; */
     border-collapse: separate;
     border-spacing: 0 ${spacings.nudge}px;
-
-    :first-child {
-        // background-color: ${({ theme }) => color(theme).light};
-    }
 `;
 
 const TableHead = styled.th`
@@ -34,15 +37,6 @@ const TableHead = styled.th`
 
     :last-child {
         padding-right: ${spacings.spacer * 2.5}px;
-    }
-`;
-
-const TableRow = styled.tr<{ isInverted?: boolean }>`
-    & + & {
-        /* border-top: 3px solid
-            ${({ isInverted, theme }) =>
-            isInverted ? color(theme).dark : color(theme).light};
-        margin: 5px; */
     }
 `;
 
@@ -84,26 +78,34 @@ const TableBlock: React.FC<TableProps> = ({
             <TableContainer>
                 <TableBody>
                     {rowTitle && (
-                        <TableRow isInverted={isInverted}>
-                            {rowTitle.map((item, ii) => {
-                                return <TableHead key={ii}>{item}</TableHead>;
-                            })}
-                        </TableRow>
+                        <thead>
+                            <tr>
+                                {rowTitle.map((item, ii) => {
+                                    return (
+                                        <TableHead key={ii}>{item}</TableHead>
+                                    );
+                                })}
+                            </tr>
+                        </thead>
                     )}
-
-                    {row.map(({ cols }, i) => (
-                        <TableRow key={i} isInverted={isInverted}>
-                            {cols.map((itemText, ii) => {
-                                return (
-                                    <TableData key={ii} isInverted={isInverted}>
-                                        <Copy isInverted={isInverted}>
-                                            {itemText}
-                                        </Copy>
-                                    </TableData>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
+                    <tbody>
+                        {row.map(({ cols }, i) => (
+                            <tr key={i}>
+                                {cols.map((itemText, ii) => {
+                                    return (
+                                        <TableData
+                                            key={ii}
+                                            isInverted={isInverted}
+                                        >
+                                            <Copy isInverted={isInverted}>
+                                                {itemText}
+                                            </Copy>
+                                        </TableData>
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
                 </TableBody>
             </TableContainer>
         </div>
