@@ -7,7 +7,7 @@ import Star from 'components/base/icons/Star';
 import StarGhost from 'components/base/icons/StarGhost';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import TopBar from 'components/sections/header/TopBar';
+import TopBar from 'components/sections/navigation/TopBar';
 
 const logoFn = ({
     isInverted,
@@ -83,7 +83,7 @@ const secondaryCtaFn = ({
 );
 
 export default {
-    title: 'Sections/Header/TopBar',
+    title: 'Sections/Navigation/TopBar',
     component: TopBar,
     parameters: {
         backgrounds: {
@@ -116,6 +116,19 @@ export const WithLogo: Story = () => (
     />
 );
 
+export const WithCustomLogoScale: Story = () => (
+    <TopBar
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+            scale: {
+                desktop: 1.5,
+                mobile: 0.5,
+            },
+        }}
+    />
+);
+
 export const WithScrollTriggerDelay: Story = () => (
     <TopBar
         withTopOffset
@@ -139,6 +152,20 @@ export const HideTopBarOnScrollDown: Story = () => (
 
 export const WithActions: Story = () => (
     <TopBar
+        withTopOffset
+        hideOnScrollDown
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
+    />
+);
+
+export const PreventTopOverflow: Story = () => (
+    <TopBar
+        allowTopOverlow={false}
         withTopOffset
         hideOnScrollDown
         logo={{

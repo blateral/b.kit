@@ -3,26 +3,24 @@ import { Meta, Story } from '@storybook/react';
 
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import TableSection from 'components/sections/Table';
-import Table from 'components/blocks/Table';
+import Table from 'components/sections/Table';
 
 export default {
-    title: 'Sections / TableSek',
-    components: TableSection,
+    title: 'Sections / Table',
+    components: Table,
 } as Meta;
 
 export const Default: Story = () => (
-    <TableSection
-        tableItems={(IsInverted) => (
-            <Table
-                isInverted={IsInverted}
-                rowTitle={[
+    <Table
+        tableItems={[
+            {
+                rowTitle: [
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
-                ]}
-                row={[
+                ],
+                row: [
                     {
                         cols: [
                             'Lorem ipsum dolor sit amet',
@@ -55,14 +53,14 @@ export const Default: Story = () => (
                             'Lorem ipsum dolor sit amet',
                         ],
                     },
-                ]}
-            />
-        )}
+                ],
+            },
+        ]}
     />
 );
 
 export const WithIntro: Story = () => (
-    <TableSection
+    <Table
         title="Lorem ipsum dolor sit amet."
         superTitle="Lorem, ipsum dolor."
         text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
@@ -76,16 +74,15 @@ export const WithIntro: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        tableItems={(isInverted) => (
-            <Table
-                isInverted={isInverted}
-                rowTitle={[
+        tableItems={[
+            {
+                rowTitle: [
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
-                ]}
-                row={[
+                ],
+                row: [
                     {
                         cols: [
                             'Lorem ipsum dolor sit amet',
@@ -118,14 +115,14 @@ export const WithIntro: Story = () => (
                             'Lorem ipsum dolor sit amet',
                         ],
                     },
-                ]}
-            />
-        )}
+                ],
+            },
+        ]}
     />
 );
 
 export const WithTableGroups: Story = () => (
-    <TableSection
+    <Table
         title="Lorem ipsum dolor sit amet."
         superTitle="Lorem, ipsum dolor."
         text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
@@ -139,16 +136,16 @@ export const WithTableGroups: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        tableItems={(IsInverted) => (
-            <Table
-                isInverted={IsInverted}
-                rowTitle={[
+        tableItems={[
+            {
+                tableTitle: 'Gruppe 1',
+                rowTitle: [
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
-                ]}
-                row={[
+                ],
+                row: [
                     {
                         cols: [
                             'Lorem ipsum dolor sit amet',
@@ -181,14 +178,57 @@ export const WithTableGroups: Story = () => (
                             'Lorem ipsum dolor sit amet',
                         ],
                     },
-                ]}
-            />
-        )}
+                ],
+            },
+            {
+                tableTitle: 'Gruppe 2',
+                rowTitle: [
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+        ]}
     />
 );
 
 export const IsInverted: Story = () => (
-    <TableSection
+    <Table
         title="Lorem ipsum dolor sit amet."
         superTitle="Lorem, ipsum dolor."
         text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
@@ -202,16 +242,16 @@ export const IsInverted: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        tableItems={(IsInverted) => (
-            <Table
-                isInverted={IsInverted}
-                rowTitle={[
+        tableItems={[
+            {
+                tableTitle: 'Gruppe 1',
+                rowTitle: [
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
                     'Table Headline',
-                ]}
-                row={[
+                ],
+                row: [
                     {
                         cols: [
                             'Lorem ipsum dolor sit amet',
@@ -244,9 +284,52 @@ export const IsInverted: Story = () => (
                             'Lorem ipsum dolor sit amet',
                         ],
                     },
-                ]}
-            />
-        )}
+                ],
+            },
+            {
+                tableTitle: 'Gruppe 2',
+                rowTitle: [
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+        ]}
         isInverted
     />
 );

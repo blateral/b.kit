@@ -12,7 +12,7 @@ import {
 } from 'utils/styles';
 import Cross from 'components/base/icons/Cross';
 import { useMediaQuery } from 'utils/useMediaQuery';
-import { LogoProps } from '../Header';
+import { LogoProps } from '../Navigation';
 
 const View = styled.div<{ isOpen?: boolean }>`
     position: absolute;

@@ -7,7 +7,18 @@ import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color, mq, withRange } from 'utils/styles';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { ScrollDirection, useScroll } from 'utils/useScroll';
-import { LogoProps } from './Header';
+import { LogoProps } from './Navigation';
+
+const TopWhitespace = styled.div<{ logoHeight?: number }>`
+    width: 100%;
+    height: ${({ logoHeight }) =>
+        logoHeight ? logoHeight + 25 + 'px' : '140px'};
+
+    @media ${mq.medium} {
+        height: ${({ logoHeight }) =>
+            logoHeight ? logoHeight + 50 + 'px' : '140px'};
+    }
+`;
 
 const View = styled.div<{
     isVisible?: boolean;
@@ -15,6 +26,7 @@ const View = styled.div<{
     isOpen?: boolean;
     isInverted?: boolean;
     animated?: boolean;
+    allowOffset?: boolean;
     isBackVisible?: boolean;
 }>`
     position: ${({ isLarge }) => (isLarge ? 'absolute' : 'fixed')};
@@ -30,11 +42,18 @@ const View = styled.div<{
     margin: 0 auto;
     overflow: hidden;
 
-    background-color: ${({ theme, isInverted, isLarge, isBackVisible }) =>
+    background-color: ${({
+        theme,
+        isInverted,
+        isLarge,
+        isBackVisible,
+        allowOffset,
+    }) =>
         isBackVisible
             ? isInverted
-                ? !isLarge && `rgba(0, 0, 0, ${!isLarge ? 0.3 : 0})`
-                : !isLarge && color(theme).light
+                ? (!isLarge || !allowOffset) &&
+                  `rgba(0, 0, 0, ${!isLarge ? 0.3 : 0})`
+                : (!isLarge || !allowOffset) && color(theme).light
             : 'transparent'};
 
     box-shadow: 0px 4px 4px
@@ -182,6 +201,7 @@ const TopBar: FC<{
     isInverted?: boolean;
     hideOnScrollDown?: boolean;
     withTopOffset?: boolean;
+    allowTopOverlow?: boolean;
     onToggleClick?: () => void;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
     logo?: LogoProps;
@@ -199,9 +219,10 @@ const TopBar: FC<{
 }> = ({
     isVisible = true,
     isInverted = false,
-    hideOnScrollDown = true,
-    withTopOffset = true,
+    hideOnScrollDown = false,
+    withTopOffset = false,
     isBackVisible = true,
+    allowTopOverlow = true,
     onToggleClick,
     toggleIcon,
     logo,
@@ -222,7 +243,7 @@ const TopBar: FC<{
 
     useEffect(() => {
         if (typeof window !== 'undefined' && viewRef.current && withTopOffset) {
-            setTopOffset(viewRef.current.getBoundingClientRect().height);
+            setTopOffset(viewRef.current.scrollHeight);
         }
     }, [setTopOffset, withTopOffset, currentMq]);
 
@@ -251,74 +272,89 @@ const TopBar: FC<{
     }, [isTop]);
 
     // check if top bar is inverted
-    const isBarInverted = isLarge || isInverted || !isBackVisible;
+    const isBarInverted =
+        (isLarge && allowTopOverlow) || isInverted || !isBackVisible;
+
+    const logoScale =
+        (currentMq === 'large' ? logo?.scale?.desktop : logo?.scale?.mobile) ||
+        1;
+    const logoHeight = isLarge ? 115 * logoScale : 70;
 
     return (
-        <View
-            ref={viewRef}
-            isInverted={isInverted}
-            isVisible={isVisible}
-            isBackVisible={isBackVisible}
-            isOpen={isOpen}
-            isLarge={isLarge}
-            animated={isAnimated}
-            className={className}
-        >
-            <Content clampWidth="normal" addWhitespace>
-                <LeftCol isTop={isLarge}>
-                    <ToggleContainer
-                        onClick={onToggleClick}
-                        iconColor={
-                            isInverted ? color(theme).light : color(theme).dark
-                        }
-                    >
-                        {toggleIcon ? (
-                            toggleIcon(isBarInverted)
-                        ) : (
-                            <StyledMenuBurger
-                                iconColor={
-                                    isBarInverted
-                                        ? color(theme).light
-                                        : color(theme).dark
-                                }
-                            />
-                        )}
-                    </ToggleContainer>
-                </LeftCol>
-                <CenterCol isTop={isLarge}>
-                    {logo && (
-                        <LogoLink
-                            href={logo.link}
-                            logoHeight={!isLarge ? 70 : undefined}
+        <>
+            {!allowTopOverlow && <TopWhitespace logoHeight={logoHeight} />}
+            <View
+                ref={viewRef}
+                isInverted={isInverted}
+                isVisible={isVisible}
+                isBackVisible={isBackVisible}
+                isOpen={isOpen}
+                isLarge={isLarge}
+                animated={isAnimated}
+                allowOffset={allowTopOverlow}
+                className={className}
+            >
+                <Content clampWidth="normal" addWhitespace>
+                    <LeftCol isTop={isLarge}>
+                        <ToggleContainer
+                            onClick={onToggleClick}
+                            iconColor={
+                                isInverted
+                                    ? color(theme).light
+                                    : color(theme).dark
+                            }
                         >
-                            {logo.icon &&
-                                logo.icon({
-                                    isInverted: isBarInverted,
-                                    name: 'topbar_logo',
-                                    size:
-                                        currentMq !== 'large' || !isLarge
-                                            ? 'small'
-                                            : 'full',
-                                })}
-                        </LogoLink>
-                    )}
-                </CenterCol>
-                <RightCol isTop={isLarge}>
-                    {secondaryAction &&
-                        secondaryAction({
-                            isInverted: isBarInverted,
-                            name: 'topbar_secondaryCta',
-                            size: currentMq === 'large' ? 'desktop' : 'mobile',
-                        })}
-                    {primaryAction &&
-                        primaryAction({
-                            isInverted: isBarInverted,
-                            name: 'topbar_primaryCta',
-                            size: currentMq === 'large' ? 'desktop' : 'mobile',
-                        })}
-                </RightCol>
-            </Content>
-        </View>
+                            {toggleIcon ? (
+                                toggleIcon(isBarInverted)
+                            ) : (
+                                <StyledMenuBurger
+                                    iconColor={
+                                        isBarInverted
+                                            ? color(theme).light
+                                            : color(theme).dark
+                                    }
+                                />
+                            )}
+                        </ToggleContainer>
+                    </LeftCol>
+                    <CenterCol isTop={isLarge}>
+                        {logo && (
+                            <LogoLink href={logo.link} logoHeight={logoHeight}>
+                                {logo.icon &&
+                                    logo.icon({
+                                        isInverted: isBarInverted,
+                                        name: 'topbar_logo',
+                                        size:
+                                            currentMq !== 'large' || !isLarge
+                                                ? 'small'
+                                                : 'full',
+                                    })}
+                            </LogoLink>
+                        )}
+                    </CenterCol>
+                    <RightCol isTop={isLarge}>
+                        {secondaryAction &&
+                            secondaryAction({
+                                isInverted: isBarInverted,
+                                name: 'topbar_secondaryCta',
+                                size:
+                                    currentMq === 'large'
+                                        ? 'desktop'
+                                        : 'mobile',
+                            })}
+                        {primaryAction &&
+                            primaryAction({
+                                isInverted: isBarInverted,
+                                name: 'topbar_primaryCta',
+                                size:
+                                    currentMq === 'large'
+                                        ? 'desktop'
+                                        : 'mobile',
+                            })}
+                    </RightCol>
+                </Content>
+            </View>
+        </>
     );
 };
 

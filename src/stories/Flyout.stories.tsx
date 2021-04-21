@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Flyout from 'components/sections/header/menu/Flyout';
+import Flyout from 'components/sections/navigation/menu/Flyout';
 import SearchInput from 'components/fields/SearchInput';
 import Button from 'components/buttons/Button';
 import ArrowRight from 'components/base/icons/ArrowRight';
@@ -10,7 +10,7 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 import StarGhost from 'components/base/icons/StarGhost';
 
 export default {
-    title: 'Sections/Header/Menu/Flyout',
+    title: 'Sections/Navigation/Menu/Flyout',
     component: Flyout.View,
     decorators: [
         (Story) => (

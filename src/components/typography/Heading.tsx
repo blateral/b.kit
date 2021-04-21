@@ -57,7 +57,12 @@ const BaseStyles = styled.h1<{
     text-shadow: ${({ hasShadow }) =>
         hasShadow && '1px 2px 8px rgba(0, 0, 0, 0.25)'};
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         margin: 0;
         padding: 0;
         border: 0;
@@ -148,7 +153,7 @@ const Heading: React.FC<{
             hyphens={hyphens}
             hasShadow={hasShadow}
             dangerouslySetInnerHTML={
-                innerHTML ? { __html: innerHTML } : undefined
+                innerHTML && !children ? { __html: innerHTML } : undefined
             }
             className={className}
         >

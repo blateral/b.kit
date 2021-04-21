@@ -1,22 +1,31 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color } from 'utils/styles';
+import { getColors as color, withRange, spacings } from 'utils/styles';
 import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
+import TableBlock, { TableProps } from 'components/blocks/TableBlock';
 
-const TableBlock = styled.div``;
+const TableWrapper = styled.div<{ withSeperation?: boolean }>`
+    ${({ withSeperation }) =>
+        withSeperation &&
+        withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-top')};
 
-const TableSection: React.FC<{
+    & + & {
+        ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    }
+`;
+
+const Table: React.FC<{
     title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     text?: string;
 
-    tableItems: (isInverted?: boolean) => React.ReactNode | React.ReactNode[];
+    tableItems: TableProps[];
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -32,13 +41,12 @@ const TableSection: React.FC<{
     tableItems,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const tableArray = React.Children.toArray(tableItems);
     return (
         <Section
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
-            <Wrapper>
+            <Wrapper addWhitespace>
                 {title && (
                     <Intro
                         title={title}
@@ -50,12 +58,16 @@ const TableSection: React.FC<{
                     />
                 )}
 
-                {tableArray.map((item, index) => {
-                    return <TableBlock key={index}>{item}</TableBlock>;
+                {tableItems.map((item, i) => {
+                    return (
+                        <TableWrapper key={i} withSeperation={!!title}>
+                            <TableBlock {...item} isInverted={isInverted} />
+                        </TableWrapper>
+                    );
                 })}
             </Wrapper>
         </Section>
     );
 };
 
-export default TableSection;
+export default Table;

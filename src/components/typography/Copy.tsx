@@ -112,7 +112,7 @@ const Copy: React.FC<{
             }
             columns={columns}
             dangerouslySetInnerHTML={
-                innerHTML ? { __html: innerHTML } : undefined
+                innerHTML && !children ? { __html: innerHTML } : undefined
             }
             className={className}
         >
