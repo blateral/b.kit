@@ -1,4 +1,4 @@
-/***** Version: 0.7.1 *****/
+/***** Version: 0.7.2 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts } from 'utils/styles';
@@ -23,6 +23,20 @@ export {
     spacings,
     mq,
 } from 'utils/styles';
+
+/***** Hooks *****/
+export { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+export {
+    setCookie,
+    deleteCookie,
+    getCookie,
+} from 'utils/cookie-consent/cookie';
+export { default as useIE } from 'utils/useIE';
+export { useItemHeight } from 'utils/useItemHeight';
+export { getMediaQuery, isBrowser, useMediaQuery } from 'utils/useMediaQuery';
+export { useScroll } from 'utils/useScroll';
+export { usePoster, canUseWebP } from 'utils/usePoster';
+export { default as useInterval } from 'utils/useInterval';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
@@ -63,6 +77,7 @@ export {
     CookieText,
     CookieActions,
 } from 'components/blocks/CookieConsent';
+export { default as Navigation } from 'components/sections/navigation/Navigation';
 
 /***** Icons *****/
 export { default as ArrowRightIcon } from 'components/base/icons/ArrowRight';

@@ -104,11 +104,20 @@ const Feature: React.FC<
                 </ImageContainer>
             )}
             <Content addWhitespace={addWhitespace}>
-                <ContentBlock type="copy-b" size="big" isInverted={isInverted}>
+                <ContentBlock
+                    type="copy-b"
+                    size="big"
+                    isInverted={isInverted}
+                    data-sheet="title"
+                >
                     {title}
                 </ContentBlock>
                 {description && (
-                    <ContentBlock size="small" isInverted={isInverted}>
+                    <ContentBlock
+                        size="small"
+                        isInverted={isInverted}
+                        data-sheet="desc"
+                    >
                         <Desc
                             dangerouslySetInnerHTML={{ __html: description }}
                         />
@@ -121,6 +130,7 @@ const Feature: React.FC<
                         type="copy-b"
                         isInverted={isInverted}
                         innerHTML={intro}
+                        data-sheet="intro"
                     />
                 )}
                 {text && (
@@ -129,6 +139,7 @@ const Feature: React.FC<
                         size="medium"
                         isInverted={isInverted}
                         innerHTML={text}
+                        data-sheet="text"
                     />
                 )}
             </ArticleContent>

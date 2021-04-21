@@ -115,6 +115,7 @@ const Heading: React.FC<{
     hasShadow = false,
     innerHTML,
     children,
+    ...rest
 }) => {
     const theme = React.useContext(ThemeContext);
     let tag: HeadlineTag = 'h2';
@@ -156,6 +157,7 @@ const Heading: React.FC<{
                 innerHTML && !children ? { __html: innerHTML } : undefined
             }
             className={className}
+            {...rest}
         >
             {children}
         </View>
