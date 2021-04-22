@@ -53,6 +53,7 @@ export { default as Poster } from 'components/sections/Poster';
 export { default as Video } from 'components/sections/Video';
 export { default as CallToAction } from 'components/sections/CallToAction';
 export { default as FactList } from 'components/sections/FactList';
+export { default as Table } from 'components/sections/Table';
 export { default as Map } from 'components/sections/Map';
 export { default as ImageCarousel } from 'components/sections/carousel/ImageCarousel';
 export { default as FeatureCarousel } from 'components/sections/carousel/FeatureCarousel';
