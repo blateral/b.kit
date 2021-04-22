@@ -37,6 +37,7 @@ export { getMediaQuery, isBrowser, useMediaQuery } from 'utils/useMediaQuery';
 export { useScroll } from 'utils/useScroll';
 export { usePoster, canUseWebP } from 'utils/usePoster';
 export { default as useInterval } from 'utils/useInterval';
+export { useImgPreload } from 'utils/useImgPreload';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
