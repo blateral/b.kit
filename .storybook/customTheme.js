@@ -1,9 +1,11 @@
 import { create } from '@storybook/theming/create';
 import { version } from '../package.json';
 
+import brandLogo from '../public/images/bkit-logo_small.png';
+
 export default create({
     base: 'light',
-    brandTitle: `B.Kit v${version}`,
+    brandTitle: `b.kit ${version}`,
     brandUrl: 'https://www.blateral.com/',
-    // brandImage: 'https://placehold.it/350x150',
+    brandImage: brandLogo,
 });
