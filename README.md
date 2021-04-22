@@ -1,3 +1,5 @@
+![b.kit logo](./public/images/bkit-logo_small.png)
+
 # b.kit - React component library to b.uild awesome websites
 
 The b.kit library consists of a set of essential React components that can be implemented and modified in any React project. The goal is to reduce the need of rebuilding each component every time. Instead they are defined in one library and can be reused in multiple projects.
