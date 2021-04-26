@@ -1,4 +1,4 @@
-/***** Version: 0.7.3 *****/
+/***** Version: 0.7.5 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts } from 'utils/styles';
@@ -37,6 +37,7 @@ export { getMediaQuery, isBrowser, useMediaQuery } from 'utils/useMediaQuery';
 export { useScroll } from 'utils/useScroll';
 export { usePoster, canUseWebP } from 'utils/usePoster';
 export { default as useInterval } from 'utils/useInterval';
+export { useImgPreload } from 'utils/useImgPreload';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
