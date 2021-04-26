@@ -133,6 +133,7 @@ const Slider: FC<
     const slickSettings: Settings = {
         className: 'slider variable-width',
         dots: false,
+        arrows: false,
         infinite: false,
         speed: 500,
         slidesToScroll: 1,
