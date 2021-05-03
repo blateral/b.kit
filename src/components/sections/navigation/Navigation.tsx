@@ -29,10 +29,6 @@ export interface NavProps {
     logo?: LogoProps;
     /** Allow overflow of topbar over content if page is on top */
     allowTopbarOverflow?: boolean;
-    /** Hide topbar if page is scrolled down. Open it if page is scrolled up. */
-    hideTopbarOnScrollDown?: boolean;
-    /** Wait until page has been scrolled over top offset before activate topbar open/close functionality */
-    withTopbarOffset?: boolean;
     /** Hide topbar background if menu overlay is open */
     hideTopbarBackUnderMenu?: boolean;
     primaryCta?: (props: {
@@ -64,8 +60,6 @@ const Navigation: FC<NavProps> = ({
     isTopbarInverted,
     allowTopbarOverflow,
     hideTopbarBackUnderMenu,
-    hideTopbarOnScrollDown,
-    withTopbarOffset,
     openMenuIcon,
 }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -85,8 +79,6 @@ const Navigation: FC<NavProps> = ({
             <TopBar
                 isBackVisible={hideTopbarBackUnderMenu ? !isMenuOpen : true}
                 isInverted={isTopbarInverted}
-                hideOnScrollDown={hideTopbarOnScrollDown}
-                withTopOffset={withTopbarOffset}
                 allowTopOverlow={allowTopbarOverflow}
                 toggleIcon={openMenuIcon}
                 onToggleClick={() => setIsMenuOpen(true)}

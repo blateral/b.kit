@@ -199,8 +199,6 @@ const TopBar: FC<{
     isVisible?: boolean;
     isBackVisible?: boolean;
     isInverted?: boolean;
-    hideOnScrollDown?: boolean;
-    withTopOffset?: boolean;
     allowTopOverlow?: boolean;
     onToggleClick?: () => void;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
@@ -219,8 +217,6 @@ const TopBar: FC<{
 }> = ({
     isVisible = true,
     isInverted = false,
-    hideOnScrollDown = false,
-    withTopOffset = false,
     isBackVisible = true,
     allowTopOverlow = true,
     onToggleClick,
@@ -242,13 +238,13 @@ const TopBar: FC<{
     const { isTop, isInOffset, scrollDirection, setTopOffset } = useScroll({});
 
     useEffect(() => {
-        if (typeof window !== 'undefined' && viewRef.current && withTopOffset) {
+        if (typeof window !== 'undefined' && viewRef.current) {
             setTopOffset(viewRef.current.scrollHeight);
         }
-    }, [setTopOffset, withTopOffset, currentMq]);
+    }, [setTopOffset, currentMq]);
 
     useEffect(() => {
-        if (!isInOffset && hideOnScrollDown) {
+        if (!isInOffset) {
             if (scrollDirection === ScrollDirection.UP) {
                 setIsOpen(true);
                 setIsAnimated(true);
@@ -256,16 +252,16 @@ const TopBar: FC<{
                 setIsOpen(false);
             }
         }
-    }, [hideOnScrollDown, isInOffset, scrollDirection]);
+    }, [isInOffset, scrollDirection]);
 
     useEffect(() => {
-        if (!isInOffset || (!withTopOffset && !isTop)) {
+        if (!isInOffset && !isTop) {
             setIsLarge((prev) => {
                 if (prev) setIsAnimated(false);
                 return false;
             });
         }
-    }, [isInOffset, isLarge, isTop, withTopOffset]);
+    }, [isInOffset, isLarge, isTop]);
 
     useEffect(() => {
         if (isTop) setIsLarge(true);
