@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import Copy from '../typography/Copy';
 import { getColors as color, mq, spacings } from 'utils/styles';
+import Wrapper from 'components/base/Wrapper';
 
 const TableContainer = styled.div`
     overflow-x: scroll;
@@ -14,6 +15,12 @@ const TableContainer = styled.div`
         overflow-y: hidden;
         white-space: pre-wrap;
         margin-right: 0px;
+    }
+`;
+
+const TableGroupWrapper = styled(Wrapper)`
+    @media ${mq.large} {
+        padding: 0;
     }
 `;
 
@@ -71,9 +78,11 @@ const TableBlock: React.FC<TableProps> = ({
     return (
         <div>
             {tableTitle && (
-                <Copy type="copy-b" isInverted={isInverted}>
-                    {tableTitle}
-                </Copy>
+                <TableGroupWrapper addWhitespace>
+                    <Copy type="copy-b" isInverted={isInverted}>
+                        {tableTitle}
+                    </Copy>
+                </TableGroupWrapper>
             )}
             <TableContainer>
                 <TableBody>
@@ -82,7 +91,9 @@ const TableBlock: React.FC<TableProps> = ({
                             <tr>
                                 {rowTitle.map((item, ii) => {
                                     return (
-                                        <TableHead key={ii}>{item}</TableHead>
+                                        <TableHead key={ii}>
+                                            <Copy type="copy-b">{item}</Copy>
+                                        </TableHead>
                                     );
                                 })}
                             </tr>

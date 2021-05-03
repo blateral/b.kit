@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, withRange, spacings } from 'utils/styles';
+import { getColors as color, withRange, spacings, mq } from 'utils/styles';
 import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 import Section from 'components/base/Section';
@@ -15,6 +15,12 @@ const TableWrapper = styled.div<{ withSeperation?: boolean }>`
 
     & + & {
         ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    }
+`;
+
+const IntroWrapper = styled(Wrapper)`
+    @media ${mq.large} {
+        padding: 0;
     }
 `;
 
@@ -46,17 +52,19 @@ const Table: React.FC<{
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
-            <Wrapper addWhitespace>
-                {title && (
-                    <Intro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                        isInverted={isInverted}
-                    />
-                )}
+            <Wrapper>
+                <IntroWrapper addWhitespace>
+                    {title && (
+                        <Intro
+                            title={title}
+                            titleAs={titleAs}
+                            superTitle={superTitle}
+                            superTitleAs={superTitleAs}
+                            text={text}
+                            isInverted={isInverted}
+                        />
+                    )}
+                </IntroWrapper>
 
                 {tableItems.map((item, i) => {
                     return (
