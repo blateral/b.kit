@@ -242,8 +242,6 @@ const exampleNavItems = {
 
 export const WithLogo: Story = () => (
     <Navigation
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -253,8 +251,6 @@ export const WithLogo: Story = () => (
 
 export const WithTopbarActions: Story = () => (
     <Navigation
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -267,8 +263,6 @@ export const WithTopbarActions: Story = () => (
 export const WithInvertedTopbar: Story = () => (
     <Navigation
         isTopbarInverted
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -281,8 +275,6 @@ export const WithInvertedTopbar: Story = () => (
 export const PreventTopbarOverflow: Story = () => (
     <Navigation
         allowTopbarOverflow={false}
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -294,8 +286,6 @@ export const PreventTopbarOverflow: Story = () => (
 
 export const WithMenuNavItems: Story = () => (
     <Navigation
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -308,8 +298,6 @@ export const WithMenuNavItems: Story = () => (
 
 export const WithMenuSearchbar: Story = () => (
     <Navigation
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -330,8 +318,6 @@ export const WithMenuSearchbar: Story = () => (
 
 export const WithMenuSocials: Story = () => (
     <Navigation
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -357,8 +343,6 @@ export const WithMenuSocials: Story = () => (
 
 export const HideTopbarBackgroundUnderMenu: Story = () => (
     <Navigation
-        withTopbarOffset
-        hideTopbarOnScrollDown
         hideTopbarBackUnderMenu
         logo={{
             icon: logoFn,
@@ -386,8 +370,6 @@ export const HideTopbarBackgroundUnderMenu: Story = () => (
 export const WithInvertedMenu: Story = () => (
     <Navigation
         isMenuInverted
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -414,8 +396,6 @@ export const WithInvertedMenu: Story = () => (
 export const WithLargeMenu: Story = () => (
     <Navigation
         isLargeMenu
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -443,8 +423,6 @@ export const WithInvertedLargeMenu: Story = () => (
     <Navigation
         isLargeMenu
         isMenuInverted
-        withTopbarOffset
-        hideTopbarOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',

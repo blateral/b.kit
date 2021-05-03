@@ -129,31 +129,8 @@ export const WithCustomLogoScale: Story = () => (
     />
 );
 
-export const WithScrollTriggerDelay: Story = () => (
-    <TopBar
-        withTopOffset
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-    />
-);
-
-export const HideTopBarOnScrollDown: Story = () => (
-    <TopBar
-        withTopOffset
-        hideOnScrollDown
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-    />
-);
-
 export const WithActions: Story = () => (
     <TopBar
-        withTopOffset
-        hideOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -166,8 +143,6 @@ export const WithActions: Story = () => (
 export const PreventTopOverflow: Story = () => (
     <TopBar
         allowTopOverlow={false}
-        withTopOffset
-        hideOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -180,8 +155,6 @@ export const PreventTopOverflow: Story = () => (
 export const Inverted: Story = () => (
     <TopBar
         isInverted
-        withTopOffset
-        hideOnScrollDown
         logo={{
             icon: logoFn,
             link: '#logoLink',
@@ -194,8 +167,6 @@ export const Inverted: Story = () => (
 export const WithToggleIconVariation: Story = () => (
     <TopBar
         isInverted
-        withTopOffset
-        hideOnScrollDown
         toggleIcon={(isInverted) => (
             <Star iconColor={isInverted ? '#fff' : '#000'} />
         )}
