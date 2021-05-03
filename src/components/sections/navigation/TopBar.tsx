@@ -238,9 +238,18 @@ const TopBar: FC<{
     const { isTop, isInOffset, scrollDirection, setTopOffset } = useScroll({});
 
     useEffect(() => {
+        let topbarLogo: null | HTMLElement = null;
+        const calcTopbar = () => {
+            if (viewRef.current) setTopOffset(viewRef.current.scrollHeight);
+        };
+
         if (typeof window !== 'undefined' && viewRef.current) {
-            setTopOffset(viewRef.current.scrollHeight);
+            topbarLogo = viewRef.current.querySelector('img');
+            topbarLogo?.addEventListener('load', calcTopbar);
         }
+        return () => {
+            topbarLogo?.removeEventListener('load', calcTopbar);
+        };
     }, [setTopOffset, currentMq]);
 
     useEffect(() => {
