@@ -129,6 +129,19 @@ export const WithCustomLogoScale: Story = () => (
     />
 );
 
+export const WithCustomScrolledLogoScale: Story = () => (
+    <TopBar
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+            scrolledScale: {
+                desktop: 1,
+                mobile: 1,
+            },
+        }}
+    />
+);
+
 export const WithActions: Story = () => (
     <TopBar
         logo={{

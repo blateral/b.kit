@@ -231,6 +231,18 @@ const TopBar: FC<{
     const [isOpen, setIsOpen] = useState(true);
     const [isLarge, setIsLarge] = useState(true);
     const [isAnimated, setIsAnimated] = useState(false);
+    const defaultLogoScale: Pick<LogoProps, 'scale' | 'scrolledScale'> = {
+        scale: {
+            mobile: 1,
+            desktop: 1,
+            ...logo?.scale,
+        },
+        scrolledScale: {
+            mobile: 0.6,
+            desktop: 0.6,
+            ...logo?.scrolledScale,
+        },
+    };
 
     const mqs: TopBarMq[] = ['semilarge', 'large'];
     const currentMq = useMediaQuery(mqs) as TopBarMq | undefined;
@@ -280,10 +292,20 @@ const TopBar: FC<{
     const isBarInverted =
         (isLarge && allowTopOverlow) || isInverted || !isBackVisible;
 
-    const logoScale =
-        (currentMq === 'large' ? logo?.scale?.desktop : logo?.scale?.mobile) ||
-        1;
-    const logoHeight = isLarge ? 115 * logoScale : 70;
+    // get scale factor of topbar logo
+    let logoScale = 1;
+    if (currentMq === 'large') {
+        const desktopScale = isLarge
+            ? defaultLogoScale.scale?.desktop
+            : defaultLogoScale.scrolledScale?.desktop;
+        if (desktopScale !== undefined) logoScale = desktopScale;
+    } else {
+        const mobileScale = isLarge
+            ? defaultLogoScale.scale?.mobile
+            : defaultLogoScale.scrolledScale?.mobile;
+        if (mobileScale !== undefined) logoScale = mobileScale;
+    }
+    const logoHeight = isLarge ? 115 * logoScale : 115 * logoScale;
 
     return (
         <>
