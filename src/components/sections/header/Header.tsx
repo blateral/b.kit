@@ -168,6 +168,8 @@ const StyledActions = styled(Actions)`
 
 const Header: FC<{
     size?: 'full' | 'small';
+    /** Optional explicit height scale value: 100vh * [0...1] */
+    sizeScale?: number;
     title?: string;
     titleAs?: CalloutTag;
     primaryCta?: (isInverted?: boolean) => React.ReactNode;
@@ -180,6 +182,7 @@ const Header: FC<{
     };
 }> = ({
     size = 'full',
+    sizeScale,
     title,
     titleAs,
     primaryCta,
@@ -199,7 +202,13 @@ const Header: FC<{
                 <StyledPoster
                     images={images}
                     gradient={withTopGradient ? gradient : undefined}
-                    size={size === 'small' ? 0.8 : 1}
+                    size={
+                        sizeScale === undefined
+                            ? size === 'small'
+                                ? 0.8
+                                : 1
+                            : sizeScale
+                    }
                 >
                     <Wrapper>
                         <PosterContent>
