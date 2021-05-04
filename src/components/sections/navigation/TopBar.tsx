@@ -9,20 +9,21 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import { ScrollDirection, useScroll } from 'utils/useScroll';
 import { LogoProps } from './Navigation';
 
-const TopWhitespace = styled.div<{ logoHeight?: number }>`
+const TopWhitespace = styled.div<{ logoHeight?: number; showLarge?: boolean }>`
     width: 100%;
-    height: ${({ logoHeight }) =>
-        logoHeight ? logoHeight + 25 + 'px' : '140px'};
+    height: ${({ logoHeight, showLarge }) =>
+        logoHeight ? logoHeight + (showLarge ? 25 : 10) + 'px' : '140px'};
 
-    @media ${mq.medium} {
-        height: ${({ logoHeight }) =>
-            logoHeight ? logoHeight + 50 + 'px' : '140px'};
+    @media ${mq.semilarge} {
+        height: ${({ logoHeight, showLarge }) =>
+            logoHeight ? logoHeight + (showLarge ? 50 : 30) + 'px' : '140px'};
     }
 `;
 
 const View = styled.div<{
     isVisible?: boolean;
     isLarge?: boolean;
+    showLarge?: boolean;
     isOpen?: boolean;
     isInverted?: boolean;
     animated?: boolean;
@@ -36,8 +37,8 @@ const View = styled.div<{
     width: 100%;
     z-index: 10;
     max-width: ${spacings.wrapperLarge}px;
-    padding: ${({ isLarge, isOpen }) =>
-            !isLarge && isOpen ? spacings.nudge : spacings.spacer}px
+    padding: ${({ showLarge, isOpen }) =>
+            !showLarge && isOpen ? spacings.nudge : spacings.spacer}px
         0 ${spacings.nudge}px 0;
     margin: 0 auto;
     overflow: hidden;
@@ -77,9 +78,11 @@ const View = styled.div<{
     will-change: transform, background-color, padding, height, box-shadow,
         opacity;
 
-    @media ${mq.medium} {
-        padding: ${({ isLarge, isOpen }) =>
-                !isLarge && isOpen ? spacings.nudge * 3 : spacings.nudge * 7}px
+    @media ${mq.semilarge} {
+        padding: ${({ showLarge, isOpen }) =>
+                !showLarge && isOpen
+                    ? spacings.nudge * 3
+                    : spacings.nudge * 7}px
             0 ${spacings.nudge * 3}px 0;
     }
 `;
@@ -193,6 +196,10 @@ const LogoLink = styled(Link)<{ logoHeight?: number }>`
     }
 `;
 
+const clampValue = (num: number, min: number, max: number) => {
+    return Math.min(Math.max(num, min), max);
+};
+
 type TopBarMq = 'semilarge' | 'large';
 
 const TopBar: FC<{
@@ -200,6 +207,7 @@ const TopBar: FC<{
     isBackVisible?: boolean;
     isInverted?: boolean;
     allowTopOverlow?: boolean;
+    isLargeOnPageTop?: boolean;
     onToggleClick?: () => void;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
     logo?: LogoProps;
@@ -219,6 +227,7 @@ const TopBar: FC<{
     isInverted = false,
     isBackVisible = true,
     allowTopOverlow = true,
+    isLargeOnPageTop = true,
     onToggleClick,
     toggleIcon,
     logo,
@@ -231,17 +240,26 @@ const TopBar: FC<{
     const [isOpen, setIsOpen] = useState(true);
     const [isLarge, setIsLarge] = useState(true);
     const [isAnimated, setIsAnimated] = useState(false);
+    const defaultLogoScale: Pick<
+        LogoProps,
+        'pageTopScale' | 'scrolledScale'
+    > = {
+        pageTopScale: {
+            mobile: 1,
+            desktop: 1,
+            ...logo?.pageTopScale,
+        },
+        scrolledScale: {
+            mobile: 0.6,
+            desktop: 0.6,
+            ...logo?.scrolledScale,
+        },
+    };
 
     const mqs: TopBarMq[] = ['semilarge', 'large'];
     const currentMq = useMediaQuery(mqs) as TopBarMq | undefined;
 
     const { isTop, isInOffset, scrollDirection, setTopOffset } = useScroll({});
-
-    useEffect(() => {
-        if (typeof window !== 'undefined' && viewRef.current) {
-            setTopOffset(viewRef.current.scrollHeight);
-        }
-    }, [setTopOffset, currentMq]);
 
     useEffect(() => {
         if (!isInOffset) {
@@ -271,14 +289,53 @@ const TopBar: FC<{
     const isBarInverted =
         (isLarge && allowTopOverlow) || isInverted || !isBackVisible;
 
-    const logoScale =
-        (currentMq === 'large' ? logo?.scale?.desktop : logo?.scale?.mobile) ||
-        1;
-    const logoHeight = isLarge ? 115 * logoScale : 70;
+    // get scale factor of topbar logo
+    let logoScale = 1;
+    // get scale for current media query
+    const scalePageTop =
+        defaultLogoScale.pageTopScale?.[
+            currentMq === 'large' ? 'desktop' : 'mobile'
+        ];
+    const scaleScrolled =
+        defaultLogoScale.scrolledScale?.[
+            currentMq === 'large' ? 'desktop' : 'mobile'
+        ];
+
+    const scale = (isLargeOnPageTop ? isLarge : false)
+        ? scalePageTop
+        : scaleScrolled;
+    if (scale !== undefined) logoScale = scale;
+
+    // calc logo height
+    const logoHeight = clampValue(115 * logoScale, 60, 300);
+    const logoTopHeight =
+        scalePageTop &&
+        scaleScrolled &&
+        clampValue(
+            115 * (isLargeOnPageTop ? scalePageTop : scaleScrolled),
+            60,
+            300
+        );
+
+    // calculate top scroll offset
+    useEffect(() => {
+        const showLarge = isLargeOnPageTop ? isLarge : false;
+
+        if (currentMq === 'large') {
+            setTopOffset(logoHeight + (showLarge ? 25 : 10));
+        } else {
+            setTopOffset(logoHeight + (showLarge ? 50 : 30));
+        }
+    }, [setTopOffset, currentMq, isLargeOnPageTop, isLarge, logoHeight]);
 
     return (
         <>
-            {!allowTopOverlow && <TopWhitespace logoHeight={logoHeight} />}
+            {!allowTopOverlow && (
+                <TopWhitespace
+                    showLarge={isLargeOnPageTop}
+                    logoHeight={logoTopHeight}
+                />
+            )}
             <View
                 ref={viewRef}
                 isInverted={isInverted}
@@ -286,12 +343,13 @@ const TopBar: FC<{
                 isBackVisible={isBackVisible}
                 isOpen={isOpen}
                 isLarge={isLarge}
+                showLarge={isLargeOnPageTop ? isLarge : false}
                 animated={isAnimated}
                 allowOffset={allowTopOverlow}
                 className={className}
             >
                 <Content clampWidth="normal" addWhitespace>
-                    <LeftCol isTop={isLarge}>
+                    <LeftCol isTop={isLargeOnPageTop ? isLarge : false}>
                         <ToggleContainer
                             onClick={onToggleClick}
                             iconColor={
@@ -313,7 +371,7 @@ const TopBar: FC<{
                             )}
                         </ToggleContainer>
                     </LeftCol>
-                    <CenterCol isTop={isLarge}>
+                    <CenterCol isTop={isLargeOnPageTop ? isLarge : false}>
                         {logo && (
                             <LogoLink href={logo.link} logoHeight={logoHeight}>
                                 {logo.icon &&
@@ -321,14 +379,17 @@ const TopBar: FC<{
                                         isInverted: isBarInverted,
                                         name: 'topbar_logo',
                                         size:
-                                            currentMq !== 'large' || !isLarge
+                                            currentMq !== 'large' ||
+                                            !(isLargeOnPageTop
+                                                ? isLarge
+                                                : false)
                                                 ? 'small'
                                                 : 'full',
                                     })}
                             </LogoLink>
                         )}
                     </CenterCol>
-                    <RightCol isTop={isLarge}>
+                    <RightCol isTop={isLargeOnPageTop ? isLarge : false}>
                         {secondaryAction &&
                             secondaryAction({
                                 isInverted: isBarInverted,

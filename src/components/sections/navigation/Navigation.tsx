@@ -11,8 +11,14 @@ export interface LogoProps {
         name?: string;
     }) => React.ReactNode;
     link?: string;
-    scale?: {
+    pageTopScale?: {
         // icon scale factor
+        mobile?: number;
+        desktop?: number;
+    };
+    /** Logo scale if is shown from scroll up */
+    scrolledScale?: {
+        /** Default is 0.6 */
         mobile?: number;
         desktop?: number;
     };
@@ -31,6 +37,7 @@ export interface NavProps {
     allowTopbarOverflow?: boolean;
     /** Hide topbar background if menu overlay is open */
     hideTopbarBackUnderMenu?: boolean;
+    isTopbarLargeOnPageTop?: boolean;
     primaryCta?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
@@ -60,6 +67,7 @@ const Navigation: FC<NavProps> = ({
     isTopbarInverted,
     allowTopbarOverflow,
     hideTopbarBackUnderMenu,
+    isTopbarLargeOnPageTop,
     openMenuIcon,
 }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -80,6 +88,7 @@ const Navigation: FC<NavProps> = ({
                 isBackVisible={hideTopbarBackUnderMenu ? !isMenuOpen : true}
                 isInverted={isTopbarInverted}
                 allowTopOverlow={allowTopbarOverflow}
+                isLargeOnPageTop={isTopbarLargeOnPageTop}
                 toggleIcon={openMenuIcon}
                 onToggleClick={() => setIsMenuOpen(true)}
                 {...sharedProps}
