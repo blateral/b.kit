@@ -284,6 +284,31 @@ export const PreventTopbarOverflow: Story = () => (
     />
 );
 
+export const WithoutTopbarLargeState: Story = () => (
+    <Navigation
+        isTopbarLargeOnPageTop={false}
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryCta={primaryCtaFn}
+        secondaryCta={secondaryCtaFn}
+    />
+);
+
+export const WithoutLargeAndOverflow: Story = () => (
+    <Navigation
+        allowTopbarOverflow={false}
+        isTopbarLargeOnPageTop={false}
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryCta={primaryCtaFn}
+        secondaryCta={secondaryCtaFn}
+    />
+);
+
 export const WithMenuNavItems: Story = () => (
     <Navigation
         logo={{

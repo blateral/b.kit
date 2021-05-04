@@ -26,6 +26,7 @@ export const useScroll = ({
         if (typeof window === 'undefined') return;
         const handleScroll = () => {
             setIsTop(window.pageYOffset <= 1);
+            setIsInOffset(window.pageYOffset <= 1 + topOffset);
 
             if (lastScrollPos.current) {
                 // check if top offset is left
@@ -33,7 +34,6 @@ export const useScroll = ({
                     window.pageYOffset > 1 + topOffset &&
                     lastScrollPos.current <= 1 + topOffset
                 ) {
-                    setIsInOffset(false);
                     onLeftOffset && onLeftOffset();
                 }
 
@@ -42,7 +42,6 @@ export const useScroll = ({
                     window.pageYOffset <= 1 + topOffset &&
                     lastScrollPos.current > 1 + topOffset
                 ) {
-                    setIsInOffset(true);
                     onEnterOffset && onEnterOffset();
                 }
 
@@ -58,7 +57,6 @@ export const useScroll = ({
             lastScrollPos.current = window.pageYOffset;
         };
 
-        setIsInOffset(window.pageYOffset <= 1 + topOffset);
         handleScroll();
         window.addEventListener('scroll', handleScroll);
 

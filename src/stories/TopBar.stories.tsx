@@ -121,7 +121,7 @@ export const WithCustomLogoScale: Story = () => (
         logo={{
             icon: logoFn,
             link: '#logoLink',
-            scale: {
+            pageTopScale: {
                 desktop: 1.5,
                 mobile: 0.5,
             },
@@ -142,20 +142,28 @@ export const WithCustomScrolledLogoScale: Story = () => (
     />
 );
 
-export const WithActions: Story = () => (
+export const WithoutLargeState: Story = () => (
     <TopBar
+        isLargeOnPageTop={false}
         logo={{
             icon: logoFn,
             link: '#logoLink',
         }}
-        primaryAction={primaryCtaFn}
-        secondaryAction={secondaryCtaFn}
     />
 );
 
 export const PreventTopOverflow: Story = () => (
     <TopBar
         allowTopOverlow={false}
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+    />
+);
+
+export const WithActions: Story = () => (
+    <TopBar
         logo={{
             icon: logoFn,
             link: '#logoLink',
