@@ -128,7 +128,7 @@ const StyledPoster = styled(Poster)<{ gradient?: string; size?: number }>`
     justify-content: flex-start;
     align-items: flex-end;
     height: ${({ size }) => (size ? size * 100 + 'vh' : '100vh')};
-    max-height: 1500px;
+    max-height: 1100px;
 
     ${withRange([spacings.spacer * 7, spacings.spacer * 8], 'padding-top')};
     ${withRange(
