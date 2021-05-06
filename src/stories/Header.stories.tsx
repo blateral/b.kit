@@ -24,11 +24,13 @@ export const SinglePoster: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -44,11 +46,13 @@ export const WithoutTopGradient: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -64,11 +68,13 @@ export const WithTitle: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -84,11 +90,13 @@ export const WithActions: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -114,11 +122,13 @@ export const WithBadge: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -152,11 +162,13 @@ export const WithBadgeOnMobile: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -192,11 +204,13 @@ export const SmallerHeaderSize: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -224,11 +238,13 @@ export const WithExplicitSizeScale: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -254,11 +270,13 @@ export const WithKenBurnsEffect: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -266,12 +284,14 @@ export const WithKenBurnsEffect: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=2',
                 medium: 'https://unsplash.it/1100/1320?id=2',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=2',
                 xlarge: 'https://unsplash.it/2450/1320?id=2',
             },
             {
                 small: 'https://unsplash.it/660/792?id=3',
                 medium: 'https://unsplash.it/1100/1320?id=3',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=3',
                 xlarge: 'https://unsplash.it/2450/1320?id=3',
             },
@@ -297,11 +317,13 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=1',
                 medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
                 webp: {
                     small: 'https://unsplash.it/660/792.webp?id=1',
                     medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
                     large: 'https://unsplash.it/1596/860.webp?id=1',
                     xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
                 },
@@ -309,12 +331,14 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
             {
                 small: 'https://unsplash.it/660/792?id=2',
                 medium: 'https://unsplash.it/1100/1320?id=2',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=2',
                 xlarge: 'https://unsplash.it/2450/1320?id=2',
             },
             {
                 small: 'https://unsplash.it/660/792?id=3',
                 medium: 'https://unsplash.it/1100/1320?id=3',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=3',
                 xlarge: 'https://unsplash.it/2450/1320?id=3',
             },
