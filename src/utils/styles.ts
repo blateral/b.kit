@@ -274,16 +274,34 @@ const defaultFonts: Fonts = {
     },
 };
 
+/***** Global Settings *****/
+export interface GlobalSettings {
+    sections: {
+        /** Add seperation around sections with background attribute 'plain' (e.g. Teaser) */
+        plainSeperation: boolean;
+    };
+}
+
+const defaultGlobalSettings: GlobalSettings = {
+    sections: {
+        plainSeperation: false,
+    },
+};
+
 /***** Theme Helper *****/
 export const getBaseTheme = () => {
     return {
         colors: { ...defaultColors },
         fonts: { types: { ...defaultFonts } },
+        globalSettings: { ...defaultGlobalSettings },
     } as DefaultTheme;
 };
 
 export const getTheme = (theme?: DefaultTheme) => {
-    return (theme && theme.colors && theme.fonts) || getBaseTheme();
+    return (
+        (theme && theme.colors && theme.fonts && theme.globalSettings) ||
+        getBaseTheme()
+    );
 };
 
 export const getColors = (theme?: DefaultTheme) => {
@@ -294,4 +312,10 @@ export const getFonts = (theme?: DefaultTheme) => {
     return theme && theme.fonts?.types
         ? theme.fonts.types
         : getBaseTheme().fonts.types;
+};
+
+export const getGlobalSettings = (theme?: DefaultTheme) => {
+    return theme && theme.globalSettings
+        ? theme.globalSettings
+        : getBaseTheme().globalSettings;
 };
