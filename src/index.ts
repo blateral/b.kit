@@ -1,7 +1,7 @@
-/***** Version: 0.8.2 *****/
+/***** Version: 0.8.3 *****/
 
 import 'styled-components';
-import { Colors, FontBase, Fonts } from 'utils/styles';
+import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
 
 /***** Styled Component theme override *****/
 declare module 'styled-components' {
@@ -11,6 +11,7 @@ declare module 'styled-components' {
             base?: FontBase;
             types: Fonts;
         };
+        globalSettings: GlobalSettings;
     }
 }
 

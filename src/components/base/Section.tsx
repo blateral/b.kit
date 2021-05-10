@@ -1,6 +1,12 @@
 import * as React from 'react';
-import styled, { css } from 'styled-components';
-import { mq, spacings, withRange } from 'utils/styles';
+import { useContext } from 'react';
+import styled, { css, ThemeContext } from 'styled-components';
+import {
+    mq,
+    spacings,
+    withRange,
+    getGlobalSettings as settings,
+} from 'utils/styles';
 
 export type BgMode =
     | 'full'
@@ -39,6 +45,7 @@ const getBackground = (mode: BgMode, bgColor: string) => {
 const View = styled.section<{
     indent: string;
     addSeperation?: boolean;
+    addPlainSeperation?: boolean;
 }>`
     position: relative;
     overflow: hidden;
@@ -51,9 +58,37 @@ const View = styled.section<{
         withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-bottom')}
 
     ${({ indent }) =>
+        indent !== 'plain' &&
         css`
             &[data-ident='${indent}'] + &[data-ident='${indent}'] {
                 padding-top: 0;
+            }
+        `}
+
+    ${({ indent, addPlainSeperation }) =>
+        addPlainSeperation &&
+        indent &&
+        css`
+            &[data-ident='plain'] {
+                ${withRange(
+                    [spacings.spacer * 2, spacings.spacer * 4],
+                    'margin-top'
+                )}
+            }
+
+            &[data-ident='plain'] + & {
+                ${withRange(
+                    [spacings.spacer * 2, spacings.spacer * 4],
+                    'margin-top'
+                )}
+            }
+
+            &[data-ident='plain'] + &[data-ident='transparent'] {
+                margin-top: 0;
+            }
+
+            &[data-ident='transparent'] + &[data-ident='plain'] {
+                margin-top: 0;
             }
         `}
 `;
@@ -129,12 +164,15 @@ const Section: React.FC<{
     className,
     children,
 }) => {
+    const theme = useContext(ThemeContext);
+
     return (
         <View
             as={as}
             data-ident={bgColor && bgMode === 'full' ? bgColor : 'plain'}
             indent={bgColor && bgMode === 'full' ? bgColor : 'plain'}
             addSeperation={addSeperation}
+            addPlainSeperation={settings(theme).sections.plainSeperation}
             className={className}
         >
             {bgColor && bgMode && <Back bgColor={bgColor} bgMode={bgMode} />}
