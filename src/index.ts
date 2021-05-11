@@ -68,11 +68,27 @@ export { default as Header } from 'components/sections/header/Header';
 export { default as Button } from 'components/buttons/Button';
 export { default as ButtonGhost } from 'components/buttons/ButtonGhost';
 
+/***** Base *****/
+export { default as Grid } from 'components/base/Grid';
+export { default as Section } from 'components/base/Section';
+export { default as Wrapper } from 'components/base/Wrapper';
+
+/***** Typography *****/
+export { default as Heading } from 'components/typography/Heading';
+export { default as Copy } from 'components/typography/Copy';
+export { default as Callout } from 'components/typography/Callout';
+export { default as Link } from 'components/typography/Link';
+
 /***** Fields *****/
 export { default as CompactForm } from 'components/fields/CompactForm';
 export { default as SearchInput } from 'components/fields/SearchInput';
 
-/***** Special blocks *****/
+/***** Blocks *****/
+export { default as Title } from 'components/blocks/Title';
+export { default as Actions } from 'components/blocks/Actions';
+export { default as Bdot } from 'components/blocks/Bdot';
+export { default as Intro } from 'components/blocks/Intro';
+export { default as Image } from 'components/blocks/Image';
 export {
     default as CookieConsent,
     CookieIcon,
