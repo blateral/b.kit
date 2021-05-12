@@ -11,7 +11,7 @@ import {
 const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     min-height: 3em;
     height: 3.65em;
-    min-width: 123px;
+    min-width: 210px;
     padding: 0.1em 1.2em;
 
     display: inline-block;

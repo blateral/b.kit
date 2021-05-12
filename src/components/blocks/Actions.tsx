@@ -17,7 +17,7 @@ const View = styled.div<{ isCentered?: boolean; isMirrored?: boolean }>`
     width: calc(100% + ${spacings.spacer}px);
 
     & > * {
-        flex: 1;
+        flex: 1 0 auto;
         margin-top: ${spacings.spacer * 0.5}px;
         margin-left: ${spacings.spacer}px;
     }
@@ -26,6 +26,7 @@ const View = styled.div<{ isCentered?: boolean; isMirrored?: boolean }>`
         flex-direction: ${({ isMirrored }) =>
             isMirrored ? 'row-reverse' : 'row'};
         align-items: stretch;
+        width: auto;
     }
 `;
 

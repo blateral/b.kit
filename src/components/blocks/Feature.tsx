@@ -53,8 +53,12 @@ const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
 
     @media ${mq.medium} {
+        width: 100%;
+
         & > * {
             max-width: 50%;
+            min-width: 0;
+            flex: 1;
         }
     }
 `;
