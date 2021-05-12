@@ -29,6 +29,7 @@ const Video: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isInverted?: boolean;
+    hasBack?: boolean;
 }> = ({
     title,
     titleAs,
@@ -38,6 +39,7 @@ const Video: React.FC<{
     primaryAction,
     secondaryAction,
     isInverted = false,
+    hasBack = false,
     bgImage,
     embedId,
     playIcon,
@@ -46,7 +48,13 @@ const Video: React.FC<{
 
     return (
         <Section
-            bgColor={isInverted ? color(theme).dark : 'transparent'}
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBack
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
             addSeperation
         >
             {title && (

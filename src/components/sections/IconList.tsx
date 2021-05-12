@@ -19,7 +19,7 @@ const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     }
 `;
 
-const ListContainer = styled.div<{ isCentered?: boolean }>`
+const ListContainer = styled.div`
     text-align: center;
     &:not(:first-child) {
         ${withRange([spacings.spacer, spacings.spacer * 1.75], 'margin-top')}
@@ -28,19 +28,20 @@ const ListContainer = styled.div<{ isCentered?: boolean }>`
     &:not(:last-child) {
         ${withRange([spacings.spacer, spacings.spacer * 1.75], 'margin-bottom')}
     }
-
-    @media ${mq.semilarge} {
-        text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
-    }
 `;
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.div<{ isCentered?: boolean }>`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: ${spacings.spacer * 1.75}px;
 
     text-align: center;
+
+    @media ${mq.semilarge} {
+        justify-content: ${({ isCentered }) =>
+            isCentered ? 'center' : 'flex-start'};
+    }
 `;
 
 const ShowMore = styled.span<{ itemCount?: number }>`
@@ -83,9 +84,8 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
     /* left: ${({ isCentered }) => isCentered && '50%'};
     transform: ${({ isCentered }) => isCentered && 'translateX(-50%)'}; */
 
-
     @media ${mq.semilarge} {
-    margin: ${({ isCentered }) => isCentered && '0 auto'};
+        margin: ${({ isCentered }) => isCentered && '0 auto'};
         max-width: 600px;
     }
 `;
@@ -162,9 +162,9 @@ const IconList: React.FC<{
                         isCentered={isCentered}
                     />
                 )}
-                <ListContainer isCentered={isCentered}>
+                <ListContainer>
                     <Copy type="copy" size="medium" isInverted={isInverted}>
-                        <ItemContainer>
+                        <ItemContainer isCentered={isCentered}>
                             <Items
                                 isVisible={!showMore ? true : showMore === true}
                                 isCentered={isCentered}
