@@ -125,7 +125,7 @@ const StyledActions = styled(Actions)`
 
     @media ${mq.medium} {
         & > * {
-            max-width: 50%;
+            max-width: calc(50% - ${spacings.spacer}px);
         }
     }
 `;

@@ -39,7 +39,7 @@ const StyledActions = styled(Actions)`
         align-items: flex-start;
 
         & > * {
-            max-width: 300px;
+            max-width: ${(19 / 28) * spacings.wrapper + 'px'};
         }
     }
 `;
