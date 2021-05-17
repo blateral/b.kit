@@ -129,7 +129,7 @@ const FeatureList: React.FC<{
                     />
                 </Wrapper>
             )}
-            <Wrapper clampWidth="normal">
+            <Wrapper addWhitespace clampWidth="normal">
                 {features && (
                     <ContentContainer
                         isHalf={features.length % 2 === 0 ? true : false}
