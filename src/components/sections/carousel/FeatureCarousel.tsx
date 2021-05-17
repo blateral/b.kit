@@ -16,6 +16,13 @@ const StyledWrapper = styled(Wrapper)`
 
     @media ${mq.semilarge} {
         padding-left: (1 / 28) * 100%;
+
+        padding-left: ${`
+                      max(
+                          ${spacings.spacer}px,
+                          ${(1 / 28) * 100}%
+                      );
+                  `};
     }
 
     @media ${mq.xlarge} {
