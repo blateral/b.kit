@@ -14,7 +14,7 @@ const StyledWrapper = styled.div`
     }
 
     @media ${mq.semilarge} {
-        padding-left: (1 / 28) * 100%;
+        padding-left: ${(1 / 28) * 100}%;
 
         padding-left: ${`
                       max(
@@ -25,7 +25,7 @@ const StyledWrapper = styled.div`
     }
 
     @media ${mq.xlarge} {
-        padding-left: (1 / 28) * ${spacings.wrapper}px;
+        padding-left: ${(1 / 28) * spacings.wrapper}px;
     }
 `;
 
