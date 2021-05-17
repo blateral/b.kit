@@ -1,10 +1,27 @@
 import React, { FC } from 'react';
-import { ThemeContext } from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color } from 'utils/styles';
+import { getColors as color, spacings, mq } from 'utils/styles';
 import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
+import Wrapper from 'components/base/Wrapper';
+
+const StyledWrapper = styled(Wrapper)`
+    padding-left: ${spacings.nudge * 2}px;
+
+    @media ${mq.medium} {
+        padding-left: ${spacings.spacer * 2}px;
+    }
+
+    @media ${mq.semilarge} {
+        padding-left: (1 / 28) * 100%;
+    }
+
+    @media ${mq.xlarge} {
+        padding-left: (1 / 28) * ${spacings.wrapper}px;
+    }
+`;
 
 const FeatureCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
@@ -55,54 +72,56 @@ const FeatureCarousel: FC<
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <CarouselBase
-                title={title}
-                titleAs={titleAs}
-                superTitle={superTitle}
-                superTitleAs={superTitleAs}
-                text={text}
-                primaryAction={primaryAction}
-                secondaryAction={secondaryAction}
-                spacing="normal"
-                isInverted={isInverted}
-                controlNext={controlNext}
-                controlPrev={controlPrev}
-                dot={dot}
-                beforeChange={beforeChange}
-                afterChange={afterChange}
-                onInit={onInit}
-                slidesToShow={featureCount > 1 ? 3 : 1}
-                responsive={[
-                    {
-                        breakpoint: 1024,
-                        settings: {
-                            slidesToShow: featureCount > 1 ? 3 : 1,
+            <StyledWrapper>
+                <CarouselBase
+                    title={title}
+                    titleAs={titleAs}
+                    superTitle={superTitle}
+                    superTitleAs={superTitleAs}
+                    text={text}
+                    primaryAction={primaryAction}
+                    secondaryAction={secondaryAction}
+                    spacing="normal"
+                    isInverted={isInverted}
+                    controlNext={controlNext}
+                    controlPrev={controlPrev}
+                    dot={dot}
+                    beforeChange={beforeChange}
+                    afterChange={afterChange}
+                    onInit={onInit}
+                    slidesToShow={featureCount > 1 ? 3 : 1}
+                    responsive={[
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: featureCount > 1 ? 3 : 1,
+                            },
                         },
-                    },
-                    {
-                        breakpoint: 832,
-                        settings: {
-                            slidesToShow: featureCount > 1 ? 2.25 : 1,
+                        {
+                            breakpoint: 832,
+                            settings: {
+                                slidesToShow: featureCount > 1 ? 2.25 : 1,
+                            },
                         },
-                    },
-                    {
-                        breakpoint: 640,
-                        settings: {
-                            slidesToShow: featureCount > 1 ? 1.15 : 1,
+                        {
+                            breakpoint: 640,
+                            settings: {
+                                slidesToShow: featureCount > 1 ? 1.15 : 1,
+                            },
                         },
-                    },
-                ]}
-            >
-                {features &&
-                    features.map((feature, i) => (
-                        <Feature
-                            key={i}
-                            addWhitespace
-                            isInverted={isInverted}
-                            {...feature}
-                        />
-                    ))}
-            </CarouselBase>
+                    ]}
+                >
+                    {features &&
+                        features.map((feature, i) => (
+                            <Feature
+                                key={i}
+                                addWhitespace
+                                isInverted={isInverted}
+                                {...feature}
+                            />
+                        ))}
+                </CarouselBase>
+            </StyledWrapper>
         </Section>
     );
 };
