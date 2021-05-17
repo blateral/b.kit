@@ -5,9 +5,8 @@ import { getColors as color, spacings, mq } from 'utils/styles';
 import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
-import Wrapper from 'components/base/Wrapper';
 
-const StyledWrapper = styled(Wrapper)`
+const StyledWrapper = styled.div`
     padding-left: ${spacings.nudge * 2}px;
 
     @media ${mq.medium} {
