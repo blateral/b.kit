@@ -5,6 +5,7 @@ import { getColors as color, spacings, mq } from 'utils/styles';
 import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
+import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
 const StyledWrapper = styled.div`
     padding-left: ${spacings.nudge * 2}px;
@@ -54,6 +55,22 @@ const FeatureCarousel: FC<
 }) => {
     const theme = React.useContext(ThemeContext);
     const featureCount = features?.length || 0;
+    const cardRefs = useEqualSheetHeight({
+        listLength: featureCount,
+        identifiers: [
+            '[data-sheet="title"]',
+            '[data-sheet="desc"]',
+            '[data-sheet="intro"]',
+            '[data-sheet="text"]',
+        ],
+        responsive: {
+            small: featureCount,
+            medium: featureCount,
+            semilarge: featureCount,
+            large: featureCount,
+            xlarge: featureCount,
+        },
+    });
 
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
@@ -119,12 +136,14 @@ const FeatureCarousel: FC<
                 >
                     {features &&
                         features.map((feature, i) => (
-                            <Feature
-                                key={i}
-                                addWhitespace
-                                isInverted={isInverted}
-                                {...feature}
-                            />
+                            <div key={i} ref={cardRefs[i]}>
+                                <Feature
+                                    key={i}
+                                    addWhitespace
+                                    isInverted={isInverted}
+                                    {...feature}
+                                />
+                            </div>
                         ))}
                 </CarouselBase>
             </StyledWrapper>
