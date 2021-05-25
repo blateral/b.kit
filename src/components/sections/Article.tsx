@@ -36,14 +36,18 @@ const Content = styled.div<{ withAsideText?: boolean }>`
 `;
 
 const ContentBlock = styled.div<{ isAside?: boolean }>`
-    :not(:first-child) {
-        padding-top: ${({ isAside }) => (isAside ? spacings.nudge * 4 : '0')}px;
+    & + & {
+        padding-top: ${({ isAside }) => (isAside ? spacings.spacer : '0')}px;
     }
 
     flex: ${({ isAside }) => (isAside ? '1 0 30%' : '1 0 60%')};
 
     @media ${mq.semilarge} {
         max-width: ${({ isAside }) => (isAside ? '100%' : '60%')};
+
+        & + & {
+            padding-top: 0;
+        }
     }
 `;
 
