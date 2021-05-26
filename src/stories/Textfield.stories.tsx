@@ -41,6 +41,7 @@ const Textfields: React.FC<{
                 }
                 infoMessage={infoMessage ? 'Das ist ein Textfeld' : ''}
                 isDisabled={isDisabledField}
+                isRequired
             />
             <Separator />
             <Textfield

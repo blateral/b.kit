@@ -3,8 +3,6 @@ import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, spacings } from 'utils/styles';
 
-const View = styled.div``;
-
 const FieldHead = styled.div`
     display: flex;
     flex-direction: row;
@@ -13,13 +11,15 @@ const FieldHead = styled.div`
     padding-bottom: ${spacings.nudge * 3}px;
 `;
 
-const Field = styled.input<{
+const Area = styled.textarea<{
     isInverted?: boolean;
     hasError?: boolean;
     isDisabled?: boolean;
 }>`
     outline: none;
+    resize: none;
     width: 100%;
+    min-height: 120px;
 
     padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
 
@@ -29,9 +29,10 @@ const Field = styled.input<{
             : `2px solid ${getColors(theme).mono.medium}`};
     border: ${({ hasError }) => hasError && '2px solid #ff0000'};
 
-    font-weight: inherit;
     font-family: inherit;
+    font-weight: inherit;
     font-size: inherit;
+
     color: ${({ hasError }) => (hasError ? '#ff0000' : 'inherit')};
 
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
@@ -59,8 +60,7 @@ const ErrorMessage = styled(Copy)`
     margin-top: ${spacings.nudge * 2}px;
 `;
 
-const Textfield: React.FC<{
-    type?: 'text' | 'email' | 'tel';
+const Textarea: React.FC<{
     label?: string;
     errorMessage?: string;
     infoMessage?: string;
@@ -75,22 +75,21 @@ const Textfield: React.FC<{
     isOptional?: boolean;
     isDisabled?: boolean;
 }> = ({
-    type = 'text',
     label,
     errorMessage,
     infoMessage,
-    placeholder,
     value,
     name,
+    placeholder,
+    isRequired,
+    isDisabled,
     isInverted,
     hasError,
     isOptional,
-    isDisabled,
-    isRequired,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <View>
+        <div>
             <FieldHead>
                 {label && (
                     <Copy
@@ -110,15 +109,14 @@ const Textfield: React.FC<{
                     </Copy>
                 )}
             </FieldHead>
-            <Copy textColor="#383838" type="copy-b">
-                <Field
+            <Copy type="copy-b">
+                <Area
+                    value={value}
+                    name={name}
                     placeholder={placeholder}
                     hasError={hasError}
-                    type={type}
-                    isInverted={isInverted}
                     isDisabled={isDisabled}
-                    name={name}
-                    value={value}
+                    isInverted={isInverted}
                     required={isRequired}
                 />
             </Copy>
@@ -137,8 +135,8 @@ const Textfield: React.FC<{
                         : 'Bitte geben Sie einen gültigen Text ein'}
                 </ErrorMessage>
             )}
-        </View>
+        </div>
     );
 };
 
-export default Textfield;
+export default Textarea;
