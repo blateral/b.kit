@@ -21,6 +21,7 @@ export const Default: Story = () => (
             },
             phone: {
                 isRequired: true,
+                infoMessage: '*Help extra info line option',
             },
             area: {},
         }}
@@ -46,6 +47,7 @@ export const WithIntro: Story = () => (
             },
             phone: {
                 isRequired: true,
+                infoMessage: '*Help extra info line option',
             },
             area: {},
         }}
@@ -71,6 +73,7 @@ export const IsInverted: Story = () => (
             },
             phone: {
                 isRequired: true,
+                infoMessage: '*Help extra info line option',
             },
             area: {},
         }}
