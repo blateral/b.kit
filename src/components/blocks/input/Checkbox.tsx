@@ -59,36 +59,45 @@ const Checkbox: React.FC<{
     isDisabled?: boolean;
     isSelected?: boolean;
     isInverted?: boolean;
-}> = ({ label, isDisabled, isSelected, isInverted, onChange, name, value }) => {
+    isRequired?: boolean;
+}> = ({
+    label,
+    isDisabled,
+    isSelected,
+    isInverted,
+    onChange,
+    name,
+    value,
+    isRequired,
+}) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <div>
-            <CheckboxContainer isDisabled={isDisabled} onClick={onChange}>
-                <Box isSelected={isSelected} isInverted={isInverted}>
-                    {isSelected && <StyledCheck />}
-                </Box>
-                <Original
-                    type="checkbox"
-                    name={name}
-                    value={value}
-                    disabled
-                    checked={isSelected}
-                />
-                {label && (
-                    <Copy
-                        size="small"
-                        type="copy-b"
-                        textColor={
-                            isDisabled
-                                ? getColors(theme).mono.dark
-                                : getColors(theme).primary.medium
-                        }
-                    >
-                        {label}
-                    </Copy>
-                )}
-            </CheckboxContainer>
-        </div>
+        <CheckboxContainer isDisabled={isDisabled} onClick={onChange}>
+            <Box isSelected={isSelected} isInverted={isInverted}>
+                {isSelected && <StyledCheck />}
+            </Box>
+            <Original
+                type="checkbox"
+                name={name}
+                value={value}
+                disabled
+                checked={isSelected}
+                required={isRequired}
+            />
+            {label && (
+                <Copy
+                    size="small"
+                    type="copy-b"
+                    textColor={
+                        isDisabled
+                            ? getColors(theme).mono.dark
+                            : getColors(theme).primary.medium
+                    }
+                >
+                    {label} {isRequired && '*'}
+                </Copy>
+            )}
+        </CheckboxContainer>
     );
 };
 

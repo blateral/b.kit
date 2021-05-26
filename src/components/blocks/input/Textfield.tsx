@@ -59,8 +59,7 @@ const ErrorMessage = styled(Copy)`
     margin-top: ${spacings.nudge * 2}px;
 `;
 
-const Textfield: React.FC<{
-    type?: 'text' | 'email' | 'tel';
+export type FormProps = {
     label?: string;
     errorMessage?: string;
     infoMessage?: string;
@@ -70,11 +69,17 @@ const Textfield: React.FC<{
     placeholder?: string;
     isRequired?: boolean;
 
-    isInverted?: boolean;
     hasError?: boolean;
     isOptional?: boolean;
     isDisabled?: boolean;
-}> = ({
+};
+
+const Textfield: React.FC<
+    FormProps & {
+        type?: 'text' | 'email' | 'tel';
+        isInverted?: boolean;
+    }
+> = ({
     type = 'text',
     label,
     errorMessage,
