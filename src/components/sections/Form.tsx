@@ -63,6 +63,7 @@ export interface FormData {
 }
 
 export type FormFieldProps = Omit<FormProps, 'value' | 'name'>;
+type FormDataErrors = Partial<FormData>;
 
 const Form: React.FC<{
     title?: string;
@@ -78,6 +79,7 @@ const Form: React.FC<{
         additionalProps: { type: string; as: 'button' | 'a' };
     }) => React.ReactNode;
     onSubmit?: (data: FormData) => void;
+    validation?: (values: FormData, errors: FormDataErrors) => FormDataErrors;
     yupValidationSchema?: any;
 
     isInverted?: boolean;
@@ -112,6 +114,7 @@ const Form: React.FC<{
     formFields,
     checkbox,
     yupValidationSchema,
+    validation,
 }) => {
     const theme = React.useContext(ThemeContext);
 
@@ -151,6 +154,12 @@ const Form: React.FC<{
                             check: false,
                         } as FormData
                     }
+                    validate={(values) => {
+                        let errors: FormData = {};
+                        if (validation)
+                            errors = validation(values, errors) as FormData;
+                        return errors;
+                    }}
                     validationSchema={yupValidationSchema}
                     onSubmit={async (values) => {
                         onSubmit && onSubmit(values);
