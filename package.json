@@ -55,6 +55,7 @@
         "eslint": "^7.14.0",
         "eslint-plugin-react": "^7.21.5",
         "eslint-plugin-react-hooks": "^4.2.0",
+        "formik": "^2.2.8",
         "git-branch-is": "^4.0.0",
         "husky": "^4.3.0",
         "leaflet": "1.7.1",
@@ -76,6 +77,7 @@
         "react-dom": "^17.0.1",
         "react-slick": "0.27.1",
         "slick-carousel": "1.8.1",
-        "styled-components": "^5.2.1"
+        "styled-components": "^5.2.1",
+        "formik": "^2.2.8"
     }
 }
