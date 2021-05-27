@@ -1,8 +1,8 @@
+import Check from 'components/base/icons/Check';
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, spacings } from 'utils/styles';
-import Check from '../../base/icons/Check';
 
 const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
     display: flex;

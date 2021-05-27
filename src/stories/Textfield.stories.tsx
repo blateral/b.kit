@@ -1,123 +1,112 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Textfield from '../components/blocks/input/Textfield';
+import Textfield from 'components/fields/Textfield';
 import styled from 'styled-components';
 
-const Separator = () => (
-    <React.Fragment>
-        <br />
-        <br />
-        <hr />
-        <br />
-        <br />
-    </React.Fragment>
-);
+export default {
+    title: 'Fields/Textfield',
+    component: Textfield,
+    decorators: [
+        (Story) => (
+            <Helper>
+                <Story />
+            </Helper>
+        ),
+    ],
+} as Meta;
 
-const Textfields: React.FC<{
-    isInverted?: boolean;
-    hasError?: boolean;
-    errorMessage?: boolean;
-    infoMessage?: boolean;
-    isOptionalField?: boolean;
-    isDisabledField?: boolean;
-}> = ({
-    isInverted,
-    hasError,
-    errorMessage,
-    infoMessage,
-    isOptionalField,
-    isDisabledField,
-}) => {
-    return (
-        <React.Fragment>
-            <Textfield
-                isInverted={isInverted}
-                label="Type Text"
-                hasError={hasError}
-                errorMessage={
-                    errorMessage
-                        ? 'Bitte geben Sie einen gültigen Text ein!'
-                        : ''
-                }
-                infoMessage={infoMessage ? 'Das ist ein Textfeld' : ''}
-                isDisabled={isDisabledField}
-                isRequired
-            />
-            <Separator />
-            <Textfield
-                isInverted={isInverted}
-                label="Type E-Mail"
-                type="email"
-                hasError={hasError}
-                errorMessage={
-                    errorMessage
-                        ? 'Bitte geben Sie eine gültige E-Mail ein!'
-                        : ''
-                }
-                infoMessage={infoMessage ? 'Das ist ein E-Mail Feld' : ''}
-                isDisabled={isDisabledField}
-            />
-            <Separator />
-            <Textfield
-                isInverted={isInverted}
-                label="Type Telephone"
-                type="tel"
-                hasError={hasError}
-                errorMessage={
-                    errorMessage
-                        ? 'Bitte geben Sie eine gültige Telefonnummer ein!'
-                        : ''
-                }
-                infoMessage={infoMessage ? 'Das ist ein Telefon Feld' : ''}
-                isOptional={isOptionalField}
-            />
-        </React.Fragment>
-    );
-};
-
-const Background = styled.div<{ dark?: boolean }>`
-    background-color: ${({ dark }) => (dark ? '#1d2223' : 'transparent')};
-    height: 100vh;
+// Story Helper
+const Helper = styled.div`
+    height: 300px;
+    width: 100%;
     padding: 20px;
 `;
 
-export default {
-    title: 'Blocks/Input/Textfield',
-    component: Textfield,
-} as Meta;
+export const Default: Story = () => <Textfield name="field_a" />;
 
-export const Default: Story = () => (
-    <Background>
-        <Textfields />
-    </Background>
+export const WithLightBackground: Story = () => (
+    <Textfield name="field_a" lightBg={false} />
+);
+WithLightBackground.parameters = {
+    backgrounds: {
+        default: 'gray',
+        values: [{ name: 'gray', value: '#F0F0F0' }],
+    },
+};
+
+export const WithPlaceholder: Story = () => (
+    <Textfield name="field_a" placeholder="Enter text.." />
 );
 
-export const IsInverted: Story = () => (
-    <Background dark>
-        <Textfields isInverted />
-    </Background>
+export const WithLabel: Story = () => (
+    <Textfield name="field_a" label="Label text" placeholder="Enter text.." />
 );
 
-export const HasError: Story = () => (
-    <Background dark>
-        <Textfields isInverted hasError errorMessage />
-    </Background>
+export const WithCustomOptionalLabel: Story = () => (
+    <Textfield
+        name="field_a"
+        label="Label text"
+        placeholder="Enter text.."
+        optionalLabel="Not Required*"
+    />
 );
 
 export const WithInfoMessage: Story = () => (
-    <Background dark>
-        <Textfields isInverted infoMessage />
-    </Background>
+    <Textfield
+        name="field_a"
+        label="Label text"
+        placeholder="Enter text.."
+        infoMessage="Das ist ein Textfeld"
+        optionalLabel="*Optional"
+    />
 );
 
-export const HasOptionalFields: Story = () => (
-    <Background dark>
-        <Textfields isInverted infoMessage isOptionalField />
-    </Background>
+export const AsRequired: Story = () => (
+    <Textfield
+        name="field_a"
+        label="Label text"
+        placeholder="Enter text.."
+        optionalLabel="*Optional"
+        infoMessage="Das ist ein Textfeld"
+        isRequired
+    />
 );
 
-export const IsDisabledAndHasOptionalField: Story = () => (
-    <Background dark>
-        <Textfields isDisabledField isInverted infoMessage isOptionalField />
-    </Background>
+export const IsDisabled: Story = () => (
+    <Textfield
+        isDisabled
+        name="field_a"
+        label="Label text"
+        placeholder="Enter text.."
+        optionalLabel="*Optional"
+        infoMessage="Das ist ein Textfeld"
+    />
 );
+
+export const HasError: Story = () => (
+    <Textfield
+        name="field_a"
+        label="Label text"
+        placeholder="Enter text.."
+        optionalLabel="*Optional"
+        infoMessage="Das ist ein Textfeld"
+        errorMessage="Bitte geben Sie einen gültigen Wert ein!"
+    />
+);
+
+export const IsInverted: Story = () => (
+    <Textfield
+        name="field_a"
+        label="Label text"
+        placeholder="Enter text.."
+        optionalLabel="*Optional"
+        infoMessage="Das ist ein Textfeld"
+        isInverted
+    />
+);
+IsInverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};

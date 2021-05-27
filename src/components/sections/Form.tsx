@@ -3,9 +3,9 @@ import styled, { ThemeContext } from 'styled-components';
 import Section, { BgMode } from 'components/base/Section';
 import { HeadlineTag } from 'components/typography/Heading';
 import { spacings, mq, getColors as color, withRange } from 'utils/styles';
-import Textfield, { FormProps } from 'components/blocks/input/Textfield';
-import Textarea from 'components/blocks/input/Textarea';
-import Checkbox from 'components/blocks/input/Checkbox';
+import Textfield, { FormProps } from 'components/fields/Textfield';
+import Textarea from 'components/fields/Textarea';
+import Checkbox from 'components/fields/Checkbox';
 import Wrapper from 'components/base/Wrapper';
 import Intro from 'components/blocks/Intro';
 
@@ -138,10 +138,11 @@ const Form: React.FC<{
                             name={formFields.name?.name || ''}
                             isRequired={formFields.name?.isRequired}
                             errorMessage={formFields.name?.errorMessage}
-                            isOptional={
-                                formFields.name?.isOptional &&
-                                !formFields.name.isRequired
-                            }
+                            // isOptional={
+                            //     formFields.name?.isOptional &&
+                            //     !formFields.name.isRequired
+                            // }
+                            optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
                         <Textfield
@@ -152,10 +153,11 @@ const Form: React.FC<{
                             name={formFields.surname?.name || ''}
                             isRequired={formFields.surname?.isRequired}
                             errorMessage={formFields.surname?.errorMessage}
-                            isOptional={
-                                formFields.surname?.isOptional &&
-                                !formFields.surname.isRequired
-                            }
+                            // isOptional={
+                            //     formFields.name?.isOptional &&
+                            //     !formFields.name.isRequired
+                            // }
+                            optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
                         <Textfield
@@ -167,10 +169,11 @@ const Form: React.FC<{
                             name={formFields.mail?.name || ''}
                             isRequired={formFields.mail?.isRequired}
                             errorMessage={formFields.mail?.errorMessage}
-                            isOptional={
-                                formFields.mail?.isOptional &&
-                                !formFields.mail.isRequired
-                            }
+                            // isOptional={
+                            //     formFields.name?.isOptional &&
+                            //     !formFields.name.isRequired
+                            // }
+                            optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
                         <Textfield
@@ -182,10 +185,11 @@ const Form: React.FC<{
                             name={formFields.phone?.name || ''}
                             isRequired={formFields.phone?.isRequired}
                             errorMessage={formFields.phone?.errorMessage}
-                            isOptional={
-                                formFields.phone?.isOptional &&
-                                !formFields.phone.isRequired
-                            }
+                            // isOptional={
+                            //     formFields.name?.isOptional &&
+                            //     !formFields.name.isRequired
+                            // }
+                            optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
                     </FlexContainer>
@@ -198,10 +202,11 @@ const Form: React.FC<{
                             name={formFields.area?.name}
                             isRequired={formFields.area?.isRequired}
                             errorMessage={formFields.area?.errorMessage}
-                            isOptional={
-                                formFields.area?.isOptional &&
-                                !formFields.area.isRequired
-                            }
+                            // isOptional={
+                            //     formFields.name?.isOptional &&
+                            //     !formFields.name.isRequired
+                            // }
+                            // optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
                     </FlexContainer>

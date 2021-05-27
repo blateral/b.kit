@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Checkbox from 'components/blocks/input/Checkbox';
+import Checkbox from 'components/fields/Checkbox';
 import styled from 'styled-components';
 
 export default {
-    title: 'Blocks/Input/Checkbox',
+    title: 'Fields/Checkbox',
     component: Checkbox,
 } as Meta;
 

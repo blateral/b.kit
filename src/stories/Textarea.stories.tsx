@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Textarea from 'components/blocks/input/Textarea';
+import Textarea from 'components/fields/Textarea';
 import styled from 'styled-components';
 
 export default {
-    title: 'Blocks/Input/Textarea',
+    title: 'Fields/Textarea',
     component: Textarea,
 } as Meta;
 
