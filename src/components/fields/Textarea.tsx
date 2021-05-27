@@ -108,7 +108,7 @@ const Textarea: React.FC<
                         }
                         size="small"
                     >
-                        {label} {isRequired && '*'}
+                        {label}
                     </Copy>
                 )}
                 {!isRequired && optionalLabel && (
