@@ -77,6 +77,7 @@ const Form: React.FC<{
         isInverted?: boolean;
         additionalProps: { type: string; as: 'button' | 'a' };
     }) => React.ReactNode;
+    onSubmit?: (data: FormData) => void;
 
     isInverted?: boolean;
     bgMode?: BgMode;
@@ -108,6 +109,7 @@ const Form: React.FC<{
     primaryAction,
     secondaryAction,
     submitAction,
+    onSubmit,
     formFields,
     checkbox,
 }) => {
@@ -150,7 +152,7 @@ const Form: React.FC<{
                         } as FormData
                     }
                     onSubmit={async (values) => {
-                        console.log(values);
+                        onSubmit && onSubmit(values);
                     }}
                 >
                     {({ handleSubmit, setFieldValue, values }) => (

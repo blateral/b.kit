@@ -34,6 +34,7 @@ export const Default: Story = () => (
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
+        onSubmit={console.log}
     />
 );
 
@@ -65,6 +66,7 @@ export const WithIntro: Story = () => (
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
+        onSubmit={console.log}
     />
 );
 
@@ -97,6 +99,7 @@ export const WithFullBackground: Story = () => (
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
+        onSubmit={console.log}
     />
 );
 
@@ -129,6 +132,7 @@ export const WithHalfLeftBackground: Story = () => (
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
+        onSubmit={console.log}
     />
 );
 
@@ -161,6 +165,7 @@ export const WithHalfRightBackground: Story = () => (
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
+        onSubmit={console.log}
     />
 );
 
@@ -193,6 +198,7 @@ export const WithLargerLeftBackground: Story = () => (
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
+        onSubmit={console.log}
     />
 );
 
@@ -225,6 +231,7 @@ export const WithLargerRightBackground: Story = () => (
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
+        onSubmit={console.log}
     />
 );
 
@@ -257,5 +264,6 @@ export const IsInverted: Story = () => (
             </Button.View>
         )}
         isInverted
+        onSubmit={console.log}
     />
 );
