@@ -57,7 +57,6 @@ export const isDisabled: Story = () => (
 export const hasError: Story = () => (
     <Textarea
         label="Textarea"
-        hasError
         errorMessage="Bitte füllen Sie dieses Feld aus!"
         infoMessage="Das ist ein Textfeld"
     />
