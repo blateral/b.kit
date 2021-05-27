@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Form from 'components/sections/Form';
+import Button from 'components/buttons/Button';
 
 export default {
     title: 'Sections/Form',
@@ -28,6 +29,11 @@ export const Default: Story = () => (
         checkbox={{
             label: 'Ich aktzeptiere die Datenschutzbestimmungen',
         }}
+        submitAction={({ isInverted, additionalProps }) => (
+            <Button.View isInverted={isInverted} {...additionalProps}>
+                <Button.Label>Senden</Button.Label>
+            </Button.View>
+        )}
     />
 );
 
@@ -54,6 +60,11 @@ export const WithIntro: Story = () => (
         checkbox={{
             label: 'Ich aktzeptiere die Datenschutzbestimmungen',
         }}
+        submitAction={({ isInverted, additionalProps }) => (
+            <Button.View isInverted={isInverted} {...additionalProps}>
+                <Button.Label>Senden</Button.Label>
+            </Button.View>
+        )}
     />
 );
 
@@ -80,6 +91,11 @@ export const IsInverted: Story = () => (
         checkbox={{
             label: 'Ich aktzeptiere die Datenschutzbestimmungen',
         }}
+        submitAction={({ isInverted, additionalProps }) => (
+            <Button.View isInverted={isInverted} {...additionalProps}>
+                <Button.Label>Senden</Button.Label>
+            </Button.View>
+        )}
         isInverted
     />
 );

@@ -47,6 +47,10 @@ const FlexContainer = styled.div`
     }
 `;
 
+const ActionWrapper = styled.div`
+    margin-top: ${spacings.spacer * 3}px;
+`;
+
 const Form: React.FC<{
     title?: string;
     titleAs?: HeadlineTag;
@@ -56,9 +60,13 @@ const Form: React.FC<{
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    submitAction?: (props: {
+        isInverted?: boolean;
+        additionalProps: { type: string; as: 'button' | 'a' };
+    }) => React.ReactNode;
 
     isInverted?: boolean;
-    bgMode?: 'full' | 'splitted';
+    bgMode?: BgMode;
 
     formFields: {
         name?: FormProps;
@@ -86,21 +94,11 @@ const Form: React.FC<{
     text,
     primaryAction,
     secondaryAction,
+    submitAction,
     formFields,
     checkbox,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'half-right';
-            default:
-                return undefined;
-        }
-    };
-
     const [isSelected, setIsSelected] = React.useState(false);
 
     return (
@@ -113,7 +111,7 @@ const Form: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? bgMode : undefined}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (
@@ -138,10 +136,6 @@ const Form: React.FC<{
                             name={formFields.name?.name || ''}
                             isRequired={formFields.name?.isRequired}
                             errorMessage={formFields.name?.errorMessage}
-                            // isOptional={
-                            //     formFields.name?.isOptional &&
-                            //     !formFields.name.isRequired
-                            // }
                             optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
@@ -153,10 +147,6 @@ const Form: React.FC<{
                             name={formFields.surname?.name || ''}
                             isRequired={formFields.surname?.isRequired}
                             errorMessage={formFields.surname?.errorMessage}
-                            // isOptional={
-                            //     formFields.name?.isOptional &&
-                            //     !formFields.name.isRequired
-                            // }
                             optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
@@ -169,10 +159,6 @@ const Form: React.FC<{
                             name={formFields.mail?.name || ''}
                             isRequired={formFields.mail?.isRequired}
                             errorMessage={formFields.mail?.errorMessage}
-                            // isOptional={
-                            //     formFields.name?.isOptional &&
-                            //     !formFields.name.isRequired
-                            // }
                             optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
@@ -185,10 +171,6 @@ const Form: React.FC<{
                             name={formFields.phone?.name || ''}
                             isRequired={formFields.phone?.isRequired}
                             errorMessage={formFields.phone?.errorMessage}
-                            // isOptional={
-                            //     formFields.name?.isOptional &&
-                            //     !formFields.name.isRequired
-                            // }
                             optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
@@ -202,11 +184,7 @@ const Form: React.FC<{
                             name={formFields.area?.name}
                             isRequired={formFields.area?.isRequired}
                             errorMessage={formFields.area?.errorMessage}
-                            // isOptional={
-                            //     formFields.name?.isOptional &&
-                            //     !formFields.name.isRequired
-                            // }
-                            // optionalLabel={formFields.name?.optionalLabel}
+                            optionalLabel={formFields.name?.optionalLabel}
                             isInverted={isInverted}
                         />
                     </FlexContainer>
@@ -229,6 +207,18 @@ const Form: React.FC<{
                         isInverted={isInverted}
                         isRequired
                     />
+                )}
+                {submitAction && (
+                    <ActionWrapper>
+                        {submitAction &&
+                            submitAction({
+                                isInverted,
+                                additionalProps: {
+                                    type: 'submit',
+                                    as: 'button',
+                                },
+                            })}
+                    </ActionWrapper>
                 )}
             </Wrapper>
         </Section>
