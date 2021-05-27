@@ -2,6 +2,7 @@ import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
+import { FormProps } from './Textfield';
 
 const FieldHead = styled.div`
     display: flex;
@@ -72,34 +73,27 @@ const ErrorMessage = styled(Copy)`
     margin-top: ${spacings.nudge * 2}px;
 `;
 
-const Textarea: React.FC<{
-    label?: string;
-    errorMessage?: string;
-    infoMessage?: string;
+const OptionalLabel = styled(Copy)`
+    margin-left: auto;
+`;
 
-    value?: string;
-    name?: string;
-    placeholder?: string;
-    isRequired?: boolean;
-    lightBg?: boolean;
-
-    isInverted?: boolean;
-    hasError?: boolean;
-    isOptional?: boolean;
-    isDisabled?: boolean;
-}> = ({
+const Textarea: React.FC<
+    FormProps & {
+        isInverted?: boolean;
+        lightBg?: boolean;
+    }
+> = ({
+    lightBg = true,
     label,
+    optionalLabel = 'Optional*',
     errorMessage,
     infoMessage,
+    placeholder,
     value,
     name,
-    placeholder,
-    isRequired,
-    isDisabled,
     isInverted,
-    hasError,
-    isOptional,
-    lightBg = true,
+    isDisabled,
+    isRequired,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
@@ -117,10 +111,13 @@ const Textarea: React.FC<{
                         {label} {isRequired && '*'}
                     </Copy>
                 )}
-                {isOptional && (
-                    <Copy textColor={color(theme).mono.dark} size="small">
-                        Optional*
-                    </Copy>
+                {!isRequired && optionalLabel && (
+                    <OptionalLabel
+                        textColor={color(theme).mono.dark}
+                        size="small"
+                    >
+                        {optionalLabel}
+                    </OptionalLabel>
                 )}
             </FieldHead>
             <Copy type="copy-b">
@@ -128,7 +125,7 @@ const Textarea: React.FC<{
                     value={value}
                     name={name}
                     placeholder={placeholder}
-                    hasError={hasError}
+                    hasError={!!errorMessage}
                     isDisabled={isDisabled}
                     isInverted={isInverted}
                     required={isRequired}
@@ -140,7 +137,7 @@ const Textarea: React.FC<{
                     {infoMessage}
                 </InfoMessage>
             )}
-            {hasError && (
+            {errorMessage && (
                 <ErrorMessage textColor="#ff0000" size="small" type="copy-i">
                     {errorMessage
                         ? errorMessage
