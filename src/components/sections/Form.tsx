@@ -8,12 +8,14 @@ import Textarea from 'components/fields/Textarea';
 import Checkbox from 'components/fields/Checkbox';
 import Wrapper from 'components/base/Wrapper';
 import Intro from 'components/blocks/Intro';
+import { Field, Formik } from 'formik';
+import { FormEvent } from 'react';
 
 const StyledIntro = styled(Intro)`
     ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
 `;
 
-const FormContainer = styled.form`
+const FieldsContainer = styled.div`
     padding-bottom: 30px;
 
     & > * > * + * {
@@ -51,6 +53,17 @@ const ActionWrapper = styled.div`
     margin-top: ${spacings.spacer * 3}px;
 `;
 
+export interface FormData {
+    name?: string;
+    surname?: string;
+    mail?: string;
+    phone?: string;
+    area?: string;
+    check?: boolean;
+}
+
+export type FormFieldProps = Omit<FormProps, 'value' | 'name'>;
+
 const Form: React.FC<{
     title?: string;
     titleAs?: HeadlineTag;
@@ -69,11 +82,11 @@ const Form: React.FC<{
     bgMode?: BgMode;
 
     formFields: {
-        name?: FormProps;
-        surname?: FormProps;
-        mail?: FormProps;
-        phone?: FormProps;
-        area?: FormProps;
+        name?: FormFieldProps;
+        surname?: FormFieldProps;
+        mail?: FormFieldProps;
+        phone?: FormFieldProps;
+        area?: FormFieldProps;
     };
 
     checkbox?: {
@@ -99,7 +112,6 @@ const Form: React.FC<{
     checkbox,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const [isSelected, setIsSelected] = React.useState(false);
 
     return (
         <Section
@@ -126,100 +138,179 @@ const Form: React.FC<{
                         isInverted={isInverted}
                     />
                 )}
-                <FormContainer>
-                    <FlexContainer>
-                        <Textfield
-                            label={formFields.name?.label || 'Vorname'}
-                            placeholder={formFields.name?.placeholder}
-                            infoMessage={formFields.name?.infoMessage}
-                            value={formFields.name?.value}
-                            name={formFields.name?.name || ''}
-                            isRequired={formFields.name?.isRequired}
-                            errorMessage={formFields.name?.errorMessage}
-                            optionalLabel={formFields.name?.optionalLabel}
-                            isInverted={isInverted}
-                        />
-                        <Textfield
-                            label={formFields.surname?.label || 'Nachname'}
-                            placeholder={formFields.surname?.placeholder}
-                            infoMessage={formFields.surname?.infoMessage}
-                            value={formFields.surname?.value}
-                            name={formFields.surname?.name || ''}
-                            isRequired={formFields.surname?.isRequired}
-                            errorMessage={formFields.surname?.errorMessage}
-                            optionalLabel={formFields.name?.optionalLabel}
-                            isInverted={isInverted}
-                        />
-                        <Textfield
-                            type="email"
-                            label={formFields.mail?.label || 'E-Mail'}
-                            placeholder={formFields.mail?.placeholder}
-                            infoMessage={formFields.mail?.infoMessage}
-                            value={formFields.mail?.value}
-                            name={formFields.mail?.name || ''}
-                            isRequired={formFields.mail?.isRequired}
-                            errorMessage={formFields.mail?.errorMessage}
-                            optionalLabel={formFields.name?.optionalLabel}
-                            isInverted={isInverted}
-                        />
-                        <Textfield
-                            type="tel"
-                            label={formFields.phone?.label || 'Telefon'}
-                            placeholder={formFields.phone?.placeholder}
-                            infoMessage={formFields.phone?.infoMessage}
-                            value={formFields.phone?.value}
-                            name={formFields.phone?.name || ''}
-                            isRequired={formFields.phone?.isRequired}
-                            errorMessage={formFields.phone?.errorMessage}
-                            optionalLabel={formFields.name?.optionalLabel}
-                            isInverted={isInverted}
-                        />
-                    </FlexContainer>
-                    <FlexContainer>
-                        <Textarea
-                            label={formFields.area?.label || 'Textfeld'}
-                            placeholder={formFields.area?.placeholder}
-                            infoMessage={formFields.area?.infoMessage}
-                            value={formFields.area?.value}
-                            name={formFields.area?.name}
-                            isRequired={formFields.area?.isRequired}
-                            errorMessage={formFields.area?.errorMessage}
-                            optionalLabel={formFields.name?.optionalLabel}
-                            isInverted={isInverted}
-                        />
-                    </FlexContainer>
-                </FormContainer>
-                {checkbox && (
-                    <Checkbox
-                        onChange={() =>
-                            !isSelected
-                                ? setIsSelected(true)
-                                : setIsSelected(false)
-                        }
-                        isSelected={isSelected}
-                        isDisabled={checkbox.isDisabled}
-                        value={checkbox.value}
-                        name={checkbox.name}
-                        label={
-                            checkbox.label ||
-                            'Ich habe die Datenschutzbestimmungen zu Kenntnis genommen und aktzeptiere.'
-                        }
-                        isInverted={isInverted}
-                        isRequired
-                    />
-                )}
-                {submitAction && (
-                    <ActionWrapper>
-                        {submitAction &&
-                            submitAction({
-                                isInverted,
-                                additionalProps: {
-                                    type: 'submit',
-                                    as: 'button',
-                                },
-                            })}
-                    </ActionWrapper>
-                )}
+                <Formik
+                    initialValues={
+                        {
+                            name: '',
+                            surname: '',
+                            phone: '',
+                            area: '',
+                            mail: '',
+                            check: false,
+                        } as FormData
+                    }
+                    onSubmit={async (values) => {
+                        console.log(values);
+                    }}
+                >
+                    {({ handleSubmit, setFieldValue, values }) => (
+                        <form
+                            onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                                e.preventDefault();
+                                handleSubmit(e);
+                            }}
+                        >
+                            <FieldsContainer>
+                                <FlexContainer>
+                                    <Field
+                                        label={
+                                            formFields.name?.label || 'Vorname'
+                                        }
+                                        placeholder={
+                                            formFields.name?.placeholder
+                                        }
+                                        infoMessage={
+                                            formFields.name?.infoMessage
+                                        }
+                                        as={Textfield}
+                                        name="name"
+                                        isRequired={formFields.name?.isRequired}
+                                        errorMessage={
+                                            formFields.name?.errorMessage
+                                        }
+                                        optionalLabel={
+                                            formFields.name?.optionalLabel
+                                        }
+                                        isInverted={isInverted}
+                                    />
+                                    <Field
+                                        label={
+                                            formFields.surname?.label ||
+                                            'Nachname'
+                                        }
+                                        placeholder={
+                                            formFields.surname?.placeholder
+                                        }
+                                        infoMessage={
+                                            formFields.surname?.infoMessage
+                                        }
+                                        as={Textfield}
+                                        name="surname"
+                                        isRequired={
+                                            formFields.surname?.isRequired
+                                        }
+                                        errorMessage={
+                                            formFields.surname?.errorMessage
+                                        }
+                                        optionalLabel={
+                                            formFields.name?.optionalLabel
+                                        }
+                                        isInverted={isInverted}
+                                    />
+                                    <Field
+                                        type="email"
+                                        label={
+                                            formFields.mail?.label || 'E-Mail'
+                                        }
+                                        placeholder={
+                                            formFields.mail?.placeholder
+                                        }
+                                        infoMessage={
+                                            formFields.mail?.infoMessage
+                                        }
+                                        as={Textfield}
+                                        name="mail"
+                                        isRequired={formFields.mail?.isRequired}
+                                        errorMessage={
+                                            formFields.mail?.errorMessage
+                                        }
+                                        optionalLabel={
+                                            formFields.name?.optionalLabel
+                                        }
+                                        isInverted={isInverted}
+                                    />
+                                    <Field
+                                        type="tel"
+                                        label={
+                                            formFields.phone?.label || 'Telefon'
+                                        }
+                                        placeholder={
+                                            formFields.phone?.placeholder
+                                        }
+                                        infoMessage={
+                                            formFields.phone?.infoMessage
+                                        }
+                                        as={Textfield}
+                                        name="phone"
+                                        isRequired={
+                                            formFields.phone?.isRequired
+                                        }
+                                        errorMessage={
+                                            formFields.phone?.errorMessage
+                                        }
+                                        optionalLabel={
+                                            formFields.name?.optionalLabel
+                                        }
+                                        isInverted={isInverted}
+                                    />
+                                </FlexContainer>
+                                <FlexContainer>
+                                    <Field
+                                        label={
+                                            formFields.area?.label || 'Textfeld'
+                                        }
+                                        placeholder={
+                                            formFields.area?.placeholder
+                                        }
+                                        infoMessage={
+                                            formFields.area?.infoMessage
+                                        }
+                                        name="area"
+                                        as={Textarea}
+                                        isRequired={formFields.area?.isRequired}
+                                        errorMessage={
+                                            formFields.area?.errorMessage
+                                        }
+                                        optionalLabel={
+                                            formFields.name?.optionalLabel
+                                        }
+                                        isInverted={isInverted}
+                                    />
+                                </FlexContainer>
+                            </FieldsContainer>
+                            {checkbox && (
+                                <Field
+                                    onClick={() => {
+                                        setFieldValue('check', !values.check);
+                                    }}
+                                    value={values.check}
+                                    isSelected={values.check}
+                                    isDisabled={checkbox.isDisabled}
+                                    name="check"
+                                    as={Checkbox}
+                                    label={
+                                        checkbox.label ||
+                                        'Ich habe die Datenschutzbestimmungen zu Kenntnis genommen und aktzeptiere.'
+                                    }
+                                    isInverted={isInverted}
+                                    isRequired
+                                />
+                            )}
+                            {submitAction && (
+                                <ActionWrapper>
+                                    {submitAction &&
+                                        submitAction({
+                                            isInverted,
+                                            additionalProps: {
+                                                type: 'submit',
+                                                as: 'button',
+                                            },
+                                        })}
+                                </ActionWrapper>
+                            )}
+                        </form>
+                    )}
+                </Formik>
             </Wrapper>
         </Section>
     );

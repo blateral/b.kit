@@ -94,6 +94,7 @@ const Textfield: React.FC<
         type?: 'text' | 'email' | 'tel';
         isInverted?: boolean;
         lightBg?: boolean;
+        onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     }
 > = ({
     lightBg = true,
@@ -108,6 +109,7 @@ const Textfield: React.FC<
     isInverted,
     isDisabled,
     isRequired,
+    onChange,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
@@ -145,6 +147,7 @@ const Textfield: React.FC<
                     name={name}
                     value={value}
                     required={isRequired}
+                    onChange={onChange}
                 />
             </Copy>
             {infoMessage && (

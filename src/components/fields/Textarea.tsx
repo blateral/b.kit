@@ -81,6 +81,7 @@ const Textarea: React.FC<
     FormProps & {
         isInverted?: boolean;
         lightBg?: boolean;
+        onChange?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
     }
 > = ({
     lightBg = true,
@@ -94,6 +95,7 @@ const Textarea: React.FC<
     isInverted,
     isDisabled,
     isRequired,
+    onChange,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
@@ -130,6 +132,7 @@ const Textarea: React.FC<
                     isInverted={isInverted}
                     required={isRequired}
                     hasBack={lightBg}
+                    onChange={onChange}
                 />
             </Copy>
             {infoMessage && (

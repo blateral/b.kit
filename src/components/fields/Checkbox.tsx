@@ -51,7 +51,8 @@ const StyledCheck = styled(Check)`
 const Checkbox: React.FC<{
     label?: string;
 
-    onChange?: () => void;
+    onChange?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
+    onClick?: () => void;
 
     name?: string;
     value?: string;
@@ -66,13 +67,14 @@ const Checkbox: React.FC<{
     isSelected,
     isInverted,
     onChange,
+    onClick,
     name,
     value,
     isRequired,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <CheckboxContainer isDisabled={isDisabled} onClick={onChange}>
+        <CheckboxContainer isDisabled={isDisabled} onClick={onClick}>
             <Box isSelected={isSelected} isInverted={isInverted}>
                 {isSelected && <StyledCheck />}
             </Box>
@@ -83,6 +85,7 @@ const Checkbox: React.FC<{
                 disabled
                 checked={isSelected}
                 required={isRequired}
+                onChange={onChange}
             />
             {label && (
                 <Copy
