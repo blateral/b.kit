@@ -197,6 +197,7 @@ const Form: React.FC<{
                                             formFields.name?.optionalLabel
                                         }
                                         isInverted={isInverted}
+                                        lightBg={bgMode === 'full'}
                                     />
                                     <Field
                                         label={
@@ -224,6 +225,7 @@ const Form: React.FC<{
                                             formFields.name?.optionalLabel
                                         }
                                         isInverted={isInverted}
+                                        lightBg={bgMode === 'full'}
                                     />
                                     <Field
                                         type="email"
@@ -249,6 +251,7 @@ const Form: React.FC<{
                                             formFields.name?.optionalLabel
                                         }
                                         isInverted={isInverted}
+                                        lightBg={bgMode === 'full'}
                                     />
                                     <Field
                                         type="tel"
@@ -276,6 +279,7 @@ const Form: React.FC<{
                                             formFields.name?.optionalLabel
                                         }
                                         isInverted={isInverted}
+                                        lightBg={bgMode === 'full'}
                                     />
                                 </FlexContainer>
                                 <FlexContainer>
@@ -302,6 +306,7 @@ const Form: React.FC<{
                                             formFields.name?.optionalLabel
                                         }
                                         isInverted={isInverted}
+                                        lightBg={bgMode === 'full'}
                                     />
                                 </FlexContainer>
                             </FieldsContainer>

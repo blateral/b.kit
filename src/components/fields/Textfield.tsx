@@ -97,7 +97,7 @@ const Textfield: React.FC<
         onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     }
 > = ({
-    lightBg = true,
+    lightBg,
     type = 'text',
     label,
     optionalLabel = 'Optional*',
@@ -138,7 +138,7 @@ const Textfield: React.FC<
             </FieldHead>
             <Copy textColor={color(theme).secondary.dark} type="copy-b">
                 <Field
-                    hasBack={lightBg}
+                    hasBack={!lightBg}
                     placeholder={placeholder}
                     hasError={!!errorMessage}
                     type={type}

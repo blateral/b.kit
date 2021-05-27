@@ -25,7 +25,7 @@ const Helper = styled.div`
 export const Default: Story = () => <Textfield name="field_a" />;
 
 export const WithLightBackground: Story = () => (
-    <Textfield name="field_a" lightBg={false} />
+    <Textfield name="field_a" lightBg />
 );
 WithLightBackground.parameters = {
     backgrounds: {

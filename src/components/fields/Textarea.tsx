@@ -84,7 +84,7 @@ const Textarea: React.FC<
         onChange?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
     }
 > = ({
-    lightBg = true,
+    lightBg,
     label,
     optionalLabel = 'Optional*',
     errorMessage,
@@ -131,7 +131,7 @@ const Textarea: React.FC<
                     isDisabled={isDisabled}
                     isInverted={isInverted}
                     required={isRequired}
-                    hasBack={lightBg}
+                    hasBack={!lightBg}
                     onChange={onChange}
                 />
             </Copy>
