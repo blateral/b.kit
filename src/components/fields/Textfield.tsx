@@ -12,6 +12,7 @@ const FieldHead = styled.div`
     justify-content: space-between;
     padding-bottom: ${spacings.nudge * 3}px;
     padding-left: ${spacings.nudge}px;
+    padding-right: ${spacings.nudge}px;
 `;
 
 const Field = styled.input<{
