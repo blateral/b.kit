@@ -78,6 +78,7 @@ const Form: React.FC<{
         additionalProps: { type: string; as: 'button' | 'a' };
     }) => React.ReactNode;
     onSubmit?: (data: FormData) => void;
+    yupValidationSchema?: any;
 
     isInverted?: boolean;
     bgMode?: BgMode;
@@ -92,10 +93,8 @@ const Form: React.FC<{
 
     checkbox?: {
         label?: string;
-
         name?: string;
         value?: string;
-
         isDisabled?: boolean;
     };
 }> = ({
@@ -112,6 +111,7 @@ const Form: React.FC<{
     onSubmit,
     formFields,
     checkbox,
+    yupValidationSchema,
 }) => {
     const theme = React.useContext(ThemeContext);
 
@@ -151,11 +151,12 @@ const Form: React.FC<{
                             check: false,
                         } as FormData
                     }
+                    validationSchema={yupValidationSchema}
                     onSubmit={async (values) => {
                         onSubmit && onSubmit(values);
                     }}
                 >
-                    {({ handleSubmit, setFieldValue, values }) => (
+                    {({ handleSubmit, setFieldValue, values, errors }) => (
                         <form
                             onSubmit={(e: FormEvent<HTMLFormElement>) => {
                                 e.preventDefault();
@@ -178,7 +179,10 @@ const Form: React.FC<{
                                         name="name"
                                         isRequired={formFields.name?.isRequired}
                                         errorMessage={
-                                            formFields.name?.errorMessage
+                                            (errors.name &&
+                                                formFields.name
+                                                    ?.errorMessage) ||
+                                            errors.name
                                         }
                                         optionalLabel={
                                             formFields.name?.optionalLabel
@@ -202,7 +206,10 @@ const Form: React.FC<{
                                             formFields.surname?.isRequired
                                         }
                                         errorMessage={
-                                            formFields.surname?.errorMessage
+                                            (errors.surname &&
+                                                formFields.surname
+                                                    ?.errorMessage) ||
+                                            errors.surname
                                         }
                                         optionalLabel={
                                             formFields.name?.optionalLabel
@@ -224,7 +231,10 @@ const Form: React.FC<{
                                         name="mail"
                                         isRequired={formFields.mail?.isRequired}
                                         errorMessage={
-                                            formFields.mail?.errorMessage
+                                            (errors.mail &&
+                                                formFields.mail
+                                                    ?.errorMessage) ||
+                                            errors.mail
                                         }
                                         optionalLabel={
                                             formFields.name?.optionalLabel
@@ -248,7 +258,10 @@ const Form: React.FC<{
                                             formFields.phone?.isRequired
                                         }
                                         errorMessage={
-                                            formFields.phone?.errorMessage
+                                            (errors.phone &&
+                                                formFields.phone
+                                                    ?.errorMessage) ||
+                                            errors.phone
                                         }
                                         optionalLabel={
                                             formFields.name?.optionalLabel
@@ -271,7 +284,10 @@ const Form: React.FC<{
                                         as={Textarea}
                                         isRequired={formFields.area?.isRequired}
                                         errorMessage={
-                                            formFields.area?.errorMessage
+                                            (errors.area &&
+                                                formFields.area
+                                                    ?.errorMessage) ||
+                                            errors.area
                                         }
                                         optionalLabel={
                                             formFields.name?.optionalLabel
