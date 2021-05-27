@@ -1,7 +1,7 @@
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { getColors, spacings } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 
 const FieldHead = styled.div`
     display: flex;
@@ -9,46 +9,58 @@ const FieldHead = styled.div`
     align-items: top;
     justify-content: space-between;
     padding-bottom: ${spacings.nudge * 3}px;
+    padding-left: ${spacings.nudge}px;
+    padding-right: ${spacings.nudge}px;
 `;
 
 const Area = styled.textarea<{
     isInverted?: boolean;
     hasError?: boolean;
     isDisabled?: boolean;
+    hasBack?: boolean;
 }>`
+    display: block;
     outline: none;
+    width: 100%;
+    min-height: 60px;
+    box-shadow: none;
+    border: none;
+    border-radius: 0px;
+    outline: none;
+    -webkit-appearance: none;
+
     resize: none;
     width: 100%;
     min-height: 120px;
 
     padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
 
-    border: ${({ isInverted, theme }) =>
+    /* border: ${({ isInverted, theme }) =>
         isInverted
             ? '2px solid transparent'
-            : `2px solid ${getColors(theme).mono.medium}`};
-    border: ${({ hasError }) => hasError && '2px solid #ff0000'};
+            : `2px solid ${color(theme).mono.medium}`}; */
+    border: ${({ hasError }) =>
+        hasError ? '2px solid #ff0000' : '2px solid transparent'};
+    background-color: ${({ isInverted, hasBack, theme }) =>
+        isInverted || !hasBack ? color(theme).light : color(theme).mono.light};
 
-    font-family: inherit;
     font-weight: inherit;
+    font-family: inherit;
     font-size: inherit;
-
     color: ${({ hasError }) => (hasError ? '#ff0000' : 'inherit')};
 
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
     &:active {
-        border: ${({ theme }) =>
-            `2px solid ${getColors(theme).primary.medium}`};
+        border: ${({ theme }) => `2px solid ${color(theme).primary.medium}`};
     }
 
     &:focus {
-        border: ${({ theme }) =>
-            `2px solid ${getColors(theme).primary.medium}`};
+        border: ${({ theme }) => `2px solid ${color(theme).primary.medium}`};
     }
 
     ::placeholder {
-        color: ${({ isDisabled }) => (isDisabled ? '#999999' : '#383838')};
+        color: ${({ theme }) => color(theme).secondary.light};
     }
 `;
 
@@ -69,6 +81,7 @@ const Textarea: React.FC<{
     name?: string;
     placeholder?: string;
     isRequired?: boolean;
+    lightBg?: boolean;
 
     isInverted?: boolean;
     hasError?: boolean;
@@ -86,6 +99,7 @@ const Textarea: React.FC<{
     isInverted,
     hasError,
     isOptional,
+    lightBg = true,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
@@ -95,8 +109,8 @@ const Textarea: React.FC<{
                     <Copy
                         textColor={
                             isDisabled
-                                ? getColors(theme).mono.dark
-                                : getColors(theme).primary.medium
+                                ? color(theme).mono.dark
+                                : color(theme).primary.medium
                         }
                         size="small"
                     >
@@ -104,7 +118,7 @@ const Textarea: React.FC<{
                     </Copy>
                 )}
                 {isOptional && (
-                    <Copy textColor={getColors(theme).mono.dark} size="small">
+                    <Copy textColor={color(theme).mono.dark} size="small">
                         Optional*
                     </Copy>
                 )}
@@ -118,13 +132,11 @@ const Textarea: React.FC<{
                     isDisabled={isDisabled}
                     isInverted={isInverted}
                     required={isRequired}
+                    hasBack={lightBg}
                 />
             </Copy>
             {infoMessage && (
-                <InfoMessage
-                    textColor={getColors(theme).mono.dark}
-                    size="small"
-                >
+                <InfoMessage textColor={color(theme).mono.dark} size="small">
                     {infoMessage}
                 </InfoMessage>
             )}
