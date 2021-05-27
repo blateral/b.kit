@@ -62,7 +62,7 @@ export interface FormData {
     check?: boolean;
 }
 
-export type FormFieldProps = Omit<FormProps, 'value' | 'name'>;
+export type FormFieldProps = Omit<FormProps, 'value' | 'name' | 'errorMessage'>;
 type FormDataErrors = Partial<FormData>;
 
 const Form: React.FC<{
@@ -187,12 +187,7 @@ const Form: React.FC<{
                                         as={Textfield}
                                         name="name"
                                         isRequired={formFields.name?.isRequired}
-                                        errorMessage={
-                                            (errors.name &&
-                                                formFields.name
-                                                    ?.errorMessage) ||
-                                            errors.name
-                                        }
+                                        errorMessage={errors.name}
                                         optionalLabel={
                                             formFields.name?.optionalLabel
                                         }
@@ -215,12 +210,7 @@ const Form: React.FC<{
                                         isRequired={
                                             formFields.surname?.isRequired
                                         }
-                                        errorMessage={
-                                            (errors.surname &&
-                                                formFields.surname
-                                                    ?.errorMessage) ||
-                                            errors.surname
-                                        }
+                                        errorMessage={errors.surname}
                                         optionalLabel={
                                             formFields.name?.optionalLabel
                                         }
@@ -241,12 +231,7 @@ const Form: React.FC<{
                                         as={Textfield}
                                         name="mail"
                                         isRequired={formFields.mail?.isRequired}
-                                        errorMessage={
-                                            (errors.mail &&
-                                                formFields.mail
-                                                    ?.errorMessage) ||
-                                            errors.mail
-                                        }
+                                        errorMessage={errors.mail}
                                         optionalLabel={
                                             formFields.name?.optionalLabel
                                         }
@@ -269,12 +254,7 @@ const Form: React.FC<{
                                         isRequired={
                                             formFields.phone?.isRequired
                                         }
-                                        errorMessage={
-                                            (errors.phone &&
-                                                formFields.phone
-                                                    ?.errorMessage) ||
-                                            errors.phone
-                                        }
+                                        errorMessage={errors.phone}
                                         optionalLabel={
                                             formFields.name?.optionalLabel
                                         }
@@ -296,12 +276,7 @@ const Form: React.FC<{
                                         name="area"
                                         as={Textarea}
                                         isRequired={formFields.area?.isRequired}
-                                        errorMessage={
-                                            (errors.area &&
-                                                formFields.area
-                                                    ?.errorMessage) ||
-                                            errors.area
-                                        }
+                                        errorMessage={errors.area}
                                         optionalLabel={
                                             formFields.name?.optionalLabel
                                         }
