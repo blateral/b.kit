@@ -83,7 +83,7 @@ const Form: React.FC<{
     yupValidationSchema?: any;
 
     isInverted?: boolean;
-    bgMode?: BgMode;
+    bgMode?: 'full';
 
     formFields: {
         name?: FormFieldProps;
@@ -118,6 +118,15 @@ const Form: React.FC<{
 }) => {
     const theme = React.useContext(ThemeContext);
 
+    const getSectionBgMode = (): BgMode | undefined => {
+        switch (bgMode) {
+            case 'full':
+                return 'full';
+            default:
+                return undefined;
+        }
+    };
+
     return (
         <Section
             addSeperation
@@ -128,7 +137,7 @@ const Form: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? bgMode : undefined}
+            bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (
