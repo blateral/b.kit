@@ -39,6 +39,7 @@ export { useScroll } from 'utils/useScroll';
 export { usePoster, canUseWebP } from 'utils/usePoster';
 export { default as useInterval } from 'utils/useInterval';
 export { useImgPreload } from 'utils/useImgPreload';
+export { hexToRgba } from 'utils/hexRgbConverter';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
