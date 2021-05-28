@@ -4,7 +4,7 @@ import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, spacings } from 'utils/styles';
 
-const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
+const View = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -12,7 +12,9 @@ const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
     & > * + * {
         margin-left: ${spacings.nudge * 2}px;
     }
+`;
 
+const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
     cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
     pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 `;
@@ -74,19 +76,21 @@ const Checkbox: React.FC<{
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <CheckboxContainer isDisabled={isDisabled} onClick={onClick}>
-            <Box isSelected={isSelected} isInverted={isInverted}>
-                {isSelected && <StyledCheck />}
-            </Box>
-            <Original
-                type="checkbox"
-                name={name}
-                value={value}
-                disabled
-                checked={isSelected}
-                required={isRequired}
-                onChange={onChange}
-            />
+        <View>
+            <CheckboxContainer isDisabled={isDisabled} onClick={onClick}>
+                <Box isSelected={isSelected} isInverted={isInverted}>
+                    {isSelected && <StyledCheck />}
+                </Box>
+                <Original
+                    type="checkbox"
+                    name={name}
+                    value={value}
+                    disabled
+                    checked={isSelected}
+                    required={isRequired}
+                    onChange={onChange}
+                />
+            </CheckboxContainer>
             {label && (
                 <Copy
                     size="small"
@@ -96,11 +100,10 @@ const Checkbox: React.FC<{
                             ? getColors(theme).mono.dark
                             : getColors(theme).primary.medium
                     }
-                >
-                    {label} {isRequired && '*'}
-                </Copy>
+                    innerHTML={label}
+                />
             )}
-        </CheckboxContainer>
+        </View>
     );
 };
 
