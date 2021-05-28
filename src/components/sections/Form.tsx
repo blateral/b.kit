@@ -10,6 +10,7 @@ import Wrapper from 'components/base/Wrapper';
 import Intro from 'components/blocks/Intro';
 import { Field, Formik } from 'formik';
 import { FormEvent } from 'react';
+import Actions from 'components/blocks/Actions';
 
 const StyledIntro = styled(Intro)`
     ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
@@ -36,6 +37,7 @@ const FieldsContainer = styled.div`
 const FlexContainer = styled.div`
     flex: 1 0 50%;
     width: 100%;
+    max-width: 650px;
 
     & + & {
         padding-top: 30px;
@@ -49,7 +51,7 @@ const FlexContainer = styled.div`
     }
 `;
 
-const ActionWrapper = styled.div`
+const ActionWrapper = styled(Actions)`
     margin-top: ${spacings.spacer * 3}px;
 `;
 
@@ -63,14 +65,14 @@ export interface FormData {
 }
 
 export type FormFieldProps = Omit<FormProps, 'value' | 'name' | 'errorMessage'>;
-type FormDataErrors = Partial<FormData>;
+type FormDataErrors = { [key in keyof FormData]: string };
 
 const Form: React.FC<{
     title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
-    text?: string;
+    intro?: string;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -106,7 +108,7 @@ const Form: React.FC<{
     titleAs,
     superTitle,
     superTitleAs,
-    text,
+    intro,
     primaryAction,
     secondaryAction,
     submitAction,
@@ -146,7 +148,7 @@ const Form: React.FC<{
                         titleAs={titleAs}
                         superTitle={superTitle}
                         superTitleAs={superTitleAs}
-                        text={text}
+                        text={intro}
                         primaryAction={primaryAction}
                         secondaryAction={secondaryAction}
                         isInverted={isInverted}
@@ -164,9 +166,12 @@ const Form: React.FC<{
                         } as FormData
                     }
                     validate={(values) => {
-                        let errors: FormData = {};
+                        let errors: FormDataErrors = {};
                         if (validation)
-                            errors = validation(values, errors) as FormData;
+                            errors = validation(
+                                values,
+                                errors
+                            ) as FormDataErrors;
                         return errors;
                     }}
                     validationSchema={yupValidationSchema}
@@ -183,116 +188,136 @@ const Form: React.FC<{
                         >
                             <FieldsContainer>
                                 <FlexContainer>
-                                    <Field
-                                        label={
-                                            formFields.name?.label || 'Vorname'
-                                        }
-                                        placeholder={
-                                            formFields.name?.placeholder
-                                        }
-                                        infoMessage={
-                                            formFields.name?.infoMessage
-                                        }
-                                        as={Textfield}
-                                        name="name"
-                                        isRequired={formFields.name?.isRequired}
-                                        errorMessage={errors.name}
-                                        optionalLabel={
-                                            formFields.name?.optionalLabel
-                                        }
-                                        isInverted={isInverted}
-                                        lightBg={bgMode === 'full'}
-                                    />
-                                    <Field
-                                        label={
-                                            formFields.surname?.label ||
-                                            'Nachname'
-                                        }
-                                        placeholder={
-                                            formFields.surname?.placeholder
-                                        }
-                                        infoMessage={
-                                            formFields.surname?.infoMessage
-                                        }
-                                        as={Textfield}
-                                        name="surname"
-                                        isRequired={
-                                            formFields.surname?.isRequired
-                                        }
-                                        errorMessage={errors.surname}
-                                        optionalLabel={
-                                            formFields.name?.optionalLabel
-                                        }
-                                        isInverted={isInverted}
-                                        lightBg={bgMode === 'full'}
-                                    />
-                                    <Field
-                                        type="email"
-                                        label={
-                                            formFields.mail?.label || 'E-Mail'
-                                        }
-                                        placeholder={
-                                            formFields.mail?.placeholder
-                                        }
-                                        infoMessage={
-                                            formFields.mail?.infoMessage
-                                        }
-                                        as={Textfield}
-                                        name="mail"
-                                        isRequired={formFields.mail?.isRequired}
-                                        errorMessage={errors.mail}
-                                        optionalLabel={
-                                            formFields.name?.optionalLabel
-                                        }
-                                        isInverted={isInverted}
-                                        lightBg={bgMode === 'full'}
-                                    />
-                                    <Field
-                                        type="tel"
-                                        label={
-                                            formFields.phone?.label || 'Telefon'
-                                        }
-                                        placeholder={
-                                            formFields.phone?.placeholder
-                                        }
-                                        infoMessage={
-                                            formFields.phone?.infoMessage
-                                        }
-                                        as={Textfield}
-                                        name="phone"
-                                        isRequired={
-                                            formFields.phone?.isRequired
-                                        }
-                                        errorMessage={errors.phone}
-                                        optionalLabel={
-                                            formFields.name?.optionalLabel
-                                        }
-                                        isInverted={isInverted}
-                                        lightBg={bgMode === 'full'}
-                                    />
+                                    {formFields.name && (
+                                        <Field
+                                            label={
+                                                formFields.name?.label ||
+                                                'Vorname'
+                                            }
+                                            placeholder={
+                                                formFields.name?.placeholder
+                                            }
+                                            infoMessage={
+                                                formFields.name?.infoMessage
+                                            }
+                                            as={Textfield}
+                                            name="name"
+                                            isRequired={
+                                                formFields.name?.isRequired
+                                            }
+                                            errorMessage={errors.name}
+                                            optionalLabel={
+                                                formFields.name?.optionalLabel
+                                            }
+                                            isInverted={isInverted}
+                                            lightBg={bgMode === 'full'}
+                                        />
+                                    )}
+                                    {formFields.surname && (
+                                        <Field
+                                            label={
+                                                formFields.surname?.label ||
+                                                'Nachname'
+                                            }
+                                            placeholder={
+                                                formFields.surname?.placeholder
+                                            }
+                                            infoMessage={
+                                                formFields.surname?.infoMessage
+                                            }
+                                            as={Textfield}
+                                            name="surname"
+                                            isRequired={
+                                                formFields.surname?.isRequired
+                                            }
+                                            errorMessage={errors.surname}
+                                            optionalLabel={
+                                                formFields.name?.optionalLabel
+                                            }
+                                            isInverted={isInverted}
+                                            lightBg={bgMode === 'full'}
+                                        />
+                                    )}
+                                    {formFields.mail && (
+                                        <Field
+                                            type="email"
+                                            label={
+                                                formFields.mail?.label ||
+                                                'E-Mail'
+                                            }
+                                            placeholder={
+                                                formFields.mail?.placeholder
+                                            }
+                                            infoMessage={
+                                                formFields.mail?.infoMessage
+                                            }
+                                            as={Textfield}
+                                            name="mail"
+                                            isRequired={
+                                                formFields.mail?.isRequired
+                                            }
+                                            errorMessage={errors.mail}
+                                            optionalLabel={
+                                                formFields.name?.optionalLabel
+                                            }
+                                            isInverted={isInverted}
+                                            lightBg={bgMode === 'full'}
+                                        />
+                                    )}
+                                    {formFields.phone && (
+                                        <Field
+                                            type="tel"
+                                            label={
+                                                formFields.phone?.label ||
+                                                'Telefon'
+                                            }
+                                            placeholder={
+                                                formFields.phone?.placeholder
+                                            }
+                                            infoMessage={
+                                                formFields.phone?.infoMessage
+                                            }
+                                            as={Textfield}
+                                            name="phone"
+                                            isRequired={
+                                                formFields.phone?.isRequired
+                                            }
+                                            errorMessage={errors.phone}
+                                            optionalLabel={
+                                                formFields.name?.optionalLabel
+                                            }
+                                            isInverted={isInverted}
+                                            lightBg={bgMode === 'full'}
+                                        />
+                                    )}
                                 </FlexContainer>
-                                <FlexContainer>
-                                    <Field
-                                        label={
-                                            formFields.area?.label || 'Textfeld'
-                                        }
-                                        placeholder={
-                                            formFields.area?.placeholder
-                                        }
-                                        infoMessage={
-                                            formFields.area?.infoMessage
-                                        }
-                                        name="area"
-                                        as={Textarea}
-                                        isRequired={formFields.area?.isRequired}
-                                        errorMessage={errors.area}
-                                        optionalLabel={
-                                            formFields.name?.optionalLabel
-                                        }
-                                        isInverted={isInverted}
-                                        lightBg={bgMode === 'full'}
-                                    />
-                                </FlexContainer>
+                                {formFields.area && (
+                                    <FlexContainer>
+                                        <Field
+                                            label={
+                                                formFields.area?.label ||
+                                                'Textfeld'
+                                            }
+                                            placeholder={
+                                                formFields.area?.placeholder
+                                            }
+                                            infoMessage={
+                                                formFields.area?.infoMessage
+                                            }
+                                            name="area"
+                                            as={Textarea}
+                                            isRequired={
+                                                formFields.area?.isRequired
+                                            }
+                                            errorMessage={errors.area}
+                                            optionalLabel={
+                                                formFields.name?.optionalLabel
+                                            }
+                                            isInverted={isInverted}
+                                            lightBg={bgMode === 'full'}
+                                        />
+                                    </FlexContainer>
+                                )}
                             </FieldsContainer>
                             {checkbox && (
                                 <Field
@@ -313,16 +338,18 @@ const Form: React.FC<{
                                 />
                             )}
                             {submitAction && (
-                                <ActionWrapper>
-                                    {submitAction &&
+                                <ActionWrapper
+                                    primary={
+                                        submitAction &&
                                         submitAction({
                                             isInverted,
                                             additionalProps: {
                                                 type: 'submit',
                                                 as: 'button',
                                             },
-                                        })}
-                                </ActionWrapper>
+                                        })
+                                    }
+                                />
                             )}
                         </form>
                     )}

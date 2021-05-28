@@ -39,6 +39,31 @@ export const Default: Story = () => (
     />
 );
 
+export const WithLessFields: Story = () => (
+    <Form
+        formFields={{
+            name: {
+                isRequired: true,
+            },
+            surname: {
+                isRequired: true,
+            },
+            mail: {
+                isRequired: true,
+            },
+        }}
+        checkbox={{
+            label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
+        }}
+        submitAction={({ isInverted, additionalProps }) => (
+            <Button.View isInverted={isInverted} {...additionalProps}>
+                <Button.Label>Senden</Button.Label>
+            </Button.View>
+        )}
+        onSubmit={console.log}
+    />
+);
+
 export const WithIntro: Story = () => (
     <Form
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
