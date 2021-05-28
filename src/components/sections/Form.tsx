@@ -130,6 +130,12 @@ const Form: React.FC<{
         }
     };
 
+    const isEmpty = (obj: any) => {
+        return (
+            obj && Object.keys(obj).length === 0 && obj.constructor === Object
+        );
+    };
+
     return (
         <Section
             addSeperation
@@ -352,7 +358,9 @@ const Form: React.FC<{
                                         submitAction({
                                             isInverted,
                                             isDisabled:
-                                                !dirty || !isValid || !errors,
+                                                !dirty ||
+                                                !isValid ||
+                                                !isEmpty(errors),
                                             additionalProps: {
                                                 type: 'submit',
                                                 as: 'button',
