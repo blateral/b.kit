@@ -56,6 +56,23 @@ export const WithBgColor: Story = () => (
     </>
 );
 
+export const WithBgMode: Story = () => (
+    <>
+        <Section bgColor="aquamarine" bgMode="half-left">
+            <ExampleContent />
+        </Section>
+        <Section bgColor="blueviolet" bgMode="half-right">
+            <ExampleContent />
+        </Section>
+        <Section bgColor="aquamarine" bgMode="larger-left">
+            <ExampleContent />
+        </Section>
+        <Section bgColor="blueviolet" bgMode="larger-right">
+            <ExampleContent />
+        </Section>
+    </>
+);
+
 export const WithSeperation: Story = () => (
     <>
         <Section addSeperation>

@@ -107,9 +107,8 @@ const Copy: React.FC<{
             type={type}
             size={size}
             textColor={
-                textColor || isInverted
-                    ? fontSettings.colorInverted
-                    : fontSettings.color
+                textColor ||
+                (isInverted ? fontSettings.colorInverted : fontSettings.color)
             }
             columns={columns}
             dangerouslySetInnerHTML={

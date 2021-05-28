@@ -1,4 +1,4 @@
-/***** Version: 0.8.9 *****/
+/***** Version: 0.9.0 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -39,6 +39,7 @@ export { useScroll } from 'utils/useScroll';
 export { usePoster, canUseWebP } from 'utils/usePoster';
 export { default as useInterval } from 'utils/useInterval';
 export { useImgPreload } from 'utils/useImgPreload';
+export { hexToRgba } from 'utils/hexRgbConverter';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
@@ -57,6 +58,7 @@ export { default as CallToAction } from 'components/sections/CallToAction';
 export { default as FactList } from 'components/sections/FactList';
 export { default as Table } from 'components/sections/Table';
 export { default as Map } from 'components/sections/Map';
+export { default as Form } from 'components/sections/Form';
 export { default as ImageCarousel } from 'components/sections/carousel/ImageCarousel';
 export { default as FeatureCarousel } from 'components/sections/carousel/FeatureCarousel';
 export { default as PromotionCarousel } from 'components/sections/carousel/PromotionCarousel';
