@@ -7,6 +7,7 @@ import { HeadlineTag } from 'components/typography/Heading';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
+import { hexToRgba } from 'utils/hexRgbConverter';
 
 const TableContainer = styled.div`
     overflow-x: scroll;
@@ -73,7 +74,8 @@ const TableData = styled.td<{ isInverted?: boolean }>`
     min-width: 60px;
     box-sizing: content-box;
 
-    background-color: ${({ isInverted }) => (isInverted ? '#333' : '#F6F6F6')};
+    background-color: ${({ isInverted, theme }) =>
+        hexToRgba(color(theme).light, isInverted ? 0.2 : 0.4)};
 
     :last-child {
         padding-right: ${spacings.spacer * 2.5}px;
