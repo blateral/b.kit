@@ -28,7 +28,7 @@ export const Default: Story = () => (
             area: {},
         }}
         checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
+            label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
         submitAction={({ isInverted, additionalProps }) => (
             <Button.View isInverted={isInverted} {...additionalProps}>
@@ -60,7 +60,7 @@ export const WithIntro: Story = () => (
             area: {},
         }}
         checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
+            label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
         submitAction={({ isInverted, additionalProps }) => (
             <Button.View isInverted={isInverted} {...additionalProps}>
@@ -92,7 +92,7 @@ export const WithValidation: Story = () => (
             area: {},
         }}
         checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
+            label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
         submitAction={({ isInverted, additionalProps }) => (
             <Button.View isInverted={isInverted} {...additionalProps}>
@@ -129,7 +129,7 @@ export const WithYupValidation: Story = () => (
             area: {},
         }}
         checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
+            label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
         submitAction={({ isInverted, additionalProps }) => (
             <Button.View isInverted={isInverted} {...additionalProps}>
@@ -173,139 +173,7 @@ export const WithFullBackground: Story = () => (
             area: {},
         }}
         checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
-        }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
-                <Button.Label>Senden</Button.Label>
-            </Button.View>
-        )}
-        onSubmit={console.log}
-    />
-);
-
-export const WithHalfLeftBackground: Story = () => (
-    <Form
-        bgMode="half-left"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        formFields={{
-            name: {
-                isRequired: true,
-            },
-            surname: {
-                isRequired: true,
-            },
-            mail: {
-                isRequired: true,
-            },
-            phone: {
-                isRequired: true,
-                infoMessage: '*Help extra info line option',
-            },
-            area: {},
-        }}
-        checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
-        }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
-                <Button.Label>Senden</Button.Label>
-            </Button.View>
-        )}
-        onSubmit={console.log}
-    />
-);
-
-export const WithHalfRightBackground: Story = () => (
-    <Form
-        bgMode="half-right"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        formFields={{
-            name: {
-                isRequired: true,
-            },
-            surname: {
-                isRequired: true,
-            },
-            mail: {
-                isRequired: true,
-            },
-            phone: {
-                isRequired: true,
-                infoMessage: '*Help extra info line option',
-            },
-            area: {},
-        }}
-        checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
-        }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
-                <Button.Label>Senden</Button.Label>
-            </Button.View>
-        )}
-        onSubmit={console.log}
-    />
-);
-
-export const WithLargerLeftBackground: Story = () => (
-    <Form
-        bgMode="larger-left"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        formFields={{
-            name: {
-                isRequired: true,
-            },
-            surname: {
-                isRequired: true,
-            },
-            mail: {
-                isRequired: true,
-            },
-            phone: {
-                isRequired: true,
-                infoMessage: '*Help extra info line option',
-            },
-            area: {},
-        }}
-        checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
-        }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
-                <Button.Label>Senden</Button.Label>
-            </Button.View>
-        )}
-        onSubmit={console.log}
-    />
-);
-
-export const WithLargerRightBackground: Story = () => (
-    <Form
-        bgMode="larger-right"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        formFields={{
-            name: {
-                isRequired: true,
-            },
-            surname: {
-                isRequired: true,
-            },
-            mail: {
-                isRequired: true,
-            },
-            phone: {
-                isRequired: true,
-                infoMessage: '*Help extra info line option',
-            },
-            area: {},
-        }}
-        checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
+            label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
         submitAction={({ isInverted, additionalProps }) => (
             <Button.View isInverted={isInverted} {...additionalProps}>
@@ -337,7 +205,7 @@ export const IsInverted: Story = () => (
             area: {},
         }}
         checkbox={{
-            label: 'Ich aktzeptiere die Datenschutzbestimmungen',
+            label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
         submitAction={({ isInverted, additionalProps }) => (
             <Button.View isInverted={isInverted} {...additionalProps}>
