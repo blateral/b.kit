@@ -30,8 +30,12 @@ export const Default: Story = () => (
         checkbox={{
             label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
+        submitAction={({ isInverted, isDisabled, additionalProps }) => (
+            <Button.View
+                isInverted={isInverted}
+                isDisabled={isDisabled}
+                {...additionalProps}
+            >
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
@@ -55,8 +59,12 @@ export const WithLessFields: Story = () => (
         checkbox={{
             label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
+        submitAction={({ isInverted, isDisabled, additionalProps }) => (
+            <Button.View
+                isInverted={isInverted}
+                isDisabled={isDisabled}
+                {...additionalProps}
+            >
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
@@ -87,8 +95,12 @@ export const WithIntro: Story = () => (
         checkbox={{
             label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
+        submitAction={({ isInverted, isDisabled, additionalProps }) => (
+            <Button.View
+                isInverted={isInverted}
+                isDisabled={isDisabled}
+                {...additionalProps}
+            >
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
@@ -119,8 +131,12 @@ export const WithValidation: Story = () => (
         checkbox={{
             label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
+        submitAction={({ isInverted, isDisabled, additionalProps }) => (
+            <Button.View
+                isInverted={isInverted}
+                isDisabled={isDisabled}
+                {...additionalProps}
+            >
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
@@ -156,8 +172,12 @@ export const WithYupValidation: Story = () => (
         checkbox={{
             label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
+        submitAction={({ isInverted, isDisabled, additionalProps }) => (
+            <Button.View
+                isInverted={isInverted}
+                isDisabled={isDisabled}
+                {...additionalProps}
+            >
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
@@ -200,8 +220,12 @@ export const WithFullBackground: Story = () => (
         checkbox={{
             label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
+        submitAction={({ isInverted, isDisabled, additionalProps }) => (
+            <Button.View
+                isInverted={isInverted}
+                isDisabled={isDisabled}
+                {...additionalProps}
+            >
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
@@ -232,8 +256,12 @@ export const IsInverted: Story = () => (
         checkbox={{
             label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
         }}
-        submitAction={({ isInverted, additionalProps }) => (
-            <Button.View isInverted={isInverted} {...additionalProps}>
+        submitAction={({ isInverted, isDisabled, additionalProps }) => (
+            <Button.View
+                isInverted={isInverted}
+                isDisabled={isDisabled}
+                {...additionalProps}
+            >
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}

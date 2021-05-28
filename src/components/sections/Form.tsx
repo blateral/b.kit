@@ -79,6 +79,7 @@ const Form: React.FC<{
     submitAction?: (props: {
         isInverted?: boolean;
         additionalProps: { type: 'submit'; as: 'button' | 'a' };
+        isDisabled?: boolean;
     }) => React.ReactNode;
     onSubmit?: (data: FormData) => void;
     validation?: (values: FormData, errors: FormDataErrors) => FormDataErrors;
@@ -127,6 +128,12 @@ const Form: React.FC<{
             default:
                 return undefined;
         }
+    };
+
+    const isEmpty = (obj: any) => {
+        return (
+            obj && Object.keys(obj).length === 0 && obj.constructor === Object
+        );
     };
 
     return (
@@ -179,7 +186,14 @@ const Form: React.FC<{
                         onSubmit && onSubmit(values);
                     }}
                 >
-                    {({ handleSubmit, setFieldValue, values, errors }) => (
+                    {({
+                        handleSubmit,
+                        setFieldValue,
+                        values,
+                        errors,
+                        isValid,
+                        dirty,
+                    }) => (
                         <form
                             onSubmit={(e: FormEvent<HTMLFormElement>) => {
                                 e.preventDefault();
@@ -343,6 +357,10 @@ const Form: React.FC<{
                                         submitAction &&
                                         submitAction({
                                             isInverted,
+                                            isDisabled:
+                                                !dirty ||
+                                                !isValid ||
+                                                !isEmpty(errors),
                                             additionalProps: {
                                                 type: 'submit',
                                                 as: 'button',
