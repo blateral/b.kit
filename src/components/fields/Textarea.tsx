@@ -1,7 +1,7 @@
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 import { FormProps } from './Textfield';
 
 const FieldHead = styled.div`
@@ -33,6 +33,10 @@ const Area = styled.textarea<{
     resize: none;
     width: 100%;
     min-height: 120px;
+
+    @media ${mq.semilarge} {
+        min-height: 185px;
+    }
 
     padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
 
