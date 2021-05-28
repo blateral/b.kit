@@ -14,6 +14,12 @@ const View = styled.div`
     }
 `;
 
+const Label = styled(Copy)`
+    & > * {
+        margin: 0;
+    }
+`;
+
 const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
     cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
     pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
@@ -92,7 +98,7 @@ const Checkbox: React.FC<{
                 />
             </CheckboxContainer>
             {label && (
-                <Copy
+                <Label
                     size="small"
                     type="copy-b"
                     textColor={

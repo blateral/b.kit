@@ -65,7 +65,7 @@ export interface FormData {
 }
 
 export type FormFieldProps = Omit<FormProps, 'value' | 'name' | 'errorMessage'>;
-type FormDataErrors = { [key in keyof FormData]: string };
+export type FormDataErrors = { [key in keyof FormData]: string };
 
 const Form: React.FC<{
     title?: string;
@@ -78,7 +78,7 @@ const Form: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     submitAction?: (props: {
         isInverted?: boolean;
-        additionalProps: { type: string; as: 'button' | 'a' };
+        additionalProps: { type: 'submit'; as: 'button' | 'a' };
     }) => React.ReactNode;
     onSubmit?: (data: FormData) => void;
     validation?: (values: FormData, errors: FormDataErrors) => FormDataErrors;
