@@ -3,8 +3,6 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import * as React from 'react';
 import styled from 'styled-components';
 import { mq, spacings, withRange } from 'utils/styles';
-import Poster from '../Poster';
-import HeaderPoster from './HeaderPoster';
 
 const View = styled.header`
     position: relative;
@@ -139,6 +137,8 @@ const VideoHeader: React.FC<VideoProps & { mobileImage?: ImageProps }> = ({
 }) => {
     const [isLoaded, setLoaded] = React.useState(false);
     const [isVideoOpen, setVideoOpen] = React.useState(false);
+    console.log(setVideoOpen(isVideoOpen));
+
     return (
         <View>
             <HeaderWrapper clampWidth="large">
