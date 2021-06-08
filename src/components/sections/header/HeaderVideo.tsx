@@ -85,7 +85,7 @@ const HeaderVideo: React.FC<{
 
     return (
         <PosterView className={className}>
-            {placeholderImg && !isLoaded && (
+            {placeholderImg?.small && !isLoaded && (
                 <PlaceholderImg coverSpace {...placeholderImg} />
             )}
             {videoUrl && !isMobile && (

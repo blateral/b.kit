@@ -1,47 +1,30 @@
 import * as React from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
-import { FontType, getFonts as font, mq, withRange } from 'utils/styles';
+import {
+    styleTextColor,
+    FontType,
+    getFonts as font,
+    mq,
+    withRange,
+} from 'utils/styles';
 
 type HeadingType = Exclude<
     FontType,
     'copy' | 'copy-i' | 'copy-b' | 'label' | 'callout'
 >;
 
-/**
- * Generate css attributes to style gradient text color
- * @param textColor
- */
-const GradientColor = (textColor?: string) => {
-    return css`
-        color: ${() => {
-            const color = textColor?.match(/[0-9A-F]{6}/gi)?.[0];
-            return color ? '#' + color : '';
-        }};
-        @supports (-webkit-text-stroke: thin) {
-            background: ${textColor};
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    `;
-};
-
 // Styles
 const BaseStyles = styled.h1<{
     hyphens?: boolean;
     hasShadow?: boolean;
     textColor?: string;
+    textGradient?: string;
     type: HeadingType;
 }>`
     display: inline-block;
     margin: 0;
     padding: 0;
-    ${({ textColor }) =>
-        textColor?.indexOf('gradient') !== -1
-            ? GradientColor(textColor)
-            : css`
-                  color: ${textColor};
-              `};
+    ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
 
     hyphens: auto;
     overflow-wrap: break-word;
@@ -100,6 +83,7 @@ const Heading: React.FC<{
     isInverted?: boolean;
     size?: HeadingType;
     textColor?: string;
+    textGradient?: string;
     hyphens?: boolean;
     hasShadow?: boolean;
     innerHTML?: string;
@@ -111,6 +95,7 @@ const Heading: React.FC<{
     className,
     size = 'heading-2',
     textColor,
+    textGradient,
     hyphens = false,
     hasShadow = false,
     innerHTML,
@@ -147,9 +132,14 @@ const Heading: React.FC<{
             as={as || tag}
             type={size}
             textColor={
-                textColor || isInverted
-                    ? fontSettings.colorInverted
-                    : fontSettings.color
+                textColor ||
+                (isInverted ? fontSettings.colorInverted : fontSettings.color)
+            }
+            textGradient={
+                textGradient ||
+                (isInverted
+                    ? fontSettings.colorGradientInverted
+                    : fontSettings.colorGradient)
             }
             hyphens={hyphens}
             hasShadow={hasShadow}

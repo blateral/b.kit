@@ -40,7 +40,18 @@ export const WithSize: Story = () => (
 export const WithColor: Story = () => (
     <>
         <Heading textColor={'green'}>Lorem Ipsum Dolor Sit</Heading>
+        <Seperator />
         <Heading textColor={'hotpink'}>Lorem Ipsum Dolor Sit</Heading>
+        <Seperator />
+        <Heading
+            textGradient="linear-gradient(
+                    89.07deg,
+                    #407199 24.08%,
+                    #a8dde0 116.66%
+                )"
+        >
+            Lorem Ipsum Dolor Sit
+        </Heading>
     </>
 );
 

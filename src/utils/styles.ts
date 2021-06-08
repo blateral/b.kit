@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'styled-components';
+import { css, DefaultTheme } from 'styled-components';
 
 export type MediaQueryType =
     | 'small'
@@ -45,6 +45,30 @@ export const withRange = (
     `;
 };
 
+/**
+ * Generate css attributes to style text color with plain color or gradient
+ * @param fallbackColor
+ * @param gradient
+ */
+export const styleTextColor = (fallbackColor?: string, gradient?: string) => {
+    if (gradient) {
+        return css`
+            color: ${fallbackColor};
+
+            @supports (-webkit-text-stroke: thin) {
+                background: ${gradient};
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        `;
+    } else {
+        return css`
+            color: ${fallbackColor};
+        `;
+    }
+};
+
 /***** Color Types *****/
 interface ColorOptions {
     light: string;
@@ -76,6 +100,8 @@ export interface FontProps {
     textTransform?: string;
     color?: string;
     colorInverted?: string;
+    colorGradient?: string;
+    colorGradientInverted?: string;
 }
 
 export type FontPropsType = keyof FontProps;
