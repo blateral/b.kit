@@ -15,7 +15,7 @@ export type PromotionCarouselItem = Omit<
 
 const PromotionCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
-        bgMode?: 'full' | 'splitted';
+        bgMode?: BgMode;
         promotions?: PromotionCarouselItem[];
     }
 > = ({
@@ -43,8 +43,14 @@ const PromotionCarousel: FC<
         switch (bgMode) {
             case 'full':
                 return 'full';
-            case 'splitted':
+            case 'half-right':
                 return 'half-right';
+            case 'half-left':
+                return 'half-left';
+            case 'larger-right':
+                return 'larger-right';
+            case 'larger-left':
+                return 'larger-left';
             default:
                 return undefined;
         }
