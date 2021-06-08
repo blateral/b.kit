@@ -7,6 +7,7 @@ import {
     withRange,
     FontOptionType,
     getFonts as font,
+    styleTextColor,
 } from 'utils/styles';
 
 type CopyType = Exclude<
@@ -22,12 +23,13 @@ type CopyType = Exclude<
 
 const BaseStyles = styled.div<{
     textColor?: string;
+    textGradient?: string;
     columns?: boolean;
     type: CopyType;
     size: FontOptionType;
 }>`
     hyphens: auto;
-    color: ${({ textColor }) => textColor || 'inherit'};
+    ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
 
     @media ${mq.medium} {
         hyphens: none;
@@ -83,6 +85,7 @@ const View = styled(BaseStyles)`
 const Copy: React.FC<{
     isInverted?: boolean;
     textColor?: string;
+    textGradient?: string;
     type?: CopyType;
     size?: FontOptionType;
     columns?: boolean;
@@ -93,6 +96,7 @@ const Copy: React.FC<{
     type = 'copy',
     size = 'medium',
     textColor,
+    textGradient,
     columns = false,
     innerHTML,
     className,
@@ -109,6 +113,12 @@ const Copy: React.FC<{
             textColor={
                 textColor ||
                 (isInverted ? fontSettings.colorInverted : fontSettings.color)
+            }
+            textGradient={
+                textGradient ||
+                (isInverted
+                    ? fontSettings.colorGradientInverted
+                    : fontSettings.colorGradient)
             }
             columns={columns}
             dangerouslySetInnerHTML={

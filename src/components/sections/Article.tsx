@@ -77,7 +77,7 @@ const Article: React.FC<{
     text?: string;
     asideText?: string;
 
-    bgMode?: 'full' | 'splitted';
+    bgMode?: BgMode;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -100,8 +100,14 @@ const Article: React.FC<{
         switch (bgMode) {
             case 'full':
                 return 'full';
-            case 'splitted':
+            case 'half-right':
+                return 'half-right';
+            case 'half-left':
+                return 'half-left';
+            case 'larger-right':
                 return 'larger-right';
+            case 'larger-left':
+                return 'larger-left';
             default:
                 return undefined;
         }

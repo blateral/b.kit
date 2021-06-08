@@ -67,7 +67,8 @@ const CrossPromotion: React.FC<{
     aside?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
     isMirrored?: boolean;
 
-    bgMode?: 'full' | 'splitted';
+    // bgMode?: 'full' | 'splitted';
+    bgMode?: BgMode;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -87,12 +88,29 @@ const CrossPromotion: React.FC<{
     isInverted = false,
     isMirrored = false,
 }) => {
+    // const getSectionBgMode = (): BgMode | undefined => {
+    //     switch (bgMode) {
+    //         case 'full':
+    //             return 'full';
+    //         case 'splitted':
+    //             return 'half-right';
+    //         default:
+    //             return undefined;
+    //     }
+    // };
+
     const getSectionBgMode = (): BgMode | undefined => {
         switch (bgMode) {
             case 'full':
                 return 'full';
-            case 'splitted':
+            case 'half-right':
                 return 'half-right';
+            case 'half-left':
+                return 'half-left';
+            case 'larger-right':
+                return 'larger-right';
+            case 'larger-left':
+                return 'larger-left';
             default:
                 return undefined;
         }

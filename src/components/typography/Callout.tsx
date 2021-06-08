@@ -1,6 +1,12 @@
 import * as React from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
-import { FontOptionType, getFonts as font, mq, withRange } from 'utils/styles';
+import {
+    FontOptionType,
+    getFonts as font,
+    mq,
+    styleTextColor,
+    withRange,
+} from 'utils/styles';
 
 // Styles
 const BaseStyles = styled.h1<{
@@ -8,10 +14,11 @@ const BaseStyles = styled.h1<{
     hyphens?: boolean;
     hasShadow?: boolean;
     textColor?: string;
+    textGradient?: string;
 }>`
     margin: 0;
     padding: 0;
-    color: ${({ textColor }) => textColor || 'inherit'};
+    ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
 
     hyphens: auto;
     overflow-wrap: break-word;
@@ -56,6 +63,7 @@ const Callout: React.FC<{
     as?: CalloutTag;
     size?: FontOptionType;
     textColor?: string;
+    textGradient?: string;
     hyphens?: boolean;
     hasShadow?: boolean;
     innerHTML?: string;
@@ -67,6 +75,7 @@ const Callout: React.FC<{
     className,
     size = 'medium',
     textColor,
+    textGradient,
     hyphens = false,
     hasShadow = false,
     innerHTML,
@@ -80,9 +89,14 @@ const Callout: React.FC<{
             as={as}
             size={size}
             textColor={
-                textColor || isInverted
-                    ? fontSettings.colorInverted
-                    : fontSettings.color
+                textColor ||
+                (isInverted ? fontSettings.colorInverted : fontSettings.color)
+            }
+            textGradient={
+                textGradient ||
+                (isInverted
+                    ? fontSettings.colorGradientInverted
+                    : fontSettings.colorGradient)
             }
             hyphens={hyphens}
             hasShadow={hasShadow}
