@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'components/blocks/Image';
+import { useMediaQuery } from 'utils/useMediaQuery';
 
 interface HeaderVideoImageProps {
     small: string;
@@ -60,19 +61,34 @@ const AutoplayVideo = styled.video<{ isVisible?: boolean }>`
     transition: opacity 0.3s ease-in-out;
 `;
 
+type HeaderVideoMq = 'small' | 'medium' | 'semilarge' | 'large' | 'xlarge';
+
 const HeaderVideo: React.FC<{
     placeholderImg?: HeaderVideoImageProps;
     videoUrl?: string;
     className?: string;
 }> = ({ placeholderImg, videoUrl, className, children }) => {
     const [isLoaded, setLoaded] = useState<boolean>(false);
+    const currentMq = useMediaQuery([
+        'small',
+        'medium',
+        'semilarge',
+        'large',
+        'xlarge',
+    ]) as HeaderVideoMq | undefined;
+
+    const isMobile = currentMq === undefined || currentMq === 'small';
+
+    useEffect(() => {
+        if (isMobile) setLoaded(false);
+    }, [isMobile]);
 
     return (
         <PosterView className={className}>
             {placeholderImg && !isLoaded && (
                 <PlaceholderImg coverSpace {...placeholderImg} />
             )}
-            {videoUrl && (
+            {videoUrl && !isMobile && (
                 <AutoplayVideo
                     isVisible={isLoaded}
                     src={videoUrl}
