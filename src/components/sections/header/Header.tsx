@@ -9,6 +9,7 @@ import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
 import HeaderPoster from './HeaderPoster';
 import Actions from 'components/blocks/Actions';
 import Callout from 'components/typography/Callout';
+import HeaderVideo from './HeaderVideo';
 
 interface HeaderImageProps {
     small: string;
@@ -96,29 +97,42 @@ const Badge = styled.div<{ showOnMobile?: boolean }>`
 `;
 
 const Poster: FC<{
+    videoUrl?: string;
     images?: HeaderImageProps[];
     className?: string;
-}> = ({ images, className, children }) => {
-    if (!images || images.length === 0) return <div>{children}</div>;
-    else if (images.length === 1)
+}> = ({ videoUrl, images, className, children }) => {
+    if (!videoUrl) {
+        if (!images || images.length === 0) return <div>{children}</div>;
+        else if (images.length === 1)
+            return (
+                <HeaderPoster bgImage={images[0]} className={className}>
+                    {children}
+                </HeaderPoster>
+            );
+        else
+            return (
+                <HeaderKenBurns
+                    images={images.map((img) => {
+                        return {
+                            ...img,
+                        } as HeaderKenBurnsImageProps;
+                    })}
+                    className={className}
+                >
+                    {children}
+                </HeaderKenBurns>
+            );
+    } else {
         return (
-            <HeaderPoster bgImage={images[0]} className={className}>
-                {children}
-            </HeaderPoster>
-        );
-    else
-        return (
-            <HeaderKenBurns
-                images={images.map((img) => {
-                    return {
-                        ...img,
-                    } as HeaderKenBurnsImageProps;
-                })}
+            <HeaderVideo
+                videoUrl={videoUrl}
+                placeholderImg={images?.[0]}
                 className={className}
             >
                 {children}
-            </HeaderKenBurns>
+            </HeaderVideo>
         );
+    }
 };
 
 const StyledPoster = styled(Poster)<{ gradient?: string; size?: number }>`
@@ -174,6 +188,7 @@ const Header: FC<{
     titleAs?: CalloutTag;
     primaryCta?: (isInverted?: boolean) => React.ReactNode;
     secondaryCta?: (isInverted?: boolean) => React.ReactNode;
+    videoUrl?: string;
     images?: HeaderImageProps[];
     withTopGradient?: boolean;
     badge?: {
@@ -187,6 +202,7 @@ const Header: FC<{
     titleAs,
     primaryCta,
     secondaryCta,
+    videoUrl,
     images,
     withTopGradient = true,
     badge,
@@ -200,6 +216,7 @@ const Header: FC<{
         <View>
             <HeaderWrapper clampWidth="large">
                 <StyledPoster
+                    videoUrl={videoUrl}
                     images={images}
                     gradient={withTopGradient ? gradient : undefined}
                     size={
