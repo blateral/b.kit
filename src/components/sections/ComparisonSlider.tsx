@@ -22,13 +22,15 @@ const BackgroundImg = styled(Image)`
     width: 100%;
 `;
 
-const ForegroundContainer = styled.div`
+const ForegroundContainer = styled.div<{ hasAnim?: boolean }>`
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     width: 50%;
     overflow: hidden;
+
+    transition: width ${({ hasAnim }) => (hasAnim ? 0.1 : 0)}s ease-in-out;
 `;
 
 const ForegroundImg = styled(Image)`
@@ -51,11 +53,13 @@ const ForegroundOverlay = styled.div<{ opacity: number }>`
     background-color: rgba(29, 34, 35, ${({ opacity }) => opacity});
 `;
 
-const ControlContainer = styled.div`
+const ControlContainer = styled.div<{ hasAnim?: boolean }>`
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    transition: left ${({ hasAnim }) => (hasAnim ? 0.1 : 0)}s ease-in-out;
 `;
 
 const Control = styled.div`
@@ -147,9 +151,12 @@ const ComparisonSlider: FC<{
                         onMouseUp={() => setIsHolding(false)}
                         onMouseLeave={() => setIsHolding(false)}
                         onTouchMove={handleTouchMove}
+                        onTouchStart={() => setIsHolding(true)}
+                        onTouchEnd={() => setIsHolding(false)}
                     >
                         <BackgroundImg {...backgroundImg} />
                         <ForegroundContainer
+                            hasAnim={!isHolding}
                             style={{ width: slideValue * 100 + '%' }}
                         >
                             <ForegroundImg {...foregroundImg} />
@@ -157,6 +164,7 @@ const ComparisonSlider: FC<{
                         </ForegroundContainer>
                         <ControlContainer
                             ref={controlRef}
+                            hasAnim={!isHolding}
                             style={{ left: slideValue * 100 + '%' }}
                         >
                             {dragControl ? (
