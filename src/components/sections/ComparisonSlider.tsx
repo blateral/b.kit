@@ -42,6 +42,15 @@ const ForegroundImg = styled(Image)`
     object-fit: cover;
 `;
 
+const ForegroundOverlay = styled.div<{ opacity: number }>`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(29, 34, 35, ${({ opacity }) => opacity});
+`;
+
 const ControlContainer = styled.div`
     position: absolute;
     top: 50%;
@@ -64,8 +73,15 @@ const ComparisonSlider: FC<{
     initialValue?: number;
     foregroundImg?: ImageProps;
     backgroundImg?: ImageProps;
+    overlayOpacity?: number;
     dragControl?: React.ReactNode;
-}> = ({ initialValue, foregroundImg, backgroundImg, dragControl }) => {
+}> = ({
+    initialValue,
+    foregroundImg,
+    backgroundImg,
+    overlayOpacity = 0.2,
+    dragControl,
+}) => {
     const [slideValue, setSlideValue] = useState<number>(
         initialValue ? Math.min(Math.max(initialValue, 0), 1) : 0.5
     );
@@ -137,6 +153,7 @@ const ComparisonSlider: FC<{
                             style={{ width: slideValue * 100 + '%' }}
                         >
                             <ForegroundImg {...foregroundImg} />
+                            <ForegroundOverlay opacity={overlayOpacity} />
                         </ForegroundContainer>
                         <ControlContainer
                             ref={controlRef}
