@@ -4,8 +4,9 @@ import styled, { ThemeContext } from 'styled-components';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import { getColors as color } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
+import Copy from 'components/typography/Copy';
 
 const Images = styled.div`
     position: relative;
@@ -44,13 +45,34 @@ const ForegroundImg = styled(Image)`
     object-fit: cover;
 `;
 
-const ForegroundOverlay = styled.div<{ opacity: number }>`
+const ForegroundOverlay = styled.div<{ color: string }>`
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(29, 34, 35, ${({ opacity }) => opacity});
+    background-color: ${({ color }) => color};
+`;
+
+const ImageLabel = styled(Copy)<{ bgColor?: string }>`
+    height: ${spacings.spacer * 1.5}px;
+    padding: ${spacings.nudge}px ${spacings.spacer}px ${spacings.nudge * 2}px
+        ${spacings.spacer}px;
+    background: ${({ bgColor }) => bgColor && bgColor};
+`;
+
+const ForegroundLabel = styled(ImageLabel)`
+    position: absolute;
+    bottom: ${spacings.spacer * 1.5}px;
+    left: ${spacings.spacer}px;
+    pointer-events: none;
+`;
+
+const BackgroundLabel = styled(ImageLabel)`
+    position: absolute;
+    bottom: ${spacings.spacer * 1.5}px;
+    right: ${spacings.spacer}px;
+    pointer-events: none;
 `;
 
 const ControlContainer = styled.div<{ hasAnim?: boolean }>`
@@ -77,19 +99,26 @@ const ComparisonSlider: FC<{
     initialValue?: number;
     foregroundImg?: ImageProps;
     backgroundImg?: ImageProps;
-    overlayOpacity?: number;
+    foregroundLabel?: string;
+    backgroundLabel?: string;
+    overlayColor?: string;
+    labelColor?: string;
     dragControl?: React.ReactNode;
 }> = ({
     initialValue,
     foregroundImg,
     backgroundImg,
-    overlayOpacity = 0.2,
+    foregroundLabel,
+    backgroundLabel,
+    overlayColor = 'rgba(0, 0 , 0, 0.2)',
+    labelColor = 'rgba(0, 0 , 0, 0.3)',
     dragControl,
 }) => {
     const [slideValue, setSlideValue] = useState<number>(
         initialValue ? Math.min(Math.max(initialValue, 0), 1) : 0.5
     );
     const [isHolding, setIsHolding] = useState<boolean>(false);
+    const [isDragging, setIsDragging] = useState<boolean>(false);
     const [sideOffset, setSideOffset] = useState<number>(0);
     const controlRef = useRef<HTMLDivElement | null>(null);
     const theme = useContext(ThemeContext);
@@ -129,7 +158,8 @@ const ComparisonSlider: FC<{
     const handleMouseMove = (ev: React.MouseEvent) => {
         const target = ev.currentTarget;
         if (target && ev.clientX && isHolding) {
-            setCurrentPos(target, ev.clientX);
+            setIsDragging(true);
+            if (isDragging) setCurrentPos(target, ev.clientX);
         }
     };
 
@@ -147,20 +177,45 @@ const ComparisonSlider: FC<{
                     <Images
                         onClick={handleClick}
                         onMouseMove={handleMouseMove}
-                        onMouseDown={() => setIsHolding(true)}
-                        onMouseUp={() => setIsHolding(false)}
-                        onMouseLeave={() => setIsHolding(false)}
+                        onMouseDown={() => {
+                            setIsDragging(false);
+                            setIsHolding(true);
+                        }}
+                        onMouseUp={() => {
+                            setIsDragging(false);
+                            setIsHolding(false);
+                        }}
+                        onMouseLeave={() => {
+                            setIsHolding(false);
+                            setIsDragging(false);
+                        }}
                         onTouchMove={handleTouchMove}
                         onTouchStart={() => setIsHolding(true)}
                         onTouchEnd={() => setIsHolding(false)}
                     >
                         <BackgroundImg {...backgroundImg} />
+                        {backgroundLabel && (
+                            <BackgroundLabel
+                                textColor={color(theme).light}
+                                bgColor={labelColor}
+                            >
+                                {backgroundLabel}
+                            </BackgroundLabel>
+                        )}
                         <ForegroundContainer
                             hasAnim={!isHolding}
                             style={{ width: slideValue * 100 + '%' }}
                         >
                             <ForegroundImg {...foregroundImg} />
-                            <ForegroundOverlay opacity={overlayOpacity} />
+                            {foregroundLabel && (
+                                <ForegroundLabel
+                                    textColor={color(theme).light}
+                                    bgColor={labelColor}
+                                >
+                                    {foregroundLabel}
+                                </ForegroundLabel>
+                            )}
+                            <ForegroundOverlay color={overlayColor} />
                         </ForegroundContainer>
                         <ControlContainer
                             ref={controlRef}
