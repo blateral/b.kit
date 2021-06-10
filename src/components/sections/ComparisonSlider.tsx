@@ -10,6 +10,7 @@ import Copy from 'components/typography/Copy';
 
 const Images = styled.div`
     position: relative;
+    cursor: col-resize;
 
     & > * {
         pointer-events: none;
