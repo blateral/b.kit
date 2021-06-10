@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useRef, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { BgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import { getColors as color, spacings } from 'utils/styles';
@@ -96,6 +96,8 @@ const Control = styled.div`
 `;
 
 const ComparisonSlider: FC<{
+    isInverted?: boolean;
+    bgMode?: BgMode;
     initialValue?: number;
     foregroundImg?: ImageProps;
     backgroundImg?: ImageProps;
@@ -105,6 +107,8 @@ const ComparisonSlider: FC<{
     labelColor?: string;
     dragControl?: React.ReactNode;
 }> = ({
+    isInverted,
+    bgMode,
     initialValue,
     foregroundImg,
     backgroundImg,
@@ -122,6 +126,23 @@ const ComparisonSlider: FC<{
     const [sideOffset, setSideOffset] = useState<number>(0);
     const controlRef = useRef<HTMLDivElement | null>(null);
     const theme = useContext(ThemeContext);
+
+    const getSectionBgMode = (): BgMode | undefined => {
+        switch (bgMode) {
+            case 'full':
+                return 'full';
+            case 'half-right':
+                return 'half-right';
+            case 'half-left':
+                return 'half-left';
+            case 'larger-right':
+                return 'larger-right';
+            case 'larger-left':
+                return 'larger-left';
+            default:
+                return undefined;
+        }
+    };
 
     useEffect(() => {
         if (controlRef.current) {
@@ -171,7 +192,17 @@ const ComparisonSlider: FC<{
     };
 
     return (
-        <Section>
+        <Section
+            addSeperation
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : bgMode
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
+            bgMode={!isInverted ? getSectionBgMode() : undefined}
+        >
             <Wrapper>
                 {backgroundImg && foregroundImg && (
                     <Images
