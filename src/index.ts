@@ -38,6 +38,7 @@ export { getMediaQuery, isBrowser, useMediaQuery } from 'utils/useMediaQuery';
 export { useScroll } from 'utils/useScroll';
 export { usePoster, canUseWebP } from 'utils/usePoster';
 export { default as useInterval } from 'utils/useInterval';
+export { default as useTouch } from 'utils/useTouch';
 export { useImgPreload } from 'utils/useImgPreload';
 export { hexToRgba } from 'utils/hexRgbConverter';
 

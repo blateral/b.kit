@@ -7,6 +7,11 @@ import Image, { ImageProps } from 'components/blocks/Image';
 
 const Images = styled.div`
     position: relative;
+
+    & > * {
+        pointer-events: none;
+        user-select: none;
+    }
 `;
 
 const BackgroundImg = styled(Image)`
@@ -32,38 +37,71 @@ const ForegroundImg = styled(Image)`
     bottom: 0;
     height: 100%;
     max-width: none;
+    object-fit: cover;
 `;
 
 const ComparisonSlider: FC<{
+    initialValue?: number;
     foregroundImg?: ImageProps;
     backgroundImg?: ImageProps;
-}> = ({ foregroundImg, backgroundImg }) => {
-    const [slideValue, setSlideValue] = useState<string>('50');
+}> = ({ initialValue, foregroundImg, backgroundImg }) => {
+    const [slideValue, setSlideValue] = useState<number>(
+        initialValue ? Math.min(Math.max(initialValue, 0), 1) : 0.5
+    );
+    const [isHolding, setIsHolding] = useState<boolean>(false);
+
+    const setCurrentPos = (target: EventTarget & Element, clientX: number) => {
+        if (target && clientX) {
+            const relativeClientX = clientX - target.getBoundingClientRect().x;
+            let percentage =
+                relativeClientX / target.getBoundingClientRect().width;
+            percentage = Math.min(Math.max(percentage, 0), 1);
+
+            setSlideValue(percentage);
+        }
+    };
+
+    const handleClick = (ev: React.MouseEvent) => {
+        const target = ev.currentTarget;
+        if (target && ev.clientX) {
+            setCurrentPos(target, ev.clientX);
+        }
+    };
+
+    const handleMouseMove = (ev: React.MouseEvent) => {
+        const target = ev.currentTarget;
+        if (target && ev.clientX && isHolding) {
+            setCurrentPos(target, ev.clientX);
+        }
+    };
+
+    const handleTouchMove = (ev: React.TouchEvent<HTMLDivElement>) => {
+        const target = ev.currentTarget;
+        if (target && ev.touches[0]?.clientX) {
+            setCurrentPos(target, ev.touches[0]?.clientX);
+        }
+    };
 
     return (
         <Section>
             <Wrapper>
                 {backgroundImg && foregroundImg && (
-                    <Images>
+                    <Images
+                        onClick={handleClick}
+                        onMouseMove={handleMouseMove}
+                        onMouseDown={() => setIsHolding(true)}
+                        onMouseUp={() => setIsHolding(false)}
+                        onMouseLeave={() => setIsHolding(false)}
+                        onTouchMove={handleTouchMove}
+                    >
                         <BackgroundImg {...backgroundImg} />
                         <ForegroundContainer
-                            style={{ width: slideValue + '%' }}
+                            style={{ width: slideValue * 100 + '%' }}
                         >
                             <ForegroundImg {...foregroundImg} />
                         </ForegroundContainer>
                     </Images>
                 )}
-                <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    step="0.01"
-                    value={slideValue}
-                    onChange={(e: React.SyntheticEvent<HTMLInputElement>) =>
-                        setSlideValue(e.currentTarget.value)
-                    }
-                    style={{ width: '100%' }}
-                />
             </Wrapper>
         </Section>
     );
