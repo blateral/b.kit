@@ -4,6 +4,7 @@ import { Meta, Story } from '@storybook/react';
 import ArrowRight from 'components/base/icons/ArrowRight';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
+import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
 import Cross from 'components/base/icons/Cross';
 import CrossSmall from 'components/base/icons/CrossSmall';
 import Magnifier from 'components/base/icons/Magnifier';
@@ -28,6 +29,7 @@ export default {
         ArrowRight,
         ArrowRightGhost,
         ArrowLeftGhost,
+        ArrowLeftRight,
         Cross,
         CrossSmall,
         Magnifier,
@@ -62,6 +64,9 @@ IconArrowRightGhost.storyName = 'Arrow right ghost';
 
 export const IconArrowLeftGhost: Story = () => <ArrowLeftGhost />;
 IconArrowLeftGhost.storyName = 'Arrow left ghost';
+
+export const IconArrowLeftRight: Story = () => <ArrowLeftRight />;
+IconArrowLeftRight.storyName = 'Arrow left right';
 
 export const IconCross: Story = () => <Cross />;
 IconCross.storyName = 'Cross';
