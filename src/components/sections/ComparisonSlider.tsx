@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useRef, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { css, ThemeContext } from 'styled-components';
 
 import Section, { BgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -7,6 +7,11 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import { getColors as color, spacings } from 'utils/styles';
 import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
 import Copy from 'components/typography/Copy';
+import useIE from 'utils/useIE';
+
+const clamp = (num: number, min: number, max: number) => {
+    return Math.min(Math.max(num, min), max);
+};
 
 const Images = styled.div`
     position: relative;
@@ -24,7 +29,11 @@ const BackgroundImg = styled(Image)`
     width: 100%;
 `;
 
-const ForegroundContainer = styled.div<{ hasAnim?: boolean }>`
+const ForegroundContainer = styled.div<{
+    hasTransition?: boolean;
+    initalValue?: number;
+    hasAnim?: boolean;
+}>`
     position: absolute;
     top: 0;
     left: 0;
@@ -32,7 +41,38 @@ const ForegroundContainer = styled.div<{ hasAnim?: boolean }>`
     width: 50%;
     overflow: hidden;
 
-    transition: width ${({ hasAnim }) => (hasAnim ? 0.1 : 0)}s ease-in-out;
+    transition: width ${({ hasTransition }) => (hasTransition ? 0.1 : 0)}s
+        ease-in-out;
+
+    ${({ hasAnim, initalValue }) =>
+        hasAnim &&
+        css`
+            animation-name: ForegroundAnim;
+            animation-duration: 5s;
+            animation-iteration-count: 1;
+            animation-play-state: ${hasAnim && 'running'};
+
+            @keyframes ForegroundAnim {
+                0% {
+                    width: ${initalValue
+                        ? clamp(initalValue * 100, 0, 100) + '%'
+                        : '50%'};
+                }
+                33% {
+                    width: ${initalValue
+                        ? clamp(initalValue * 100 + 10, 0, 100) + '%'
+                        : '60%'};
+                }
+                66% {
+                    width: ${initalValue
+                        ? clamp(initalValue * 100 - 10, 0, 100) + '%'
+                        : '40%'};
+                }
+                100% {
+                    width: ${initalValue ? initalValue * 100 + '%' : '50%'};
+                }
+            }
+        `}
 `;
 
 const ForegroundImg = styled(Image)`
@@ -76,13 +116,48 @@ const BackgroundLabel = styled(ImageLabel)`
     pointer-events: none;
 `;
 
-const ControlContainer = styled.div<{ hasAnim?: boolean }>`
+const ControlContainer = styled.div<{
+    hasTransition?: boolean;
+    hasAnim?: boolean;
+    initalValue?: number;
+}>`
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    transition: left ${({ hasAnim }) => (hasAnim ? 0.1 : 0)}s ease-in-out;
+    transition: left ${({ hasTransition }) => (hasTransition ? 0.1 : 0)}s
+        ease-in-out;
+
+    ${({ hasAnim, initalValue }) =>
+        hasAnim &&
+        css`
+            animation-name: ControlAnim;
+            animation-duration: 5s;
+            animation-iteration-count: 1;
+            animation-play-state: ${hasAnim && 'running'};
+
+            @keyframes ControlAnim {
+                0% {
+                    left: ${initalValue
+                        ? clamp(initalValue * 100, 0, 100) + '%'
+                        : '50%'};
+                }
+                33% {
+                    left: ${initalValue
+                        ? clamp(initalValue * 100 + 10, 0, 100) + '%'
+                        : '60%'};
+                }
+                66% {
+                    left: ${initalValue
+                        ? clamp(initalValue * 100 - 10, 0, 100) + '%'
+                        : '40%'};
+                }
+                100% {
+                    left: ${initalValue ? initalValue * 100 + '%' : '50%'};
+                }
+            }
+        `}
 `;
 
 const Control = styled.div`
@@ -107,6 +182,7 @@ const ComparisonSlider: FC<{
     overlayColor?: string;
     labelColor?: string;
     dragControl?: React.ReactNode;
+    enableControlAnim?: boolean;
 }> = ({
     isInverted,
     bgMode,
@@ -118,12 +194,15 @@ const ComparisonSlider: FC<{
     overlayColor = 'rgba(0, 0 , 0, 0.2)',
     labelColor = 'rgba(0, 0 , 0, 0.3)',
     dragControl,
+    enableControlAnim,
 }) => {
+    const isIE = useIE(true);
     const [slideValue, setSlideValue] = useState<number>(
         initialValue ? Math.min(Math.max(initialValue, 0), 1) : 0.5
     );
     const [isHolding, setIsHolding] = useState<boolean>(false);
     const [isDragging, setIsDragging] = useState<boolean>(false);
+    const [interacted, setInteracted] = useState<boolean>(true);
     const [sideOffset, setSideOffset] = useState<number>(0);
     const controlRef = useRef<HTMLDivElement | null>(null);
     const theme = useContext(ThemeContext);
@@ -151,6 +230,35 @@ const ComparisonSlider: FC<{
         }
     }, []);
 
+    useEffect(() => {
+        const handleInitalLoad = () => {
+            const options = {
+                rootMargin: '0px',
+                threshold: 1.0,
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                if (enableControlAnim && entries[0]?.isIntersecting) {
+                    // if control is first fully visible
+                    observer.unobserve(entries[0]?.target);
+                    setInteracted(false);
+                }
+            }, options);
+            if (controlRef.current) observer.observe(controlRef.current);
+            window.removeEventListener('load', handleInitalLoad);
+        };
+
+        // wait unitl user has scrolled once
+        if (!isIE) {
+            if (document.readyState === 'complete') handleInitalLoad();
+            else window.addEventListener('load', handleInitalLoad);
+        }
+
+        return () => {
+            window.removeEventListener('load', handleInitalLoad);
+        };
+    }, [enableControlAnim, isIE]);
+
     const setCurrentPos = (target: EventTarget & Element, clientX: number) => {
         if (target && clientX) {
             const relativeClientX = clientX - target.getBoundingClientRect().x;
@@ -174,6 +282,7 @@ const ComparisonSlider: FC<{
         const target = ev.currentTarget;
         if (target && ev.clientX) {
             setCurrentPos(target, ev.clientX);
+            setInteracted(true);
         }
     };
 
@@ -181,6 +290,7 @@ const ComparisonSlider: FC<{
         const target = ev.currentTarget;
         if (target && ev.clientX && isHolding) {
             setIsDragging(true);
+            setInteracted(true);
             if (isDragging) setCurrentPos(target, ev.clientX);
         }
     };
@@ -188,6 +298,7 @@ const ComparisonSlider: FC<{
     const handleTouchMove = (ev: React.TouchEvent<HTMLDivElement>) => {
         const target = ev.currentTarget;
         if (target && ev.touches[0]?.clientX) {
+            setInteracted(true);
             setCurrentPos(target, ev.touches[0]?.clientX);
         }
     };
@@ -235,7 +346,9 @@ const ComparisonSlider: FC<{
                             </BackgroundLabel>
                         )}
                         <ForegroundContainer
-                            hasAnim={!isHolding}
+                            hasTransition={!isHolding}
+                            hasAnim={!interacted}
+                            initalValue={initialValue}
                             style={{ width: slideValue * 100 + '%' }}
                         >
                             <ForegroundImg {...foregroundImg} />
@@ -251,7 +364,9 @@ const ComparisonSlider: FC<{
                         </ForegroundContainer>
                         <ControlContainer
                             ref={controlRef}
-                            hasAnim={!isHolding}
+                            hasTransition={!isHolding}
+                            hasAnim={!interacted}
+                            initalValue={initialValue}
                             style={{ left: slideValue * 100 + '%' }}
                         >
                             {dragControl ? (
