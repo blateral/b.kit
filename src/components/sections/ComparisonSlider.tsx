@@ -51,6 +51,7 @@ const ForegroundContainer = styled.div<{
             animation-duration: 5s;
             animation-iteration-count: 1;
             animation-play-state: ${hasAnim && 'running'};
+            animation-timing-function: ease-in-out;
 
             @keyframes ForegroundAnim {
                 0% {
@@ -136,6 +137,7 @@ const ControlContainer = styled.div<{
             animation-duration: 5s;
             animation-iteration-count: 1;
             animation-play-state: ${hasAnim && 'running'};
+            animation-timing-function: ease-in-out;
 
             @keyframes ControlAnim {
                 0% {
