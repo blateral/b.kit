@@ -58,12 +58,14 @@ const FeatureList: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isInverted?: boolean;
+    isCentered?: boolean;
     features?: FeatureProps[];
     bgMode?: 'full' | 'splitted';
 }> = ({
     features,
     bgMode,
     isInverted = false,
+    isCentered = false,
     title,
     titleAs,
     superTitle,
@@ -139,6 +141,7 @@ const FeatureList: React.FC<{
                                 return (
                                     <div key={i} ref={cardRefs[i]}>
                                         <Feature
+                                            isCentered={isCentered}
                                             isInverted={isInverted}
                                             addWhitespace
                                             {...feature}

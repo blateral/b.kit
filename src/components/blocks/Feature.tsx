@@ -11,7 +11,10 @@ const View = styled.div`
     padding-bottom: ${spacings.nudge}px;
 `;
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.div<{ isCentered?: boolean }>`
+    display: flex;
+    justify-content: ${({ isCentered }) =>
+        isCentered ? 'center' : 'flex-start'};
     padding-bottom: ${spacings.spacer * 2}px;
 `;
 
@@ -19,7 +22,8 @@ const StyledImage = styled(Image)`
     // width: 100%;
 `;
 
-const Content = styled.div<{ addWhitespace?: boolean }>`
+const Content = styled.div<{ addWhitespace?: boolean; isCentered?: boolean }>`
+    text-align: ${({ isCentered }) => isCentered && 'center'};
     padding: 0
         ${({ addWhitespace }) => addWhitespace && spacings.nudge * 2 + 'px'};
 
@@ -31,7 +35,9 @@ const Content = styled.div<{ addWhitespace?: boolean }>`
     }
 `;
 
-const ArticleContent = styled(Content)`
+const ArticleContent = styled(Content)<{ isCentered?: boolean }>`
+    text-align: ${({ isCentered }) => isCentered && 'center'};
+
     @media ${mq.medium} {
         max-width: 95%;
     }
@@ -65,6 +71,7 @@ const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
 
 export interface FeatureProps {
     isInverted?: boolean;
+    isCentered?: boolean;
     title?: string;
     description?: string;
     intro?: string;
@@ -88,6 +95,7 @@ const Feature: React.FC<
     image,
     addWhitespace = false,
     isInverted = false,
+    isCentered = false,
     primaryAction,
     secondaryAction,
     className,
@@ -95,7 +103,7 @@ const Feature: React.FC<
     return (
         <View className={className}>
             {image && (
-                <ImageContainer>
+                <ImageContainer isCentered={isCentered}>
                     <StyledImage
                         small={image.small}
                         medium={image.medium}
@@ -107,7 +115,7 @@ const Feature: React.FC<
                     />
                 </ImageContainer>
             )}
-            <Content addWhitespace={addWhitespace}>
+            <Content addWhitespace={addWhitespace} isCentered={isCentered}>
                 <ContentBlock
                     type="copy-b"
                     size="big"
@@ -128,7 +136,10 @@ const Feature: React.FC<
                     </ContentBlock>
                 )}
             </Content>
-            <ArticleContent addWhitespace={addWhitespace}>
+            <ArticleContent
+                addWhitespace={addWhitespace}
+                isCentered={isCentered}
+            >
                 {intro && (
                     <ContentBlock
                         type="copy-b"
@@ -149,6 +160,7 @@ const Feature: React.FC<
             </ArticleContent>
             {(primaryAction || secondaryAction) && (
                 <StyledActions
+                    isCentered={isCentered}
                     addWhitespace={addWhitespace}
                     primary={primaryAction && primaryAction(isInverted)}
                     secondary={secondaryAction && secondaryAction(isInverted)}
