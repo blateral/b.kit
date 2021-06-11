@@ -11,16 +11,16 @@ export default {
 export const Default: Story = () => (
     <ComparisonSlider
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -31,16 +31,16 @@ export const WithInitialValue: Story = () => (
     <ComparisonSlider
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -52,16 +52,16 @@ export const WithAnimation: Story = () => (
         enableControlAnim
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -72,17 +72,17 @@ export const WithLabels: Story = () => (
     <ComparisonSlider
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         backgroundLabel="After"
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -95,17 +95,17 @@ export const WithFullBackground: Story = () => (
         bgMode="full"
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         backgroundLabel="After"
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -118,17 +118,17 @@ export const WithHalfLeftBg: Story = () => (
         bgMode="half-left"
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         backgroundLabel="After"
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -141,17 +141,17 @@ export const WithHalfRightBg: Story = () => (
         bgMode="half-right"
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         backgroundLabel="After"
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -164,17 +164,17 @@ export const WithLargerRightBg: Story = () => (
         bgMode="larger-right"
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         backgroundLabel="After"
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -187,17 +187,17 @@ export const WithLargerLeftBg: Story = () => (
         bgMode="larger-left"
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         backgroundLabel="After"
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -210,17 +210,17 @@ export const IsInverted: Story = () => (
         isInverted
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         backgroundLabel="After"
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -233,16 +233,16 @@ export const CustomOverlayOpacity: Story = () => (
         initialValue={0.6}
         overlayColor="rgba(0,0,0,0.6)"
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
@@ -253,16 +253,16 @@ export const WithCustomControl: Story = () => (
     <ComparisonSlider
         initialValue={0.6}
         backgroundImg={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
+            small: 'http://unsplash.it/640/310',
+            medium: 'http://unsplash.it/1024/494',
+            large: 'http://unsplash.it/1440/694',
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
         foregroundImg={{
-            small: 'http://unsplash.it/640/480?image=410',
-            medium: 'http://unsplash.it/1024/576?image=410',
-            large: 'http://unsplash.it/1440/810?image=410',
+            small: 'http://unsplash.it/640/310?image=410',
+            medium: 'http://unsplash.it/1024/494?image=410',
+            large: 'http://unsplash.it/1440/694?image=410',
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}

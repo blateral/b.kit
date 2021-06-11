@@ -195,6 +195,35 @@ export const EvenAmountOfFeatures: Story = () => (
     />
 );
 
+export const WithCenteredItems: Story = () => (
+    <FeatureList
+        isCentered
+        features={exampleFeaturesEven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/599/450?image=70' + i,
+                medium: 'https://unsplash.it/789/789?image=70' + i,
+                large: 'https://unsplash.it/591/591?image=70' + i,
+                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+                coverSpace: true,
+            },
+        }))}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted?: boolean) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
 export const WithBackground: Story = () => (
     <FeatureList
         bgMode="full"

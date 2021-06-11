@@ -56,7 +56,7 @@ export const styleTextColor = (fallbackColor?: string, gradient?: string) => {
             color: ${fallbackColor};
 
             @supports (-webkit-text-stroke: thin) {
-                padding-top: 1px;
+                padding-top: 2px;
                 background: ${gradient};
                 background-clip: text;
                 -webkit-background-clip: text;
