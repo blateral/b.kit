@@ -102,6 +102,33 @@ export const WithWhitespace: Story = () => (
     />
 );
 
+export const Centered: Story = () => (
+    <Feature
+        isCentered
+        addWhitespace
+        image={{
+            small: 'https://unsplash.it/502/376?image=703',
+            medium: 'https://unsplash.it/600/600?image=703',
+            large: 'https://unsplash.it/314/314?image=703',
+            xlarge: 'https://unsplash.it/453/453?image=703',
+        }}
+        title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
+        description="Name/ Place/Position/ Telefon/Date"
+        intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
 export const Inverted: Story = () => (
     <Feature
         isInverted
