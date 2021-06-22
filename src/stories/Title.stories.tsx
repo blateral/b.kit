@@ -33,7 +33,7 @@ export const Centered: Story = () => (
 
 export const Inverted: Story = () => (
     <Title
-        isInverted
+        colorMode="inverted"
         isCentered
         title="Ausstattung der Zimmer für Dauer- und Kurzzeitpflege"
         titleAs="h2"
@@ -42,6 +42,23 @@ export const Inverted: Story = () => (
 );
 
 Inverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};
+
+export const OnImage: Story = () => (
+    <Title
+        colorMode="onImage"
+        isCentered
+        title="Ausstattung der Zimmer für Dauer- und Kurzzeitpflege"
+        titleAs="h2"
+        superTitle="Haus St. Franziskus"
+    />
+);
+
+OnImage.parameters = {
     backgrounds: {
         default: 'inverted',
         values: [{ name: 'inverted', value: 'black' }],

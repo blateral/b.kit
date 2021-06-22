@@ -158,7 +158,7 @@ const IconList: React.FC<{
                         superTitle={superTitle}
                         superTitleAs={superTitleAs}
                         text={text}
-                        isInverted={isInverted}
+                        colorMode={isInverted ? 'inverted' : 'default'}
                         isCentered={isCentered}
                     />
                 )}

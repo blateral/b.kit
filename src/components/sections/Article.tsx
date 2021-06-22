@@ -128,7 +128,7 @@ const Article: React.FC<{
                     titleAs={titleAs}
                     superTitle={superTitle}
                     superTitleAs={superTitleAs}
-                    isInverted={isInverted}
+                    colorMode={isInverted ? 'inverted' : 'default'}
                 />
                 <Content withAsideText={asideText ? true : false}>
                     <ContentBlock>

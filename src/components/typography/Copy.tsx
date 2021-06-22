@@ -126,10 +126,12 @@ const Copy: React.FC<{
                 (isInverted ? fontSettings.colorInverted : fontSettings.color)
             }
             textGradient={
-                textGradient ||
-                (isInverted
-                    ? fontSettings.colorGradientInverted
-                    : fontSettings.colorGradient)
+                !textColor
+                    ? textGradient ||
+                      (isInverted
+                          ? fontSettings.colorGradientInverted
+                          : fontSettings.colorGradient)
+                    : undefined
             }
             columns={columns}
             dangerouslySetInnerHTML={

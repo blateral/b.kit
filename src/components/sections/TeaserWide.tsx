@@ -148,7 +148,7 @@ const TeaserWide: FC<{
                     >
                         <InfoWrapper isMirrored={isMirrored}>
                             <StyledTitle
-                                isInverted={isInverted}
+                                colorMode={isInverted ? 'inverted' : 'default'}
                                 title={title}
                                 titleAs={titleAs}
                                 superTitle={superTitle}

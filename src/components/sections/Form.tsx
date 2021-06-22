@@ -158,7 +158,7 @@ const Form: React.FC<{
                         text={intro}
                         primaryAction={primaryAction}
                         secondaryAction={secondaryAction}
-                        isInverted={isInverted}
+                        colorMode={isInverted ? 'inverted' : 'default'}
                     />
                 )}
                 <Formik

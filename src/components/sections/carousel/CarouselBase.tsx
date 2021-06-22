@@ -225,12 +225,12 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                     {title && (
                         <IntroBlock>
                             <Intro
+                                colorMode={isInverted ? 'inverted' : 'default'}
                                 title={title}
                                 titleAs={titleAs}
                                 superTitle={superTitle}
                                 superTitleAs={superTitleAs}
                                 text={text}
-                                isInverted={isInverted}
                                 secondaryAction={secondaryAction}
                                 primaryAction={primaryAction}
                             />

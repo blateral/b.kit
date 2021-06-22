@@ -67,7 +67,7 @@ const Video: React.FC<{
                         text={text}
                         primaryAction={primaryAction}
                         secondaryAction={secondaryAction}
-                        isInverted={isInverted}
+                        colorMode={isInverted ? 'inverted' : 'default'}
                     />
                 </Wrapper>
             )}
