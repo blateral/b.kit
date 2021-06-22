@@ -7,13 +7,35 @@ export default {
     component: Fact,
 } as Meta;
 
-export const Default: Story = () => (
+export const WithTitle: Story = () => (
     <Fact title="Lorem ipsum dolor sit amet A" />
+);
+
+export const WithSubtitle: Story = () => (
+    <Fact title="Lorem ipsum dolor sit amet A" subTitle="Subheadline" />
+);
+
+export const WithText: Story = () => (
+    <Fact
+        title="Lorem ipsum dolor sit amet A"
+        subTitle="Subheadline"
+        text={`Lorem ipsum dolor sit amet consetetur 
+            sadipscing elitr, sed diam nonumy eirmod 
+            tempor invidunt ut labore Lorem ipsum dolor sit amet consetetur 
+            sadipscing elitr, sed diam nonumy eirmod 
+            tempor invidunt ut labore `}
+    />
 );
 
 export const WithImage: Story = () => (
     <Fact
         title="Lorem ipsum dolor sit amet A"
+        subTitle="Subheadline"
+        text={`Lorem ipsum dolor sit amet consetetur 
+            sadipscing elitr, sed diam nonumy eirmod 
+            tempor invidunt ut labore Lorem ipsum dolor sit amet consetetur 
+            sadipscing elitr, sed diam nonumy eirmod 
+            tempor invidunt ut labore `}
         image={{
             small: 'https://unsplash.it/599/450?image=700',
             medium: 'https://unsplash.it/789/789?image=700',
@@ -26,6 +48,12 @@ export const WithImage: Story = () => (
 export const WithImageCovered: Story = () => (
     <Fact
         title="Lorem ipsum dolor sit amet A"
+        subTitle="Subheadline"
+        text={`Lorem ipsum dolor sit amet consetetur 
+            sadipscing elitr, sed diam nonumy eirmod 
+            tempor invidunt ut labore Lorem ipsum dolor sit amet consetetur 
+            sadipscing elitr, sed diam nonumy eirmod 
+            tempor invidunt ut labore `}
         image={{
             small: 'https://unsplash.it/599/450?image=700',
             medium: 'https://unsplash.it/789/789?image=700',

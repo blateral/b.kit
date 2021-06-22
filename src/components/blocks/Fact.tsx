@@ -28,7 +28,7 @@ const Content = styled.div<{ isCentered?: boolean }>`
 
 const ContentBlock = styled(Copy)`
     & + & {
-        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
+        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'margin-top')}
     }
 `;
 
@@ -36,6 +36,8 @@ export interface FactProps {
     isInverted?: boolean;
     isCentered?: boolean;
     title?: string;
+    subTitle?: string;
+    text?: string;
     image?: ImageProps;
 }
 
@@ -43,7 +45,15 @@ const Fact: FC<
     FactProps & {
         className?: string;
     }
-> = ({ isInverted = false, isCentered = false, title, image, className }) => {
+> = ({
+    isInverted = false,
+    isCentered = false,
+    title,
+    subTitle,
+    text,
+    image,
+    className,
+}) => {
     return (
         <View className={className}>
             {image && (
@@ -69,6 +79,23 @@ const Fact: FC<
                     >
                         {title}
                     </ContentBlock>
+                )}
+                {subTitle && (
+                    <ContentBlock
+                        type="copy-b"
+                        isInverted={isInverted}
+                        data-sheet="subtitle"
+                    >
+                        {subTitle}
+                    </ContentBlock>
+                )}
+                {text && (
+                    <ContentBlock
+                        type="copy"
+                        isInverted={isInverted}
+                        data-sheet="text"
+                        innerHTML={text}
+                    />
                 )}
             </Content>
         </View>
