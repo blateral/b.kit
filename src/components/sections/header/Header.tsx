@@ -1,8 +1,13 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
 import { CalloutTag } from 'components/typography/Callout';
-import { mq, spacings, withRange } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    withRange,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
 import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
@@ -191,6 +196,8 @@ const Header: FC<{
     videoUrl?: string;
     images?: HeaderImageProps[];
     withTopGradient?: boolean;
+    customTopGradient?: string;
+    customBottomGradient?: string;
     badge?: {
         content: React.ReactNode;
         showOnMobile?: boolean;
@@ -205,13 +212,24 @@ const Header: FC<{
     videoUrl,
     images,
     withTopGradient = true,
+    customTopGradient,
+    customBottomGradient,
     badge,
 }) => {
-    const gradient =
-        title || primaryCta || secondaryCta
-            ? 'linear-gradient(3deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0) 60%), linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)'
-            : 'linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)';
+    const theme = useContext(ThemeContext);
+    const topGradient = withTopGradient
+        ? customTopGradient ||
+          'linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)'
+        : undefined;
 
+    const bottomGradient =
+        title || primaryCta || secondaryCta
+            ? customBottomGradient || global(theme).sections.imageTextGradient
+            : undefined;
+
+    const gradient = `${bottomGradient ? bottomGradient + ', ' : ''}${
+        topGradient || ''
+    }`;
     return (
         <View>
             <HeaderWrapper clampWidth="large">
@@ -239,7 +257,7 @@ const Header: FC<{
                                             size="medium"
                                             as={titleAs}
                                             hasShadow
-                                            isInverted
+                                            textColor="#fff"
                                         >
                                             {title}
                                         </Callout>

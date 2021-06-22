@@ -4,7 +4,12 @@ import styled, { css } from 'styled-components';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import { mq, spacings, withRange } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    withRange,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 
@@ -27,12 +32,7 @@ const PosterContainer = styled.div<{
         left: 0;
         bottom: 0;
         right: 0;
-        background: linear-gradient(
-            3deg,
-            rgba(0, 0, 0, 0.25) 0%,
-            rgba(0, 0, 0, 0.15) 30%,
-            rgba(0, 0, 0, 0) 50%
-        );
+        background: ${({ theme }) => global(theme).sections.imageTextGradient};
         pointer-events: none;
     }
 
@@ -80,7 +80,6 @@ const IntroContainer = styled(Wrapper)`
 
 const Poster: FC<{
     image: ImageProps;
-    isInverted?: boolean;
     title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
@@ -90,7 +89,6 @@ const Poster: FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
-    isInverted = false,
     title,
     titleAs,
     superTitle,
@@ -108,12 +106,12 @@ const Poster: FC<{
                     {title && (
                         <IntroContainer addWhitespace>
                             <Intro
+                                colorMode="onImage"
                                 title={title}
                                 titleAs={titleAs}
                                 superTitle={superTitle}
                                 superTitleAs={superTitleAs}
                                 text={text}
-                                isInverted={isInverted}
                                 secondaryAction={secondaryAction}
                                 primaryAction={primaryAction}
                                 clampText={text !== undefined}

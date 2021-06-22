@@ -93,10 +93,12 @@ const Callout: React.FC<{
                 (isInverted ? fontSettings.colorInverted : fontSettings.color)
             }
             textGradient={
-                textGradient ||
-                (isInverted
-                    ? fontSettings.colorGradientInverted
-                    : fontSettings.colorGradient)
+                !textColor
+                    ? textGradient ||
+                      (isInverted
+                          ? fontSettings.colorGradientInverted
+                          : fontSettings.colorGradient)
+                    : undefined
             }
             hyphens={hyphens}
             hasShadow={hasShadow}

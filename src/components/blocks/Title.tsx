@@ -15,19 +15,19 @@ const View = styled.div<{ isCentered?: boolean }>`
 `;
 
 const Title: FC<{
+    colorMode?: 'default' | 'inverted' | 'onImage';
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     title?: string;
     titleAs?: HeadlineTag;
-    isInverted?: boolean;
     isCentered?: boolean;
     className?: string;
 }> = ({
+    colorMode = 'default',
     superTitle,
     superTitleAs,
     title,
     titleAs,
-    isInverted = false,
     isCentered = false,
     className,
 }) => {
@@ -38,7 +38,8 @@ const Title: FC<{
                     <Heading
                         as={superTitleAs || 'h2'}
                         size="super"
-                        isInverted={isInverted}
+                        textColor={colorMode === 'onImage' ? '#fff' : undefined}
+                        isInverted={colorMode === 'inverted'}
                         innerHTML={superTitle}
                     />
                 </div>
@@ -48,7 +49,8 @@ const Title: FC<{
                     <Heading
                         as={titleAs || 'h3'}
                         size="heading-2"
-                        isInverted={isInverted}
+                        textColor={colorMode === 'onImage' ? '#fff' : undefined}
+                        isInverted={colorMode === 'inverted'}
                         innerHTML={title}
                     />
                 </div>

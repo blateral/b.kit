@@ -45,6 +45,7 @@ const StyledActions = styled(Actions)`
 `;
 
 const Intro: React.FC<{
+    colorMode?: 'default' | 'inverted' | 'onImage';
     title: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
@@ -54,12 +55,12 @@ const Intro: React.FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    isInverted?: boolean;
     isCentered?: boolean;
     clampTitle?: boolean;
     clampText?: boolean;
     className?: string;
 }> = ({
+    colorMode = 'default',
     title,
     titleAs,
     superTitle,
@@ -67,7 +68,6 @@ const Intro: React.FC<{
     text,
     primaryAction,
     secondaryAction,
-    isInverted = false,
     isCentered = false,
     clampTitle = true,
     clampText = true,
@@ -76,18 +76,19 @@ const Intro: React.FC<{
     return (
         <View isCentered={isCentered} className={className}>
             <StyledTitle
+                colorMode={colorMode}
                 title={title}
                 titleAs={titleAs}
                 superTitle={superTitle}
                 superTitleAs={superTitleAs}
-                isInverted={isInverted}
                 isCentered={isCentered}
                 clampTitle={clampTitle}
             />
             {text && (
                 <ContentBlock
                     type="copy-b"
-                    isInverted={isInverted}
+                    textColor={colorMode === 'onImage' ? '#fff' : undefined}
+                    isInverted={colorMode === 'inverted'}
                     isCentered={isCentered}
                     clampText={clampText}
                     innerHTML={text}
@@ -95,8 +96,18 @@ const Intro: React.FC<{
             )}
             {(primaryAction || secondaryAction) && (
                 <StyledActions
-                    primary={primaryAction && primaryAction(isInverted)}
-                    secondary={secondaryAction && secondaryAction(isInverted)}
+                    primary={
+                        primaryAction &&
+                        primaryAction(
+                            colorMode === 'inverted' || colorMode === 'onImage'
+                        )
+                    }
+                    secondary={
+                        secondaryAction &&
+                        secondaryAction(
+                            colorMode === 'inverted' || colorMode === 'onImage'
+                        )
+                    }
                 />
             )}
         </View>

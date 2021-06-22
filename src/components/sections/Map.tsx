@@ -180,7 +180,7 @@ const LocationInfoCard: FC<{
             {location.meta?.title && (
                 <CardHeader>
                     <Intro
-                        isInverted={isInverted}
+                        colorMode={isInverted ? 'inverted' : 'default'}
                         title={location.meta.title}
                         titleAs={location.meta.titleAs}
                         superTitle={location.meta?.superTitle}

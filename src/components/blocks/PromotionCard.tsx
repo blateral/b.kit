@@ -1,7 +1,12 @@
 import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 
-import { mq, spacings, withRange } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    withRange,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Intro from './Intro';
 
@@ -20,12 +25,7 @@ const View = styled.div<{
         left: 0;
         bottom: 0;
         right: 0;
-        background: linear-gradient(
-            3deg,
-            rgba(0, 0, 0, 0.25) 0%,
-            rgba(0, 0, 0, 0.15) 30%,
-            rgba(0, 0, 0, 0) 50%
-        );
+        background: ${({ theme }) => global(theme).sections.imageTextGradient};
         pointer-events: none;
     }
 
@@ -118,10 +118,10 @@ const PromotionCard: FC<PromotionCardProps> = ({
                 <IntroContainer>
                     <LinkHelper href={href} />
                     <Intro
+                        colorMode="onImage"
                         title={title}
                         superTitle={superTitle}
                         text={text}
-                        isInverted
                         secondaryAction={() => secondaryAction}
                         primaryAction={() => primaryAction}
                         clampText={text !== undefined}
