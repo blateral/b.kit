@@ -136,12 +136,12 @@ const Heading: React.FC<{
                 (isInverted ? fontSettings.colorInverted : fontSettings.color)
             }
             textGradient={
-                !textColor
-                    ? textGradient ||
-                      (isInverted
-                          ? fontSettings.colorGradientInverted
-                          : fontSettings.colorGradient)
-                    : undefined
+                textGradient ||
+                (!textColor
+                    ? isInverted
+                        ? fontSettings.colorGradientInverted
+                        : fontSettings.colorGradient
+                    : undefined)
             }
             hyphens={hyphens}
             hasShadow={hasShadow}
