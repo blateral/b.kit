@@ -52,6 +52,17 @@ const BaseStyles = styled.div<{
     //     margin-bottom: 0;
     // }
 
+    ul,
+    ol {
+        padding-left: 0;
+    }
+
+    ul,
+    ol li {
+        list-style-position: outside;
+        margin-left: 1em;
+    }
+
     ${({ columns }) =>
         columns &&
         css`

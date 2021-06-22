@@ -53,11 +53,6 @@ const ContentBlock = styled.div<{ isAside?: boolean }>`
 
 const ContentText = styled(Copy)`
     text-align: left;
-
-    ul {
-        padding-left: 0;
-        list-style-position: inside;
-    }
 `;
 
 const StyledActions = styled(Actions)`
