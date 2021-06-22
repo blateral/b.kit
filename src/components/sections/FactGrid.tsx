@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors, mq, spacings, withRange } from 'utils/styles';
+import { getColors, mq, spacings } from 'utils/styles';
 import { HeadlineTag } from 'components/typography/Heading';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
