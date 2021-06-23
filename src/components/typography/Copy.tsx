@@ -54,6 +54,7 @@ const BaseStyles = styled.div<{
 
     ul,
     ol {
+        display: inline-block;
         padding-left: 0;
     }
 
