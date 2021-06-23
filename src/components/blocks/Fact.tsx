@@ -11,19 +11,12 @@ const ImageContainer = styled.div<{ isCentered?: boolean }>`
     display: flex;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
-    padding-bottom: ${spacings.spacer * 2}px;
+    padding-bottom: ${spacings.nudge * 3}px;
     max-width: 100%;
 `;
 
 const Content = styled.div<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => isCentered && 'center'};
-
-    & + & {
-        ${withRange(
-            [spacings.spacer * 1.5, spacings.spacer * 2],
-            'padding-top'
-        )}
-    }
 `;
 
 const Title = styled(Copy)`

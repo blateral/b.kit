@@ -1,12 +1,13 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors, mq, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 import { HeadlineTag } from 'components/typography/Heading';
-import Section from 'components/base/Section';
+import Section, { BgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Intro from 'components/blocks/Intro';
 import Fact, { FactProps } from 'components/blocks/Fact';
+import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
 const StyledIntro = styled(Intro)`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -17,12 +18,18 @@ const ContentContainer = styled.div<{ columns?: number }>`
         padding-top: ${spacings.spacer * 2}px;
     }
 
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: flex-start;
+    @media ${mq.medium} {
+        display: -ms-grid;
+        display: grid;
+        -ms-grid-columns: ${({ columns }) =>
+            columns &&
+            new Array(columns < 3 ? columns : 3).fill('').map(() => {
+                return '1fr ';
+            })};
+        grid-template-columns: repeat(
+            ${({ columns }) => columns && (columns < 3 ? columns : 3)},
+            1fr
+        );
 
         margin-left: -20px;
         margin-top: -40px;
@@ -30,9 +37,37 @@ const ContentContainer = styled.div<{ columns?: number }>`
         & > * {
             padding-left: 20px;
             padding-top: 40px;
-            flex: ${({ columns }) => columns && `0 0 ${(1 / columns) * 100}%`};
             max-width: 370px;
         }
+    }
+
+    @media ${mq.semilarge} {
+        -ms-grid-columns: ${({ columns }) =>
+            columns &&
+            new Array(columns < 4 ? columns : 4).fill('').map(() => {
+                return '1fr ';
+            })};
+        grid-template-columns: repeat(
+            ${({ columns }) => columns && (columns < 4 ? columns : 4)},
+            1fr
+        );
+    }
+
+    @media ${mq.large} {
+        -ms-grid-columns: ${({ columns }) =>
+            columns &&
+            new Array(columns).fill('').map(() => {
+                return '1fr ';
+            })};
+        grid-template-columns: repeat(${({ columns }) => columns}, 1fr);
+    }
+`;
+
+const FactFill = styled.div`
+    display: none;
+
+    @media ${mq.large} {
+        display: block;
     }
 `;
 
@@ -48,7 +83,7 @@ const FactGrid: FC<{
 
     facts?: Array<FactProps>;
 
-    hasBack?: boolean;
+    bgMode?: 'full' | 'splitted';
     isInverted?: boolean;
     isCentered?: boolean;
 }> = ({
@@ -61,22 +96,51 @@ const FactGrid: FC<{
     primaryAction,
     secondaryAction,
     facts,
-    hasBack,
+    bgMode,
     isInverted,
     isCentered,
 }) => {
     const theme = useContext(ThemeContext);
+    const factCount = facts?.length || 0;
+
+    const getSectionBgMode = (): BgMode | undefined => {
+        switch (bgMode) {
+            case 'full':
+                return 'full';
+            case 'splitted':
+                return 'half-right';
+            default:
+                return undefined;
+        }
+    };
+
+    const cardRefs = useEqualSheetHeight({
+        listLength: factCount,
+        identifiers: [
+            '[data-sheet="title"]',
+            '[data-sheet="subtitle"]',
+            '[data-sheet="text"]',
+        ],
+        responsive: {
+            small: 1,
+            medium: columns < 3 ? columns : 3,
+            semilarge: columns < 4 ? columns : 4,
+            large: columns,
+            xlarge: columns,
+        },
+    });
 
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).dark
-                    : hasBack
-                    ? getColors(theme).mono.light
+                    ? color(theme).dark
+                    : bgMode
+                    ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (
@@ -93,14 +157,31 @@ const FactGrid: FC<{
                 )}
                 {facts && (
                     <ContentContainer columns={columns}>
-                        {facts.map((fact, i) => (
-                            <Fact
-                                key={i}
-                                {...fact}
-                                isCentered={isCentered}
-                                isInverted={isInverted}
-                            />
-                        ))}
+                        {facts.map((fact, i) => {
+                            if (
+                                fact?.title ||
+                                fact?.subTitle ||
+                                fact?.image ||
+                                fact?.text
+                            ) {
+                                return (
+                                    <div key={i} ref={cardRefs[i]}>
+                                        <Fact
+                                            key={i}
+                                            {...fact}
+                                            isCentered={isCentered}
+                                            isInverted={isInverted}
+                                        />
+                                    </div>
+                                );
+                            } else {
+                                return (
+                                    <div key={i} ref={cardRefs[i]}>
+                                        <FactFill key={i} />
+                                    </div>
+                                );
+                            }
+                        })}
                     </ContentContainer>
                 )}
             </Wrapper>
