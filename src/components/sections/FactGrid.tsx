@@ -175,11 +175,7 @@ const FactGrid: FC<{
                                     </div>
                                 );
                             } else {
-                                return (
-                                    <div key={i} ref={cardRefs[i]}>
-                                        <FactFill key={i} />
-                                    </div>
-                                );
+                                return <FactFill ref={cardRefs[i]} key={i} />;
                             }
                         })}
                     </ContentContainer>
