@@ -57,6 +57,7 @@ export { default as Poster } from 'components/sections/Poster';
 export { default as Video } from 'components/sections/Video';
 export { default as CallToAction } from 'components/sections/CallToAction';
 export { default as FactList } from 'components/sections/FactList';
+export { default as FactGrid } from 'components/sections/FactGrid';
 export { default as Table } from 'components/sections/Table';
 export { default as Map } from 'components/sections/Map';
 export { default as Form } from 'components/sections/Form';

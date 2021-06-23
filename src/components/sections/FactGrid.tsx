@@ -81,7 +81,7 @@ const FactGrid: FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    facts?: Array<FactProps>;
+    facts?: Array<Omit<FactProps, 'isInverted' | 'isCentered'>>;
 
     bgMode?: 'full' | 'splitted';
     isInverted?: boolean;

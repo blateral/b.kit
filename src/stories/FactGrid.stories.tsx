@@ -25,7 +25,7 @@ const exampleFact = {
         semilarge: 'https://unsplash.it/310/233?image=700',
         large: 'https://unsplash.it/350/263?image=700',
     },
-};
+} as Omit<FactProps, 'isInverted' | 'isCentered'>;
 
 export const Default: Story = () => (
     <FactGrid
