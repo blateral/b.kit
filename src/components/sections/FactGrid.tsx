@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import { HeadlineTag } from 'components/typography/Heading';
 import Section, { BgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -10,7 +10,7 @@ import Fact, { FactProps } from 'components/blocks/Fact';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
 const StyledIntro = styled(Intro)`
-    padding-bottom: ${spacings.spacer * 2}px;
+    ${withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-bottom')}
 `;
 
 const ContentContainer = styled.div<{ columns?: number }>`
