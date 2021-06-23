@@ -26,8 +26,22 @@ const Content = styled.div<{ isCentered?: boolean }>`
     }
 `;
 
+const Title = styled(Copy)`
+    * + & {
+        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'margin-top')}
+    }
+`;
+
 const ContentBlock = styled(Copy)`
-    & + & {
+    * + & {
+        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'margin-top')}
+    }
+`;
+
+const Text = styled(Copy)`
+    margin-top: ${spacings.nudge}px;
+
+    ${Title} + & {
         ${withRange([spacings.spacer * 0.5, spacings.spacer], 'margin-top')}
     }
 `;
@@ -71,14 +85,14 @@ const Fact: FC<
             )}
             <Content isCentered={isCentered}>
                 {title && (
-                    <ContentBlock
+                    <Title
                         type="copy-b"
                         size="big"
                         isInverted={isInverted}
                         data-sheet="title"
                     >
                         {title}
-                    </ContentBlock>
+                    </Title>
                 )}
                 {subTitle && (
                     <ContentBlock
@@ -90,7 +104,7 @@ const Fact: FC<
                     </ContentBlock>
                 )}
                 {text && (
-                    <ContentBlock
+                    <Text
                         type="copy"
                         isInverted={isInverted}
                         data-sheet="text"

@@ -12,7 +12,7 @@ const StyledIntro = styled(Intro)`
     padding-bottom: ${spacings.spacer * 2}px;
 `;
 
-const ContentContainer = styled.div`
+const ContentContainer = styled.div<{ columns?: number }>`
     & > * + * {
         padding-top: ${spacings.spacer * 2}px;
     }
@@ -21,7 +21,7 @@ const ContentContainer = styled.div`
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        justify-content: 'flex-start';
+        justify-content: flex-start;
         align-items: flex-start;
 
         margin-left: -20px;
@@ -30,13 +30,14 @@ const ContentContainer = styled.div`
         & > * {
             padding-left: 20px;
             padding-top: 40px;
-            flex: 1 0 50%;
-            max-width: 50%;
+            flex: ${({ columns }) => columns && `0 0 ${(1 / columns) * 100}%`};
+            max-width: 370px;
         }
     }
 `;
 
 const FactGrid: FC<{
+    columns?: 3 | 4 | 6;
     title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
@@ -49,7 +50,9 @@ const FactGrid: FC<{
 
     hasBack?: boolean;
     isInverted?: boolean;
+    isCentered?: boolean;
 }> = ({
+    columns = 3,
     title,
     titleAs,
     superTitle,
@@ -60,6 +63,7 @@ const FactGrid: FC<{
     facts,
     hasBack,
     isInverted,
+    isCentered,
 }) => {
     const theme = useContext(ThemeContext);
 
@@ -88,9 +92,14 @@ const FactGrid: FC<{
                     />
                 )}
                 {facts && (
-                    <ContentContainer>
+                    <ContentContainer columns={columns}>
                         {facts.map((fact, i) => (
-                            <Fact key={i} {...fact} />
+                            <Fact
+                                key={i}
+                                {...fact}
+                                isCentered={isCentered}
+                                isInverted={isInverted}
+                            />
                         ))}
                     </ContentContainer>
                 )}
