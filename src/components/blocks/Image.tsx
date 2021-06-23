@@ -15,6 +15,7 @@ export interface ImageProps {
 const Img = styled.img<{ coverSpace?: boolean }>`
     max-width: 100%;
     display: block;
+    align-self: flex-start;
     ${({ coverSpace }) =>
         coverSpace &&
         css`
