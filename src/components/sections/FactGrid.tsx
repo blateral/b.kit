@@ -19,47 +19,86 @@ const ContentContainer = styled.div<{ columns?: number }>`
     }
 
     @media ${mq.medium} {
-        display: -ms-grid;
-        display: grid;
-        -ms-grid-columns: ${({ columns }) =>
-            columns &&
-            new Array(columns < 3 ? columns : 3).fill('').map(() => {
-                return '1fr ';
-            })};
-        grid-template-columns: repeat(
-            ${({ columns }) => columns && (columns < 3 ? columns : 3)},
-            1fr
-        );
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        @supports (display: grid) {
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: ${({ columns }) =>
+                columns &&
+                new Array(columns < 3 ? columns : 3).fill('').map(() => {
+                    return '1fr ';
+                })};
+            grid-template-columns: repeat(
+                ${({ columns }) => columns && (columns < 3 ? columns : 3)},
+                1fr
+            );
+        }
 
         margin-left: -20px;
         margin-top: -40px;
 
         & > * {
+            flex: 0 0
+                ${({ columns }) =>
+                    columns && (1 / (columns < 3 ? columns : 3)) * 100 + '%'};
+            max-width: ${({ columns }) =>
+                columns && (1 / (columns < 3 ? columns : 3)) * 100 + '%'};
             padding-left: 20px;
             padding-top: 40px;
-            max-width: 370px;
+
+            @supports (display: grid) {
+                max-width: 370px;
+            }
         }
     }
 
     @media ${mq.semilarge} {
-        -ms-grid-columns: ${({ columns }) =>
-            columns &&
-            new Array(columns < 4 ? columns : 4).fill('').map(() => {
-                return '1fr ';
-            })};
-        grid-template-columns: repeat(
-            ${({ columns }) => columns && (columns < 4 ? columns : 4)},
-            1fr
-        );
+        & > * {
+            flex: 0 0
+                ${({ columns }) =>
+                    columns && (1 / (columns < 4 ? columns : 4)) * 100 + '%'};
+            max-width: ${({ columns }) =>
+                columns && (1 / (columns < 4 ? columns : 4)) * 100 + '%'};
+        }
+
+        @supports (display: grid) {
+            -ms-grid-columns: ${({ columns }) =>
+                columns &&
+                new Array(columns < 4 ? columns : 4).fill('').map(() => {
+                    return '1fr ';
+                })};
+            grid-template-columns: repeat(
+                ${({ columns }) => columns && (columns < 4 ? columns : 4)},
+                1fr
+            );
+
+            & > * {
+                max-width: 370px;
+            }
+        }
     }
 
     @media ${mq.large} {
-        -ms-grid-columns: ${({ columns }) =>
-            columns &&
-            new Array(columns).fill('').map(() => {
-                return '1fr ';
-            })};
-        grid-template-columns: repeat(${({ columns }) => columns}, 1fr);
+        & > * {
+            flex: 0 0 ${({ columns }) => columns && (1 / columns) * 100 + '%'};
+            max-width: ${({ columns }) => columns && (1 / columns) * 100 + '%'};
+        }
+
+        @supports (display: grid) {
+            -ms-grid-columns: ${({ columns }) =>
+                columns &&
+                new Array(columns).fill('').map(() => {
+                    return '1fr ';
+                })};
+            grid-template-columns: repeat(${({ columns }) => columns}, 1fr);
+
+            & > * {
+                max-width: 370px;
+            }
+        }
     }
 `;
 
