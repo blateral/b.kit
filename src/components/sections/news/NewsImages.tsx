@@ -2,8 +2,9 @@ import * as React from 'react';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import styled from 'styled-components';
-import { mq, spacings } from 'utils/styles';
+import styled, { ThemeContext } from 'styled-components';
+import { getColors, mq, spacings, withRange } from 'utils/styles';
+import Actions from 'components/blocks/Actions';
 
 const ImageFlex = styled.div`
     margin: -${spacings.spacer}px;
@@ -24,12 +25,31 @@ const Img = styled.div<{ isSingleHalf?: boolean }>`
     }
 `;
 
+const StyledActions = styled(Actions)`
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+`;
+
 const NewsImages: React.FC<{
     images?: ImageProps[];
     imageStyle?: 'full' | 'half';
-}> = ({ images, imageStyle = 'full' }) => {
+
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    isInverted?: boolean;
+}> = ({
+    images,
+    imageStyle = 'full',
+    primaryAction,
+    secondaryAction,
+    isInverted,
+}) => {
+    const theme = React.useContext(ThemeContext);
     return (
-        <Section>
+        <Section
+            addSeperation
+            bgColor={isInverted ? getColors(theme).dark : 'transparent'}
+        >
             <Wrapper clampWidth="small" addWhitespace>
                 {images && imageStyle === 'half' ? (
                     <ImageFlex>
@@ -49,6 +69,14 @@ const NewsImages: React.FC<{
                             })}
                         </div>
                     )
+                )}
+                {(primaryAction || secondaryAction) && (
+                    <StyledActions
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
+                    />
                 )}
             </Wrapper>
         </Section>

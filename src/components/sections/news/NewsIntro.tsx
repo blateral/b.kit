@@ -4,8 +4,8 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
-import styled from 'styled-components';
-import { spacings, withRange } from 'utils/styles';
+import styled, { ThemeContext } from 'styled-components';
+import { getColors, spacings, withRange } from 'utils/styles';
 
 const Content = styled.div`
     & > * + * {
@@ -13,7 +13,7 @@ const Content = styled.div`
     }
 `;
 
-const IntroHead = styled.div`
+const IntroHead = styled(Copy)`
     display: flex;
 
     flex-direction: row;
@@ -21,8 +21,8 @@ const IntroHead = styled.div`
     justify-content: space-between;
 `;
 
-const Tag = styled(Copy)`
-    border: 1px solid #000;
+const Tag = styled.div<{ isInverted?: boolean }>`
+    border: 1px solid ${({ isInverted }) => (isInverted ? '#fff' : '#000')};
     border-radius: 15px;
 
     padding: 5px 10px;
@@ -64,22 +64,35 @@ const NewsIntro: React.FC<{
     title?: string;
     text?: string;
     image?: ImageProps;
-}> = ({ tag, meta, title, text, image }) => {
+
+    isInverted?: boolean;
+}> = ({ tag, meta, title, text, image, isInverted }) => {
+    const theme = React.useContext(ThemeContext);
     return (
-        <Section>
+        <Section
+            addSeperation
+            bgColor={isInverted ? getColors(theme).dark : 'transparent'}
+        >
             <Wrapper clampWidth="small" addWhitespace>
                 <Content>
-                    <IntroHead>
-                        <Tag>{tag}</Tag>
+                    <IntroHead isInverted={isInverted}>
+                        <Tag isInverted={isInverted}>{tag}</Tag>
                         <MetaBlock>
-                            <Copy>{meta?.author}</Copy>
-                            <Copy>{meta?.date}</Copy>
+                            <div>{meta?.author}</div>
+                            <div>{meta?.date}</div>
                         </MetaBlock>
                     </IntroHead>
                     <div>
-                        <StyledTitle title={title} />
+                        <StyledTitle
+                            colorMode={isInverted ? 'inverted' : 'default'}
+                            title={title}
+                        />
                         {text && (
-                            <ContentBlock type="copy-b" innerHTML={text} />
+                            <ContentBlock
+                                isInverted={isInverted}
+                                type="copy-b"
+                                innerHTML={text}
+                            />
                         )}
                     </div>
                     {image && (

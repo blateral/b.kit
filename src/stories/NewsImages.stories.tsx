@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsImages from '../components/sections/news/NewsImages';
+import Button from 'components/buttons/Button';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/News/NewsImages',
@@ -34,7 +36,7 @@ export const SingleImageHalf: Story = () => (
     />
 );
 
-export const WithMultipleImages: Story = () => (
+export const MultipleHalfImages: Story = () => (
     <NewsImages
         images={[
             {
@@ -51,5 +53,66 @@ export const WithMultipleImages: Story = () => (
             },
         ]}
         imageStyle="half"
+    />
+);
+
+export const WithActions: Story = () => (
+    <NewsImages
+        images={[
+            {
+                small: 'https://unsplash.it/419/313?image=400',
+                medium: 'https://unsplash.it/983/736?image=400',
+                large: 'https://unsplash.it/1399/1048?image=400',
+                xlarge: 'https://unsplash.it/1400/1050?image=400',
+            },
+            {
+                small: 'https://unsplash.it/419/313?image=401',
+                medium: 'https://unsplash.it/983/736?image=401',
+                large: 'https://unsplash.it/1399/1048?image=401',
+                xlarge: 'https://unsplash.it/1400/1050?image=401',
+            },
+        ]}
+        imageStyle="half"
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+export const isInverted: Story = () => (
+    <NewsImages
+        images={[
+            {
+                small: 'https://unsplash.it/419/313?image=400',
+                medium: 'https://unsplash.it/983/736?image=400',
+                large: 'https://unsplash.it/1399/1048?image=400',
+                xlarge: 'https://unsplash.it/1400/1050?image=400',
+            },
+            {
+                small: 'https://unsplash.it/419/313?image=401',
+                medium: 'https://unsplash.it/983/736?image=401',
+                large: 'https://unsplash.it/1399/1048?image=401',
+                xlarge: 'https://unsplash.it/1400/1050?image=401',
+            },
+        ]}
+        imageStyle="half"
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+        isInverted
     />
 );

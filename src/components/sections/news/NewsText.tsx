@@ -33,7 +33,10 @@ const NewsText: React.FC<{
 }> = ({ text, primaryAction, secondaryAction, isInverted }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <Section bgColor={isInverted ? color(theme).dark : 'transparent'}>
+        <Section
+            addSeperation
+            bgColor={isInverted ? color(theme).dark : 'transparent'}
+        >
             <Wrapper clampWidth="small" addWhitespace>
                 {text && (
                     <ContentBlock

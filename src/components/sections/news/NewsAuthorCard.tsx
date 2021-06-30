@@ -2,17 +2,17 @@ import * as React from 'react';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import Heading from 'components/typography/Heading';
-import { spacings } from 'utils/styles';
+import { getColors, spacings } from 'utils/styles';
 
-const ContentBlock = styled.div`
+const ContentBlock = styled.div<{ isInverted?: boolean }>`
     &:before {
         content: '';
         display: block;
         width: 100%;
         height: 1px;
-        background-color: #000;
+        background-color: ${({ isInverted }) => (isInverted ? '#fff' : '#000')};
         margin-bottom: ${spacings.spacer * 2}px;
     }
 
@@ -21,7 +21,7 @@ const ContentBlock = styled.div`
         display: block;
         width: 100%;
         height: 1px;
-        background-color: #000;
+        background-color: ${({ isInverted }) => (isInverted ? '#fff' : '#000')};
         margin-top: ${spacings.spacer * 2}px;
     }
 `;
@@ -48,16 +48,26 @@ const NewsAuthorCard: React.FC<{
     label?: string;
     author?: string;
     avatar?: { src: string; alt?: string };
-}> = ({ label = 'Written By', author, avatar }) => {
+
+    isInverted?: boolean;
+}> = ({ label = 'Written By', author, avatar, isInverted }) => {
+    const theme = React.useContext(ThemeContext);
     return (
-        <Section>
+        <Section
+            addSeperation
+            bgColor={isInverted ? getColors(theme).dark : 'transparent'}
+        >
             <Wrapper clampWidth="small">
-                <ContentBlock>
+                <ContentBlock isInverted={isInverted}>
                     <ContentFlex>
                         {avatar && <Avatar src={avatar.src} alt={avatar.alt} />}
                         <Author>
-                            <StyledCopy type="copy-b">{label}</StyledCopy>
-                            <Heading size="heading-2">{author}</Heading>
+                            <StyledCopy isInverted={isInverted} type="copy-b">
+                                {label}
+                            </StyledCopy>
+                            <Heading isInverted={isInverted} size="heading-2">
+                                {author}
+                            </Heading>
                         </Author>
                     </ContentFlex>
                 </ContentBlock>

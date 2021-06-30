@@ -15,3 +15,13 @@ export const Default: Story = () => (
         }}
     />
 );
+
+export const isInverted: Story = () => (
+    <NewsAuthorCard
+        author="Author Name"
+        avatar={{
+            src: 'http://placehold.it/150',
+        }}
+        isInverted
+    />
+);
