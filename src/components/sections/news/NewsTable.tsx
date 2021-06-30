@@ -31,23 +31,11 @@ const TableBody = styled.table`
     padding: 0 ${spacings.nudge * 2}px;
 
     @media ${mq.medium} {
-        padding-left: ${spacings.spacer}px;
-        padding-right: ${spacings.spacer}px;
-    }
-
-    @media ${mq.semilarge} {
-        padding-left: ${(1 / 28) * 100}%;
-        padding-left: ${`
-                      max(
-                          ${spacings.spacer}px,
-                          ${(1 / 28) * 100}%
-                      );
-                  `};
-        padding-right: ${spacings.spacer}px;
+        padding: 0;
     }
 
     @media ${mq.xlarge} {
-        padding-left: ${(1 / 28) * spacings.wrapper}px;
+        padding-left: ${(1 / 28) * spacings.wrapperSmall}px;
         padding-right: ${spacings.spacer}px;
     }
 `;
@@ -153,6 +141,10 @@ const TableWrapper = styled.div<{ withSeperation?: boolean }>`
     }
 `;
 
+const StyledActions = styled(Actions)`
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+`;
+
 const NewsTable: React.FC<{
     tableItems: TableProps[];
 
@@ -176,9 +168,11 @@ const NewsTable: React.FC<{
                     );
                 })}
                 {(primaryAction || secondaryAction) && (
-                    <Actions
-                        primary={primaryAction}
-                        secondary={secondaryAction}
+                    <StyledActions
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
                     />
                 )}
             </Wrapper>

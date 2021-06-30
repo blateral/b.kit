@@ -58,6 +58,109 @@ export const Default: Story = () => (
     />
 );
 
+export const WithTableGroups: Story = () => (
+    <NewsTable
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+        tableItems={[
+            {
+                tableTitle: 'Gruppe 1',
+                rowTitle: [
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+            {
+                tableTitle: 'Gruppe 2',
+                rowTitle: [
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+        ]}
+    />
+);
+
 export const WithActions: Story = () => (
     <NewsTable
         primaryAction={(isInverted) => (
@@ -117,7 +220,7 @@ export const WithActions: Story = () => (
     />
 );
 
-export const WithTableGroups: Story = () => (
+export const isInverted: Story = () => (
     <NewsTable
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
@@ -129,52 +232,9 @@ export const WithTableGroups: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
+        isInverted
         tableItems={[
             {
-                tableTitle: 'Gruppe 1',
-                rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                ],
-                row: [
-                    {
-                        cols: [
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                        ],
-                    },
-                    {
-                        cols: [
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                        ],
-                    },
-                    {
-                        cols: [
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                        ],
-                    },
-                    {
-                        cols: [
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                            'Lorem ipsum dolor sit amet',
-                        ],
-                    },
-                ],
-            },
-            {
-                tableTitle: 'Gruppe 2',
                 rowTitle: [
                     'Table Headline',
                     'Table Headline',
