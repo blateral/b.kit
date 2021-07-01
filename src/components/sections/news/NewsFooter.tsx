@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { ImageProps } from 'components/blocks/Image';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, mq, spacings } from 'utils/styles';
 import Copy from 'components/typography/Copy';
-import NewsCard from '../../blocks/NewsCard';
+import NewsCard, { NewsCardProps } from '../../blocks/NewsCard';
 
 const ContentFlex = styled.div`
     @media ${mq.semilarge} {
@@ -50,17 +49,7 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 `;
 
 const NewsFooter: React.FC<{
-    items: {
-        newsLink?: string;
-        tag?: string;
-        publishDate?: string;
-        title?: string;
-        text?: string;
-        image?: ImageProps;
-
-        primaryAction?: (isInverted?: boolean) => React.ReactNode;
-        secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-    }[];
+    items: NewsCardProps[];
 
     showAllLink?: string;
 

@@ -52,7 +52,7 @@ const StyledActions = styled(Actions)`
     }
 `;
 
-const NewsCard: React.FC<{
+export interface NewsCardProps {
     tag?: string;
     newsLink?: string;
     publishDate?: string;
@@ -60,14 +60,18 @@ const NewsCard: React.FC<{
     text?: string;
     image?: ImageProps;
 
-    index: number;
-
-    isVisible?: boolean;
-    isInverted?: boolean;
-
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-}> = ({
+}
+
+const NewsCard: React.FC<
+    NewsCardProps & {
+        index: number;
+
+        isVisible?: boolean;
+        isInverted?: boolean;
+    }
+> = ({
     tag,
     newsLink,
     publishDate,
