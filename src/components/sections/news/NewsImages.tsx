@@ -5,6 +5,13 @@ import Wrapper from 'components/base/Wrapper';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, mq, spacings, withRange } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
+import VideoCard from 'components/blocks/VideoCard';
+
+const Content = styled.div`
+    & > * + * {
+        margin-top: ${spacings.spacer * 2}px;
+    }
+`;
 
 const ImageFlex = styled.div`
     margin: -${spacings.spacer}px;
@@ -33,6 +40,10 @@ const NewsImages: React.FC<{
     images?: ImageProps[];
     imageStyle?: 'full' | 'half';
 
+    bgImage?: ImageProps;
+    embedId?: string;
+    playIcon?: React.ReactChild;
+
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
@@ -40,6 +51,9 @@ const NewsImages: React.FC<{
 }> = ({
     images,
     imageStyle = 'full',
+    bgImage,
+    embedId,
+    playIcon,
     primaryAction,
     secondaryAction,
     isInverted,
@@ -51,25 +65,38 @@ const NewsImages: React.FC<{
             bgColor={isInverted ? getColors(theme).dark : 'transparent'}
         >
             <Wrapper clampWidth="small" addWhitespace>
-                {images && imageStyle === 'half' ? (
-                    <ImageFlex>
-                        {images.map((img, i) => {
-                            return (
-                                <Img key={i} isSingleHalf={images.length >= 1}>
-                                    <Image {...img} />
-                                </Img>
-                            );
-                        })}
-                    </ImageFlex>
-                ) : (
-                    images && (
-                        <div>
+                <Content>
+                    {images && (imageStyle === 'half' || images.length >= 2) ? (
+                        <ImageFlex>
                             {images.map((img, i) => {
-                                return <Image {...img} key={i} />;
+                                return (
+                                    <Img
+                                        key={i}
+                                        isSingleHalf={images.length >= 1}
+                                    >
+                                        <Image {...img} />
+                                    </Img>
+                                );
                             })}
-                        </div>
-                    )
-                )}
+                        </ImageFlex>
+                    ) : (
+                        images && (
+                            <div>
+                                {images.map((img, i) => {
+                                    return <Image {...img} key={i} />;
+                                })}
+                            </div>
+                        )
+                    )}
+                    {embedId && bgImage && (
+                        <VideoCard
+                            bgImage={bgImage}
+                            embedId={embedId}
+                            playIcon={playIcon}
+                        />
+                    )}
+                </Content>
+
                 {(primaryAction || secondaryAction) && (
                     <StyledActions
                         primary={primaryAction && primaryAction(isInverted)}
