@@ -1,9 +1,11 @@
-import Actions from 'components/blocks/Actions';
-import Image, { ImageProps } from 'components/blocks/Image';
-import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled from 'styled-components';
+
 import { mq, spacings, withRange } from 'utils/styles';
+import Copy from 'components/typography/Copy';
+import Actions from 'components/blocks/Actions';
+import Image, { ImageProps } from 'components/blocks/Image';
+import Tag from 'components/blocks/Tag';
 
 const Content = styled.a<{
     isVisible?: boolean;
@@ -29,13 +31,6 @@ const FooterHead = styled(Copy)`
 
     margin-top: ${spacings.spacer * 2}px;
     margin-bottom: ${spacings.spacer * 1.5}px;
-`;
-
-const Tag = styled.div<{ isInverted?: boolean }>`
-    border: 1px solid ${({ isInverted }) => (isInverted ? '#fff' : '#000')};
-    border-radius: 15px;
-
-    padding: 5px 10px;
 `;
 
 const FooterMain = styled.div`
