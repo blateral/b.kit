@@ -9,7 +9,6 @@ export default {
 
 export const Default: Story = () => (
     <NewsFooter
-        showAllLink="#0"
         items={[
             {
                 tag: 'Tag Secondary',
@@ -47,7 +46,6 @@ export const Default: Story = () => (
 
 export const WithMoreItems: Story = () => (
     <NewsFooter
-        showAllLink="#0"
         items={[
             {
                 tag: 'Tag Secondary',
@@ -130,7 +128,6 @@ export const WithMoreItems: Story = () => (
 
 export const IsInverted: Story = () => (
     <NewsFooter
-        showAllLink="#0"
         items={[
             {
                 tag: 'Tag Secondary',
