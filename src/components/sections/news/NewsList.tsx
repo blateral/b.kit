@@ -79,7 +79,7 @@ const NewsList: React.FC<{
     secondaryAction,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const [showMore, setShowMore] = React.useState(false);
+    const [visibleCard, setVisibleCard] = React.useState(3);
     return (
         <Section
             addSeperation
@@ -105,8 +105,7 @@ const NewsList: React.FC<{
                                 <NewsCard
                                     {...item}
                                     index={i}
-                                    isVisible={showMore}
-                                    visibleCards={3}
+                                    visibleCards={visibleCard}
                                     isInverted={isInverted}
                                 />
                             </ListItem>
@@ -119,9 +118,16 @@ const NewsList: React.FC<{
                     <Copy isInverted={isInverted}>
                         <ShowMore
                             itemCount={list.length}
-                            onClick={() => setShowMore((prev) => !prev)}
+                            onClick={(ev) => {
+                                ev.preventDefault();
+                                visibleCard >= list.length
+                                    ? setVisibleCard(visibleCard - 3)
+                                    : setVisibleCard(visibleCard + 3);
+                            }}
                         >
-                            {showMore ? 'Show Less' : 'Show More'}
+                            {visibleCard < list.length
+                                ? 'Show More'
+                                : 'Show Less'}
                         </ShowMore>
                     </Copy>
                     {(primaryAction || secondaryAction) && (

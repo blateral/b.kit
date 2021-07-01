@@ -14,8 +14,8 @@ const Content = styled.a<{
 
     flex: 0 0 50%;
 
-    display: ${({ index, isVisible, visibleCards }) =>
-        isVisible || index < visibleCards ? 'block' : 'none'};
+    display: ${({ index, visibleCards }) =>
+        index < visibleCards ? 'block' : 'none'};
 
     text-decoration: none;
 `;
@@ -72,7 +72,6 @@ const NewsCard: React.FC<
     NewsCardProps & {
         index: number;
 
-        isVisible?: boolean;
         isInverted?: boolean;
         visibleCards?: number;
     }
@@ -84,7 +83,6 @@ const NewsCard: React.FC<
     text,
     image,
     index,
-    isVisible,
     isInverted,
     visibleCards,
     primaryAction,
@@ -92,7 +90,6 @@ const NewsCard: React.FC<
 }) => {
     return (
         <Content
-            isVisible={isVisible}
             index={index}
             href={newsLink}
             visibleCards={visibleCards ? visibleCards : 2}

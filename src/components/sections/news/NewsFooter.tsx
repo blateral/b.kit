@@ -56,7 +56,7 @@ const NewsFooter: React.FC<{
     isInverted?: boolean;
 }> = ({ items, showAllLink, isInverted }) => {
     const theme = React.useContext(ThemeContext);
-    const [showMore, setShowMore] = React.useState(false);
+    const [visibleCard, setVisibleCard] = React.useState(2);
     return (
         <Section
             addSeperation
@@ -75,7 +75,7 @@ const NewsFooter: React.FC<{
                                     index={i}
                                     image={image}
                                     newsLink={newsLink}
-                                    isVisible={showMore}
+                                    visibleCards={visibleCard}
                                     publishDate={publishDate}
                                     tag={tag}
                                     title={title}
@@ -91,14 +91,21 @@ const NewsFooter: React.FC<{
                         <Copy isInverted={isInverted}>Show All</Copy>
                     </ShowAll>
 
-                    <ShowMore
-                        itemCount={items.length}
-                        onClick={() => setShowMore((prev) => !prev)}
-                    >
-                        <Copy isInverted={isInverted}>
-                            {showMore ? 'Show Less' : 'Show More'}
-                        </Copy>
-                    </ShowMore>
+                    <Copy isInverted={isInverted}>
+                        <ShowMore
+                            itemCount={items.length}
+                            onClick={(ev) => {
+                                ev.preventDefault();
+                                visibleCard >= items.length
+                                    ? setVisibleCard(visibleCard - 2)
+                                    : setVisibleCard(visibleCard + 2);
+                            }}
+                        >
+                            {visibleCard < items.length
+                                ? 'Show More'
+                                : 'Show Less'}
+                        </ShowMore>
+                    </Copy>
                 </Actions>
             </Wrapper>
         </Section>
