@@ -19,21 +19,13 @@ const ContentFlex = styled.div`
 
 const Actions = styled.div`
     margin-top: ${spacings.spacer * 4}px;
-
-    display: flex;
+    text-align: center;
+    /* display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: center; */
 
     & > * + * {
         margin-left: 20px;
-    }
-`;
-
-const ShowAll = styled.a`
-    text-decoration: none;
-
-    &:hover {
-        opacity: 0.75;
     }
 `;
 
@@ -51,10 +43,8 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 const NewsFooter: React.FC<{
     items: NewsCardProps[];
 
-    showAllLink?: string;
-
     isInverted?: boolean;
-}> = ({ items, showAllLink, isInverted }) => {
+}> = ({ items, isInverted }) => {
     const theme = React.useContext(ThemeContext);
     const [visibleCard, setVisibleCard] = React.useState(2);
     return (
@@ -87,10 +77,6 @@ const NewsFooter: React.FC<{
                     )}
                 </ContentFlex>
                 <Actions>
-                    <ShowAll href={showAllLink}>
-                        <Copy isInverted={isInverted}>Show All</Copy>
-                    </ShowAll>
-
                     <Copy isInverted={isInverted}>
                         <ShowMore
                             itemCount={items.length}
@@ -102,8 +88,8 @@ const NewsFooter: React.FC<{
                             }}
                         >
                             {visibleCard < items.length
-                                ? 'Show More'
-                                : 'Show Less'}
+                                ? 'weitere Anzeigen'
+                                : 'weniger Anzeigen'}
                         </ShowMore>
                     </Copy>
                 </Actions>
