@@ -1,10 +1,11 @@
 import * as React from 'react';
-import Image, { ImageProps } from 'components/blocks/Image';
+import { ImageProps } from 'components/blocks/Image';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, mq, spacings } from 'utils/styles';
 import Copy from 'components/typography/Copy';
+import NewsCard from './NewsCard';
 
 const ContentFlex = styled.div`
     @media ${mq.semilarge} {
@@ -14,41 +15,6 @@ const ContentFlex = styled.div`
         align-items: flex-start;
 
         margin: -20px;
-    }
-`;
-
-const Content = styled.a<{ isVisible?: boolean; index: number }>`
-    padding: 20px;
-
-    flex: 0 0 50%;
-
-    display: ${({ index, isVisible }) =>
-        isVisible || index < 2 ? 'block' : 'none'};
-
-    text-decoration: none;
-`;
-
-const FooterHead = styled(Copy)`
-    display: flex;
-
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: ${spacings.spacer * 2}px;
-    margin-bottom: ${spacings.spacer * 1.5}px;
-`;
-
-const Tag = styled.div<{ isInverted?: boolean }>`
-    border: 1px solid ${({ isInverted }) => (isInverted ? '#fff' : '#000')};
-    border-radius: 15px;
-
-    padding: 5px 10px;
-`;
-
-const FooterMain = styled.div`
-    & > * + * {
-        margin-top: ${spacings.spacer}px;
     }
 `;
 
@@ -115,37 +81,18 @@ const NewsFooter: React.FC<{
                             i
                         ) => {
                             return (
-                                <Content
+                                <NewsCard
                                     key={i}
-                                    isVisible={showMore}
                                     index={i}
-                                    href={newsLink}
-                                >
-                                    <Copy>
-                                        {image && <Image {...image} />}
-                                        <FooterHead isInverted={isInverted}>
-                                            <Tag isInverted={isInverted}>
-                                                {tag}
-                                            </Tag>
-                                            <div>{publishDate}</div>
-                                        </FooterHead>
-                                        <FooterMain>
-                                            <Copy
-                                                isInverted={isInverted}
-                                                size="big"
-                                                type="copy-b"
-                                            >
-                                                {title}
-                                            </Copy>
-                                            <Copy
-                                                isInverted={isInverted}
-                                                type="copy-b"
-                                            >
-                                                {text}
-                                            </Copy>
-                                        </FooterMain>
-                                    </Copy>
-                                </Content>
+                                    image={image}
+                                    newsLink={newsLink}
+                                    isVisible={showMore}
+                                    publishDate={publishDate}
+                                    tag={tag}
+                                    title={title}
+                                    text={text}
+                                    isInverted={isInverted}
+                                />
                             );
                         }
                     )}
