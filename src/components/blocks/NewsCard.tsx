@@ -5,13 +5,17 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { mq, spacings, withRange } from 'utils/styles';
 
-const Content = styled.a<{ isVisible?: boolean; index: number }>`
+const Content = styled.a<{
+    isVisible?: boolean;
+    index: number;
+    visibleCards: number;
+}>`
     padding: 20px;
 
     flex: 0 0 50%;
 
-    display: ${({ index, isVisible }) =>
-        isVisible || index < 2 ? 'block' : 'none'};
+    display: ${({ index, isVisible, visibleCards }) =>
+        isVisible || index < visibleCards ? 'block' : 'none'};
 
     text-decoration: none;
 `;
@@ -70,6 +74,7 @@ const NewsCard: React.FC<
 
         isVisible?: boolean;
         isInverted?: boolean;
+        visibleCards?: number;
     }
 > = ({
     tag,
@@ -81,11 +86,17 @@ const NewsCard: React.FC<
     index,
     isVisible,
     isInverted,
+    visibleCards,
     primaryAction,
     secondaryAction,
 }) => {
     return (
-        <Content isVisible={isVisible} index={index} href={newsLink}>
+        <Content
+            isVisible={isVisible}
+            index={index}
+            href={newsLink}
+            visibleCards={visibleCards ? visibleCards : 2}
+        >
             <Copy>
                 {image && <Image {...image} />}
                 <FooterHead isInverted={isInverted}>
