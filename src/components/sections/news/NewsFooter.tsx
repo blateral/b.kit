@@ -5,7 +5,7 @@ import Wrapper from 'components/base/Wrapper';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, mq, spacings } from 'utils/styles';
 import Copy from 'components/typography/Copy';
-import NewsCard from './NewsCard';
+import NewsCard from '../../blocks/NewsCard';
 
 const ContentFlex = styled.div`
     @media ${mq.semilarge} {

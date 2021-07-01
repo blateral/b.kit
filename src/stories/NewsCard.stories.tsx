@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NewsCard from '../components/sections/news/NewsCard';
+import NewsCard from '../components/blocks/NewsCard';
 
 export default {
-    title: 'Sections/News/NewsCard',
+    title: 'Blocks/NewsCard',
     component: NewsCard,
 } as Meta;
 
