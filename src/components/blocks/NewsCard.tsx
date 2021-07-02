@@ -7,22 +7,17 @@ import Actions from 'components/blocks/Actions';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
 
-const Content = styled.a<{
-    isVisible?: boolean;
-    index: number;
-    visibleCards: number;
-}>`
-    padding: 20px;
-
-    flex: 0 0 50%;
-
-    display: ${({ index, visibleCards }) =>
-        index < visibleCards ? 'block' : 'none'};
-
+const View = styled.div`
+    // flex: 0 0 50%;
+    position: relative;
     text-decoration: none;
+    padding-bottom: ${spacings.spacer}px;
 `;
 
-const FooterHead = styled(Copy)`
+/* display: ${({ index, visibleCards }) =>
+        index < visibleCards ? 'block' : 'none'};*/
+
+const Head = styled(Copy)`
     display: flex;
 
     flex-direction: row;
@@ -31,29 +26,44 @@ const FooterHead = styled(Copy)`
 
     margin-top: ${spacings.spacer * 2}px;
     margin-bottom: ${spacings.spacer * 1.5}px;
+
+    & > * + * {
+        margin-left: ${spacings.spacer}px;
+    }
 `;
 
-const FooterMain = styled.div`
+const Main = styled.div`
+    max-width: 95%;
+
     & > * + * {
         margin-top: ${spacings.spacer}px;
     }
 `;
 
 const StyledActions = styled(Actions)`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')}
 
-    @media ${mq.semilarge} {
+    /* @media ${mq.semilarge} {
         align-items: flex-start;
 
         & > * {
             max-width: ${(19 / 28) * spacings.wrapper + 'px'};
+        }
+    } */
+    @media ${mq.medium} {
+        width: 100%;
+
+        & > * {
+            max-width: 50%;
+            min-width: 0 !important;
+            flex: 1;
         }
     }
 `;
 
 export interface NewsCardProps {
     tag?: string;
-    newsLink?: string;
+    onTagClick?: (name: string) => void;
     publishDate?: string;
     title?: string;
     text?: string;
@@ -65,54 +75,60 @@ export interface NewsCardProps {
 
 const NewsCard: React.FC<
     NewsCardProps & {
-        index: number;
-
         isInverted?: boolean;
-        visibleCards?: number;
+        className?: string;
     }
 > = ({
     tag,
-    newsLink,
+    onTagClick,
     publishDate,
     title,
     text,
     image,
-    index,
     isInverted,
-    visibleCards,
     primaryAction,
     secondaryAction,
+    className,
 }) => {
     return (
-        <Content
-            index={index}
-            href={newsLink}
-            visibleCards={visibleCards ? visibleCards : 2}
+        <View
+            // index={index}
+            // visibleCards={visibleCards ? visibleCards : 2}
+            className={className}
         >
-            <Copy>
-                {image && <Image {...image} />}
-                <FooterHead isInverted={isInverted}>
-                    <Tag isInverted={isInverted}>{tag}</Tag>
-                    <div>{publishDate}</div>
-                </FooterHead>
-                <FooterMain>
+            {image && <Image coverSpace {...image} />}
+            <Head isInverted={isInverted}>
+                {tag && (
+                    <Tag
+                        isInverted={isInverted}
+                        onClick={onTagClick ? () => onTagClick(tag) : undefined}
+                    >
+                        {tag}
+                    </Tag>
+                )}
+                <div>{publishDate}</div>
+            </Head>
+            <Main>
+                {title && (
                     <Copy isInverted={isInverted} size="big" type="copy-b">
                         {title}
                     </Copy>
-                    <Copy isInverted={isInverted} type="copy-b">
-                        {text}
-                    </Copy>
-                    {(primaryAction || secondaryAction) && (
-                        <StyledActions
-                            primary={primaryAction && primaryAction(isInverted)}
-                            secondary={
-                                secondaryAction && secondaryAction(isInverted)
-                            }
-                        />
-                    )}
-                </FooterMain>
-            </Copy>
-        </Content>
+                )}
+                {text && (
+                    <Copy
+                        isInverted={isInverted}
+                        type="copy-b"
+                        innerHTML={text}
+                    />
+                )}
+            </Main>
+            {(primaryAction || secondaryAction) && (
+                <StyledActions
+                    primary={primaryAction && primaryAction(isInverted)}
+                    secondary={secondaryAction && secondaryAction(isInverted)}
+                />
+            )}
+        </View>
     );
 };
 

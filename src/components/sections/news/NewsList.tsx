@@ -85,7 +85,7 @@ const NewsList: React.FC<{
             addSeperation
             bgColor={isInverted ? getColors(theme).dark : 'transparent'}
         >
-            <Wrapper addWhitespace clampWidth="small">
+            <Wrapper addWhitespace>
                 {intro && (
                     <StyledIntro
                         title={intro.title}
@@ -104,8 +104,8 @@ const NewsList: React.FC<{
                             <ListItem key={i}>
                                 <NewsCard
                                     {...item}
-                                    index={i}
-                                    visibleCards={visibleCard}
+                                    // index={i}
+                                    // visibleCards={visibleCard}
                                     isInverted={isInverted}
                                 />
                             </ListItem>

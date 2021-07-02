@@ -4,7 +4,7 @@ import styled, { ThemeContext } from 'styled-components';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
-import NewsCard, { NewsCardProps } from '../../blocks/NewsCard';
+import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { getColors, mq, spacings, withRange } from 'utils/styles';
 import { HeadlineTag } from 'components/typography/Heading';
 import Intro from 'components/blocks/Intro';
@@ -103,8 +103,8 @@ const NewsOverview: React.FC<{
                             <ListItem key={i}>
                                 <NewsCard
                                     {...item}
-                                    index={i}
-                                    visibleCards={list.length}
+                                    // index={i}
+                                    // visibleCards={list.length}
                                     isInverted={isInverted}
                                 />
                             </ListItem>

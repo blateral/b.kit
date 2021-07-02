@@ -37,7 +37,6 @@ export const Default: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -52,7 +51,6 @@ export const Default: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -67,7 +65,6 @@ export const Default: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -82,7 +79,6 @@ export const Default: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -97,7 +93,6 @@ export const Default: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -112,7 +107,6 @@ export const Default: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -127,7 +121,6 @@ export const Default: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -142,7 +135,6 @@ export const Default: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -157,7 +149,6 @@ export const Default: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -185,7 +176,6 @@ export const IsInverted: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -200,7 +190,6 @@ export const IsInverted: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -215,7 +204,6 @@ export const IsInverted: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -230,7 +218,6 @@ export const IsInverted: Story = () => (
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:

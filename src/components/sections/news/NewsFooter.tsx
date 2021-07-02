@@ -55,17 +55,13 @@ const NewsFooter: React.FC<{
             <Wrapper addWhitespace clampWidth="small">
                 <ContentFlex>
                     {items.map(
-                        (
-                            { tag, publishDate, title, text, image, newsLink },
-                            i
-                        ) => {
+                        ({ tag, publishDate, title, text, image }, i) => {
                             return (
                                 <NewsCard
                                     key={i}
-                                    index={i}
+                                    // index={i}
                                     image={image}
-                                    newsLink={newsLink}
-                                    visibleCards={visibleCard}
+                                    // visibleCards={visibleCard}
                                     publishDate={publishDate}
                                     tag={tag}
                                     title={title}

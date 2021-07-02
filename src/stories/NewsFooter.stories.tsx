@@ -13,7 +13,6 @@ export const Default: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -28,7 +27,6 @@ export const Default: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -50,7 +48,6 @@ export const WithMoreItems: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -65,7 +62,6 @@ export const WithMoreItems: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -80,7 +76,6 @@ export const WithMoreItems: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -95,7 +90,6 @@ export const WithMoreItems: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -110,7 +104,6 @@ export const WithMoreItems: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -132,7 +125,6 @@ export const IsInverted: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -147,7 +139,6 @@ export const IsInverted: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -162,7 +153,6 @@ export const IsInverted: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -177,7 +167,6 @@ export const IsInverted: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -192,7 +181,6 @@ export const IsInverted: Story = () => (
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
-                newsLink: '#0',
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:

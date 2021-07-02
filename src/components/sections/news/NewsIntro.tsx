@@ -88,7 +88,11 @@ const NewsIntro: React.FC<{
                         {tag && (
                             <HeadTag
                                 isInverted={isInverted}
-                                onClick={() => onTagClick && onTagClick(tag)}
+                                onClick={
+                                    onTagClick
+                                        ? () => onTagClick(tag)
+                                        : undefined
+                                }
                             >
                                 {tag}
                             </HeadTag>
