@@ -125,9 +125,7 @@ const NewsList: React.FC<{
                                     : setVisibleCard(visibleCard + 3);
                             }}
                         >
-                            {visibleCard < list.length
-                                ? 'weiter Anzeigen'
-                                : 'weniger Anzeigen'}
+                            {visibleCard < list.length && 'weitere Anzeigen'}
                         </ShowMore>
                     </Copy>
                     {(primaryAction || secondaryAction) && (

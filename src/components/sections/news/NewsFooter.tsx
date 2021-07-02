@@ -87,9 +87,7 @@ const NewsFooter: React.FC<{
                                     : setVisibleCard(visibleCard + 2);
                             }}
                         >
-                            {visibleCard < items.length
-                                ? 'weitere Anzeigen'
-                                : 'weniger Anzeigen'}
+                            {visibleCard < items.length && 'weitere Anzeigen'}
                         </ShowMore>
                     </Copy>
                 </Actions>
