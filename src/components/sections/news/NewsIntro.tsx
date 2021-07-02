@@ -115,7 +115,7 @@ const NewsIntro: React.FC<{
                     </div>
                     {image?.small && (
                         <div>
-                            <Image {...image} />
+                            <Image coverSpace {...image} />
                         </div>
                     )}
                 </Content>
