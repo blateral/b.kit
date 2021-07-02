@@ -8,14 +8,10 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
 
 const View = styled.div`
-    // flex: 0 0 50%;
     position: relative;
     text-decoration: none;
     padding-bottom: ${spacings.spacer}px;
 `;
-
-/* display: ${({ index, visibleCards }) =>
-        index < visibleCards ? 'block' : 'none'};*/
 
 const Head = styled(Copy)`
     display: flex;
@@ -43,13 +39,6 @@ const Main = styled.div`
 const StyledActions = styled(Actions)`
     ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')}
 
-    /* @media ${mq.semilarge} {
-        align-items: flex-start;
-
-        & > * {
-            max-width: ${(19 / 28) * spacings.wrapper + 'px'};
-        }
-    } */
     @media ${mq.medium} {
         width: 100%;
 
@@ -62,6 +51,7 @@ const StyledActions = styled(Actions)`
 `;
 
 export interface NewsCardProps {
+    isInverted?: boolean;
     tag?: string;
     onTagClick?: (name: string) => void;
     publishDate?: string;
@@ -75,7 +65,6 @@ export interface NewsCardProps {
 
 const NewsCard: React.FC<
     NewsCardProps & {
-        isInverted?: boolean;
         className?: string;
     }
 > = ({
@@ -91,13 +80,9 @@ const NewsCard: React.FC<
     className,
 }) => {
     return (
-        <View
-            // index={index}
-            // visibleCards={visibleCards ? visibleCards : 2}
-            className={className}
-        >
+        <View className={className}>
             {image && <Image coverSpace {...image} />}
-            <Head isInverted={isInverted}>
+            <Head isInverted={isInverted} data-sheet="head">
                 {tag && (
                     <Tag
                         isInverted={isInverted}
@@ -110,7 +95,12 @@ const NewsCard: React.FC<
             </Head>
             <Main>
                 {title && (
-                    <Copy isInverted={isInverted} size="big" type="copy-b">
+                    <Copy
+                        isInverted={isInverted}
+                        size="big"
+                        type="copy-b"
+                        data-sheet="title"
+                    >
                         {title}
                     </Copy>
                 )}
@@ -119,6 +109,7 @@ const NewsCard: React.FC<
                         isInverted={isInverted}
                         type="copy-b"
                         innerHTML={text}
+                        data-sheet="text"
                     />
                 )}
             </Main>

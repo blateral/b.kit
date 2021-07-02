@@ -4,11 +4,12 @@ import styled, { ThemeContext } from 'styled-components';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
-import NewsCard, { NewsCardProps } from '../../blocks/NewsCard';
+import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import { HeadlineTag } from 'components/typography/Heading';
 import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
+import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
 const StyledIntro = styled(Intro)`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -95,6 +96,24 @@ const NewsList: React.FC<{
     const theme = React.useContext(ThemeContext);
     const [visibleCard, setVisibleCard] = React.useState(3);
 
+    const newsCount = news?.length || 0;
+
+    const cardRefs = useEqualSheetHeight({
+        listLength: newsCount,
+        identifiers: [
+            '[data-sheet="head"]',
+            '[data-sheet="title"]',
+            '[data-sheet="text"]',
+        ],
+        responsive: {
+            small: 1,
+            medium: 1,
+            semilarge: 2,
+            large: newsCount % 2 === 0 ? 2 : 3,
+            xlarge: newsCount % 2 === 0 ? 2 : 3,
+        },
+    });
+
     return (
         <Section
             addSeperation
@@ -125,19 +144,15 @@ const NewsList: React.FC<{
                     {news &&
                         news.map((item, i) => {
                             return (
-                                <div key={i}>
+                                <div key={i} ref={cardRefs[i]}>
                                     <NewsCard
-                                        {...item}
-                                        // index={i}
-                                        // visibleCards={visibleCard}
                                         isInverted={isInverted}
+                                        {...item}
                                     />
                                 </div>
                             );
                         })}
                 </News>
-            </Wrapper>
-            <Wrapper addWhitespace>
                 <ListFooter>
                     {news && news.length > 0 && (
                         <Copy isInverted={isInverted}>
