@@ -32,12 +32,6 @@ const exampleNewsCard: NewsCardProps = {
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
     text:
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
-    image: {
-        small: 'https://unsplash.it/419/313?image=400',
-        medium: 'https://unsplash.it/983/736?image=400',
-        large: 'https://unsplash.it/1399/1048?image=400',
-        xlarge: 'https://unsplash.it/1400/1050?image=400',
-    },
     ...actions,
 };
 
@@ -47,10 +41,10 @@ const exampleNews = generateItemList<NewsCardProps>(
     (item, i) => ({
         ...item,
         image: {
-            small: 'https://unsplash.it/419/313?image=40' + i,
-            medium: 'https://unsplash.it/983/736?image=40' + i,
-            large: 'https://unsplash.it/1399/1048?image=40' + i,
-            xlarge: 'https://unsplash.it/1400/1050?image=40' + i,
+            small: 'https://unsplash.it/599/450?image=40' + i,
+            medium: 'https://unsplash.it/688/593?image=40' + i,
+            large: 'https://unsplash.it/591/444?image=40' + i,
+            xlarge: 'https://unsplash.it/592/445?image=40' + i,
             coverSpace: true,
         },
     })
