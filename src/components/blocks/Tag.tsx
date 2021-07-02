@@ -21,6 +21,7 @@ const View = styled(Copy)<{
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    text-align: center;
     background: ${({ isActive, isInverted, theme }) =>
         isActive && (isInverted ? color(theme).light : color(theme).dark)};
     color: ${({ isActive, isInverted, theme }) =>

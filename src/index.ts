@@ -76,12 +76,6 @@ export { default as NewsList } from 'components/sections/news/NewsList';
 export { default as NewsTable } from 'components/sections/news/NewsTable';
 export { default as NewsText } from 'components/sections/news/NewsText';
 
-
-
-
-
-
-
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
 export { default as ButtonGhost } from 'components/buttons/ButtonGhost';

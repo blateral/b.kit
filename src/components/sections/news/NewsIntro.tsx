@@ -23,8 +23,8 @@ const IntroHead = styled(Copy)`
     justify-content: space-between;
 `;
 
-const IntroTag = styled(Tag)`
-    min-width: 100px;
+const HeadTag = styled(Tag)`
+    flex: 0 1 auto;
 `;
 
 const MetaBlock = styled.div`
@@ -86,12 +86,12 @@ const NewsIntro: React.FC<{
                 <Content>
                     <IntroHead isInverted={isInverted}>
                         {tag && (
-                            <IntroTag
+                            <HeadTag
                                 isInverted={isInverted}
                                 onClick={() => onTagClick && onTagClick(tag)}
                             >
                                 {tag}
-                            </IntroTag>
+                            </HeadTag>
                         )}
                         {(meta?.date || meta?.date) && (
                             <MetaBlock>
