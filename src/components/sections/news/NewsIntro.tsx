@@ -1,10 +1,12 @@
+import * as React from 'react';
+import styled, { ThemeContext } from 'styled-components';
+
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import Tag from 'components/blocks/Tag';
 import { getColors, spacings, withRange } from 'utils/styles';
 
 const Content = styled.div`
@@ -19,13 +21,6 @@ const IntroHead = styled(Copy)`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-`;
-
-const Tag = styled.div<{ isInverted?: boolean }>`
-    border: 1px solid ${({ isInverted }) => (isInverted ? '#fff' : '#000')};
-    border-radius: 15px;
-
-    padding: 5px 10px;
 `;
 
 const MetaBlock = styled.div`
