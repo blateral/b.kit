@@ -43,7 +43,7 @@ const exampleNewsCard: NewsCardProps = {
 
 const exampleNews = generateItemList<NewsCardProps>(
     exampleNewsCard,
-    5,
+    10,
     (item, i) => ({
         ...item,
         image: {

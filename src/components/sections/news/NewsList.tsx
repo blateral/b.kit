@@ -10,6 +10,8 @@ import { HeadlineTag } from 'components/typography/Heading';
 import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+import { useContext, useEffect, useState } from 'react';
+import { useMediaQuery } from 'utils/useMediaQuery';
 
 const StyledIntro = styled(Intro)`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -47,10 +49,11 @@ const News = styled.div`
 `;
 
 const ListFooter = styled.div`
-    ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-top')};
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    text-align: center;
 
-    & > * + * {
-        ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    @media ${mq.medium} {
+        text-align: left;
     }
 `;
 
@@ -67,6 +70,8 @@ const ShowMore = styled.span<{ itemCount?: number }>`
     }
 `;
 
+type NewsListMq = 'small' | 'semilarge' | 'large';
+
 const NewsList: React.FC<{
     title: string;
     titleAs?: HeadlineTag;
@@ -80,6 +85,7 @@ const NewsList: React.FC<{
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    showMoreText?: string;
 }> = ({
     title,
     titleAs,
@@ -92,9 +98,13 @@ const NewsList: React.FC<{
 
     primaryAction,
     secondaryAction,
+    showMoreText,
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const [visibleCard, setVisibleCard] = React.useState(3);
+    const theme = useContext(ThemeContext);
+    const mqs: NewsListMq[] = ['small', 'semilarge', 'large'];
+    const currentMq = useMediaQuery(mqs) as NewsListMq | undefined;
+    const [itemsPerRow, setItemsPerRow] = useState(3);
+    const [visibleRows, setVisibleRows] = useState(1);
 
     const newsCount = news?.length || 0;
 
@@ -113,6 +123,26 @@ const NewsList: React.FC<{
             xlarge: newsCount % 2 === 0 ? 2 : 3,
         },
     });
+
+    useEffect(() => {
+        switch (currentMq) {
+            case 'large':
+                setItemsPerRow(3);
+                break;
+
+            case 'semilarge':
+                setItemsPerRow(2);
+                break;
+
+            case 'small':
+                setItemsPerRow(1);
+                if (visibleRows < 3) setVisibleRows(3);
+                break;
+
+            default:
+                setItemsPerRow(1);
+        }
+    }, [currentMq, visibleRows]);
 
     return (
         <Section
@@ -142,31 +172,33 @@ const NewsList: React.FC<{
             <Wrapper addWhitespace clampWidth="normal">
                 <News>
                     {news &&
-                        news.map((item, i) => {
-                            return (
-                                <div key={i} ref={cardRefs[i]}>
-                                    <NewsCard
-                                        isInverted={isInverted}
-                                        {...item}
-                                    />
-                                </div>
-                            );
-                        })}
+                        news
+                            .filter((_, i) => i < visibleRows * itemsPerRow)
+                            .map((item, i) => {
+                                return (
+                                    <div key={i} ref={cardRefs[i]}>
+                                        <NewsCard
+                                            isInverted={isInverted}
+                                            {...item}
+                                        />
+                                    </div>
+                                );
+                            })}
                 </News>
                 <ListFooter>
                     {news && news.length > 0 && (
-                        <Copy isInverted={isInverted}>
+                        <Copy type="copy" size="medium" isInverted={isInverted}>
                             <ShowMore
                                 itemCount={news.length}
                                 onClick={(ev) => {
                                     ev.preventDefault();
-                                    visibleCard >= news.length
-                                        ? setVisibleCard(visibleCard - 3)
-                                        : setVisibleCard(visibleCard + 3);
+                                    if (visibleRows < newsCount / itemsPerRow) {
+                                        setVisibleRows((prev) => prev + 1);
+                                    }
                                 }}
                             >
-                                {visibleCard < news.length &&
-                                    'weitere Anzeigen'}
+                                {visibleRows < newsCount / itemsPerRow &&
+                                    (showMoreText || 'show more')}
                             </ShowMore>
                         </Copy>
                     )}

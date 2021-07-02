@@ -110,6 +110,14 @@ const Item = styled.img<{ isVisible?: boolean; index: number }>`
     }
 `;
 
+const ListFooter = styled(Copy)`
+    text-align: center;
+
+    @media ${mq.medium} {
+        text-align: left;
+    }
+`;
+
 const IconList: React.FC<{
     title?: string;
     titleAs?: HeadlineTag;
@@ -120,6 +128,8 @@ const IconList: React.FC<{
     items: { src: string; alt?: string }[];
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    showMoreText?: string;
+    showLessText?: string;
     isInverted?: boolean;
     isCentered?: boolean;
 }> = ({
@@ -134,6 +144,8 @@ const IconList: React.FC<{
     isCentered = false,
     primaryAction,
     secondaryAction,
+    showLessText = 'weniger anzeigen',
+    showMoreText = 'weitere anzeigen',
 }) => {
     const [showMore, setShowMore] = React.useState(false);
     const theme = React.useContext(ThemeContext);
@@ -182,12 +194,18 @@ const IconList: React.FC<{
                                 })}
                             </Items>
                         </ItemContainer>
-                        <ShowMore
-                            itemCount={items.length}
-                            onClick={() => setShowMore((prev) => !prev)}
+                        <ListFooter
+                            type="copy"
+                            size="medium"
+                            isInverted={isInverted}
                         >
-                            {showMore ? 'weniger anzeigen' : 'weitere anzeigen'}
-                        </ShowMore>
+                            <ShowMore
+                                itemCount={items.length}
+                                onClick={() => setShowMore((prev) => !prev)}
+                            >
+                                {showMore ? showLessText : showMoreText}
+                            </ShowMore>
+                        </ListFooter>
                     </Copy>
                 </ListContainer>
 
