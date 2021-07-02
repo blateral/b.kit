@@ -109,7 +109,7 @@ const NewsList: React.FC<{
     const newsCount = news?.length || 0;
 
     const cardRefs = useEqualSheetHeight({
-        listLength: newsCount,
+        listLength: Math.min(visibleRows * itemsPerRow, newsCount),
         identifiers: [
             '[data-sheet="head"]',
             '[data-sheet="title"]',
@@ -119,8 +119,8 @@ const NewsList: React.FC<{
             small: 1,
             medium: 1,
             semilarge: 2,
-            large: newsCount % 2 === 0 ? 2 : 3,
-            xlarge: newsCount % 2 === 0 ? 2 : 3,
+            large: 3,
+            xlarge: 3,
         },
     });
 
@@ -192,7 +192,10 @@ const NewsList: React.FC<{
                                 itemCount={news.length}
                                 onClick={(ev) => {
                                     ev.preventDefault();
-                                    if (visibleRows < newsCount / itemsPerRow) {
+                                    if (
+                                        visibleRows <
+                                        Math.ceil(newsCount / itemsPerRow)
+                                    ) {
                                         setVisibleRows((prev) => prev + 1);
                                     }
                                 }}

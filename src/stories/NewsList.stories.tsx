@@ -42,7 +42,7 @@ const exampleNews = generateItemList<NewsCardProps>(
         ...item,
         image: {
             small: 'https://unsplash.it/599/450?image=40' + i,
-            medium: 'https://unsplash.it/688/593?image=40' + i,
+            medium: 'https://unsplash.it/688/516?image=40' + i,
             large: 'https://unsplash.it/591/444?image=40' + i,
             xlarge: 'https://unsplash.it/592/445?image=40' + i,
             coverSpace: true,
