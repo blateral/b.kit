@@ -6,7 +6,6 @@ import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from '../../blocks/NewsCard';
 import { getColors, mq, spacings, withRange } from 'utils/styles';
-import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
 import Intro from 'components/blocks/Intro';
 import Tag from 'components/blocks/Tag';
@@ -46,14 +45,6 @@ const ListItem = styled.li`
     flex: 0 0 33.33%;
 `;
 
-const ListFooter = styled.div`
-    ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-top')};
-
-    & > * + * {
-        ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
-    }
-`;
-
 const NewsOverview: React.FC<{
     list: NewsCardProps[];
     tags?: { label?: string; id: string }[];
@@ -67,18 +58,12 @@ const NewsOverview: React.FC<{
     };
 
     isInverted?: boolean;
-
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
     list,
     tags,
 
     intro,
     isInverted,
-
-    primaryAction,
-    secondaryAction,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
@@ -126,18 +111,6 @@ const NewsOverview: React.FC<{
                         );
                     })}
                 </List>
-            </Wrapper>
-            <Wrapper addWhitespace clampWidth="small">
-                <ListFooter>
-                    {(primaryAction || secondaryAction) && (
-                        <Actions
-                            primary={primaryAction && primaryAction(isInverted)}
-                            secondary={
-                                secondaryAction && secondaryAction(isInverted)
-                            }
-                        />
-                    )}
-                </ListFooter>
             </Wrapper>
         </Section>
     );
