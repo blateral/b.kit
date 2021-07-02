@@ -80,3 +80,37 @@ export const WithAction: Story = () => (
         )}
     />
 );
+
+export const Inverted: Story = () => (
+    <NewsCard
+        isInverted
+        tag="Secondary Tag"
+        onTagClick={console.log}
+        publishDate="02.07.2021"
+        title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+        image={{
+            small: 'https://unsplash.it/419/313?image=400',
+            medium: 'https://unsplash.it/983/736?image=400',
+            large: 'https://unsplash.it/1399/1048?image=400',
+            xlarge: 'https://unsplash.it/1400/1050?image=400',
+        }}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+Inverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};
