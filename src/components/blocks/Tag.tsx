@@ -4,7 +4,11 @@ import styled from 'styled-components';
 import { spacings, getColors as color } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 
-const View = styled(Copy)<{ isInverted?: boolean }>`
+const View = styled(Copy)<{
+    isInverted?: boolean;
+    isActive?: boolean;
+    onClick?: () => void;
+}>`
     display: inline-block;
     border: 1px solid
         ${({ isInverted, theme }) =>
@@ -13,14 +17,39 @@ const View = styled(Copy)<{ isInverted?: boolean }>`
 
     padding: 3px ${spacings.nudge * 2}px;
     user-select: none;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background: ${({ isActive, isInverted, theme }) =>
+        isActive && (isInverted ? color(theme).light : color(theme).dark)};
+    color: ${({ isActive, isInverted, theme }) =>
+        isActive && (isInverted ? color(theme).dark : color(theme).light)};
+    cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')};
+
+    transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+
+    &:hover {
+        background: ${({ theme, isInverted, onClick }) =>
+            onClick && (isInverted ? color(theme).light : color(theme).dark)};
+        color: ${({ theme, isInverted, onClick }) =>
+            onClick && (isInverted ? color(theme).dark : color(theme).light)};
+    }
 `;
 
 const Tag: FC<{
     isInverted?: boolean;
+    isActive?: boolean;
+    onClick?: () => void;
     className?: string;
-}> = ({ isInverted, className, children }) => {
+}> = ({ isInverted, isActive, onClick, className, children }) => {
     return (
-        <View isInverted={isInverted} className={className}>
+        <View
+            isInverted={isInverted}
+            isActive={isActive}
+            onClick={onClick}
+            className={className}
+        >
             {children}
         </View>
     );

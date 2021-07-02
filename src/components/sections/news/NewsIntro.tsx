@@ -7,7 +7,7 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import Tag from 'components/blocks/Tag';
-import { getColors, spacings, withRange } from 'utils/styles';
+import { getColors as color, spacings, withRange } from 'utils/styles';
 
 const Content = styled.div`
     & > * + * {
@@ -23,14 +23,27 @@ const IntroHead = styled(Copy)`
     justify-content: space-between;
 `;
 
-const MetaBlock = styled.div`
-    display: flex;
+const IntroTag = styled(Tag)`
+    min-width: 100px;
+`;
 
+const MetaBlock = styled.div`
+    flex: 1 1 auto;
+    display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    * + & {
+        margin-left: ${spacings.spacer}px;
+    }
 
     & > * + * {
-        margin-left: 20px;
+        margin-left: ${spacings.spacer}px;
     }
 `;
 
@@ -55,27 +68,37 @@ const ContentBlock = styled(Copy)<{
 
 const NewsIntro: React.FC<{
     tag?: string;
+    onTagClick?: (name: string) => void;
     meta?: { date?: string; author?: string };
     title?: string;
     text?: string;
     image?: ImageProps;
 
     isInverted?: boolean;
-}> = ({ tag, meta, title, text, image, isInverted }) => {
+}> = ({ tag, onTagClick, meta, title, text, image, isInverted = false }) => {
     const theme = React.useContext(ThemeContext);
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? getColors(theme).dark : 'transparent'}
+            bgColor={isInverted ? color(theme).dark : 'transparent'}
         >
             <Wrapper clampWidth="small" addWhitespace>
                 <Content>
                     <IntroHead isInverted={isInverted}>
-                        <Tag isInverted={isInverted}>{tag}</Tag>
-                        <MetaBlock>
-                            <div>{meta?.author}</div>
-                            <div>{meta?.date}</div>
-                        </MetaBlock>
+                        {tag && (
+                            <IntroTag
+                                isInverted={isInverted}
+                                onClick={() => onTagClick && onTagClick(tag)}
+                            >
+                                {tag}
+                            </IntroTag>
+                        )}
+                        {(meta?.date || meta?.date) && (
+                            <MetaBlock>
+                                <div>{meta?.author}</div>
+                                <div>{meta?.date}</div>
+                            </MetaBlock>
+                        )}
                     </IntroHead>
                     <div>
                         <StyledTitle
@@ -90,7 +113,7 @@ const NewsIntro: React.FC<{
                             />
                         )}
                     </div>
-                    {image && (
+                    {image?.small && (
                         <div>
                             <Image {...image} />
                         </div>
