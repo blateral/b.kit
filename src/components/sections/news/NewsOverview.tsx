@@ -86,7 +86,6 @@ const NewsOverview: React.FC<{
     hasBack,
 }) => {
     const theme = React.useContext(ThemeContext);
-    const [isActive, setIsActive] = React.useState(false);
     const [isSelected, setIsSelected] = React.useState<number | undefined>();
     return (
         <Section
@@ -121,9 +120,8 @@ const NewsOverview: React.FC<{
                                             setIsSelected(
                                                 isSelected === i ? undefined : i
                                             );
-                                            setIsActive(true);
                                         }}
-                                        isActive={isActive && isSelected === i}
+                                        isActive={isSelected === i}
                                     >
                                         {tag}
                                     </Tag>
