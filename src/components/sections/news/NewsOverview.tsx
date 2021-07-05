@@ -118,12 +118,7 @@ const NewsOverview: React.FC<{
                     {list.map((item, i) => {
                         return (
                             <ListItem key={i}>
-                                <NewsCard
-                                    {...item}
-                                    // index={i}
-                                    // visibleCards={list.length}
-                                    isInverted={isInverted}
-                                />
+                                <NewsCard {...item} isInverted={isInverted} />
                             </ListItem>
                         );
                     })}
