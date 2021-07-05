@@ -1,6 +1,6 @@
 import { CookieConsentData } from 'components/blocks/CookieConsent';
 import { Cookie } from './cookie';
-import { StatusFormatter } from './formatter';
+import StatusFormatter from '../statusFormatter';
 
 export const isUrlInWhitelist = (
     urlString: string,
@@ -54,13 +54,13 @@ export const updateConsentStatusElements = ({
     status,
     dateFormat,
     timeFormat,
-    localeKey = 'eng',
+    localeKey = 'en',
 }: {
     cookie: Cookie<CookieConsentData>;
     status: string;
     dateFormat: string;
     timeFormat: string;
-    localeKey: 'de' | 'eng';
+    localeKey: 'de' | 'en';
 }) => {
     const allConsentStatusElements = document.querySelectorAll(
         '[data-consent-status], .cookie-consent-status'

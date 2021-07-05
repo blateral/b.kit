@@ -18,7 +18,7 @@ export const WithMeta: Story = () => (
     <NewsIntro
         meta={{
             author: 'Max Mustermann',
-            date: '02.07.2021',
+            date: new Date('July 22, 2021 03:24:00'),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
@@ -31,7 +31,7 @@ export const WithTag: Story = () => (
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
-            date: '02.07.2021',
+            date: new Date('July 22, 2021 03:24:00'),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
@@ -44,7 +44,7 @@ export const WithImage: Story = () => (
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
-            date: '02.07.2021',
+            date: new Date('July 22, 2021 03:24:00'),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
@@ -63,7 +63,7 @@ export const WithBackground: Story = () => (
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
-            date: '02.07.2021',
+            date: new Date('July 22, 2021 03:24:00'),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
@@ -81,7 +81,7 @@ export const isInverted: Story = () => (
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
-            date: '02.07.2021',
+            date: new Date('July 22, 2021 03:24:00'),
         }}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."

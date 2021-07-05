@@ -27,7 +27,7 @@ const actions = {
 
 const exampleNewsCard: NewsCardProps = {
     tag: 'Secondary Tag',
-    publishDate: 'Date',
+    publishDate: new Date('July 22, 2021 03:24:00'),
     title:
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
     text:

@@ -12,7 +12,7 @@ export const Default: Story = () => (
         news={[
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -25,7 +25,7 @@ export const Default: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -45,7 +45,7 @@ export const WithMoreItems: Story = () => (
         news={[
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -58,7 +58,7 @@ export const WithMoreItems: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -71,7 +71,7 @@ export const WithMoreItems: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -84,7 +84,7 @@ export const WithMoreItems: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -97,7 +97,7 @@ export const WithMoreItems: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -118,7 +118,7 @@ export const WithBackground: Story = () => (
         news={[
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -131,7 +131,7 @@ export const WithBackground: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -144,7 +144,7 @@ export const WithBackground: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -157,7 +157,7 @@ export const WithBackground: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -170,7 +170,7 @@ export const WithBackground: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -190,7 +190,7 @@ export const IsInverted: Story = () => (
         news={[
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -203,7 +203,7 @@ export const IsInverted: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -216,7 +216,7 @@ export const IsInverted: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -229,7 +229,7 @@ export const IsInverted: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:
@@ -242,7 +242,7 @@ export const IsInverted: Story = () => (
             },
             {
                 tag: 'Tag Secondary',
-                publishDate: 'Date',
+                publishDate: new Date('July 22, 2021 03:24:00'),
                 title:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text:

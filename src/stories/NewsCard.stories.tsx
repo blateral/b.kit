@@ -33,7 +33,7 @@ export const WithPublishDate: Story = () => (
     <NewsCard
         tag="Secondary Tag"
         onTagClick={console.log}
-        publishDate="02.07.2021"
+        publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
     />
@@ -43,7 +43,7 @@ export const WithImage: Story = () => (
     <NewsCard
         tag="Secondary Tag"
         onTagClick={console.log}
-        publishDate="02.07.2021"
+        publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         image={{
@@ -59,7 +59,7 @@ export const WithAction: Story = () => (
     <NewsCard
         tag="Secondary Tag"
         onTagClick={console.log}
-        publishDate="02.07.2021"
+        publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         image={{
@@ -86,7 +86,7 @@ export const Inverted: Story = () => (
         isInverted
         tag="Secondary Tag"
         onTagClick={console.log}
-        publishDate="02.07.2021"
+        publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         image={{

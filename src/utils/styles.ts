@@ -309,6 +309,10 @@ export interface GlobalSettings {
         plainSeperation: boolean;
         /** Customnize gradient for all text on image background gradients */
         imageTextGradient: string;
+        /** Date and Time Formats for all news sections */
+        newsDateFormat: string;
+        newsTimeFormat: string;
+        newsLocaleKey: 'de' | 'en';
     };
 }
 
@@ -324,6 +328,9 @@ const defaultGlobalSettings: GlobalSettings = {
                 rgba(0, 0, 0, 0) 100%
             );
         `,
+        newsDateFormat: 'mm.dd.yy',
+        newsTimeFormat: 'hh:mm',
+        newsLocaleKey: 'en',
     },
 };
 

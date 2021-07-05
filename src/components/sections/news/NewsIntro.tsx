@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import Section from 'components/base/Section';
@@ -7,7 +7,13 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import Tag from 'components/blocks/Tag';
-import { getColors as color, spacings, withRange } from 'utils/styles';
+import {
+    getColors as color,
+    spacings,
+    withRange,
+    getGlobalSettings as global,
+} from 'utils/styles';
+import StatusFormatter from 'utils/statusFormatter';
 
 const Content = styled.div`
     & > * + * {
@@ -69,7 +75,7 @@ const ContentBlock = styled(Copy)<{
 const NewsIntro: React.FC<{
     tag?: string;
     onTagClick?: (name: string) => void;
-    meta?: { date?: string; author?: string };
+    meta?: { date?: Date; author?: string };
     title?: string;
     text?: string;
     image?: ImageProps;
@@ -86,7 +92,20 @@ const NewsIntro: React.FC<{
     isInverted = false,
     hasBack = false,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
+
+    let publishedAt = '';
+    if (meta?.date) {
+        const formatter = new StatusFormatter(
+            meta.date.getTime(),
+            '',
+            global(theme).sections.newsDateFormat,
+            global(theme).sections.newsTimeFormat,
+            global(theme).sections.newsLocaleKey
+        );
+        publishedAt = formatter.getFormattedDate();
+    }
+
     return (
         <Section
             addSeperation
@@ -113,10 +132,10 @@ const NewsIntro: React.FC<{
                                 {tag}
                             </HeadTag>
                         )}
-                        {(meta?.date || meta?.date) && (
+                        {publishedAt && (
                             <MetaBlock>
                                 <div>{meta?.author}</div>
-                                <div>{meta?.date}</div>
+                                <div>{publishedAt}</div>
                             </MetaBlock>
                         )}
                     </IntroHead>

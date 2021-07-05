@@ -215,7 +215,7 @@ export const CustomStatusText: Story = () => (
             consentDeclineStatusMsg="Declined on %DATE% at %TIME%"
             dateFormat="mm.dd.yy"
             timeFormat="hh:mm"
-            localeKey="eng"
+            localeKey="en"
         >
             {({
                 handleAccept,

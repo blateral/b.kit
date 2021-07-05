@@ -1,11 +1,17 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
-import { mq, spacings, withRange } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    withRange,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
+import StatusFormatter from 'utils/statusFormatter';
 
 const View = styled.div`
     position: relative;
@@ -54,7 +60,7 @@ export interface NewsCardProps {
     isInverted?: boolean;
     tag?: string;
     onTagClick?: (name: string) => void;
-    publishDate?: string;
+    publishDate?: Date;
     title?: string;
     text?: string;
     image?: Omit<ImageProps, 'coverSpace'>;
@@ -79,6 +85,20 @@ const NewsCard: React.FC<
     secondaryAction,
     className,
 }) => {
+    const theme = useContext(ThemeContext);
+
+    let publishedAt = '';
+    if (publishDate) {
+        const formatter = new StatusFormatter(
+            publishDate.getTime(),
+            '',
+            global(theme).sections.newsDateFormat,
+            global(theme).sections.newsTimeFormat,
+            global(theme).sections.newsLocaleKey
+        );
+        publishedAt = formatter.getFormattedDate();
+    }
+
     return (
         <View className={className}>
             {image && <Image coverSpace {...image} />}
@@ -91,7 +111,7 @@ const NewsCard: React.FC<
                         {tag}
                     </Tag>
                 )}
-                <div>{publishDate}</div>
+                {publishedAt && <div>{publishedAt}</div>}
             </Head>
             <Main>
                 {title && (

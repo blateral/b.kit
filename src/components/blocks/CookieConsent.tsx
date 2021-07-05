@@ -60,7 +60,7 @@ export interface CookieConfig {
     dateFormat?: string;
     timeFormat?: string;
     lifetime?: number;
-    localeKey?: 'de' | 'eng';
+    localeKey?: 'de' | 'en';
     zIndex?: number;
     overlayOpacity?: number;
 }
