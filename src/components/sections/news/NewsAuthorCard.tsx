@@ -1,10 +1,11 @@
 import * as React from 'react';
+import styled, { ThemeContext } from 'styled-components';
+
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import styled, { ThemeContext } from 'styled-components';
 import Heading from 'components/typography/Heading';
-import { getColors, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 
 const ContentBlock = styled.div<{ isInverted?: boolean }>`
     &:before {
@@ -28,7 +29,16 @@ const ContentBlock = styled.div<{ isInverted?: boolean }>`
 
 const ContentFlex = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    @media ${mq.medium} {
+        flex-direction: row;
+        justify-content: flex-start;
+        text-align: left;
+    }
 `;
 
 const Avatar = styled.img`
@@ -36,7 +46,12 @@ const Avatar = styled.img`
 `;
 
 const Author = styled.div`
-    margin-left: ${spacings.spacer}px;
+    margin-top: ${spacings.spacer}px;
+
+    @media ${mq.medium} {
+        margin-left: 0;
+        margin-left: ${spacings.spacer}px;
+    }
 `;
 
 const StyledCopy = styled(Copy)`
@@ -50,14 +65,28 @@ const NewsAuthorCard: React.FC<{
     avatar?: { src: string; alt?: string };
 
     isInverted?: boolean;
-}> = ({ label = 'Written By', author, avatar, isInverted }) => {
+    hasBack?: boolean;
+}> = ({
+    label = 'Written By',
+    author,
+    avatar,
+    isInverted = false,
+    hasBack = false,
+}) => {
     const theme = React.useContext(ThemeContext);
+
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? getColors(theme).dark : 'transparent'}
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBack
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
         >
-            <Wrapper clampWidth="small">
+            <Wrapper clampWidth="small" addWhitespace>
                 <ContentBlock isInverted={isInverted}>
                     <ContentFlex>
                         {avatar && <Avatar src={avatar.src} alt={avatar.alt} />}

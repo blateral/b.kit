@@ -16,7 +16,17 @@ export const Default: Story = () => (
     />
 );
 
-export const isInverted: Story = () => (
+export const WithBackground: Story = () => (
+    <NewsAuthorCard
+        hasBack
+        author="Author Name"
+        avatar={{
+            src: 'http://placehold.it/150',
+        }}
+    />
+);
+
+export const Inverted: Story = () => (
     <NewsAuthorCard
         author="Author Name"
         avatar={{
