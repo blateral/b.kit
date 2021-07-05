@@ -27,26 +27,39 @@ const TagWrapper = styled.div`
     padding: ${spacings.nudge}px;
 `;
 
-const List = styled.ul`
-    margin: 0;
-    margin: -${spacings.spacer}px;
-    padding: 0;
-    list-style: none;
+const List = styled.div`
+    & > * + * {
+        padding-top: ${spacings.spacer * 2}px;
+    }
 
     @media ${mq.semilarge} {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        align-items: center;
+        justify-content: 'flex-start';
+        align-items: flex-start;
+
+        margin-left: -20px;
+        margin-top: -40px;
+
+        & > * {
+            padding-left: 20px;
+            padding-top: 40px;
+            flex: 1 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    @media ${mq.large} {
+        & > * {
+            flex: 1 0 33.33%;
+            max-width: 33.33%;
+        }
     }
 `;
 
-const ListItem = styled.li`
-    flex: 0 0 33.33%;
-`;
-
 const NewsOverview: React.FC<{
-    list: NewsCardProps[];
+    news: NewsCardProps[];
     tags?: { label?: string; id: string }[];
 
     intro?: {
@@ -59,7 +72,7 @@ const NewsOverview: React.FC<{
 
     isInverted?: boolean;
 }> = ({
-    list,
+    news,
     tags,
 
     intro,
@@ -71,7 +84,7 @@ const NewsOverview: React.FC<{
             addSeperation
             bgColor={isInverted ? getColors(theme).dark : 'transparent'}
         >
-            <Wrapper addWhitespace clampWidth="small">
+            <Wrapper addWhitespace>
                 {intro && (
                     <StyledIntro
                         title={intro.title}
@@ -96,18 +109,13 @@ const NewsOverview: React.FC<{
                     </TagContainer>
                 )}
             </Wrapper>
-            <Wrapper addWhitespace clampWidth="normal">
+            <Wrapper addWhitespace>
                 <List>
-                    {list.map((item, i) => {
+                    {news.map((item, i) => {
                         return (
-                            <ListItem key={i}>
-                                <NewsCard
-                                    {...item}
-                                    // index={i}
-                                    // visibleCards={list.length}
-                                    isInverted={isInverted}
-                                />
-                            </ListItem>
+                            <div key={i}>
+                                <NewsCard {...item} isInverted={isInverted} />
+                            </div>
                         );
                     })}
                 </List>

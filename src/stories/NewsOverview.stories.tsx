@@ -33,7 +33,7 @@ export const Default: Story = () => (
             { label: 'Tag 15', id: '15' },
             { label: 'Tag 16', id: '16' },
         ]}
-        list={[
+        news={[
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
@@ -172,7 +172,7 @@ export const IsInverted: Story = () => (
             text:
                 'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
         }}
-        list={[
+        news={[
             {
                 tag: 'Secondary Tag',
                 publishDate: 'Date',
