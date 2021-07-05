@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import Section from 'components/base/Section';
@@ -11,6 +11,8 @@ import Intro from 'components/blocks/Intro';
 import Tag from 'components/blocks/Tag';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+import { useObserverSupport } from 'utils/useObserverSupport';
+import Copy from 'components/typography/Copy';
 
 const StyledIntro = styled(Intro)`
     ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
@@ -64,6 +66,28 @@ const List = styled.div`
     }
 `;
 
+const ListFooter = styled.div`
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    text-align: center;
+
+    @media ${mq.medium} {
+        text-align: left;
+    }
+`;
+
+const ShowMore = styled.span<{ itemCount?: number }>`
+    cursor: pointer;
+
+    text-decoration: underline;
+
+    display: ${({ itemCount }) =>
+        itemCount && itemCount > 2 ? 'block' : 'none'};
+
+    &:hover {
+        opacity: 0.75;
+    }
+`;
+
 type NewsOverviewMq = 'small' | 'semilarge' | 'large';
 
 const NewsOverview: React.FC<{
@@ -77,6 +101,7 @@ const NewsOverview: React.FC<{
     activeTag?: string;
     tags?: string[];
     onTagClick?: (tag: string) => void;
+    showMoreText?: string;
 
     isInverted?: boolean;
     hasBack?: boolean;
@@ -91,6 +116,7 @@ const NewsOverview: React.FC<{
     activeTag,
     tags,
     onTagClick,
+    showMoreText,
 
     isInverted,
     hasBack,
@@ -104,6 +130,9 @@ const NewsOverview: React.FC<{
     const currentMq = useMediaQuery(mqs) as NewsOverviewMq | undefined;
     const [itemsPerRow, setItemsPerRow] = useState(3);
     const [visibleRows, setVisibleRows] = useState(3);
+
+    const targetRef = useRef<HTMLDivElement>(null);
+    const observerSupported = useObserverSupport();
 
     const newsCount = news?.length || 0;
 
@@ -146,6 +175,41 @@ const NewsOverview: React.FC<{
     useEffect(() => {
         setSelectedTag(activeTag);
     }, [activeTag]);
+
+    useEffect(() => {
+        // if new tag is selected reset list rows to three visible item rows
+        setVisibleRows(3);
+    }, [selectedTag]);
+
+    useEffect(() => {
+        // cancel if intersection observers are not supported
+        if (!observerSupported) return;
+
+        const element = targetRef.current;
+        let observer: IntersectionObserver;
+
+        if (element) {
+            const options = {
+                rootMargin: '0px 0px 100px 0px',
+                threshold: 0,
+            };
+
+            observer = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                if (entry?.isIntersecting) {
+                    // on bottom of the wrapper load more news
+                    if (visibleRows < Math.ceil(newsCount / itemsPerRow)) {
+                        setVisibleRows((prev) => prev + 1);
+                    }
+                }
+            }, options);
+            observer.observe(element);
+        }
+
+        return () => {
+            if (observer) observer.disconnect();
+        };
+    }, [itemsPerRow, newsCount, visibleRows, observerSupported]);
 
     return (
         <Section
@@ -229,6 +293,34 @@ const NewsOverview: React.FC<{
                                 );
                             })}
                 </List>
+                <div ref={targetRef} />
+                {!observerSupported && (
+                    <ListFooter>
+                        {news && news.length > 0 && (
+                            <Copy
+                                type="copy"
+                                size="medium"
+                                isInverted={isInverted}
+                            >
+                                <ShowMore
+                                    itemCount={news.length}
+                                    onClick={(ev) => {
+                                        ev.preventDefault();
+                                        if (
+                                            visibleRows <
+                                            Math.ceil(newsCount / itemsPerRow)
+                                        ) {
+                                            setVisibleRows((prev) => prev + 1);
+                                        }
+                                    }}
+                                >
+                                    {visibleRows < newsCount / itemsPerRow &&
+                                        (showMoreText || 'show more')}
+                                </ShowMore>
+                            </Copy>
+                        )}
+                    </ListFooter>
+                )}
             </Wrapper>
         </Section>
     );
