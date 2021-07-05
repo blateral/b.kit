@@ -32,6 +32,10 @@ const List = styled.div`
         padding-top: ${spacings.spacer * 2}px;
     }
 
+    & > * + * {
+        padding-top: ${spacings.spacer * 2}px;
+    }
+
     @media ${mq.semilarge} {
         display: flex;
         flex-wrap: wrap;
