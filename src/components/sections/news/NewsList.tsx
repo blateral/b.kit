@@ -94,7 +94,7 @@ const NewsList: React.FC<{
     text,
     news,
     isInverted = false,
-    hasBack,
+    hasBack = false,
 
     primaryAction,
     secondaryAction,
