@@ -75,12 +75,15 @@ const NewsOverview: React.FC<{
     };
 
     isInverted?: boolean;
+    hasBack?: boolean;
 }> = ({
     news,
     tags,
 
     intro,
+
     isInverted,
+    hasBack,
 }) => {
     const theme = React.useContext(ThemeContext);
     const [isActive, setIsActive] = React.useState(false);
@@ -88,7 +91,13 @@ const NewsOverview: React.FC<{
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? getColors(theme).dark : 'transparent'}
+            bgColor={
+                isInverted
+                    ? getColors(theme).dark
+                    : hasBack
+                    ? getColors(theme).mono.light
+                    : 'transparent'
+            }
         >
             <Wrapper addWhitespace>
                 {intro && (
