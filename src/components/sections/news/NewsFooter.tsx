@@ -1,32 +1,42 @@
 import * as React from 'react';
+import styled, { ThemeContext } from 'styled-components';
+
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import styled, { ThemeContext } from 'styled-components';
-import { getColors, mq, spacings } from 'utils/styles';
+import { getColors, mq, spacings, withRange } from 'utils/styles';
 import Copy from 'components/typography/Copy';
-import NewsCard, { NewsCardProps } from '../../blocks/NewsCard';
+import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
+import { useContext, useEffect, useState } from 'react';
+import { useMediaQuery } from 'utils/useMediaQuery';
+import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
 const ContentFlex = styled.div`
+    & > * + * {
+        padding-top: ${spacings.spacer * 2}px;
+    }
+
     @media ${mq.semilarge} {
         display: flex;
-        flex-direction: row;
         flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: 'flex-start';
         align-items: flex-start;
 
-        margin: -20px;
+        margin-left: -20px;
+        margin-top: -40px;
+
+        & > * {
+            padding-left: 20px;
+            padding-top: 40px;
+            flex: 1 0 50%;
+            max-width: 50%;
+        }
     }
 `;
 
 const Actions = styled.div`
-    margin-top: ${spacings.spacer * 4}px;
+    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
     text-align: center;
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center; */
-
-    & > * + * {
-        margin-left: 20px;
-    }
 `;
 
 const ShowMore = styled.span<{ itemCount?: number }>`
@@ -40,13 +50,54 @@ const ShowMore = styled.span<{ itemCount?: number }>`
     }
 `;
 
+type NewsFooterMq = 'small' | 'semilarge';
+
 const NewsFooter: React.FC<{
-    items: NewsCardProps[];
+    news: NewsCardProps[];
 
     isInverted?: boolean;
-}> = ({ items, isInverted }) => {
-    const theme = React.useContext(ThemeContext);
-    const [visibleCard, setVisibleCard] = React.useState(2);
+    showMoreText?: string;
+}> = ({ news, isInverted = false, showMoreText }) => {
+    const newsCount = news?.length || 0;
+    const theme = useContext(ThemeContext);
+
+    const mqs: NewsFooterMq[] = ['small', 'semilarge'];
+    const currentMq = useMediaQuery(mqs) as NewsFooterMq | undefined;
+    const [itemsPerRow, setItemsPerRow] = useState(2);
+    const [visibleRows, setVisibleRows] = useState(1);
+
+    const cardRefs = useEqualSheetHeight({
+        listLength: Math.min(visibleRows * itemsPerRow, newsCount),
+        identifiers: [
+            '[data-sheet="head"]',
+            '[data-sheet="title"]',
+            '[data-sheet="text"]',
+        ],
+        responsive: {
+            small: 1,
+            medium: 1,
+            semilarge: 2,
+            large: 2,
+            xlarge: 2,
+        },
+    });
+
+    useEffect(() => {
+        switch (currentMq) {
+            case 'semilarge':
+                setItemsPerRow(2);
+                break;
+
+            case 'small':
+                setItemsPerRow(1);
+                if (visibleRows < 3) setVisibleRows(3);
+                break;
+
+            default:
+                setItemsPerRow(1);
+        }
+    }, [currentMq, visibleRows]);
+
     return (
         <Section
             addSeperation
@@ -54,39 +105,41 @@ const NewsFooter: React.FC<{
         >
             <Wrapper addWhitespace clampWidth="small">
                 <ContentFlex>
-                    {items.map(
-                        ({ tag, publishDate, title, text, image }, i) => {
-                            return (
-                                <NewsCard
-                                    key={i}
-                                    // index={i}
-                                    image={image}
-                                    // visibleCards={visibleCard}
-                                    publishDate={publishDate}
-                                    tag={tag}
-                                    title={title}
-                                    text={text}
-                                    isInverted={isInverted}
-                                />
-                            );
-                        }
-                    )}
+                    {news &&
+                        news
+                            .filter((_, i) => i < visibleRows * itemsPerRow)
+                            .map((item, i) => {
+                                return (
+                                    <div key={i} ref={cardRefs[i]}>
+                                        <NewsCard
+                                            isInverted={isInverted}
+                                            {...item}
+                                        />
+                                    </div>
+                                );
+                            })}
                 </ContentFlex>
-                <Actions>
-                    <Copy isInverted={isInverted}>
-                        <ShowMore
-                            itemCount={items.length}
-                            onClick={(ev) => {
-                                ev.preventDefault();
-                                visibleCard >= items.length
-                                    ? setVisibleCard(visibleCard - 2)
-                                    : setVisibleCard(visibleCard + 2);
-                            }}
-                        >
-                            {visibleCard < items.length && 'weitere Anzeigen'}
-                        </ShowMore>
-                    </Copy>
-                </Actions>
+                {news && news.length > 0 && (
+                    <Actions>
+                        <Copy isInverted={isInverted}>
+                            <ShowMore
+                                itemCount={news.length}
+                                onClick={(ev) => {
+                                    ev.preventDefault();
+                                    if (
+                                        visibleRows <
+                                        Math.ceil(newsCount / itemsPerRow)
+                                    ) {
+                                        setVisibleRows((prev) => prev + 1);
+                                    }
+                                }}
+                            >
+                                {visibleRows < newsCount / itemsPerRow &&
+                                    (showMoreText || 'show more')}
+                            </ShowMore>
+                        </Copy>
+                    </Actions>
+                )}
             </Wrapper>
         </Section>
     );

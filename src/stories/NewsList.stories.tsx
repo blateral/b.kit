@@ -45,7 +45,6 @@ const exampleNews = generateItemList<NewsCardProps>(
             medium: 'https://unsplash.it/688/516?image=40' + i,
             large: 'https://unsplash.it/591/444?image=40' + i,
             xlarge: 'https://unsplash.it/592/445?image=40' + i,
-            coverSpace: true,
         },
     })
 );

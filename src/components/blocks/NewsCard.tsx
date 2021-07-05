@@ -57,7 +57,7 @@ export interface NewsCardProps {
     publishDate?: string;
     title?: string;
     text?: string;
-    image?: ImageProps;
+    image?: Omit<ImageProps, 'coverSpace'>;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;

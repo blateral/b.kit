@@ -9,7 +9,7 @@ export default {
 
 export const Default: Story = () => (
     <NewsFooter
-        items={[
+        news={[
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
@@ -18,10 +18,9 @@ export const Default: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=400',
+                    medium: 'https://unsplash.it/791/594?image=400',
+                    semilarge: 'https://unsplash.it/462/347?image=400',
                 },
             },
             {
@@ -32,10 +31,9 @@ export const Default: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=401',
+                    medium: 'https://unsplash.it/791/594?image=401',
+                    semilarge: 'https://unsplash.it/462/347?image=401',
                 },
             },
         ]}
@@ -44,7 +42,7 @@ export const Default: Story = () => (
 
 export const WithMoreItems: Story = () => (
     <NewsFooter
-        items={[
+        news={[
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
@@ -53,10 +51,9 @@ export const WithMoreItems: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=400',
+                    medium: 'https://unsplash.it/791/594?image=400',
+                    semilarge: 'https://unsplash.it/462/347?image=400',
                 },
             },
             {
@@ -67,10 +64,9 @@ export const WithMoreItems: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=401',
+                    medium: 'https://unsplash.it/791/594?image=401',
+                    semilarge: 'https://unsplash.it/462/347?image=401',
                 },
             },
             {
@@ -81,10 +77,9 @@ export const WithMoreItems: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=402',
+                    medium: 'https://unsplash.it/791/594?image=402',
+                    semilarge: 'https://unsplash.it/462/347?image=402',
                 },
             },
             {
@@ -95,10 +90,9 @@ export const WithMoreItems: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=403',
+                    medium: 'https://unsplash.it/791/594?image=403',
+                    semilarge: 'https://unsplash.it/462/347?image=403',
                 },
             },
             {
@@ -109,10 +103,9 @@ export const WithMoreItems: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=404',
+                    medium: 'https://unsplash.it/791/594?image=404',
+                    semilarge: 'https://unsplash.it/462/347?image=404',
                 },
             },
         ]}
@@ -121,7 +114,7 @@ export const WithMoreItems: Story = () => (
 
 export const IsInverted: Story = () => (
     <NewsFooter
-        items={[
+        news={[
             {
                 tag: 'Tag Secondary',
                 publishDate: 'Date',
@@ -130,10 +123,9 @@ export const IsInverted: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=400',
+                    medium: 'https://unsplash.it/791/594?image=400',
+                    semilarge: 'https://unsplash.it/462/347?image=400',
                 },
             },
             {
@@ -144,10 +136,9 @@ export const IsInverted: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=401',
+                    medium: 'https://unsplash.it/791/594?image=401',
+                    semilarge: 'https://unsplash.it/462/347?image=401',
                 },
             },
             {
@@ -158,10 +149,9 @@ export const IsInverted: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=402',
+                    medium: 'https://unsplash.it/791/594?image=402',
+                    semilarge: 'https://unsplash.it/462/347?image=402',
                 },
             },
             {
@@ -172,10 +162,9 @@ export const IsInverted: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=403',
+                    medium: 'https://unsplash.it/791/594?image=403',
+                    semilarge: 'https://unsplash.it/462/347?image=403',
                 },
             },
             {
@@ -186,10 +175,9 @@ export const IsInverted: Story = () => (
                 text:
                     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
                 image: {
-                    small: 'https://unsplash.it/419/313?image=400',
-                    medium: 'https://unsplash.it/983/736?image=400',
-                    large: 'https://unsplash.it/1399/1048?image=400',
-                    xlarge: 'https://unsplash.it/1400/1050?image=400',
+                    small: 'https://unsplash.it/629/464?image=404',
+                    medium: 'https://unsplash.it/791/594?image=404',
+                    semilarge: 'https://unsplash.it/462/347?image=404',
                 },
             },
         ]}
