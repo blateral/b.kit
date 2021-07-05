@@ -64,7 +64,7 @@ const ListItem = styled.li`
 
 const NewsOverview: React.FC<{
     list: NewsCardProps[];
-    tags?: { label?: string; id: string }[];
+    tags?: string[];
 
     intro?: {
         title: string;
@@ -83,6 +83,8 @@ const NewsOverview: React.FC<{
     isInverted,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const [isActive, setIsActive] = React.useState(false);
+    const [isSelected, setIsSelected] = React.useState<number | undefined>();
     return (
         <Section
             addSeperation
@@ -104,8 +106,17 @@ const NewsOverview: React.FC<{
                         {tags.map((tag, i) => {
                             return (
                                 <TagWrapper key={i}>
-                                    <Tag isInverted={isInverted}>
-                                        {tag.label}
+                                    <Tag
+                                        isInverted={isInverted}
+                                        onClick={() => {
+                                            setIsSelected(
+                                                isSelected === i ? undefined : i
+                                            );
+                                            setIsActive(true);
+                                        }}
+                                        isActive={isActive && isSelected === i}
+                                    >
+                                        {tag}
                                     </Tag>
                                 </TagWrapper>
                             );
