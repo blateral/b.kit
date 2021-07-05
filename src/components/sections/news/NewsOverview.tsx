@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import Section from 'components/base/Section';
@@ -9,6 +9,8 @@ import { getColors, mq, spacings, withRange } from 'utils/styles';
 import { HeadlineTag } from 'components/typography/Heading';
 import Intro from 'components/blocks/Intro';
 import Tag from 'components/blocks/Tag';
+import { useMediaQuery } from 'utils/useMediaQuery';
+import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
 const StyledIntro = styled(Intro)`
     ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
@@ -62,31 +64,89 @@ const List = styled.div`
     }
 `;
 
-const NewsOverview: React.FC<{
-    news: NewsCardProps[];
-    tags?: string[];
+type NewsOverviewMq = 'small' | 'semilarge' | 'large';
 
-    intro?: {
-        title: string;
-        titleAs?: HeadlineTag;
-        superTitle?: string;
-        superTitleAs?: HeadlineTag;
-        text?: string;
-    };
+const NewsOverview: React.FC<{
+    title: string;
+    titleAs?: HeadlineTag;
+    superTitle?: string;
+    superTitleAs?: HeadlineTag;
+    text?: string;
+
+    news: NewsCardProps[];
+    activeTag?: string;
+    tags?: string[];
+    onTagClick?: (tag: string) => void;
 
     isInverted?: boolean;
     hasBack?: boolean;
 }> = ({
-    news,
-    tags,
+    title,
+    titleAs,
+    superTitle,
+    superTitleAs,
+    text,
 
-    intro,
+    news,
+    activeTag,
+    tags,
+    onTagClick,
 
     isInverted,
     hasBack,
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const [isSelected, setIsSelected] = React.useState<number | undefined>();
+    const theme = useContext(ThemeContext);
+    const [selectedTag, setSelectedTag] = useState<string | undefined>(
+        activeTag || undefined
+    );
+
+    const mqs: NewsOverviewMq[] = ['small', 'semilarge', 'large'];
+    const currentMq = useMediaQuery(mqs) as NewsOverviewMq | undefined;
+    const [itemsPerRow, setItemsPerRow] = useState(3);
+    const [visibleRows, setVisibleRows] = useState(3);
+
+    const newsCount = news?.length || 0;
+
+    const cardRefs = useEqualSheetHeight({
+        listLength: Math.min(visibleRows * itemsPerRow, newsCount),
+        identifiers: [
+            '[data-sheet="head"]',
+            '[data-sheet="title"]',
+            '[data-sheet="text"]',
+        ],
+        responsive: {
+            small: 1,
+            medium: 1,
+            semilarge: 2,
+            large: 3,
+            xlarge: 3,
+        },
+    });
+
+    useEffect(() => {
+        switch (currentMq) {
+            case 'large':
+                setItemsPerRow(3);
+                break;
+
+            case 'semilarge':
+                setItemsPerRow(2);
+                break;
+
+            case 'small':
+                setItemsPerRow(1);
+                if (visibleRows < 3) setVisibleRows(3);
+                break;
+
+            default:
+                setItemsPerRow(1);
+        }
+    }, [currentMq, visibleRows]);
+
+    useEffect(() => {
+        setSelectedTag(activeTag);
+    }, [activeTag]);
+
     return (
         <Section
             addSeperation
@@ -99,13 +159,13 @@ const NewsOverview: React.FC<{
             }
         >
             <Wrapper addWhitespace>
-                {intro && (
+                {title && (
                     <StyledIntro
-                        title={intro.title}
-                        titleAs={intro.titleAs}
-                        superTitle={intro.superTitle}
-                        superTitleAs={intro.superTitleAs}
-                        text={intro.text}
+                        title={title}
+                        titleAs={titleAs}
+                        superTitle={superTitle}
+                        superTitleAs={superTitleAs}
+                        text={text}
                         colorMode={isInverted ? 'inverted' : 'default'}
                     />
                 )}
@@ -117,11 +177,16 @@ const NewsOverview: React.FC<{
                                     <Tag
                                         isInverted={isInverted}
                                         onClick={() => {
-                                            setIsSelected(
-                                                isSelected === i ? undefined : i
-                                            );
+                                            if (!onTagClick) {
+                                                // if no callback is defined handle filtering on client side inside the component
+                                                setSelectedTag(
+                                                    selectedTag === tag
+                                                        ? undefined
+                                                        : tag
+                                                );
+                                            } else onTagClick(tag);
                                         }}
-                                        isActive={isSelected === i}
+                                        isActive={selectedTag === tag}
                                     >
                                         {tag}
                                     </Tag>
@@ -130,16 +195,23 @@ const NewsOverview: React.FC<{
                         })}
                     </TagContainer>
                 )}
-            </Wrapper>
-            <Wrapper addWhitespace>
                 <List>
-                    {news.map((item, i) => {
-                        return (
-                            <div key={i}>
-                                <NewsCard {...item} isInverted={isInverted} />
-                            </div>
-                        );
-                    })}
+                    {news &&
+                        news
+                            .filter((item) =>
+                                selectedTag ? item.tag === selectedTag : true
+                            )
+                            .filter((_, i) => i < visibleRows * itemsPerRow)
+                            .map((item, i) => {
+                                return (
+                                    <div key={i} ref={cardRefs[i]}>
+                                        <NewsCard
+                                            isInverted={isInverted}
+                                            {...item}
+                                        />
+                                    </div>
+                                );
+                            })}
                 </List>
             </Wrapper>
         </Section>
