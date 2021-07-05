@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { getColors, mq, spacings, withRange } from 'utils/styles';
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { useContext, useEffect, useState } from 'react';
@@ -56,8 +56,9 @@ const NewsFooter: React.FC<{
     news: NewsCardProps[];
 
     isInverted?: boolean;
+    hasBack?: boolean;
     showMoreText?: string;
-}> = ({ news, isInverted = false, showMoreText }) => {
+}> = ({ news, isInverted = false, hasBack = false, showMoreText }) => {
     const newsCount = news?.length || 0;
     const theme = useContext(ThemeContext);
 
@@ -101,7 +102,13 @@ const NewsFooter: React.FC<{
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? getColors(theme).dark : 'transparent'}
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBack
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
         >
             <Wrapper addWhitespace clampWidth="small">
                 <ContentFlex>

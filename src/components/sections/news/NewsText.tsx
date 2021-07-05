@@ -1,10 +1,12 @@
+import * as React from 'react';
+import styled, { ThemeContext } from 'styled-components';
+
 import Section from 'components/base/Section';
 import Actions from 'components/blocks/Actions';
 import Copy from 'components/typography/Copy';
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import Wrapper from 'components/base/Wrapper';
 import { getColors as color, spacings, withRange } from 'utils/styles';
-import Wrapper from '../../base/Wrapper';
+import { useContext } from 'react';
 
 const ContentBlock = styled(Copy)<{
     clampText?: boolean;
@@ -30,12 +32,25 @@ const NewsText: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isInverted?: boolean;
-}> = ({ text, primaryAction, secondaryAction, isInverted }) => {
-    const theme = React.useContext(ThemeContext);
+    hasBack?: boolean;
+}> = ({
+    text,
+    primaryAction,
+    secondaryAction,
+    isInverted = false,
+    hasBack = false,
+}) => {
+    const theme = useContext(ThemeContext);
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? color(theme).dark : 'transparent'}
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBack
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
         >
             <Wrapper clampWidth="small" addWhitespace>
                 {text && (

@@ -75,12 +75,28 @@ const NewsIntro: React.FC<{
     image?: ImageProps;
 
     isInverted?: boolean;
-}> = ({ tag, onTagClick, meta, title, text, image, isInverted = false }) => {
+    hasBack?: boolean;
+}> = ({
+    tag,
+    onTagClick,
+    meta,
+    title,
+    text,
+    image,
+    isInverted = false,
+    hasBack = false,
+}) => {
     const theme = React.useContext(ThemeContext);
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? color(theme).dark : 'transparent'}
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBack
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
         >
             <Wrapper clampWidth="small" addWhitespace>
                 <Content>
