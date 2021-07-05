@@ -15,8 +15,6 @@ export const Default: Story = () => (
             {
                 small: 'https://unsplash.it/619/305?image=400',
                 medium: 'https://unsplash.it/983/483?image=400',
-                large: 'https://unsplash.it/1399/688?image=400',
-                xlarge: 'https://unsplash.it/1400/690?image=400',
             },
         ]}
     />
@@ -26,10 +24,9 @@ export const SingleImageHalf: Story = () => (
     <NewsImages
         images={[
             {
-                small: 'https://unsplash.it/419/313?image=400',
-                medium: 'https://unsplash.it/983/736?image=400',
-                large: 'https://unsplash.it/1399/1048?image=400',
-                xlarge: 'https://unsplash.it/1400/1050?image=400',
+                small: 'https://unsplash.it/619/465?image=400',
+                medium: 'https://unsplash.it/376/282?image=400',
+                large: 'https://unsplash.it/452/339?image=400',
             },
         ]}
         imageStyle="half"
@@ -40,22 +37,19 @@ export const MultipleHalfImages: Story = () => (
     <NewsImages
         images={[
             {
-                small: 'https://unsplash.it/419/313?image=400',
-                medium: 'https://unsplash.it/983/736?image=400',
-                large: 'https://unsplash.it/1399/1048?image=400',
-                xlarge: 'https://unsplash.it/1400/1050?image=400',
+                small: 'https://unsplash.it/619/465?image=400',
+                medium: 'https://unsplash.it/376/282?image=400',
+                large: 'https://unsplash.it/452/339?image=400',
             },
             {
-                small: 'https://unsplash.it/419/313?image=401',
-                medium: 'https://unsplash.it/983/736?image=401',
-                large: 'https://unsplash.it/1399/1048?image=401',
-                xlarge: 'https://unsplash.it/1400/1050?image=401',
+                small: 'https://unsplash.it/619/465?image=401',
+                medium: 'https://unsplash.it/376/282?image=401',
+                large: 'https://unsplash.it/452/339?image=401',
             },
             {
-                small: 'https://unsplash.it/419/313?image=402',
-                medium: 'https://unsplash.it/983/736?image=402',
-                large: 'https://unsplash.it/1399/1048?image=402',
-                xlarge: 'https://unsplash.it/1400/1050?image=402',
+                small: 'https://unsplash.it/619/465?image=402',
+                medium: 'https://unsplash.it/376/282?image=402',
+                large: 'https://unsplash.it/452/339?image=402',
             },
         ]}
         imageStyle="half"
@@ -66,16 +60,14 @@ export const WithActions: Story = () => (
     <NewsImages
         images={[
             {
-                small: 'https://unsplash.it/419/313?image=400',
-                medium: 'https://unsplash.it/983/736?image=400',
-                large: 'https://unsplash.it/1399/1048?image=400',
-                xlarge: 'https://unsplash.it/1400/1050?image=400',
+                small: 'https://unsplash.it/619/465?image=400',
+                medium: 'https://unsplash.it/376/282?image=400',
+                large: 'https://unsplash.it/452/339?image=400',
             },
             {
-                small: 'https://unsplash.it/419/313?image=401',
-                medium: 'https://unsplash.it/983/736?image=401',
-                large: 'https://unsplash.it/1399/1048?image=401',
-                xlarge: 'https://unsplash.it/1400/1050?image=401',
+                small: 'https://unsplash.it/619/465?image=401',
+                medium: 'https://unsplash.it/376/282?image=401',
+                large: 'https://unsplash.it/452/339?image=401',
             },
         ]}
         imageStyle="half"
@@ -97,16 +89,14 @@ export const WithBackground: Story = () => (
         hasBack
         images={[
             {
-                small: 'https://unsplash.it/419/313?image=400',
-                medium: 'https://unsplash.it/983/736?image=400',
-                large: 'https://unsplash.it/1399/1048?image=400',
-                xlarge: 'https://unsplash.it/1400/1050?image=400',
+                small: 'https://unsplash.it/619/465?image=400',
+                medium: 'https://unsplash.it/376/282?image=400',
+                large: 'https://unsplash.it/452/339?image=400',
             },
             {
-                small: 'https://unsplash.it/419/313?image=401',
-                medium: 'https://unsplash.it/983/736?image=401',
-                large: 'https://unsplash.it/1399/1048?image=401',
-                xlarge: 'https://unsplash.it/1400/1050?image=401',
+                small: 'https://unsplash.it/619/465?image=401',
+                medium: 'https://unsplash.it/376/282?image=401',
+                large: 'https://unsplash.it/452/339?image=401',
             },
         ]}
         imageStyle="half"
@@ -127,16 +117,14 @@ export const Inverted: Story = () => (
     <NewsImages
         images={[
             {
-                small: 'https://unsplash.it/419/313?image=400',
-                medium: 'https://unsplash.it/983/736?image=400',
-                large: 'https://unsplash.it/1399/1048?image=400',
-                xlarge: 'https://unsplash.it/1400/1050?image=400',
+                small: 'https://unsplash.it/619/465?image=400',
+                medium: 'https://unsplash.it/376/282?image=400',
+                large: 'https://unsplash.it/452/339?image=400',
             },
             {
-                small: 'https://unsplash.it/419/313?image=401',
-                medium: 'https://unsplash.it/983/736?image=401',
-                large: 'https://unsplash.it/1399/1048?image=401',
-                xlarge: 'https://unsplash.it/1400/1050?image=401',
+                small: 'https://unsplash.it/619/465?image=401',
+                medium: 'https://unsplash.it/376/282?image=401',
+                large: 'https://unsplash.it/452/339?image=401',
             },
         ]}
         imageStyle="half"
