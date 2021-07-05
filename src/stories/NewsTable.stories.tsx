@@ -60,16 +60,6 @@ export const Default: Story = () => (
 
 export const WithTableGroups: Story = () => (
     <NewsTable
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         tableItems={[
             {
                 tableTitle: 'Gruppe 1',

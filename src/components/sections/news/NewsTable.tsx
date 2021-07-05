@@ -81,11 +81,9 @@ const TableBlock: React.FC<TableProps> = ({
     return (
         <div>
             {tableTitle && (
-                <Wrapper addWhitespace>
-                    <Copy type="copy-b" isInverted={isInverted}>
-                        {tableTitle}
-                    </Copy>
-                </Wrapper>
+                <Copy type="copy-b" isInverted={isInverted}>
+                    {tableTitle}
+                </Copy>
             )}
             <TableContainer>
                 <TableBody>
