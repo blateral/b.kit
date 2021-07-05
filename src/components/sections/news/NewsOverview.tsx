@@ -29,20 +29,37 @@ const TagWrapper = styled.div`
 
 const List = styled.ul`
     margin: 0;
-    margin: -${spacings.spacer}px;
     padding: 0;
     list-style: none;
+
+    & > * + * {
+        padding-top: ${spacings.spacer * 2}px;
+    }
 
     @media ${mq.semilarge} {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        align-items: center;
+        justify-content: 'flex-start';
+        align-items: flex-start;
+
+        margin-left: -20px;
+        margin-top: -40px;
     }
 `;
 
 const ListItem = styled.li`
-    flex: 0 0 33.33%;
+    @media ${mq.semilarge} {
+        padding-left: 20px;
+        padding-top: 40px;
+        flex: 1 0 50%;
+        max-width: 50%;
+    }
+
+    @media ${mq.large} {
+        flex: 1 0 33.33%;
+        max-width: 33.33%;
+    }
 `;
 
 const NewsOverview: React.FC<{
