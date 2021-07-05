@@ -33,11 +33,6 @@ const TableBody = styled.table`
     @media ${mq.medium} {
         padding: 0;
     }
-
-    @media ${mq.xlarge} {
-        padding-left: ${(1 / 28) * spacings.wrapperSmall}px;
-        padding-right: ${spacings.spacer}px;
-    }
 `;
 
 const TableHead = styled.th`
