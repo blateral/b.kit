@@ -328,7 +328,7 @@ const defaultGlobalSettings: GlobalSettings = {
                 rgba(0, 0, 0, 0) 100%
             );
         `,
-        newsDateFormat: 'mm.dd.yy',
+        newsDateFormat: 'dd/mm/yy',
         newsTimeFormat: 'hh:mm',
         newsLocaleKey: 'en',
     },
