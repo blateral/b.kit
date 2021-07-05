@@ -207,6 +207,22 @@ const NewsOverview: React.FC<{
                                     <div key={i} ref={cardRefs[i]}>
                                         <NewsCard
                                             isInverted={isInverted}
+                                            onTagClick={
+                                                activeTag !== item.tag
+                                                    ? (name) => {
+                                                          if (!onTagClick) {
+                                                              // if no callback is defined handle filtering on client side inside the component
+                                                              setSelectedTag(
+                                                                  selectedTag ===
+                                                                      name
+                                                                      ? undefined
+                                                                      : name
+                                                              );
+                                                          } else
+                                                              onTagClick(name);
+                                                      }
+                                                    : undefined
+                                            }
                                             {...item}
                                         />
                                     </div>
