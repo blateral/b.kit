@@ -1,8 +1,9 @@
-import * as React from 'react';
-import { ImageProps } from 'components/blocks/Image';
+import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
+
+import { ImageProps } from 'components/blocks/Image';
 import Section from 'components/base/Section';
-import { getColors, spacings, withRange } from 'utils/styles';
+import { getColors as color, spacings, withRange } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import VideoCard from 'components/blocks/VideoCard';
 import Actions from 'components/blocks/Actions';
@@ -20,19 +21,27 @@ const NewsVideo: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isInverted?: boolean;
+    hasBack?: boolean;
 }> = ({
     bgImage,
     embedId,
     playIcon,
     primaryAction,
     secondaryAction,
-    isInverted,
+    isInverted = false,
+    hasBack = false,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? getColors(theme).dark : 'transparent'}
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBack
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
         >
             <Wrapper addWhitespace clampWidth="small">
                 <div>

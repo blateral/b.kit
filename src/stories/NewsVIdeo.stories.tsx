@@ -45,6 +45,30 @@ export const WithActions: Story = () => (
     />
 );
 
+export const WithBackground: Story = () => (
+    <NewsVideo
+        hasBack
+        bgImage={{
+            small: 'http://unsplash.it/640/480',
+            medium: 'http://unsplash.it/1024/576',
+            large: 'http://unsplash.it/1440/810',
+            xlarge: 'http://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
+        }}
+        embedId="z9IxDy1tAf8"
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
 export const isInverted: Story = () => (
     <NewsVideo
         bgImage={{
