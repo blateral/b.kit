@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
+
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import styled, { ThemeContext } from 'styled-components';
-import { getColors, mq, spacings, withRange } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 
 const Content = styled.div`
@@ -15,10 +16,16 @@ const Content = styled.div`
 const ImageFlex = styled.div`
     margin: -${spacings.spacer}px;
 
-    @media ${mq.semilarge} {
+    @media ${mq.medium} {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
+
+        & > * {
+            flex: 1 0 50%;
+            max-width: 50%;
+        }
     }
 `;
 
@@ -36,25 +43,34 @@ const StyledActions = styled(Actions)`
 `;
 
 const NewsImages: React.FC<{
-    images?: ImageProps[];
+    images?: Omit<ImageProps, 'coverSpace'>[];
     imageStyle?: 'full' | 'half';
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isInverted?: boolean;
+    hasBack?: boolean;
 }> = ({
     images,
     imageStyle = 'full',
     primaryAction,
     secondaryAction,
-    isInverted,
+    isInverted = false,
+    hasBack = false,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
+
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? getColors(theme).dark : 'transparent'}
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBack
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
         >
             <Wrapper clampWidth="small" addWhitespace>
                 <Content>
@@ -66,7 +82,7 @@ const NewsImages: React.FC<{
                                         key={i}
                                         isSingleHalf={images.length >= 1}
                                     >
-                                        <Image {...img} />
+                                        <Image coverSpace {...img} />
                                     </Img>
                                 );
                             })}
@@ -75,7 +91,9 @@ const NewsImages: React.FC<{
                         images && (
                             <div>
                                 {images.map((img, i) => {
-                                    return <Image {...img} key={i} />;
+                                    return (
+                                        <Image coverSpace {...img} key={i} />
+                                    );
                                 })}
                             </div>
                         )
