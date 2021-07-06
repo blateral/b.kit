@@ -42,8 +42,13 @@ const View = styled.div<{
                   `
                 : 0};
 
-        padding-right: ${({ addWhitespace, clampWidth }) =>
-            addWhitespace && clampWidth !== 'small' ? spacings.spacer : 0}px;
+        padding-right: ${({ addWhitespace }) =>
+            addWhitespace ? spacings.spacer : 0}px;
+    }
+
+    @media ${mq.large} {
+        padding-left: ${({ clampWidth }) => clampWidth === 'small' && 0}px;
+        padding-right: ${({ clampWidth }) => clampWidth === 'small' && 0}px;
     }
 
     @media ${mq.xlarge} {
