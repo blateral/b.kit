@@ -28,7 +28,7 @@ const TableBody = styled.table`
     border-collapse: separate;
     border-spacing: 0 ${spacings.nudge}px;
 
-    padding: 0 ${spacings.nudge * 2}px;
+    // padding: 0 ${spacings.nudge * 2}px;
 
     @media ${mq.medium} {
         padding: 0;
