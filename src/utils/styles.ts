@@ -21,6 +21,7 @@ export const mq: { [key in Exclude<MediaQueryType, 'small'>]: string } = {
 export const spacings = {
     nudge: 5,
     spacer: 20,
+    wrapperSmall: 1000,
     wrapper: 1440,
     wrapperLarge: 2400,
 };
@@ -308,6 +309,10 @@ export interface GlobalSettings {
         plainSeperation: boolean;
         /** Customnize gradient for all text on image background gradients */
         imageTextGradient: string;
+        /** Date and Time Formats for all news sections */
+        newsDateFormat: string;
+        newsTimeFormat: string;
+        newsLocaleKey: 'de' | 'en';
     };
 }
 
@@ -323,6 +328,9 @@ const defaultGlobalSettings: GlobalSettings = {
                 rgba(0, 0, 0, 0) 100%
             );
         `,
+        newsDateFormat: 'dd/mm/yy',
+        newsTimeFormat: 'hh:mm',
+        newsLocaleKey: 'en',
     },
 };
 

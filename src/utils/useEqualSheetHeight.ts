@@ -118,14 +118,16 @@ export const useEqualSheetHeight = (props: {
         return () => {
             window.removeEventListener('resize', resizeHandler);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sheetRefs, currentMq]);
 
     useEffect(() => {
-        setSheetRefs((ref) =>
+        setSheetRefs(() =>
             Array(props.listLength)
                 .fill(null)
                 .map((_, i) => sheetRefs[i] || createRef())
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.listLength]);
 
     return sheetRefs;

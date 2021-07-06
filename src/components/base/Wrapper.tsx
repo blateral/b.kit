@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { mq, spacings } from 'utils/styles';
 
-export type ClampWidthType = 'normal' | 'large';
+export type ClampWidthType = 'small' | 'normal' | 'large';
 
 const View = styled.div<{
     clampWidth?: ClampWidthType;
@@ -12,7 +12,11 @@ const View = styled.div<{
     position: relative;
     width: 100%;
     max-width: ${({ clampWidth }) =>
-        clampWidth === 'large' ? spacings.wrapperLarge : spacings.wrapper}px;
+        clampWidth === 'large'
+            ? spacings.wrapperLarge
+            : clampWidth === 'small'
+            ? spacings.wrapperSmall
+            : spacings.wrapper}px;
     margin-left: auto;
     margin-right: auto;
     padding: 0
