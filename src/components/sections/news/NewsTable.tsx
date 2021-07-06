@@ -152,7 +152,7 @@ const NewsTable: React.FC<{
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
-            <Wrapper clampWidth="small">
+            <Wrapper addWhitespace clampWidth="small">
                 {tableItems.map((item, i) => {
                     return (
                         <TableWrapper key={i}>
