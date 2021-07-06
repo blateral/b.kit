@@ -46,18 +46,11 @@ const View = styled.div<{
             addWhitespace ? spacings.spacer : 0}px;
     }
 
-    @media ${mq.large} {
-        padding-left: ${({ clampWidth }) => clampWidth === 'small' && 0}px;
-        padding-right: ${({ clampWidth }) => clampWidth === 'small' && 0}px;
-    }
-
     @media ${mq.xlarge} {
-        padding-left: ${({ addWhitespace, clampWidth }) =>
-            addWhitespace && clampWidth !== 'small'
-                ? (1 / 28) * spacings.wrapper
-                : 0}px;
-        padding-right: ${({ addWhitespace, clampWidth }) =>
-            addWhitespace && clampWidth !== 'small' ? spacings.spacer : 0}px;
+        padding-left: ${({ addWhitespace }) =>
+            addWhitespace ? (1 / 28) * spacings.wrapper : 0}px;
+        padding-right: ${({ addWhitespace }) =>
+            addWhitespace ? spacings.spacer : 0}px;
     }
 `;
 
