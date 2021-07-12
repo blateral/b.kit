@@ -13,6 +13,7 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useObserverSupport } from 'utils/useObserverSupport';
 import Copy from 'components/typography/Copy';
+import { useScrollTo } from 'utils/useScrollTo';
 
 const StyledIntro = styled(Intro)`
     ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
@@ -142,6 +143,7 @@ const NewsOverview: React.FC<{
 
     const newsCount = news?.length || 0;
 
+    const setNewPos = useScrollTo(800);
     const { sheetRefs: cardRefs, triggerCalculation } = useEqualSheetHeight({
         listLength: Math.min(visibleRows * itemsPerRow, newsCount),
         identifiers: [
@@ -283,6 +285,8 @@ const NewsOverview: React.FC<{
                                             onTagClick={
                                                 activeTag !== item.tag
                                                     ? (name) => {
+                                                          // scroll back to top
+                                                          setNewPos(0);
                                                           if (!onTagClick) {
                                                               // if no callback is defined handle filtering on client side inside the component
                                                               setSelectedTag(
