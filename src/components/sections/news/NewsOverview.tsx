@@ -123,10 +123,11 @@ const NewsOverview: React.FC<{
     isInverted,
     hasBack,
 }) => {
-
     const theme = useContext(ThemeContext);
 
-    activeTag = queryParams?.selected ? decodeURI(queryParams.selected) : activeTag;
+    activeTag = queryParams?.selected
+        ? decodeURI(queryParams.selected)
+        : activeTag;
     const [selectedTag, setSelectedTag] = useState<string | undefined>(
         activeTag || undefined
     );
@@ -141,7 +142,7 @@ const NewsOverview: React.FC<{
 
     const newsCount = news?.length || 0;
 
-    const cardRefs = useEqualSheetHeight({
+    const { sheetRefs: cardRefs, triggerCalculation } = useEqualSheetHeight({
         listLength: Math.min(visibleRows * itemsPerRow, newsCount),
         identifiers: [
             '[data-sheet="head"]',
@@ -184,6 +185,8 @@ const NewsOverview: React.FC<{
     useEffect(() => {
         // if new tag is selected reset list rows to three visible item rows
         setVisibleRows(3);
+        triggerCalculation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTag]);
 
     useEffect(() => {

@@ -108,7 +108,7 @@ const NewsList: React.FC<{
 
     const newsCount = news?.length || 0;
 
-    const cardRefs = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: Math.min(visibleRows * itemsPerRow, newsCount),
         identifiers: [
             '[data-sheet="head"]',

@@ -153,7 +153,7 @@ const FactGrid: FC<{
         }
     };
 
-    const cardRefs = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: factCount,
         identifiers: [
             '[data-sheet="title"]',

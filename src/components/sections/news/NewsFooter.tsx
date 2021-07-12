@@ -67,7 +67,7 @@ const NewsFooter: React.FC<{
     const [itemsPerRow, setItemsPerRow] = useState(2);
     const [visibleRows, setVisibleRows] = useState(1);
 
-    const cardRefs = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: Math.min(visibleRows * itemsPerRow, newsCount),
         identifiers: [
             '[data-sheet="head"]',
