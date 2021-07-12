@@ -76,7 +76,7 @@ const NewsCard: React.FC<
     }
 > = ({
     tag,
-    isList,
+    isList = true,
     onTagClick,
     publishDate,
     title,
