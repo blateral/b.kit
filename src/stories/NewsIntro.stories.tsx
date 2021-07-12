@@ -27,7 +27,7 @@ export const WithMeta: Story = () => (
 
 export const WithTag: Story = () => (
     <NewsIntro
-        tag="Tag Secondary"
+        tags={["Tag Secondary", "Tag Tertiary", "Tag Quadrifilogio"]}
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
@@ -40,7 +40,7 @@ export const WithTag: Story = () => (
 
 export const WithImage: Story = () => (
     <NewsIntro
-        tag="Tag Secondary"
+        tags={["Tag Secondary", "Tag Tertiary", "Tag Quadrifilogio"]}
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
@@ -59,7 +59,7 @@ export const WithImage: Story = () => (
 export const WithBackground: Story = () => (
     <NewsIntro
         hasBack
-        tag="Tag Secondary"
+        tags={["Tag Secondary", "Tag Tertiary", "Tag Quadrifilogio"]}
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
@@ -77,7 +77,7 @@ export const WithBackground: Story = () => (
 
 export const isInverted: Story = () => (
     <NewsIntro
-        tag="Tag Secondary"
+        tags={["Tag Secondary", "Tag Tertiary", "Tag Quadrifilogio"]}
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
