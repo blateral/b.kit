@@ -117,7 +117,7 @@ const NewsCard: React.FC<
                     <Tag
                         isInverted={isInverted}
                         onClick={() => {
-                            window.location.href = `/news?selected=${tag}`
+                            window.location.href = `/news?selected=${encodeURI(tag)}`
                         }}
                     >
                         {tag}

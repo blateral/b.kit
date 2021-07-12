@@ -126,7 +126,7 @@ const NewsOverview: React.FC<{
 
     const theme = useContext(ThemeContext);
 
-    activeTag = queryParams?.selected ? queryParams.selected : activeTag;
+    activeTag = queryParams?.selected ? decodeURI(queryParams.selected) : activeTag;
     const [selectedTag, setSelectedTag] = useState<string | undefined>(
         activeTag || undefined
     );
