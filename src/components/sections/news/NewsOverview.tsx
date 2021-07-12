@@ -13,6 +13,7 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useObserverSupport } from 'utils/useObserverSupport';
 import Copy from 'components/typography/Copy';
+import { useScrollTo } from 'utils/useScrollTo';
 
 const StyledIntro = styled(Intro)`
     ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
@@ -123,10 +124,11 @@ const NewsOverview: React.FC<{
     isInverted,
     hasBack,
 }) => {
-
     const theme = useContext(ThemeContext);
 
-    activeTag = queryParams?.selected ? decodeURI(queryParams.selected) : activeTag;
+    activeTag = queryParams?.selected
+        ? decodeURI(queryParams.selected)
+        : activeTag;
     const [selectedTag, setSelectedTag] = useState<string | undefined>(
         activeTag || undefined
     );
@@ -141,7 +143,8 @@ const NewsOverview: React.FC<{
 
     const newsCount = news?.length || 0;
 
-    const cardRefs = useEqualSheetHeight({
+    const setNewPos = useScrollTo(800);
+    const { sheetRefs: cardRefs, triggerCalculation } = useEqualSheetHeight({
         listLength: Math.min(visibleRows * itemsPerRow, newsCount),
         identifiers: [
             '[data-sheet="head"]',
@@ -184,6 +187,8 @@ const NewsOverview: React.FC<{
     useEffect(() => {
         // if new tag is selected reset list rows to three visible item rows
         setVisibleRows(3);
+        triggerCalculation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTag]);
 
     useEffect(() => {
@@ -280,6 +285,8 @@ const NewsOverview: React.FC<{
                                             onTagClick={
                                                 activeTag !== item.tag
                                                     ? (name) => {
+                                                          // scroll back to top
+                                                          setNewPos(0);
                                                           if (!onTagClick) {
                                                               // if no callback is defined handle filtering on client side inside the component
                                                               setSelectedTag(

@@ -55,7 +55,7 @@ const FeatureCarousel: FC<
 }) => {
     const theme = React.useContext(ThemeContext);
     const featureCount = features?.length || 0;
-    const cardRefs = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: featureCount,
         identifiers: [
             '[data-sheet="title"]',
