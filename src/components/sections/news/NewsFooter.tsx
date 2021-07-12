@@ -119,6 +119,7 @@ const NewsFooter: React.FC<{
                                 return (
                                     <div key={i} ref={cardRefs[i]}>
                                         <NewsCard
+                                            isList={true}
                                             isInverted={isInverted}
                                             {...item}
                                         />

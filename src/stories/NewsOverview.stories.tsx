@@ -85,6 +85,7 @@ export const Default: Story = () => (
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        queryParams={{ selected: 'Tag 7' }}
         tags={[
             'Tag 1',
             'Tag 2',

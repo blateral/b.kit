@@ -100,6 +100,7 @@ const NewsOverview: React.FC<{
     news: NewsCardProps[];
     activeTag?: string;
     tags?: string[];
+    queryParams?: Record<string, any>;
     onTagClick?: (tag: string) => void;
     showMoreText?: string;
 
@@ -115,13 +116,17 @@ const NewsOverview: React.FC<{
     news,
     activeTag,
     tags,
+    queryParams,
     onTagClick,
     showMoreText,
 
     isInverted,
     hasBack,
 }) => {
+
     const theme = useContext(ThemeContext);
+
+    activeTag = queryParams?.selected ? decodeURI(queryParams.selected) : activeTag;
     const [selectedTag, setSelectedTag] = useState<string | undefined>(
         activeTag || undefined
     );
@@ -270,6 +275,7 @@ const NewsOverview: React.FC<{
                                 return (
                                     <div key={i} ref={cardRefs[i]}>
                                         <NewsCard
+                                            isList={false}
                                             isInverted={isInverted}
                                             onTagClick={
                                                 activeTag !== item.tag
