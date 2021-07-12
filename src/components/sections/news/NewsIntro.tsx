@@ -30,7 +30,9 @@ const IntroHead = styled(Copy)`
 `;
 
 const HeadTag = styled(Tag)`
+
     flex: 0 1 auto;
+    margin-right: ${spacings.nudge * 2}px;
 `;
 
 const MetaBlock = styled.div`
@@ -53,12 +55,12 @@ const MetaBlock = styled.div`
     }
 `;
 
-const StyledTitle = styled(Title)<{ clampTitle?: boolean }>`
+const StyledTitle = styled(Title) <{ clampTitle?: boolean }>`
     max-width: ${({ clampTitle }) =>
         clampTitle && (13 / 28) * spacings.wrapperSmall + 'px'};
 `;
 
-const ContentBlock = styled(Copy)<{
+const ContentBlock = styled(Copy) <{
     clampText?: boolean;
     isCentered?: boolean;
 }>`
@@ -73,7 +75,7 @@ const ContentBlock = styled(Copy)<{
 `;
 
 const NewsIntro: React.FC<{
-    tag?: string;
+    tags?: string[];
     onTagClick?: (name: string) => void;
     meta?: { date?: Date; author?: string };
     title?: string;
@@ -83,7 +85,7 @@ const NewsIntro: React.FC<{
     isInverted?: boolean;
     hasBack?: boolean;
 }> = ({
-    tag,
+    tags,
     onTagClick,
     meta,
     title,
@@ -113,54 +115,59 @@ const NewsIntro: React.FC<{
                 isInverted
                     ? color(theme).dark
                     : hasBack
-                    ? color(theme).mono.light
-                    : 'transparent'
+                        ? color(theme).mono.light
+                        : 'transparent'
             }
         >
             <Wrapper clampWidth="small" addWhitespace>
                 <Content>
                     <IntroHead isInverted={isInverted}>
-                        {tag && (
-                            <HeadTag
-                                isInverted={isInverted}
-                                onClick={
-                                    onTagClick
-                                        ? () => onTagClick(tag)
-                                        : undefined
-                                }
-                            >
-                                {tag}
-                            </HeadTag>
-                        )}
-                        {publishedAt && (
-                            <MetaBlock>
-                                <div>{meta?.author}</div>
-                                <div>{publishedAt}</div>
-                            </MetaBlock>
-                        )}
-                    </IntroHead>
-                    <div>
-                        <StyledTitle
-                            colorMode={isInverted ? 'inverted' : 'default'}
-                            title={title}
-                        />
-                        {text && (
-                            <ContentBlock
-                                isInverted={isInverted}
-                                type="copy-b"
-                                innerHTML={text}
-                            />
-                        )}
-                    </div>
-                    {image?.small && (
+                        {tags && tags.map((tag, index) => {
+
+                            return (
+                                <HeadTag
+                                    key={`headtag-${index}`}
+                                    isInverted={isInverted}
+                                    onClick={
+                                        onTagClick
+                                            ? () => onTagClick(tag)
+                                            : undefined
+                                    }
+                                >
+                                    {tag}
+                                </HeadTag>
+                            )
+                        })
+                            }
+                            {publishedAt && (
+                                <MetaBlock>
+                                    <div>{meta?.author}</div>
+                                    <div>{publishedAt}</div>
+                                </MetaBlock>
+                            )}
+                        </IntroHead>
                         <div>
-                            <Image coverSpace {...image} />
+                            <StyledTitle
+                                colorMode={isInverted ? 'inverted' : 'default'}
+                                title={title}
+                            />
+                            {text && (
+                                <ContentBlock
+                                    isInverted={isInverted}
+                                    type="copy-b"
+                                    innerHTML={text}
+                                />
+                            )}
                         </div>
-                    )}
-                </Content>
-            </Wrapper>
-        </Section>
-    );
-};
+                        {image?.small && (
+                            <div>
+                                <Image coverSpace {...image} />
+                            </div>
+                        )}
+                    </Content>
+                </Wrapper>
+            </Section>
+        );
+    };
 
 export default NewsIntro;
