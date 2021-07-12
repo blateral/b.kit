@@ -127,7 +127,7 @@ const NewsCard: React.FC<
                 {text && (
                     <Copy
                         isInverted={isInverted}
-                        type="copy-b"
+                        type="copy"
                         innerHTML={text}
                         data-sheet="text"
                     />

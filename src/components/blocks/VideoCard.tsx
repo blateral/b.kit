@@ -13,7 +13,7 @@ const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
 
     padding-bottom: 56.25%;
 
-    background-image: url("${({ bgImage }) => (bgImage ? bgImage.small : '')}");
+    background-image: url('${({ bgImage }) => (bgImage ? bgImage.small : '')}');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -24,8 +24,8 @@ const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
         background-image: ${({ bgImage }) =>
             bgImage ? `url("${bgImage.medium}")` : ''};
     }
- 
-    @media ${mq.semilarge}{
+
+    @media ${mq.semilarge} {
         background-image: ${({ bgImage }) =>
             bgImage ? `url("${bgImage.semilarge}")` : ''};
     }
@@ -47,9 +47,8 @@ const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
         left: 0;
         bottom: 0;
         right: 0;
-        background-color:${({ theme }) => color(theme).mono.medium};
-        opacity:  ${({ bgImage }) => (bgImage ? '0.3' : '0')};
-        
+        background-color: ${({ theme }) => color(theme).mono.medium};
+        opacity: ${({ bgImage }) => (bgImage ? '0.3' : '0')};
 
         pointer-events: none;
     }
@@ -64,8 +63,11 @@ const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
         right: 0;
         pointer-events: none;
 
-        background: linear-gradient(358.19deg, rgba(29, 34, 35, 0.52) 12.37%, rgba(29, 34, 35, 0) 59.02%);
-
+        background: linear-gradient(
+            358.19deg,
+            rgba(29, 34, 35, 0.52) 12.37%,
+            rgba(29, 34, 35, 0) 59.02%
+        );
     }
 `;
 
@@ -74,18 +76,21 @@ const VideoControls = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: ${({ theme }) => color(theme).dark};
+    color: ${({ theme }) => color(theme).light};
 
     & > * {
-        transition: transform 0.2s ease-in-out;
+        opacity: 0.8;
+        transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
     }
 
     ${View}:hover > & > * {
         transform: scale(1.05);
+        opacity: 1;
     }
 
     ${View}:active > & > * {
         transform: scale(0.95);
+        opacity: 1;
     }
 `;
 
