@@ -59,7 +59,7 @@ const StyledActions = styled(Actions)`
 export interface NewsCardProps {
     isInverted?: boolean;
     tag?: string;
-    taghref?: string;
+    isList?: boolean;
     onTagClick?: (name: string) => void;
     publishDate?: Date;
     title?: string;
@@ -76,7 +76,7 @@ const NewsCard: React.FC<
     }
 > = ({
     tag,
-    taghref,
+    isList,
     onTagClick,
     publishDate,
     title,
@@ -105,7 +105,7 @@ const NewsCard: React.FC<
         <View className={className}>
             {image && <Image coverSpace {...image} />}
             <Head isInverted={isInverted} data-sheet="head">
-                {tag && !taghref && (
+                {tag && !isList && (
                     <Tag
                         isInverted={isInverted}
                         onClick={onTagClick ? () => onTagClick(tag) : undefined}
@@ -113,7 +113,7 @@ const NewsCard: React.FC<
                         {tag}
                     </Tag>
                 )}
-                {tag && taghref && (
+                {tag && isList && (
                     <Tag
                         isInverted={isInverted}
                         onClick={() => {
