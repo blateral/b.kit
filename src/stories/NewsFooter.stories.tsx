@@ -327,6 +327,6 @@ export const WithHandler: Story = () => (
                 },
             },
         ]}
-        onTagClick={(tag, insideList) => console.log(tag, insideList)}
+        onTagClick={console.log}
     />
 );

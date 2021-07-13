@@ -80,6 +80,7 @@ const NewsList: React.FC<{
     text?: string;
 
     news?: NewsCardProps[];
+    onTagClick?: (tag: string) => void;
     isInverted?: boolean;
     hasBack?: boolean;
 
@@ -93,6 +94,7 @@ const NewsList: React.FC<{
     superTitleAs,
     text,
     news,
+    onTagClick,
     isInverted = false,
     hasBack = false,
 
@@ -178,7 +180,7 @@ const NewsList: React.FC<{
                                 return (
                                     <div key={i} ref={cardRefs[i]}>
                                         <NewsCard
-                                            isList={true}
+                                            onTagClick={onTagClick}
                                             isInverted={isInverted}
                                             {...item}
                                         />

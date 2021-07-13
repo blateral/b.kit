@@ -54,7 +54,7 @@ type NewsFooterMq = 'small' | 'semilarge';
 
 const NewsFooter: React.FC<{
     news: NewsCardProps[];
-    onTagClick?: (tag: string, insideList?: boolean) => void;
+    onTagClick?: (tag: string) => void;
 
     isInverted?: boolean;
     hasBack?: boolean;
@@ -127,10 +127,7 @@ const NewsFooter: React.FC<{
                                     <div key={i} ref={cardRefs[i]}>
                                         <NewsCard
                                             isInverted={isInverted}
-                                            onTagClick={(name) =>
-                                                onTagClick &&
-                                                onTagClick(name, true)
-                                            }
+                                            onTagClick={onTagClick}
                                             {...item}
                                         />
                                     </div>
