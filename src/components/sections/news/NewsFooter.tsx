@@ -54,11 +54,18 @@ type NewsFooterMq = 'small' | 'semilarge';
 
 const NewsFooter: React.FC<{
     news: NewsCardProps[];
+    onTagClick?: (tag: string, insideList?: boolean) => void;
 
     isInverted?: boolean;
     hasBack?: boolean;
     showMoreText?: string;
-}> = ({ news, isInverted = false, hasBack = false, showMoreText }) => {
+}> = ({
+    news,
+    onTagClick,
+    isInverted = false,
+    hasBack = false,
+    showMoreText,
+}) => {
     const newsCount = news?.length || 0;
     const theme = useContext(ThemeContext);
 
@@ -119,8 +126,11 @@ const NewsFooter: React.FC<{
                                 return (
                                     <div key={i} ref={cardRefs[i]}>
                                         <NewsCard
-                                            isList={true}
                                             isInverted={isInverted}
+                                            onTagClick={(name) =>
+                                                onTagClick &&
+                                                onTagClick(name, true)
+                                            }
                                             {...item}
                                         />
                                     </div>

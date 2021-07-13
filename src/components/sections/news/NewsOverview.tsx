@@ -102,7 +102,7 @@ const NewsOverview: React.FC<{
     activeTag?: string;
     tags?: string[];
     queryParams?: Record<string, any>;
-    onTagClick?: (tag: string) => void;
+    onTagClick?: (tag: string, insideList?: boolean) => void;
     showMoreText?: string;
 
     isInverted?: boolean;
@@ -258,7 +258,7 @@ const NewsOverview: React.FC<{
                                                         ? undefined
                                                         : tag
                                                 );
-                                            } else onTagClick(tag);
+                                            } else onTagClick(tag, false);
                                         }}
                                         isActive={selectedTag === tag}
                                     >
@@ -280,7 +280,6 @@ const NewsOverview: React.FC<{
                                 return (
                                     <div key={i} ref={cardRefs[i]}>
                                         <NewsCard
-                                            isList={false}
                                             isInverted={isInverted}
                                             onTagClick={
                                                 activeTag !== item.tag
@@ -295,8 +294,12 @@ const NewsOverview: React.FC<{
                                                                       ? undefined
                                                                       : name
                                                               );
-                                                          } else
-                                                              onTagClick(name);
+                                                          } else {
+                                                              onTagClick(
+                                                                  name,
+                                                                  true
+                                                              );
+                                                          }
                                                       }
                                                     : undefined
                                             }
