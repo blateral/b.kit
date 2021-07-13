@@ -12,11 +12,20 @@ import Actions from 'components/blocks/Actions';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
 import StatusFormatter from 'utils/statusFormatter';
+import Link, { LinkProps } from 'components/typography/Link';
 
 const View = styled.div`
     position: relative;
     text-decoration: none;
     padding-bottom: ${spacings.spacer}px;
+`;
+
+const ImageLink = styled(Link)`
+    width: 100%;
+`;
+
+const TitleLink = styled(Link)`
+    text-decoration: none;
 `;
 
 const Head = styled(Copy)`
@@ -64,6 +73,7 @@ export interface NewsCardProps {
     title?: string;
     text?: string;
     image?: Omit<ImageProps, 'coverSpace'>;
+    link?: LinkProps;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -80,6 +90,7 @@ const NewsCard: React.FC<
     title,
     text,
     image,
+    link,
     isInverted,
     primaryAction,
     secondaryAction,
@@ -101,7 +112,11 @@ const NewsCard: React.FC<
 
     return (
         <View className={className}>
-            {image && <Image coverSpace {...image} />}
+            {image && (
+                <ImageLink {...link}>
+                    <Image coverSpace {...image} />
+                </ImageLink>
+            )}
             <Head isInverted={isInverted} data-sheet="head">
                 {tag && (
                     <Tag
@@ -115,14 +130,16 @@ const NewsCard: React.FC<
             </Head>
             <Main>
                 {title && (
-                    <Copy
-                        isInverted={isInverted}
-                        size="big"
-                        type="copy-b"
-                        data-sheet="title"
-                    >
-                        {title}
-                    </Copy>
+                    <TitleLink {...link}>
+                        <Copy
+                            isInverted={isInverted}
+                            size="big"
+                            type="copy-b"
+                            data-sheet="title"
+                        >
+                            {title}
+                        </Copy>
+                    </TitleLink>
                 )}
                 {text && (
                     <Copy

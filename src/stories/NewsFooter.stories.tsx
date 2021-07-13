@@ -22,6 +22,7 @@ export const Default: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=400',
                     semilarge: 'https://unsplash.it/462/347?image=400',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -35,6 +36,7 @@ export const Default: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=401',
                     semilarge: 'https://unsplash.it/462/347?image=401',
                 },
+                link: { href: '#0' },
             },
         ]}
     />
@@ -55,6 +57,7 @@ export const WithMoreItems: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=400',
                     semilarge: 'https://unsplash.it/462/347?image=400',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -68,6 +71,7 @@ export const WithMoreItems: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=401',
                     semilarge: 'https://unsplash.it/462/347?image=401',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -81,6 +85,7 @@ export const WithMoreItems: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=402',
                     semilarge: 'https://unsplash.it/462/347?image=402',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -94,6 +99,7 @@ export const WithMoreItems: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=403',
                     semilarge: 'https://unsplash.it/462/347?image=403',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -107,6 +113,7 @@ export const WithMoreItems: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=404',
                     semilarge: 'https://unsplash.it/462/347?image=404',
                 },
+                link: { href: '#0' },
             },
         ]}
     />
@@ -128,6 +135,7 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=400',
                     semilarge: 'https://unsplash.it/462/347?image=400',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -141,6 +149,7 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=401',
                     semilarge: 'https://unsplash.it/462/347?image=401',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -154,6 +163,7 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=402',
                     semilarge: 'https://unsplash.it/462/347?image=402',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -167,6 +177,7 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=403',
                     semilarge: 'https://unsplash.it/462/347?image=403',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -180,6 +191,7 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=404',
                     semilarge: 'https://unsplash.it/462/347?image=404',
                 },
+                link: { href: '#0' },
             },
         ]}
     />
@@ -200,6 +212,7 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=400',
                     semilarge: 'https://unsplash.it/462/347?image=400',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -213,6 +226,7 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=401',
                     semilarge: 'https://unsplash.it/462/347?image=401',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -226,6 +240,7 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=402',
                     semilarge: 'https://unsplash.it/462/347?image=402',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -239,6 +254,7 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=403',
                     semilarge: 'https://unsplash.it/462/347?image=403',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -252,6 +268,7 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=404',
                     semilarge: 'https://unsplash.it/462/347?image=404',
                 },
+                link: { href: '#0' },
             },
         ]}
         isInverted
@@ -273,6 +290,7 @@ export const WithHandler: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=400',
                     semilarge: 'https://unsplash.it/462/347?image=400',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -286,6 +304,7 @@ export const WithHandler: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=401',
                     semilarge: 'https://unsplash.it/462/347?image=401',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -299,6 +318,7 @@ export const WithHandler: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=402',
                     semilarge: 'https://unsplash.it/462/347?image=402',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -312,6 +332,7 @@ export const WithHandler: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=403',
                     semilarge: 'https://unsplash.it/462/347?image=403',
                 },
+                link: { href: '#0' },
             },
             {
                 tag: 'Tag Secondary',
@@ -325,6 +346,7 @@ export const WithHandler: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=404',
                     semilarge: 'https://unsplash.it/462/347?image=404',
                 },
+                link: { href: '#0' },
             },
         ]}
         onTagClick={console.log}
