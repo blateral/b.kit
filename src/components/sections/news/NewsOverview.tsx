@@ -13,6 +13,7 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useObserverSupport } from 'utils/useObserverSupport';
 import Copy from 'components/typography/Copy';
+import { useScrollTo } from 'utils/useScrollTo';
 
 const StyledIntro = styled(Intro)`
     ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
@@ -100,7 +101,8 @@ const NewsOverview: React.FC<{
     news: NewsCardProps[];
     activeTag?: string;
     tags?: string[];
-    onTagClick?: (tag: string) => void;
+    queryParams?: Record<string, any>;
+    onTagClick?: (tag: string, insideList?: boolean) => void;
     showMoreText?: string;
 
     isInverted?: boolean;
@@ -115,6 +117,7 @@ const NewsOverview: React.FC<{
     news,
     activeTag,
     tags,
+    queryParams,
     onTagClick,
     showMoreText,
 
@@ -122,6 +125,10 @@ const NewsOverview: React.FC<{
     hasBack,
 }) => {
     const theme = useContext(ThemeContext);
+
+    activeTag = queryParams?.selected
+        ? decodeURI(queryParams.selected)
+        : activeTag;
     const [selectedTag, setSelectedTag] = useState<string | undefined>(
         activeTag || undefined
     );
@@ -136,7 +143,8 @@ const NewsOverview: React.FC<{
 
     const newsCount = news?.length || 0;
 
-    const cardRefs = useEqualSheetHeight({
+    const setNewPos = useScrollTo(800);
+    const { sheetRefs: cardRefs, triggerCalculation } = useEqualSheetHeight({
         listLength: Math.min(visibleRows * itemsPerRow, newsCount),
         identifiers: [
             '[data-sheet="head"]',
@@ -179,6 +187,8 @@ const NewsOverview: React.FC<{
     useEffect(() => {
         // if new tag is selected reset list rows to three visible item rows
         setVisibleRows(3);
+        triggerCalculation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTag]);
 
     useEffect(() => {
@@ -248,7 +258,7 @@ const NewsOverview: React.FC<{
                                                         ? undefined
                                                         : tag
                                                 );
-                                            } else onTagClick(tag);
+                                            } else onTagClick(tag, false);
                                         }}
                                         isActive={selectedTag === tag}
                                     >
@@ -271,22 +281,20 @@ const NewsOverview: React.FC<{
                                     <div key={i} ref={cardRefs[i]}>
                                         <NewsCard
                                             isInverted={isInverted}
-                                            onTagClick={
-                                                activeTag !== item.tag
-                                                    ? (name) => {
-                                                          if (!onTagClick) {
-                                                              // if no callback is defined handle filtering on client side inside the component
-                                                              setSelectedTag(
-                                                                  selectedTag ===
-                                                                      name
-                                                                      ? undefined
-                                                                      : name
-                                                              );
-                                                          } else
-                                                              onTagClick(name);
-                                                      }
-                                                    : undefined
-                                            }
+                                            onTagClick={(name) => {
+                                                // scroll back to top
+                                                setNewPos(0);
+                                                if (!onTagClick) {
+                                                    // if no callback is defined handle filtering on client side inside the component
+                                                    setSelectedTag(
+                                                        selectedTag === name
+                                                            ? undefined
+                                                            : name
+                                                    );
+                                                } else {
+                                                    onTagClick(name, true);
+                                                }
+                                            }}
                                             {...item}
                                         />
                                     </div>

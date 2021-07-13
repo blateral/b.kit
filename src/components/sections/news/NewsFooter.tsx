@@ -54,11 +54,18 @@ type NewsFooterMq = 'small' | 'semilarge';
 
 const NewsFooter: React.FC<{
     news: NewsCardProps[];
+    onTagClick?: (tag: string) => void;
 
     isInverted?: boolean;
     hasBack?: boolean;
     showMoreText?: string;
-}> = ({ news, isInverted = false, hasBack = false, showMoreText }) => {
+}> = ({
+    news,
+    onTagClick,
+    isInverted = false,
+    hasBack = false,
+    showMoreText,
+}) => {
     const newsCount = news?.length || 0;
     const theme = useContext(ThemeContext);
 
@@ -67,7 +74,7 @@ const NewsFooter: React.FC<{
     const [itemsPerRow, setItemsPerRow] = useState(2);
     const [visibleRows, setVisibleRows] = useState(1);
 
-    const cardRefs = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: Math.min(visibleRows * itemsPerRow, newsCount),
         identifiers: [
             '[data-sheet="head"]',
@@ -120,6 +127,7 @@ const NewsFooter: React.FC<{
                                     <div key={i} ref={cardRefs[i]}>
                                         <NewsCard
                                             isInverted={isInverted}
+                                            onTagClick={onTagClick}
                                             {...item}
                                         />
                                     </div>

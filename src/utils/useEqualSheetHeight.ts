@@ -121,6 +121,14 @@ export const useEqualSheetHeight = (props: {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sheetRefs, currentMq]);
 
+    const triggerCalculation = () => {
+        setSheetRefs(() =>
+            Array(props.listLength)
+                .fill(null)
+                .map((_, i) => sheetRefs[i] || createRef())
+        );
+    };
+
     useEffect(() => {
         setSheetRefs(() =>
             Array(props.listLength)
@@ -130,5 +138,8 @@ export const useEqualSheetHeight = (props: {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.listLength]);
 
-    return sheetRefs;
+    return {
+        sheetRefs,
+        triggerCalculation,
+    };
 };
