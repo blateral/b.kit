@@ -1,4 +1,4 @@
-/***** Version: 0.10.11 *****/
+/***** Version: 0.10.15 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -36,6 +36,7 @@ export { default as useIE } from 'utils/useIE';
 export { useItemHeight } from 'utils/useItemHeight';
 export { getMediaQuery, isBrowser, useMediaQuery } from 'utils/useMediaQuery';
 export { useScroll } from 'utils/useScroll';
+export { useScrollTo } from 'utils/useScrollTo';
 export { usePoster, canUseWebP } from 'utils/usePoster';
 export { default as useInterval } from 'utils/useInterval';
 export { default as useTouch } from 'utils/useTouch';

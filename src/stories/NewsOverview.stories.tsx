@@ -32,6 +32,7 @@ const exampleNewsCard: NewsCardProps = {
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
     text:
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+    link: { href: '#0' },
     ...actions,
 };
 
@@ -47,6 +48,8 @@ const exampleNewsTag1 = generateItemList<NewsCardProps>(
             large: 'https://unsplash.it/591/444?image=40' + i,
             xlarge: 'https://unsplash.it/592/445?image=40' + i,
         },
+        text:
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     })
 );
 
@@ -85,6 +88,7 @@ export const Default: Story = () => (
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        queryParams={{ selected: 'Tag 7' }}
         tags={[
             'Tag 1',
             'Tag 2',
