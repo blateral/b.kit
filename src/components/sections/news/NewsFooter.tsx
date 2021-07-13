@@ -142,7 +142,7 @@ const NewsFooter: React.FC<{
                                 }}
                             >
                                 {visibleRows < newsCount / itemsPerRow &&
-                                    (showMoreText || 'show more')}
+                                    (showMoreText || 'mehr anzeigen')}
                             </ShowMore>
                         </Copy>
                     </Actions>
