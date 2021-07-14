@@ -7,26 +7,6 @@ import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { getColors as color, mq, spacings } from 'utils/styles';
 
-const ContentBlock = styled.div<{ isInverted?: boolean }>`
-    /* &:before {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 1px;
-        background-color: ${({ isInverted }) => (isInverted ? '#fff' : '#000')};
-        margin-bottom: ${spacings.spacer * 2}px;
-    }
-
-    &:after {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 1px;
-        background-color: ${({ isInverted }) => (isInverted ? '#fff' : '#000')};
-        margin-top: ${spacings.spacer * 2}px;
-    } */
-`;
-
 const Seperator = styled.div<{ isInverted?: boolean }>`
     border-bottom: solid 1px
         ${({ isInverted, theme }) =>
