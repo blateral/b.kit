@@ -8,7 +8,7 @@ import Heading from 'components/typography/Heading';
 import { getColors as color, mq, spacings } from 'utils/styles';
 
 const ContentBlock = styled.div<{ isInverted?: boolean }>`
-    &:before {
+    /* &:before {
         content: '';
         display: block;
         width: 100%;
@@ -23,6 +23,20 @@ const ContentBlock = styled.div<{ isInverted?: boolean }>`
         width: 100%;
         height: 1px;
         background-color: ${({ isInverted }) => (isInverted ? '#fff' : '#000')};
+        margin-top: ${spacings.spacer * 2}px;
+    } */
+`;
+
+const Seperator = styled.div<{ isInverted?: boolean }>`
+    border-bottom: solid 1px
+        ${({ isInverted, theme }) =>
+            isInverted ? color(theme).light : color(theme).dark};
+
+    &:first-child {
+        margin-bottom: ${spacings.spacer * 2}px;
+    }
+
+    &:last-child {
         margin-top: ${spacings.spacer * 2}px;
     }
 `;
@@ -66,13 +80,7 @@ const NewsAuthorCard: React.FC<{
 
     isInverted?: boolean;
     hasBack?: boolean;
-}> = ({
-    label = 'Written By',
-    author,
-    avatar,
-    isInverted = false,
-    hasBack = false,
-}) => {
+}> = ({ label, author, avatar, isInverted = false, hasBack = false }) => {
     const theme = React.useContext(ThemeContext);
 
     return (
@@ -87,19 +95,33 @@ const NewsAuthorCard: React.FC<{
             }
         >
             <Wrapper clampWidth="small" addWhitespace>
-                <ContentBlock isInverted={isInverted}>
-                    <ContentFlex>
-                        {avatar && <Avatar src={avatar.src} alt={avatar.alt} />}
-                        <Author>
-                            <StyledCopy isInverted={isInverted} type="copy-b">
-                                {label}
-                            </StyledCopy>
-                            <Heading isInverted={isInverted} size="heading-2">
-                                {author}
-                            </Heading>
-                        </Author>
-                    </ContentFlex>
-                </ContentBlock>
+                {(avatar?.src || label || author) && (
+                    <>
+                        <Seperator />
+                        <ContentFlex>
+                            {avatar && (
+                                <Avatar src={avatar.src} alt={avatar.alt} />
+                            )}
+                            <Author>
+                                {author && (
+                                    <StyledCopy
+                                        isInverted={isInverted}
+                                        type="copy-b"
+                                    >
+                                        {label || 'Written By'}
+                                    </StyledCopy>
+                                )}
+                                <Heading
+                                    isInverted={isInverted}
+                                    size="heading-2"
+                                >
+                                    {author}
+                                </Heading>
+                            </Author>
+                        </ContentFlex>
+                    </>
+                )}
+                <Seperator />
             </Wrapper>
         </Section>
     );
