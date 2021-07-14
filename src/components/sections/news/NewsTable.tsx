@@ -75,8 +75,8 @@ const TableBlock: React.FC<TableProps> = ({
     row,
     tableTitle,
     rowTitle,
-    isInverted,
-    hasBack,
+    isInverted = false,
+    hasBack = false,
 }) => {
     return (
         <div>
