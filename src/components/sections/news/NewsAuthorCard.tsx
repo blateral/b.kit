@@ -11,14 +11,6 @@ const Seperator = styled.div<{ isInverted?: boolean }>`
     border-bottom: solid 1px
         ${({ isInverted, theme }) =>
             isInverted ? color(theme).light : color(theme).dark};
-
-    &:first-child {
-        margin-bottom: ${spacings.spacer * 2}px;
-    }
-
-    &:last-child {
-        margin-top: ${spacings.spacer * 2}px;
-    }
 `;
 
 const ContentFlex = styled.div`
@@ -27,6 +19,8 @@ const ContentFlex = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
+
+    margin: ${spacings.spacer * 2}px 0;
 
     @media ${mq.medium} {
         flex-direction: row;
