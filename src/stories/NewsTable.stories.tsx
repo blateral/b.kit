@@ -210,6 +210,66 @@ export const WithActions: Story = () => (
     />
 );
 
+export const WithBackground: Story = () => (
+    <NewsTable
+        hasBack
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+        tableItems={[
+            {
+                rowTitle: [
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+        ]}
+    />
+);
+
 export const isInverted: Story = () => (
     <NewsTable
         primaryAction={(isInverted) => (

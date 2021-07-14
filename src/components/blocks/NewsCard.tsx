@@ -110,6 +110,11 @@ const NewsCard: React.FC<
         publishedAt = formatter.getFormattedDate();
     }
 
+    // settings max text length to 300 chars
+    if (text && text.length > 300) {
+        text = text.slice(0, 301) + '...';
+    }
+
     return (
         <View className={className}>
             {image && (

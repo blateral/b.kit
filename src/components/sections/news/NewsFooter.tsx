@@ -36,11 +36,12 @@ const ContentFlex = styled.div`
 
 const Actions = styled.div`
     ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
-    text-align: center;
+    text-align: left;
 `;
 
 const ShowMore = styled.span<{ itemCount?: number }>`
     cursor: pointer;
+    text-decoration: underline;
 
     display: ${({ itemCount }) =>
         itemCount && itemCount > 2 ? 'block' : 'none'};
@@ -150,7 +151,7 @@ const NewsFooter: React.FC<{
                                 }}
                             >
                                 {visibleRows < newsCount / itemsPerRow &&
-                                    (showMoreText || 'show more')}
+                                    (showMoreText || 'mehr anzeigen')}
                             </ShowMore>
                         </Copy>
                     </Actions>

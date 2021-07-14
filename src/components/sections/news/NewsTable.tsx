@@ -11,13 +11,6 @@ const TableContainer = styled.div`
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-
-    /* @media ${mq.semilarge} {
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: pre-wrap;
-        margin-right: 0px;
-    } */
 `;
 
 const TableBody = styled.table`
@@ -28,17 +21,17 @@ const TableBody = styled.table`
     border-collapse: separate;
     border-spacing: 0 ${spacings.nudge}px;
 
-    // padding: 0 ${spacings.nudge * 2}px;
-
     @media ${mq.medium} {
         padding: 0;
     }
 `;
 
-const TableHead = styled.th`
+const TableHead = styled.th<{ hasBack?: boolean; isInverted?: boolean }>`
     text-align: left;
     color: ${({ theme }) => color(theme).dark};
-    background-color: ${({ theme }) => color(theme).light};
+    background-color: ${({ theme, hasBack, isInverted }) =>
+        hasBack && !isInverted ? color(theme).light : color(theme).mono.light};
+
     padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px
         ${spacings.nudge * 3.5}px ${spacings.spacer * 2}px;
     min-width: 60px;
@@ -49,14 +42,19 @@ const TableHead = styled.th`
     }
 `;
 
-const TableData = styled.td<{ isInverted?: boolean }>`
+const TableData = styled.td<{ isInverted?: boolean; hasBack?: boolean }>`
     padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px
         ${spacings.nudge * 3.5}px ${spacings.spacer * 2}px;
     min-width: 60px;
     box-sizing: content-box;
 
-    background-color: ${({ isInverted, theme }) =>
-        hexToRgba(color(theme).light, isInverted ? 0.2 : 0.4)};
+    background-color: ${({ isInverted, hasBack, theme }) =>
+        hexToRgba(
+            hasBack && !isInverted
+                ? color(theme).light
+                : color(theme).mono.light,
+            isInverted ? 0.2 : 0.4
+        )};
 
     :last-child {
         padding-right: ${spacings.spacer * 2.5}px;
@@ -70,13 +68,15 @@ export interface TableProps {
         cols: string[];
     }[];
     isInverted?: boolean;
+    hasBack?: boolean;
 }
 
 const TableBlock: React.FC<TableProps> = ({
     row,
     tableTitle,
     rowTitle,
-    isInverted,
+    isInverted = false,
+    hasBack = false,
 }) => {
     return (
         <div>
@@ -92,7 +92,11 @@ const TableBlock: React.FC<TableProps> = ({
                             <tr>
                                 {rowTitle.map((item, ii) => {
                                     return (
-                                        <TableHead key={ii}>
+                                        <TableHead
+                                            hasBack={hasBack}
+                                            isInverted={isInverted}
+                                            key={ii}
+                                        >
                                             <Copy type="copy-b">{item}</Copy>
                                         </TableHead>
                                     );
@@ -108,6 +112,7 @@ const TableBlock: React.FC<TableProps> = ({
                                         <TableData
                                             key={ii}
                                             isInverted={isInverted}
+                                            hasBack={hasBack}
                                         >
                                             <Copy isInverted={isInverted}>
                                                 {itemText}
@@ -145,18 +150,29 @@ const NewsTable: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isInverted?: boolean;
-}> = ({ isInverted, tableItems, primaryAction, secondaryAction }) => {
+    hasBack?: boolean;
+}> = ({ isInverted, hasBack, tableItems, primaryAction, secondaryAction }) => {
     const theme = React.useContext(ThemeContext);
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBack
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
         >
             <Wrapper addWhitespace clampWidth="small">
                 {tableItems.map((item, i) => {
                     return (
                         <TableWrapper key={i}>
-                            <TableBlock {...item} isInverted={isInverted} />
+                            <TableBlock
+                                {...item}
+                                hasBack={hasBack}
+                                isInverted={isInverted}
+                            />
                         </TableWrapper>
                     );
                 })}

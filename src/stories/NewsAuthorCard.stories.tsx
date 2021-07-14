@@ -7,7 +7,11 @@ export default {
     component: NewsAuthorCard,
 } as Meta;
 
-export const Default: Story = () => (
+export const Default: Story = () => <NewsAuthorCard />;
+
+export const WithAuthor: Story = () => <NewsAuthorCard author="Author Name" />;
+
+export const WithAvatar: Story = () => (
     <NewsAuthorCard
         author="Author Name"
         avatar={{
