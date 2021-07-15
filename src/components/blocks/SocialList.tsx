@@ -5,10 +5,10 @@ import { getColors as color, spacings } from 'utils/styles';
 import Link from 'components/typography/Link';
 
 const View = styled.div`
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
-    padding: ${spacings.nudge * 2}px 0;
+    // padding: ${spacings.nudge * 2}px 0;
     // overflow: hidden;
 
     & > * + * {
