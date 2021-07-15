@@ -30,6 +30,12 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     line-height: 1;
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
 
+    perspective: 1000;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-perspective: 1000;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: auto;
+
     outline: none;
     box-shadow: none;
     border: solid 1px
@@ -44,7 +50,7 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
 
     pointer-events: ${({ disable }) => (disable ? 'none' : 'all')};
 
-    will-change: transform;
+    // will-change: transform;
 
     background-color: transparent;
     color: ${({ theme, inverted, disable }) =>
