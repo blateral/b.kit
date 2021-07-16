@@ -69,7 +69,7 @@ const NewsAuthorCard: React.FC<{
             }
         >
             <Wrapper clampWidth="small" addWhitespace>
-                {(avatar?.src || label || author) && (
+                {author && (
                     <>
                         <Seperator isInverted={isInverted} />
                         <ContentFlex>
