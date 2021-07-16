@@ -238,9 +238,9 @@ const NewsOverview: React.FC<{
                 )}
                 {tags && (
                     <TagContainer>
-                        {tags.map((tag, i) => {
+                        {tags.sort().map((tag, i) => {
                             return (
-                                <TagWrapper key={i}>
+                                <TagWrapper key={'tag_' + i}>
                                     <Tag
                                         isInverted={isInverted}
                                         onClick={() => {
