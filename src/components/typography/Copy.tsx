@@ -52,9 +52,14 @@ const BaseStyles = styled.div<{
     //     margin-bottom: 0;
     // }
 
-    ul,
-    ol {
+    :not(li) > ul,
+    :not(li) > ol {
         display: inline-block;
+        padding-left: 0;
+    }
+
+    li > ul,
+    li > ol {
         padding-left: 0;
     }
 

@@ -9,6 +9,7 @@ import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { useContext, useEffect, useState } from 'react';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+import Pointer from 'components/buttons/Pointer';
 
 const ContentFlex = styled.div`
     & > * + * {
@@ -40,15 +41,8 @@ const Actions = styled.div`
 `;
 
 const ShowMore = styled.span<{ itemCount?: number }>`
-    cursor: pointer;
-    text-decoration: underline;
-
     display: ${({ itemCount }) =>
         itemCount && itemCount > 2 ? 'block' : 'none'};
-
-    &:hover {
-        opacity: 0.75;
-    }
 `;
 
 type NewsFooterMq = 'small' | 'semilarge';
@@ -150,8 +144,16 @@ const NewsFooter: React.FC<{
                                     }
                                 }}
                             >
-                                {visibleRows < newsCount / itemsPerRow &&
-                                    (showMoreText || 'mehr anzeigen')}
+                                {visibleRows < newsCount / itemsPerRow && (
+                                    <Pointer.View
+                                        as="button"
+                                        isInverted={isInverted}
+                                    >
+                                        <Pointer.Label>
+                                            {showMoreText || 'mehr anzeigen'}
+                                        </Pointer.Label>
+                                    </Pointer.View>
+                                )}
                             </ShowMore>
                         </Copy>
                     </Actions>

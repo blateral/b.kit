@@ -14,6 +14,7 @@ import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useObserverSupport } from 'utils/useObserverSupport';
 import Copy from 'components/typography/Copy';
 import { useScrollTo } from 'utils/useScrollTo';
+import Pointer from 'components/buttons/Pointer';
 
 const StyledIntro = styled(Intro)`
     ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
@@ -77,16 +78,8 @@ const ListFooter = styled.div`
 `;
 
 const ShowMore = styled.span<{ itemCount?: number }>`
-    cursor: pointer;
-
-    text-decoration: underline;
-
     display: ${({ itemCount }) =>
         itemCount && itemCount > 2 ? 'block' : 'none'};
-
-    &:hover {
-        opacity: 0.75;
-    }
 `;
 
 type NewsOverviewMq = 'small' | 'semilarge' | 'large';
@@ -322,8 +315,17 @@ const NewsOverview: React.FC<{
                                         }
                                     }}
                                 >
-                                    {visibleRows < newsCount / itemsPerRow &&
-                                        (showMoreText || 'mehr anzeigen')}
+                                    {visibleRows < newsCount / itemsPerRow && (
+                                        <Pointer.View
+                                            as="button"
+                                            isInverted={isInverted}
+                                        >
+                                            <Pointer.Label>
+                                                {showMoreText ||
+                                                    'mehr anzeigen'}
+                                            </Pointer.Label>
+                                        </Pointer.View>
+                                    )}
                                 </ShowMore>
                             </Copy>
                         )}

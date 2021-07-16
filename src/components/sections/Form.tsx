@@ -18,6 +18,7 @@ const StyledIntro = styled(Intro)`
 
 const FieldsContainer = styled.div`
     padding-bottom: 30px;
+    max-width: 1150px;
 
     & > * > * + * {
         padding-top: 30px;
@@ -27,10 +28,6 @@ const FieldsContainer = styled.div`
         display: flex;
         flex-direction: row;
         align-items: top;
-    }
-
-    @media ${mq.semilarge} {
-        width: 70%;
     }
 `;
 
