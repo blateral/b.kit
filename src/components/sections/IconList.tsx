@@ -8,6 +8,7 @@ import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
+import Pointer from 'components/buttons/Pointer';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: 0 auto;
@@ -45,9 +46,6 @@ const ItemContainer = styled.div<{ isCentered?: boolean }>`
 `;
 
 const ShowMore = styled.span<{ itemCount?: number }>`
-    text-decoration: underline;
-    cursor: pointer;
-
     display: ${({ itemCount }) =>
         itemCount && itemCount > 6 ? 'block' : 'none'};
 
@@ -70,7 +68,7 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     flex-wrap: wrap;
     margin-left: -20px;
 
-    @media ${mq.semilarge} {
+    @media ${mq.medium} {
         align-items: ${({ isCentered }) =>
             isCentered ? 'center' : 'flex-start'};
         justify-content: ${({ isCentered }) =>
@@ -78,14 +76,17 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     }
 `;
 
-const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
+const ActionsWrapper = styled.div<{ isCentered?: boolean }>`
     position: relative;
     padding-top: ${spacings.spacer * 2}px;
-    /* left: ${({ isCentered }) => isCentered && '50%'};
-    transform: ${({ isCentered }) => isCentered && 'translateX(-50%)'}; */
 
-    @media ${mq.semilarge} {
-        margin: ${({ isCentered }) => isCentered && '0 auto'};
+    @media ${mq.medium} {
+        text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+    }
+`;
+
+const StyledActions = styled(Actions)`
+    @media ${mq.medium} {
         max-width: 600px;
     }
 `;
@@ -110,11 +111,11 @@ const Item = styled.img<{ isVisible?: boolean; index: number }>`
     }
 `;
 
-const ListFooter = styled(Copy)`
+const ListFooter = styled(Copy)<{ isCentered?: boolean }>`
     text-align: center;
 
     @media ${mq.medium} {
-        text-align: left;
+        text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
     }
 `;
 
@@ -198,25 +199,35 @@ const IconList: React.FC<{
                             type="copy"
                             size="medium"
                             isInverted={isInverted}
+                            isCentered={isCentered}
                         >
                             <ShowMore
                                 itemCount={items.length}
                                 onClick={() => setShowMore((prev) => !prev)}
                             >
-                                {showMore ? showLessText : showMoreText}
+                                <Pointer.View
+                                    as="button"
+                                    isInverted={isInverted}
+                                >
+                                    <Pointer.Label>
+                                        {showMore ? showLessText : showMoreText}
+                                    </Pointer.Label>
+                                </Pointer.View>
                             </ShowMore>
                         </ListFooter>
                     </Copy>
                 </ListContainer>
 
                 {(primaryAction || secondaryAction) && (
-                    <StyledActions
-                        isCentered={isCentered}
-                        primary={primaryAction && primaryAction(isInverted)}
-                        secondary={
-                            secondaryAction && secondaryAction(isInverted)
-                        }
-                    />
+                    <ActionsWrapper isCentered={isCentered}>
+                        <StyledActions
+                            isCentered={isCentered}
+                            primary={primaryAction && primaryAction(isInverted)}
+                            secondary={
+                                secondaryAction && secondaryAction(isInverted)
+                            }
+                        />
+                    </ActionsWrapper>
                 )}
             </Wrapper>
         </StyledSection>
