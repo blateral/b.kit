@@ -42,22 +42,12 @@ export const WithLabel: Story = () => (
     <Textfield name="field_a" label="Label text" placeholder="Enter text.." />
 );
 
-export const WithCustomOptionalLabel: Story = () => (
-    <Textfield
-        name="field_a"
-        label="Label text"
-        placeholder="Enter text.."
-        optionalLabel="Not Required*"
-    />
-);
-
 export const WithInfoMessage: Story = () => (
     <Textfield
         name="field_a"
         label="Label text"
         placeholder="Enter text.."
         infoMessage="Das ist ein Textfeld"
-        optionalLabel="*Optional"
     />
 );
 
@@ -66,7 +56,6 @@ export const AsRequired: Story = () => (
         name="field_a"
         label="Label text"
         placeholder="Enter text.."
-        optionalLabel="*Optional"
         infoMessage="Das ist ein Textfeld"
         isRequired
     />
@@ -78,7 +67,6 @@ export const IsDisabled: Story = () => (
         name="field_a"
         label="Label text"
         placeholder="Enter text.."
-        optionalLabel="*Optional"
         infoMessage="Das ist ein Textfeld"
     />
 );
@@ -88,7 +76,6 @@ export const HasError: Story = () => (
         name="field_a"
         label="Label text"
         placeholder="Enter text.."
-        optionalLabel="*Optional"
         infoMessage="Das ist ein Textfeld"
         errorMessage="Bitte geben Sie einen gültigen Wert ein!"
     />
@@ -99,7 +86,6 @@ export const IsInverted: Story = () => (
         name="field_a"
         label="Label text"
         placeholder="Enter text.."
-        optionalLabel="*Optional"
         infoMessage="Das ist ein Textfeld"
         isInverted
     />

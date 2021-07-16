@@ -15,6 +15,8 @@ const View = styled.div`
 `;
 
 const Label = styled(Copy)`
+    display: flex;
+
     & > * {
         margin: 0;
     }
@@ -106,7 +108,7 @@ const Checkbox: React.FC<{
                             ? getColors(theme).mono.dark
                             : getColors(theme).primary.medium
                     }
-                    innerHTML={label}
+                    innerHTML={`${label}${isRequired ? '<span> *</span>' : ''}`}
                 />
             )}
         </View>

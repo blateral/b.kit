@@ -32,11 +32,6 @@ const Field = styled.input<{
     -webkit-appearance: none;
 
     padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
-
-    /* border: ${({ isInverted, theme }) =>
-        isInverted
-            ? '2px solid transparent'
-            : `2px solid ${color(theme).mono.medium}`}; */
     border: ${({ hasError }) =>
         hasError ? '2px solid #ff0000' : '2px solid transparent'};
     background-color: ${({ isInverted, hasBack, theme }) =>
@@ -72,13 +67,8 @@ const ErrorMessage = styled(Copy)`
     padding-left: ${spacings.nudge}px;
 `;
 
-const OptionalLabel = styled(Copy)`
-    margin-left: auto;
-`;
-
 export type FormProps = {
     label?: string;
-    optionalLabel?: string;
     errorMessage?: string;
     infoMessage?: string;
 
@@ -100,7 +90,6 @@ const Textfield: React.FC<
     lightBg,
     type = 'text',
     label,
-    optionalLabel = 'Optional*',
     errorMessage,
     infoMessage,
     placeholder,
@@ -124,16 +113,8 @@ const Textfield: React.FC<
                         }
                         size="small"
                     >
-                        {label}
+                        {`${label}${isRequired ? ' *' : ''}`}
                     </Copy>
-                )}
-                {!isRequired && optionalLabel && (
-                    <OptionalLabel
-                        textColor={color(theme).mono.dark}
-                        size="small"
-                    >
-                        {optionalLabel}
-                    </OptionalLabel>
                 )}
             </FieldHead>
             <Copy textColor={color(theme).secondary.dark} type="copy-b">

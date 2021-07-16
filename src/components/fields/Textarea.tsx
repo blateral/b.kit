@@ -77,10 +77,6 @@ const ErrorMessage = styled(Copy)`
     margin-top: ${spacings.nudge * 2}px;
 `;
 
-const OptionalLabel = styled(Copy)`
-    margin-left: auto;
-`;
-
 const Textarea: React.FC<
     FormProps & {
         isInverted?: boolean;
@@ -90,7 +86,6 @@ const Textarea: React.FC<
 > = ({
     lightBg,
     label,
-    optionalLabel = 'Optional*',
     errorMessage,
     infoMessage,
     placeholder,
@@ -114,16 +109,8 @@ const Textarea: React.FC<
                         }
                         size="small"
                     >
-                        {label}
+                        {`${label}${isRequired ? ' *' : ''}`}
                     </Copy>
-                )}
-                {!isRequired && optionalLabel && (
-                    <OptionalLabel
-                        textColor={color(theme).mono.dark}
-                        size="small"
-                    >
-                        {optionalLabel}
-                    </OptionalLabel>
                 )}
             </FieldHead>
             <Copy type="copy-b">

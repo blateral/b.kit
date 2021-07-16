@@ -32,7 +32,7 @@ const FieldsContainer = styled.div`
 `;
 
 const FlexContainer = styled.div`
-    flex: 1 0 50%;
+    flex: 0 1 50%;
     width: 100%;
     max-width: 650px;
 
@@ -43,7 +43,7 @@ const FlexContainer = styled.div`
     @media ${mq.medium} {
         & + & {
             padding-top: 0;
-            padding-left: 30px;
+            margin-left: 30px;
         }
     }
 `;
@@ -217,9 +217,6 @@ const Form: React.FC<{
                                                 formFields.name?.isRequired
                                             }
                                             errorMessage={errors.name}
-                                            optionalLabel={
-                                                formFields.name?.optionalLabel
-                                            }
                                             isInverted={isInverted}
                                             lightBg={bgMode === 'full'}
                                         />
@@ -242,9 +239,6 @@ const Form: React.FC<{
                                                 formFields.surname?.isRequired
                                             }
                                             errorMessage={errors.surname}
-                                            optionalLabel={
-                                                formFields.name?.optionalLabel
-                                            }
                                             isInverted={isInverted}
                                             lightBg={bgMode === 'full'}
                                         />
@@ -268,9 +262,6 @@ const Form: React.FC<{
                                                 formFields.mail?.isRequired
                                             }
                                             errorMessage={errors.mail}
-                                            optionalLabel={
-                                                formFields.name?.optionalLabel
-                                            }
                                             isInverted={isInverted}
                                             lightBg={bgMode === 'full'}
                                         />
@@ -294,9 +285,6 @@ const Form: React.FC<{
                                                 formFields.phone?.isRequired
                                             }
                                             errorMessage={errors.phone}
-                                            optionalLabel={
-                                                formFields.name?.optionalLabel
-                                            }
                                             isInverted={isInverted}
                                             lightBg={bgMode === 'full'}
                                         />
@@ -321,9 +309,6 @@ const Form: React.FC<{
                                                 formFields.area?.isRequired
                                             }
                                             errorMessage={errors.area}
-                                            optionalLabel={
-                                                formFields.name?.optionalLabel
-                                            }
                                             isInverted={isInverted}
                                             lightBg={bgMode === 'full'}
                                         />
