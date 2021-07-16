@@ -14,7 +14,17 @@ export const Default: Story = () => (
     />
 );
 
-export const WithMeta: Story = () => (
+export const WithAuthor: Story = () => (
+    <NewsIntro
+        meta={{
+            author: 'Max Mustermann',
+        }}
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
+    />
+);
+
+export const WithAuthorAndDate: Story = () => (
     <NewsIntro
         meta={{
             author: 'Max Mustermann',
@@ -27,7 +37,7 @@ export const WithMeta: Story = () => (
 
 export const WithTag: Story = () => (
     <NewsIntro
-        tags={["Tag Secondary", "Tag Tertiary", "Tag Quadrifilogio"]}
+        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
@@ -40,7 +50,7 @@ export const WithTag: Story = () => (
 
 export const WithImage: Story = () => (
     <NewsIntro
-        tags={["Tag Secondary", "Tag Tertiary", "Tag Quadrifilogio"]}
+        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
@@ -59,7 +69,7 @@ export const WithImage: Story = () => (
 export const WithBackground: Story = () => (
     <NewsIntro
         hasBack
-        tags={["Tag Secondary", "Tag Tertiary", "Tag Quadrifilogio"]}
+        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',
@@ -77,7 +87,7 @@ export const WithBackground: Story = () => (
 
 export const isInverted: Story = () => (
     <NewsIntro
-        tags={["Tag Secondary", "Tag Tertiary", "Tag Quadrifilogio"]}
+        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
         onTagClick={console.log}
         meta={{
             author: 'Max Mustermann',

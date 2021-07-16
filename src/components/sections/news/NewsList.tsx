@@ -12,6 +12,7 @@ import Copy from 'components/typography/Copy';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useContext, useEffect, useState } from 'react';
 import { useMediaQuery } from 'utils/useMediaQuery';
+import Pointer from 'components/buttons/Pointer';
 
 const StyledIntro = styled(Intro)`
     padding-bottom: ${spacings.spacer * 2}px;
@@ -58,16 +59,8 @@ const ListFooter = styled.div`
 `;
 
 const ShowMore = styled.span<{ itemCount?: number }>`
-    cursor: pointer;
-
-    text-decoration: underline;
-
     display: ${({ itemCount }) =>
         itemCount && itemCount > 2 ? 'block' : 'none'};
-
-    &:hover {
-        opacity: 0.75;
-    }
 `;
 
 type NewsListMq = 'small' | 'semilarge' | 'large';
@@ -203,8 +196,16 @@ const NewsList: React.FC<{
                                     }
                                 }}
                             >
-                                {visibleRows < newsCount / itemsPerRow &&
-                                    (showMoreText || 'mehr anzeigen')}
+                                {visibleRows < newsCount / itemsPerRow && (
+                                    <Pointer.View
+                                        as="button"
+                                        isInverted={isInverted}
+                                    >
+                                        <Pointer.Label>
+                                            {showMoreText || 'mehr anzeigen'}
+                                        </Pointer.Label>
+                                    </Pointer.View>
+                                )}
                             </ShowMore>
                         </Copy>
                     )}

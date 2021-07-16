@@ -107,6 +107,33 @@ export const WithUnevenSiteLinks: Story = () => (
     />
 );
 
+export const WithSocials: Story = () => (
+    <Footer
+        logo={{
+            img: 'https://via.placeholder.com/289x77?text=Logo',
+            link: '/',
+        }}
+        contactData={exampleContactData}
+        siteLinks={[
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen', isActive: true },
+            { href: '#', label: 'Arbeiten & Mitwirken' },
+            { href: '#', label: 'Spenden' },
+            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Aufgaben/Bereiche' },
+            { href: '#', label: 'Pflege' },
+            { href: '#', label: 'Wohnen' },
+        ]}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Xing /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+    />
+);
+
 export const WithNewsletterTitleAndText: Story = () => (
     <Footer
         logo={{
@@ -128,48 +155,18 @@ export const WithNewsletterTitleAndText: Story = () => (
             { href: '#', label: 'Spenden' },
             { href: '#', label: 'Stiftung' },
         ]}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Xing /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
         newsTitle="Newsletter"
         newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
     />
 );
 
 export const WithNewsletterForm: Story = () => (
-    <Footer
-        logo={{
-            img: 'https://via.placeholder.com/289x77?text=Logo',
-            link: '/',
-        }}
-        contactData={exampleContactData}
-        siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen' },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-        ]}
-        newsTitle="Newsletter"
-        newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
-        newsForm={(isInverted) => (
-            <CompactForm
-                isInverted={isInverted}
-                placeholder="Geben Sie Ihre E-Mail Adresse an"
-                buttonIcon={'Primary'}
-                onSubmit={console.log}
-                onClick={console.log}
-                onBlur={console.log}
-            />
-        )}
-    />
-);
-
-export const WithSocials: Story = () => (
     <Footer
         logo={{
             img: 'https://via.placeholder.com/289x77?text=Logo',

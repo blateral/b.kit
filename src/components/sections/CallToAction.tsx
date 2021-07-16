@@ -180,16 +180,16 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
     );
 };
 
-const StyledSection = styled(Section)`
-    padding: ${spacings.spacer * 3}px ${spacings.nudge * 2}px;
-    padding-top: ${spacings.spacer * 2}px;
-    text-align: center;
+// const StyledSection = styled(Section)`
+//     padding: ${spacings.spacer * 3}px ${spacings.nudge * 2}px;
+//     padding-top: ${spacings.spacer * 2}px;
+//     text-align: center;
 
-    @media ${mq.medium} {
-        padding: ${spacings.spacer * 3}px ${spacings.spacer}px;
-        padding-top: ${spacings.spacer * 2}px;
-    }
-`;
+//     @media ${mq.medium} {
+//         padding: ${spacings.spacer * 3}px ${spacings.spacer}px;
+//         padding-top: ${spacings.spacer * 2}px;
+//     }
+// `;
 
 const StyledIntro = styled(Intro)`
     @media ${mq.semilarge} {
@@ -277,11 +277,11 @@ export const CallToAction: FC<{
     const theme = useContext(ThemeContext);
 
     return (
-        <StyledSection
+        <Section
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
         >
-            <Wrapper clampWidth="normal">
+            <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
                 <Content>
                     {title && (
@@ -320,7 +320,7 @@ export const CallToAction: FC<{
                     )}
                 </Content>
             </Wrapper>
-        </StyledSection>
+        </Section>
     );
 };
 

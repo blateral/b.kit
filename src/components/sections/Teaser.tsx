@@ -84,11 +84,6 @@ const StyledTitle = styled(Title)`
 `;
 
 const ContentBlock = styled(Copy)`
-    ul {
-        padding-left: 0;
-        list-style-position: inside;
-    }
-
     :not(:first-child) {
         padding-top: ${spacings.nudge * 5}px;
     }

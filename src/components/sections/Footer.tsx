@@ -39,19 +39,38 @@ const Content = styled.div<{ isInverted?: boolean }>`
     color: ${({ theme, isInverted }) =>
         isInverted ? color(theme).light : color(theme).dark};
 
+    & > * {
+        flex: 1;
+    }
+
+    & > *:last-child {
+        flex: 1 1 100%;
+    }
+
     @media ${mq.medium} {
         flex-direction: row;
         flex-wrap: wrap;
         padding-top: ${spacings.spacer}px;
         padding-bottom: ${spacings.spacer}px;
+
+        & > *:last-child {
+            max-width: 600px;
+        }
+    }
+
+    @media ${mq.large} {
+        & > *:last-child {
+            flex: 1;
+            max-width: 100%;
+        }
     }
 `;
 
 const ContentBlock = styled.div<{
     direction?: 'row' | 'column';
     topSpace?: string;
+    hAlign?: 'left' | 'center' | 'right';
 }>`
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,6 +88,16 @@ const ContentBlock = styled.div<{
         padding-top: ${({ topSpace }) => topSpace && topSpace};
         text-align: left;
         min-width: 330px;
+    }
+
+    @media ${mq.large} {
+        align-items: ${({ hAlign }) =>
+            hAlign === 'right'
+                ? 'flex-end'
+                : hAlign === 'center'
+                ? 'center'
+                : 'flex-start'};
+        text-align: ${({ hAlign }) => hAlign && hAlign};
     }
 `;
 
@@ -289,7 +318,14 @@ const Footer: FC<{
                                 </SiteLinksView>
                             )}
                         </ContentBlock>
-                        <ContentBlock topSpace={logo && columnTopSpace}>
+                        <ContentBlock
+                            topSpace={logo && columnTopSpace}
+                            hAlign={
+                                !newsTitle && !newsText && !newsForm
+                                    ? 'right'
+                                    : 'left'
+                            }
+                        >
                             {newsTitle && (
                                 <Copy type="copy-b" isInverted={isInverted}>
                                     {newsTitle}

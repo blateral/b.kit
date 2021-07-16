@@ -9,10 +9,7 @@ import {
 } from 'utils/styles';
 
 const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
-    min-height: 3em;
-    height: 3.65em;
-    min-width: 210px;
-    padding: 0.1em 1.2em;
+    padding: 0.2em;
 
     display: inline-block;
     display: inline-flex;
@@ -26,7 +23,7 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
     font-weight: ${({ theme }) => font(theme).copy.medium.weight};
     text-align: center;
-    text-decoration: none;
+    text-decoration: underline;
     line-height: 1;
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
 
@@ -37,36 +34,23 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     will-change: auto;
 
     outline: none;
-    box-shadow: none;
-    border: solid 1px
-        ${({ theme, inverted, disable }) =>
-            disable
-                ? color(theme).mono.medium
-                : inverted
-                ? color(theme).light
-                : color(theme).dark};
-    user-select: none;
+    border: none;
     cursor: pointer;
 
     pointer-events: ${({ disable }) => (disable ? 'none' : 'all')};
 
-    // will-change: transform;
-
-    background-color: transparent;
+    background: none;
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).mono.medium
+            ? color(theme).mono.light
             : inverted
             ? color(theme).light
             : color(theme).dark};
-    text-align: center;
-
-    transition: all ease-in-out 0.2s;
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).mono.medium
+                ? color(theme).mono.light
                 : inverted
                 ? color(theme).light
                 : color(theme).dark};
@@ -77,17 +61,16 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     }
 
     &:hover {
-        transform: scale(1.04);
+        opacity: 0.6;
     }
 
-    &:focus {
+    /* &:focus {
         text-decoration: underline;
-        transform: scale(1.012);
     }
 
     &:active {
-        transform: scale(0.95);
-    }
+        text-decoration: underline;
+    } */
 `;
 
 interface Props {
@@ -107,7 +90,7 @@ export type LinkProps = Props & {
     isExternal?: boolean;
 };
 
-const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
+const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
     (
         { as, isInverted, isDisabled, onClick, className, children, ...rest },
         ref
@@ -132,6 +115,7 @@ const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
                     ref={ref}
                     as={as as any}
                     href={(rest as LinkProps).href}
+                    data-disabled={isDisabled}
                     target={
                         (rest as LinkProps).isExternal ? '_blank' : undefined
                     }
@@ -153,7 +137,7 @@ const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
     }
 );
 
-ButtonGhost.displayName = 'Button Ghost';
+Pointer.displayName = 'Button';
 
 const Icon = styled.div<{ iconColor?: string }>`
     display: flex;
@@ -168,6 +152,11 @@ const Icon = styled.div<{ iconColor?: string }>`
 
     transition: transform 0.2s ease-in-out;
 
+    ${View}[data-disabled='true'] > & {
+        color: ${({ theme, iconColor }) =>
+            iconColor || color(theme).mono.light};
+    }
+
     ${View}:hover > & {
         transform: translateX(3px);
     }
@@ -177,4 +166,4 @@ const Label = styled.span`
     display: inline-block;
 `;
 
-export default { View: ButtonGhost, Label: Label, Icon: Icon };
+export default { View: Pointer, Label: Label, Icon: Icon };
