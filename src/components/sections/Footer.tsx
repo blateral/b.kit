@@ -292,7 +292,7 @@ const Footer: FC<{
                                     {siteLinksColLeft.map((link, i) => (
                                         <SiteLink key={i} href={link.href}>
                                             <LinkWrapper
-                                                type="copy-b"
+                                                type="copy"
                                                 isActive={link.isActive}
                                                 isInverted={isInverted}
                                             >
@@ -307,7 +307,7 @@ const Footer: FC<{
                                     {siteLinksColRight.map((link, i) => (
                                         <SiteLink key={i} href={link.href}>
                                             <LinkWrapper
-                                                type="copy-b"
+                                                type="copy"
                                                 isActive={link.isActive}
                                                 isInverted={isInverted}
                                             >

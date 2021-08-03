@@ -258,9 +258,8 @@ const Header: FC<{
                                             as={titleAs}
                                             hasShadow
                                             textColor="#fff"
-                                        >
-                                            {title}
-                                        </Callout>
+                                            innerHTML={title}
+                                        />
                                     )}
                                     {(primaryCta || secondaryCta) && (
                                         <StyledActions
@@ -287,9 +286,12 @@ const Header: FC<{
             <PosterContentMobile>
                 <Wrapper addWhitespace>
                     {title && (
-                        <Callout size="small" as={titleAs} isInverted={false}>
-                            {title}
-                        </Callout>
+                        <Callout
+                            size="small"
+                            as={titleAs}
+                            isInverted={false}
+                            innerHTML={title}
+                        />
                     )}
                     {(primaryCta || secondaryCta) && (
                         <StyledActions
