@@ -195,6 +195,7 @@ const ScrollArea = styled.div`
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
     margin-left: -${spacings.spacer}px;
     padding-left: ${spacings.spacer}px;
+    padding-bottom: ${spacings.spacer * 4.5}px;
 
     & > * {
         flex: 1 1 auto;
