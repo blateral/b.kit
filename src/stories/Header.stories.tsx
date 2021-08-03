@@ -63,7 +63,7 @@ export const WithoutTopGradient: Story = () => (
 
 export const WithTitle: Story = () => (
     <Header
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Risikomanagementprozess"
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
