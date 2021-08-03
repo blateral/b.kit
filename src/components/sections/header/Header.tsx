@@ -254,6 +254,7 @@ const Header: FC<{
                                 >
                                     {title && (
                                         <Callout
+                                            hyphens
                                             size="medium"
                                             as={titleAs}
                                             hasShadow
@@ -287,6 +288,7 @@ const Header: FC<{
                 <Wrapper addWhitespace>
                     {title && (
                         <Callout
+                            hyphens
                             size="small"
                             as={titleAs}
                             isInverted={false}
