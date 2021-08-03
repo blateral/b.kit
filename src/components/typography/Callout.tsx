@@ -21,7 +21,8 @@ const BaseStyles = styled.h1<{
     ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
 
     hyphens: auto;
-    overflow-wrap: break-word;
+    /* -webkit-hyphens: auto; */
+    /* overflow-wrap: break-word; */
 
     ${(props: { hyphens?: boolean }) =>
         !props.hyphens &&
