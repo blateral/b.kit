@@ -54,7 +54,7 @@ const Stage = styled.div<{
         content: ${({ isLarge }) => !isLarge && `""`};
         position: absolute;
         top: 0;
-        left: 0;
+        left: 1px;
         bottom: 0;
         width: 40vw;
 
