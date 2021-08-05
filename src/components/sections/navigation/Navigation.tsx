@@ -69,6 +69,7 @@ const Navigation: FC<NavProps> = ({
     hideTopbarBackUnderMenu,
     isTopbarLargeOnPageTop,
     openMenuIcon,
+    closeMenuIcon,
 }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -103,6 +104,7 @@ const Navigation: FC<NavProps> = ({
                 socials={socials}
                 search={search}
                 onCloseClick={() => setIsMenuOpen(false)}
+                toggleIcon={closeMenuIcon}
                 {...sharedProps}
             />
         </>
