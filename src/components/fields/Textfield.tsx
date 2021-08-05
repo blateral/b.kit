@@ -106,12 +106,10 @@ const Textfield: React.FC<
             <FieldHead>
                 {label && (
                     <Copy
+                        isInverted={isInverted}
                         textColor={
-                            isDisabled
-                                ? color(theme).mono.dark
-                                : color(theme).primary.medium
+                            isDisabled ? color(theme).mono.dark : undefined
                         }
-                        size="small"
                     >
                         {`${label}${isRequired ? ' *' : ''}`}
                     </Copy>
