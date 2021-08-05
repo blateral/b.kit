@@ -410,30 +410,34 @@ const Control: FC<{
 }> = ({ type, onClick, children, className }) => {
     return (
         <SliderContext.Consumer>
-            {(values) => (
-                <ControlView
-                    className={className + ' slider-control'}
-                    onClick={(ev) => {
-                        type === 'next'
-                            ? values.nextStep()
-                            : values.previousStep();
+            {(values) => {
+                if (values.steps > 1) {
+                    return (
+                        <ControlView
+                            className={className + ' slider-control'}
+                            onClick={(ev) => {
+                                type === 'next'
+                                    ? values.nextStep()
+                                    : values.previousStep();
 
-                        onClick && onClick(ev);
-                    }}
-                    disabled={
-                        type === 'next'
-                            ? values.isOnLastStep()
-                            : values.isOnFirstStep()
-                    }
-                >
-                    {children &&
-                        children(
-                            type === 'next'
-                                ? !values.isOnLastStep()
-                                : !values.isOnFirstStep()
-                        )}
-                </ControlView>
-            )}
+                                onClick && onClick(ev);
+                            }}
+                            disabled={
+                                type === 'next'
+                                    ? values.isOnLastStep()
+                                    : values.isOnFirstStep()
+                            }
+                        >
+                            {children &&
+                                children(
+                                    type === 'next'
+                                        ? !values.isOnLastStep()
+                                        : !values.isOnFirstStep()
+                                )}
+                        </ControlView>
+                    );
+                } else return null;
+            }}
         </SliderContext.Consumer>
     );
 };
@@ -515,14 +519,16 @@ const DotGroup: FC<{
         <SliderContext.Consumer>
             {(values) => (
                 <DotGroupView className={className + ' slider-control'}>
-                    {stepsArray?.map((step, i) => {
-                        return (
-                            children &&
-                            children(i, i === values.currentStep, () =>
-                                values.goToStep(i)
-                            )
-                        );
-                    })}
+                    {stepsArray &&
+                        stepsArray.length > 1 &&
+                        stepsArray?.map((step, i) => {
+                            return (
+                                children &&
+                                children(i, i === values.currentStep, () =>
+                                    values.goToStep(i)
+                                )
+                            );
+                        })}
                 </DotGroupView>
             )}
         </SliderContext.Consumer>
