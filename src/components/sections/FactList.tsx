@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, spacings, withRange } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
@@ -60,12 +60,10 @@ const FactList: React.FC<{
         icon?: { src: string; alt?: string };
     }[];
 
-    hasBack?: boolean;
+    bgMode?: 'full' | 'inverted';
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
-    isInverted?: boolean;
 }> = ({
     title,
     titleAs,
@@ -73,22 +71,24 @@ const FactList: React.FC<{
     superTitleAs,
     intro,
     facts,
-    hasBack,
+    bgMode,
     primaryAction,
     secondaryAction,
-    isInverted,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
                     ? getColors(theme).dark
-                    : hasBack
+                    : bgMode === 'full'
                     ? getColors(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (
