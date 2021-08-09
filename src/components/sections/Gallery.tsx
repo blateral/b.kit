@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import { getColors as color, mq, spacings } from 'utils/styles';
@@ -55,13 +55,11 @@ const Gallery: FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    isInverted?: boolean;
-    hasBack?: boolean;
+    bgMode?: 'full' | 'inverted';
     images?: Array<ImageType>;
     className?: string;
 }> = ({
-    isInverted = false,
-    hasBack = false,
+    bgMode,
     images,
     className,
     title,
@@ -73,12 +71,7 @@ const Gallery: FC<{
     secondaryAction,
 }) => {
     const theme = useContext(ThemeContext);
-
-    // const isPrevImgFull = (images: ImageType[], currentIndex: number) => {
-    //     const newIndex = --currentIndex;
-    //     if (images && images[newIndex]) return images[newIndex]?.isFull;
-    //     else return false;
-    // };
+    const isInverted = bgMode === 'inverted';
 
     const isNextImgFull = (images: ImageType[], currentIndex: number) => {
         const newIndex = ++currentIndex;
@@ -98,11 +91,11 @@ const Gallery: FC<{
     return (
         <Section
             addSeperation
-            bgMode="full"
+            bgMode={mapToBgMode(bgMode, true)}
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : bgMode === 'full'
                     ? color(theme).mono.light
                     : 'transparent'
             }

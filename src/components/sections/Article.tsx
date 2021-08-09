@@ -72,12 +72,10 @@ const Article: React.FC<{
     text?: string;
     asideText?: string;
 
-    bgMode?: 'full' | 'splitted';
+    bgMode?: 'full' | 'splitted' | 'inverted';
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
-    isInverted?: boolean;
 }> = ({
     title,
     titleAs,
@@ -89,9 +87,9 @@ const Article: React.FC<{
     bgMode,
     primaryAction,
     secondaryAction,
-    isInverted = false,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
 
     return (
         <Section
@@ -103,7 +101,7 @@ const Article: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 <StyledTitle

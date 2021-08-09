@@ -170,7 +170,7 @@ ImageRatioB.storyName = 'Image ratio 3:4';
 
 export const Inverted: Story = () => (
     <ImageCarousel
-        isInverted
+        bgMode="inverted"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."

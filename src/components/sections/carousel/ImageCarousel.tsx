@@ -7,8 +7,8 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 
 const ImageCarousel: FC<
-    Omit<CarouselProps, 'variableWidths'> & {
-        bgMode?: 'full' | 'splitted';
+    Omit<CarouselProps, 'variableWidths' | 'isInverted'> & {
+        bgMode?: 'full' | 'splitted' | 'inverted';
         images?: ImageProps[];
     }
 > = ({
@@ -19,7 +19,6 @@ const ImageCarousel: FC<
     text,
     primaryAction,
     secondaryAction,
-    isInverted = false,
     bgMode,
     spacing = 'normal',
     images,
@@ -31,6 +30,7 @@ const ImageCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
     const imageCount = images?.length || 0;
 
     return (
@@ -43,7 +43,7 @@ const ImageCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <CarouselBase
                 title={title}

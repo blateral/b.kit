@@ -2,13 +2,17 @@ import * as React from 'react';
 import styled, { css } from 'styled-components';
 import { mq, spacings, withRange } from 'utils/styles';
 
-export type BgMode = 'full' | 'larger-left' | 'larger-right';
+export type BgMode = 'full' | 'larger-left' | 'larger-right' | 'inverted';
 
 const getBackground = (mode: BgMode, bgColor: string) => {
     let bgValue = undefined;
 
     switch (mode) {
         case 'full':
+            bgValue = bgColor;
+            break;
+
+        case 'inverted':
             bgValue = bgColor;
             break;
 
@@ -110,15 +114,15 @@ const Back = styled.div<{
     bottom: 0;
     left: 0;
     max-width: ${({ bgMode }) =>
-        (bgMode === 'full' ? spacings.wrapperLarge : spacings.wrapper) + 'px'};
+        (bgMode === 'full' || bgMode === 'inverted'
+            ? spacings.wrapperLarge
+            : spacings.wrapper) + 'px'};
     background: ${({ bgColor }) => bgColor || undefined};
     margin: 0 auto;
 
     @media ${mq.semilarge} {
         background: ${({ bgColor, bgMode }) =>
-            bgColor && bgMode && bgMode !== 'full'
-                ? getBackground(bgMode, bgColor)
-                : undefined};
+            bgColor && bgMode ? getBackground(bgMode, bgColor) : undefined};
     }
 
     @media ${mq.xlarge} {
@@ -159,7 +163,7 @@ const Section: React.FC<{
 }> = ({
     renderAs,
     bgColor,
-    bgMode = 'full',
+    bgMode,
     addSeperation = false,
     isStackable = false,
     className,
@@ -172,8 +176,14 @@ const Section: React.FC<{
         case 'larger-right':
             bgMode = 'larger-right';
             break;
-        default:
+        case 'inverted':
+            bgMode = 'inverted';
+            break;
+        case 'full':
             bgMode = 'full';
+            break;
+        default:
+            bgMode = undefined;
     }
 
     return (
@@ -199,14 +209,20 @@ const Section: React.FC<{
 export default Section;
 
 export const mapToBgMode = (
-    mode?: 'full' | 'splitted',
+    mode?: 'full' | 'splitted' | 'inverted',
+    preventSplit = false,
     isMirrored = false
 ): BgMode | undefined => {
     switch (mode) {
         case 'full':
             return 'full';
-        case 'splitted':
-            return isMirrored ? 'larger-left' : 'larger-right';
+        case 'inverted':
+            return 'inverted';
+        case 'splitted': {
+            if (!preventSplit)
+                return isMirrored ? 'larger-left' : 'larger-right';
+            else return undefined;
+        }
 
         default:
             return undefined;

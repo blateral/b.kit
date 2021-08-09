@@ -364,7 +364,7 @@ MixedThirdFull.storyName = 'Third to full width';
 
 export const WithBackground: Story = () => (
     <Gallery
-        hasBack
+        bgMode="full"
         images={[
             {
                 small: 'https://unsplash.it/500/246?image=400',
@@ -403,7 +403,7 @@ export const WithBackground: Story = () => (
 
 export const Inverted: Story = () => (
     <Gallery
-        isInverted
+        bgMode="inverted"
         images={[
             {
                 small: 'https://unsplash.it/500/246?image=400',
