@@ -99,7 +99,7 @@ const Poster: FC<{
     image,
 }) => {
     return (
-        <Section>
+        <Section bgColor="undefined" bgMode="full">
             <Wrapper clampWidth="large">
                 <PosterContainer hasContent={title !== undefined}>
                     <StyledImage {...image} coverSpace />
