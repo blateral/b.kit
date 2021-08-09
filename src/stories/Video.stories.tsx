@@ -62,7 +62,7 @@ export const WithIntro: Story = () => (
 
 export const WithBackground: Story = () => (
     <Video
-        hasBack
+        bgMode="full"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -89,6 +89,7 @@ export const WithBackground: Story = () => (
 
 export const Inverted: Story = () => (
     <Video
+        bgMode="inverted"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -110,12 +111,12 @@ export const Inverted: Story = () => (
             alt: 'Placeholder Image',
         }}
         embedId="z9IxDy1tAf8"
-        isInverted
     />
 );
 
 export const WithCustomPlayIcon: Story = () => (
     <Video
+        bgMode="inverted"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -138,6 +139,5 @@ export const WithCustomPlayIcon: Story = () => (
         }}
         embedId="z9IxDy1tAf8"
         playIcon={<Play iconColor="red" />}
-        isInverted
     />
 );

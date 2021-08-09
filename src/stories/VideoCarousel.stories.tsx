@@ -87,7 +87,7 @@ export const WithIntro: Story = () => (
 
 export const Inverted: Story = () => (
     <VideoCarousel
-        isInverted
+        bgMode="inverted"
         videos={exampleVideos.map((item, i) => ({
             ...item,
             bgImage: {

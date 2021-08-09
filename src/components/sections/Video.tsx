@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import { getColors as color, spacings } from 'utils/styles';
 import Intro from 'components/blocks/Intro';
 import Wrapper from 'components/base/Wrapper';
@@ -28,8 +28,7 @@ const Video: React.FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    isInverted?: boolean;
-    hasBack?: boolean;
+    bgMode?: 'full' | 'inverted';
 }> = ({
     title,
     titleAs,
@@ -38,23 +37,24 @@ const Video: React.FC<{
     text,
     primaryAction,
     secondaryAction,
-    isInverted = false,
-    hasBack = false,
+    bgMode,
     bgImage,
     embedId,
     playIcon,
 }) => {
     const theme = useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
 
     return (
         <Section
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : bgMode === 'full'
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode)}
             addSeperation
         >
             {title && (

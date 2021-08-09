@@ -7,8 +7,8 @@ import CarouselBase, { CarouselProps } from './CarouselBase';
 import VideoCard, { VideoCardProps } from 'components/blocks/VideoCard';
 
 const VideoCarousel: FC<
-    Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
-        bgMode?: 'full' | 'splitted';
+    Omit<CarouselProps, 'variableWidths' | 'spacing' | 'isInverted'> & {
+        bgMode?: 'full' | 'splitted' | 'inverted';
         videos?: VideoCardProps[];
     }
 > = ({
@@ -19,7 +19,6 @@ const VideoCarousel: FC<
     text,
     primaryAction,
     secondaryAction,
-    isInverted = false,
     bgMode,
     videos,
     controlNext,
@@ -30,6 +29,7 @@ const VideoCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
     const videoCount = videos?.length || 0;
 
     return (
@@ -42,7 +42,7 @@ const VideoCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <CarouselBase
                 title={title}
