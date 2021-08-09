@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import { getColors as color, spacings, mq } from 'utils/styles';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
@@ -72,17 +72,6 @@ const FeatureCarousel: FC<
         },
     });
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'half-right';
-            default:
-                return undefined;
-        }
-    };
-
     return (
         <Section
             addSeperation
@@ -93,7 +82,7 @@ const FeatureCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
         >
             <StyledWrapper>
                 <CarouselBase

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ThemeContext } from 'styled-components';
 
 import { getColors as color } from 'utils/styles';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import VideoCard, { VideoCardProps } from 'components/blocks/VideoCard';
 
@@ -32,17 +32,6 @@ const VideoCarousel: FC<
     const theme = React.useContext(ThemeContext);
     const videoCount = videos?.length || 0;
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'half-right';
-            default:
-                return undefined;
-        }
-    };
-
     return (
         <Section
             addSeperation
@@ -53,7 +42,7 @@ const VideoCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
         >
             <CarouselBase
                 title={title}

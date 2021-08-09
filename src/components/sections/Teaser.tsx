@@ -7,7 +7,7 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 import Title from 'components/blocks/Title';
 import Wrapper from 'components/base/Wrapper';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import { mq, spacings, withRange, getColors as color } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 
@@ -136,17 +136,6 @@ const Teaser: FC<{
 }) => {
     const theme = useContext(ThemeContext);
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return isMirrored ? 'larger-left' : 'larger-right';
-            default:
-                return undefined;
-        }
-    };
-
     return (
         <Section
             addSeperation
@@ -157,7 +146,7 @@ const Teaser: FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
         >
             <Wrapper clampWidth="normal">
                 <Grid.Row gutter={spacings.spacer}>

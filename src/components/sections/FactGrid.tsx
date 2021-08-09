@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import { HeadlineTag } from 'components/typography/Heading';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Intro from 'components/blocks/Intro';
 import Fact, { FactProps } from 'components/blocks/Fact';
@@ -142,17 +142,6 @@ const FactGrid: FC<{
     const theme = useContext(ThemeContext);
     const factCount = facts?.length || 0;
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'half-right';
-            default:
-                return undefined;
-        }
-    };
-
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: factCount,
         identifiers: [
@@ -179,7 +168,7 @@ const FactGrid: FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (

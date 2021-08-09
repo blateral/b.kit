@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useRef, useState } from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
 
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import { getColors as color, spacings } from 'utils/styles';
@@ -175,7 +175,7 @@ const Control = styled.div`
 
 const ComparisonSlider: FC<{
     isInverted?: boolean;
-    bgMode?: BgMode;
+    bgMode?: 'full' | 'splitted';
     initialValue?: number;
     foregroundImg?: ImageProps;
     backgroundImg?: ImageProps;
@@ -208,23 +208,6 @@ const ComparisonSlider: FC<{
     const [sideOffset, setSideOffset] = useState<number>(0);
     const controlRef = useRef<HTMLDivElement | null>(null);
     const theme = useContext(ThemeContext);
-
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'half-right':
-                return 'half-right';
-            case 'half-left':
-                return 'half-left';
-            case 'larger-right':
-                return 'larger-right';
-            case 'larger-left':
-                return 'larger-left';
-            default:
-                return undefined;
-        }
-    };
 
     useEffect(() => {
         if (controlRef.current) {
@@ -315,7 +298,7 @@ const ComparisonSlider: FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
         >
             <Wrapper>
                 {backgroundImg && foregroundImg && (

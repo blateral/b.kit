@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import Section, { BgMode } from 'components/base/Section';
+import Section from 'components/base/Section';
 import { HeadlineTag } from 'components/typography/Heading';
 import { spacings, mq, getColors as color, withRange } from 'utils/styles';
 import Textfield, { FormProps } from 'components/fields/Textfield';
@@ -83,7 +83,7 @@ const Form: React.FC<{
     yupValidationSchema?: any;
 
     isInverted?: boolean;
-    bgMode?: 'full';
+    hasBack?: boolean;
 
     formFields: {
         name?: FormFieldProps;
@@ -100,7 +100,7 @@ const Form: React.FC<{
         isDisabled?: boolean;
     };
 }> = ({
-    bgMode,
+    hasBack,
     isInverted = false,
     title,
     titleAs,
@@ -118,15 +118,6 @@ const Form: React.FC<{
 }) => {
     const theme = React.useContext(ThemeContext);
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            default:
-                return undefined;
-        }
-    };
-
     const isEmpty = (obj: any) => {
         return (
             obj && Object.keys(obj).length === 0 && obj.constructor === Object
@@ -139,11 +130,10 @@ const Form: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : bgMode
+                    : hasBack
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (
@@ -218,7 +208,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.name}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBack}
                                         />
                                     )}
                                     {formFields.surname && (
@@ -240,7 +230,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.surname}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBack}
                                         />
                                     )}
                                     {formFields.mail && (
@@ -263,7 +253,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.mail}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBack}
                                         />
                                     )}
                                     {formFields.phone && (
@@ -286,7 +276,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.phone}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBack}
                                         />
                                     )}
                                 </FlexContainer>
@@ -310,7 +300,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.area}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBack}
                                         />
                                     </FlexContainer>
                                 )}

@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 
 import { getColors as color } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 
 const ImageCarousel: FC<
@@ -33,17 +33,6 @@ const ImageCarousel: FC<
     const theme = React.useContext(ThemeContext);
     const imageCount = images?.length || 0;
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'half-right';
-            default:
-                return undefined;
-        }
-    };
-
     return (
         <Section
             addSeperation
@@ -54,7 +43,7 @@ const ImageCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
         >
             <CarouselBase
                 title={title}

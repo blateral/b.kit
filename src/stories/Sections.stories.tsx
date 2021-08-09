@@ -58,16 +58,16 @@ export const WithBgColor: Story = () => (
 
 export const WithBgMode: Story = () => (
     <>
-        <Section bgColor="aquamarine" bgMode="half-left">
+        <Section bgColor="aquamarine" bgMode="full">
             <ExampleContent />
         </Section>
-        <Section bgColor="blueviolet" bgMode="half-right">
+        <Section bgColor="blueviolet" bgMode="larger-left">
             <ExampleContent />
         </Section>
-        <Section bgColor="aquamarine" bgMode="larger-left">
+        <Section bgColor="aquamarine" bgMode="larger-right">
             <ExampleContent />
         </Section>
-        <Section bgColor="blueviolet" bgMode="larger-right">
+        <Section bgColor="blueviolet" bgMode="full">
             <ExampleContent />
         </Section>
     </>
@@ -101,12 +101,6 @@ export const WithSeperation: Story = () => (
 
 export const SplittedBackground: Story = () => (
     <>
-        <Section addSeperation bgColor="hotpink" bgMode="half-left">
-            <ExampleContent />
-        </Section>
-        <Section addSeperation bgColor="green" bgMode="half-right">
-            <ExampleContent />
-        </Section>
         <Section addSeperation bgColor="red" bgMode="larger-left">
             <ExampleContent />
         </Section>

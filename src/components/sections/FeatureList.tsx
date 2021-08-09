@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import { getColors as color, spacings, mq } from 'utils/styles';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
 import Intro from 'components/blocks/Intro';
@@ -94,17 +94,6 @@ const FeatureList: React.FC<{
         },
     });
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'half-right';
-            default:
-                return undefined;
-        }
-    };
-
     return (
         <Section
             addSeperation
@@ -115,7 +104,7 @@ const FeatureList: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
         >
             {title && (
                 <Wrapper addWhitespace>

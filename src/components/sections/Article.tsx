@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { ThemeContext, css } from 'styled-components';
 
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
@@ -72,7 +72,7 @@ const Article: React.FC<{
     text?: string;
     asideText?: string;
 
-    bgMode?: BgMode;
+    bgMode?: 'full' | 'splitted';
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -91,23 +91,6 @@ const Article: React.FC<{
     secondaryAction,
     isInverted = false,
 }) => {
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'half-right':
-                return 'half-right';
-            case 'half-left':
-                return 'half-left';
-            case 'larger-right':
-                return 'larger-right';
-            case 'larger-left':
-                return 'larger-left';
-            default:
-                return undefined;
-        }
-    };
-
     const theme = React.useContext(ThemeContext);
 
     return (
@@ -120,7 +103,7 @@ const Article: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 <StyledTitle

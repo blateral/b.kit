@@ -196,9 +196,9 @@ export const WithYupValidation: Story = () => (
     />
 );
 
-export const WithFullBackground: Story = () => (
+export const WithBackground: Story = () => (
     <Form
-        bgMode="full"
+        hasBack
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         formFields={{

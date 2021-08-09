@@ -1,19 +1,8 @@
 import * as React from 'react';
-import { useContext } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
-import {
-    mq,
-    spacings,
-    withRange,
-    getGlobalSettings as settings,
-} from 'utils/styles';
+import styled, { css } from 'styled-components';
+import { mq, spacings, withRange } from 'utils/styles';
 
-export type BgMode =
-    | 'full'
-    | 'half-left'
-    | 'half-right'
-    | 'larger-left'
-    | 'larger-right';
+export type BgMode = 'full' | 'larger-left' | 'larger-right';
 
 const getBackground = (mode: BgMode, bgColor: string) => {
     let bgValue = undefined;
@@ -21,14 +10,6 @@ const getBackground = (mode: BgMode, bgColor: string) => {
     switch (mode) {
         case 'full':
             bgValue = bgColor;
-            break;
-
-        case 'half-left':
-            bgValue = `linear-gradient(to left, transparent 50%, ${bgColor} 50%)`;
-            break;
-
-        case 'half-right':
-            bgValue = `linear-gradient(to right, transparent 50%, ${bgColor} 50%)`;
             break;
 
         case 'larger-left':
@@ -43,52 +24,77 @@ const getBackground = (mode: BgMode, bgColor: string) => {
 };
 
 const View = styled.section<{
-    indent: string;
+    as?: SectionType;
+    bgIdent: string;
+    isStackable?: boolean;
     addSeperation?: boolean;
-    addPlainSeperation?: boolean;
 }>`
     position: relative;
-    overflow: hidden;
+    overflow: ${({ as }) => (as === 'div' ? 'visible' : 'hidden')};
 
-    ${({ addSeperation }) =>
+    // section paddings
+    ${({ addSeperation, isStackable, bgIdent }) =>
         addSeperation &&
-        withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-top')}
-    ${({ addSeperation }) =>
-        addSeperation &&
-        withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-bottom')}
-
-    ${({ indent }) =>
-        indent !== 'plain' &&
         css`
-            &[data-ident='${indent}'] + &[data-ident='${indent}'] {
-                padding-top: 0;
+            ${withRange(
+                [spacings.spacer * 2, spacings.spacer * 4],
+                'padding-top'
+            )}
+            ${withRange(
+                [
+                    isStackable ? spacings.spacer : spacings.spacer * 2,
+                    isStackable ? spacings.spacer : spacings.spacer * 4,
+                ],
+                'padding-bottom'
+            )}
+            &[data-stack-ident='true'] + & {
+                ${withRange([spacings.spacer, spacings.spacer], 'padding-top')};
+            }
+            &[data-bg-ident='${bgIdent}'] + &[data-bg-ident='${bgIdent}'] {
+                ${withRange([0, 0], 'padding-top')}
             }
         `}
 
-    ${({ indent, addPlainSeperation }) =>
-        addPlainSeperation &&
-        indent &&
+    // section margins
+    ${({ addSeperation, isStackable, bgIdent }) =>
+        addSeperation &&
         css`
-            &[data-ident='plain'] {
+            *:not([data-bg-ident='transparent'])
+                + &[data-bg-ident='larger-left'] {
                 ${withRange(
                     [spacings.spacer * 2, spacings.spacer * 4],
                     'margin-top'
-                )}
+                )};
             }
-
-            &[data-ident='plain'] + & {
+            *:not([data-bg-ident='transparent'])
+                + &[data-bg-ident='larger-right'] {
                 ${withRange(
                     [spacings.spacer * 2, spacings.spacer * 4],
                     'margin-top'
-                )}
+                )};
             }
-
-            &[data-ident='plain'] + &[data-ident='transparent'] {
-                margin-top: 0;
+            &[data-bg-ident='larger-left']
+                + &:not([data-bg-ident='transparent']) {
+                ${withRange(
+                    [
+                        isStackable ? spacings.spacer : spacings.spacer * 2,
+                        isStackable ? spacings.spacer : spacings.spacer * 4,
+                    ],
+                    'margin-top'
+                )};
             }
-
-            &[data-ident='transparent'] + &[data-ident='plain'] {
-                margin-top: 0;
+            &[data-bg-ident='larger-right']
+                + &:not([data-bg-ident='transparent']) {
+                ${withRange(
+                    [
+                        isStackable ? spacings.spacer : spacings.spacer * 2,
+                        isStackable ? spacings.spacer : spacings.spacer * 4,
+                    ],
+                    'margin-top'
+                )};
+            }
+            &[data-bg-ident='${bgIdent}'] + &[data-bg-ident='${bgIdent}'] {
+                ${withRange([0, 0], 'margin-top')}
             }
         `}
 `;
@@ -105,9 +111,7 @@ const Back = styled.div<{
     left: 0;
     max-width: ${({ bgMode }) =>
         (bgMode === 'full' ? spacings.wrapperLarge : spacings.wrapper) + 'px'};
-
     background: ${({ bgColor }) => bgColor || undefined};
-
     margin: 0 auto;
 
     @media ${mq.semilarge} {
@@ -120,59 +124,70 @@ const Back = styled.div<{
     @media ${mq.xlarge} {
         :before {
             content: ${({ bgMode }) =>
-                bgMode === 'half-left' || bgMode === 'larger-left'
-                    ? `""`
-                    : undefined};
+                bgMode === 'larger-left' ? `""` : undefined};
             position: absolute;
             top: 0;
             left: 0;
             bottom: 0;
             width: ${(spacings.wrapperLarge - spacings.wrapper) / 2}px;
             background-color: ${({ bgColor }) => bgColor && bgColor};
-
             transform: translateX(-100%);
         }
-
         :after {
             content: ${({ bgMode }) =>
-                bgMode === 'half-right' || bgMode === 'larger-right'
-                    ? `""`
-                    : undefined};
+                bgMode === 'larger-right' ? `""` : undefined};
             position: absolute;
             top: 0;
             right: 0;
             bottom: 0;
             width: ${(spacings.wrapperLarge - spacings.wrapper) / 2}px;
             background-color: ${({ bgColor }) => bgColor && bgColor};
-
             transform: translateX(100%);
         }
     }
 `;
 
+export type SectionType = 'header' | 'footer' | 'div';
+
 const Section: React.FC<{
-    as?: 'header' | 'footer';
+    renderAs?: SectionType;
     bgColor?: string;
     bgMode?: BgMode;
     addSeperation?: boolean;
+    isStackable?: boolean;
     className?: string;
 }> = ({
-    as,
+    renderAs,
     bgColor,
     bgMode = 'full',
     addSeperation = false,
+    isStackable = false,
     className,
     children,
 }) => {
-    const theme = useContext(ThemeContext);
+    switch (bgMode) {
+        case 'larger-left':
+            bgMode = 'larger-left';
+            break;
+        case 'larger-right':
+            bgMode = 'larger-right';
+            break;
+        default:
+            bgMode = 'full';
+    }
 
     return (
         <View
-            as={as}
-            data-ident={bgColor && bgMode === 'full' ? bgColor : 'plain'}
-            indent={bgColor && bgMode === 'full' ? bgColor : 'plain'}
-            addSeperation={addSeperation}
-            addPlainSeperation={settings(theme).sections.plainSeperation}
+            as={renderAs}
+            data-bg-ident={bgColor && bgMode ? bgMode : 'transparent'}
+            bgIdent={bgColor && bgMode ? bgMode : 'transparent'}
+            addSeperation={
+                !renderAs || (renderAs && renderAs !== 'div')
+                    ? addSeperation
+                    : false
+            }
+            isStackable={isStackable}
+            data-stack-ident={isStackable ? 'true' : 'false'}
             className={className}
         >
             {bgColor && bgMode && <Back bgColor={bgColor} bgMode={bgMode} />}
@@ -182,3 +197,18 @@ const Section: React.FC<{
 };
 
 export default Section;
+
+export const mapToBgMode = (
+    mode?: 'full' | 'splitted',
+    isMirrored = false
+): BgMode | undefined => {
+    switch (mode) {
+        case 'full':
+            return 'full';
+        case 'splitted':
+            return isMirrored ? 'larger-left' : 'larger-right';
+
+        default:
+            return undefined;
+    }
+};
