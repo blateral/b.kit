@@ -57,14 +57,12 @@ const FeatureList: React.FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    isInverted?: boolean;
     isCentered?: boolean;
     features?: FeatureProps[];
-    bgMode?: 'full' | 'splitted';
+    bgMode?: 'full' | 'splitted' | 'inverted';
 }> = ({
     features,
     bgMode,
-    isInverted = false,
     isCentered = false,
     title,
     titleAs,
@@ -75,6 +73,7 @@ const FeatureList: React.FC<{
     secondaryAction,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
 
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
@@ -104,7 +103,7 @@ const FeatureList: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             {title && (
                 <Wrapper addWhitespace>

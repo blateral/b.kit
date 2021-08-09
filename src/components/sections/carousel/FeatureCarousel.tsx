@@ -31,8 +31,8 @@ const StyledWrapper = styled.div`
 `;
 
 const FeatureCarousel: FC<
-    Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
-        bgMode?: 'full' | 'splitted';
+    Omit<CarouselProps, 'variableWidths' | 'spacing' | 'isInverted'> & {
+        bgMode?: 'full' | 'splitted' | 'inverted';
         features?: FeatureProps[];
     }
 > = ({
@@ -43,7 +43,6 @@ const FeatureCarousel: FC<
     text,
     primaryAction,
     secondaryAction,
-    isInverted = false,
     bgMode,
     features,
     controlNext,
@@ -54,6 +53,7 @@ const FeatureCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: featureCount,
@@ -82,7 +82,7 @@ const FeatureCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <StyledWrapper>
                 <CarouselBase

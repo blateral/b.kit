@@ -284,8 +284,7 @@ export const WithSplittedBackground: Story = () => (
 
 export const Inverted: Story = () => (
     <FeatureList
-        isInverted
-        bgMode="splitted"
+        bgMode="inverted"
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
