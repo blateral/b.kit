@@ -7,8 +7,8 @@ import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Slider from 'components/blocks/Slider';
 import { ResponsiveObject } from 'react-slick';
-import IntroBlock from 'components/blocks/IntroBlock';
-import { HeadlineTag } from 'components/typography/Heading';
+// import IntroBlock from 'components/blocks/IntroBlock';
+// import { HeadlineTag } from 'components/typography/Heading';
 
 const View = styled(Wrapper)`
     position: relative;
@@ -25,10 +25,10 @@ const Head = styled(Wrapper)`
     flex-direction: row;
 `;
 
-const IntroContainer = styled.div`
-    flex: 1;
-    ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
-`;
+// const IntroContainer = styled.div`
+//     flex: 1;
+//     ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
+// `;
 
 const TopControls = styled.div`
     display: none;
@@ -149,15 +149,6 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
 `;
 
 export interface CarouselProps {
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    text?: string;
-
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
     spacing?: 'normal' | 'large';
     variableWidths?: boolean;
     isInverted?: boolean;
@@ -184,13 +175,6 @@ export interface CarouselProps {
 }
 
 const CarouselBase: FC<CarouselProps & { className?: string }> = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
     spacing,
     variableWidths,
     isInverted,
@@ -222,20 +206,6 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                 onInit={onInit}
             >
                 <Head clampWidth="normal" addWhitespace>
-                    {title && (
-                        <IntroContainer>
-                            <IntroBlock
-                                colorMode={isInverted ? 'inverted' : 'default'}
-                                title={title}
-                                titleAs={titleAs}
-                                superTitle={superTitle}
-                                superTitleAs={superTitleAs}
-                                text={text}
-                                secondaryAction={secondaryAction}
-                                primaryAction={primaryAction}
-                            />
-                        </IntroContainer>
-                    )}
                     {React.Children.count(children) > 1 && (
                         <TopControls>
                             <StyledControl type="prev" isInverted={isInverted}>

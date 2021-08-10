@@ -55,9 +55,6 @@ const CrossPromotion: React.FC<{
     aside?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
 
     bgMode?: 'full' | 'inverted' | 'splitted';
-
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({ main, aside, bgMode }) => {
     const theme = React.useContext(ThemeContext);
 

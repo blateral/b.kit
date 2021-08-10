@@ -5,8 +5,6 @@ import ImageCarousel from 'components/sections/carousel/ImageCarousel';
 import ArrowRight from 'components/base/icons/ArrowRight';
 import { ImageProps } from 'components/blocks/Image';
 import { generateItemList } from 'utils/storyHelpers';
-import ButtonGhost from 'components/buttons/ButtonGhost';
-import Button from 'components/buttons/Button';
 
 export default {
     title: 'Sections/Carousels/ImageCarousel',
@@ -47,47 +45,8 @@ export const Default: Story = () => (
     />
 );
 
-export const WithIntro: Story = () => (
-    <ImageCarousel
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        images={exampleImages.map((img, i) => ({
-            ...img,
-            small: 'https://unsplash.it/553/431?image=40' + i,
-            medium: 'https://unsplash.it/357/357?image=40' + i,
-            large: 'https://unsplash.it/507/507?image=40' + i,
-            xlarge: 'https://unsplash.it/680/680?image=40' + i,
-            alt: 'Placeholder Image ' + 1,
-        }))}
-    />
-);
-
 export const DifferentSlideWidths: Story = () => (
     <ImageCarousel
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         images={[
             {
                 small: 'https://unsplash.it/520/415?image=400',
@@ -116,19 +75,6 @@ export const DifferentSlideWidths: Story = () => (
 
 export const ImageRatioA: Story = () => (
     <ImageCarousel
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         images={exampleImages.map((img, i) => ({
             ...img,
             small: 'https://unsplash.it/553/431?image=40' + i,
@@ -143,19 +89,6 @@ ImageRatioA.storyName = 'Image ratio 4:3';
 
 export const ImageRatioB: Story = () => (
     <ImageCarousel
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         images={exampleImages.map((img, i) => ({
             ...img,
             small: 'https://unsplash.it/553/431?image=40' + i,
@@ -171,19 +104,6 @@ ImageRatioB.storyName = 'Image ratio 3:4';
 export const Inverted: Story = () => (
     <ImageCarousel
         bgMode="inverted"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         images={exampleImages.map((img, i) => ({
             ...img,
             small: 'https://unsplash.it/553/431?image=40' + i,
@@ -198,19 +118,6 @@ export const Inverted: Story = () => (
 export const WithBackground: Story = () => (
     <ImageCarousel
         bgMode="full"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         images={exampleImages.map((img, i) => ({
             ...img,
             small: 'https://unsplash.it/553/431?image=40' + i,
@@ -225,19 +132,6 @@ export const WithBackground: Story = () => (
 export const WithHalfBackground: Story = () => (
     <ImageCarousel
         bgMode="splitted"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         images={exampleImages.map((img, i) => ({
             ...img,
             small: 'https://unsplash.it/553/431?image=40' + i,
@@ -253,19 +147,6 @@ export const WithLargeSpacing: Story = () => (
     <ImageCarousel
         spacing="large"
         bgMode="full"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         images={exampleImages.map((img, i) => ({
             ...img,
             small: 'https://unsplash.it/553/431?image=40' + i,
@@ -283,19 +164,6 @@ export const WithHandlers: Story = () => (
         onInit={(steps) => console.log('carousel has ' + steps + ' steps')}
         beforeChange={(current) => console.log('before step: ' + current)}
         afterChange={(current) => console.log('after step: ' + current)}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         images={exampleImages.map((img, i) => ({
             ...img,
             small: 'https://unsplash.it/553/431?image=40' + i,
@@ -312,19 +180,6 @@ export const WithCustomControls: Story = () => (
         bgMode="full"
         controlNext={() => <ArrowRight />}
         controlPrev={() => <ArrowRight />}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         images={exampleImages.map((img, i) => ({
             ...img,
             small: 'https://unsplash.it/553/431?image=40' + i,
@@ -341,19 +196,6 @@ export const WithCustomDots: Story = () => (
         bgMode="full"
         dot={({ isActive }) => (
             <ArrowRight iconColor={isActive ? 'red' : 'grey'} />
-        )}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
         )}
         images={exampleImages.map((img, i) => ({
             ...img,

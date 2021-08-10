@@ -19,13 +19,6 @@ const PromotionCarousel: FC<
         promotions?: PromotionCarouselItem[];
     }
 > = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
     bgMode,
     promotions,
     controlNext,
@@ -52,13 +45,6 @@ const PromotionCarousel: FC<
             bgMode={mapToBgMode(bgMode)}
         >
             <CarouselBase
-                title={title}
-                titleAs={titleAs}
-                superTitle={superTitle}
-                superTitleAs={superTitleAs}
-                text={text}
-                primaryAction={primaryAction}
-                secondaryAction={secondaryAction}
                 spacing="normal"
                 isInverted={isInverted}
                 controlNext={controlNext}

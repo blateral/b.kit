@@ -12,13 +12,6 @@ const ImageCarousel: FC<
         images?: ImageProps[];
     }
 > = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
     bgMode,
     spacing = 'normal',
     images,
@@ -46,13 +39,6 @@ const ImageCarousel: FC<
             bgMode={mapToBgMode(bgMode)}
         >
             <CarouselBase
-                title={title}
-                titleAs={titleAs}
-                superTitle={superTitle}
-                superTitleAs={superTitleAs}
-                text={text}
-                primaryAction={primaryAction}
-                secondaryAction={secondaryAction}
                 variableWidths
                 spacing={spacing}
                 isInverted={isInverted}
