@@ -155,14 +155,11 @@ const TableWrapper = styled.div<{ withSeperation?: boolean }>`
 
 const Table: React.FC<{
     tableItems: TableProps[];
-
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
     bgMode?: 'full' | 'inverted';
 }> = ({ bgMode = 'full', tableItems }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
+
     return (
         <Section
             addSeperation

@@ -40,9 +40,6 @@ const ImgWrapper = styled.div<{ isFull?: boolean }>`
 type ImageType = ImageProps & { isFull?: boolean };
 
 const Gallery: FC<{
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
     bgMode?: 'full' | 'inverted';
     images?: Array<ImageType>;
     className?: string;

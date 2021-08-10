@@ -42,9 +42,6 @@ const ContentContainer = styled.div<{ isHalf?: boolean }>`
 `;
 
 const FeatureList: React.FC<{
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
     isCentered?: boolean;
     features?: FeatureProps[];
     bgMode?: 'full' | 'splitted' | 'inverted';

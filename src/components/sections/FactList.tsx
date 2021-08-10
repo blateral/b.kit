@@ -53,9 +53,6 @@ const FactList: React.FC<{
     }[];
 
     bgMode?: 'full' | 'inverted';
-
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({ facts, bgMode }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';

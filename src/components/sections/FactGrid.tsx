@@ -106,8 +106,6 @@ const FactFill = styled.div`
 
 const FactGrid: FC<{
     columns?: 3 | 4 | 6;
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     facts?: Array<Omit<FactProps, 'isInverted' | 'isCentered'>>;
 
