@@ -407,7 +407,7 @@ export const WithSplittedBackground: Story = () => (
 
 export const Inverted: Story = () => (
     <FactGrid
-        isInverted
+        bgMode="inverted"
         columns={6}
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"

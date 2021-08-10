@@ -122,8 +122,7 @@ const FactGrid: FC<{
 
     facts?: Array<Omit<FactProps, 'isInverted' | 'isCentered'>>;
 
-    bgMode?: 'full' | 'splitted';
-    isInverted?: boolean;
+    bgMode?: 'full' | 'inverted' | 'splitted';
     isCentered?: boolean;
 }> = ({
     columns = 3,
@@ -136,11 +135,12 @@ const FactGrid: FC<{
     secondaryAction,
     facts,
     bgMode,
-    isInverted,
     isCentered,
 }) => {
     const theme = useContext(ThemeContext);
     const factCount = facts?.length || 0;
+
+    const isInverted = bgMode === 'inverted';
 
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: factCount,
@@ -168,7 +168,7 @@ const FactGrid: FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (
