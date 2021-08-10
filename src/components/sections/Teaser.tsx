@@ -144,7 +144,7 @@ const Teaser: FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
             <Wrapper clampWidth="normal">
                 <Grid.Row gutter={spacings.spacer}>
