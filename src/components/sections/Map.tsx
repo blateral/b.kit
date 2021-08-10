@@ -1,7 +1,7 @@
 import Grid from 'components/base/Grid';
 import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
 import Intro from 'components/blocks/Intro';
@@ -341,8 +341,11 @@ export interface MapLocation {
 }
 
 const Map: FC<{
-    isInverted?: boolean;
+    // isInverted?: boolean;
+
+    bgMode?: 'full' | 'inverted';
     isMirrored?: boolean;
+
     center?: [number, number];
     zoom?: number;
     flyToZoom?: number;
@@ -369,7 +372,7 @@ const Map: FC<{
         index?: number;
     }) => React.ReactNode;
 }> = ({
-    isInverted = false,
+    bgMode = 'full',
     isMirrored = false,
     center = [51.505, -0.09],
     zoom = 5,
@@ -388,9 +391,12 @@ const Map: FC<{
         initialLocation || ''
     );
 
+    const isInverted = bgMode === 'inverted';
+
     return (
         <StyledSection
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
+            bgMode={mapToBgMode(bgMode)}
         >
             <Slider.Provider
                 fade={true}

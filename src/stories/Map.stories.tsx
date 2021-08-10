@@ -194,7 +194,7 @@ export const Mirrored: Story = () => (
 
 export const Inverted: Story = () => (
     <Map
-        isInverted
+        bgMode="inverted"
         initialLocation="Sipplingen"
         locations={exampleLocations}
         flyToControl={<FlyTo />}
