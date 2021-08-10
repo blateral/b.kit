@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, { useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
@@ -125,31 +125,30 @@ const IconList: React.FC<{
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     text?: string;
-    hasBack?: boolean;
     items: { src: string; alt?: string }[];
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     showMoreText?: string;
     showLessText?: string;
-    isInverted?: boolean;
     isCentered?: boolean;
+    bgMode?: 'full' | 'inverted';
 }> = ({
     title,
     titleAs,
     superTitle,
     superTitleAs,
     text,
-    hasBack,
     items,
-    isInverted = false,
     isCentered = false,
     primaryAction,
     secondaryAction,
     showLessText = 'weniger anzeigen',
     showMoreText = 'weitere anzeigen',
+    bgMode,
 }) => {
-    const [showMore, setShowMore] = React.useState(false);
-    const theme = React.useContext(ThemeContext);
+    const [showMore, setShowMore] = useState(false);
+    const isInverted = bgMode === 'inverted';
+    const theme = useContext(ThemeContext);
 
     return (
         <StyledSection
@@ -157,10 +156,11 @@ const IconList: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : bgMode === 'full'
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode, true)}
             isCentered={isCentered}
         >
             <Wrapper clampWidth="normal" addWhitespace>
