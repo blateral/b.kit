@@ -193,7 +193,7 @@ export const WithBackground: Story = () => (
             'Tag 16',
         ]}
         news={[...exampleNewsTag1, ...exampleNewsTag2, ...exampleNewsTag3]}
-        hasBack
+        bgMode="full"
     />
 );
 
@@ -222,6 +222,6 @@ export const IsInverted: Story = () => (
             'Tag 16',
         ]}
         news={[...exampleNewsTag1, ...exampleNewsTag2, ...exampleNewsTag3]}
-        isInverted
+        bgMode="inverted"
     />
 );

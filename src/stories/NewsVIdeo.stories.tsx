@@ -47,7 +47,7 @@ export const WithActions: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsVideo
-        hasBack
+        bgMode="full"
         bgImage={{
             small: 'http://unsplash.it/640/480',
             medium: 'http://unsplash.it/1024/576',
@@ -89,6 +89,6 @@ export const isInverted: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        isInverted
+        bgMode="inverted"
     />
 );

@@ -86,7 +86,7 @@ export const WithActions: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsImages
-        hasBack
+        bgMode="full"
         images={[
             {
                 small: 'https://unsplash.it/619/465?image=400',
@@ -138,6 +138,6 @@ export const Inverted: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        isInverted
+        bgMode="inverted"
     />
 );

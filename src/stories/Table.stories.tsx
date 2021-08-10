@@ -330,6 +330,6 @@ export const IsInverted: Story = () => (
                 ],
             },
         ]}
-        isInverted
+        bgMode="inverted"
     />
 );

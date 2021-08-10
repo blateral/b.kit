@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
 
@@ -49,17 +49,18 @@ const NewsImages: React.FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    isInverted?: boolean;
-    hasBack?: boolean;
+    bgMode?: 'full' | 'inverted';
 }> = ({
     images,
     imageStyle = 'full',
     primaryAction,
     secondaryAction,
-    isInverted = false,
-    hasBack = false,
+    bgMode,
 }) => {
     const theme = useContext(ThemeContext);
+
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     return (
         <Section
@@ -67,10 +68,11 @@ const NewsImages: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="small" addWhitespace>
                 <Content>

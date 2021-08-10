@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
@@ -98,8 +98,7 @@ const NewsOverview: React.FC<{
     onTagClick?: (tag: string, insideList?: boolean) => void;
     showMoreText?: string;
 
-    isInverted?: boolean;
-    hasBack?: boolean;
+    bgMode?: 'full' | 'inverted';
 }> = ({
     title,
     titleAs,
@@ -114,10 +113,12 @@ const NewsOverview: React.FC<{
     onTagClick,
     showMoreText,
 
-    isInverted,
-    hasBack,
+    bgMode,
 }) => {
     const theme = useContext(ThemeContext);
+
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     activeTag = queryParams?.selected
         ? decodeURI(queryParams.selected)
@@ -220,10 +221,11 @@ const NewsOverview: React.FC<{
             bgColor={
                 isInverted
                     ? getColors(theme).dark
-                    : hasBack
+                    : hasBg
                     ? getColors(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace>
                 {title && (
