@@ -1,5 +1,5 @@
 import Plus from 'components/base/icons/Plus';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
@@ -87,8 +87,7 @@ const Accordion: React.FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    isInverted?: boolean;
-    hasBg?: boolean;
+    bgMode?: 'full' | 'splitted' | 'inverted';
 }> = ({
     title,
     titleAs,
@@ -99,23 +98,25 @@ const Accordion: React.FC<{
     borderColor,
     primaryAction,
     secondaryAction,
-    isInverted,
-    hasBg,
+    bgMode,
 }) => {
     const [isSelected, setIsSelected] = React.useState<boolean>();
     const [currentItem, setCurrentItem] = React.useState<number>();
 
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBg
+                    : bgMode
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper>
                 {title && (

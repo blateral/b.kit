@@ -300,7 +300,7 @@ export const WithBackground: Story = () => (
                     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
         ]}
-        hasBg
+        bgMode="full"
     />
 );
 
@@ -367,6 +367,6 @@ export const isInverted: Story = () => (
                     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
         ]}
-        isInverted
+        bgMode="inverted"
     />
 );
