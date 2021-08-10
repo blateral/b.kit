@@ -7,15 +7,9 @@ import Grid from 'components/base/Grid';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
-import Intro from 'components/blocks/Intro';
 import PromotionCard, {
     PromotionCardProps,
 } from 'components/blocks/PromotionCard';
-import { HeadlineTag } from 'components/typography/Heading';
-
-const StyledIntro = styled(Intro)`
-    padding-bottom: ${spacings.spacer * 2}px;
-`;
 
 const FlexGrid = styled.div`
     @media ${mq.semilarge} {
@@ -57,12 +51,6 @@ const PosterContainer = styled.div`
 `;
 
 const CrossPromotion: React.FC<{
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    text?: string;
-
     main?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
     aside?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
 
@@ -70,18 +58,7 @@ const CrossPromotion: React.FC<{
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-}> = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
-    main,
-    aside,
-    bgMode,
-}) => {
+}> = ({ main, aside, bgMode }) => {
     const theme = React.useContext(ThemeContext);
 
     const isInverted = bgMode === 'inverted';
@@ -98,20 +75,6 @@ const CrossPromotion: React.FC<{
             }
             bgMode={mapToBgMode(bgMode)}
         >
-            {title && (
-                <Wrapper addWhitespace>
-                    <StyledIntro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                        secondaryAction={secondaryAction}
-                        primaryAction={primaryAction}
-                    />
-                </Wrapper>
-            )}
             <Wrapper clampWidth="normal">
                 <Grid.Row>
                     <Grid.Col>

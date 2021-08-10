@@ -5,13 +5,7 @@ import { getColors as color, spacings, mq } from 'utils/styles';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
-import Intro from 'components/blocks/Intro';
-import { HeadlineTag } from 'components/typography/Heading';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-
-const StyledIntro = styled(Intro)`
-    padding-bottom: ${spacings.spacer * 2}px;
-`;
 
 const ContentContainer = styled.div<{ isHalf?: boolean }>`
     & > * + * {
@@ -48,30 +42,13 @@ const ContentContainer = styled.div<{ isHalf?: boolean }>`
 `;
 
 const FeatureList: React.FC<{
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    text?: string;
-
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isCentered?: boolean;
     features?: FeatureProps[];
     bgMode?: 'full' | 'splitted' | 'inverted';
-}> = ({
-    features,
-    bgMode,
-    isCentered = false,
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
-}) => {
+}> = ({ features, bgMode, isCentered = false }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
@@ -105,20 +82,6 @@ const FeatureList: React.FC<{
             }
             bgMode={mapToBgMode(bgMode)}
         >
-            {title && (
-                <Wrapper addWhitespace>
-                    <StyledIntro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                        secondaryAction={secondaryAction}
-                        primaryAction={primaryAction}
-                    />
-                </Wrapper>
-            )}
             <Wrapper addWhitespace clampWidth="normal">
                 {features && (
                     <ContentContainer

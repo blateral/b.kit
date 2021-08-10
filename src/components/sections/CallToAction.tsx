@@ -12,7 +12,7 @@ import Copy from 'components/typography/Copy';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { HeadlineTag } from 'components/typography/Heading';
-import Intro from 'components/blocks/Intro';
+import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 
 const ContactView = styled.div`
@@ -191,7 +191,7 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
 //     }
 // `;
 
-const StyledIntro = styled(Intro)`
+const StyledIntro = styled(IntroBlock)`
     @media ${mq.semilarge} {
         & > *:first-child {
             min-height: 110px;

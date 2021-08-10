@@ -44,7 +44,7 @@ const StyledActions = styled(Actions)`
     }
 `;
 
-const Intro: React.FC<{
+const IntroBlock: React.FC<{
     colorMode?: 'default' | 'inverted' | 'onImage';
     title: string;
     titleAs?: HeadlineTag;
@@ -114,4 +114,4 @@ const Intro: React.FC<{
     );
 };
 
-export default Intro;
+export default IntroBlock;

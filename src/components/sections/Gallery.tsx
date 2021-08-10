@@ -5,12 +5,6 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import { getColors as color, mq, spacings } from 'utils/styles';
-import Intro from 'components/blocks/Intro';
-import { HeadlineTag } from 'components/typography/Heading';
-
-const StyledIntro = styled(Intro)`
-    padding-bottom: ${spacings.spacer * 2}px;
-`;
 
 const ImgContainer = styled.div`
     display: flex;
@@ -46,30 +40,13 @@ const ImgWrapper = styled.div<{ isFull?: boolean }>`
 type ImageType = ImageProps & { isFull?: boolean };
 
 const Gallery: FC<{
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    text?: string;
-
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     bgMode?: 'full' | 'inverted';
     images?: Array<ImageType>;
     className?: string;
-}> = ({
-    bgMode,
-    images,
-    className,
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
-}) => {
+}> = ({ bgMode, images, className }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
 
@@ -101,20 +78,6 @@ const Gallery: FC<{
             }
             className={className}
         >
-            {title && (
-                <Wrapper addWhitespace>
-                    <StyledIntro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                        secondaryAction={secondaryAction}
-                        primaryAction={primaryAction}
-                    />
-                </Wrapper>
-            )}
             <Wrapper>
                 <ImgContainer>
                     {images &&

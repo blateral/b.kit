@@ -7,16 +7,11 @@ import Wrapper from 'components/base/Wrapper';
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import { HeadlineTag } from 'components/typography/Heading';
-import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useContext, useEffect, useState } from 'react';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import Pointer from 'components/buttons/Pointer';
-
-const StyledIntro = styled(Intro)`
-    padding-bottom: ${spacings.spacer * 2}px;
-`;
 
 const News = styled.div`
     & > * + * {
@@ -80,17 +75,10 @@ const NewsList: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     showMoreText?: string;
 }> = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
     news,
     onTagClick,
     bgMode,
 
-    primaryAction,
-    secondaryAction,
     showMoreText,
 }) => {
     const theme = useContext(ThemeContext);
@@ -152,20 +140,6 @@ const NewsList: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            {title && (
-                <Wrapper addWhitespace>
-                    <StyledIntro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                        primaryAction={primaryAction}
-                        secondaryAction={secondaryAction}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                    />
-                </Wrapper>
-            )}
             <Wrapper addWhitespace clampWidth="normal">
                 <News>
                     {news &&

@@ -124,81 +124,12 @@ export const Default: Story = () => (
     />
 );
 
-export const WithIntro: Story = () => (
-    <IconList
-        title="Lorem ipsum dolor sit amet."
-        superTitle="Lorem, ipsum dolor."
-        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        items={Items}
-    />
-);
-
 export const WithBackground: Story = () => (
-    <IconList
-        bgMode="full"
-        title="Lorem ipsum dolor sit amet."
-        superTitle="Lorem, ipsum dolor."
-        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        items={Items}
-    />
+    <IconList bgMode="full" items={Items} />
 );
 
 export const Inverted: Story = () => (
-    <IconList
-        bgMode="inverted"
-        title="Lorem ipsum dolor sit amet."
-        superTitle="Lorem, ipsum dolor."
-        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        items={Items}
-    />
+    <IconList bgMode="inverted" items={Items} />
 );
 
-export const Centered: Story = () => (
-    <IconList
-        title="Lorem ipsum dolor sit amet."
-        superTitle="Lorem, ipsum dolor."
-        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        isCentered
-        items={Items}
-    />
-);
+export const Centered: Story = () => <IconList isCentered items={Items} />;
