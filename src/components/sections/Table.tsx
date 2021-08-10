@@ -183,7 +183,7 @@ const Table: React.FC<{
         <Section
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={bgMode ? mapToBgMode(bgMode, true) : 'full'}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (
