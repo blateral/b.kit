@@ -102,7 +102,7 @@ export { default as SearchInput } from 'components/fields/SearchInput';
 export { default as Title } from 'components/blocks/Title';
 export { default as Actions } from 'components/blocks/Actions';
 export { default as Bdot } from 'components/blocks/Bdot';
-export { default as Intro } from 'components/blocks/Intro';
+export { default as IntroBlock } from 'components/blocks/IntroBlock';
 export { default as Image } from 'components/blocks/Image';
 export {
     default as CookieConsent,

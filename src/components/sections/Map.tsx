@@ -4,7 +4,7 @@ import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
-import Intro from 'components/blocks/Intro';
+import IntroBlock from 'components/blocks/IntroBlock';
 import LeafletMap from 'components/blocks/LeafletMap';
 import Slider, { SliderContext } from 'components/blocks/Slider';
 import Copy from 'components/typography/Copy';
@@ -179,7 +179,7 @@ const LocationInfoCard: FC<{
         <InfoCardView>
             {location.meta?.title && (
                 <CardHeader>
-                    <Intro
+                    <IntroBlock
                         colorMode={isInverted ? 'inverted' : 'default'}
                         title={location.meta.title}
                         titleAs={location.meta.titleAs}

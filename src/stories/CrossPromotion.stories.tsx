@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import CrossPromotion from 'components/sections/CrossPromotion';
-import Button from 'components/buttons/Button';
-import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/CrossPromotion',
@@ -26,39 +24,6 @@ export const SingleImageFull: Story = () => (
                     'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
             },
         ]}
-    />
-);
-
-export const WithIntro: Story = () => (
-    <CrossPromotion
-        main={[
-            {
-                size: 'full',
-                image: {
-                    small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
-                    large: 'https://unsplash.it/1399/824?image=409',
-                    xlarge: 'https://unsplash.it/1400/826?image=409',
-                },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                superTitle: 'Haus St. Franziskus',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
-            },
-        ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -88,19 +53,6 @@ export const TwoHalfCardsRatioA: Story = () => (
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
         ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -132,19 +84,6 @@ export const TwoHalfCardsRatioB: Story = () => (
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
         ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -174,19 +113,6 @@ export const TwoHalfCardsRatioC: Story = () => (
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
         ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -229,19 +155,6 @@ export const MixedImages: Story = () => (
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
         ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -283,19 +196,6 @@ export const WithFullBackground: Story = () => (
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
         ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -337,19 +237,6 @@ export const SplittedBackground: Story = () => (
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
         ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -391,19 +278,6 @@ export const Inverted: Story = () => (
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
         ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -444,18 +318,5 @@ export const WithClickHandlers: Story = () => (
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
         ]}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );

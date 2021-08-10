@@ -1,7 +1,7 @@
 import Plus from 'components/base/icons/Plus';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import Intro from 'components/blocks/Intro';
+// import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
 import { HeadlineTag } from 'components/typography/Heading';
 import * as React from 'react';
@@ -9,9 +9,9 @@ import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color } from 'utils/styles';
 import Minus from '../base/icons/Minus';
 
-const StyledIntro = styled(Intro)`
-    padding-bottom: ${spacings.spacer * 2}px;
-`;
+// const StyledIntro = styled(Intro)`
+//     padding-bottom: ${spacings.spacer * 2}px;
+// `;
 
 const AccordionBlock = styled.ul<{
     isInverted?: boolean;
@@ -89,15 +89,15 @@ const Accordion: React.FC<{
 
     bgMode?: 'full' | 'inverted';
 }> = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
+    // title,
+    // titleAs,
+    // superTitle,
+    // superTitleAs,
+    // text,
     items,
     borderColor,
-    primaryAction,
-    secondaryAction,
+    // primaryAction,
+    // secondaryAction,
     bgMode,
 }) => {
     const [isSelected, setIsSelected] = React.useState<boolean>();
@@ -119,7 +119,7 @@ const Accordion: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper>
-                {title && (
+                {/* {title && (
                     <StyledIntro
                         title={title}
                         superTitle={superTitle}
@@ -130,7 +130,7 @@ const Accordion: React.FC<{
                         secondaryAction={secondaryAction}
                         primaryAction={primaryAction}
                     />
-                )}
+                )} */}
                 {items &&
                     items.map(({ label, text, hasColumns }, i) => {
                         return (

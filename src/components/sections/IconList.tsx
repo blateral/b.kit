@@ -6,8 +6,6 @@ import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
-import Intro from 'components/blocks/Intro';
-import { HeadlineTag } from 'components/typography/Heading';
 import Pointer from 'components/buttons/Pointer';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
@@ -120,11 +118,6 @@ const ListFooter = styled(Copy)<{ isCentered?: boolean }>`
 `;
 
 const IconList: React.FC<{
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    text?: string;
     items: { src: string; alt?: string }[];
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -133,11 +126,6 @@ const IconList: React.FC<{
     isCentered?: boolean;
     bgMode?: 'full' | 'inverted';
 }> = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
     items,
     isCentered = false,
     primaryAction,
@@ -164,17 +152,6 @@ const IconList: React.FC<{
             isCentered={isCentered}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                {title && (
-                    <Intro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                        isCentered={isCentered}
-                    />
-                )}
                 <ListContainer>
                     <Copy type="copy" size="medium" isInverted={isInverted}>
                         <ItemContainer isCentered={isCentered}>

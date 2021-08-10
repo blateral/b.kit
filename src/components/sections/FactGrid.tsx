@@ -1,17 +1,11 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import { HeadlineTag } from 'components/typography/Heading';
+import { getColors as color, mq, spacings } from 'utils/styles';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import Intro from 'components/blocks/Intro';
 import Fact, { FactProps } from 'components/blocks/Fact';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-
-const StyledIntro = styled(Intro)`
-    ${withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-bottom')}
-`;
 
 const ContentContainer = styled.div<{ columns?: number }>`
     & > * + * {
@@ -112,11 +106,6 @@ const FactFill = styled.div`
 
 const FactGrid: FC<{
     columns?: 3 | 4 | 6;
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    intro?: string;
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
@@ -124,19 +113,7 @@ const FactGrid: FC<{
 
     bgMode?: 'full' | 'inverted' | 'splitted';
     isCentered?: boolean;
-}> = ({
-    columns = 3,
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    intro,
-    primaryAction,
-    secondaryAction,
-    facts,
-    bgMode,
-    isCentered,
-}) => {
+}> = ({ columns = 3, facts, bgMode, isCentered }) => {
     const theme = useContext(ThemeContext);
     const factCount = facts?.length || 0;
 
@@ -171,18 +148,6 @@ const FactGrid: FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                {title && (
-                    <StyledIntro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={intro}
-                        primaryAction={primaryAction}
-                        secondaryAction={secondaryAction}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                    />
-                )}
                 {facts && (
                     <ContentContainer columns={columns}>
                         {facts.map((fact, i) => {

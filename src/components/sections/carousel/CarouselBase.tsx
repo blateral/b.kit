@@ -7,7 +7,7 @@ import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Slider from 'components/blocks/Slider';
 import { ResponsiveObject } from 'react-slick';
-import Intro from 'components/blocks/Intro';
+import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 
 const View = styled(Wrapper)`
@@ -25,7 +25,7 @@ const Head = styled(Wrapper)`
     flex-direction: row;
 `;
 
-const IntroBlock = styled.div`
+const IntroContainer = styled.div`
     flex: 1;
     ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
 `;
@@ -223,8 +223,8 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
             >
                 <Head clampWidth="normal" addWhitespace>
                     {title && (
-                        <IntroBlock>
-                            <Intro
+                        <IntroContainer>
+                            <IntroBlock
                                 colorMode={isInverted ? 'inverted' : 'default'}
                                 title={title}
                                 titleAs={titleAs}
@@ -234,7 +234,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                                 secondaryAction={secondaryAction}
                                 primaryAction={primaryAction}
                             />
-                        </IntroBlock>
+                        </IntroContainer>
                     )}
                     {React.Children.count(children) > 1 && (
                         <TopControls>

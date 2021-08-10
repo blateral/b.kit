@@ -1,23 +1,23 @@
 import * as React from 'react';
-import Intro from 'components/sections/Intro';
+import IntroBlock from 'components/blocks/IntroBlock';
 import { Meta, Story } from '@storybook/react';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
-    title: 'Sections/Intro',
-    component: Intro,
+    title: 'Blocks/IntroBlock',
+    component: IntroBlock,
 } as Meta;
 
 export const Default: Story = () => (
-    <Intro
+    <IntroBlock
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
     />
 );
 
 export const WithText: Story = () => (
-    <Intro
+    <IntroBlock
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -25,7 +25,7 @@ export const WithText: Story = () => (
 );
 
 export const WithActions: Story = () => (
-    <Intro
+    <IntroBlock
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -43,7 +43,7 @@ export const WithActions: Story = () => (
 );
 
 export const Centered: Story = () => (
-    <Intro
+    <IntroBlock
         isCentered
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
@@ -62,7 +62,8 @@ export const Centered: Story = () => (
 );
 
 export const Inverted: Story = () => (
-    <Intro
+    <IntroBlock
+        colorMode="inverted"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -76,12 +77,19 @@ export const Inverted: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        bgMode="inverted"
     />
 );
 
-export const hasBackground: Story = () => (
-    <Intro
+Inverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};
+
+export const OnImage: Story = () => (
+    <IntroBlock
+        colorMode="onImage"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -95,25 +103,12 @@ export const hasBackground: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        bgMode="full"
     />
 );
 
-export const hasSplittedBackground: Story = () => (
-    <Intro
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        bgMode="splitted"
-    />
-);
+OnImage.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};

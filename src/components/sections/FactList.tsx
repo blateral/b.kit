@@ -3,9 +3,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, spacings, withRange } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
-import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
-import { HeadlineTag } from 'components/typography/Heading';
 
 const FactsContainer = styled.ul`
     padding: 0;
@@ -48,12 +46,6 @@ const Text = styled(Copy)`
 `;
 
 const FactList: React.FC<{
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    intro?: string;
-
     facts?: {
         label?: string;
         text?: string;
@@ -64,17 +56,7 @@ const FactList: React.FC<{
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-}> = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    intro,
-    facts,
-    bgMode,
-    primaryAction,
-    secondaryAction,
-}) => {
+}> = ({ facts, bgMode }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
 
@@ -91,18 +73,6 @@ const FactList: React.FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                {title && (
-                    <Intro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={intro}
-                        primaryAction={primaryAction}
-                        secondaryAction={secondaryAction}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                    />
-                )}
                 {facts && (
                     <FactsContainer>
                         {facts.map(({ label, text, icon }, i) => {

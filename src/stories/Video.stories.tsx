@@ -34,48 +34,9 @@ export const Default: Story = () => (
     />
 );
 
-export const WithIntro: Story = () => (
-    <Video
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        bgImage={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
-            xlarge: 'http://unsplash.it/1680/810',
-            alt: 'Placeholder Image',
-        }}
-        embedId="z9IxDy1tAf8"
-    />
-);
-
 export const WithBackground: Story = () => (
     <Video
         bgMode="full"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         bgImage={{
             small: 'http://unsplash.it/640/480',
             medium: 'http://unsplash.it/1024/576',
@@ -90,19 +51,6 @@ export const WithBackground: Story = () => (
 export const Inverted: Story = () => (
     <Video
         bgMode="inverted"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         bgImage={{
             small: 'https://unsplash.it/640/480',
             medium: 'https://unsplash.it/1024/576',
@@ -117,19 +65,6 @@ export const Inverted: Story = () => (
 export const WithCustomPlayIcon: Story = () => (
     <Video
         bgMode="inverted"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         bgImage={{
             small: 'https://unsplash.it/640/480',
             medium: 'https://unsplash.it/1024/576',
