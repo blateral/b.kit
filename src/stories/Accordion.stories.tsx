@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Accordion from 'components/sections/Accordion';
-import Button from 'components/buttons/Button';
-import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/Accordion',
