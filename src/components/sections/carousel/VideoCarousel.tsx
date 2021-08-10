@@ -12,13 +12,6 @@ const VideoCarousel: FC<
         videos?: VideoCardProps[];
     }
 > = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
     bgMode,
     videos,
     controlNext,
@@ -45,13 +38,6 @@ const VideoCarousel: FC<
             bgMode={mapToBgMode(bgMode)}
         >
             <CarouselBase
-                title={title}
-                titleAs={titleAs}
-                superTitle={superTitle}
-                superTitleAs={superTitleAs}
-                text={text}
-                primaryAction={primaryAction}
-                secondaryAction={secondaryAction}
                 spacing="normal"
                 isInverted={isInverted}
                 controlNext={controlNext}

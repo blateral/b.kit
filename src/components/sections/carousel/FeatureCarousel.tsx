@@ -36,13 +36,6 @@ const FeatureCarousel: FC<
         features?: FeatureProps[];
     }
 > = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
     bgMode,
     features,
     controlNext,
@@ -86,13 +79,6 @@ const FeatureCarousel: FC<
         >
             <StyledWrapper>
                 <CarouselBase
-                    title={title}
-                    titleAs={titleAs}
-                    superTitle={superTitle}
-                    superTitleAs={superTitleAs}
-                    text={text}
-                    primaryAction={primaryAction}
-                    secondaryAction={secondaryAction}
                     spacing="normal"
                     isInverted={isInverted}
                     controlNext={controlNext}
