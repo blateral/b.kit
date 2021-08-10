@@ -174,8 +174,7 @@ const Control = styled.div`
 `;
 
 const ComparisonSlider: FC<{
-    isInverted?: boolean;
-    bgMode?: 'full' | 'splitted';
+    bgMode?: 'full' | 'inverted' | 'splitted';
     initialValue?: number;
     foregroundImg?: ImageProps;
     backgroundImg?: ImageProps;
@@ -186,7 +185,6 @@ const ComparisonSlider: FC<{
     dragControl?: React.ReactNode;
     enableControlAnim?: boolean;
 }> = ({
-    isInverted,
     bgMode,
     initialValue,
     foregroundImg,
@@ -288,6 +286,8 @@ const ComparisonSlider: FC<{
         }
     };
 
+    const isInverted = bgMode === 'inverted';
+
     return (
         <Section
             addSeperation
@@ -298,7 +298,7 @@ const ComparisonSlider: FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper>
                 {backgroundImg && foregroundImg && (

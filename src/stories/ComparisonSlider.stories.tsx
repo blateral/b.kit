@@ -138,7 +138,7 @@ export const SplittedBackground: Story = () => (
 
 export const IsInverted: Story = () => (
     <ComparisonSlider
-        isInverted
+        bgMode="inverted"
         initialValue={0.6}
         backgroundImg={{
             small: 'http://unsplash.it/640/310',

@@ -55,17 +55,17 @@ const AccordionHead = styled.div`
 
 const AccordionText = styled(Copy)<{
     isVisible?: boolean;
-    isInverted?: boolean;
+    inverted?: boolean;
     hasBg?: boolean;
     borderColor?: string;
 }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
 
     border-top: 2px solid
-        ${({ borderColor, isInverted, theme, hasBg }) =>
+        ${({ borderColor, inverted, theme, hasBg }) =>
             borderColor
                 ? borderColor
-                : isInverted
+                : inverted
                 ? color(theme).dark
                 : hasBg
                 ? color(theme).mono.light
@@ -112,11 +112,11 @@ const Accordion: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : bgMode
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper>
                 {title && (
@@ -165,7 +165,7 @@ const Accordion: React.FC<{
                                     </AccordionHead>
                                     <AccordionText
                                         borderColor={borderColor}
-                                        isInverted={isInverted}
+                                        inverted={isInverted}
                                         hasBg={hasBg}
                                         isVisible={
                                             i === currentItem && isSelected
