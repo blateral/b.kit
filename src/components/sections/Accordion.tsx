@@ -87,7 +87,7 @@ const Accordion: React.FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    bgMode?: 'full' | 'splitted' | 'inverted';
+    bgMode?: 'full' | 'inverted';
 }> = ({
     title,
     titleAs,

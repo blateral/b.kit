@@ -9,7 +9,7 @@ import {
     withRange,
 } from 'utils/styles';
 import Copy from 'components/typography/Copy';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { HeadlineTag } from 'components/typography/Heading';
 import Intro from 'components/blocks/Intro';
@@ -248,7 +248,6 @@ const Badge = styled.div`
 `;
 
 export const CallToAction: FC<{
-    isInverted?: boolean;
     title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
@@ -261,8 +260,8 @@ export const CallToAction: FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     newsForm?: (isInverted?: boolean) => React.ReactNode;
+    bgMode?: 'inverted';
 }> = ({
-    isInverted = false,
     title,
     titleAs = 'h1',
     superTitle,
@@ -273,13 +272,15 @@ export const CallToAction: FC<{
     primaryAction,
     secondaryAction,
     newsForm,
+    bgMode,
 }) => {
     const theme = useContext(ThemeContext);
-
+    const isInverted = bgMode === 'inverted';
     return (
         <Section
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
