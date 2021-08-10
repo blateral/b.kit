@@ -139,7 +139,7 @@ export const Mirrored: Story = () => (
 
 export const Inverted: Story = () => (
     <Teaser
-        isInverted
+        bgMode="inverted"
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{

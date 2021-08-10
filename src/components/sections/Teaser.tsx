@@ -106,9 +106,8 @@ const StyledActions = styled(Actions)`
 `;
 
 const Teaser: FC<{
-    isInverted?: boolean;
     isMirrored?: boolean;
-    bgMode?: 'full' | 'splitted';
+    bgMode?: 'full' | 'inverted' | 'splitted';
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     title?: string;
@@ -120,7 +119,6 @@ const Teaser: FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
-    isInverted = false,
     isMirrored = false,
     bgMode,
     superTitle,
@@ -135,7 +133,7 @@ const Teaser: FC<{
     secondaryAction,
 }) => {
     const theme = useContext(ThemeContext);
-
+    const isInverted = bgMode === 'inverted';
     return (
         <Section
             addSeperation
@@ -146,7 +144,7 @@ const Teaser: FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal">
                 <Grid.Row gutter={spacings.spacer}>
