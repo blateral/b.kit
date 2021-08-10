@@ -198,7 +198,7 @@ export const WithYupValidation: Story = () => (
 
 export const WithBackground: Story = () => (
     <Form
-        hasBack
+        bgMode="full"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         formFields={{
@@ -265,7 +265,7 @@ export const IsInverted: Story = () => (
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
-        isInverted
+        bgMode="inverted"
         onSubmit={console.log}
     />
 );
