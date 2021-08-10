@@ -341,8 +341,6 @@ export interface MapLocation {
 }
 
 const Map: FC<{
-    // isInverted?: boolean;
-
     bgMode?: 'full' | 'inverted';
     isMirrored?: boolean;
 
@@ -372,7 +370,7 @@ const Map: FC<{
         index?: number;
     }) => React.ReactNode;
 }> = ({
-    bgMode = 'full',
+    bgMode,
     isMirrored = false,
     center = [51.505, -0.09],
     zoom = 5,
@@ -396,7 +394,7 @@ const Map: FC<{
     return (
         <StyledSection
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
         >
             <Slider.Provider
                 fade={true}
