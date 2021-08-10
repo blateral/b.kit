@@ -117,7 +117,6 @@ const TeaserWide: FC<{
 
     return (
         <Section
-            addSeperation
             bgColor={
                 isInverted
                     ? color(theme).dark
@@ -125,7 +124,7 @@ const TeaserWide: FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             {image && (
                 <WideImage coverSpace {...image} isMirrored={isMirrored} />
