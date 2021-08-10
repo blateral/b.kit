@@ -70,7 +70,7 @@ const Form: React.FC<{
     validation?: (values: FormData, errors: FormDataErrors) => FormDataErrors;
     yupValidationSchema?: any;
 
-    bgMode?: 'full' | 'inverted' | 'splitted';
+    bgMode?: 'full' | 'inverted';
 
     formFields: {
         name?: FormFieldProps;
@@ -116,7 +116,7 @@ const Form: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 <Formik
