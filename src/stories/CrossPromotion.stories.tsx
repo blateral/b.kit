@@ -281,6 +281,89 @@ export const Inverted: Story = () => (
     />
 );
 
+export const isMirrored: Story = () => (
+    <CrossPromotion
+        isMirrored
+        main={[
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=411',
+                    medium: 'https://unsplash.it/791/592?image=411',
+                    semilarge: 'https://unsplash.it/689/1054?image=411',
+                    large: 'https://unsplash.it/790/1054?image=411',
+                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+        ]}
+        aside={[
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+        ]}
+    />
+);
+
+export const isMirroredAndWithSplittedBackground: Story = () => (
+    <CrossPromotion
+        isMirrored
+        bgMode="splitted"
+        main={[
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=411',
+                    medium: 'https://unsplash.it/791/592?image=411',
+                    semilarge: 'https://unsplash.it/689/1054?image=411',
+                    large: 'https://unsplash.it/790/1054?image=411',
+                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+        ]}
+        aside={[
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+        ]}
+    />
+);
+
 export const WithClickHandlers: Story = () => (
     <CrossPromotion
         main={[

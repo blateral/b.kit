@@ -55,10 +55,11 @@ const CrossPromotion: React.FC<{
     aside?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
 
     bgMode?: 'full' | 'inverted' | 'splitted';
+    isMirrored?: boolean;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-}> = ({ main, aside, bgMode }) => {
+}> = ({ main, aside, bgMode, isMirrored }) => {
     const theme = React.useContext(ThemeContext);
 
     const isInverted = bgMode === 'inverted';
@@ -73,29 +74,50 @@ const CrossPromotion: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
             <Wrapper clampWidth="normal">
                 <Grid.Row>
                     <Grid.Col>
                         {aside ? (
-                            <FlexGrid>
-                                <FlexGridCol>
-                                    {aside.map((card, i) => (
-                                        <PosterContainer key={i}>
-                                            <PromotionCard {...card} />
-                                        </PosterContainer>
-                                    ))}
-                                </FlexGridCol>
-                                <FlexGridCol>
-                                    {main &&
-                                        main.map((card, i) => (
+                            isMirrored ? (
+                                <FlexGrid>
+                                    <FlexGridCol>
+                                        {main &&
+                                            main.map((card, i) => (
+                                                <PosterContainer key={i}>
+                                                    <PromotionCard {...card} />
+                                                </PosterContainer>
+                                            ))}
+                                    </FlexGridCol>
+
+                                    <FlexGridCol>
+                                        {aside.map((card, i) => (
                                             <PosterContainer key={i}>
                                                 <PromotionCard {...card} />
                                             </PosterContainer>
                                         ))}
-                                </FlexGridCol>
-                            </FlexGrid>
+                                    </FlexGridCol>
+                                </FlexGrid>
+                            ) : (
+                                <FlexGrid>
+                                    <FlexGridCol>
+                                        {aside.map((card, i) => (
+                                            <PosterContainer key={i}>
+                                                <PromotionCard {...card} />
+                                            </PosterContainer>
+                                        ))}
+                                    </FlexGridCol>
+                                    <FlexGridCol>
+                                        {main &&
+                                            main.map((card, i) => (
+                                                <PosterContainer key={i}>
+                                                    <PromotionCard {...card} />
+                                                </PosterContainer>
+                                            ))}
+                                    </FlexGridCol>
+                                </FlexGrid>
+                            )
                         ) : (
                             <Grid.Row>
                                 {main &&
