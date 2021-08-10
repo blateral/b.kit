@@ -225,7 +225,7 @@ const NewsOverview: React.FC<{
                     ? getColors(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
                 {title && (

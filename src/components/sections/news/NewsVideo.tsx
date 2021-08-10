@@ -33,6 +33,7 @@ const NewsVideo: React.FC<{
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
     return (
         <Section
             addSeperation
@@ -43,7 +44,7 @@ const NewsVideo: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
                 <div>

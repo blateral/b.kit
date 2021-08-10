@@ -109,7 +109,7 @@ const NewsIntro: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="small" addWhitespace>
                 <Content>

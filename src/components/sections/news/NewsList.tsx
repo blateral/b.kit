@@ -74,8 +74,6 @@ const NewsList: React.FC<{
 
     news?: NewsCardProps[];
     onTagClick?: (tag: string) => void;
-    // isInverted?: boolean;
-    // hasBg?: boolean;
     bgMode?: 'full' | 'inverted';
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -89,9 +87,6 @@ const NewsList: React.FC<{
     text,
     news,
     onTagClick,
-
-    // isInverted = false,
-    // hasBg = false,
     bgMode,
 
     primaryAction,
@@ -155,7 +150,7 @@ const NewsList: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             {title && (
                 <Wrapper addWhitespace>

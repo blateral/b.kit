@@ -107,7 +107,7 @@ const NewsFooter: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
                 <ContentFlex>

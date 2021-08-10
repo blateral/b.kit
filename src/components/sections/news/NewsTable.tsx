@@ -154,6 +154,7 @@ const NewsTable: React.FC<{
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
     return (
         <Section
             addSeperation
@@ -164,7 +165,7 @@ const NewsTable: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
                 {tableItems.map((item, i) => {

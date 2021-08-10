@@ -36,6 +36,7 @@ const NewsText: React.FC<{
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
     return (
         <Section
             addSeperation
@@ -46,7 +47,7 @@ const NewsText: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="small" addWhitespace>
                 {text && (
