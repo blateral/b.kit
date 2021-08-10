@@ -14,8 +14,8 @@ export type PromotionCarouselItem = Omit<
 >;
 
 const PromotionCarousel: FC<
-    Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
-        bgMode?: 'full' | 'splitted';
+    Omit<CarouselProps, 'variableWidths' | 'spacing' | 'isInverted'> & {
+        bgMode?: 'full' | 'splitted' | 'inverted';
         promotions?: PromotionCarouselItem[];
     }
 > = ({
@@ -26,7 +26,6 @@ const PromotionCarousel: FC<
     text,
     primaryAction,
     secondaryAction,
-    isInverted = false,
     bgMode,
     promotions,
     controlNext,
@@ -37,6 +36,7 @@ const PromotionCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
     const promotionCount = promotions?.length || 0;
 
     return (
@@ -49,7 +49,7 @@ const PromotionCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <CarouselBase
                 title={title}

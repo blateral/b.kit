@@ -260,7 +260,7 @@ export const CallToAction: FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     newsForm?: (isInverted?: boolean) => React.ReactNode;
-    bgMode?: 'inverted';
+    bgMode?: 'full' | 'inverted';
 }> = ({
     title,
     titleAs = 'h1',
@@ -280,7 +280,7 @@ export const CallToAction: FC<{
         <Section
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={bgMode ? mapToBgMode(bgMode, true) : 'full'}
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
