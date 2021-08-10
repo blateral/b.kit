@@ -355,7 +355,7 @@ export const SplittedBackground: Story = () => (
 
 export const Inverted: Story = () => (
     <CrossPromotion
-        isInverted
+        bgMode="inverted"
         main={[
             {
                 size: 'half',

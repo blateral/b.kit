@@ -65,14 +65,11 @@ const CrossPromotion: React.FC<{
 
     main?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
     aside?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
-    isMirrored?: boolean;
 
-    bgMode?: 'full' | 'splitted';
+    bgMode?: 'full' | 'inverted' | 'splitted';
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
-    isInverted?: boolean;
 }> = ({
     title,
     titleAs,
@@ -84,10 +81,10 @@ const CrossPromotion: React.FC<{
     main,
     aside,
     bgMode,
-    isInverted = false,
-    isMirrored = false,
 }) => {
     const theme = React.useContext(ThemeContext);
+
+    const isInverted = bgMode === 'inverted';
 
     return (
         <Section
@@ -99,7 +96,7 @@ const CrossPromotion: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? mapToBgMode(bgMode) : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             {title && (
                 <Wrapper addWhitespace>
@@ -119,44 +116,23 @@ const CrossPromotion: React.FC<{
                 <Grid.Row>
                     <Grid.Col>
                         {aside ? (
-                            isMirrored ? (
-                                <FlexGrid>
-                                    <FlexGridCol>
-                                        {main &&
-                                            main.map((card, i) => (
-                                                <PosterContainer key={i}>
-                                                    <PromotionCard {...card} />
-                                                </PosterContainer>
-                                            ))}
-                                    </FlexGridCol>
-
-                                    <FlexGridCol>
-                                        {aside.map((card, i) => (
+                            <FlexGrid>
+                                <FlexGridCol>
+                                    {aside.map((card, i) => (
+                                        <PosterContainer key={i}>
+                                            <PromotionCard {...card} />
+                                        </PosterContainer>
+                                    ))}
+                                </FlexGridCol>
+                                <FlexGridCol>
+                                    {main &&
+                                        main.map((card, i) => (
                                             <PosterContainer key={i}>
                                                 <PromotionCard {...card} />
                                             </PosterContainer>
                                         ))}
-                                    </FlexGridCol>
-                                </FlexGrid>
-                            ) : (
-                                <FlexGrid>
-                                    <FlexGridCol>
-                                        {aside.map((card, i) => (
-                                            <PosterContainer key={i}>
-                                                <PromotionCard {...card} />
-                                            </PosterContainer>
-                                        ))}
-                                    </FlexGridCol>
-                                    <FlexGridCol>
-                                        {main &&
-                                            main.map((card, i) => (
-                                                <PosterContainer key={i}>
-                                                    <PromotionCard {...card} />
-                                                </PosterContainer>
-                                            ))}
-                                    </FlexGridCol>
-                                </FlexGrid>
-                            )
+                                </FlexGridCol>
+                            </FlexGrid>
                         ) : (
                             <Grid.Row>
                                 {main &&
