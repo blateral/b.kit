@@ -145,7 +145,7 @@ export const WithIntro: Story = () => (
 
 export const WithBackground: Story = () => (
     <IconList
-        hasBack
+        bgMode="full"
         title="Lorem ipsum dolor sit amet."
         superTitle="Lorem, ipsum dolor."
         text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
@@ -165,6 +165,7 @@ export const WithBackground: Story = () => (
 
 export const Inverted: Story = () => (
     <IconList
+        bgMode="inverted"
         title="Lorem ipsum dolor sit amet."
         superTitle="Lorem, ipsum dolor."
         text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veniam corrupti tempore doloribus nobis at minima sed similique, nulla molestias!"
@@ -179,7 +180,6 @@ export const Inverted: Story = () => (
             </ButtonGhost.View>
         )}
         items={Items}
-        isInverted
     />
 );
 
