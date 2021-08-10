@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Video from 'components/sections/Video';
-
-import Button from 'components/buttons/Button';
 import Play from 'components/base/icons/Play';
-import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/Video',
@@ -13,16 +10,6 @@ export default {
 
 export const Default: Story = () => (
     <Video
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         bgImage={{
             small: 'http://unsplash.it/640/480',
             medium: 'http://unsplash.it/1024/576',

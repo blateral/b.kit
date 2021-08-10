@@ -12,10 +12,6 @@ const Video: React.FC<{
     bgImage: ImageProps;
     embedId: string;
     playIcon?: React.ReactChild;
-
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
     bgMode?: 'full' | 'inverted';
 }> = ({ bgMode, bgImage, embedId, playIcon }) => {
     const theme = useContext(ThemeContext);
