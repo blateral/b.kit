@@ -86,7 +86,7 @@ export const WithIntro: Story = () => (
 
 export const Inverted: Story = () => (
     <PromotionCarousel
-        isInverted
+        bgMode="inverted"
         promotions={examplePromotions.map((promotion, i) => ({
             ...promotion,
             image: {
