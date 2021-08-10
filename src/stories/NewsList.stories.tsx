@@ -80,7 +80,7 @@ export const WithActions: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsList
-        hasBack
+        bgMode="full"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -100,7 +100,7 @@ export const WithBackground: Story = () => (
 
 export const Inverted: Story = () => (
     <NewsList
-        isInverted
+        bgMode="inverted"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
@@ -120,7 +120,7 @@ export const Inverted: Story = () => (
 
 export const WithHandler: Story = () => (
     <NewsList
-        isInverted
+        bgMode="inverted"
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
@@ -74,8 +74,9 @@ const NewsList: React.FC<{
 
     news?: NewsCardProps[];
     onTagClick?: (tag: string) => void;
-    isInverted?: boolean;
-    hasBack?: boolean;
+    // isInverted?: boolean;
+    // hasBg?: boolean;
+    bgMode?: 'full' | 'inverted';
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -88,8 +89,10 @@ const NewsList: React.FC<{
     text,
     news,
     onTagClick,
-    isInverted = false,
-    hasBack = false,
+
+    // isInverted = false,
+    // hasBg = false,
+    bgMode,
 
     primaryAction,
     secondaryAction,
@@ -102,6 +105,9 @@ const NewsList: React.FC<{
     const [visibleRows, setVisibleRows] = useState(1);
 
     const newsCount = news?.length || 0;
+
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: Math.min(visibleRows * itemsPerRow, newsCount),
@@ -145,10 +151,11 @@ const NewsList: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode)}
         >
             {title && (
                 <Wrapper addWhitespace>

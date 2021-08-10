@@ -68,7 +68,7 @@ export const WithImage: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsIntro
-        hasBack
+        bgMode="full"
         tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
         onTagClick={console.log}
         meta={{
@@ -100,6 +100,6 @@ export const isInverted: Story = () => (
             medium: 'https://unsplash.it/791/445?image=400',
             semilarge: 'https://unsplash.it/944/531?image=400',
         }}
-        isInverted
+        bgMode="inverted"
     />
 );

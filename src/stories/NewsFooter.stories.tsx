@@ -121,7 +121,7 @@ export const WithMoreItems: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsFooter
-        hasBack
+        bgMode="full"
         news={[
             {
                 tag: 'Tag Secondary',
@@ -271,7 +271,7 @@ export const IsInverted: Story = () => (
                 link: { href: '#0' },
             },
         ]}
-        isInverted
+        bgMode="inverted"
     />
 );
 

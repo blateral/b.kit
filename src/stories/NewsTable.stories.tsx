@@ -212,7 +212,7 @@ export const WithActions: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsTable
-        hasBack
+        bgMode="full"
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
@@ -282,7 +282,7 @@ export const isInverted: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        isInverted
+        bgMode="inverted"
         tableItems={[
             {
                 rowTitle: [
