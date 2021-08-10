@@ -7,7 +7,7 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 import Title from 'components/blocks/Title';
 import Wrapper from 'components/base/Wrapper';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 
@@ -83,9 +83,7 @@ const SubTextBlock = styled(ContentBlock)`
 `;
 
 const TeaserWide: FC<{
-    isInverted?: boolean;
     isMirrored?: boolean;
-    hasBack?: boolean;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     title?: string;
@@ -96,10 +94,10 @@ const TeaserWide: FC<{
     subText?: string;
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    bgMode?: 'full' | 'inverted';
 }> = ({
-    isInverted = false,
     isMirrored = false,
-    hasBack = false,
     superTitle,
     superTitleAs,
     title,
@@ -110,8 +108,12 @@ const TeaserWide: FC<{
     subText,
     primaryAction,
     secondaryAction,
+    bgMode,
 }) => {
     const theme = useContext(ThemeContext);
+
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     return (
         <Section
@@ -119,10 +121,11 @@ const TeaserWide: FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode)}
         >
             {image && (
                 <WideImage coverSpace {...image} isMirrored={isMirrored} />

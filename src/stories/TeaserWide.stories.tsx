@@ -116,7 +116,7 @@ export const Mirrored: Story = () => (
 
 export const Inverted: Story = () => (
     <TeaserWide
-        isInverted
+        bgMode="inverted"
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
@@ -144,7 +144,7 @@ export const Inverted: Story = () => (
 
 export const WithBackground: Story = () => (
     <TeaserWide
-        hasBack
+        bgMode="full"
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
