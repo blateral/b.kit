@@ -52,8 +52,6 @@ const NewsAuthorCard: React.FC<{
     author?: string;
     avatar?: { src: string; alt?: string };
 
-    // isInverted?: boolean;
-    // hasBg?: boolean;
     bgMode?: 'full' | 'inverted';
 }> = ({ label, author, avatar, bgMode }) => {
     const theme = React.useContext(ThemeContext);
@@ -71,7 +69,7 @@ const NewsAuthorCard: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="small" addWhitespace>
                 {author && (
