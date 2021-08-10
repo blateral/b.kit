@@ -4,7 +4,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, withRange, spacings, mq } from 'utils/styles';
 import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import { hexToRgba } from 'utils/hexRgbConverter';
@@ -167,21 +167,23 @@ const Table: React.FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    isInverted?: boolean;
+    bgMode?: 'full' | 'inverted';
 }> = ({
     text,
     title,
     superTitle,
     superTitleAs,
     titleAs,
-    isInverted,
+    bgMode = 'full',
     tableItems,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
     return (
         <Section
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {title && (
