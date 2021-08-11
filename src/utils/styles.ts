@@ -305,8 +305,6 @@ const defaultFonts: Fonts = {
 /***** Global Settings *****/
 export interface GlobalSettings {
     sections: {
-        /** Add seperation around sections with background attribute 'plain' (e.g. Teaser) */
-        plainSeperation: boolean;
         /** Customnize gradient for all text on image background gradients */
         imageTextGradient: string;
         /** Date and Time Formats for all news sections */
@@ -318,7 +316,6 @@ export interface GlobalSettings {
 
 const defaultGlobalSettings: GlobalSettings = {
     sections: {
-        plainSeperation: false,
         imageTextGradient: `
             linear-gradient(
                 0deg,
