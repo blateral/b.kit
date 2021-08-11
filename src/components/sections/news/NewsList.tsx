@@ -6,7 +6,6 @@ import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import { HeadlineTag } from 'components/typography/Heading';
 import Copy from 'components/typography/Copy';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useContext, useEffect, useState } from 'react';
@@ -61,18 +60,9 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 type NewsListMq = 'small' | 'semilarge' | 'large';
 
 const NewsList: React.FC<{
-    title: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    text?: string;
-
     news?: NewsCardProps[];
     onTagClick?: (tag: string) => void;
     bgMode?: 'full' | 'inverted';
-
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     showMoreText?: string;
 }> = ({
     news,

@@ -6,8 +6,6 @@ import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { getColors, mq, spacings, withRange } from 'utils/styles';
-import { HeadlineTag } from 'components/typography/Heading';
-// import Intro from 'components/blocks/Intro';
 import Tag from 'components/blocks/Tag';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
@@ -15,10 +13,6 @@ import { useObserverSupport } from 'utils/useObserverSupport';
 import Copy from 'components/typography/Copy';
 import { useScrollTo } from 'utils/useScrollTo';
 import Pointer from 'components/buttons/Pointer';
-
-// const StyledIntro = styled(Intro)`
-//     ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
-// `;
 
 const TagContainer = styled.div`
     margin: -${spacings.nudge}px;
@@ -85,12 +79,6 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 type NewsOverviewMq = 'small' | 'semilarge' | 'large';
 
 const NewsOverview: React.FC<{
-    title: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    text?: string;
-
     news: NewsCardProps[];
     activeTag?: string;
     tags?: string[];
@@ -100,12 +88,6 @@ const NewsOverview: React.FC<{
 
     bgMode?: 'full' | 'inverted';
 }> = ({
-    // title,
-    // titleAs,
-    // superTitle,
-    // superTitleAs,
-    // text,
-
     news,
     activeTag,
     tags,
@@ -228,16 +210,6 @@ const NewsOverview: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {/* {title && (
-                    <StyledIntro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                    />
-                )} */}
                 {tags && (
                     <TagContainer>
                         {tags.sort().map((tag, i) => {
