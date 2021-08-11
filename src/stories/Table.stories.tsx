@@ -150,6 +150,100 @@ export const WithTableGroups: Story = () => (
     />
 );
 
+export const WithBackground: Story = () => (
+    <Table
+        tableItems={[
+            {
+                tableTitle: 'Gruppe 1',
+                rowTitle: [
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+            {
+                tableTitle: 'Gruppe 2',
+                rowTitle: [
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                    'Table Headline',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+        ]}
+        bgMode="full"
+    />
+);
+
 export const IsInverted: Story = () => (
     <Table
         tableItems={[
