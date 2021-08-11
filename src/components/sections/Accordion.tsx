@@ -92,7 +92,7 @@ const Accordion: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            <Wrapper>
+            <Wrapper addWhitespace>
                 {items &&
                     items.map(({ label, text, hasColumns }, i) => {
                         return (
