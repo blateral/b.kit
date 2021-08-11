@@ -46,7 +46,10 @@ const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
 
         padding-right: ${({ isMirrored }) =>
             isMirrored ? spacings.spacer * 1.5 : (1 / 28) * spacings.wrapper}px;
-        padding-bottom: ${spacings.nudge * 6}px;
+        ${withRange(
+            [spacings.spacer * 2, spacings.spacer * 4],
+            'padding-bottom'
+        )}
         padding-left: ${({ isMirrored }) =>
             !isMirrored
                 ? spacings.spacer * 1.5
