@@ -8,7 +8,7 @@ import {
     getGlobalSettings as global,
 } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Intro from './Intro';
+import IntroBlock from './IntroBlock';
 
 const View = styled.div<{
     clickable?: boolean;
@@ -43,6 +43,7 @@ const View = styled.div<{
 
 const StyledImage = styled(Image)`
     width: 100%;
+    height: 100%;
     min-height: 300px;
 `;
 
@@ -117,7 +118,7 @@ const PromotionCard: FC<PromotionCardProps> = ({
             {title && (
                 <IntroContainer>
                     <LinkHelper href={href} />
-                    <Intro
+                    <IntroBlock
                         colorMode="onImage"
                         title={title}
                         superTitle={superTitle}

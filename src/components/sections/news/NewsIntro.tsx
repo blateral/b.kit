@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Title from 'components/blocks/Title';
@@ -81,19 +81,11 @@ const NewsIntro: React.FC<{
     text?: string;
     image?: ImageProps;
 
-    isInverted?: boolean;
-    hasBack?: boolean;
-}> = ({
-    tags,
-    onTagClick,
-    meta,
-    title,
-    text,
-    image,
-    isInverted = false,
-    hasBack = false,
-}) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ tags, onTagClick, meta, title, text, image, bgMode }) => {
     const theme = useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     let publishedAt = '';
     if (meta?.date) {
@@ -113,10 +105,11 @@ const NewsIntro: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="small" addWhitespace>
                 <Content>

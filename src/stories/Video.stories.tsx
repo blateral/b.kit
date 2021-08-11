@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Video from 'components/sections/Video';
-
-import Button from 'components/buttons/Button';
 import Play from 'components/base/icons/Play';
-import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/Video',
@@ -13,42 +10,6 @@ export default {
 
 export const Default: Story = () => (
     <Video
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        bgImage={{
-            small: 'http://unsplash.it/640/480',
-            medium: 'http://unsplash.it/1024/576',
-            large: 'http://unsplash.it/1440/810',
-            xlarge: 'http://unsplash.it/1680/810',
-            alt: 'Placeholder Image',
-        }}
-        embedId="z9IxDy1tAf8"
-    />
-);
-
-export const WithIntro: Story = () => (
-    <Video
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         bgImage={{
             small: 'http://unsplash.it/640/480',
             medium: 'http://unsplash.it/1024/576',
@@ -62,20 +23,7 @@ export const WithIntro: Story = () => (
 
 export const WithBackground: Story = () => (
     <Video
-        hasBack
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
+        bgMode="full"
         bgImage={{
             small: 'http://unsplash.it/640/480',
             medium: 'http://unsplash.it/1024/576',
@@ -89,19 +37,7 @@ export const WithBackground: Story = () => (
 
 export const Inverted: Story = () => (
     <Video
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
+        bgMode="inverted"
         bgImage={{
             small: 'https://unsplash.it/640/480',
             medium: 'https://unsplash.it/1024/576',
@@ -110,25 +46,12 @@ export const Inverted: Story = () => (
             alt: 'Placeholder Image',
         }}
         embedId="z9IxDy1tAf8"
-        isInverted
     />
 );
 
 export const WithCustomPlayIcon: Story = () => (
     <Video
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
+        bgMode="inverted"
         bgImage={{
             small: 'https://unsplash.it/640/480',
             medium: 'https://unsplash.it/1024/576',
@@ -138,6 +61,5 @@ export const WithCustomPlayIcon: Story = () => (
         }}
         embedId="z9IxDy1tAf8"
         playIcon={<Play iconColor="red" />}
-        isInverted
     />
 );

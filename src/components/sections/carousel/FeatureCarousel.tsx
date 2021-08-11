@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import { getColors as color, spacings, mq } from 'utils/styles';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
@@ -31,19 +31,11 @@ const StyledWrapper = styled.div`
 `;
 
 const FeatureCarousel: FC<
-    Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
-        bgMode?: 'full' | 'splitted';
+    Omit<CarouselProps, 'variableWidths' | 'spacing' | 'isInverted'> & {
+        bgMode?: 'full' | 'splitted' | 'inverted';
         features?: FeatureProps[];
     }
 > = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
-    isInverted = false,
     bgMode,
     features,
     controlNext,
@@ -54,6 +46,7 @@ const FeatureCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: featureCount,
@@ -72,17 +65,6 @@ const FeatureCarousel: FC<
         },
     });
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'half-right';
-            default:
-                return undefined;
-        }
-    };
-
     return (
         <Section
             addSeperation
@@ -93,17 +75,10 @@ const FeatureCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <StyledWrapper>
                 <CarouselBase
-                    title={title}
-                    titleAs={titleAs}
-                    superTitle={superTitle}
-                    superTitleAs={superTitleAs}
-                    text={text}
-                    primaryAction={primaryAction}
-                    secondaryAction={secondaryAction}
                     spacing="normal"
                     isInverted={isInverted}
                     controlNext={controlNext}

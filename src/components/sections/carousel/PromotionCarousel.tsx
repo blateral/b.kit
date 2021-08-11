@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ThemeContext } from 'styled-components';
 
 import { getColors as color } from 'utils/styles';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import PromotionCard, {
     PromotionCardProps,
@@ -14,19 +14,11 @@ export type PromotionCarouselItem = Omit<
 >;
 
 const PromotionCarousel: FC<
-    Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
-        bgMode?: BgMode;
+    Omit<CarouselProps, 'variableWidths' | 'spacing' | 'isInverted'> & {
+        bgMode?: 'full' | 'splitted' | 'inverted';
         promotions?: PromotionCarouselItem[];
     }
 > = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
-    isInverted = false,
     bgMode,
     promotions,
     controlNext,
@@ -37,24 +29,8 @@ const PromotionCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
     const promotionCount = promotions?.length || 0;
-
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'half-right':
-                return 'half-right';
-            case 'half-left':
-                return 'half-left';
-            case 'larger-right':
-                return 'larger-right';
-            case 'larger-left':
-                return 'larger-left';
-            default:
-                return undefined;
-        }
-    };
 
     return (
         <Section
@@ -66,16 +42,9 @@ const PromotionCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <CarouselBase
-                title={title}
-                titleAs={titleAs}
-                superTitle={superTitle}
-                superTitleAs={superTitleAs}
-                text={text}
-                primaryAction={primaryAction}
-                secondaryAction={secondaryAction}
                 spacing="normal"
                 isInverted={isInverted}
                 controlNext={controlNext}

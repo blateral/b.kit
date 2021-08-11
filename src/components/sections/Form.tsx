@@ -1,20 +1,14 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import Section, { BgMode } from 'components/base/Section';
-import { HeadlineTag } from 'components/typography/Heading';
-import { spacings, mq, getColors as color, withRange } from 'utils/styles';
+import Section, { mapToBgMode } from 'components/base/Section';
+import { spacings, mq, getColors as color } from 'utils/styles';
 import Textfield, { FormProps } from 'components/fields/Textfield';
 import Textarea from 'components/fields/Textarea';
 import Checkbox from 'components/fields/Checkbox';
 import Wrapper from 'components/base/Wrapper';
-import Intro from 'components/blocks/Intro';
 import { Field, Formik } from 'formik';
 import { FormEvent } from 'react';
 import Actions from 'components/blocks/Actions';
-
-const StyledIntro = styled(Intro)`
-    ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
-`;
 
 const FieldsContainer = styled.div`
     padding-bottom: 30px;
@@ -65,12 +59,6 @@ export type FormFieldProps = Omit<FormProps, 'value' | 'name' | 'errorMessage'>;
 export type FormDataErrors = { [key in keyof FormData]: string };
 
 const Form: React.FC<{
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    intro?: string;
-
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     submitAction?: (props: {
@@ -82,8 +70,7 @@ const Form: React.FC<{
     validation?: (values: FormData, errors: FormDataErrors) => FormDataErrors;
     yupValidationSchema?: any;
 
-    isInverted?: boolean;
-    bgMode?: 'full';
+    bgMode?: 'full' | 'inverted';
 
     formFields: {
         name?: FormFieldProps;
@@ -100,32 +87,18 @@ const Form: React.FC<{
         isDisabled?: boolean;
     };
 }> = ({
-    bgMode,
-    isInverted = false,
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    intro,
-    primaryAction,
-    secondaryAction,
     submitAction,
     onSubmit,
     formFields,
     checkbox,
     yupValidationSchema,
     validation,
+    bgMode,
 }) => {
     const theme = React.useContext(ThemeContext);
 
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            default:
-                return undefined;
-        }
-    };
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     const isEmpty = (obj: any) => {
         return (
@@ -143,21 +116,9 @@ const Form: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                {title && (
-                    <StyledIntro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={intro}
-                        primaryAction={primaryAction}
-                        secondaryAction={secondaryAction}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                    />
-                )}
                 <Formik
                     initialValues={
                         {
@@ -218,7 +179,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.name}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBg}
                                         />
                                     )}
                                     {formFields.surname && (
@@ -240,7 +201,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.surname}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBg}
                                         />
                                     )}
                                     {formFields.mail && (
@@ -263,7 +224,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.mail}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBg}
                                         />
                                     )}
                                     {formFields.phone && (
@@ -286,7 +247,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.phone}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBg}
                                         />
                                     )}
                                 </FlexContainer>
@@ -310,7 +271,7 @@ const Form: React.FC<{
                                             }
                                             errorMessage={errors.area}
                                             isInverted={isInverted}
-                                            lightBg={bgMode === 'full'}
+                                            lightBg={hasBg}
                                         />
                                     </FlexContainer>
                                 )}

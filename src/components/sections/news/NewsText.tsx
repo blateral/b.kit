@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Actions from 'components/blocks/Actions';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
@@ -31,26 +31,23 @@ const NewsText: React.FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    isInverted?: boolean;
-    hasBack?: boolean;
-}> = ({
-    text,
-    primaryAction,
-    secondaryAction,
-    isInverted = false,
-    hasBack = false,
-}) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ text, primaryAction, secondaryAction, bgMode }) => {
     const theme = useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
+
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="small" addWhitespace>
                 {text && (

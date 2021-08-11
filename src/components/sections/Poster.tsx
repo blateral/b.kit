@@ -10,7 +10,7 @@ import {
     withRange,
     getGlobalSettings as global,
 } from 'utils/styles';
-import Intro from 'components/blocks/Intro';
+import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 
 const PosterContainer = styled.div<{
@@ -99,13 +99,13 @@ const Poster: FC<{
     image,
 }) => {
     return (
-        <Section>
+        <Section bgColor="undefined" bgMode="full">
             <Wrapper clampWidth="large">
                 <PosterContainer hasContent={title !== undefined}>
                     <StyledImage {...image} coverSpace />
                     {title && (
                         <IntroContainer addWhitespace>
-                            <Intro
+                            <IntroBlock
                                 colorMode="onImage"
                                 title={title}
                                 titleAs={titleAs}

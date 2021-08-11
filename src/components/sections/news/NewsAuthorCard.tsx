@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
@@ -52,10 +52,12 @@ const NewsAuthorCard: React.FC<{
     author?: string;
     avatar?: { src: string; alt?: string };
 
-    isInverted?: boolean;
-    hasBack?: boolean;
-}> = ({ label, author, avatar, isInverted = false, hasBack = false }) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ label, author, avatar, bgMode }) => {
     const theme = React.useContext(ThemeContext);
+
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     return (
         <Section
@@ -63,10 +65,11 @@ const NewsAuthorCard: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="small" addWhitespace>
                 {author && (

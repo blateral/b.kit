@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "0.10.29",
+    "version": "1.0.1",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
@@ -32,7 +32,7 @@
     "homepage": "https://github.com/blateral/b.kit#readme",
     "husky": {
         "hooks": {
-            "pre-push": "yarn tc && yarn deploy-storybook"
+            "pre-push": "yarn tc"
         }
     },
     "devDependencies": {

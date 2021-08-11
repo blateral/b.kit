@@ -22,7 +22,7 @@ export const WithAvatar: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsAuthorCard
-        hasBack
+        bgMode="full"
         author="Author Name"
         avatar={{
             src: 'http://placehold.it/150',
@@ -36,6 +36,6 @@ export const Inverted: Story = () => (
         avatar={{
             src: 'http://placehold.it/150',
         }}
-        isInverted
+        bgMode="inverted"
     />
 );

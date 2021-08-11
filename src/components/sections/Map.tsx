@@ -1,10 +1,10 @@
 import Grid from 'components/base/Grid';
 import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
-import Intro from 'components/blocks/Intro';
+import IntroBlock from 'components/blocks/IntroBlock';
 import LeafletMap from 'components/blocks/LeafletMap';
 import Slider, { SliderContext } from 'components/blocks/Slider';
 import Copy from 'components/typography/Copy';
@@ -179,7 +179,7 @@ const LocationInfoCard: FC<{
         <InfoCardView>
             {location.meta?.title && (
                 <CardHeader>
-                    <Intro
+                    <IntroBlock
                         colorMode={isInverted ? 'inverted' : 'default'}
                         title={location.meta.title}
                         titleAs={location.meta.titleAs}
@@ -341,8 +341,9 @@ export interface MapLocation {
 }
 
 const Map: FC<{
-    isInverted?: boolean;
+    bgMode?: 'full' | 'inverted';
     isMirrored?: boolean;
+
     center?: [number, number];
     zoom?: number;
     flyToZoom?: number;
@@ -369,7 +370,7 @@ const Map: FC<{
         index?: number;
     }) => React.ReactNode;
 }> = ({
-    isInverted = false,
+    bgMode,
     isMirrored = false,
     center = [51.505, -0.09],
     zoom = 5,
@@ -388,9 +389,12 @@ const Map: FC<{
         initialLocation || ''
     );
 
+    const isInverted = bgMode === 'inverted';
+
     return (
         <StyledSection
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
+            bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
         >
             <Slider.Provider
                 fade={true}

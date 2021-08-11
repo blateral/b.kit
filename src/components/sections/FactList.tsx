@@ -1,11 +1,9 @@
 import * as React from 'react';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors, spacings, withRange } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
-import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
-import { HeadlineTag } from 'components/typography/Heading';
 
 const FactsContainer = styled.ul`
     padding: 0;
@@ -48,61 +46,30 @@ const Text = styled(Copy)`
 `;
 
 const FactList: React.FC<{
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    intro?: string;
-
     facts?: {
         label?: string;
         text?: string;
         icon?: { src: string; alt?: string };
     }[];
 
-    hasBack?: boolean;
-
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
-    isInverted?: boolean;
-}> = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    intro,
-    facts,
-    hasBack,
-    primaryAction,
-    secondaryAction,
-    isInverted,
-}) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ facts, bgMode }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
                     ? getColors(theme).dark
-                    : hasBack
+                    : bgMode === 'full'
                     ? getColors(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                {title && (
-                    <Intro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={intro}
-                        primaryAction={primaryAction}
-                        secondaryAction={secondaryAction}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                    />
-                )}
                 {facts && (
                     <FactsContainer>
                         {facts.map(({ label, text, icon }, i) => {

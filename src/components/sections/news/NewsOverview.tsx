@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { getColors, mq, spacings, withRange } from 'utils/styles';
 import { HeadlineTag } from 'components/typography/Heading';
-import Intro from 'components/blocks/Intro';
+// import Intro from 'components/blocks/Intro';
 import Tag from 'components/blocks/Tag';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
@@ -16,9 +16,9 @@ import Copy from 'components/typography/Copy';
 import { useScrollTo } from 'utils/useScrollTo';
 import Pointer from 'components/buttons/Pointer';
 
-const StyledIntro = styled(Intro)`
-    ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
-`;
+// const StyledIntro = styled(Intro)`
+//     ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
+// `;
 
 const TagContainer = styled.div`
     margin: -${spacings.nudge}px;
@@ -98,14 +98,13 @@ const NewsOverview: React.FC<{
     onTagClick?: (tag: string, insideList?: boolean) => void;
     showMoreText?: string;
 
-    isInverted?: boolean;
-    hasBack?: boolean;
+    bgMode?: 'full' | 'inverted';
 }> = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
+    // title,
+    // titleAs,
+    // superTitle,
+    // superTitleAs,
+    // text,
 
     news,
     activeTag,
@@ -114,10 +113,12 @@ const NewsOverview: React.FC<{
     onTagClick,
     showMoreText,
 
-    isInverted,
-    hasBack,
+    bgMode,
 }) => {
     const theme = useContext(ThemeContext);
+
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     activeTag = queryParams?.selected
         ? decodeURI(queryParams.selected)
@@ -220,13 +221,14 @@ const NewsOverview: React.FC<{
             bgColor={
                 isInverted
                     ? getColors(theme).dark
-                    : hasBack
+                    : hasBg
                     ? getColors(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {title && (
+                {/* {title && (
                     <StyledIntro
                         title={title}
                         titleAs={titleAs}
@@ -235,7 +237,7 @@ const NewsOverview: React.FC<{
                         text={text}
                         colorMode={isInverted ? 'inverted' : 'default'}
                     />
-                )}
+                )} */}
                 {tags && (
                     <TagContainer>
                         {tags.sort().map((tag, i) => {

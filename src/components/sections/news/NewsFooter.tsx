@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Copy from 'components/typography/Copy';
@@ -51,18 +51,14 @@ const NewsFooter: React.FC<{
     news: NewsCardProps[];
     onTagClick?: (tag: string) => void;
 
-    isInverted?: boolean;
-    hasBack?: boolean;
+    bgMode?: 'full' | 'inverted';
     showMoreText?: string;
-}> = ({
-    news,
-    onTagClick,
-    isInverted = false,
-    hasBack = false,
-    showMoreText,
-}) => {
+}> = ({ news, onTagClick, bgMode, showMoreText }) => {
     const newsCount = news?.length || 0;
     const theme = useContext(ThemeContext);
+
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     const mqs: NewsFooterMq[] = ['small', 'semilarge'];
     const currentMq = useMediaQuery(mqs) as NewsFooterMq | undefined;
@@ -107,10 +103,11 @@ const NewsFooter: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
                 <ContentFlex>

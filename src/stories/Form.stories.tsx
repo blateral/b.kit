@@ -72,46 +72,8 @@ export const WithLessFields: Story = () => (
     />
 );
 
-export const WithIntro: Story = () => (
-    <Form
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        formFields={{
-            name: {
-                isRequired: true,
-            },
-            surname: {
-                isRequired: true,
-            },
-            mail: {
-                isRequired: true,
-            },
-            phone: {
-                isRequired: true,
-                infoMessage: '*Help extra info line option',
-            },
-            area: {},
-        }}
-        checkbox={{
-            label: `Ich aktzeptiere die <a href="#0">Datenschutzbestimmungen</a>`,
-        }}
-        submitAction={({ isInverted, isDisabled, additionalProps }) => (
-            <Button.View
-                isInverted={isInverted}
-                isDisabled={isDisabled}
-                {...additionalProps}
-            >
-                <Button.Label>Senden</Button.Label>
-            </Button.View>
-        )}
-        onSubmit={console.log}
-    />
-);
-
 export const WithValidation: Story = () => (
     <Form
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
         formFields={{
             name: {
                 isRequired: true,
@@ -151,8 +113,6 @@ export const WithValidation: Story = () => (
 
 export const WithYupValidation: Story = () => (
     <Form
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
         formFields={{
             name: {
                 isRequired: true,
@@ -196,11 +156,9 @@ export const WithYupValidation: Story = () => (
     />
 );
 
-export const WithFullBackground: Story = () => (
+export const WithBackground: Story = () => (
     <Form
         bgMode="full"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
         formFields={{
             name: {
                 isRequired: true,
@@ -235,12 +193,8 @@ export const WithFullBackground: Story = () => (
 
 export const IsInverted: Story = () => (
     <Form
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
         formFields={{
-            name: {
-                isRequired: true,
-            },
+            name: { isRequired: true },
             surname: {
                 isRequired: true,
             },
@@ -265,7 +219,7 @@ export const IsInverted: Story = () => (
                 <Button.Label>Senden</Button.Label>
             </Button.View>
         )}
-        isInverted
+        bgMode="inverted"
         onSubmit={console.log}
     />
 );

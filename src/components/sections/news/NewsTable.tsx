@@ -1,4 +1,4 @@
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
 import Copy from 'components/typography/Copy';
@@ -149,20 +149,23 @@ const NewsTable: React.FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
-    isInverted?: boolean;
-    hasBack?: boolean;
-}> = ({ isInverted, hasBack, tableItems, primaryAction, secondaryAction }) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ bgMode, tableItems, primaryAction, secondaryAction }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
+
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : hasBack
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
                 {tableItems.map((item, i) => {
@@ -170,7 +173,7 @@ const NewsTable: React.FC<{
                         <TableWrapper key={i}>
                             <TableBlock
                                 {...item}
-                                hasBack={hasBack}
+                                hasBack={hasBg}
                                 isInverted={isInverted}
                             />
                         </TableWrapper>

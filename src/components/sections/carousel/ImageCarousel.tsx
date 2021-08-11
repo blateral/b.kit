@@ -3,23 +3,15 @@ import styled, { ThemeContext } from 'styled-components';
 
 import { getColors as color } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 
 const ImageCarousel: FC<
-    Omit<CarouselProps, 'variableWidths'> & {
-        bgMode?: 'full' | 'splitted';
+    Omit<CarouselProps, 'variableWidths' | 'isInverted'> & {
+        bgMode?: 'full' | 'splitted' | 'inverted';
         images?: ImageProps[];
     }
 > = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
-    isInverted = false,
     bgMode,
     spacing = 'normal',
     images,
@@ -31,18 +23,8 @@ const ImageCarousel: FC<
     dot,
 }) => {
     const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
     const imageCount = images?.length || 0;
-
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return 'half-right';
-            default:
-                return undefined;
-        }
-    };
 
     return (
         <Section
@@ -54,16 +36,9 @@ const ImageCarousel: FC<
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={mapToBgMode(bgMode)}
         >
             <CarouselBase
-                title={title}
-                titleAs={titleAs}
-                superTitle={superTitle}
-                superTitleAs={superTitleAs}
-                text={text}
-                primaryAction={primaryAction}
-                secondaryAction={secondaryAction}
                 variableWidths
                 spacing={spacing}
                 isInverted={isInverted}

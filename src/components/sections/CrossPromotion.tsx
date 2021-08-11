@@ -4,18 +4,12 @@ import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, spacings, mq } from 'utils/styles';
 
 import Grid from 'components/base/Grid';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
-import Intro from 'components/blocks/Intro';
 import PromotionCard, {
     PromotionCardProps,
 } from 'components/blocks/PromotionCard';
-import { HeadlineTag } from 'components/typography/Heading';
-
-const StyledIntro = styled(Intro)`
-    padding-bottom: ${spacings.spacer * 2}px;
-`;
 
 const FlexGrid = styled.div`
     @media ${mq.semilarge} {
@@ -57,66 +51,18 @@ const PosterContainer = styled.div`
 `;
 
 const CrossPromotion: React.FC<{
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    text?: string;
-
     main?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
     aside?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
-    isMirrored?: boolean;
 
-    // bgMode?: 'full' | 'splitted';
-    bgMode?: BgMode;
+    bgMode?: 'full' | 'inverted' | 'splitted';
+    isMirrored?: boolean;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
-    isInverted?: boolean;
-}> = ({
-    title,
-    titleAs,
-    superTitle,
-    superTitleAs,
-    text,
-    primaryAction,
-    secondaryAction,
-    main,
-    aside,
-    bgMode,
-    isInverted = false,
-    isMirrored = false,
-}) => {
-    // const getSectionBgMode = (): BgMode | undefined => {
-    //     switch (bgMode) {
-    //         case 'full':
-    //             return 'full';
-    //         case 'splitted':
-    //             return 'half-right';
-    //         default:
-    //             return undefined;
-    //     }
-    // };
-
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'half-right':
-                return 'half-right';
-            case 'half-left':
-                return 'half-left';
-            case 'larger-right':
-                return 'larger-right';
-            case 'larger-left':
-                return 'larger-left';
-            default:
-                return undefined;
-        }
-    };
-
+}> = ({ main, aside, bgMode, isMirrored }) => {
     const theme = React.useContext(ThemeContext);
+
+    const isInverted = bgMode === 'inverted';
 
     return (
         <Section
@@ -128,22 +74,8 @@ const CrossPromotion: React.FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
-            {title && (
-                <Wrapper addWhitespace>
-                    <StyledIntro
-                        title={title}
-                        titleAs={titleAs}
-                        superTitle={superTitle}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                        secondaryAction={secondaryAction}
-                        primaryAction={primaryAction}
-                    />
-                </Wrapper>
-            )}
             <Wrapper clampWidth="normal">
                 <Grid.Row>
                     <Grid.Col>

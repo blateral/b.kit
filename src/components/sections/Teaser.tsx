@@ -7,7 +7,7 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 import Title from 'components/blocks/Title';
 import Wrapper from 'components/base/Wrapper';
-import Section, { BgMode } from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import { mq, spacings, withRange, getColors as color } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 
@@ -106,9 +106,8 @@ const StyledActions = styled(Actions)`
 `;
 
 const Teaser: FC<{
-    isInverted?: boolean;
     isMirrored?: boolean;
-    bgMode?: 'full' | 'splitted';
+    bgMode?: 'full' | 'inverted' | 'splitted';
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     title?: string;
@@ -120,7 +119,6 @@ const Teaser: FC<{
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
-    isInverted = false,
     isMirrored = false,
     bgMode,
     superTitle,
@@ -135,18 +133,7 @@ const Teaser: FC<{
     secondaryAction,
 }) => {
     const theme = useContext(ThemeContext);
-
-    const getSectionBgMode = (): BgMode | undefined => {
-        switch (bgMode) {
-            case 'full':
-                return 'full';
-            case 'splitted':
-                return isMirrored ? 'larger-left' : 'larger-right';
-            default:
-                return undefined;
-        }
-    };
-
+    const isInverted = bgMode === 'inverted';
     return (
         <Section
             addSeperation
@@ -157,7 +144,7 @@ const Teaser: FC<{
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={!isInverted ? getSectionBgMode() : undefined}
+            bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
             <Wrapper clampWidth="normal">
                 <Grid.Row gutter={spacings.spacer}>
