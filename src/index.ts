@@ -1,4 +1,4 @@
-/***** Version: 1.0.2 *****/
+/***** Version: 1.0.3 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -47,6 +47,7 @@ export { hexToRgba } from 'utils/hexRgbConverter';
 export * from 'utils/LibThemeProvider';
 
 /***** Sections *****/
+export { default as Intro } from 'components/sections/Intro';
 export { default as Gallery } from 'components/sections/Gallery';
 export { default as Teaser } from 'components/sections/Teaser';
 export { default as TeaserWide } from 'components/sections/TeaserWide';
