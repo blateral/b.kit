@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NewsOverview from '../components/sections/news/NewsOverview';
+import NewsOverview from 'components/sections/news/NewsOverview';
 import { generateItemList } from 'utils/storyHelpers';
 import { NewsCardProps } from 'components/blocks/NewsCard';
 import Button from 'components/buttons/Button';
@@ -85,9 +85,6 @@ const exampleNewsTag3 = generateItemList<NewsCardProps>(
 
 export const Default: Story = () => (
     <NewsOverview
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
         queryParams={{ selected: 'Tag 7' }}
         tags={[
             'Tag 1',
@@ -113,9 +110,6 @@ export const Default: Story = () => (
 
 export const WithActiveTag: Story = () => (
     <NewsOverview
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
         activeTag="Tag 3"
         tags={[
             'Tag 1',
@@ -141,9 +135,6 @@ export const WithActiveTag: Story = () => (
 
 export const WithTagClickHandler: Story = () => (
     <NewsOverview
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
         activeTag="Tag 3"
         tags={[
             'Tag 1',
@@ -170,9 +161,6 @@ export const WithTagClickHandler: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsOverview
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
         activeTag="Tag 3"
         tags={[
             'Tag 1',
@@ -199,9 +187,6 @@ export const WithBackground: Story = () => (
 
 export const IsInverted: Story = () => (
     <NewsOverview
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        superTitle="Haus St. Franziskus"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
         activeTag="Tag 3"
         tags={[
             'Tag 1',
