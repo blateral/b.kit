@@ -1,17 +1,11 @@
 import Plus from 'components/base/icons/Plus';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-// import Intro from 'components/blocks/Intro';
 import Copy from 'components/typography/Copy';
-import { HeadlineTag } from 'components/typography/Heading';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color } from 'utils/styles';
 import Minus from '../base/icons/Minus';
-
-// const StyledIntro = styled(Intro)`
-//     padding-bottom: ${spacings.spacer * 2}px;
-// `;
 
 const AccordionBlock = styled.ul<{
     isInverted?: boolean;
@@ -75,31 +69,11 @@ const AccordionText = styled(Copy)<{
 `;
 
 const Accordion: React.FC<{
-    title?: string;
-    titleAs?: HeadlineTag;
-    superTitle?: string;
-    superTitleAs?: HeadlineTag;
-    text?: string;
-
     items?: { label?: string; text?: string; hasColumns?: boolean }[];
     borderColor?: string;
 
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
     bgMode?: 'full' | 'inverted';
-}> = ({
-    // title,
-    // titleAs,
-    // superTitle,
-    // superTitleAs,
-    // text,
-    items,
-    borderColor,
-    // primaryAction,
-    // secondaryAction,
-    bgMode,
-}) => {
+}> = ({ items, borderColor, bgMode }) => {
     const [isSelected, setIsSelected] = React.useState<boolean>();
     const [currentItem, setCurrentItem] = React.useState<number>();
 
@@ -119,18 +93,6 @@ const Accordion: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper>
-                {/* {title && (
-                    <StyledIntro
-                        title={title}
-                        superTitle={superTitle}
-                        titleAs={titleAs}
-                        superTitleAs={superTitleAs}
-                        text={text}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                        secondaryAction={secondaryAction}
-                        primaryAction={primaryAction}
-                    />
-                )} */}
                 {items &&
                     items.map(({ label, text, hasColumns }, i) => {
                         return (
