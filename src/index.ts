@@ -1,4 +1,4 @@
-/***** Version: 1.0.1 *****/
+/***** Version: 1.0.2 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -62,6 +62,7 @@ export { default as FactGrid } from 'components/sections/FactGrid';
 export { default as Table } from 'components/sections/Table';
 export { default as Map } from 'components/sections/Map';
 export { default as Form } from 'components/sections/Form';
+export { default as Accordion } from 'components/sections/Accordion';
 export { default as ComparisonSlider } from 'components/sections/ComparisonSlider';
 export { default as ImageCarousel } from 'components/sections/carousel/ImageCarousel';
 export { default as FeatureCarousel } from 'components/sections/carousel/FeatureCarousel';
