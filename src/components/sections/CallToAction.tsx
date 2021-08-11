@@ -109,7 +109,7 @@ const Decorator = styled.div<{ isInverted?: boolean }>`
 
 const AddressLabel = styled(Copy)`
     flex: 0 100%;
-    text-align: left;
+    text-align: center;
 
     a {
         color: ${({ textColor }) => textColor && textColor};
@@ -122,6 +122,10 @@ const AddressLabel = styled(Copy)`
 
     a:hover {
         text-decoration: underline;
+    }
+
+    @media ${mq.medium} {
+        text-align: left;
     }
 `;
 
@@ -179,17 +183,6 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
         </ContactView>
     );
 };
-
-// const StyledSection = styled(Section)`
-//     padding: ${spacings.spacer * 3}px ${spacings.nudge * 2}px;
-//     padding-top: ${spacings.spacer * 2}px;
-//     text-align: center;
-
-//     @media ${mq.medium} {
-//         padding: ${spacings.spacer * 3}px ${spacings.spacer}px;
-//         padding-top: ${spacings.spacer * 2}px;
-//     }
-// `;
 
 const StyledIntro = styled(IntroBlock)`
     @media ${mq.semilarge} {

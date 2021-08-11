@@ -2,7 +2,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import { getColors as color } from 'utils/styles';
 
@@ -17,11 +17,11 @@ const Intro: React.FC<{
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     isCentered?: boolean;
+    isStackable?: boolean;
     clampTitle?: boolean;
     clampText?: boolean;
-    className?: string;
-
     bgMode?: 'inverted' | 'full' | 'splitted';
+    className?: string;
 }> = ({
     title,
     titleAs,
@@ -31,16 +31,19 @@ const Intro: React.FC<{
     primaryAction,
     secondaryAction,
     isCentered = false,
+    isStackable = false,
     clampTitle = true,
     clampText = true,
     className,
     bgMode,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
+
     return (
         <Section
             addSeperation
+            isStackable={isStackable}
             bgColor={
                 isInverted
                     ? color(theme).dark
