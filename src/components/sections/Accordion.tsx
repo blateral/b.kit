@@ -5,7 +5,7 @@ import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color } from 'utils/styles';
-import Minus from '../base/icons/Minus';
+import Minus from 'components/base/icons/Minus';
 
 const AccordionBlock = styled.ul<{
     isInverted?: boolean;

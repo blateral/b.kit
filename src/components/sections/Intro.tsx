@@ -34,7 +34,6 @@ const Intro: React.FC<{
     isStackable = false,
     clampTitle = true,
     clampText = true,
-    className,
     bgMode,
 }) => {
     const theme = useContext(ThemeContext);
@@ -66,7 +65,6 @@ const Intro: React.FC<{
                     isCentered={isCentered}
                     clampTitle={clampTitle}
                     clampText={clampText}
-                    className={className}
                 />
             </Wrapper>
         </Section>
