@@ -1,4 +1,4 @@
-/***** Version: 0.10.29 *****/
+/***** Version: 1.0.1 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
