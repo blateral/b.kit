@@ -47,6 +47,15 @@ const AccordionHead = styled.div`
     padding: ${spacings.spacer}px;
 `;
 
+const IconContainer = styled.div`
+    will-change: transform;
+    transition: all ease-in-out 0.2s;
+
+    ${AccordionHead}:hover & {
+        transform: scale(1.2);
+    }
+`;
+
 const AccordionText = styled(Copy)<{
     isVisible?: boolean;
     inverted?: boolean;
@@ -69,13 +78,12 @@ const AccordionText = styled(Copy)<{
 `;
 
 const Accordion: React.FC<{
-    items?: { label?: string; text?: string; hasColumns?: boolean }[];
+    items: { label?: string; text?: string; hasColumns?: boolean }[];
     borderColor?: string;
 
     bgMode?: 'full' | 'inverted';
 }> = ({ items, borderColor, bgMode }) => {
-    const [isSelected, setIsSelected] = React.useState<boolean>();
-    const [currentItem, setCurrentItem] = React.useState<number>();
+    const [currentItems, setCurrentItems] = React.useState<number[]>([]);
 
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
@@ -95,43 +103,53 @@ const Accordion: React.FC<{
             <Wrapper addWhitespace>
                 {items &&
                     items.map(({ label, text, hasColumns }, i) => {
+                        const isSelected = currentItems.indexOf(i) !== -1;
                         return (
                             <AccordionBlock
-                                tabIndex={0}
-                                onBlur={() => setIsSelected(!isSelected)}
                                 key={i}
-                                onClick={() => {
-                                    setIsSelected(!isSelected),
-                                        setCurrentItem(i);
-                                }}
                                 borderColor={borderColor}
                                 isInverted={isInverted}
                                 hasBg={hasBg}
-                                onMouseDown={() => setIsSelected(!isSelected)}
-                                onMouseUp={() => setIsSelected(!isSelected)}
                             >
                                 <AccordionItems>
-                                    <AccordionHead>
+                                    <AccordionHead
+                                        onClick={() => {
+                                            setCurrentItems((prev) => {
+                                                const copy = [...prev];
+                                                const index = copy.indexOf(i);
+                                                if (index === -1) {
+                                                    copy.push(i);
+                                                } else {
+                                                    copy.splice(index, 1);
+                                                }
+                                                return copy;
+                                            });
+                                        }}
+                                    >
                                         <Copy size="big" type="copy-b">
                                             {label}
                                         </Copy>
-                                        {i === currentItem && isSelected ? (
-                                            <Minus
-                                                iconColor={color(theme).dark}
-                                            />
-                                        ) : (
-                                            <Plus
-                                                iconColor={color(theme).dark}
-                                            />
-                                        )}
+                                        <IconContainer>
+                                            {isSelected ? (
+                                                <Minus
+                                                    iconColor={
+                                                        color(theme).dark
+                                                    }
+                                                />
+                                            ) : (
+                                                <Plus
+                                                    iconColor={
+                                                        color(theme).dark
+                                                    }
+                                                />
+                                            )}
+                                        </IconContainer>
                                     </AccordionHead>
                                     <AccordionText
                                         borderColor={borderColor}
                                         inverted={isInverted}
                                         hasBg={hasBg}
-                                        isVisible={
-                                            i === currentItem && isSelected
-                                        }
+                                        isVisible={isSelected}
                                         type="copy"
                                         innerHTML={text}
                                         columns={hasColumns}
