@@ -343,7 +343,8 @@ export interface MapLocation {
 const Map: FC<{
     bgMode?: 'full' | 'inverted';
     isMirrored?: boolean;
-
+    provider?: string;
+    attribution?: string;
     center?: [number, number];
     zoom?: number;
     flyToZoom?: number;
@@ -372,6 +373,8 @@ const Map: FC<{
 }> = ({
     bgMode,
     isMirrored = false,
+    provider,
+    attribution,
     center = [51.505, -0.09],
     zoom = 5,
     flyToZoom,
@@ -421,6 +424,8 @@ const Map: FC<{
                 <SliderContext.Consumer>
                     {({ goToStep }) => (
                         <MapContainer
+                            url={provider}
+                            attribution={attribution}
                             onReady={({ showAll, goTo }) => {
                                 if (allMarkersOnInit) showAll();
                                 else goTo();
