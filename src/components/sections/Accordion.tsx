@@ -83,8 +83,7 @@ const Accordion: React.FC<{
 
     bgMode?: 'full' | 'inverted';
 }> = ({ items, borderColor, bgMode }) => {
-    const [isSelected, setIsSelected] = React.useState(false);
-    const [currentItem, setCurrentItem] = React.useState<number>();
+    const [currentItems, setCurrentItems] = React.useState<number[]>([]);
 
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
@@ -104,6 +103,7 @@ const Accordion: React.FC<{
             <Wrapper addWhitespace>
                 {items &&
                     items.map(({ label, text, hasColumns }, i) => {
+                        const isSelected = currentItems.indexOf(i) !== -1;
                         return (
                             <AccordionBlock
                                 key={i}
@@ -114,19 +114,23 @@ const Accordion: React.FC<{
                                 <AccordionItems>
                                     <AccordionHead
                                         onClick={() => {
-                                            isSelected
-                                                ? setIsSelected(false)
-                                                : setIsSelected(true),
-                                                setCurrentItem(i),
-                                                currentItem !== i &&
-                                                    setIsSelected(true);
+                                            setCurrentItems((prev) => {
+                                                const copy = [...prev];
+                                                const index = copy.indexOf(i);
+                                                if (index === -1) {
+                                                    copy.push(i);
+                                                } else {
+                                                    copy.splice(index, 1);
+                                                }
+                                                return copy;
+                                            });
                                         }}
                                     >
                                         <Copy size="big" type="copy-b">
                                             {label}
                                         </Copy>
                                         <IconContainer>
-                                            {i === currentItem && isSelected ? (
+                                            {isSelected ? (
                                                 <Minus
                                                     iconColor={
                                                         color(theme).dark
@@ -145,9 +149,7 @@ const Accordion: React.FC<{
                                         borderColor={borderColor}
                                         inverted={isInverted}
                                         hasBg={hasBg}
-                                        isVisible={
-                                            i === currentItem && isSelected
-                                        }
+                                        isVisible={isSelected}
                                         type="copy"
                                         innerHTML={text}
                                         columns={hasColumns}
