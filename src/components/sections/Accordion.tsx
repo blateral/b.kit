@@ -47,6 +47,15 @@ const AccordionHead = styled.div`
     padding: ${spacings.spacer}px;
 `;
 
+const IconContainer = styled.div`
+    will-change: transform;
+    transition: all ease-in-out 0.2s;
+
+    ${AccordionHead}:hover & {
+        transform: scale(1.2);
+    }
+`;
+
 const AccordionText = styled(Copy)<{
     isVisible?: boolean;
     inverted?: boolean;
@@ -69,12 +78,12 @@ const AccordionText = styled(Copy)<{
 `;
 
 const Accordion: React.FC<{
-    items?: { label?: string; text?: string; hasColumns?: boolean }[];
+    items: { label?: string; text?: string; hasColumns?: boolean }[];
     borderColor?: string;
 
     bgMode?: 'full' | 'inverted';
 }> = ({ items, borderColor, bgMode }) => {
-    const [isSelected, setIsSelected] = React.useState<boolean>();
+    const [isSelected, setIsSelected] = React.useState(false);
     const [currentItem, setCurrentItem] = React.useState<number>();
 
     const theme = React.useContext(ThemeContext);
@@ -97,33 +106,40 @@ const Accordion: React.FC<{
                     items.map(({ label, text, hasColumns }, i) => {
                         return (
                             <AccordionBlock
-                                tabIndex={0}
-                                onBlur={() => setIsSelected(!isSelected)}
                                 key={i}
-                                onClick={() => {
-                                    setIsSelected(!isSelected),
-                                        setCurrentItem(i);
-                                }}
                                 borderColor={borderColor}
                                 isInverted={isInverted}
                                 hasBg={hasBg}
-                                onMouseDown={() => setIsSelected(!isSelected)}
-                                onMouseUp={() => setIsSelected(!isSelected)}
                             >
                                 <AccordionItems>
-                                    <AccordionHead>
+                                    <AccordionHead
+                                        onClick={() => {
+                                            isSelected
+                                                ? setIsSelected(false)
+                                                : setIsSelected(true),
+                                                setCurrentItem(i),
+                                                currentItem !== i &&
+                                                    setIsSelected(true);
+                                        }}
+                                    >
                                         <Copy size="big" type="copy-b">
                                             {label}
                                         </Copy>
-                                        {i === currentItem && isSelected ? (
-                                            <Minus
-                                                iconColor={color(theme).dark}
-                                            />
-                                        ) : (
-                                            <Plus
-                                                iconColor={color(theme).dark}
-                                            />
-                                        )}
+                                        <IconContainer>
+                                            {i === currentItem && isSelected ? (
+                                                <Minus
+                                                    iconColor={
+                                                        color(theme).dark
+                                                    }
+                                                />
+                                            ) : (
+                                                <Plus
+                                                    iconColor={
+                                                        color(theme).dark
+                                                    }
+                                                />
+                                            )}
+                                        </IconContainer>
                                     </AccordionHead>
                                     <AccordionText
                                         borderColor={borderColor}
