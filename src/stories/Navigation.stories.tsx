@@ -470,6 +470,33 @@ export const WithLargeMenu: Story = () => (
     />
 );
 
+export const WithLargeMirroredMenu: Story = () => (
+    <Navigation
+        isLargeMenu
+        isMirrored
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryCta={primaryCtaFn}
+        secondaryCta={secondaryCtaFn}
+        {...exampleNavItems}
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+    />
+);
+
 export const WithInvertedLargeMenu: Story = () => (
     <Navigation
         isLargeMenu

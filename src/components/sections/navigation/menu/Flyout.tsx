@@ -14,7 +14,11 @@ import Cross from 'components/base/icons/Cross';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { LogoProps } from '../Navigation';
 
-const View = styled.div<{ isOpen?: boolean; isMirrored?: boolean }>`
+const View = styled.div<{
+    isOpen?: boolean;
+    isMirrored?: boolean;
+    isLarge?: boolean;
+}>`
     position: absolute;
     top: 0;
     left: ${({ isMirrored }) => !isMirrored && 0};
@@ -24,11 +28,23 @@ const View = styled.div<{ isOpen?: boolean; isMirrored?: boolean }>`
     overflow: hidden;
     pointer-events: none;
 
-    /* transform: translate(${({ isOpen }) => (isOpen ? '0%' : '-100%')}); */
-    transform: translate(
+    /* transform: translate(
         ${({ isMirrored, isOpen }) =>
-            isMirrored ? (isOpen ? '0%' : '100%') : isOpen ? '0%' : '-100%'}
-    );
+        isMirrored ? (isOpen ? '0%' : '100%') : isOpen ? '0%' : '-100%'}
+    ); */
+
+    ${({ isMirrored, isOpen, isLarge }) =>
+        isLarge
+            ? css`
+                  transform: translateY(${isOpen ? '0%' : '-100%'});
+              `
+            : isMirrored && !isLarge
+            ? css`
+                  transform: translate(${isOpen ? '0%' : '100%'});
+              `
+            : css`
+                  transform: translate(${isOpen ? '0%' : '-100%'});
+              `}
 
     transition: transform 0.2s cubic-bezier(0.71, 0, 0.29, 1);
     will-change: transform;
@@ -280,7 +296,12 @@ const Flyout: FC<{
     const currentMq = useMediaQuery(mqs) as FlyoutMq | undefined;
 
     return (
-        <View isOpen={isOpen} className={className} isMirrored={isMirrored}>
+        <View
+            isOpen={isOpen}
+            className={className}
+            isMirrored={isMirrored}
+            isLarge={isLarge}
+        >
             <StyledWrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <Stage
                     isOpen={isOpen}
@@ -290,13 +311,10 @@ const Flyout: FC<{
                 >
                     <Content isLarge={isLarge}>
                         <Header>
-                            {isMirrored ? (
+                            {isMirrored && !isLarge ? (
                                 <LeftCol isMirrored>
                                     {search && (
-                                        <SearchContainer
-                                            isMirrored
-                                            isLarge={isLarge}
-                                        >
+                                        <SearchContainer isMirrored>
                                             {search(isInverted)}
                                         </SearchContainer>
                                     )}
