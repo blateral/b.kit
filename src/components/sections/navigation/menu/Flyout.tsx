@@ -138,11 +138,13 @@ const HeaderCol = styled.div`
     transition: padding-top 0.2s ease-in-out;
 `;
 
-const LeftCol = styled(HeaderCol)`
+const LeftCol = styled(HeaderCol)<{ isMirrored?: boolean }>`
     flex: 1;
     justify-content: flex-start;
     align-self: flex-start;
     text-align: left;
+
+    padding-right: ${({ isMirrored }) => isMirrored && spacings.spacer}px;
 
     ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
 `;
@@ -174,24 +176,28 @@ const RightCol = styled(HeaderCol)`
     }
 `;
 
-const ToggleContainer = styled.div<{ iconColor?: string }>`
+const ToggleContainer = styled.div<{
+    iconColor?: string;
+    isMirrored?: boolean;
+}>`
     cursor: pointer;
     padding: ${spacings.nudge * 2}px;
+    /* padding-right: ${({ isMirrored }) => isMirrored && spacings.spacer}px; */
     margin: -${spacings.nudge * 2}px;
 
     color: ${({ iconColor }) => iconColor && iconColor};
 `;
 
-const StyledMenuClose = styled(Cross)`
+const StyledMenuClose = styled(Cross)<{ isMirrored?: boolean }>`
     margin-top: ${spacings.nudge}px;
 `;
 
-const SearchContainer = styled.div<{ isLarge?: boolean }>`
+const SearchContainer = styled.div<{ isLarge?: boolean; isMirrored?: boolean }>`
     display: flex;
     justify-content: center;
     width: 100%;
+    padding-left: ${({ isMirrored }) => !isMirrored && spacings.spacer}px;
     padding-right: ${spacings.spacer}px;
-    padding-left: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
         & > * {
@@ -284,33 +290,67 @@ const Flyout: FC<{
                 >
                     <Content isLarge={isLarge}>
                         <Header>
-                            <LeftCol>
-                                <ToggleContainer
-                                    onClick={onCloseClick}
-                                    iconColor={
-                                        isInverted
-                                            ? color(theme).light
-                                            : color(theme).dark
-                                    }
-                                >
-                                    {toggleIcon ? (
-                                        toggleIcon(isInverted)
-                                    ) : (
-                                        <StyledMenuClose
-                                            iconColor={
-                                                isInverted
-                                                    ? color(theme).light
-                                                    : color(theme).dark
-                                            }
-                                        />
+                            {isMirrored ? (
+                                <LeftCol isMirrored>
+                                    {search && (
+                                        <SearchContainer
+                                            isMirrored
+                                            isLarge={isLarge}
+                                        >
+                                            {search(isInverted)}
+                                        </SearchContainer>
                                     )}
-                                </ToggleContainer>
-                                {search && (
-                                    <SearchContainer isLarge={isLarge}>
-                                        {search(isInverted)}
-                                    </SearchContainer>
-                                )}
-                            </LeftCol>
+                                    <ToggleContainer
+                                        onClick={onCloseClick}
+                                        iconColor={
+                                            isInverted
+                                                ? color(theme).light
+                                                : color(theme).dark
+                                        }
+                                    >
+                                        {toggleIcon ? (
+                                            toggleIcon(isInverted)
+                                        ) : (
+                                            <StyledMenuClose
+                                                iconColor={
+                                                    isInverted
+                                                        ? color(theme).light
+                                                        : color(theme).dark
+                                                }
+                                            />
+                                        )}
+                                    </ToggleContainer>
+                                </LeftCol>
+                            ) : (
+                                <LeftCol>
+                                    <ToggleContainer
+                                        onClick={onCloseClick}
+                                        iconColor={
+                                            isInverted
+                                                ? color(theme).light
+                                                : color(theme).dark
+                                        }
+                                    >
+                                        {toggleIcon ? (
+                                            toggleIcon(isInverted)
+                                        ) : (
+                                            <StyledMenuClose
+                                                iconColor={
+                                                    isInverted
+                                                        ? color(theme).light
+                                                        : color(theme).dark
+                                                }
+                                            />
+                                        )}
+                                    </ToggleContainer>
+                                    {search && (
+                                        <SearchContainer isLarge={isLarge}>
+                                            {search(isInverted)}
+                                        </SearchContainer>
+                                    )}
+                                </LeftCol>
+                            )}
+
                             {isLarge &&
                                 (currentMq === 'semilarge' ||
                                     currentMq === 'large') && (
