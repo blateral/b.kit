@@ -28,15 +28,19 @@ const View = styled.div<{
     overflow: hidden;
     pointer-events: none;
 
-    /* transform: translate(
-        ${({ isMirrored, isOpen }) =>
-        isMirrored ? (isOpen ? '0%' : '100%') : isOpen ? '0%' : '-100%'}
-    ); */
-
     ${({ isMirrored, isOpen, isLarge }) =>
         isLarge
             ? css`
-                  transform: translateY(${isOpen ? '0%' : '-100%'});
+                  @keyframes showNav {
+                      from {
+                          opacity: 0;
+                      }
+                      to {
+                          opacity: 1;
+                      }
+                  }
+                  display: ${isOpen ? 'block' : 'none'};
+                  animation: showNav 0.2s ease-in-out both;
               `
             : isMirrored && !isLarge
             ? css`
