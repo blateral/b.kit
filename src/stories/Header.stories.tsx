@@ -83,6 +83,59 @@ export const WithTitle: Story = () => (
     />
 );
 
+export const WithIntroText: Story = () => (
+    <Header
+        title="Risikomanagementprozess"
+        intro={{
+            text:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        }}
+        images={[
+            {
+                small: 'https://unsplash.it/660/792?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
+                large: 'https://unsplash.it/1596/860?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+                webp: {
+                    small: 'https://unsplash.it/660/792.webp?id=1',
+                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
+                    large: 'https://unsplash.it/1596/860.webp?id=1',
+                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
+                },
+            },
+        ]}
+    />
+);
+
+export const WithIntroHeading: Story = () => (
+    <Header
+        title="Risikomanagementprozess"
+        intro={{
+            title: 'Risikomanagementprozess',
+            text:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        }}
+        images={[
+            {
+                small: 'https://unsplash.it/660/792?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
+                large: 'https://unsplash.it/1596/860?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+                webp: {
+                    small: 'https://unsplash.it/660/792.webp?id=1',
+                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
+                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
+                    large: 'https://unsplash.it/1596/860.webp?id=1',
+                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
+                },
+            },
+        ]}
+    />
+);
+
 export const WithActions: Story = () => (
     <Header
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"

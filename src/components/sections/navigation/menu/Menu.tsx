@@ -14,7 +14,10 @@ const View = styled.div`
     z-index: 10;
 `;
 
-const Backdrop = styled.div<{ isVisible?: boolean; opacity?: number }>`
+const Backdrop = styled.div<{
+    isVisible?: boolean;
+    opacity?: number;
+}>`
     position: absolute;
     top: 0;
     right: 0;
@@ -50,6 +53,7 @@ interface MenuProps {
     isOpen?: boolean;
     size?: 'small' | 'full';
     isInverted?: boolean;
+    isMirrored?: boolean;
     backdropOpacity?: number;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
     logo?: LogoProps;
@@ -74,6 +78,7 @@ const Menu: FC<MenuProps> = ({
     isOpen = false,
     size = 'small',
     isInverted = false,
+    isMirrored = false,
     backdropOpacity = 0.4,
     toggleIcon,
     logo,
@@ -94,6 +99,7 @@ const Menu: FC<MenuProps> = ({
             />
             <Flyout.View
                 isOpen={isOpen}
+                isMirrored={isMirrored}
                 isLarge={size === 'full'}
                 isInverted={isInverted}
                 onCloseClick={onCloseClick}

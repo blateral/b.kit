@@ -28,6 +28,7 @@ export interface NavProps {
     isLargeMenu?: boolean;
     isMenuInverted?: boolean;
     isTopbarInverted?: boolean;
+    isMirrored?: boolean;
     activeNavItem?: string;
     navItems?: NavGroup[];
     backdropOpacity?: number;
@@ -70,6 +71,7 @@ const Navigation: FC<NavProps> = ({
     isTopbarLargeOnPageTop,
     openMenuIcon,
     closeMenuIcon,
+    isMirrored,
 }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -86,6 +88,7 @@ const Navigation: FC<NavProps> = ({
     return (
         <>
             <TopBar
+                isMirrored={isMirrored}
                 isBackVisible={hideTopbarBackUnderMenu ? !isMenuOpen : true}
                 isInverted={isTopbarInverted}
                 allowTopOverlow={allowTopbarOverflow}
@@ -95,6 +98,7 @@ const Navigation: FC<NavProps> = ({
                 {...sharedProps}
             />
             <Menu
+                isMirrored={isMirrored}
                 isOpen={isMenuOpen}
                 backdropOpacity={backdropOpacity}
                 size={isLargeMenu ? 'full' : 'small'}
