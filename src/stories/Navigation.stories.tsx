@@ -366,6 +366,32 @@ export const WithMenuSocials: Story = () => (
     />
 );
 
+export const WithMirroredView: Story = () => (
+    <Navigation
+        isMirrored
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryCta={primaryCtaFn}
+        secondaryCta={secondaryCtaFn}
+        {...exampleNavItems}
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+    />
+);
+
 export const HideTopbarBackgroundUnderMenu: Story = () => (
     <Navigation
         hideTopbarBackUnderMenu

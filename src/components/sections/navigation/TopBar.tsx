@@ -167,10 +167,13 @@ const RightCol = styled(Column)`
     }
 `;
 
-const ToggleContainer = styled.div<{ iconColor?: string }>`
+const ToggleContainer = styled.div<{
+    iconColor?: string;
+    isMirrored?: boolean;
+}>`
     cursor: pointer;
     padding: ${spacings.nudge * 2}px;
-    margin: -${spacings.nudge * 2}px;
+    margin: ${({ isMirrored }) => !isMirrored && -spacings.nudge * 2}px;
 
     color: ${({ iconColor }) => iconColor && iconColor};
 `;
@@ -206,6 +209,7 @@ const TopBar: FC<{
     isVisible?: boolean;
     isBackVisible?: boolean;
     isInverted?: boolean;
+    isMirrored?: boolean;
     allowTopOverlow?: boolean;
     isLargeOnPageTop?: boolean;
     onToggleClick?: () => void;
@@ -225,6 +229,7 @@ const TopBar: FC<{
 }> = ({
     isVisible = true,
     isInverted = false,
+    isMirrored = false,
     isBackVisible = true,
     allowTopOverlow = true,
     isLargeOnPageTop = true,
@@ -349,28 +354,30 @@ const TopBar: FC<{
                 className={className}
             >
                 <Content clampWidth="normal" addWhitespace>
-                    <LeftCol isTop={isLargeOnPageTop ? isLarge : false}>
-                        <ToggleContainer
-                            onClick={onToggleClick}
-                            iconColor={
-                                isInverted
-                                    ? color(theme).light
-                                    : color(theme).dark
-                            }
-                        >
-                            {toggleIcon ? (
-                                toggleIcon(isBarInverted)
-                            ) : (
-                                <StyledMenuBurger
-                                    iconColor={
-                                        isBarInverted
-                                            ? color(theme).light
-                                            : color(theme).dark
-                                    }
-                                />
-                            )}
-                        </ToggleContainer>
-                    </LeftCol>
+                    {!isMirrored && (
+                        <LeftCol isTop={isLargeOnPageTop ? isLarge : false}>
+                            <ToggleContainer
+                                onClick={onToggleClick}
+                                iconColor={
+                                    isInverted
+                                        ? color(theme).light
+                                        : color(theme).dark
+                                }
+                            >
+                                {toggleIcon ? (
+                                    toggleIcon(isBarInverted)
+                                ) : (
+                                    <StyledMenuBurger
+                                        iconColor={
+                                            isBarInverted
+                                                ? color(theme).light
+                                                : color(theme).dark
+                                        }
+                                    />
+                                )}
+                            </ToggleContainer>
+                        </LeftCol>
+                    )}
                     <CenterCol isTop={isLargeOnPageTop ? isLarge : false}>
                         {logo && (
                             <LogoLink href={logo.link} logoHeight={logoHeight}>
@@ -408,6 +415,29 @@ const TopBar: FC<{
                                         ? 'desktop'
                                         : 'mobile',
                             })}
+                        {isMirrored && (
+                            <ToggleContainer
+                                onClick={onToggleClick}
+                                iconColor={
+                                    isInverted
+                                        ? color(theme).light
+                                        : color(theme).dark
+                                }
+                                isMirrored
+                            >
+                                {toggleIcon ? (
+                                    toggleIcon(isBarInverted)
+                                ) : (
+                                    <StyledMenuBurger
+                                        iconColor={
+                                            isBarInverted
+                                                ? color(theme).light
+                                                : color(theme).dark
+                                        }
+                                    />
+                                )}
+                            </ToggleContainer>
+                        )}
                     </RightCol>
                 </Content>
             </View>

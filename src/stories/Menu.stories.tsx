@@ -323,6 +323,34 @@ export const WithFullWidthFlyout: Story = () => (
     />
 );
 
+export const WithMirroredView: Story = () => (
+    <Menu
+        isOpen
+        isMirrored
+        size="full"
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
+        {...exampleNavItems}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+    />
+);
+
 export const Inverted: Story = () => (
     <Menu
         isOpen

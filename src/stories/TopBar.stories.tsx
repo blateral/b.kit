@@ -173,6 +173,18 @@ export const WithActions: Story = () => (
     />
 );
 
+export const WithMirroredView: Story = () => (
+    <TopBar
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
+        isMirrored
+    />
+);
+
 export const Inverted: Story = () => (
     <TopBar
         isInverted

@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { css, ThemeContext } from 'styled-components';
 
 import Wrapper from 'components/base/Wrapper';
 import Link, { LinkProps } from 'components/typography/Link';
@@ -14,16 +14,21 @@ import Cross from 'components/base/icons/Cross';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { LogoProps } from '../Navigation';
 
-const View = styled.div<{ isOpen?: boolean }>`
+const View = styled.div<{ isOpen?: boolean; isMirrored?: boolean }>`
     position: absolute;
     top: 0;
-    left: 0;
+    left: ${({ isMirrored }) => !isMirrored && 0};
+    right: ${({ isMirrored }) => isMirrored && 0};
     height: 100vh;
     width: 100%;
     overflow: hidden;
     pointer-events: none;
 
-    transform: translate(${({ isOpen }) => (isOpen ? '0%' : '-100%')});
+    /* transform: translate(${({ isOpen }) => (isOpen ? '0%' : '-100%')}); */
+    transform: translate(
+        ${({ isMirrored, isOpen }) =>
+            isMirrored ? (isOpen ? '0%' : '100%') : isOpen ? '0%' : '-100%'}
+    );
 
     transition: transform 0.2s cubic-bezier(0.71, 0, 0.29, 1);
     will-change: transform;
@@ -37,6 +42,7 @@ const Stage = styled.div<{
     isOpen?: boolean;
     isLarge?: boolean;
     isInverted?: boolean;
+    isMirrored?: boolean;
 }>`
     height: 100%;
     width: 100%;
@@ -50,19 +56,42 @@ const Stage = styled.div<{
         max-width: ${({ isLarge }) => (isLarge ? undefined : '500px')};
     }
 
-    &:after {
-        content: ${({ isLarge }) => !isLarge && `""`};
-        position: absolute;
-        top: 0;
-        left: 1px;
-        bottom: 0;
-        width: 40vw;
+    ${({ isMirrored, isInverted, isLarge }) =>
+        isMirrored
+            ? css`
+                  margin-left: auto;
+                  margin-right: 0;
 
-        transform: translateX(-100%);
+                  &:before {
+                      content: ${!isLarge && `""`};
+                      position: absolute;
+                      top: 0;
+                      right: 1px;
+                      bottom: 0;
+                      width: 40vw;
+                      z-index: -1;
 
-        background-color: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).dark : color(theme).light};
-    }
+                      transform: translateX(100%);
+
+                      background-color: ${({ theme }) =>
+                          isInverted ? color(theme).dark : color(theme).light};
+                  }
+              `
+            : css`
+                  &:after {
+                      content: ${!isLarge && `""`};
+                      position: absolute;
+                      top: 0;
+                      left: 1px;
+                      bottom: 0;
+                      width: 40vw;
+
+                      transform: translateX(-100%);
+
+                      background-color: ${({ theme }) =>
+                          isInverted ? color(theme).dark : color(theme).light};
+                  }
+              `}
 `;
 
 const Header = styled.div`
@@ -84,6 +113,7 @@ const Content = styled.div<{ isLarge?: boolean }>`
     width: 100%;
     max-width: ${spacings.wrapper}px;
     margin: 0 auto;
+
     padding-left: ${spacings.spacer}px;
     padding-bottom: ${spacings.nudge * 3}px;
 
@@ -209,6 +239,7 @@ const Flyout: FC<{
     isOpen?: boolean;
     isLarge?: boolean;
     isInverted?: boolean;
+    isMirrored?: boolean;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
     logo?: LogoProps;
     primaryAction?: (props: {
@@ -228,6 +259,7 @@ const Flyout: FC<{
     isOpen = false,
     isLarge = false,
     isInverted = false,
+    isMirrored = false,
     toggleIcon,
     logo,
     primaryAction,
@@ -242,12 +274,13 @@ const Flyout: FC<{
     const currentMq = useMediaQuery(mqs) as FlyoutMq | undefined;
 
     return (
-        <View isOpen={isOpen} className={className}>
+        <View isOpen={isOpen} className={className} isMirrored={isMirrored}>
             <StyledWrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <Stage
                     isOpen={isOpen}
                     isLarge={isLarge}
                     isInverted={isInverted}
+                    isMirrored={isMirrored}
                 >
                     <Content isLarge={isLarge}>
                         <Header>
