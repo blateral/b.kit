@@ -15,6 +15,8 @@ import HeaderPoster from './HeaderPoster';
 import Actions from 'components/blocks/Actions';
 import Callout from 'components/typography/Callout';
 import HeaderVideo from './HeaderVideo';
+import Copy from 'components/typography/Copy';
+import Heading from 'components/typography/Heading';
 
 interface HeaderImageProps {
     small: string;
@@ -185,12 +187,26 @@ const StyledActions = styled(Actions)`
     }
 `;
 
+const IntroBlock = styled.div<{ noTitle?: boolean }>`
+    margin-top: ${({ noTitle }) => noTitle && spacings.spacer}px;
+
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
+    }
+`;
+
 const Header: FC<{
     size?: 'full' | 'small';
     /** Optional explicit height scale value: 100vh * [0...1] */
     sizeScale?: number;
     title?: string;
     titleAs?: CalloutTag;
+
+    intro?: {
+        text?: string;
+        title?: string;
+    };
+
     primaryCta?: (isInverted?: boolean) => React.ReactNode;
     secondaryCta?: (isInverted?: boolean) => React.ReactNode;
     videoUrl?: string;
@@ -207,6 +223,7 @@ const Header: FC<{
     sizeScale,
     title,
     titleAs,
+    intro,
     primaryCta,
     secondaryCta,
     videoUrl,
@@ -252,7 +269,7 @@ const Header: FC<{
                                     medium={{ span: 16 / 28 }}
                                     large={{ span: 15 / 28 }}
                                 >
-                                    {title && (
+                                    {!intro?.title && title && (
                                         <Callout
                                             hyphens
                                             size="medium"
@@ -261,6 +278,28 @@ const Header: FC<{
                                             textColor="#fff"
                                             innerHTML={title}
                                         />
+                                    )}
+                                    {intro && (
+                                        <IntroBlock
+                                            noTitle={!intro.title && !!title}
+                                        >
+                                            {intro.title && (
+                                                <Heading
+                                                    as="h1"
+                                                    size="heading-1"
+                                                    hasShadow
+                                                    textColor="#fff"
+                                                    hyphens
+                                                >
+                                                    {intro.title}
+                                                </Heading>
+                                            )}
+                                            {intro.text && (
+                                                <Copy textColor="#fff">
+                                                    {intro.text}
+                                                </Copy>
+                                            )}
+                                        </IntroBlock>
                                     )}
                                     {(primaryCta || secondaryCta) && (
                                         <StyledActions
