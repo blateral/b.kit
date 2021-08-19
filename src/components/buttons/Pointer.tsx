@@ -8,7 +8,11 @@ import {
     withRange,
 } from 'utils/styles';
 
-const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
+const View = styled.a<{
+    inverted?: boolean;
+    disable?: boolean;
+    textDecoration?: 'none' | 'underline';
+}>`
     padding: 0.2em;
 
     display: inline-block;
@@ -23,7 +27,8 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
     font-weight: ${({ theme }) => font(theme).copy.medium.weight};
     text-align: center;
-    text-decoration: underline;
+    text-decoration: ${({ textDecoration }) =>
+        textDecoration ? textDecoration : 'underline'};
     line-height: 1;
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
 
@@ -77,6 +82,7 @@ interface Props {
     isInverted?: boolean;
     isDisabled?: boolean;
     onClick?: () => void;
+    textDecoration?: 'none' | 'underline';
     className?: string;
 }
 
@@ -92,12 +98,22 @@ export type LinkProps = Props & {
 
 const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
     (
-        { as, isInverted, isDisabled, onClick, className, children, ...rest },
+        {
+            as,
+            isInverted,
+            isDisabled,
+            onClick,
+            className,
+            textDecoration,
+            children,
+            ...rest
+        },
         ref
     ) => {
         if (as === 'button') {
             return (
                 <View
+                    textDecoration={textDecoration}
                     ref={ref}
                     as={as as any}
                     inverted={isInverted}
@@ -112,6 +128,7 @@ const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
         } else {
             return (
                 <View
+                    textDecoration={textDecoration}
                     ref={ref}
                     as={as as any}
                     href={(rest as LinkProps).href}

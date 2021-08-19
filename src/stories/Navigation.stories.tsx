@@ -11,6 +11,7 @@ import Magnifier from 'components/base/icons/Magnifier';
 import Facebook from 'components/base/icons/socials/Facebook';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
 import Twitter from 'components/base/icons/socials/Twitter';
+import Pointer from 'components/buttons/Pointer';
 
 export default {
     title: 'Sections/Navigation',
@@ -104,6 +105,30 @@ const secondaryCtaFn = ({
             </ButtonGhost.Icon>
         )}
     </ButtonGhost.View>
+);
+
+const primaryPointer = ({ isInverted }: { isInverted?: boolean }) => (
+    <Pointer.View
+        as="a"
+        href="#"
+        isInverted={isInverted}
+        onClick={console.log}
+        textDecoration="none"
+    >
+        <Pointer.Label>Termin Buchen</Pointer.Label>
+    </Pointer.View>
+);
+
+const secondaryPointer = ({ isInverted }: { isInverted?: boolean }) => (
+    <Pointer.View
+        as="a"
+        href="#"
+        isInverted={isInverted}
+        onClick={console.log}
+        textDecoration="none"
+    >
+        <Pointer.Label>Für Kollegen</Pointer.Label>
+    </Pointer.View>
 );
 
 const exampleNavItems = {
@@ -257,6 +282,17 @@ export const WithTopbarActions: Story = () => (
         }}
         primaryCta={primaryCtaFn}
         secondaryCta={secondaryCtaFn}
+    />
+);
+
+export const WithTopbarPointers: Story = () => (
+    <Navigation
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryCta={primaryPointer}
+        secondaryCta={secondaryPointer}
     />
 );
 
@@ -453,6 +489,33 @@ export const WithLargeMenu: Story = () => (
         }}
         primaryCta={primaryCtaFn}
         secondaryCta={secondaryCtaFn}
+        {...exampleNavItems}
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        socials={[
+            { href: '#', icon: <Facebook /> },
+            { href: '#', icon: <LinkedIn /> },
+            { href: '#', icon: <Twitter /> },
+        ]}
+    />
+);
+
+export const WithLargeMenuAndPointerActions: Story = () => (
+    <Navigation
+        isLargeMenu
+        isMirrored
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryCta={primaryPointer}
+        secondaryCta={secondaryPointer}
         {...exampleNavItems}
         search={(isInverted) => (
             <SearchInput
