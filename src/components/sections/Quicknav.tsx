@@ -45,7 +45,11 @@ const Quicknav: React.FC<{
 }> = ({ navItems, activeNavItem, onNavClick, className }) => {
     const [isActiveItem, setIsActiveItem] = React.useState<number>(
         activeNavItem
-            ? navItems?.findIndex((item) => item.label === activeNavItem)
+            ? navItems?.findIndex(
+                  (item) =>
+                      item.label === activeNavItem ||
+                      item.link?.indexOf(activeNavItem) !== -1
+              )
             : -1
     );
 
