@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Quicknav from 'components/blocks/Quicknav';
+import Quicknav from 'components/sections/Quicknav';
 
 export default {
-    title: 'Blocks / Quicknav',
+    title: 'Sections / Quicknav',
     component: Quicknav,
 } as Meta;
 

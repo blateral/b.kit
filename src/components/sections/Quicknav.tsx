@@ -2,13 +2,8 @@ import { spacings, getColors as color } from 'utils/styles';
 import QuicknavButton from 'components/buttons/QuicknavButton';
 import * as React from 'react';
 import styled from 'styled-components';
-
-const View = styled.div`
-    position: relative;
-    padding: ${spacings.nudge * 3}px 0;
-    padding-left: ${spacings.spacer}px;
-    overflow: hidden;
-`;
+import Section from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
 
 const NavList = styled.ul`
     list-style: none;
@@ -50,7 +45,11 @@ const Quicknav: React.FC<{
 }> = ({ navItems, activeNavItem, onNavClick, className }) => {
     const [isActiveItem, setIsActiveItem] = React.useState<number>(
         activeNavItem
-            ? navItems?.findIndex((item) => item.label === activeNavItem)
+            ? navItems?.findIndex(
+                  (item) =>
+                      item.label === activeNavItem ||
+                      item.link?.indexOf(activeNavItem) !== -1
+              )
             : -1
     );
 
@@ -94,39 +93,41 @@ const Quicknav: React.FC<{
     }, [isActiveItem]);
 
     return (
-        <View className={className}>
-            <NavList ref={parentRef}>
-                {navItems.map((item, i) => {
-                    return (
-                        <NavItem
-                            ref={itemRef}
-                            data-index={`tabnav-${i}`}
-                            key={i}
-                            onClick={() => {
-                                if (!onNavClick) {
-                                    setIsActiveItem(i);
-                                } else {
-                                    onNavClick(i, item.label);
-                                }
-                            }}
-                        >
-                            <QuicknavButton
-                                label={item.label}
-                                link={item.link}
-                                isActive={isActiveItem === i}
-                            />
-                        </NavItem>
-                    );
-                })}
-                <Slider
-                    style={{
-                        transform: `translateX(${pos}px)`,
-                        transition: `.2s ease-in-out`,
-                        width: `${width}px`,
-                    }}
-                />
-            </NavList>
-        </View>
+        <Section className={className}>
+            <Wrapper>
+                <NavList ref={parentRef}>
+                    {navItems.map((item, i) => {
+                        return (
+                            <NavItem
+                                ref={itemRef}
+                                data-index={`tabnav-${i}`}
+                                key={i}
+                                onClick={() => {
+                                    if (!onNavClick) {
+                                        setIsActiveItem(i);
+                                    } else {
+                                        onNavClick(i, item.label);
+                                    }
+                                }}
+                            >
+                                <QuicknavButton
+                                    label={item.label}
+                                    link={item.link}
+                                    isActive={isActiveItem === i}
+                                />
+                            </NavItem>
+                        );
+                    })}
+                    <Slider
+                        style={{
+                            transform: `translateX(${pos}px)`,
+                            transition: `.2s ease-in-out`,
+                            width: `${width}px`,
+                        }}
+                    />
+                </NavList>
+            </Wrapper>
+        </Section>
     );
 };
 

@@ -158,7 +158,7 @@ const HeaderCol = styled.div`
     transition: padding-top 0.2s ease-in-out;
 `;
 
-const LeftCol = styled(HeaderCol)<{ isMirrored?: boolean }>`
+const LeftCol = styled(HeaderCol)<{ isMirrored?: boolean; isLarge?: boolean }>`
     flex: 1;
     justify-content: flex-start;
     align-self: flex-start;
@@ -167,6 +167,11 @@ const LeftCol = styled(HeaderCol)<{ isMirrored?: boolean }>`
     padding-right: ${({ isMirrored }) => isMirrored && spacings.spacer}px;
 
     ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
+
+    @media ${mq.semilarge} {
+        display: ${({ isMirrored, isLarge }) =>
+            isMirrored && isLarge && 'none'};
+    }
 `;
 
 const CenterCol = styled(HeaderCol)`
@@ -213,7 +218,8 @@ const StyledMenuClose = styled(Cross)<{ isMirrored?: boolean }>`
 `;
 
 const SearchContainer = styled.div<{ isLarge?: boolean; isMirrored?: boolean }>`
-    display: flex;
+    display: ${({ isLarge, isMirrored }) =>
+        isMirrored && isLarge ? 'contents' : 'flex'};
     justify-content: center;
     width: 100%;
     padding-left: ${({ isMirrored }) => !isMirrored && spacings.spacer}px;
@@ -256,6 +262,19 @@ const ScrollArea = styled.div`
     & > * {
         flex: 1 1 auto;
         flex-shrink: 0;
+    }
+`;
+
+const MirroredLargeContainerDesktop = styled(HeaderCol)`
+    display: none;
+
+    @media ${mq.semilarge} {
+        display: flex;
+
+        justify-content: flex-end;
+        padding-left: ${spacings.spacer}px;
+
+        ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
     }
 `;
 
@@ -343,6 +362,34 @@ const Flyout: FC<{
                                         )}
                                     </ToggleContainer>
                                 </LeftCol>
+                            ) : isMirrored && isLarge ? (
+                                <LeftCol isMirrored isLarge>
+                                    {search && (
+                                        <SearchContainer isMirrored>
+                                            {search(isInverted)}
+                                        </SearchContainer>
+                                    )}
+                                    <ToggleContainer
+                                        onClick={onCloseClick}
+                                        iconColor={
+                                            isInverted
+                                                ? color(theme).light
+                                                : color(theme).dark
+                                        }
+                                    >
+                                        {toggleIcon ? (
+                                            toggleIcon(isInverted)
+                                        ) : (
+                                            <StyledMenuClose
+                                                iconColor={
+                                                    isInverted
+                                                        ? color(theme).light
+                                                        : color(theme).dark
+                                                }
+                                            />
+                                        )}
+                                    </ToggleContainer>
+                                </LeftCol>
                             ) : (
                                 <LeftCol>
                                     <ToggleContainer
@@ -394,6 +441,14 @@ const Flyout: FC<{
                                             )}
                                         </CenterCol>
                                         <RightCol>
+                                            {search && isMirrored && isLarge && (
+                                                <SearchContainer
+                                                    isMirrored
+                                                    isLarge
+                                                >
+                                                    {search(isInverted)}
+                                                </SearchContainer>
+                                            )}
                                             {secondaryAction &&
                                                 secondaryAction({
                                                     isInverted,
@@ -412,6 +467,39 @@ const Flyout: FC<{
                                                             ? 'desktop'
                                                             : 'mobile',
                                                 })}
+                                            {isMirrored && isLarge && (
+                                                <MirroredLargeContainerDesktop>
+                                                    <ToggleContainer
+                                                        onClick={onCloseClick}
+                                                        iconColor={
+                                                            isInverted
+                                                                ? color(theme)
+                                                                      .light
+                                                                : color(theme)
+                                                                      .dark
+                                                        }
+                                                    >
+                                                        {toggleIcon ? (
+                                                            toggleIcon(
+                                                                isInverted
+                                                            )
+                                                        ) : (
+                                                            <StyledMenuClose
+                                                                iconColor={
+                                                                    isInverted
+                                                                        ? color(
+                                                                              theme
+                                                                          )
+                                                                              .light
+                                                                        : color(
+                                                                              theme
+                                                                          ).dark
+                                                                }
+                                                            />
+                                                        )}
+                                                    </ToggleContainer>
+                                                </MirroredLargeContainerDesktop>
+                                            )}
                                         </RightCol>
                                     </>
                                 )}
