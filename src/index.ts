@@ -80,10 +80,13 @@ export { default as NewsTable } from 'components/sections/news/NewsTable';
 export { default as NewsText } from 'components/sections/news/NewsText';
 export { default as NewsVideo } from 'components/sections/news/NewsVideo';
 export { default as NewsOverview } from 'components/sections/news/NewsOverview';
+export { default as QuickNav } from 'components/sections/Quicknav';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
 export { default as ButtonGhost } from 'components/buttons/ButtonGhost';
+export { default as Pointer } from 'components/buttons/Pointer';
+
 
 /***** Base *****/
 export { default as Grid } from 'components/base/Grid';
