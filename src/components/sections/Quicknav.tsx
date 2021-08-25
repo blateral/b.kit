@@ -15,6 +15,8 @@ const NavList = styled.ul`
     margin: 0;
     position: relative;
 
+    margin-left: -${spacings.spacer}px;
+
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
@@ -32,10 +34,6 @@ const NavItem = styled.li`
 
     padding: 20px;
     padding-top: 0;
-
-    &:first-child {
-        padding-left: 0px;
-    }
 `;
 
 const Test = styled.div`
