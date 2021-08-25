@@ -5,18 +5,19 @@ import styled from 'styled-components';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
+const StyledSection = styled(Section)`
+    padding-top: 55px;
+`;
+
 const NavList = styled.ul`
     list-style: none;
-    margin: -${spacings.nudge * 5}px -${spacings.nudge * 3}px;
     padding: 0;
+    margin: 0;
     position: relative;
 
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-
-    margin: -${spacings.nudge * 3}px;
-    padding-right: ${spacings.spacer}px;
 
     ::-webkit-scrollbar {
         display: none;
@@ -28,9 +29,24 @@ const NavItem = styled.li`
     position: relative;
 
     cursor: pointer;
+
+    padding: 20px;
+    padding-top: 0;
+
+    &:first-child {
+        padding-left: 0px;
+    }
+`;
+
+const Test = styled.div`
+    width: 100%;
+    height: 1px;
+
+    background: rgba(0, 0, 0, 0.1);
 `;
 
 const Slider = styled.div<{ isActive?: boolean }>`
+    /* display: ${({ isActive }) => (isActive ? 'block' : 'block')}; */
     height: 4px;
     position: absolute;
     bottom: 0;
@@ -61,7 +77,11 @@ const Quicknav: React.FC<{
 
     React.useEffect(() => {
         setIsActiveItem(
-            navItems.findIndex((item) => item.label === activeNavItem)
+            navItems.findIndex(
+                (item) =>
+                    item.label === activeNavItem ||
+                    (activeNavItem && item.link?.indexOf(activeNavItem) !== -1)
+            )
         );
     }, [activeNavItem, navItems]);
 
@@ -76,7 +96,7 @@ const Quicknav: React.FC<{
             const Box = element.getBoundingClientRect();
             const ParentBox = (parent as Element).getBoundingClientRect();
 
-            setWidth(Box.width - spacings.spacer * 1.5);
+            setWidth(Box.width - spacings.spacer);
             setPos(
                 Box.left -
                     ParentBox.left +
@@ -93,8 +113,8 @@ const Quicknav: React.FC<{
     }, [isActiveItem]);
 
     return (
-        <Section className={className}>
-            <Wrapper>
+        <StyledSection addSeperation className={className}>
+            <Wrapper addWhitespace>
                 <NavList ref={parentRef}>
                     {navItems.map((item, i) => {
                         return (
@@ -118,16 +138,23 @@ const Quicknav: React.FC<{
                             </NavItem>
                         );
                     })}
-                    <Slider
+                    <div
                         style={{
-                            transform: `translateX(${pos}px)`,
-                            transition: `.2s ease-in-out`,
-                            width: `${width}px`,
+                            paddingTop: '35px',
                         }}
-                    />
+                    >
+                        <Slider
+                            style={{
+                                transform: `translateX(${pos}px)`,
+                                transition: `.2s ease-in-out`,
+                                width: `${width}px`,
+                            }}
+                        />
+                    </div>
                 </NavList>
             </Wrapper>
-        </Section>
+            <Test />
+        </StyledSection>
     );
 };
 
