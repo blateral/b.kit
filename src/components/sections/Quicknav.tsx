@@ -61,7 +61,11 @@ const Quicknav: React.FC<{
 
     React.useEffect(() => {
         setIsActiveItem(
-            navItems.findIndex((item) => item.label === activeNavItem)
+            navItems.findIndex(
+                (item) =>
+                    item.label === activeNavItem ||
+                    (activeNavItem && item.link?.indexOf(activeNavItem) !== -1)
+            )
         );
     }, [activeNavItem, navItems]);
 
