@@ -279,7 +279,7 @@ const Header: FC<{
                                             innerHTML={title}
                                         />
                                     )}
-                                    {intro && (
+                                    {intro && intro.title && (
                                         <IntroBlock
                                             noTitle={!intro.title && !!title}
                                         >
@@ -323,25 +323,30 @@ const Header: FC<{
                     </Badge>
                 )}
             </HeaderWrapper>
-            <PosterContentMobile>
-                <Wrapper addWhitespace>
-                    {title && (
-                        <Callout
-                            hyphens
-                            size="small"
-                            as={titleAs}
-                            isInverted={false}
-                            innerHTML={title}
-                        />
-                    )}
-                    {(primaryCta || secondaryCta) && (
-                        <StyledActions
-                            primary={primaryCta && primaryCta(false)}
-                            secondary={secondaryCta && secondaryCta(false)}
-                        />
-                    )}
-                </Wrapper>
-            </PosterContentMobile>
+            {title ||
+                ((primaryCta || secondaryCta) && (
+                    <PosterContentMobile>
+                        <Wrapper addWhitespace>
+                            {title && (
+                                <Callout
+                                    hyphens
+                                    size="small"
+                                    as={titleAs}
+                                    isInverted={false}
+                                    innerHTML={title}
+                                />
+                            )}
+                            {(primaryCta || secondaryCta) && (
+                                <StyledActions
+                                    primary={primaryCta && primaryCta(false)}
+                                    secondary={
+                                        secondaryCta && secondaryCta(false)
+                                    }
+                                />
+                            )}
+                        </Wrapper>
+                    </PosterContentMobile>
+                ))}
         </View>
     );
 };

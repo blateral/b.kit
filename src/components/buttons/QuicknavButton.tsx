@@ -16,7 +16,7 @@ const View = styled.a<{
 
     text-align: center;
 
-    padding: ${spacings.nudge * 5}px ${spacings.nudge * 3}px;
+    /* padding: ${spacings.nudge * 5}px ${spacings.nudge * 3}px; */
 
     pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 
