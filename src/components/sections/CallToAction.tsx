@@ -291,7 +291,7 @@ export const CallToAction: FC<{
             <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
                 <Grid.Row gutter={!column ? 0 : spacings.spacer * 4}>
-                    <Grid.Col semilarge={{ span: column ? 1 / 2 : 28 / 28 }}>
+                    <Grid.Col large={{ span: column ? 1 / 2 : 28 / 28 }}>
                         <Content>
                             {title && (
                                 <StyledIntro
@@ -335,7 +335,7 @@ export const CallToAction: FC<{
                             )}
                         </Content>
                     </Grid.Col>
-                    <Grid.Col semilarge={{ span: 1 / 2 }}>
+                    <Grid.Col large={{ span: 1 / 2 }}>
                         {column && (
                             <Content>
                                 {column.title && (
