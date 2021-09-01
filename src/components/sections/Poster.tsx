@@ -88,6 +88,7 @@ const Poster: FC<{
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    hasWrapper?: boolean;
 }> = ({
     title,
     titleAs,
@@ -97,10 +98,14 @@ const Poster: FC<{
     primaryAction,
     secondaryAction,
     image,
+    hasWrapper,
 }) => {
     return (
         <Section bgColor="undefined" bgMode="full">
-            <Wrapper clampWidth="large">
+            <Wrapper
+                addWhitespace={hasWrapper}
+                clampWidth={hasWrapper ? 'normal' : 'large'}
+            >
                 <PosterContainer hasContent={title !== undefined}>
                     <StyledImage {...image} coverSpace />
                     {title && (
