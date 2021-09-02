@@ -21,7 +21,7 @@ export const Default: Story = () => (
 
 export const WithActiveItem: Story = () => (
     <Quicknav
-        activeNavItem="Ästhetische Chirurgie"
+        activeNavItem="Hautchirurgie"
         navItems={[
             { label: 'Dsygnathie', link: '#0' },
             { label: 'Dentalveoläre Chirurgie', link: '#0' },

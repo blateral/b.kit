@@ -1,4 +1,4 @@
-import { spacings, getColors as color } from 'utils/styles';
+import { spacings, getColors as color, mq } from 'utils/styles';
 import QuicknavButton from 'components/buttons/QuicknavButton';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -16,6 +16,11 @@ const NavList = styled.ul`
     position: relative;
 
     margin-left: -${spacings.spacer}px;
+    padding-right: ${spacings.spacer}px;
+
+    @media ${mq.semilarge} {
+        margin-left: -${spacings.nudge * 3}px;
+    }
 
     overflow-x: scroll;
     overflow-y: hidden;
@@ -31,9 +36,11 @@ const NavItem = styled.li`
     position: relative;
 
     cursor: pointer;
+`;
 
-    padding: 20px;
-    padding-top: 0;
+const NavItemContainer = styled.div`
+    display: inline-block;
+    padding: ${spacings.nudge * 3}px;
 `;
 
 const Test = styled.div`
@@ -94,7 +101,7 @@ const Quicknav: React.FC<{
             const Box = element.getBoundingClientRect();
             const ParentBox = (parent as Element).getBoundingClientRect();
 
-            setWidth(Box.width - spacings.spacer);
+            setWidth(Box.width - spacings.spacer * 1.5);
             setPos(
                 Box.left -
                     ParentBox.left +
@@ -128,11 +135,13 @@ const Quicknav: React.FC<{
                                     }
                                 }}
                             >
-                                <QuicknavButton
-                                    label={item.label}
-                                    link={item.link}
-                                    isActive={isActiveItem === i}
-                                />
+                                <NavItemContainer>
+                                    <QuicknavButton
+                                        label={item.label}
+                                        link={item.link}
+                                        isActive={isActiveItem === i}
+                                    />
+                                </NavItemContainer>
                             </NavItem>
                         );
                     })}
