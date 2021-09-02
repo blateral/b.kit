@@ -105,7 +105,6 @@ const Timeline: React.FC<{
     const [activeItem, setActiveItem] = useState<number>(0);
 
     useEffect(() => {
-        console.log(targetRefs);
         if (observerSupported && targetRefs && targetRefs.length > 0) {
             const options = {
                 rootMargin: '-30% 0% -70% 0%',
