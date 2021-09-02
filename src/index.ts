@@ -1,4 +1,4 @@
-/***** Version: 1.2.5 *****/
+/***** Version: 1.2.6 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -82,6 +82,7 @@ export { default as NewsVideo } from 'components/sections/news/NewsVideo';
 export { default as NewsOverview } from 'components/sections/news/NewsOverview';
 export { default as QuickNav } from 'components/sections/Quicknav';
 export { default as Timeline } from 'components/sections/Timeline';
+export { default as SocialNav } from 'components/sections/SocialNav';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
@@ -90,7 +91,7 @@ export { default as Pointer } from 'components/buttons/Pointer';
 
 /***** Base *****/
 export { default as Grid } from 'components/base/Grid';
-export { default as Section } from 'components/base/Section';
+export { default as Section, mapToBgMode } from 'components/base/Section';
 export { default as Wrapper } from 'components/base/Wrapper';
 
 /***** Typography *****/

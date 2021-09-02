@@ -27,7 +27,7 @@ const TimelineBlock = styled.div<{ isSwitched?: boolean; isActive?: boolean }>`
         height: 10px;
 
         box-sizing: content-box;
-        border: 1px solid ${({ theme }) => color(theme).dark};
+        border: 2px solid ${({ theme }) => color(theme).dark};
         border-radius: 50%;
 
         background: ${({ theme, isActive }) =>
@@ -102,13 +102,12 @@ const Timeline: React.FC<{
     const observerSupported = useObserverSupport();
     const observerRef = useRef<IntersectionObserver | null>(null);
 
-    const [activeItem, setActiveItem] = useState<number>(-1);
+    const [activeItem, setActiveItem] = useState<number>(0);
 
     useEffect(() => {
-        console.log(targetRefs);
         if (observerSupported && targetRefs && targetRefs.length > 0) {
             const options = {
-                rootMargin: '-20% 0% -80% 0%',
+                rootMargin: '-30% 0% -70% 0%',
                 threshold: 0,
             };
 
