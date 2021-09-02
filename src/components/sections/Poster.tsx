@@ -15,10 +15,14 @@ import { HeadlineTag } from 'components/typography/Heading';
 
 const PosterContainer = styled.div<{
     hasContent?: boolean;
+    hasWrapper?: boolean;
 }>`
     position: relative;
     width: 100%;
     max-height: 500px;
+    border-radius: ${({ theme, hasWrapper }) =>
+        hasWrapper && global(theme).sections.edgeRadius};
+    overflow: hidden;
 
     @media ${mq.medium} {
         max-height: 900px;
@@ -106,7 +110,10 @@ const Poster: FC<{
                 addWhitespace={hasWrapper}
                 clampWidth={hasWrapper ? 'normal' : 'large'}
             >
-                <PosterContainer hasContent={title !== undefined}>
+                <PosterContainer
+                    hasWrapper={hasWrapper}
+                    hasContent={title !== undefined}
+                >
                     <StyledImage {...image} coverSpace />
                     {title && (
                         <IntroContainer addWhitespace>
