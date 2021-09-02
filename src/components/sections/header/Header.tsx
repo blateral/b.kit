@@ -323,30 +323,27 @@ const Header: FC<{
                     </Badge>
                 )}
             </HeaderWrapper>
-            {title ||
-                ((primaryCta || secondaryCta) && (
-                    <PosterContentMobile>
-                        <Wrapper addWhitespace>
-                            {title && (
-                                <Callout
-                                    hyphens
-                                    size="small"
-                                    as={titleAs}
-                                    isInverted={false}
-                                    innerHTML={title}
-                                />
-                            )}
-                            {(primaryCta || secondaryCta) && (
-                                <StyledActions
-                                    primary={primaryCta && primaryCta(false)}
-                                    secondary={
-                                        secondaryCta && secondaryCta(false)
-                                    }
-                                />
-                            )}
-                        </Wrapper>
-                    </PosterContentMobile>
-                ))}
+            {(title || primaryCta || secondaryCta) && (
+                <PosterContentMobile>
+                    <Wrapper addWhitespace>
+                        {title && (
+                            <Callout
+                                hyphens
+                                size="small"
+                                as={titleAs}
+                                isInverted={false}
+                                innerHTML={title}
+                            />
+                        )}
+                        {(primaryCta || secondaryCta) && (
+                            <StyledActions
+                                primary={primaryCta && primaryCta(false)}
+                                secondary={secondaryCta && secondaryCta(false)}
+                            />
+                        )}
+                    </Wrapper>
+                </PosterContentMobile>
+            )}
         </View>
     );
 };
