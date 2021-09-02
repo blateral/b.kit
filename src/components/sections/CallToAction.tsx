@@ -14,7 +14,7 @@ import Wrapper from 'components/base/Wrapper';
 import { HeadlineTag } from 'components/typography/Heading';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
-import { Grid } from 'index';
+import Grid from 'components/base/Grid';
 
 const ContactView = styled.div`
     display: flex;
