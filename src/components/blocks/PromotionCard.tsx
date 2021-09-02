@@ -16,6 +16,8 @@ const View = styled.div<{
     display: block;
     position: relative;
     width: 100%;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    overflow: hidden;
 
     &:after {
         content: '';

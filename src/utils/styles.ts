@@ -306,7 +306,7 @@ const defaultFonts: Fonts = {
 export interface GlobalSettings {
     sections: {
         /** Radius of image and card edges */
-        edgeRadius: string;
+        edgeRadius: string | null;
         /** Customnize gradient for all text on image background gradients */
         imageTextGradient: string;
         /** Date and Time Formats for all news sections */
@@ -318,7 +318,7 @@ export interface GlobalSettings {
 
 const defaultGlobalSettings: GlobalSettings = {
     sections: {
-        edgeRadius: '10px',
+        edgeRadius: null,
         imageTextGradient: `
             linear-gradient(
                 0deg,

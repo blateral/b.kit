@@ -2,7 +2,11 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { ImageProps } from 'components/blocks/Image';
-import { mq, getColors as color } from 'utils/styles';
+import {
+    mq,
+    getColors as color,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import Play from 'components/base/icons/Play';
 
 const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
@@ -18,26 +22,29 @@ const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
     background-repeat: no-repeat;
     background-position: center;
 
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    overflow: hidden;
+
     @media ${mq.medium} {
         text-align: left;
 
         background-image: ${({ bgImage }) =>
-            bgImage ? `url("${bgImage.medium}")` : ''};
+            bgImage?.medium && `url("${bgImage.medium}")`};
     }
 
     @media ${mq.semilarge} {
         background-image: ${({ bgImage }) =>
-            bgImage ? `url("${bgImage.semilarge}")` : ''};
+            bgImage?.semilarge && `url("${bgImage.semilarge}")`};
     }
 
     @media ${mq.large} {
         background-image: ${({ bgImage }) =>
-            bgImage ? `url("${bgImage.large}")` : ''};
+            bgImage?.large && `url("${bgImage.large}")`};
     }
 
     @media ${mq.xlarge} {
         background-image: ${({ bgImage }) =>
-            bgImage ? `url("${bgImage.xlarge}")` : ''};
+            bgImage?.xlarge && `url("${bgImage.xlarge}")`};
     }
 
     &:before {

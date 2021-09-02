@@ -4,7 +4,12 @@ import styled, { ThemeContext } from 'styled-components';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    getGlobalSettings as global,
+    mq,
+    spacings,
+} from 'utils/styles';
 
 const ImgContainer = styled.div`
     display: flex;
@@ -35,6 +40,11 @@ const ImgWrapper = styled.div<{ isFull?: boolean }>`
             flex: 0 100%;
         } */
     }
+`;
+
+const StyledImage = styled(Image)`
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    overflow: hidden;
 `;
 
 type ImageType = ImageProps & { isFull?: boolean };
@@ -75,12 +85,14 @@ const Gallery: FC<{
             }
             className={className}
         >
-            <Wrapper>
+            <Wrapper
+                addWhitespace={global(theme).sections.edgeRadius ? true : false}
+            >
                 <ImgContainer>
                     {images &&
                         images.map((img, i) => (
                             <ImgWrapper key={i} isFull={img.isFull}>
-                                <Image {...img} />
+                                <StyledImage {...img} />
                             </ImgWrapper>
                         ))}
                 </ImgContainer>

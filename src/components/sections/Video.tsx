@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
-import { getColors as color } from 'utils/styles';
+import { getColors as color, getGlobalSettings as global } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import { ImageProps } from 'components/blocks/Image';
 
@@ -29,7 +29,9 @@ const Video: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation
         >
-            <Wrapper>
+            <Wrapper
+                addWhitespace={global(theme).sections.edgeRadius ? true : false}
+            >
                 <VideoCard
                     bgImage={bgImage}
                     embedId={embedId}
