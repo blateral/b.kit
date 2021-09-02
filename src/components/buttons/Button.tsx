@@ -75,16 +75,15 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     }
 
     &:hover {
-        transform: scale(1.02);
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
     }
 
     &:focus {
-        text-decoration: underline;
-        transform: scale(1.012);
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
     }
 
     &:active {
-        transform: scale(0.95);
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
     }
 `;
 
