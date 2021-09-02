@@ -60,6 +60,7 @@ const TimelineBlock = styled.div<{ isSwitched?: boolean; isActive?: boolean }>`
 const TimelineText = styled.div<{ isSwitched?: boolean }>`
     position: relative;
     padding: ${spacings.spacer}px;
+    padding-bottom: ${spacings.spacer * 2}px;
 
     @media ${mq.large} {
         max-width: 50%;
