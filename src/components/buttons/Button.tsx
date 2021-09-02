@@ -74,16 +74,30 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
         padding-right: ${spacings.nudge}px;
     }
 
-    &:hover {
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
-    }
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            box-shadow: 0px 8px 16px
+                ${({ inverted }) =>
+                    inverted
+                        ? 'rgba(255, 255, 255, 0.25)'
+                        : 'rgba(0, 0, 0, 0.25)'};
+        }
 
-    &:focus {
-        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
-    }
+        &:focus {
+            box-shadow: 0px 2px 6px
+                ${({ inverted }) =>
+                    inverted
+                        ? 'rgba(255, 255, 255, 0.25)'
+                        : 'rgba(0, 0, 0, 0.3)'};
+        }
 
-    &:active {
-        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+        &:active {
+            box-shadow: 0px 2px 6px
+                ${({ inverted }) =>
+                    inverted
+                        ? 'rgba(255, 255, 255, 0.25)'
+                        : 'rgba(0, 0, 0, 0.3)'};
+        }
     }
 `;
 
