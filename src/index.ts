@@ -20,6 +20,7 @@ export {
     getColors,
     getFonts,
     getBaseTheme,
+    getGlobalSettings,
     withRange,
     spacings,
     mq,
@@ -42,6 +43,7 @@ export { default as useInterval } from 'utils/useInterval';
 export { default as useTouch } from 'utils/useTouch';
 export { useImgPreload } from 'utils/useImgPreload';
 export { hexToRgba } from 'utils/hexRgbConverter';
+export { getBgImage } from 'utils/backgroundImage';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
