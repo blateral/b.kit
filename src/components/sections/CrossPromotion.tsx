@@ -1,7 +1,12 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, spacings, mq } from 'utils/styles';
+import {
+    getColors as color,
+    getGlobalSettings as global,
+    spacings,
+    mq,
+} from 'utils/styles';
 
 import Grid from 'components/base/Grid';
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -76,7 +81,10 @@ const CrossPromotion: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
-            <Wrapper clampWidth="normal">
+            <Wrapper
+                clampWidth="normal"
+                addWhitespace={global(theme).sections.edgeRadius ? true : false}
+            >
                 <Grid.Row>
                     <Grid.Col>
                         {aside ? (
