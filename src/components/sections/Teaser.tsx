@@ -8,7 +8,13 @@ import Copy from 'components/typography/Copy';
 import Title from 'components/blocks/Title';
 import Wrapper from 'components/base/Wrapper';
 import Section, { mapToBgMode } from 'components/base/Section';
-import { mq, spacings, withRange, getColors as color } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    withRange,
+    getColors as color,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 
 const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
@@ -23,6 +29,11 @@ const StyledImage = styled(Image)`
     position: relative;
     width: 100%;
     height: 100%;
+
+    @media ${mq.semilarge} {
+        border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+        overflow: hidden;
+    }
 `;
 
 const ImgDescDesktop = styled(Copy)`

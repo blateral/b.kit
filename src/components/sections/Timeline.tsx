@@ -2,10 +2,17 @@ import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
-import * as React from 'react';
+import React, {
+    createRef,
+    MutableRefObject,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
-// import { useObserverSupport } from 'utils/useObserverSupport';
+import { useObserverSupport } from 'utils/useObserverSupport';
 
 const TimelineBlock = styled.div<{ isSwitched?: boolean; isActive?: boolean }>`
     position: relative;
@@ -29,6 +36,8 @@ const TimelineBlock = styled.div<{ isSwitched?: boolean; isActive?: boolean }>`
         position: absolute;
         top: 0;
         left: 0px;
+
+        transition: all 0.2s ease-in-out;
 
         @media ${mq.large} {
             top: 0;
@@ -60,6 +69,7 @@ const TimelineBlock = styled.div<{ isSwitched?: boolean; isActive?: boolean }>`
 const TimelineText = styled.div<{ isSwitched?: boolean }>`
     position: relative;
     padding: ${spacings.spacer}px;
+    padding-bottom: ${spacings.spacer * 2}px;
 
     @media ${mq.large} {
         max-width: 50%;
@@ -85,11 +95,52 @@ const TimelineText = styled.div<{ isSwitched?: boolean }>`
 const Timeline: React.FC<{
     items?: { label?: string; title?: string; text?: string }[];
 }> = ({ items }) => {
-    const theme = React.useContext(ThemeContext);
-    const targetRef = React.useRef<HTMLDivElement>(null);
-    // const observerSupported = useObserverSupport();
+    const theme = useContext(ThemeContext);
+    const [targetRefs, setTargetRefs] = useState<
+        MutableRefObject<HTMLDivElement>[]
+    >([]);
+    const observerSupported = useObserverSupport();
+    const observerRef = useRef<IntersectionObserver | null>(null);
 
-    const [active /* setActive */] = React.useState(false);
+    const [activeItem, setActiveItem] = useState<number>(-1);
+
+    useEffect(() => {
+        console.log(targetRefs);
+        if (observerSupported && targetRefs && targetRefs.length > 0) {
+            const options = {
+                rootMargin: '-20% 0% -80% 0%',
+                threshold: 0,
+            };
+
+            observerRef.current = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const index = targetRefs?.findIndex(
+                            (t) => t.current === entry.target
+                        );
+                        setActiveItem(index);
+                    }
+                });
+            }, options);
+
+            for (let i = 0; i < targetRefs.length; i++) {
+                observerRef.current.observe(targetRefs[i].current);
+            }
+        }
+
+        return () => {
+            observerRef.current?.disconnect();
+        };
+    }, [targetRefs, observerSupported]);
+
+    useEffect(() => {
+        setTargetRefs(() =>
+            Array(items?.length)
+                .fill(null)
+                .map((_, i) => targetRefs[i] || createRef())
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [items?.length]);
 
     return (
         <Section addSeperation>
@@ -98,8 +149,8 @@ const Timeline: React.FC<{
                     items.map((item, i) => {
                         return (
                             <TimelineBlock
-                                ref={targetRef}
-                                isActive={active[i]}
+                                ref={targetRefs[i]}
+                                isActive={activeItem === i}
                                 isSwitched={i % 2 === 0}
                                 key={i}
                             >
