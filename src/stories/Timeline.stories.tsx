@@ -5,6 +5,13 @@ import Timeline from '../components/sections/Timeline';
 export default {
     title: 'sections/Timeline',
     component: Timeline,
+    decorators: [
+        (Story) => (
+            <div style={{ height: '200vh' }}>
+                <Story />
+            </div>
+        ),
+    ],
 } as Meta;
 
 export const Default: Story = () => (
