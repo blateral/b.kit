@@ -15,10 +15,14 @@ import { HeadlineTag } from 'components/typography/Heading';
 
 const PosterContainer = styled.div<{
     hasContent?: boolean;
+    hasWrapper?: boolean;
 }>`
     position: relative;
     width: 100%;
     max-height: 500px;
+    border-radius: ${({ theme, hasWrapper }) =>
+        hasWrapper && global(theme).sections.edgeRadius};
+    overflow: hidden;
 
     @media ${mq.medium} {
         max-height: 900px;
@@ -88,6 +92,7 @@ const Poster: FC<{
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    hasWrapper?: boolean;
 }> = ({
     title,
     titleAs,
@@ -97,11 +102,18 @@ const Poster: FC<{
     primaryAction,
     secondaryAction,
     image,
+    hasWrapper,
 }) => {
     return (
         <Section bgColor="undefined" bgMode="full">
-            <Wrapper clampWidth="large">
-                <PosterContainer hasContent={title !== undefined}>
+            <Wrapper
+                addWhitespace={hasWrapper}
+                clampWidth={hasWrapper ? 'normal' : 'large'}
+            >
+                <PosterContainer
+                    hasWrapper={hasWrapper}
+                    hasContent={title !== undefined}
+                >
                     <StyledImage {...image} coverSpace />
                     {title && (
                         <IntroContainer addWhitespace>

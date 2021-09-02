@@ -1,4 +1,4 @@
-/***** Version: 1.1.1 *****/
+/***** Version: 1.2.4 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -81,12 +81,12 @@ export { default as NewsText } from 'components/sections/news/NewsText';
 export { default as NewsVideo } from 'components/sections/news/NewsVideo';
 export { default as NewsOverview } from 'components/sections/news/NewsOverview';
 export { default as QuickNav } from 'components/sections/Quicknav';
+export { default as Timeline } from 'components/sections/Timeline';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
 export { default as ButtonGhost } from 'components/buttons/ButtonGhost';
 export { default as Pointer } from 'components/buttons/Pointer';
-
 
 /***** Base *****/
 export { default as Grid } from 'components/base/Grid';
