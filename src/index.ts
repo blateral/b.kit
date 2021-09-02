@@ -91,7 +91,7 @@ export { default as Pointer } from 'components/buttons/Pointer';
 
 /***** Base *****/
 export { default as Grid } from 'components/base/Grid';
-export { default as Section } from 'components/base/Section';
+export { default as Section, mapToBgMode } from 'components/base/Section';
 export { default as Wrapper } from 'components/base/Wrapper';
 
 /***** Typography *****/

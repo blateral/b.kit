@@ -29,7 +29,7 @@ const Social = styled(Link)`
     transition: color 0.2s ease-in-out;
 
     &:hover {
-        color: ${({ theme }) => color(theme).mono.light};
+        color: ${({ theme }) => color(theme).mono.dark};
     }
 
     & > * {
