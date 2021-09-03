@@ -9,27 +9,28 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import { ScrollDirection, useScroll } from 'utils/useScroll';
 import { LogoProps } from './Navigation';
 
-const TopWhitespace = styled.div<{ logoHeight?: number; showLarge?: boolean }>`
+const TopWhitespace = styled.div<{ height?: number; showLarge?: boolean }>`
     width: 100%;
-    height: ${({ logoHeight, showLarge }) =>
-        logoHeight ? logoHeight + (showLarge ? 25 : 10) + 'px' : '140px'};
+    height: ${({ height, showLarge }) =>
+        height ? height + (showLarge ? 25 : 10) + 'px' : '140px'};
 
-    @media ${mq.semilarge} {
-        height: ${({ logoHeight, showLarge }) =>
-            logoHeight ? logoHeight + (showLarge ? 50 : 30) + 'px' : '140px'};
+    @media ${mq.large} {
+        height: ${({ height, showLarge }) =>
+            height ? height + (showLarge ? 50 : 30) + 'px' : '140px'};
     }
 `;
 
 const View = styled.div<{
     isVisible?: boolean;
     isLarge?: boolean;
-    showLarge?: boolean;
     isOpen?: boolean;
     isInverted?: boolean;
     animated?: boolean;
     allowOffset?: boolean;
     isBackVisible?: boolean;
 }>`
+    display: flex;
+    align-items: ${({ isLarge }) => !isLarge && 'center'};
     position: ${({ isLarge }) => (isLarge ? 'absolute' : 'fixed')};
     top: 0;
     left: 0;
@@ -37,8 +38,9 @@ const View = styled.div<{
     width: 100%;
     z-index: 10;
     max-width: ${spacings.wrapperLarge}px;
-    padding: ${({ showLarge, isOpen }) =>
-            !showLarge && isOpen ? spacings.nudge : spacings.spacer}px
+    min-height: ${({ isLarge }) => (isLarge ? '111px' : '95px')};
+    padding: ${({ isLarge, isOpen }) =>
+            !isLarge && isOpen ? spacings.nudge : spacings.spacer}px
         0 ${spacings.nudge}px 0;
     margin: 0 auto;
     overflow: hidden;
@@ -79,11 +81,13 @@ const View = styled.div<{
         opacity;
 
     @media ${mq.semilarge} {
-        padding: ${({ showLarge, isOpen }) =>
-                !showLarge && isOpen
-                    ? spacings.nudge * 3
-                    : spacings.nudge * 7}px
+        padding: ${({ isLarge, isOpen }) =>
+                !isLarge && isOpen ? spacings.nudge * 3 : spacings.nudge * 7}px
             0 ${spacings.nudge * 3}px 0;
+    }
+
+    @media ${mq.large} {
+        min-height: ${({ isLarge }) => (isLarge ? '136px' : '115px')};
     }
 `;
 
@@ -243,7 +247,7 @@ const TopBar: FC<{
     const theme = useContext(ThemeContext);
     const viewRef = useRef<HTMLDivElement | null>(null);
     const [isOpen, setIsOpen] = useState(true);
-    const [isLarge, setIsLarge] = useState(true);
+    const [isLarge, setIsLarge] = useState<boolean>(isLargeOnPageTop);
     const [isAnimated, setIsAnimated] = useState(false);
     const defaultLogoScale: Pick<
         LogoProps,
@@ -287,8 +291,8 @@ const TopBar: FC<{
     }, [isInOffset, isLarge, isTop]);
 
     useEffect(() => {
-        if (isTop) setIsLarge(true);
-    }, [isTop]);
+        if (isTop && isLargeOnPageTop) setIsLarge(true);
+    }, [isLargeOnPageTop, isTop]);
 
     // check if top bar is inverted
     const isBarInverted =
@@ -312,34 +316,30 @@ const TopBar: FC<{
     if (scale !== undefined) logoScale = scale;
 
     // calc logo height
-    const logoHeight = clampValue(115 * logoScale, 60, 300);
+    const logoHeight = clampValue(115 * logoScale, 20, 300);
     const logoTopHeight =
-        scalePageTop &&
-        scaleScrolled &&
-        clampValue(
-            115 * (isLargeOnPageTop ? scalePageTop : scaleScrolled),
-            60,
-            300
-        );
+        scalePageTop && scaleScrolled
+            ? clampValue(
+                  115 * (isLargeOnPageTop ? scalePageTop : scaleScrolled),
+                  20,
+                  300
+              )
+            : 60;
+    const topSpace = clampValue(logoTopHeight, 86, 300);
 
     // calculate top scroll offset
     useEffect(() => {
-        const showLarge = isLargeOnPageTop ? isLarge : false;
-
         if (currentMq === 'large') {
-            setTopOffset(logoHeight + (showLarge ? 25 : 10));
+            setTopOffset(topSpace + (isLarge ? 25 : 10));
         } else {
-            setTopOffset(logoHeight + (showLarge ? 50 : 30));
+            setTopOffset(topSpace + (isLarge ? 50 : 30));
         }
-    }, [setTopOffset, currentMq, isLargeOnPageTop, isLarge, logoHeight]);
+    }, [setTopOffset, currentMq, isLarge, topSpace]);
 
     return (
         <>
             {!allowTopOverlow && (
-                <TopWhitespace
-                    showLarge={isLargeOnPageTop}
-                    logoHeight={logoTopHeight}
-                />
+                <TopWhitespace showLarge={isLargeOnPageTop} height={topSpace} />
             )}
             <View
                 ref={viewRef}
@@ -348,7 +348,6 @@ const TopBar: FC<{
                 isBackVisible={isBackVisible}
                 isOpen={isOpen}
                 isLarge={isLarge}
-                showLarge={isLargeOnPageTop ? isLarge : false}
                 animated={isAnimated}
                 allowOffset={allowTopOverlow}
                 className={className}
