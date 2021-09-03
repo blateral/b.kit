@@ -41,7 +41,7 @@ const logoFn = ({
     isInverted: boolean;
     size?: 'full' | 'small';
 }) => {
-    if (isInverted)
+    if (!isInverted)
         return (
             <img
                 src={`https://via.placeholder.com/${
