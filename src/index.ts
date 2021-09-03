@@ -1,4 +1,4 @@
-/***** Version: 1.2.7 *****/
+/***** Version: 1.3.0 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -36,7 +36,7 @@ export {
 export { default as useIE } from 'utils/useIE';
 export { useItemHeight } from 'utils/useItemHeight';
 export { getMediaQuery, isBrowser, useMediaQuery } from 'utils/useMediaQuery';
-export { useScroll } from 'utils/useScroll';
+export { useScroll, ScrollDirection } from 'utils/useScroll';
 export { useScrollTo } from 'utils/useScrollTo';
 export { usePoster, canUseWebP } from 'utils/usePoster';
 export { default as useInterval } from 'utils/useInterval';
@@ -120,6 +120,8 @@ export {
     CookieActions,
 } from 'components/blocks/CookieConsent';
 export { default as Navigation } from 'components/sections/navigation/Navigation';
+export { default as Menu } from 'components/sections/navigation/menu/Menu';
+export { default as TopBar } from 'components/sections/navigation/TopBar';
 
 /***** Icons *****/
 export { default as ArrowRightIcon } from 'components/base/icons/ArrowRight';

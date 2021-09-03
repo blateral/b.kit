@@ -266,8 +266,9 @@ const Header: FC<{
                         <PosterContent>
                             <Grid.Row gutter={0}>
                                 <Grid.Col
-                                    medium={{ span: 16 / 28 }}
-                                    large={{ span: 15 / 28 }}
+                                    span={26 / 28}
+                                    large={{ span: 20 / 28 }}
+                                    xlarge={{ span: 15 / 28 }}
                                 >
                                     {!intro?.title && title && (
                                         <Callout
@@ -279,6 +280,7 @@ const Header: FC<{
                                             innerHTML={title}
                                         />
                                     )}
+                                    {/** #TODO: Title und Intro Logik zusammen mit Markus abklären (siehe auch b.kit-prismic slice)*/}
                                     {intro && intro.title && (
                                         <IntroBlock
                                             noTitle={!intro.title && !!title}
