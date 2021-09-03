@@ -23,14 +23,16 @@ const TopWhitespace = styled.div<{ height?: number; showLarge?: boolean }>`
 const View = styled.div<{
     isVisible?: boolean;
     isLarge?: boolean;
+    isTop?: boolean;
     isOpen?: boolean;
     isInverted?: boolean;
     animated?: boolean;
     allowOffset?: boolean;
     isBackVisible?: boolean;
+    showLarge?: boolean;
 }>`
     display: flex;
-    align-items: ${({ isLarge }) => !isLarge && 'center'};
+    align-items: ${({ showLarge }) => !showLarge && 'center'};
     position: ${({ isLarge }) => (isLarge ? 'absolute' : 'fixed')};
     top: 0;
     left: 0;
@@ -38,9 +40,10 @@ const View = styled.div<{
     width: 100%;
     z-index: 10;
     max-width: ${spacings.wrapperLarge}px;
-    min-height: ${({ isLarge }) => (isLarge ? '111px' : '95px')};
-    padding: ${({ isLarge, isOpen }) =>
-            !isLarge && isOpen ? spacings.nudge : spacings.spacer}px
+    min-height: ${({ isLarge, showLarge }) =>
+        showLarge && isLarge ? '111px' : '95px'};
+    padding: ${({ showLarge, isOpen }) =>
+            !showLarge && isOpen ? spacings.nudge : spacings.spacer}px
         0 ${spacings.nudge}px 0;
     margin: 0 auto;
     overflow: hidden;
@@ -81,13 +84,16 @@ const View = styled.div<{
         opacity;
 
     @media ${mq.semilarge} {
-        padding: ${({ isLarge, isOpen }) =>
-                !isLarge && isOpen ? spacings.nudge * 3 : spacings.nudge * 7}px
+        padding: ${({ showLarge, isOpen }) =>
+                !showLarge && isOpen
+                    ? spacings.nudge * 3
+                    : spacings.nudge * 7}px
             0 ${spacings.nudge * 3}px 0;
     }
 
     @media ${mq.large} {
-        min-height: ${({ isLarge }) => (isLarge ? '136px' : '115px')};
+        min-height: ${({ isLarge, showLarge }) =>
+            isLarge && showLarge ? '136px' : '115px'};
     }
 `;
 
@@ -248,7 +254,7 @@ const TopBar: FC<{
     const viewRef = useRef<HTMLDivElement | null>(null);
     const [isOpen, setIsOpen] = useState(true);
     const [isLarge, setIsLarge] = useState<boolean>(isLargeOnPageTop);
-    const [isAnimated, setIsAnimated] = useState(false);
+    const [isAnimated, setIsAnimated] = useState(true);
     const defaultLogoScale: Pick<
         LogoProps,
         'pageTopScale' | 'scrolledScale'
@@ -291,7 +297,7 @@ const TopBar: FC<{
     }, [isInOffset, isLarge, isTop]);
 
     useEffect(() => {
-        if (isTop && isLargeOnPageTop) setIsLarge(true);
+        if (isTop) setIsLarge(true);
     }, [isLargeOnPageTop, isTop]);
 
     // check if top bar is inverted
@@ -350,6 +356,7 @@ const TopBar: FC<{
                 isLarge={isLarge}
                 animated={isAnimated}
                 allowOffset={allowTopOverlow}
+                showLarge={isLargeOnPageTop ? isLarge : false}
                 className={className}
             >
                 <Content clampWidth="normal" addWhitespace>
