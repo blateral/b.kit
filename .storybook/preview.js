@@ -45,6 +45,9 @@ export const parameters = {
     backgrounds: {
         values: [],
     },
+    controls: {
+        disabled: true,
+    },
 };
 
 export const decorators = [
