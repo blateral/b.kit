@@ -38,16 +38,15 @@ const PosterImage = styled.div`
     background-position: center;
 `;
 
-const AnimationImage = styled.div<{ scale?: number; opacity?: number }>`
+const AnimationImage = styled.img<{ scale?: number; opacity?: number }>`
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    height: 100%;
+    width: 100%;
 
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+    object-fit: cover;
+    object-position: center;
 
     transition-property: opacity, transform;
     transition-duration: ${({ scale }) => `2s, ${scale === 1 ? '0s' : '13s'}`};
@@ -64,7 +63,8 @@ const AnimationImage = styled.div<{ scale?: number; opacity?: number }>`
 const AnimationImages: FC<{
     zoom?: number;
     images: { id: number | string; image: string }[];
-}> = ({ zoom = 1.08, images }) => {
+    onChange?: (imgId: number) => void;
+}> = ({ zoom = 1.08, images, onChange }) => {
     const intervalRef = useRef<number | null>();
     const [activeImg, setActiveImg] = useState<number>(-1);
 
@@ -85,17 +85,24 @@ const AnimationImages: FC<{
         };
     }, [images]);
 
+    useEffect(() => {
+        if (activeImg !== -1) onChange && onChange(activeImg);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeImg]);
+
     return (
         <>
             {images.map((img, i) => (
                 <AnimationImage
                     key={i}
                     style={{
-                        backgroundImage: `url(${img.image})`,
+                        // backgroundImage: `url(${img.image})`,
                         zIndex: i === activeImg ? 1 : 0,
                     }}
+                    src={img.image}
                     scale={i === activeImg ? zoom : 1}
                     opacity={i === activeImg ? 1 : 0}
+                    alt=""
                 />
             ))}
         </>
@@ -118,8 +125,9 @@ type KenBurnsMq = 'small' | 'medium' | 'large' | 'xlarge';
 
 const HeaderKenBurns: React.FC<{
     images: HeaderKenBurnsImageProps[];
+    onImageChange?: (currentImg: HeaderKenBurnsImageProps) => void;
     className?: string;
-}> = ({ images, className, children }) => {
+}> = ({ images, onImageChange, className, children }) => {
     const mqs: KenBurnsMq[] = ['small', 'medium', 'large', 'xlarge'];
     const currentMq = useMediaQuery(mqs) as KenBurnsMq | undefined;
 
@@ -172,7 +180,12 @@ const HeaderKenBurns: React.FC<{
     return (
         <AnimationContainer className={className}>
             {currentMq && loadedImages[currentMq].length >= images.length ? (
-                <AnimationImages images={loadedImages[currentMq]} />
+                <AnimationImages
+                    images={loadedImages[currentMq]}
+                    onChange={(id) =>
+                        images[id] && onImageChange && onImageChange(images[id])
+                    }
+                />
             ) : (
                 <PosterImage
                     style={{

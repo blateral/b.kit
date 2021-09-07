@@ -1,4 +1,12 @@
 module.exports = {
-    stories: ['../src/stories/**/*.stories.tsx'],
-    addons: ['@storybook/addon-docs', '@storybook/addon-backgrounds'],
+    stories: ['../src/stories/**/*.stories.@(tsx|mdx)'],
+    addons: [
+        {
+            name: '@storybook/addon-essentials',
+            options: {
+                controls: false,
+                actions: false,
+            },
+        },
+    ],
 };

@@ -192,7 +192,7 @@ const StyledMenuBurger = styled(MenuBurger)`
     margin-top: ${spacings.nudge}px;
 `;
 
-const LogoLink = styled(Link)<{ logoHeight?: number }>`
+const LogoLink = styled(Link)<{ logoHeight?: number; isAnimated?: boolean }>`
     display: flex;
     justify-content: center;
     position: relative;
@@ -200,7 +200,8 @@ const LogoLink = styled(Link)<{ logoHeight?: number }>`
     width: auto;
 
     color: ${({ theme }) => color(theme).light};
-    transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+    transition: ${({ isAnimated }) =>
+        isAnimated && 'height 0.2s ease-in-out, width 0.2s ease-in-out'};
     will-change: height, width;
 
     & > * {
@@ -254,7 +255,7 @@ const TopBar: FC<{
     const viewRef = useRef<HTMLDivElement | null>(null);
     const [isOpen, setIsOpen] = useState(true);
     const [isLarge, setIsLarge] = useState<boolean>(isLargeOnPageTop);
-    const [isAnimated, setIsAnimated] = useState(true);
+    const [isAnimated, setIsAnimated] = useState(false);
     const defaultLogoScale: Pick<
         LogoProps,
         'pageTopScale' | 'scrolledScale'
@@ -275,6 +276,10 @@ const TopBar: FC<{
     const currentMq = useMediaQuery(mqs) as TopBarMq | undefined;
 
     const { isTop, isInOffset, scrollDirection, setTopOffset } = useScroll({});
+
+    useEffect(() => {
+        setIsAnimated(true);
+    }, []);
 
     useEffect(() => {
         if (!isInOffset) {
@@ -386,7 +391,11 @@ const TopBar: FC<{
                     )}
                     <CenterCol isTop={isLargeOnPageTop ? isLarge : false}>
                         {logo && (
-                            <LogoLink href={logo.link} logoHeight={logoHeight}>
+                            <LogoLink
+                                href={logo.link}
+                                logoHeight={logoHeight}
+                                isAnimated={isAnimated}
+                            >
                                 {logo.icon &&
                                     logo.icon({
                                         isInverted: isBarInverted,
