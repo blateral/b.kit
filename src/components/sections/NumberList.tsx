@@ -1,7 +1,8 @@
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Heading from 'components/typography/Heading';
 import * as React from 'react';
+import { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 
@@ -84,7 +85,14 @@ const IconBlock: React.FC<{
                     {number}
                 </Number>
             </NumberContainer>
-            <Label size="super" textColor={color(theme).secondary.dark}>
+            <Label
+                size="super"
+                textColor={
+                    isInverted
+                        ? color(theme).light
+                        : color(theme).secondary.dark
+                }
+            >
                 {label}
             </Label>
         </View>
@@ -133,13 +141,20 @@ const NumberList: React.FC<{
     }[];
     bgMode?: 'inverted';
 }> = ({ items, bgMode }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
+
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? color(theme).primary.dark : 'transparent'}
-            bgMode={isInverted ? 'inverted' : undefined}
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : bgMode
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
+            bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace>
                 <ContentContainer>

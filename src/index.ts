@@ -85,6 +85,7 @@ export { default as NewsOverview } from 'components/sections/news/NewsOverview';
 export { default as QuickNav } from 'components/sections/Quicknav';
 export { default as Timeline } from 'components/sections/Timeline';
 export { default as SocialNav } from 'components/sections/SocialNav';
+export { default as NumberList } from 'components/sections/NumberList';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
