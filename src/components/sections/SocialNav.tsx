@@ -43,21 +43,22 @@ const SocialNav: FC<{
         href: string;
         icon: React.ReactNode;
     }>;
-    bgMode?: 'inverted';
+    bgMode?: 'full' | 'inverted';
 }> = ({ socials, bgMode }) => {
-    const isInverted = bgMode === 'inverted';
     const theme = useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     return (
         <Section
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : bgMode
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
             addSeperation
         >
             <StyledWrapper addWhitespace>

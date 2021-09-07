@@ -1,8 +1,7 @@
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Heading from 'components/typography/Heading';
-import * as React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 
@@ -73,7 +72,7 @@ const IconBlock: React.FC<{
     label?: string;
     isInverted?: boolean;
 }> = ({ icon, label, number, isInverted }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
 
     const stringLength = number ? number.length : 0;
 
