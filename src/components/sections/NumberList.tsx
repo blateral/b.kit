@@ -133,16 +133,19 @@ const ContentContainer = styled.div`
     }
 `;
 
-const NumberList: React.FC<{
-    items: {
+export interface NumberListProps {
+    items?: {
         icon?: { src: string; alt?: string };
         number?: string;
         label?: string;
     }[];
-    bgMode?: 'inverted';
-}> = ({ items, bgMode }) => {
+    bgMode?: 'full' | 'inverted';
+}
+
+const NumberList: React.FC<NumberListProps> = ({ items, bgMode }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     return (
         <Section
@@ -150,15 +153,15 @@ const NumberList: React.FC<{
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : bgMode
+                    : hasBg
                     ? color(theme).mono.light
                     : 'transparent'
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
                 <ContentContainer>
-                    {items.map((item, i) => {
+                    {items?.map((item, i) => {
                         return (
                             <IconBlock
                                 {...item}
