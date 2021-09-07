@@ -22,7 +22,19 @@ export const Default: Story = () => (
     />
 );
 
-export const isInverted: Story = () => (
+export const WithBackground: Story = () => (
+    <SocialNav
+        bgMode="full"
+        socials={[
+            { href: '#0', icon: <Twitter /> },
+            { href: '#0', icon: <LinkedIn /> },
+            { href: '#0', icon: <Xing /> },
+            { href: '#0', icon: <Facebook /> },
+        ]}
+    />
+);
+
+export const IsInverted: Story = () => (
     <SocialNav
         socials={[
             { href: '#0', icon: <Twitter /> },
