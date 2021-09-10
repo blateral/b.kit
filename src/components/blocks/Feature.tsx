@@ -1,6 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { mq, spacings, withRange } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    withRange,
+    getGlobalSettings as global,
+} from 'utils/styles';
 
 import Copy from 'components/typography/Copy';
 import Image, { ImageProps as Props } from 'components/blocks/Image';
@@ -20,6 +25,9 @@ const ImageContainer = styled.div<{ isCentered?: boolean }>`
 
 const StyledImage = styled(Image)`
     // width: 100%;
+
+    overflow: hidden;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 `;
 
 const Content = styled.div<{ addWhitespace?: boolean; isCentered?: boolean }>`

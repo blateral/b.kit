@@ -108,6 +108,7 @@ const ForegroundLabel = styled(ImageLabel)`
     bottom: ${spacings.spacer * 1.5}px;
     left: ${spacings.spacer}px;
     pointer-events: none;
+    white-space: nowrap;
 `;
 
 const BackgroundLabel = styled(ImageLabel)`
@@ -115,6 +116,7 @@ const BackgroundLabel = styled(ImageLabel)`
     bottom: ${spacings.spacer * 1.5}px;
     right: ${spacings.spacer}px;
     pointer-events: none;
+    white-space: nowrap;
 `;
 
 const ControlContainer = styled.div<{

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { spacings, withRange } from 'utils/styles';
+import { spacings, withRange, getGlobalSettings as global } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 
@@ -13,6 +13,11 @@ const ImageContainer = styled.div<{ isCentered?: boolean }>`
         isCentered ? 'center' : 'flex-start'};
     padding-bottom: ${spacings.nudge * 3}px;
     max-width: 100%;
+`;
+
+const StyledImage = styled(Image)`
+    overflow: hidden;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 `;
 
 const Content = styled.div<{ isCentered?: boolean }>`
@@ -65,7 +70,7 @@ const Fact: FC<
         <View className={className}>
             {image && (
                 <ImageContainer isCentered={isCentered}>
-                    <Image
+                    <StyledImage
                         small={image.small}
                         medium={image.medium}
                         semilarge={image.semilarge}

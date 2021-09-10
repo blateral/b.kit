@@ -1,6 +1,13 @@
 import { LibThemeProvider } from '../src/utils/LibThemeProvider';
 
 const customTheme = {
+    // globalSettings: {
+    //     sections: {
+    //         newsLocaleKey: 'de',
+    //         newsDateFormat: 'dd.mm.YYYY',
+    //         edgeRadius: '5px',
+    //     },
+    // },
     // fonts: {
     //     base: {
     //         family: 'MS Comic Sans',

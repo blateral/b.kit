@@ -1,7 +1,13 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import {
+    getColors as color,
+    mq,
+    spacings,
+    withRange,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -36,6 +42,11 @@ const Img = styled.div<{ isSingleHalf?: boolean }>`
     @media ${mq.semilarge} {
         width: ${({ isSingleHalf }) => isSingleHalf && '50%'};
     }
+`;
+
+const StyledImage = styled(Image)`
+    overflow: hidden;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 `;
 
 const StyledActions = styled(Actions)`
@@ -84,7 +95,7 @@ const NewsImages: React.FC<{
                                         key={i}
                                         isSingleHalf={images.length >= 1}
                                     >
-                                        <Image coverSpace {...img} />
+                                        <StyledImage coverSpace {...img} />
                                     </Img>
                                 );
                             })}
@@ -94,7 +105,11 @@ const NewsImages: React.FC<{
                             <div>
                                 {images.map((img, i) => {
                                     return (
-                                        <Image coverSpace {...img} key={i} />
+                                        <StyledImage
+                                            coverSpace
+                                            {...img}
+                                            key={i}
+                                        />
                                     );
                                 })}
                             </div>
