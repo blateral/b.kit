@@ -24,6 +24,11 @@ const ImageLink = styled(Link)`
     width: 100%;
 `;
 
+const StyledImage = styled(Image)`
+    overflow: hidden;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+`;
+
 const TitleLink = styled(Link)`
     text-decoration: none;
 `;
@@ -119,7 +124,7 @@ const NewsCard: React.FC<
         <View className={className}>
             {image && (
                 <ImageLink {...link}>
-                    <Image coverSpace {...image} />
+                    <StyledImage coverSpace {...image} />
                 </ImageLink>
             )}
             <Head isInverted={isInverted} data-sheet="head">
