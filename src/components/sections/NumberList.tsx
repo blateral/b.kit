@@ -1,5 +1,6 @@
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
+import Callout from 'components/typography/Callout';
 import Heading from 'components/typography/Heading';
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
@@ -49,7 +50,7 @@ const NumberContainer = styled.div<{ height: number }>`
     }
 `;
 
-const Number = styled.div<{ isInverted?: boolean; stringLength: number }>`
+const Number = styled(Callout)<{ isInverted?: boolean; stringLength: number }>`
     max-height: 140px;
     ${({ stringLength }) =>
         stringLength <= 6
