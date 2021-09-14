@@ -2,7 +2,7 @@ import Check from 'components/base/icons/Check';
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { getColors, spacings } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.div`
     display: flex;
@@ -15,7 +15,7 @@ const View = styled.div`
 `;
 
 const Label = styled(Copy)`
-    display: flex;
+    padding-top: 2px;
 
     & > * {
         margin: 0;
@@ -41,11 +41,15 @@ const Box = styled.span<{ isSelected?: boolean; isInverted?: boolean }>`
     position: relative;
 
     border: 2px solid
-        ${({ isInverted, theme }) =>
-            isInverted ? '#fff' : getColors(theme).mono.medium};
+        ${({ isInverted, theme, isSelected }) =>
+            isInverted && !isSelected
+                ? '#fff'
+                : isSelected
+                ? color(theme).primary.medium
+                : color(theme).mono.medium};
 
     background-color: ${({ isSelected, theme }) =>
-        isSelected ? getColors(theme).primary.medium : '#fff'};
+        isSelected ? color(theme).primary.medium : '#fff'};
 `;
 
 const StyledCheck = styled(Check)`
@@ -91,9 +95,8 @@ const Checkbox: React.FC<{
                 </Box>
                 <Original
                     type="checkbox"
-                    name={name}
+                    name={`${name}[]`}
                     value={value}
-                    disabled
                     checked={isSelected}
                     required={isRequired}
                     onChange={onChange}
@@ -104,9 +107,7 @@ const Checkbox: React.FC<{
                     size="small"
                     type="copy-b"
                     isInverted={isInverted}
-                    textColor={
-                        isDisabled ? getColors(theme).mono.dark : undefined
-                    }
+                    textColor={isDisabled ? color(theme).mono.dark : undefined}
                     innerHTML={`${label}${isRequired ? '<span> *</span>' : ''}`}
                 />
             )}
