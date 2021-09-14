@@ -104,17 +104,18 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
 interface Props {
     isInverted?: boolean;
     isDisabled?: boolean;
-    onClick?: () => void;
     className?: string;
 }
 
 export type BtnProps = Props & {
     as?: 'button';
+    onClick?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
 };
 
 export type LinkProps = Props & {
     as?: 'a';
     href?: string;
+    onClick?: (ev: React.SyntheticEvent<HTMLAnchorElement>) => void;
     isExternal?: boolean;
 };
 
