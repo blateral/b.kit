@@ -4,6 +4,10 @@ import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import { FormProps } from './Textfield';
 
+const View = styled.div`
+    text-align: left;
+`;
+
 const FieldHead = styled.div`
     display: flex;
     flex-direction: row;
@@ -98,7 +102,7 @@ const Textarea: React.FC<
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <div>
+        <View>
             <FieldHead>
                 {label && (
                     <Copy
@@ -136,7 +140,7 @@ const Textarea: React.FC<
                         : 'Bitte geben Sie einen gültigen Text ein'}
                 </ErrorMessage>
             )}
-        </div>
+        </View>
     );
 };
 
