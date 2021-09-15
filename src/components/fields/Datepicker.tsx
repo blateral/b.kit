@@ -162,11 +162,7 @@ const PickerButton = React.forwardRef<HTMLDivElement, PickerBtnProps>(
             <View>
                 <FieldHead>
                     {label && (
-                        <Copy
-                            textColor={color(theme).dark}
-                            size="medium"
-                            type="copy-b"
-                        >
+                        <Copy textColor={'inherit'} size="medium" type="copy-b">
                             {label}
                         </Copy>
                     )}
@@ -405,12 +401,12 @@ const Datepicker: React.FC<{
                 </DatepickerFoot>
             </ReactDatePicker>
             {infoMessage && (
-                <InfoMessage textColor={color(theme).dark} size="small">
+                <InfoMessage textColor={color(theme).mono.dark} size="small">
                     {infoMessage}
                 </InfoMessage>
             )}
             {errorMessage && (
-                <ErrorMessage textColor="#ff0000" size="small">
+                <ErrorMessage textColor="#ff0000" size="small" type="copy-i">
                     {errorMessage
                         ? errorMessage
                         : 'Bitte geben Sie einen gültigen Text ein'}

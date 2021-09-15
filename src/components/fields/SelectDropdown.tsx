@@ -319,7 +319,7 @@ const SelectDropdown: React.FC<{
                 <input type="hidden" name={name} value={selectedItem.value} />
             )}
             {errorMessage && (
-                <ErrorMessage textColor={'#ff0000'} size="small">
+                <ErrorMessage textColor="#ff0000" size="small" type="copy-i">
                     {errorMessage
                         ? errorMessage
                         : 'Bitte geben Sie einen gültigen Text ein'}

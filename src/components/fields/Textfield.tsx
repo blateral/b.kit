@@ -108,8 +108,10 @@ const Textfield: React.FC<
                     <Copy
                         isInverted={isInverted}
                         textColor={
-                            isDisabled ? color(theme).mono.dark : undefined
+                            isDisabled ? color(theme).mono.dark : 'inherit'
                         }
+                        size="medium"
+                        type="copy-b"
                     >
                         {`${label}${isRequired ? ' *' : ''}`}
                     </Copy>

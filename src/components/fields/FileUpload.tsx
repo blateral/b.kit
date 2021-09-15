@@ -276,12 +276,12 @@ const FileUpload: React.FC<
                 })}
             </FieldWrapper>
             {infoMessage && (
-                <InfoMessage textColor={color(theme).dark} size="small">
+                <InfoMessage textColor={color(theme).mono.dark} size="small">
                     {infoMessage}
                 </InfoMessage>
             )}
             {errorMessage && (
-                <ErrorMessage textColor={'#ff0000'} size="small">
+                <ErrorMessage textColor="#ff0000" size="small" type="copy-i">
                     {errorMessage
                         ? errorMessage
                         : 'Bitte geben Sie einen gültigen Text ein'}
