@@ -3,7 +3,9 @@ import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 
-const View = styled.div``;
+const View = styled.div`
+    text-align: left;
+`;
 
 const FieldHead = styled.div`
     display: flex;
