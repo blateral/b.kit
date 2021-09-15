@@ -589,6 +589,7 @@ const generateArea = ({
                 ? formikErrors[key]
                 : undefined
         }
+        lightBg
     />
 );
 
@@ -614,6 +615,7 @@ const generateField = ({
                 ? formikErrors[key]
                 : undefined
         }
+        lightBg
     />
 );
 
