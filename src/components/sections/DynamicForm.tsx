@@ -15,6 +15,7 @@ import Textarea from 'components/fields/Textarea';
 import Textfield from 'components/fields/Textfield';
 import SelectDropdown from 'components/fields/SelectDropdown';
 import Copy from 'components/typography/Copy';
+import FileUpload from 'components/fields/FileUpload';
 
 const StyledSection = styled(Section)`
     overflow: visible;
@@ -31,7 +32,13 @@ const FieldContainer = styled.div`
 `;
 
 export interface FormStructure {
-    [key: string]: Field | Area | Select | Datepicker | FieldGroup;
+    [key: string]:
+        | Field
+        | Area
+        | Select
+        | Datepicker
+        | FieldGroup
+        | FileUploadField;
 }
 
 export interface FormField {
@@ -83,6 +90,14 @@ export interface FieldGroup extends FormField {
     fields: Array<{ initialChecked?: boolean; text?: string }>;
 }
 
+export interface FileUploadField extends FormField {
+    type: 'Upload';
+    label?: string;
+    infoMessage?: string;
+    errorMessage?: string;
+    isDisabled?: boolean;
+}
+
 export interface FormData {
     [key: string]:
         | string
@@ -93,7 +108,7 @@ export interface FormData {
 
 interface FieldGenerationProps {
     index: number;
-    field: Field | Area | Select | Datepicker | FieldGroup;
+    field: Field | Area | Select | Datepicker | FieldGroup | FileUploadField;
     formikValues: FormData;
     formikErrors: FormikErrors<FormData>;
     formikTouches: FormikTouched<FormData>;
@@ -159,6 +174,9 @@ const DynamicForm: FC<{
                     null,
                     null,
                 ];
+                break;
+            case 'Upload':
+                initalData['uploads'] = (fields[key] as any).files || null;
                 break;
             case 'FieldGroup': {
                 const group = fields[key] as FieldGroup;
@@ -368,6 +386,8 @@ const DynamicForm: FC<{
                                     }
                                     case 'Select':
                                         return generateSelect(generationProps);
+                                    case 'Upload':
+                                        return generateUpload(generationProps);
                                     default:
                                         return null;
                                 }
@@ -590,6 +610,33 @@ const generateArea = ({
                 : undefined
         }
         lightBg
+    />
+);
+
+const generateUpload = ({
+    index,
+    field,
+    key,
+    formikValues,
+    formikErrors,
+    formikTouches,
+    setField,
+}: FieldGenerationProps) => (
+    <FileUpload
+        key={'uploads'}
+        label={`${key}${field.isRequired ? '*' : ''}`}
+        placeholder={(field as Field).placeholder}
+        name={'uploads'}
+        value={formikValues['uploads'] as string}
+        infoMessage={(field as Field).info}
+        errorMessage={
+            formikErrors['uploads'] && formikTouches['uploads']
+                ? formikErrors['uploads']
+                : undefined
+        }
+        onUploadFiles={(files) => {
+            setField('uploads', files);
+        }}
     />
 );
 

@@ -71,6 +71,11 @@ export const Default: Story = () => (
                 ],
                 icon: { src: 'http://placehold.it/25' },
             },
+            Upload: {
+                type: 'Upload',
+                isRequired: true,
+                infoMessage: 'Nachname eingeben',
+            },
         }}
     />
 );
