@@ -162,10 +162,12 @@ const readFileAsync = (file: File) =>
     });
 
 const FileUpload: FC<
-    FormProps & {
+    Omit<FormProps, 'value' | 'placeholder'> & {
         onUploadFiles?: (files: File[]) => void;
         isInverted?: boolean;
         hasBg?: boolean;
+        addBtnLabel?: string;
+        removeBtnLabel?: string;
     }
 > = ({
     onUploadFiles,
@@ -176,6 +178,8 @@ const FileUpload: FC<
     infoMessage,
     isInverted,
     hasBg,
+    addBtnLabel,
+    removeBtnLabel,
 }) => {
     const theme = useContext(ThemeContext);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -227,7 +231,7 @@ const FileUpload: FC<
                             size="medium"
                             type="copy-b"
                         >
-                            Datei auswählen
+                            {addBtnLabel || 'Select file'}
                         </Copy>
                     </InputView>
                     {previews.length > 0 && (
@@ -249,7 +253,7 @@ const FileUpload: FC<
                                 size="medium"
                                 type="copy-b"
                             >
-                                Auswahl löschen
+                                {removeBtnLabel || 'Clear selection'}
                             </Copy>
                         </Delete>
                     )}

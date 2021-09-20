@@ -71,7 +71,8 @@ export const Default: Story = () => (
             Upload: {
                 type: 'Upload',
                 isRequired: true,
-                infoMessage: 'Nachname eingeben',
+                addBtnLabel: 'Datei/en auswählen',
+                removeBtnLabel: 'Auswahl löschen',
             },
         }}
         onSubmit={async (values) => {
@@ -146,7 +147,8 @@ export const WithBackground: Story = () => (
             Upload: {
                 type: 'Upload',
                 isRequired: true,
-                infoMessage: 'Nachname eingeben',
+                addBtnLabel: 'Datei/en auswählen',
+                removeBtnLabel: 'Auswahl löschen',
             },
         }}
         onSubmit={async (values) => {
@@ -221,7 +223,8 @@ export const Inverted: Story = () => (
             Upload: {
                 type: 'Upload',
                 isRequired: true,
-                infoMessage: 'Nachname eingeben',
+                addBtnLabel: 'Datei/en auswählen',
+                removeBtnLabel: 'Auswahl löschen',
             },
         }}
         onSubmit={async (values) => {

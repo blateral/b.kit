@@ -74,8 +74,8 @@ export interface Datepicker extends FormField {
     minDate?: Date;
     maxDate?: Date;
     singleSelect?: boolean;
-    info?: string;
     icon?: { src: string; alt?: string };
+    info?: string;
 }
 
 export interface FieldGroup extends FormField {
@@ -86,10 +86,9 @@ export interface FieldGroup extends FormField {
 
 export interface FileUpload extends FormField {
     type: 'Upload';
-    label?: string;
-    infoMessage?: string;
-    errorMessage?: string;
-    isDisabled?: boolean;
+    addBtnLabel?: string;
+    removeBtnLabel?: string;
+    info?: string;
 }
 
 export interface FormData {
@@ -101,9 +100,11 @@ export interface FormData {
         | Array<File>;
 }
 
-interface FieldGenerationProps {
+type FieldTypes = Field | Area | Select | Datepicker | FieldGroup | FileUpload;
+
+interface FieldGenerationProps<T extends FieldTypes> {
     index: number;
-    field: Field | Area | Select | Datepicker | FieldGroup | FileUpload;
+    field: T;
     formikValues: FormData;
     formikErrors: FormikErrors<FormData>;
     formikTouches: FormikTouched<FormData>;
@@ -370,7 +371,7 @@ const DynamicForm: FC<{
                                     handleChange: handleChange,
                                     handleBlur: handleBlur,
                                     theme: theme,
-                                } as FieldGenerationProps;
+                                } as FieldGenerationProps<any>;
 
                                 switch (fields[label].type) {
                                     case 'Field':
@@ -464,8 +465,8 @@ const generateCheckboxGroup = ({
     validateField,
     setField,
     theme,
-}: FieldGenerationProps) => {
-    const group = field as FieldGroup;
+}: FieldGenerationProps<FieldGroup>) => {
+    const group = field;
     const groupData = formikValues[key] as string[];
 
     return (
@@ -529,8 +530,8 @@ const generateRadioGroup = ({
     hasBg,
     setField,
     theme,
-}: FieldGenerationProps) => {
-    const group = field as FieldGroup;
+}: FieldGenerationProps<FieldGroup>) => {
+    const group = field;
     const groupData = formikValues[key] as string;
 
     return (
@@ -583,7 +584,7 @@ const generateDatepicker = ({
     setField,
     setTouched,
     validateField,
-}: FieldGenerationProps) => {
+}: FieldGenerationProps<Datepicker>) => {
     const dates = formikValues[key] as [Date | null, Date | null];
 
     return (
@@ -596,10 +597,10 @@ const generateDatepicker = ({
             }}
             values={[dates?.[0] as Date, dates?.[1] as Date]}
             label={`${key}${field.isRequired ? '*' : ''}`}
-            placeholder={(field as Datepicker).placeholder}
-            icon={(field as Datepicker).icon}
-            singleSelect={(field as Datepicker).singleSelect}
-            infoMessage={(field as Field).info}
+            placeholder={field.placeholder}
+            icon={field.icon}
+            singleSelect={field.singleSelect}
+            infoMessage={field.info}
             errorMessage={
                 formikErrors[key] && formikTouches[key]
                     ? formikErrors[key]
@@ -622,16 +623,16 @@ const generateArea = ({
     isInverted,
     hasBg,
     handleChange,
-}: FieldGenerationProps) => (
+}: FieldGenerationProps<Area>) => (
     <Textarea
         key={index}
         label={`${key}${field.isRequired ? '*' : ''}`}
-        placeholder={(field as Datepicker).placeholder}
+        placeholder={field.placeholder}
         name={key}
         value={formikValues[key] as string}
         isInverted={isInverted}
         onChange={handleChange}
-        infoMessage={(field as Field).info}
+        infoMessage={field.info}
         errorMessage={
             formikErrors[key] && formikTouches[key]
                 ? formikErrors[key]
@@ -650,13 +651,14 @@ const generateUpload = ({
     isInverted,
     hasBg,
     setField,
-}: FieldGenerationProps) => (
+}: FieldGenerationProps<FileUpload>) => (
     <FileUpload
         key={index}
         label={`${key}${field.isRequired ? '*' : ''}`}
-        placeholder={(field as Field).placeholder}
         name={key}
-        infoMessage={(field as Field).info}
+        infoMessage={field.info}
+        addBtnLabel={field.addBtnLabel}
+        removeBtnLabel={field.removeBtnLabel}
         errorMessage={
             formikErrors[key] && formikTouches[key]
                 ? formikErrors[key]
@@ -680,16 +682,16 @@ const generateField = ({
     handleChange,
     isInverted,
     hasBg,
-}: FieldGenerationProps) => (
+}: FieldGenerationProps<Field>) => (
     <Textfield
         key={index}
         label={`${key}${field.isRequired ? '*' : ''}`}
-        placeholder={(field as Field).placeholder}
+        placeholder={field.placeholder}
         name={key}
         isInverted={isInverted}
         value={formikValues[key] as string}
         onChange={handleChange}
-        infoMessage={(field as Field).info}
+        infoMessage={field.info}
         errorMessage={
             formikErrors[key] && formikTouches[key]
                 ? formikErrors[key]
@@ -710,25 +712,25 @@ const generateSelect = ({
     hasBg,
     setField,
     setTouched,
-}: FieldGenerationProps) => (
+}: FieldGenerationProps<Select>) => (
     <SelectDropdown
         key={index}
         label={`${key}${field.isRequired ? '*' : ''}`}
         name={key}
-        placeholder={(field as Select).placeholder}
+        placeholder={field.placeholder}
         errorMessage={
             formikErrors[key] && formikTouches[key]
                 ? formikErrors[key]
                 : undefined
         }
-        items={(field as Select).dropdownItems || []}
+        items={field.dropdownItems || []}
         value={formikValues[key] as string}
         onChange={(value) => {
             setField(key, value);
             setTouched(key, true);
         }}
         onBlur={() => setTouched(key, true, true)}
-        icon={(field as Select).icon}
+        icon={field.icon}
         isInverted={isInverted}
         hasBg={!hasBg}
     />
