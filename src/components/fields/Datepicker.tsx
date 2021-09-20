@@ -20,7 +20,7 @@ import Copy from 'components/typography/Copy';
 import AngleDown from 'components/base/icons/AngleDown';
 import AngleUp from 'components/base/icons/AngleUp';
 import ReactDatePicker from 'react-datepicker';
-import { hexToRgba } from 'index';
+import { hexToRgba } from 'utils/hexRgbConverter';
 
 const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
     position: relative;
