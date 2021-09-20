@@ -82,10 +82,20 @@ export interface Datepicker extends FormField {
 
     singleDateError?: string;
     mutliDateError?: string;
+    nextCtrlUrl?: string;
+    prevCtrlUrl?: string;
     validate?: (
         value: [Date | null, Date | null],
         config: Datepicker
     ) => Promise<string>;
+    deleteAction?: (
+        handleClick: (e: React.SyntheticEvent<HTMLButtonElement, Event>) => void
+    ) => React.ReactNode;
+    submitAction?: (
+        handleClick?: (
+            e: React.SyntheticEvent<HTMLButtonElement, Event>
+        ) => void
+    ) => React.ReactNode;
 }
 
 export interface FieldGroup extends FormField {
@@ -716,6 +726,10 @@ const generateDatepicker = ({
             name={key}
             isInverted={isInverted}
             hasBg={!hasBg}
+            deleteAction={field.deleteAction}
+            submitAction={field.submitAction}
+            nextCtrlUrl={field.nextCtrlUrl}
+            prevCtrlUrl={field.prevCtrlUrl}
         />
     );
 };

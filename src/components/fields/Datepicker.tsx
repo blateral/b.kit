@@ -4,6 +4,7 @@ import React, {
     useContext,
     useRef,
     forwardRef,
+    useCallback,
 } from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
 
@@ -19,11 +20,234 @@ import Copy from 'components/typography/Copy';
 import AngleDown from 'components/base/icons/AngleDown';
 import AngleUp from 'components/base/icons/AngleUp';
 import ReactDatePicker from 'react-datepicker';
+import { hexToRgba } from 'index';
 
-const PickerView = styled.div`
+const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
     position: relative;
     width: 100%;
     text-align: left;
+
+    .react-datepicker-popper {
+        right: ${spacings.spacer * 2}px;
+        z-index: 2 !important;
+        width: 100%;
+    }
+
+    @media ${mq.medium} {
+        .react-datepicker-popper {
+            right: auto;
+            width: auto;
+        }
+    }
+
+    .react-datepicker {
+        font-family: 'Roboto', sans-serif;
+        border: 1px solid ${({ theme }) => color(theme).primary.medium} !important;
+        border-radius: 0 !important;
+        padding: ${spacings.spacer}px;
+        width: 100%;
+    }
+
+    .react-datepicker-wrapper {
+        width: 100% !important;
+    }
+
+    .react-datepicker__header {
+        border: none !important;
+        background-color: ${({ theme }) => color(theme).light} !important;
+    }
+
+    /* Month */
+    .react-datepicker__month-container {
+        width: 100%;
+    }
+
+    @media ${mq.medium} {
+        .react-datepicker__month-container {
+            width: auto;
+        }
+    }
+
+    .react-datepicker__month {
+        margin-left: ${spacings.spacer}px;
+        margin-right: ${spacings.spacer}px;
+    }
+
+    .react-datepicker__current-month {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
+        font-size: 17px;
+        line-height: 1.3;
+        text-transform: uppercase;
+        background-color: ${({ theme }) => color(theme).primary.medium};
+        padding: 10px 15px;
+        color: ${({ theme }) => color(theme).light} !important;
+        width: max-content;
+        margin: 0 auto;
+    }
+
+    /* Day styles */
+
+    .react-datepicker__day-names {
+        display: flex;
+        font-size: 11px;
+        line-height: 1.25;
+        background: ${({ theme }) => color(theme).light};
+    }
+
+    @media ${mq.medium} {
+        .react-datepicker__day-names {
+            display: block;
+        }
+    }
+
+    .react-datepicker__day-name {
+        flex: 1 0 auto;
+    }
+
+    .react-datepicker__week {
+        display: flex;
+        margin: -2px !important;
+    }
+
+    @media ${mq.medium} {
+        .react-datepicker__week {
+            display: block;
+        }
+    }
+
+    .react-datepicker__day {
+        flex: 1 0 auto;
+        background-color: ${({ theme }) => color(theme).mono.light};
+        border-radius: 0 !important;
+        font-weight: 600;
+
+        outline: none !important;
+
+        margin: 2px !important;
+    }
+
+    @media ${mq.medium} {
+        .react-datepicker__day:hover {
+            background-color: ${({ theme }) =>
+                hexToRgba(color(theme).primary.medium, 0.25)} !important;
+            border-radius: 0 !important;
+        }
+    }
+
+    .react-datepicker__day--outside-month {
+        color: ${({ theme }) => color(theme).mono.medium} !important;
+        cursor: default;
+    }
+
+    .react-datepicker__day--selected {
+        background-color: ${({ theme }) =>
+            color(theme).primary.medium} !important;
+        border-radius: 0 !important;
+        color: ${({ theme }) => color(theme).light};
+    }
+
+    .react-datepicker__day--today {
+        border: 1px solid ${({ theme }) => color(theme).primary.medium} !important;
+        border-radius: 0 !important;
+        color: ${({ theme }) => color(theme).light};
+    }
+
+    /* Triangle Styles */
+
+    .react-datepicker__triangle:before {
+        border-bottom-color: ${({ theme }) =>
+            color(theme).primary.medium} !important;
+    }
+
+    .react-datepicker__triangle:after {
+        border-bottom-color: ${({ theme }) => color(theme).light} !important;
+    }
+
+    /* Day Ranges */
+
+    .react-datepicker__day--in-range {
+        background-color: ${({ theme }) =>
+            hexToRgba(color(theme).primary.medium, 0.7)} !important;
+    }
+
+    @media ${mq.medium} {
+        .react-datepicker__day--in-range:hover {
+            background-color: ${({ theme }) =>
+                hexToRgba(color(theme).primary.medium, 0.25)} !important;
+        }
+    }
+
+    .react-datepicker__day--range-start {
+        background-color: ${({ theme }) =>
+            color(theme).primary.medium} !important;
+    }
+
+    @media ${mq.medium} {
+        .react-datepicker__day--range-start:hover {
+            background-color: ${({ theme }) =>
+                hexToRgba(color(theme).primary.medium, 0.25)} !important;
+        }
+    }
+
+    .react-datepicker__day--range-end {
+        background-color: ${({ theme }) =>
+            color(theme).primary.medium} !important;
+    }
+
+    @media ${mq.medium} {
+        .react-datepicker__day--range-end:hover {
+            background-color: ${({ theme }) =>
+                hexToRgba(color(theme).primary.medium, 0.25)} !important;
+        }
+    }
+
+    .react-datepicker__day--in-selecting-range {
+        background-color: ${({ theme }) =>
+            hexToRgba(color(theme).primary.medium, 0.7)} !important;
+    }
+
+    /* Next-/Prev-Arrow */
+
+    .react-datepicker__close-icon {
+        display: none !important;
+    }
+
+    .react-datepicker__navigation--next {
+        ${({ nextUrl }) =>
+            nextUrl &&
+            css`
+                background: url(${nextUrl}) no-repeat !important;
+                width: 19px;
+                height: 19px;
+                border: none;
+                right: 1em !important;
+            `};
+    }
+
+    .react-datepicker__navigation--previous {
+        ${({ prevUrl }) =>
+            prevUrl &&
+            css`
+                background: url(${prevUrl}) no-repeat !important;
+                width: 19px;
+                height: 19px;
+                border: none;
+                left: 2em !important;
+            `};
+    }
+
+    .react-datepicker__navigation-icon--next {
+        display: none !important;
+    }
+
+    .react-datepicker__navigation-icon--previous {
+        display: none !important;
+    }
+
+    .react-datepicker__navigation {
+        top: 2.8em !important;
+    }
 `;
 
 const View = styled.div`
@@ -245,6 +469,16 @@ const Datepicker: React.FC<{
     maxDate?: Date;
     onDataChange?: (startDate: Date | null, endDate: Date | null) => void;
     onSubmit?: (startDate?: Date | null, endDate?: Date | null) => void;
+    deleteAction?: (
+        handleClick: (e: React.SyntheticEvent<HTMLButtonElement, Event>) => void
+    ) => React.ReactNode;
+    submitAction?: (
+        handleClick?: (
+            e: React.SyntheticEvent<HTMLButtonElement, Event>
+        ) => void
+    ) => React.ReactNode;
+    nextCtrlUrl?: string;
+    prevCtrlUrl?: string;
 
     singleSelect?: boolean;
     hasBg?: boolean;
@@ -264,6 +498,10 @@ const Datepicker: React.FC<{
     hasBg,
     onDataChange,
     onSubmit,
+    deleteAction,
+    submitAction,
+    nextCtrlUrl,
+    prevCtrlUrl,
 }) => {
     const theme = useContext(ThemeContext);
     const pickerRef = useRef<ReactDatePicker | undefined>(null);
@@ -319,8 +557,28 @@ const Datepicker: React.FC<{
         }
     }, [focused]);
 
+    const handleReset = useCallback(
+        (ev: React.SyntheticEvent<HTMLButtonElement, Event>) => {
+            ev.preventDefault();
+            setStartDate(undefined);
+            setEndDate(undefined);
+            new Date();
+        },
+        []
+    );
+
+    const handleSubmit = useCallback(
+        (ev: React.SyntheticEvent<HTMLButtonElement, Event>) => {
+            ev.preventDefault();
+            setFocused(false);
+            onSubmit && onSubmit(startDate, endDate);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [endDate, startDate]
+    );
+
     return (
-        <PickerView>
+        <PickerView nextUrl={nextCtrlUrl} prevUrl={prevCtrlUrl}>
             <ReactDatePicker
                 locale="de"
                 ref={pickerRef as any}
@@ -391,7 +649,7 @@ const Datepicker: React.FC<{
             >
                 <DatepickerFoot>
                     <FootFlex>
-                        <ButtonGhost.View
+                        {/* <ButtonGhost.View
                             as="button"
                             onClick={(ev) => {
                                 ev.preventDefault();
@@ -401,17 +659,21 @@ const Datepicker: React.FC<{
                             }}
                         >
                             <ButtonGhostLabel>Löschen</ButtonGhostLabel>
-                        </ButtonGhost.View>
-                        <Button.View
-                            as="button"
-                            onClick={(ev) => {
-                                ev.preventDefault();
-                                setFocused(false);
-                                onSubmit && onSubmit(startDate, endDate);
-                            }}
-                        >
-                            <ButtonLabel>Anwenden</ButtonLabel>
-                        </Button.View>
+                        </ButtonGhost.View> */}
+                        {deleteAction ? (
+                            deleteAction(handleReset)
+                        ) : (
+                            <ButtonGhost.View as="button" onClick={handleReset}>
+                                <ButtonGhostLabel>Delete</ButtonGhostLabel>
+                            </ButtonGhost.View>
+                        )}
+                        {submitAction ? (
+                            submitAction(handleSubmit)
+                        ) : (
+                            <Button.View as="button" onClick={handleSubmit}>
+                                <ButtonLabel>Submit</ButtonLabel>
+                            </Button.View>
+                        )}
                     </FootFlex>
                 </DatepickerFoot>
             </ReactDatePicker>

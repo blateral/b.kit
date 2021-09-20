@@ -45,3 +45,19 @@ export const WithIcon: Story = () => (
         placeholder="Prompt Text"
     />
 );
+
+export const WithCustomButtons: Story = () => (
+    <Datepicker
+        icon={{ src: 'http://placehold.it/50' }}
+        label="Label"
+        placeholder="Prompt Text"
+        submitAction={(clickHandler) => (
+            <button onClick={clickHandler}>Auswählen</button>
+        )}
+        deleteAction={(clickHandler) => (
+            <button onClick={clickHandler}>löschen</button>
+        )}
+        nextCtrlUrl="/images/Arrow-Right.svg"
+        prevCtrlUrl="/images/Arrow-Left.svg"
+    />
+);
