@@ -1,6 +1,5 @@
 import React, { FC, useContext } from 'react';
 import styled, { DefaultTheme, ThemeContext } from 'styled-components';
-import * as Yup from 'yup';
 
 import { getColors as color, spacings } from 'utils/styles';
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -37,6 +36,7 @@ export interface FormStructure {
 
 export interface FormField {
     isRequired?: boolean;
+    requiredErrorMsg?: string;
 }
 
 export interface Field extends FormField {
@@ -46,6 +46,7 @@ export interface Field extends FormField {
     placeholder?: string;
     info?: string;
     icon?: { src: string; alt?: string };
+    validate?: (value: string, config: Field) => Promise<string>;
 }
 
 export interface Area extends FormField {
@@ -53,6 +54,7 @@ export interface Area extends FormField {
     initalValue?: string;
     placeholder?: string;
     info?: string;
+    validate?: (value: string, config: Area) => Promise<string>;
 }
 
 export interface Select extends FormField {
@@ -65,6 +67,7 @@ export interface Select extends FormField {
     }[];
     info?: string;
     icon?: { src: string; alt?: string };
+    validate?: (value: string, config: Select) => Promise<string>;
 }
 
 export interface Datepicker extends FormField {
@@ -76,12 +79,23 @@ export interface Datepicker extends FormField {
     singleSelect?: boolean;
     icon?: { src: string; alt?: string };
     info?: string;
+
+    singleDateError?: string;
+    mutliDateError?: string;
+    validate?: (
+        value: [Date | null, Date | null],
+        config: Datepicker
+    ) => Promise<string>;
 }
 
 export interface FieldGroup extends FormField {
     type: 'FieldGroup';
     groupType: 'Radio' | 'Checkbox';
     fields: Array<{ initialChecked?: boolean; text?: string }>;
+    validate?: (
+        value: Array<string> | string,
+        config: FieldGroup
+    ) => Promise<string>;
 }
 
 export interface FileUpload extends FormField {
@@ -89,6 +103,7 @@ export interface FileUpload extends FormField {
     addBtnLabel?: string;
     removeBtnLabel?: string;
     info?: string;
+    validate?: (value: Array<File>, config: FileUpload) => Promise<string>;
 }
 
 export interface FormData {
@@ -157,7 +172,6 @@ const DynamicForm: FC<{
 
     // generate initial data and setup yup validation definition
     const initalData: FormData = {};
-    const yupDefinition: { [key: string]: any } = {};
 
     for (const key in fields) {
         switch (fields[key].type) {
@@ -204,110 +218,201 @@ const DynamicForm: FC<{
         }
     }
 
-    // create yup schema
-    for (const key in fields) {
-        switch (fields[key].type) {
-            case 'Field': {
-                const inputType = (fields[key] as Field).inputType;
-                let validator = Yup.string();
-                if (fields[key].isRequired)
-                    validator = validator.required('Pflichtfeld');
-                switch (inputType) {
-                    case 'email':
-                        validator = validator.email(
-                            'Format der E-Mail Adresse ungültig'
-                        );
-                        break;
-                    case 'tel':
-                        // validator = validator.matches(
-                        //     /^\+(?:[0-9]⋅?){6,14}[0-9]$/,
-                        //     'Format der Telefonnummer ungültig'
-                        // );
-                        break;
-                    case 'number':
-                        validator = validator.matches(
-                            /^[+]?\d+([.]\d+)?$/gm,
-                            'Zahlenformat ungültig'
-                        );
-                        break;
-                }
+    const validation = async (values: FormData) => {
+        const errors: Partial<FormData> = {};
 
-                yupDefinition[key] = validator;
-                break;
-            }
-            case 'Area': {
-                let validator = Yup.string();
-                if (fields[key].isRequired)
-                    validator = validator.required('Pflichtfeld');
-                yupDefinition[key] = validator;
-                break;
-            }
-            case 'Select': {
-                let validator = Yup.string();
-                if (fields[key].isRequired)
-                    validator = validator.required('Pflichtfeld');
-                yupDefinition[key] = validator;
-                break;
-            }
-            case 'Datepicker': {
-                const single = (fields[key] as Datepicker).singleSelect;
-                let validator = Yup.array();
-                if (fields[key].isRequired)
-                    validator = validator
-                        .of(Yup.date().nullable(true))
-                        .test(
-                            'DATE_FORMAT',
-                            single
-                                ? 'Bitte Datum angeben'
-                                : 'Bitte Start- und Enddatum angeben',
-                            (value) => {
-                                const nonNullValues = value?.filter(
-                                    (val) => val !== null && val !== undefined
-                                )?.length;
-                                return nonNullValues
-                                    ? nonNullValues == (single ? 1 : 2)
-                                    : false;
+        // search for errors and set them
+        for (const key in fields) {
+            switch (fields[key].type) {
+                case 'Field': {
+                    const config = fields[key] as Field;
+                    const inputType = config.inputType;
+
+                    // custom validation
+                    if (config.validate) {
+                        errors[key] = await config.validate(
+                            values[key] as string,
+                            config
+                        );
+                        break;
+                    }
+
+                    // default
+                    if (fields[key].isRequired && !values[key]) {
+                        errors[key] =
+                            (fields[key] as Field).requiredErrorMsg ||
+                            'Required field';
+                    }
+
+                    switch (inputType) {
+                        case 'email':
+                            if (
+                                values[key] &&
+                                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
+                                    values[key] as string
+                                )
+                            ) {
+                                errors[key] =
+                                    (fields[key] as Field).requiredErrorMsg ||
+                                    'Invalid Mail format';
                             }
-                        );
-                yupDefinition[key] = validator;
-                break;
-            }
-            case 'FieldGroup': {
-                const type = (fields[key] as FieldGroup).groupType;
-                if (type === 'Checkbox') {
-                    let validator = Yup.array(Yup.string());
-                    if (fields[key].isRequired)
-                        validator = validator
-                            .required('Pflichtfeld')
-                            .min(1, 'Bitte mindestens ein Feld auswählen');
+                            break;
+                        case 'tel':
+                            // validator = validator.matches(
+                            //     /^\+(?:[0-9]⋅?){6,14}[0-9]$/,
+                            //     'Format der Telefonnummer ungültig'
+                            // );
+                            break;
+                        case 'number':
+                            if (
+                                values[key] &&
+                                !/^[+]?\d+([.]\d+)?$/gm.test(
+                                    values[key] as string
+                                )
+                            ) {
+                                errors[key] = 'Zahlenformat ungültig';
+                            }
+                            break;
+                    }
+                    break;
+                }
+                case 'Area': {
+                    const config = fields[key] as Area;
 
-                    yupDefinition[key] = validator;
-                } else if (type === 'Radio') {
-                    let validator = Yup.string();
-                    if (fields[key].isRequired)
-                        validator = validator.required('Pflichtfeld');
-                    yupDefinition[key] = validator;
+                    // custom validation
+                    if (config.validate) {
+                        errors[key] = await config.validate(
+                            values[key] as string,
+                            config
+                        );
+                        break;
+                    }
+
+                    // default
+                    if (config.isRequired && !values[key]) {
+                        errors[key] =
+                            (fields[key] as Area).requiredErrorMsg ||
+                            'Required field';
+                    }
+                    break;
                 }
-                break;
-            }
-            case 'Upload': {
-                let validator = Yup.array().nullable();
-                if (fields[key].isRequired) {
-                    validator = validator.required('Pflichtfeld');
-                    validator = validator.min(
-                        1,
-                        'Bitte geben Sie mindestens eine Datei an!'
-                    );
+                case 'Select': {
+                    const config = fields[key] as Select;
+
+                    // custom validation
+                    if (config.validate) {
+                        errors[key] = await config.validate(
+                            values[key] as string,
+                            config
+                        );
+                        break;
+                    }
+
+                    // default
+                    if (config.isRequired && !values[key]) {
+                        errors[key] =
+                            (fields[key] as Select).requiredErrorMsg ||
+                            'Required field';
+                    }
+                    break;
                 }
-                yupDefinition[key] = validator;
-                break;
+                case 'Datepicker': {
+                    const config = fields[key] as Datepicker;
+                    const single = config.singleSelect;
+                    const value = values[key] as [Date | null, Date | null];
+
+                    // custom validation
+                    if (config.validate) {
+                        errors[key] = await config.validate(
+                            values[key] as [Date | null, Date | null],
+                            config
+                        );
+                        break;
+                    }
+
+                    // default
+                    if (config.isRequired && !values[key]) {
+                        errors[key] = single
+                            ? (fields[key] as Datepicker).singleDateError ||
+                              'Please submit date!'
+                            : (fields[key] as Datepicker).mutliDateError ||
+                              'Please submit start- and enddate!';
+                        break;
+                    }
+
+                    if (single && !value[0]) {
+                        errors[key] =
+                            (fields[key] as Datepicker).singleDateError ||
+                            'Please submit date!';
+                    } else if (!single && (!value[0] || !value[1])) {
+                        errors[key] =
+                            (fields[key] as Datepicker).mutliDateError ||
+                            'Please submit start- and enddate!';
+                    }
+                    break;
+                }
+                case 'FieldGroup': {
+                    const config = fields[key] as FieldGroup;
+                    const type = config.groupType;
+
+                    // custom validation
+                    if (config.validate) {
+                        errors[key] = await config.validate(
+                            values[key] as Array<string> | string,
+                            config
+                        );
+                        break;
+                    }
+
+                    // default
+                    if (type === 'Checkbox') {
+                        const selectValues = values[key] as string[];
+                        if (
+                            config.isRequired &&
+                            (!selectValues || selectValues?.length < 1)
+                        ) {
+                            errors[key] =
+                                (fields[key] as FieldGroup).requiredErrorMsg ||
+                                'Please select at least one item!';
+                        }
+                        break;
+                    }
+                    if (type === 'Radio') {
+                        const value = values[key] as string;
+                        if (config.isRequired && !value) {
+                            errors[key] =
+                                (fields[key] as FieldGroup).requiredErrorMsg ||
+                                'Selection required';
+                        }
+                    }
+                    break;
+                }
+                case 'Upload': {
+                    const config = fields[key] as FileUpload;
+                    const files = values[key] as File[];
+
+                    // custom validation
+                    if (config.validate) {
+                        errors[key] = await config.validate(
+                            values[key] as Array<File>,
+                            config
+                        );
+                        break;
+                    }
+
+                    // default
+                    if (config.isRequired && (!files || files?.length < 1)) {
+                        errors[key] =
+                            (fields[key] as Field).requiredErrorMsg ||
+                            'Please submit at least one file!';
+                    }
+                    break;
+                }
             }
         }
-    }
 
-    const schema = Yup.object().shape({
-        ...yupDefinition,
-    });
+        return errors;
+    };
 
     // formik hook
     const {
@@ -334,7 +439,8 @@ const DynamicForm: FC<{
         },
         validateOnBlur: true,
         validateOnChange: true,
-        validationSchema: schema,
+        // validationSchema: schema,
+        validate: validation,
     });
 
     const theme = useContext(ThemeContext);
