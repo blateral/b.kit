@@ -87,6 +87,7 @@ export interface Colors {
     primary: ColorOptions;
     secondary: ColorOptions;
     tertiary: ColorOptions;
+    error: string;
 }
 
 export type ColorType = keyof Colors;
@@ -160,6 +161,7 @@ const defaultColors: Colors = {
         medium: '#C9CED7',
         dark: '#A8ABB4',
     },
+    error: '#ff0000',
 };
 
 /***** Fonts *****/

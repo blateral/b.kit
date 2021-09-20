@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC, useContext } from 'react';
+import styled, { DefaultTheme, ThemeContext } from 'styled-components';
 import * as Yup from 'yup';
 
 import { getColors as color, spacings } from 'utils/styles';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import { Field, FormikErrors, FormikTouched, useFormik } from 'formik';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
@@ -32,13 +32,7 @@ const FieldContainer = styled.div`
 `;
 
 export interface FormStructure {
-    [key: string]:
-        | Field
-        | Area
-        | Select
-        | Datepicker
-        | FieldGroup
-        | FileUploadField;
+    [key: string]: Field | Area | Select | Datepicker | FieldGroup | FileUpload;
 }
 
 export interface FormField {
@@ -90,7 +84,7 @@ export interface FieldGroup extends FormField {
     fields: Array<{ initialChecked?: boolean; text?: string }>;
 }
 
-export interface FileUploadField extends FormField {
+export interface FileUpload extends FormField {
     type: 'Upload';
     label?: string;
     infoMessage?: string;
@@ -103,16 +97,20 @@ export interface FormData {
         | string
         | boolean
         | Array<string>
-        | [Date | null, Date | null];
+        | [Date | null, Date | null]
+        | Array<File>;
 }
 
 interface FieldGenerationProps {
     index: number;
-    field: Field | Area | Select | Datepicker | FieldGroup | FileUploadField;
+    field: Field | Area | Select | Datepicker | FieldGroup | FileUpload;
     formikValues: FormData;
     formikErrors: FormikErrors<FormData>;
     formikTouches: FormikTouched<FormData>;
     key: string;
+    isInverted: boolean;
+    hasBg: boolean;
+    theme: DefaultTheme;
     setField: (
         field: string,
         value: any,
@@ -143,21 +141,23 @@ interface FieldGenerationProps {
 const DynamicForm: FC<{
     fields?: FormStructure;
     submitLabel?: string;
-    action?: string;
-    successPageUrl?: string;
-    recipientId?: string;
-    subjectLine?: string;
+    onSubmit?: (values: FormData) => Promise<void>;
+
+    bgMode?: 'full' | 'inverted';
 }> = ({
     fields,
     submitLabel = 'senden',
-    action,
-    successPageUrl,
-    recipientId,
-    subjectLine,
+    onSubmit,
+
+    bgMode,
 }) => {
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
+
     // generate initial data and setup yup validation definition
     const initalData: FormData = {};
     const yupDefinition: { [key: string]: any } = {};
+
     for (const key in fields) {
         switch (fields[key].type) {
             case 'Field':
@@ -176,7 +176,7 @@ const DynamicForm: FC<{
                 ];
                 break;
             case 'Upload':
-                initalData['uploads'] = (fields[key] as any).files || null;
+                initalData[key] = [];
                 break;
             case 'FieldGroup': {
                 const group = fields[key] as FieldGroup;
@@ -289,6 +289,18 @@ const DynamicForm: FC<{
                 }
                 break;
             }
+            case 'Upload': {
+                let validator = Yup.array().nullable();
+                if (fields[key].isRequired) {
+                    validator = validator.required('Pflichtfeld');
+                    validator = validator.min(
+                        1,
+                        'Bitte geben Sie mindestens eine Datei an!'
+                    );
+                }
+                yupDefinition[key] = validator;
+                break;
+            }
         }
     }
 
@@ -316,34 +328,30 @@ const DynamicForm: FC<{
         } as FormData,
 
         onSubmit: async (values) => {
-            values.successPageUrl = successPageUrl || '';
-            values.recipientId = recipientId || '';
-            values.subjectLine = subjectLine || '';
-            if (action) {
-                await fetch(action, {
-                    method: 'post',
-                    body: JSON.stringify(values),
-                    headers: { 'Content-Type': 'application/json' },
-                }).then((res) => {
-                    res.json();
-                });
-                setSubmitting(false);
-            }
+            onSubmit && (await onSubmit(values));
+            setSubmitting(false);
         },
         validateOnBlur: true,
         validateOnChange: true,
         validationSchema: schema,
     });
 
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
+
     return (
         <StyledSection
             addSeperation
-            bgColor={color(theme).mono.light}
-            bgMode="full"
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : bgMode
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <form action={action} method="post" onSubmit={handleSubmit}>
+                <form noValidate onSubmit={handleSubmit}>
                     <FieldContainer>
                         {fields &&
                             Object.keys(fields)?.map((label, i) => {
@@ -354,11 +362,14 @@ const DynamicForm: FC<{
                                     formikValues: values,
                                     formikErrors: errors,
                                     formikTouches: touched,
+                                    isInverted: isInverted,
+                                    hasBg: hasBg,
                                     setField: setFieldValue,
                                     setTouched: setFieldTouched,
                                     validateField: validateField,
                                     handleChange: handleChange,
                                     handleBlur: handleBlur,
+                                    theme: theme,
                                 } as FieldGenerationProps;
 
                                 switch (fields[label].type) {
@@ -445,20 +456,23 @@ const generateCheckboxGroup = ({
     index,
     field,
     key,
+    isInverted,
     formikValues,
     formikTouches,
     formikErrors,
     setTouched,
     validateField,
     setField,
+    theme,
 }: FieldGenerationProps) => {
     const group = field as FieldGroup;
     const groupData = formikValues[key] as string[];
+
     return (
         <div key={index}>
             <FieldHead>
                 {key && (
-                    <Copy textColor={'inherit'} type="copy-b" size="medium">
+                    <Copy type="copy-b" size="medium">
                         {`${key}${field.isRequired ? '*' : ''}`}
                     </Copy>
                 )}
@@ -467,6 +481,7 @@ const generateCheckboxGroup = ({
                 {group?.fields?.map((field, ci) => (
                     <Checkbox
                         key={ci}
+                        isInverted={isInverted}
                         onClick={() => {
                             // add key to form data array if not exists. Otherwise remove it
                             if (field.text) {
@@ -495,7 +510,7 @@ const generateCheckboxGroup = ({
                 ))}
             </Fields>
             {formikErrors[key] && formikTouches[key] && (
-                <ErrorMessage textColor="#ff0000" size="small">
+                <ErrorMessage textColor={color(theme).error} size="small">
                     {formikErrors[key]}
                 </ErrorMessage>
             )}
@@ -510,15 +525,19 @@ const generateRadioGroup = ({
     formikValues,
     formikErrors,
     formikTouches,
+    isInverted,
+    hasBg,
     setField,
+    theme,
 }: FieldGenerationProps) => {
     const group = field as FieldGroup;
     const groupData = formikValues[key] as string;
+
     return (
         <div key={index}>
             <FieldHead>
                 {key && (
-                    <Copy textColor={'inherit'} type="copy-b" size="medium">
+                    <Copy type="copy-b" size="medium" isInverted={isInverted}>
                         {`${key}${field.isRequired ? '*' : ''}`}
                     </Copy>
                 )}
@@ -530,6 +549,7 @@ const generateRadioGroup = ({
                         name={key}
                         value={field.text}
                         label={field.text}
+                        isInverted={isInverted}
                         isSelected={
                             field.text ? groupData === field.text : false
                         }
@@ -538,11 +558,12 @@ const generateRadioGroup = ({
                                 setField(key, e.currentTarget.value);
                             }
                         }}
+                        hasBg={!hasBg}
                     />
                 ))}
             </Fields>
             {formikErrors[key] && formikTouches[key] && (
-                <ErrorMessage textColor="#ff0000" size="small">
+                <ErrorMessage textColor={color(theme).error} size="small">
                     {formikErrors[key]}
                 </ErrorMessage>
             )}
@@ -557,6 +578,8 @@ const generateDatepicker = ({
     formikValues,
     formikErrors,
     formikTouches,
+    isInverted,
+    hasBg,
     setField,
     setTouched,
     validateField,
@@ -583,6 +606,8 @@ const generateDatepicker = ({
                     : undefined
             }
             name={key}
+            isInverted={isInverted}
+            hasBg={!hasBg}
         />
     );
 };
@@ -594,6 +619,8 @@ const generateArea = ({
     formikValues,
     formikErrors,
     formikTouches,
+    isInverted,
+    hasBg,
     handleChange,
 }: FieldGenerationProps) => (
     <Textarea
@@ -602,6 +629,7 @@ const generateArea = ({
         placeholder={(field as Datepicker).placeholder}
         name={key}
         value={formikValues[key] as string}
+        isInverted={isInverted}
         onChange={handleChange}
         infoMessage={(field as Field).info}
         errorMessage={
@@ -609,7 +637,7 @@ const generateArea = ({
                 ? formikErrors[key]
                 : undefined
         }
-        lightBg
+        lightBg={hasBg}
     />
 );
 
@@ -617,26 +645,28 @@ const generateUpload = ({
     index,
     field,
     key,
-    formikValues,
     formikErrors,
     formikTouches,
+    isInverted,
+    hasBg,
     setField,
 }: FieldGenerationProps) => (
     <FileUpload
-        key={'uploads'}
+        key={index}
         label={`${key}${field.isRequired ? '*' : ''}`}
         placeholder={(field as Field).placeholder}
-        name={'uploads'}
-        value={formikValues['uploads'] as string}
+        name={key}
         infoMessage={(field as Field).info}
         errorMessage={
-            formikErrors['uploads'] && formikTouches['uploads']
-                ? formikErrors['uploads']
+            formikErrors[key] && formikTouches[key]
+                ? formikErrors[key]
                 : undefined
         }
         onUploadFiles={(files) => {
-            setField('uploads', files);
+            setField(key, files);
         }}
+        hasBg={!hasBg}
+        isInverted={isInverted}
     />
 );
 
@@ -648,12 +678,15 @@ const generateField = ({
     formikErrors,
     formikTouches,
     handleChange,
+    isInverted,
+    hasBg,
 }: FieldGenerationProps) => (
     <Textfield
         key={index}
         label={`${key}${field.isRequired ? '*' : ''}`}
         placeholder={(field as Field).placeholder}
         name={key}
+        isInverted={isInverted}
         value={formikValues[key] as string}
         onChange={handleChange}
         infoMessage={(field as Field).info}
@@ -662,7 +695,7 @@ const generateField = ({
                 ? formikErrors[key]
                 : undefined
         }
-        lightBg
+        lightBg={hasBg}
     />
 );
 
@@ -673,6 +706,8 @@ const generateSelect = ({
     formikValues,
     formikErrors,
     formikTouches,
+    isInverted,
+    hasBg,
     setField,
     setTouched,
 }: FieldGenerationProps) => (
@@ -694,5 +729,7 @@ const generateSelect = ({
         }}
         onBlur={() => setTouched(key, true, true)}
         icon={(field as Select).icon}
+        isInverted={isInverted}
+        hasBg={!hasBg}
     />
 );

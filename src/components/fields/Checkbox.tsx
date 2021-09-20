@@ -1,6 +1,6 @@
 import Check from 'components/base/icons/Check';
 import Copy from 'components/typography/Copy';
-import * as React from 'react';
+import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 
@@ -33,7 +33,10 @@ const Original = styled.input`
     opacity: 0;
 `;
 
-const Box = styled.span<{ isSelected?: boolean; isInverted?: boolean }>`
+const Box = styled.span<{
+    isSelected?: boolean;
+    isInverted?: boolean;
+}>`
     width: 20px;
     min-width: 20px;
     height: 20px;
@@ -42,14 +45,14 @@ const Box = styled.span<{ isSelected?: boolean; isInverted?: boolean }>`
 
     border: 2px solid
         ${({ isInverted, theme, isSelected }) =>
-            isInverted && !isSelected
-                ? '#fff'
-                : isSelected
+            isSelected
                 ? color(theme).primary.medium
+                : isInverted
+                ? color(theme).light
                 : color(theme).mono.medium};
 
     background-color: ${({ isSelected, theme }) =>
-        isSelected ? color(theme).primary.medium : '#fff'};
+        isSelected ? color(theme).primary.medium : color(theme).light};
 `;
 
 const StyledCheck = styled(Check)`
@@ -86,7 +89,8 @@ const Checkbox: React.FC<{
     value,
     isRequired,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
+
     return (
         <View>
             <CheckboxContainer isDisabled={isDisabled} onClick={onClick}>

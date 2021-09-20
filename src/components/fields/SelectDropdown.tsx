@@ -1,7 +1,7 @@
 import AngleDown from 'components/base/icons/AngleDown';
 import AngleUp from 'components/base/icons/AngleUp';
 import Copy from 'components/typography/Copy';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 
@@ -19,10 +19,15 @@ const FieldHead = styled.div`
     padding-right: ${spacings.nudge}px;
 `;
 
-const Select = styled.div<{ hasError?: boolean; isActive?: boolean }>`
-    background: ${({ isActive, theme }) =>
-        isActive ? color(theme).mono.light : color(theme).light};
-    border: 1px solid ${({ theme }) => color(theme).light};
+const Select = styled.div<{
+    hasError?: boolean;
+    isActive?: boolean;
+    hasBg?: boolean;
+}>`
+    border: ${({ hasError, theme }) =>
+        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    background: ${({ theme, hasBg }) =>
+        hasBg ? color(theme).mono.light : color(theme).light};
     outline: none;
     padding: ${spacings.spacer}px;
     width: 100%;
@@ -174,6 +179,8 @@ const SelectDropdown: React.FC<{
     isDisabled?: boolean;
     errorMessage?: string;
     isRequired?: boolean;
+    isInverted?: boolean;
+    hasBg?: boolean;
 
     onChange?: (value: string) => void;
     onBlur?: () => void;
@@ -184,6 +191,8 @@ const SelectDropdown: React.FC<{
     value,
     placeholder,
     isDisabled,
+    isInverted,
+    hasBg,
     errorMessage,
     isRequired,
     icon,
@@ -206,7 +215,7 @@ const SelectDropdown: React.FC<{
             : undefined
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (onChange && selectedItem) {
             onChange(selectedItem.value || '');
         }
@@ -218,11 +227,7 @@ const SelectDropdown: React.FC<{
             <FieldHead>
                 <Copy
                     textColor={
-                        isDisabled
-                            ? color(theme).mono.medium
-                            : errorMessage
-                            ? '#ff0000'
-                            : 'inherit'
+                        isDisabled ? color(theme).mono.medium : undefined
                     }
                     size="medium"
                     type="copy-b"
@@ -243,6 +248,8 @@ const SelectDropdown: React.FC<{
                         isOpen ? setIsOpen(false) : setIsOpen(true);
                     }}
                     isActive={isOpen}
+                    hasBg={hasBg && !isInverted}
+                    hasError={!!errorMessage}
                 >
                     <SelectMain>
                         {icon?.src && (
@@ -251,9 +258,7 @@ const SelectDropdown: React.FC<{
                         {(placeholder || selectedItem?.label) && (
                             <Label
                                 textColor={
-                                    errorMessage
-                                        ? '#ff0000'
-                                        : isDisabled
+                                    isDisabled
                                         ? color(theme).mono.medium
                                         : color(theme).dark
                                 }
@@ -267,9 +272,7 @@ const SelectDropdown: React.FC<{
                     {isOpen ? (
                         <AngleUp
                             iconColor={
-                                errorMessage
-                                    ? '#ff0000'
-                                    : isDisabled
+                                isDisabled
                                     ? color(theme).mono.medium
                                     : color(theme).dark
                             }
@@ -277,9 +280,7 @@ const SelectDropdown: React.FC<{
                     ) : (
                         <AngleDown
                             iconColor={
-                                errorMessage
-                                    ? '#ff0000'
-                                    : isDisabled
+                                isDisabled
                                     ? color(theme).mono.medium
                                     : color(theme).dark
                             }
@@ -319,7 +320,11 @@ const SelectDropdown: React.FC<{
                 <input type="hidden" name={name} value={selectedItem.value} />
             )}
             {errorMessage && (
-                <ErrorMessage textColor="#ff0000" size="small" type="copy-i">
+                <ErrorMessage
+                    textColor={color(theme).error}
+                    size="small"
+                    type="copy-i"
+                >
                     {errorMessage
                         ? errorMessage
                         : 'Bitte geben Sie einen gültigen Text ein'}

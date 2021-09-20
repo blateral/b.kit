@@ -1,5 +1,5 @@
 import Copy from 'components/typography/Copy';
-import * as React from 'react';
+import React, { FC, useEffect, useContext, useState, useRef } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, spacings } from 'utils/styles';
@@ -21,16 +21,18 @@ const FieldHead = styled.div`
     padding-right: ${spacings.nudge}px;
 `;
 
-const FieldWrapper = styled.div<{ hasError?: boolean }>`
-    background-color: ${({ theme }) => color(theme).light};
+const FieldWrapper = styled.div<{ hasError?: boolean; hasBg?: boolean }>`
+    border: ${({ hasError, theme }) =>
+        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    background: ${({ theme, hasBg }) =>
+        hasBg ? color(theme).mono.light : color(theme).light};
     padding: ${spacings.nudge * 3}px;
-    border: 1px solid
-        ${({ hasError }) => (hasError ? '#ff0000' : 'transparent')};
 
     &:focus-within {
-        border: 1px solid
-            ${({ hasError, theme }) =>
-                hasError ? '#ff0000' : color(theme).primary.medium};
+        border: ${({ hasError, theme }) =>
+            hasError
+                ? `2px solid ${color(theme).error}`
+                : '2px solid transparent'};
     }
 
     & > * {
@@ -122,7 +124,7 @@ const Delete = styled.div`
     }
 `;
 
-const FileLabel = styled.div``;
+const FileLabel = styled(Copy)``;
 
 const InfoMessage = styled(Copy)`
     margin-top: ${spacings.nudge * 2}px;
@@ -159,9 +161,11 @@ const readFileAsync = (file: File) =>
         reader.readAsDataURL(file);
     });
 
-const FileUpload: React.FC<
+const FileUpload: FC<
     FormProps & {
-        onUploadFiles?: (files: FileList) => void;
+        onUploadFiles?: (files: File[]) => void;
+        isInverted?: boolean;
+        hasBg?: boolean;
     }
 > = ({
     onUploadFiles,
@@ -170,28 +174,18 @@ const FileUpload: React.FC<
     isRequired,
     errorMessage,
     infoMessage,
+    isInverted,
+    hasBg,
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const [selectedFiles, setSelectedFiles] = React.useState<FileList | null>(
-        null
-    );
-    const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+    const theme = useContext(ThemeContext);
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    const [previews, setPreviews] = React.useState<Preview[]>([]);
+    const [previews, setPreviews] = useState<Preview[]>([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (selectedFiles) {
-            const promises = Array.from(selectedFiles).map((file) => {
-                return readFileAsync(file);
-            });
-
-            Promise.all(promises).then((p) => {
-                setPreviews([...previews, ...p]);
-            });
-
-            if (onUploadFiles) {
-                onUploadFiles(selectedFiles);
-            }
+            onUploadFiles && onUploadFiles(selectedFiles);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedFiles]);
@@ -202,7 +196,7 @@ const FileUpload: React.FC<
                 {label && (
                     <Label
                         textColor={
-                            isDisabled ? color(theme).mono.medium : 'inherit'
+                            isDisabled ? color(theme).mono.medium : undefined
                         }
                         size="medium"
                         type="copy-b"
@@ -212,7 +206,10 @@ const FileUpload: React.FC<
                     </Label>
                 )}
             </FieldHead>
-            <FieldWrapper hasError={!!errorMessage}>
+            <FieldWrapper
+                hasError={!!errorMessage}
+                hasBg={hasBg && !isInverted}
+            >
                 <FieldMain>
                     <InputView
                         onClick={(event: any) => {
@@ -225,7 +222,7 @@ const FileUpload: React.FC<
                             textColor={
                                 isDisabled
                                     ? color(theme).mono.medium
-                                    : 'inherit'
+                                    : undefined
                             }
                             size="medium"
                             type="copy-b"
@@ -238,7 +235,7 @@ const FileUpload: React.FC<
                             onClick={() => {
                                 if (fileInputRef && fileInputRef.current) {
                                     fileInputRef.current.value = '';
-                                    setSelectedFiles(null);
+                                    setSelectedFiles([]);
                                     setPreviews([]);
                                 }
                             }}
@@ -247,7 +244,7 @@ const FileUpload: React.FC<
                                 textColor={
                                     isDisabled
                                         ? color(theme).mono.medium
-                                        : '#ff0000'
+                                        : undefined
                                 }
                                 size="medium"
                                 type="copy-b"
@@ -259,7 +256,21 @@ const FileUpload: React.FC<
                 </FieldMain>
 
                 <Original
-                    onChange={(e) => setSelectedFiles(e.currentTarget.files)}
+                    onChange={(e) => {
+                        if (e.currentTarget.files) {
+                            const files = Array.from(e.currentTarget.files);
+
+                            const promises = files.map((file) => {
+                                return readFileAsync(file);
+                            });
+
+                            Promise.all(promises).then((p) => {
+                                setPreviews((prev) => [...prev, ...p]);
+                            });
+
+                            setSelectedFiles((prev) => [...prev, ...files]);
+                        }
+                    }}
                     type="file"
                     ref={fileInputRef}
                     multiple
@@ -281,7 +292,11 @@ const FileUpload: React.FC<
                 </InfoMessage>
             )}
             {errorMessage && (
-                <ErrorMessage textColor="#ff0000" size="small" type="copy-i">
+                <ErrorMessage
+                    textColor={color(theme).error}
+                    size="small"
+                    type="copy-i"
+                >
                     {errorMessage
                         ? errorMessage
                         : 'Bitte geben Sie einen gültigen Text ein'}

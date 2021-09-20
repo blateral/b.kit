@@ -26,8 +26,10 @@ const Original = styled.input`
 
 const StyledRadioButton = styled.span<{
     isSelected?: boolean;
+    hasBg?: boolean;
 }>`
-    background-color: ${({ theme }) => color(theme).light};
+    background-color: ${({ theme, hasBg }) =>
+        hasBg ? color(theme).mono.light : color(theme).light};
     border-radius: 50%;
 
     position: relative;
@@ -69,17 +71,32 @@ const Label = styled(Copy)`
 const RadioButton: React.FC<{
     isSelected?: boolean;
     isDisabled?: boolean;
+    isInverted?: boolean;
     onChange?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
     name?: string;
     id?: string;
     value?: string;
     label?: string;
-}> = ({ isDisabled, isSelected, onChange, label, id, name, value }) => {
+    hasBg?: boolean;
+}> = ({
+    isDisabled,
+    isSelected,
+    isInverted,
+    onChange,
+    label,
+    id,
+    name,
+    value,
+    hasBg,
+}) => {
     const theme = React.useContext(ThemeContext);
     return (
         <View>
             <RadioContainer isDisabled={isDisabled}>
-                <StyledRadioButton isSelected={isSelected} />
+                <StyledRadioButton
+                    isSelected={isSelected}
+                    hasBg={hasBg && !isInverted}
+                />
                 <Original
                     type="radio"
                     name={name}
@@ -96,9 +113,12 @@ const RadioButton: React.FC<{
                     textColor={
                         isDisabled
                             ? color(theme).mono.medium
+                            : isInverted
+                            ? color(theme).light
                             : color(theme).dark
                     }
                     innerHTML={label}
+                    isInverted={isInverted}
                 />
             )}
         </View>
