@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Form from 'components/sections/Form';
 import Button from 'components/buttons/Button';
-import * as Yup from 'yup';
 
 export default {
     title: 'Sections/Form',
@@ -142,17 +141,6 @@ export const WithYupValidation: Story = () => (
             </Button.View>
         )}
         onSubmit={console.log}
-        yupValidationSchema={Yup.object({
-            name: Yup.string()
-                .max(15, 'Must be 15 characters or less')
-                .required('Required'),
-            surname: Yup.string()
-                .max(20, 'Must be 20 characters or less')
-                .required('Required'),
-            mail: Yup.string()
-                .email('Invalid email address')
-                .required('Required'),
-        })}
     />
 );
 
