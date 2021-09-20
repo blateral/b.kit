@@ -1,4 +1,4 @@
-/***** Version: 1.4.3 *****/
+/***** Version: 1.5.0 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -86,6 +86,7 @@ export { default as QuickNav } from 'components/sections/Quicknav';
 export { default as Timeline } from 'components/sections/Timeline';
 export { default as SocialNav } from 'components/sections/SocialNav';
 export { default as NumberList } from 'components/sections/NumberList';
+export { default as DynamicForm } from 'components/sections/DynamicForm';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';

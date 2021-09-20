@@ -1,9 +1,11 @@
 import Copy from 'components/typography/Copy';
-import * as React from 'react';
+import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 
-const View = styled.div``;
+const View = styled.div`
+    text-align: left;
+`;
 
 const FieldHead = styled.div`
     display: flex;
@@ -32,15 +34,16 @@ const Field = styled.input<{
     -webkit-appearance: none;
 
     padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
-    border: ${({ hasError }) =>
-        hasError ? '2px solid #ff0000' : '2px solid transparent'};
+    border: ${({ hasError, theme }) =>
+        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
     background-color: ${({ isInverted, hasBack, theme }) =>
         isInverted || !hasBack ? color(theme).light : color(theme).mono.light};
 
     font-weight: inherit;
     font-family: inherit;
     font-size: inherit;
-    color: ${({ hasError }) => (hasError ? '#ff0000' : 'inherit')};
+    color: ${({ hasError, theme }) =>
+        hasError ? color(theme).error : 'inherit'};
 
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
@@ -100,7 +103,7 @@ const Textfield: React.FC<
     isRequired,
     onChange,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
     return (
         <View>
             <FieldHead>
@@ -110,6 +113,8 @@ const Textfield: React.FC<
                         textColor={
                             isDisabled ? color(theme).mono.dark : undefined
                         }
+                        size="medium"
+                        type="copy-b"
                     >
                         {`${label}${isRequired ? ' *' : ''}`}
                     </Copy>
@@ -135,7 +140,11 @@ const Textfield: React.FC<
                 </InfoMessage>
             )}
             {errorMessage && (
-                <ErrorMessage textColor="#ff0000" size="small" type="copy-i">
+                <ErrorMessage
+                    textColor={color(theme).error}
+                    size="small"
+                    type="copy-i"
+                >
                     {errorMessage
                         ? errorMessage
                         : 'Bitte geben Sie einen gültigen Text ein'}

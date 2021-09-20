@@ -4,6 +4,10 @@ import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import { FormProps } from './Textfield';
 
+const View = styled.div`
+    text-align: left;
+`;
+
 const FieldHead = styled.div`
     display: flex;
     flex-direction: row;
@@ -38,21 +42,18 @@ const Area = styled.textarea<{
         min-height: 185px;
     }
 
-    padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
+    padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
 
-    /* border: ${({ isInverted, theme }) =>
-        isInverted
-            ? '2px solid transparent'
-            : `2px solid ${color(theme).mono.medium}`}; */
-    border: ${({ hasError }) =>
-        hasError ? '2px solid #ff0000' : '2px solid transparent'};
+    border: ${({ hasError, theme }) =>
+        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
     background-color: ${({ isInverted, hasBack, theme }) =>
         isInverted || !hasBack ? color(theme).light : color(theme).mono.light};
 
     font-weight: inherit;
     font-family: inherit;
     font-size: inherit;
-    color: ${({ hasError }) => (hasError ? '#ff0000' : 'inherit')};
+    color: ${({ hasError, theme }) =>
+        hasError ? color(theme).error : 'inherit'};
 
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
@@ -98,7 +99,7 @@ const Textarea: React.FC<
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <div>
+        <View>
             <FieldHead>
                 {label && (
                     <Copy
@@ -106,6 +107,8 @@ const Textarea: React.FC<
                         textColor={
                             isDisabled ? color(theme).mono.dark : undefined
                         }
+                        size="medium"
+                        type="copy-b"
                     >
                         {`${label}${isRequired ? ' *' : ''}`}
                     </Copy>
@@ -130,13 +133,17 @@ const Textarea: React.FC<
                 </InfoMessage>
             )}
             {errorMessage && (
-                <ErrorMessage textColor="#ff0000" size="small" type="copy-i">
+                <ErrorMessage
+                    textColor={color(theme).error}
+                    size="small"
+                    type="copy-i"
+                >
                     {errorMessage
                         ? errorMessage
                         : 'Bitte geben Sie einen gültigen Text ein'}
                 </ErrorMessage>
             )}
-        </div>
+        </View>
     );
 };
 
