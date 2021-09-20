@@ -36,7 +36,6 @@ export interface FormStructure {
 
 export interface FormField {
     isRequired?: boolean;
-    requiredErrorMsg?: string;
 }
 
 export interface Field extends FormField {
@@ -47,6 +46,7 @@ export interface Field extends FormField {
     info?: string;
     icon?: { src: string; alt?: string };
     validate?: (value: string, config: Field) => Promise<string>;
+    errorMsg?: string;
 }
 
 export interface Area extends FormField {
@@ -55,6 +55,7 @@ export interface Area extends FormField {
     placeholder?: string;
     info?: string;
     validate?: (value: string, config: Area) => Promise<string>;
+    errorMsg?: string;
 }
 
 export interface Select extends FormField {
@@ -68,6 +69,7 @@ export interface Select extends FormField {
     info?: string;
     icon?: { src: string; alt?: string };
     validate?: (value: string, config: Select) => Promise<string>;
+    errorMsg?: string;
 }
 
 export interface Datepicker extends FormField {
@@ -106,6 +108,7 @@ export interface FieldGroup extends FormField {
         value: Array<string> | string,
         config: FieldGroup
     ) => Promise<string>;
+    errorMsg?: string;
 }
 
 export interface FileUpload extends FormField {
@@ -115,6 +118,7 @@ export interface FileUpload extends FormField {
     info?: string;
     acceptedFormats?: string;
     validate?: (value: Array<File>, config: FileUpload) => Promise<string>;
+    errorMsg?: string;
 }
 
 export interface FormData {
@@ -251,8 +255,7 @@ const DynamicForm: FC<{
                     // default
                     if (fields[key].isRequired && !values[key]) {
                         errors[key] =
-                            (fields[key] as Field).requiredErrorMsg ||
-                            'Required field';
+                            (fields[key] as Field).errorMsg || 'Required field';
                     }
 
                     switch (inputType) {
@@ -264,7 +267,7 @@ const DynamicForm: FC<{
                                 )
                             ) {
                                 errors[key] =
-                                    (fields[key] as Field).requiredErrorMsg ||
+                                    (fields[key] as Field).errorMsg ||
                                     'Invalid Mail format';
                             }
                             break;
@@ -302,8 +305,7 @@ const DynamicForm: FC<{
                     // default
                     if (config.isRequired && !values[key]) {
                         errors[key] =
-                            (fields[key] as Area).requiredErrorMsg ||
-                            'Required field';
+                            (fields[key] as Area).errorMsg || 'Required field';
                     }
                     break;
                 }
@@ -322,7 +324,7 @@ const DynamicForm: FC<{
                     // default
                     if (config.isRequired && !values[key]) {
                         errors[key] =
-                            (fields[key] as Select).requiredErrorMsg ||
+                            (fields[key] as Select).errorMsg ||
                             'Required field';
                     }
                     break;
@@ -383,7 +385,7 @@ const DynamicForm: FC<{
                             (!selectValues || selectValues?.length < 1)
                         ) {
                             errors[key] =
-                                (fields[key] as FieldGroup).requiredErrorMsg ||
+                                (fields[key] as FieldGroup).errorMsg ||
                                 'Please select at least one item!';
                         }
                         break;
@@ -392,7 +394,7 @@ const DynamicForm: FC<{
                         const value = values[key] as string;
                         if (config.isRequired && !value) {
                             errors[key] =
-                                (fields[key] as FieldGroup).requiredErrorMsg ||
+                                (fields[key] as FieldGroup).errorMsg ||
                                 'Selection required';
                         }
                     }
@@ -414,7 +416,7 @@ const DynamicForm: FC<{
                     // default
                     if (config.isRequired && (!files || files?.length < 1)) {
                         errors[key] =
-                            (fields[key] as Field).requiredErrorMsg ||
+                            (fields[key] as Field).errorMsg ||
                             'Please submit at least one file!';
                     }
                     break;
