@@ -73,6 +73,7 @@ export const Default: Story = () => (
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
+                acceptedFormats: 'image/png, image/jpg',
             },
         }}
         onSubmit={async (values) => {
@@ -149,6 +150,7 @@ export const WithBackground: Story = () => (
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
+                acceptedFormats: 'image/png, image/jpg',
             },
         }}
         onSubmit={async (values) => {
@@ -225,6 +227,7 @@ export const Inverted: Story = () => (
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
+                acceptedFormats: 'image/png, image/jpg',
             },
         }}
         onSubmit={async (values) => {
@@ -310,6 +313,7 @@ export const WithCustomErrorMessages: Story = () => (
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
                 requiredErrorMsg: 'Bitte wählen Sie mindestens eine Datei',
+                acceptedFormats: 'image/png, image/jpg',
             },
         }}
         onSubmit={async (values) => {
@@ -453,6 +457,7 @@ export const CustomValidation: Story = () => (
                         error = 'Select files please!';
                     return error;
                 },
+                acceptedFormats: 'image/png, image/jpg',
             },
         }}
         onSubmit={async (values) => {

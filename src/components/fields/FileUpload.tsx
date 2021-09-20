@@ -168,6 +168,7 @@ const FileUpload: FC<
         hasBg?: boolean;
         addBtnLabel?: string;
         removeBtnLabel?: string;
+        acceptedFormats?: string;
     }
 > = ({
     onUploadFiles,
@@ -180,6 +181,7 @@ const FileUpload: FC<
     hasBg,
     addBtnLabel,
     removeBtnLabel,
+    acceptedFormats,
 }) => {
     const theme = useContext(ThemeContext);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -280,6 +282,7 @@ const FileUpload: FC<
                     multiple
                     required={isRequired}
                     disabled={isDisabled}
+                    accept={acceptedFormats}
                 />
                 {previews.map((file, i) => {
                     const fileName = (file.url && file.url.split('/')) || [];

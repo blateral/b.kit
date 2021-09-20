@@ -103,6 +103,7 @@ export interface FileUpload extends FormField {
     addBtnLabel?: string;
     removeBtnLabel?: string;
     info?: string;
+    acceptedFormats?: string;
     validate?: (value: Array<File>, config: FileUpload) => Promise<string>;
 }
 
@@ -770,6 +771,7 @@ const generateUpload = ({
                 ? formikErrors[key]
                 : undefined
         }
+        acceptedFormats={field.acceptedFormats}
         onUploadFiles={(files) => {
             setField(key, files);
         }}
