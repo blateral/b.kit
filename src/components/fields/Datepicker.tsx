@@ -398,7 +398,11 @@ const PickerButton = forwardRef<HTMLDivElement, PickerBtnProps>(
             <View>
                 <FieldHead>
                     {label && (
-                        <Copy size="medium" type="copy-b">
+                        <Copy
+                            isInverted={isInverted}
+                            size="medium"
+                            type="copy-b"
+                        >
                             {label}
                         </Copy>
                     )}

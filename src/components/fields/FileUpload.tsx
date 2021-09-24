@@ -201,6 +201,7 @@ const FileUpload: FC<
             <FieldHead>
                 {label && (
                     <Label
+                        isInverted={isInverted}
                         textColor={
                             isDisabled ? color(theme).mono.medium : undefined
                         }
