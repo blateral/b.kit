@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import styled, { DefaultTheme, ThemeContext } from 'styled-components';
 
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 import Section, { mapToBgMode } from 'components/base/Section';
 import { Field, FormikErrors, FormikTouched, useFormik } from 'formik';
 import Wrapper from 'components/base/Wrapper';
@@ -20,14 +20,53 @@ const StyledSection = styled(Section)`
     overflow: visible;
 `;
 
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @media ${mq.semilarge} {
+        flex-direction: row;
+    }
+`;
+
 const FieldContainer = styled.div`
-    max-width: 590px;
-    margin: 0 auto;
+    flex: 1 1 0;
     text-align: center;
+
+    & + & {
+        margin-top: ${spacings.spacer * 1.5}px;
+    }
 
     & > * + * {
         margin-top: ${spacings.spacer * 1.5}px;
     }
+
+    @media ${mq.semilarge} {
+        max-width: 590px;
+
+        & + & {
+            margin-top: 0;
+        }
+
+        &:first-child {
+            padding-right: ${spacings.nudge * 3}px;
+        }
+
+        &:last-child {
+            padding-left: ${spacings.nudge * 3}px;
+        }
+    }
+`;
+
+const ActionContainer = styled.div<{ hasCols?: boolean }>`
+    width: 100%;
+    max-width: calc(590px * 2 + ${spacings.nudge * 2}px);
+
+    margin: 0 auto;
+    margin-top: ${spacings.spacer * 2}px;
+
+    text-align: ${({ hasCols }) => (hasCols ? 'left' : 'center')};
 `;
 
 export interface FormStructure {
@@ -36,6 +75,7 @@ export interface FormStructure {
 
 export interface FormField {
     isRequired?: boolean;
+    column?: 'left' | 'right';
 }
 
 export interface Field extends FormField {
@@ -464,6 +504,16 @@ const DynamicForm: FC<{
 
     const theme = useContext(ThemeContext);
 
+    const leftColumn =
+        fields &&
+        Object.keys(fields).filter(
+            (l) => !fields[l].column || fields[l].column === 'left'
+        );
+
+    const rightColumn =
+        fields &&
+        Object.keys(fields).filter((l) => fields[l].column === 'right');
+
     return (
         <StyledSection
             addSeperation
@@ -477,10 +527,10 @@ const DynamicForm: FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <form noValidate onSubmit={handleSubmit}>
+                <Form noValidate onSubmit={handleSubmit}>
                     <FieldContainer>
                         {fields &&
-                            Object.keys(fields)?.map((label, i) => {
+                            leftColumn?.map((label, i) => {
                                 const generationProps = {
                                     index: i,
                                     field: fields[label],
@@ -529,37 +579,103 @@ const DynamicForm: FC<{
                                         return null;
                                 }
                             })}
-                        {fields && submitLabel && (
-                            <Actions
-                                isCentered
-                                primary={
-                                    submitAction ? (
-                                        submitAction({
-                                            isInverted,
-                                            isDisabled: isSubmitting || !dirty,
-                                            additionalProps: {
-                                                type: 'submit',
-                                                as: 'button',
-                                            },
-                                        })
-                                    ) : (
-                                        <Button.View
-                                            as="button"
-                                            isDisabled={isSubmitting || !dirty}
-                                            {...{
-                                                type: 'submit',
-                                            }}
-                                        >
-                                            <Button.Label>
-                                                {submitLabel}
-                                            </Button.Label>
-                                        </Button.View>
-                                    )
-                                }
-                            />
-                        )}
                     </FieldContainer>
-                </form>
+                    {rightColumn && rightColumn.length > 0 && (
+                        <FieldContainer>
+                            {fields &&
+                                rightColumn?.map((label, i) => {
+                                    const generationProps = {
+                                        index: i,
+                                        field: fields[label],
+                                        key: label,
+                                        formikValues: values,
+                                        formikErrors: errors,
+                                        formikTouches: touched,
+                                        isInverted: isInverted,
+                                        hasBg: hasBg,
+                                        setField: setFieldValue,
+                                        setTouched: setFieldTouched,
+                                        validateField: validateField,
+                                        handleChange: handleChange,
+                                        handleBlur: handleBlur,
+                                        theme: theme,
+                                    } as FieldGenerationProps<any>;
+
+                                    switch (fields[label].type) {
+                                        case 'Field':
+                                            return generateField(
+                                                generationProps
+                                            );
+                                        case 'Area':
+                                            return generateArea(
+                                                generationProps
+                                            );
+                                        case 'Datepicker':
+                                            return generateDatepicker(
+                                                generationProps
+                                            );
+                                        case 'FieldGroup': {
+                                            if (
+                                                (fields[label] as FieldGroup)
+                                                    .groupType === 'Checkbox'
+                                            ) {
+                                                return generateCheckboxGroup(
+                                                    generationProps
+                                                );
+                                            } else {
+                                                return generateRadioGroup(
+                                                    generationProps
+                                                );
+                                            }
+                                        }
+                                        case 'Select':
+                                            return generateSelect(
+                                                generationProps
+                                            );
+                                        case 'Upload':
+                                            return generateUpload(
+                                                generationProps
+                                            );
+                                        default:
+                                            return null;
+                                    }
+                                })}
+                        </FieldContainer>
+                    )}
+                </Form>
+                {fields && submitLabel && (
+                    <ActionContainer
+                        hasCols={rightColumn && rightColumn.length > 0}
+                    >
+                        <Actions
+                            isCentered
+                            primary={
+                                submitAction ? (
+                                    submitAction({
+                                        isInverted,
+                                        isDisabled: isSubmitting || !dirty,
+                                        additionalProps: {
+                                            type: 'submit',
+                                            as: 'button',
+                                        },
+                                    })
+                                ) : (
+                                    <Button.View
+                                        as="button"
+                                        isDisabled={isSubmitting || !dirty}
+                                        {...{
+                                            type: 'submit',
+                                        }}
+                                    >
+                                        <Button.Label>
+                                            {submitLabel}
+                                        </Button.Label>
+                                    </Button.View>
+                                )
+                            }
+                        />
+                    </ActionContainer>
+                )}
             </Wrapper>
         </StyledSection>
     );
