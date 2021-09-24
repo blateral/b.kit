@@ -322,6 +322,85 @@ export const Inverted: Story = () => (
     />
 );
 
+export const CustomSubmitButton: Story = () => (
+    <DynamicForm
+        fields={{
+            Nachname: {
+                type: 'Field',
+                placeholder: 'Nachname..',
+                isRequired: true,
+                info: 'Nachname eingeben',
+                icon: { src: 'http://placehold.it/25' },
+            },
+            Nachricht: {
+                type: 'Area',
+                placeholder: 'Nachricht eingeben..',
+                info: 'Nachricht eingeben',
+                isRequired: true,
+            },
+            Email: {
+                type: 'Field',
+                placeholder: 'Email eingeben..',
+                info: 'Email eingeben',
+                isRequired: true,
+                inputType: 'email',
+            },
+            Reisezeitraum: {
+                type: 'Datepicker',
+                isRequired: true,
+                info: 'Reisezeitraum eingeben',
+                placeholder: 'Reisezeitraum wählen..',
+                icon: { src: 'http://placehold.it/25' },
+            },
+            Leistungen: {
+                type: 'FieldGroup',
+                groupType: 'Checkbox',
+                isRequired: true,
+                fields: [
+                    { text: 'mit Bad' },
+                    { text: 'mit Küche', initialChecked: true },
+                ],
+            },
+            Personen: {
+                type: 'FieldGroup',
+                groupType: 'Radio',
+                isRequired: true,
+                fields: [{ text: '1' }, { text: '2', initialChecked: true }],
+            },
+            Alter: {
+                type: 'Field',
+                placeholder: 'Alter eingeben',
+                info: 'Bitte geben Sie Ihr Alter an',
+                inputType: 'number',
+            },
+            Land: {
+                type: 'Select',
+                // initalValue: 'Germany',
+                isRequired: true,
+                dropdownItems: [
+                    { label: 'Schweiz', value: 'Switzerland' },
+                    { label: 'Deutschland', value: 'Germany' },
+                ],
+                icon: { src: 'http://placehold.it/25' },
+            },
+            Upload: {
+                type: 'Upload',
+                isRequired: true,
+                addBtnLabel: 'Datei/en auswählen',
+                removeBtnLabel: 'Auswahl löschen',
+                acceptedFormats: 'image/png, image/jpg',
+            },
+        }}
+        onSubmit={async (values) => {
+            console.log(values);
+            return;
+        }}
+        submitAction={({ additionalProps }) => (
+            <button {...additionalProps}>Submit</button>
+        )}
+    />
+);
+
 export const WithCustomErrorMessages: Story = () => (
     <DynamicForm
         fields={{

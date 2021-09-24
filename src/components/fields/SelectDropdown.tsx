@@ -226,6 +226,7 @@ const SelectDropdown: React.FC<{
         <View>
             <FieldHead>
                 <Copy
+                    isInverted={isInverted}
                     textColor={
                         isDisabled ? color(theme).mono.medium : undefined
                     }

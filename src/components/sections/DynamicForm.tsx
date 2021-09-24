@@ -173,12 +173,18 @@ const DynamicForm: FC<{
     fields?: FormStructure;
     submitLabel?: string;
     onSubmit?: (values: FormData) => Promise<void>;
+    submitAction?: (props: {
+        isInverted?: boolean;
+        additionalProps: { type: 'submit'; as: 'button' | 'a' };
+        isDisabled?: boolean;
+    }) => React.ReactNode;
 
     bgMode?: 'full' | 'inverted';
 }> = ({
     fields,
     submitLabel = 'senden',
     onSubmit,
+    submitAction,
 
     bgMode,
 }) => {
@@ -527,17 +533,28 @@ const DynamicForm: FC<{
                             <Actions
                                 isCentered
                                 primary={
-                                    <Button.View
-                                        as="button"
-                                        isDisabled={isSubmitting || !dirty}
-                                        {...{
-                                            type: 'submit',
-                                        }}
-                                    >
-                                        <Button.Label>
-                                            {submitLabel}
-                                        </Button.Label>
-                                    </Button.View>
+                                    submitAction ? (
+                                        submitAction({
+                                            isInverted,
+                                            isDisabled: isSubmitting || !dirty,
+                                            additionalProps: {
+                                                type: 'submit',
+                                                as: 'button',
+                                            },
+                                        })
+                                    ) : (
+                                        <Button.View
+                                            as="button"
+                                            isDisabled={isSubmitting || !dirty}
+                                            {...{
+                                                type: 'submit',
+                                            }}
+                                        >
+                                            <Button.Label>
+                                                {submitLabel}
+                                            </Button.Label>
+                                        </Button.View>
+                                    )
                                 }
                             />
                         )}
