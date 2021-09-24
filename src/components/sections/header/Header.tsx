@@ -155,17 +155,19 @@ const StyledPoster = styled(Poster)<{ gradient?: string; size?: number }>`
         'padding-bottom'
     )};
 
-    &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: ${({ gradient }) => gradient || undefined};
-        pointer-events: none;
-        z-index: 2;
+    @media ${mq.semilarge} {
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: ${({ gradient }) => gradient || undefined};
+            pointer-events: none;
+            z-index: 2;
+        }
     }
 
     /* required to align items at flex-end in ie11 */
