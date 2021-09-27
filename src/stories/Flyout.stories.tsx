@@ -15,8 +15,22 @@ export default {
     decorators: [
         (Story) => (
             <div
-                style={{ height: '100vh', width: '100vw', background: 'black' }}
+                style={{
+                    height: '100vh',
+                    width: '100vw',
+                    color: 'black',
+                }}
             >
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+                est Lorem ipsum dolor sit amet.
                 <Story />
             </div>
         ),
@@ -166,6 +180,32 @@ export const FullWidthWithActions: Story = () => (
     <Flyout.View
         isOpen
         isLarge
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Suche"
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        logo={{
+            icon: logoFn,
+            link: '#logoLink',
+        }}
+        primaryAction={primaryCtaFn}
+        secondaryAction={secondaryCtaFn}
+    >
+        <Flyout.NavList navGroups={[{ id: 'nav1', name: 'Zimmer' }]} />
+    </Flyout.View>
+);
+
+export const WithBackgroundSettings: Story = () => (
+    <Flyout.View
+        isOpen
+        isLarge
+        background={{
+            opacity: 0.8,
+            blur: '4px',
+        }}
         search={(isInverted) => (
             <SearchInput
                 isInverted={isInverted}

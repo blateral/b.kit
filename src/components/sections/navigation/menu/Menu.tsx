@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { mq, spacings } from 'utils/styles';
-import Flyout, { NavGroup } from './Flyout';
+import Flyout, { FlyoutBackgroundSettings, NavGroup } from './Flyout';
 import SocialList from 'components/blocks/SocialList';
 import { LogoProps } from '../Navigation';
 
@@ -57,6 +57,7 @@ interface MenuProps {
     backdropOpacity?: number;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
     logo?: LogoProps;
+    background?: FlyoutBackgroundSettings;
     primaryAction?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
@@ -82,6 +83,7 @@ const Menu: FC<MenuProps> = ({
     backdropOpacity = 0.4,
     toggleIcon,
     logo,
+    background,
     primaryAction,
     secondaryAction,
     search,
@@ -108,6 +110,7 @@ const Menu: FC<MenuProps> = ({
                 primaryAction={primaryAction}
                 secondaryAction={secondaryAction}
                 search={search}
+                background={background}
             >
                 {navItems && (
                     <Flyout.NavList

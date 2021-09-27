@@ -13,11 +13,13 @@ import {
 import Cross from 'components/base/icons/Cross';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { LogoProps } from '../Navigation';
+import { hexToRgba } from 'utils/hexRgbConverter';
 
 const View = styled.div<{
     isOpen?: boolean;
     isMirrored?: boolean;
     isLarge?: boolean;
+    bgBlur?: string;
 }>`
     position: absolute;
     top: 0;
@@ -27,6 +29,10 @@ const View = styled.div<{
     width: 100%;
     overflow: hidden;
     pointer-events: none;
+
+    @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        backdrop-filter: ${({ bgBlur }) => bgBlur && `blur(${bgBlur})`};
+    }
 
     ${({ isMirrored, isOpen, isLarge }) =>
         isLarge
@@ -63,12 +69,15 @@ const Stage = styled.div<{
     isLarge?: boolean;
     isInverted?: boolean;
     isMirrored?: boolean;
+    opacity?: number;
 }>`
     height: 100%;
     width: 100%;
 
-    background-color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).dark : color(theme).light};
+    background-color: ${({ theme, isInverted, opacity }) =>
+        isInverted
+            ? hexToRgba(color(theme).dark, opacity || 1)
+            : hexToRgba(color(theme).light, opacity || 1)};
     pointer-events: all;
 
     @media ${mq.semilarge} {
@@ -280,6 +289,11 @@ const MirroredLargeContainerDesktop = styled(HeaderCol)`
 
 type FlyoutMq = 'semilarge' | 'large';
 
+export interface FlyoutBackgroundSettings {
+    opacity?: number;
+    blur?: string;
+}
+
 const Flyout: FC<{
     isOpen?: boolean;
     isLarge?: boolean;
@@ -287,6 +301,7 @@ const Flyout: FC<{
     isMirrored?: boolean;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
     logo?: LogoProps;
+    background?: FlyoutBackgroundSettings;
     primaryAction?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
@@ -307,6 +322,7 @@ const Flyout: FC<{
     isMirrored = false,
     toggleIcon,
     logo,
+    background,
     primaryAction,
     secondaryAction,
     search,
@@ -324,6 +340,7 @@ const Flyout: FC<{
             className={className}
             isMirrored={isMirrored}
             isLarge={isLarge}
+            bgBlur={background?.blur}
         >
             <StyledWrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <Stage
@@ -331,6 +348,7 @@ const Flyout: FC<{
                     isLarge={isLarge}
                     isInverted={isInverted}
                     isMirrored={isMirrored}
+                    opacity={background?.opacity}
                 >
                     <Content isLarge={isLarge}>
                         <Header>
