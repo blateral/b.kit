@@ -1,4 +1,4 @@
-/***** Version: 1.5.5 *****/
+/***** Version: 1.5.6 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -124,6 +124,7 @@ export {
 export { default as Navigation } from 'components/sections/navigation/Navigation';
 export { default as Menu } from 'components/sections/navigation/menu/Menu';
 export { default as TopBar } from 'components/sections/navigation/TopBar';
+export { default as SocialList } from 'components/blocks/SocialList';
 
 /***** Icons *****/
 export { default as ArrowRightIcon } from 'components/base/icons/ArrowRight';
