@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { NavGroup } from './menu/Flyout';
+import { FlyoutBackgroundSettings, NavGroup } from './menu/Flyout';
 import Menu from './menu/Menu';
 
 import TopBar from './TopBar';
@@ -34,6 +34,7 @@ export interface NavProps {
     backdropOpacity?: number;
     socials?: Array<{ icon: React.ReactNode; href: string }>;
     logo?: LogoProps;
+    background?: FlyoutBackgroundSettings;
     /** Allow overflow of topbar over content if page is on top */
     allowTopbarOverflow?: boolean;
     /** Hide topbar background if menu overlay is open */
@@ -62,6 +63,7 @@ const Navigation: FC<NavProps> = ({
     socials,
     search,
     logo,
+    background,
     backdropOpacity,
     primaryCta,
     secondaryCta,
@@ -109,6 +111,7 @@ const Navigation: FC<NavProps> = ({
                 search={search}
                 onCloseClick={() => setIsMenuOpen(false)}
                 toggleIcon={closeMenuIcon}
+                background={background}
                 {...sharedProps}
             />
         </>
