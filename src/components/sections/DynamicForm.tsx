@@ -174,7 +174,7 @@ export type FormDataTypes =
 
 type FieldTypes = Field | Area | Select | Datepicker | FieldGroup | FileUpload;
 
-interface FieldGenerationProps<T extends FieldTypes> {
+export interface FieldGenerationProps<T extends FieldTypes> {
     field: T;
     value: FormDataTypes;
     error: string;
@@ -212,7 +212,6 @@ interface FieldGenerationProps<T extends FieldTypes> {
 
 const DynamicForm: FC<{
     fields?: FormStructure;
-    submitLabel?: string;
     onSubmit?: (values: FormData) => Promise<void>;
     submitAction?: (props: {
         isInverted?: boolean;
@@ -234,7 +233,6 @@ const DynamicForm: FC<{
     };
 }> = ({
     fields,
-    submitLabel = 'senden',
     onSubmit,
     submitAction,
     definitions,
@@ -707,7 +705,7 @@ const DynamicForm: FC<{
                         </FieldContainer>
                     )}
                 </Form>
-                {fields && submitLabel && (
+                {fields && (
                     <ActionContainer
                         hasCols={rightColumn && rightColumn.length > 0}
                     >
@@ -729,9 +727,7 @@ const DynamicForm: FC<{
                                             type: 'submit',
                                         }}
                                     >
-                                        <Button.Label>
-                                            {submitLabel}
-                                        </Button.Label>
+                                        <Button.Label>send</Button.Label>
                                     </Button.View>
                                 )
                             }
