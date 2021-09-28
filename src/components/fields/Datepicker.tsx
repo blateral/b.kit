@@ -42,7 +42,7 @@ const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
 
     .react-datepicker {
         font-family: 'Roboto', sans-serif;
-        border: 1px solid ${({ theme }) => color(theme).primary.medium} !important;
+        border: 1px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.6)} !important;
         border-radius: 0 !important;
         padding: ${spacings.spacer}px;
         width: 100%;
@@ -148,7 +148,7 @@ const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
     }
 
     .react-datepicker__day--today {
-        border: 1px solid ${({ theme }) => color(theme).primary.medium} !important;
+        border: 1px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.6)} !important;
         border-radius: 0 !important;
         color: ${({ theme }) => color(theme).light};
     }
@@ -157,7 +157,7 @@ const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
 
     .react-datepicker__triangle:before {
         border-bottom-color: ${({ theme }) =>
-            color(theme).primary.medium} !important;
+            hexToRgba(color(theme).dark, 0.6)} !important;
     }
 
     .react-datepicker__triangle:after {
