@@ -42,10 +42,12 @@ const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
 
     .react-datepicker {
         font-family: 'Roboto', sans-serif;
-        border: 1px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.6)} !important;
+        border: 1px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.2)} !important;
         border-radius: 0 !important;
         padding: ${spacings.spacer}px;
         width: 100%;
+
+        box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.15);
     }
 
     .react-datepicker-wrapper {
@@ -157,7 +159,7 @@ const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
 
     .react-datepicker__triangle:before {
         border-bottom-color: ${({ theme }) =>
-            hexToRgba(color(theme).dark, 0.6)} !important;
+            hexToRgba(color(theme).dark, 0.2)} !important;
     }
 
     .react-datepicker__triangle:after {
@@ -288,19 +290,19 @@ const DatepickerButton = styled.div<{
 
     &:focus {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
     }
 
     &:active {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
     }
 
     ${({ isActive }) =>
         isActive &&
         css`
             border: ${({ theme }) =>
-                `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+                `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
         `}
 
     display: flex;
@@ -424,7 +426,7 @@ const PickerButton = forwardRef<HTMLDivElement, PickerBtnProps>(
                     <DatepickerButtonMain>
                         {icon && <Icon src={icon.src} alt={icon.alt} />}
 
-                        <Copy size="small" type="copy-b">
+                        <Copy type="copy">
                             {startDate
                                 ? `${format(startDate, 'dd.MM.yyyy')}${
                                       endDate

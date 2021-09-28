@@ -60,12 +60,12 @@ const Area = styled.textarea<{
 
     &:active {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
     }
 
     &:focus {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
     }
 
     &::placeholder {
@@ -119,7 +119,7 @@ const Textarea: React.FC<
                     </Copy>
                 )}
             </FieldHead>
-            <Copy type="copy-b">
+            <Copy type="copy">
                 <Area
                     value={value}
                     name={name}
