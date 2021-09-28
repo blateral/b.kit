@@ -32,6 +32,7 @@ const Select = styled.div<{
     outline: none;
     padding: ${spacings.spacer}px;
     width: 100%;
+    height: 60px;
     max-height: 60px;
 
     position: relative;
