@@ -476,8 +476,8 @@ export const CustomSubmitButton: Story = () => (
             console.log(values);
             return;
         }}
-        submitAction={({ additionalProps }) => (
-            <button {...additionalProps}>Submit</button>
+        submitAction={({ handleSubmit }) => (
+            <button onClick={handleSubmit}>Submit</button>
         )}
     />
 );

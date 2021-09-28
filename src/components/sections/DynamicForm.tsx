@@ -215,7 +215,7 @@ const DynamicForm: FC<{
     onSubmit?: (values: FormData) => Promise<void>;
     submitAction?: (props: {
         isInverted?: boolean;
-        additionalProps: { type: 'submit'; as: 'button' | 'a' };
+        handleSubmit?: () => Promise<any>;
         isDisabled?: boolean;
     }) => React.ReactNode;
 
@@ -482,6 +482,7 @@ const DynamicForm: FC<{
         setFieldTouched,
         setSubmitting,
         validateField,
+        submitForm,
         isSubmitting,
         touched,
         values,
@@ -654,14 +655,12 @@ const DynamicForm: FC<{
                                     submitAction({
                                         isInverted,
                                         isDisabled: isSubmitting || !dirty,
-                                        additionalProps: {
-                                            type: 'submit',
-                                            as: 'button',
-                                        },
+                                        handleSubmit: submitForm,
                                     })
                                 ) : (
                                     <Button.View
                                         as="button"
+                                        onClick={submitForm}
                                         isDisabled={isSubmitting || !dirty}
                                         {...{
                                             type: 'submit',
