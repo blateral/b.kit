@@ -3,7 +3,7 @@ import styled, { DefaultTheme, ThemeContext } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
 import Section, { mapToBgMode } from 'components/base/Section';
-import { Field, FormikErrors, FormikTouched, useFormik } from 'formik';
+import { Field, FormikErrors, useFormik } from 'formik';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
 import Button from 'components/buttons/Button';
@@ -162,22 +162,23 @@ export interface FileUpload extends FormField {
 }
 
 export interface FormData {
-    [key: string]:
-        | string
-        | boolean
-        | Array<string>
-        | [Date | null, Date | null]
-        | Array<File>;
+    [key: string]: FormDataTypes;
 }
+
+export type FormDataTypes =
+    | string
+    | boolean
+    | Array<string>
+    | [Date | null, Date | null]
+    | Array<File>;
 
 type FieldTypes = Field | Area | Select | Datepicker | FieldGroup | FileUpload;
 
-interface FieldGenerationProps<T extends FieldTypes> {
-    index: number;
+export interface FieldGenerationProps<T extends FieldTypes> {
     field: T;
-    formikValues: FormData;
-    formikErrors: FormikErrors<FormData>;
-    formikTouches: FormikTouched<FormData>;
+    value: FormDataTypes;
+    error: string;
+    isTouched: boolean;
     key: string;
     isInverted: boolean;
     hasBg: boolean;
@@ -211,20 +212,30 @@ interface FieldGenerationProps<T extends FieldTypes> {
 
 const DynamicForm: FC<{
     fields?: FormStructure;
-    submitLabel?: string;
     onSubmit?: (values: FormData) => Promise<void>;
     submitAction?: (props: {
         isInverted?: boolean;
-        additionalProps: { type: 'submit'; as: 'button' | 'a' };
+        handleSubmit?: () => Promise<any>;
         isDisabled?: boolean;
     }) => React.ReactNode;
 
     bgMode?: 'full' | 'inverted';
+    definitions?: {
+        field?: (props: FieldGenerationProps<Field>) => React.ReactNode;
+        area?: (props: FieldGenerationProps<Area>) => React.ReactNode;
+        select?: (props: FieldGenerationProps<Select>) => React.ReactNode;
+        datepicker?: (
+            props: FieldGenerationProps<Datepicker>
+        ) => React.ReactNode;
+        checkbox?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
+        radio?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
+        upload?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
+    };
 }> = ({
     fields,
-    submitLabel = 'senden',
     onSubmit,
     submitAction,
+    definitions,
 
     bgMode,
 }) => {
@@ -482,6 +493,7 @@ const DynamicForm: FC<{
         setFieldTouched,
         setSubmitting,
         validateField,
+        submitForm,
         isSubmitting,
         touched,
         values,
@@ -535,9 +547,9 @@ const DynamicForm: FC<{
                                     index: i,
                                     field: fields[label],
                                     key: label,
-                                    formikValues: values,
-                                    formikErrors: errors,
-                                    formikTouches: touched,
+                                    value: values[label],
+                                    error: errors[label],
+                                    isTouched: touched[label] || false,
                                     isInverted: isInverted,
                                     hasBg: hasBg,
                                     setField: setFieldValue,
@@ -550,31 +562,55 @@ const DynamicForm: FC<{
 
                                 switch (fields[label].type) {
                                     case 'Field':
-                                        return generateField(generationProps);
+                                        return definitions?.field
+                                            ? definitions.field(generationProps)
+                                            : generateField(generationProps);
                                     case 'Area':
-                                        return generateArea(generationProps);
+                                        return definitions?.area
+                                            ? definitions.area(generationProps)
+                                            : generateArea(generationProps);
                                     case 'Datepicker':
-                                        return generateDatepicker(
-                                            generationProps
-                                        );
+                                        return definitions?.datepicker
+                                            ? definitions.datepicker(
+                                                  generationProps
+                                              )
+                                            : generateDatepicker(
+                                                  generationProps
+                                              );
                                     case 'FieldGroup': {
                                         if (
                                             (fields[label] as FieldGroup)
                                                 .groupType === 'Checkbox'
                                         ) {
-                                            return generateCheckboxGroup(
-                                                generationProps
-                                            );
+                                            return definitions?.checkbox
+                                                ? definitions.checkbox(
+                                                      generationProps
+                                                  )
+                                                : generateCheckboxGroup(
+                                                      generationProps
+                                                  );
                                         } else {
-                                            return generateRadioGroup(
-                                                generationProps
-                                            );
+                                            return definitions?.radio
+                                                ? definitions.radio(
+                                                      generationProps
+                                                  )
+                                                : generateRadioGroup(
+                                                      generationProps
+                                                  );
                                         }
                                     }
                                     case 'Select':
-                                        return generateSelect(generationProps);
+                                        return definitions?.select
+                                            ? definitions.select(
+                                                  generationProps
+                                              )
+                                            : generateSelect(generationProps);
                                     case 'Upload':
-                                        return generateUpload(generationProps);
+                                        return definitions?.upload
+                                            ? definitions.upload(
+                                                  generationProps
+                                              )
+                                            : generateUpload(generationProps);
                                     default:
                                         return null;
                                 }
@@ -588,9 +624,9 @@ const DynamicForm: FC<{
                                         index: i,
                                         field: fields[label],
                                         key: label,
-                                        formikValues: values,
-                                        formikErrors: errors,
-                                        formikTouches: touched,
+                                        value: values[label],
+                                        error: errors[label],
+                                        isTouched: touched[label] || false,
                                         isInverted: isInverted,
                                         hasBg: hasBg,
                                         setField: setFieldValue,
@@ -603,39 +639,65 @@ const DynamicForm: FC<{
 
                                     switch (fields[label].type) {
                                         case 'Field':
-                                            return generateField(
-                                                generationProps
-                                            );
+                                            return definitions?.field
+                                                ? definitions.field(
+                                                      generationProps
+                                                  )
+                                                : generateField(
+                                                      generationProps
+                                                  );
                                         case 'Area':
-                                            return generateArea(
-                                                generationProps
-                                            );
+                                            return definitions?.area
+                                                ? definitions.area(
+                                                      generationProps
+                                                  )
+                                                : generateArea(generationProps);
                                         case 'Datepicker':
-                                            return generateDatepicker(
-                                                generationProps
-                                            );
+                                            return definitions?.datepicker
+                                                ? definitions.datepicker(
+                                                      generationProps
+                                                  )
+                                                : generateDatepicker(
+                                                      generationProps
+                                                  );
                                         case 'FieldGroup': {
                                             if (
                                                 (fields[label] as FieldGroup)
                                                     .groupType === 'Checkbox'
                                             ) {
-                                                return generateCheckboxGroup(
-                                                    generationProps
-                                                );
+                                                return definitions?.checkbox
+                                                    ? definitions.checkbox(
+                                                          generationProps
+                                                      )
+                                                    : generateCheckboxGroup(
+                                                          generationProps
+                                                      );
                                             } else {
-                                                return generateRadioGroup(
-                                                    generationProps
-                                                );
+                                                return definitions?.radio
+                                                    ? definitions.radio(
+                                                          generationProps
+                                                      )
+                                                    : generateRadioGroup(
+                                                          generationProps
+                                                      );
                                             }
                                         }
                                         case 'Select':
-                                            return generateSelect(
-                                                generationProps
-                                            );
+                                            return definitions?.select
+                                                ? definitions.select(
+                                                      generationProps
+                                                  )
+                                                : generateSelect(
+                                                      generationProps
+                                                  );
                                         case 'Upload':
-                                            return generateUpload(
-                                                generationProps
-                                            );
+                                            return definitions?.upload
+                                                ? definitions.upload(
+                                                      generationProps
+                                                  )
+                                                : generateUpload(
+                                                      generationProps
+                                                  );
                                         default:
                                             return null;
                                     }
@@ -643,7 +705,7 @@ const DynamicForm: FC<{
                         </FieldContainer>
                     )}
                 </Form>
-                {fields && submitLabel && (
+                {fields && (
                     <ActionContainer
                         hasCols={rightColumn && rightColumn.length > 0}
                     >
@@ -654,22 +716,18 @@ const DynamicForm: FC<{
                                     submitAction({
                                         isInverted,
                                         isDisabled: isSubmitting || !dirty,
-                                        additionalProps: {
-                                            type: 'submit',
-                                            as: 'button',
-                                        },
+                                        handleSubmit: submitForm,
                                     })
                                 ) : (
                                     <Button.View
                                         as="button"
+                                        onClick={submitForm}
                                         isDisabled={isSubmitting || !dirty}
                                         {...{
                                             type: 'submit',
                                         }}
                                     >
-                                        <Button.Label>
-                                            {submitLabel}
-                                        </Button.Label>
+                                        <Button.Label>send</Button.Label>
                                     </Button.View>
                                 )
                             }
@@ -706,23 +764,22 @@ const ErrorMessage = styled(Copy)`
 `;
 
 const generateCheckboxGroup = ({
-    index,
     field,
     key,
     isInverted,
-    formikValues,
-    formikTouches,
-    formikErrors,
+    value,
+    isTouched,
+    error,
     setTouched,
     validateField,
     setField,
     theme,
 }: FieldGenerationProps<FieldGroup>) => {
     const group = field;
-    const groupData = formikValues[key] as string[];
+    const groupData = value as string[];
 
     return (
-        <div key={index}>
+        <div key={key}>
             <FieldHead>
                 {key && (
                     <Copy type="copy-b" size="medium">
@@ -762,9 +819,9 @@ const generateCheckboxGroup = ({
                     />
                 ))}
             </Fields>
-            {formikErrors[key] && formikTouches[key] && (
+            {error && isTouched && (
                 <ErrorMessage textColor={color(theme).error} size="small">
-                    {formikErrors[key]}
+                    {error}
                 </ErrorMessage>
             )}
         </div>
@@ -772,22 +829,21 @@ const generateCheckboxGroup = ({
 };
 
 const generateRadioGroup = ({
-    index,
     field,
     key,
-    formikValues,
-    formikErrors,
-    formikTouches,
+    value,
+    error,
+    isTouched,
     isInverted,
     hasBg,
     setField,
     theme,
 }: FieldGenerationProps<FieldGroup>) => {
     const group = field;
-    const groupData = formikValues[key] as string;
+    const groupData = value as string;
 
     return (
-        <div key={index}>
+        <div key={key}>
             <FieldHead>
                 {key && (
                     <Copy type="copy-b" size="medium" isInverted={isInverted}>
@@ -815,9 +871,9 @@ const generateRadioGroup = ({
                     />
                 ))}
             </Fields>
-            {formikErrors[key] && formikTouches[key] && (
+            {error && isTouched && (
                 <ErrorMessage textColor={color(theme).error} size="small">
-                    {formikErrors[key]}
+                    {error}
                 </ErrorMessage>
             )}
         </div>
@@ -825,23 +881,22 @@ const generateRadioGroup = ({
 };
 
 const generateDatepicker = ({
-    index,
     field,
     key,
-    formikValues,
-    formikErrors,
-    formikTouches,
+    value,
+    error,
+    isTouched,
     isInverted,
     hasBg,
     setField,
     setTouched,
     validateField,
 }: FieldGenerationProps<Datepicker>) => {
-    const dates = formikValues[key] as [Date | null, Date | null];
+    const dates = value as [Date | null, Date | null];
 
     return (
         <Datepicker
-            key={index}
+            key={key}
             onSubmit={async (start?: Date, end?: Date) => {
                 await setField(key, [start, end]);
                 await setTouched(key, true);
@@ -853,11 +908,7 @@ const generateDatepicker = ({
             icon={field.icon}
             singleSelect={field.singleSelect}
             infoMessage={field.info}
-            errorMessage={
-                formikErrors[key] && formikTouches[key]
-                    ? formikErrors[key]
-                    : undefined
-            }
+            errorMessage={error && isTouched ? error : undefined}
             name={key}
             isInverted={isInverted}
             hasBg={!hasBg}
@@ -870,56 +921,48 @@ const generateDatepicker = ({
 };
 
 const generateArea = ({
-    index,
     field,
     key,
-    formikValues,
-    formikErrors,
-    formikTouches,
+    value,
+    error,
+    isTouched,
     isInverted,
     hasBg,
     handleChange,
+    handleBlur,
 }: FieldGenerationProps<Area>) => (
     <Textarea
-        key={index}
+        key={key}
         label={`${key}${field.isRequired ? '*' : ''}`}
         placeholder={field.placeholder}
         name={key}
-        value={formikValues[key] as string}
+        value={value as string}
         isInverted={isInverted}
         onChange={handleChange}
+        onBlur={handleBlur}
         infoMessage={field.info}
-        errorMessage={
-            formikErrors[key] && formikTouches[key]
-                ? formikErrors[key]
-                : undefined
-        }
+        errorMessage={error && isTouched ? error : undefined}
         lightBg={hasBg}
     />
 );
 
 const generateUpload = ({
-    index,
     field,
     key,
-    formikErrors,
-    formikTouches,
+    error,
+    isTouched,
     isInverted,
     hasBg,
     setField,
 }: FieldGenerationProps<FileUpload>) => (
     <FileUpload
-        key={index}
+        key={key}
         label={`${key}${field.isRequired ? '*' : ''}`}
         name={key}
         infoMessage={field.info}
         addBtnLabel={field.addBtnLabel}
         removeBtnLabel={field.removeBtnLabel}
-        errorMessage={
-            formikErrors[key] && formikTouches[key]
-                ? formikErrors[key]
-                : undefined
-        }
+        errorMessage={error && isTouched ? error : undefined}
         acceptedFormats={field.acceptedFormats}
         onUploadFiles={(files) => {
             setField(key, files);
@@ -930,58 +973,50 @@ const generateUpload = ({
 );
 
 const generateField = ({
-    index,
     field,
     key,
-    formikValues,
-    formikErrors,
-    formikTouches,
+    value,
+    error,
+    isTouched,
     handleChange,
+    handleBlur,
     isInverted,
     hasBg,
 }: FieldGenerationProps<Field>) => (
     <Textfield
-        key={index}
+        key={key}
         label={`${key}${field.isRequired ? '*' : ''}`}
         placeholder={field.placeholder}
         name={key}
         isInverted={isInverted}
-        value={formikValues[key] as string}
+        value={value as string}
         onChange={handleChange}
+        onBlur={handleBlur}
         infoMessage={field.info}
-        errorMessage={
-            formikErrors[key] && formikTouches[key]
-                ? formikErrors[key]
-                : undefined
-        }
+        errorMessage={error && isTouched ? error : undefined}
         lightBg={hasBg}
     />
 );
 
 const generateSelect = ({
-    index,
     field,
     key,
-    formikValues,
-    formikErrors,
-    formikTouches,
+    value,
+    error,
+    isTouched,
     isInverted,
     hasBg,
     setField,
     setTouched,
 }: FieldGenerationProps<Select>) => (
     <SelectDropdown
-        key={index}
+        key={key}
         label={`${key}${field.isRequired ? '*' : ''}`}
         name={key}
         placeholder={field.placeholder}
-        errorMessage={
-            formikErrors[key] && formikTouches[key]
-                ? formikErrors[key]
-                : undefined
-        }
+        errorMessage={error && isTouched ? error : undefined}
         items={field.dropdownItems || []}
-        value={formikValues[key] as string}
+        value={value as string}
         onChange={(value) => {
             setField(key, value);
             setTouched(key, true);
