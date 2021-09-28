@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { mq, spacings, getColors as color, withRange } from 'utils/styles';
+import { mq } from 'utils/styles';
+import useSlider from 'utils/useSlider';
 import Wrapper from 'components/base/Wrapper';
-import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
-import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
-import Slider from 'components/blocks/Slider';
+// import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
+// import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
+// import Slider from 'components/blocks/Slider';
 import { ResponsiveObject } from 'react-slick';
 // import IntroBlock from 'components/blocks/IntroBlock';
 // import { HeadlineTag } from 'components/typography/Heading';
@@ -20,133 +21,134 @@ const View = styled(Wrapper)`
     }
 `;
 
-const Head = styled(Wrapper)`
-    display: flex;
-    flex-direction: row;
-`;
+// const Head = styled(Wrapper)`
+//     display: flex;
+//     flex-direction: row;
+// `;
 
+// old
 // const IntroContainer = styled.div`
 //     flex: 1;
 //     ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
 // `;
 
-const TopControls = styled.div`
-    display: none;
-    text-align: right;
-    max-width: ${spacings.wrapper}px;
-    margin-left: auto;
-    ${withRange(
-        [spacings.spacer * 0.5, spacings.spacer * 1.5],
-        'margin-bottom'
-    )};
+// const TopControls = styled.div`
+//     display: none;
+//     text-align: right;
+//     max-width: ${spacings.wrapper}px;
+//     margin-left: auto;
+//     ${withRange(
+//         [spacings.spacer * 0.5, spacings.spacer * 1.5],
+//         'margin-bottom'
+//     )};
 
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-direction: row;
-        align-self: flex-end;
-    }
-`;
+//     @media ${mq.semilarge} {
+//         display: flex;
+//         flex-direction: row;
+//         align-self: flex-end;
+//     }
+// `;
 
-const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
-    border: none;
-    outline: none;
-    background: none;
-    padding: 0 ${spacings.nudge * 3}px;
+// const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
+//     border: none;
+//     outline: none;
+//     background: none;
+//     padding: 0 ${spacings.nudge * 3}px;
 
-    color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).light : color(theme).dark};
-    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+//     color: ${({ theme, isInverted }) =>
+//         isInverted ? color(theme).light : color(theme).dark};
+//     transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
 
-    &:enabled {
-        cursor: pointer;
-    }
+//     &:enabled {
+//         cursor: pointer;
+//     }
 
-    &:enabled:hover {
-        transform: scale(1.05);
-    }
+//     &:enabled:hover {
+//         transform: scale(1.05);
+//     }
 
-    &:enabled:active {
-        transform: scale(0.95);
-    }
+//     &:enabled:active {
+//         transform: scale(0.95);
+//     }
 
-    &:disabled {
-        color: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).mono.dark : color(theme).mono.medium};
-    }
-`;
+//     &:disabled {
+//         color: ${({ theme, isInverted }) =>
+//             isInverted ? color(theme).mono.dark : color(theme).mono.medium};
+//     }
+// `;
 
-const StyledSlides = styled(Slider.Slides)`
-    margin-bottom: ${spacings.spacer}px;
+// const StyledSlides = styled(Slider.Slides)`
+//     margin-bottom: ${spacings.spacer}px;
 
-    @media ${mq.xlarge} {
-        margin-left: auto;
-        width: 100%;
-        max-width: ${spacings.wrapperLarge -
-        (spacings.wrapperLarge - spacings.wrapper) / 2}px;
-    }
-`;
+//     @media ${mq.xlarge} {
+//         margin-left: auto;
+//         width: 100%;
+//         max-width: ${spacings.wrapperLarge -
+//         (spacings.wrapperLarge - spacings.wrapper) / 2}px;
+//     }
+// `;
 
-const Footer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-`;
+// const Footer = styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: center;
+// `;
 
-const CtrlWrapper = styled.div`
-    display: block;
+// const CtrlWrapper = styled.div`
+//     display: block;
 
-    @media ${mq.semilarge} {
-        display: none;
-    }
-`;
+//     @media ${mq.semilarge} {
+//         display: none;
+//     }
+// `;
 
-const CtrlWrapperLeft = styled(CtrlWrapper)`
-    flex: 1;
-    text-align: left;
-`;
+// const CtrlWrapperLeft = styled(CtrlWrapper)`
+//     flex: 1;
+//     text-align: left;
+// `;
 
-const CtrlWrapperRight = styled(CtrlWrapper)`
-    flex: 1;
-    text-align: right;
-`;
+// const CtrlWrapperRight = styled(CtrlWrapper)`
+//     flex: 1;
+//     text-align: right;
+// `;
 
-const StyledDotGroup = styled(Slider.DotGroup)`
-    display: inline-block;
-    align-self: center;
-    padding: ${spacings.nudge * 2}px 0;
-`;
+// const StyledDotGroup = styled(Slider.DotGroup)`
+//     display: inline-block;
+//     align-self: center;
+//     padding: ${spacings.nudge * 2}px 0;
+// `;
 
-const DotWrapper = styled.button`
-    border: none;
-    outline: none;
-    background: none;
-    cursor: pointer;
+// const DotWrapper = styled.button`
+//     border: none;
+//     outline: none;
+//     background: none;
+//     cursor: pointer;
 
-    padding: ${spacings.nudge * 2}px;
-    margin: -${spacings.nudge * 2}px;
+//     padding: ${spacings.nudge * 2}px;
+//     margin: -${spacings.nudge * 2}px;
 
-    & + & {
-        margin-left: ${spacings.nudge * 1.5}px;
-    }
-`;
+//     & + & {
+//         margin-left: ${spacings.nudge * 1.5}px;
+//     }
+// `;
 
-const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
-    height: 14px;
-    width: 14px;
-    border: solid 1px
-        ${({ theme, isInverted }) =>
-            isInverted ? color(theme).light : color(theme).dark};
-    border-radius: 14px;
+// const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
+//     height: 14px;
+//     width: 14px;
+//     border: solid 1px
+//         ${({ theme, isInverted }) =>
+//             isInverted ? color(theme).light : color(theme).dark};
+//     border-radius: 14px;
 
-    transition: background-color 0.2s ease-in-out;
+//     transition: background-color 0.2s ease-in-out;
 
-    background-color: ${({ isActive, isInverted, theme }) =>
-        isActive
-            ? isInverted
-                ? color(theme).light
-                : color(theme).dark
-            : 'transparent'};
-`;
+//     background-color: ${({ isActive, isInverted, theme }) =>
+//         isActive
+//             ? isInverted
+//                 ? color(theme).light
+//                 : color(theme).dark
+//             : 'transparent'};
+// `;
 
 export interface CarouselProps {
     spacing?: 'normal' | 'large';
@@ -189,9 +191,58 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
     children,
     className,
 }) => {
+    let perPage = 1;
+    let rightPadding = '0%';
+
+    if (slidesToShow) {
+        perPage = ~~slidesToShow;
+        rightPadding = (1 - (slidesToShow - ~~slidesToShow)) * 100 + '%';
+    }
+
+    const { View: SliderView, Slides: SliderSlides, Slide } = useSlider({
+        arrows: false,
+        pagination: false,
+        lazyLoad: 'nearby',
+        perPage: perPage,
+        padding: {
+            right: rightPadding,
+            left: 0,
+        },
+        gap: 20,
+        autoWidth: variableWidths,
+    });
+
     return (
         <View clampWidth="large" className={className}>
-            <Slider.Provider
+            <SliderView>
+                <SliderSlides>
+                    {React.Children.map(children, (child, i) => (
+                        <Slide key={i}>{child}</Slide>
+                    ))}
+                </SliderSlides>
+                {/* <Dots>
+                    {new Array(length).fill('').map((_, i) => {
+                        const size = Math.min(
+                            Math.max(
+                                10 - (Math.abs(i - index) - 1) * 2,
+                                6
+                            ),
+                            10
+                        );
+                        return (
+                            <Dot
+                                key={i}
+                                isActive={index === i}
+                                style={{
+                                    height: size + 'px',
+                                    width: size + 'px',
+                                }}
+                            />
+                        );
+                    })}
+                </Dots> */}
+            </SliderView>
+            {/* <Slider.Provider
                 variableWidth={variableWidths}
                 sameHeight={variableWidths}
                 slideSpacing={
@@ -291,7 +342,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                         </CtrlWrapperRight>
                     </Footer>
                 )}
-            </Slider.Provider>
+            </Slider.Provider> */}
         </View>
     );
 };
