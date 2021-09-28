@@ -83,6 +83,7 @@ const Textarea: React.FC<
         isInverted?: boolean;
         lightBg?: boolean;
         onChange?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
+        onBlur?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
     }
 > = ({
     lightBg,
@@ -96,6 +97,7 @@ const Textarea: React.FC<
     isDisabled,
     isRequired,
     onChange,
+    onBlur,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
@@ -125,6 +127,7 @@ const Textarea: React.FC<
                     required={isRequired}
                     hasBack={!lightBg}
                     onChange={onChange}
+                    onBlur={onBlur}
                 />
             </Copy>
             {infoMessage && (

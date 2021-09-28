@@ -88,6 +88,7 @@ const Textfield: React.FC<
         isInverted?: boolean;
         lightBg?: boolean;
         onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
+        onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     }
 > = ({
     lightBg,
@@ -102,6 +103,7 @@ const Textfield: React.FC<
     isDisabled,
     isRequired,
     onChange,
+    onBlur,
 }) => {
     const theme = useContext(ThemeContext);
     return (
@@ -132,6 +134,7 @@ const Textfield: React.FC<
                     value={value}
                     required={isRequired}
                     onChange={onChange}
+                    onBlur={onBlur}
                 />
             </Copy>
             {infoMessage && (
