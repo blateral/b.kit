@@ -1,7 +1,6 @@
 import Copy from 'components/typography/Copy';
 import React, { FC, useEffect, useContext, useState, useRef } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, spacings } from 'utils/styles';
 import { FormProps } from './Textfield';
 
@@ -80,8 +79,11 @@ const InputView = styled.div<{ isDisabled?: boolean }>`
 
     &:hover {
         border: 1px solid transparent;
-        background: ${({ theme }) =>
-            hexToRgba(color(theme).primary.medium, 0.25)};
+        background: ${({ theme }) => color(theme).dark};
+
+        & > * {
+            color: ${({ theme }) => color(theme).light};
+        }
     }
 
     &:active {
@@ -116,6 +118,10 @@ const File = styled.div`
 
 const Delete = styled.div`
     cursor: pointer;
+
+    & > * {
+        color: ${({ theme }) => color(theme).error};
+    }
 
     &:hover {
         & > * {
