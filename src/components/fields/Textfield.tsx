@@ -1,6 +1,7 @@
 import Copy from 'components/typography/Copy';
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
+import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.div`
@@ -48,15 +49,17 @@ const Field = styled.input<{
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
     &:active {
-        border: ${({ theme }) => `2px solid ${color(theme).primary.medium}`};
+        border: ${({ theme }) =>
+            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
     }
 
     &:focus {
-        border: ${({ theme }) => `2px solid ${color(theme).primary.medium}`};
+        border: ${({ theme }) =>
+            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
     }
 
-    ::placeholder {
-        color: ${({ theme }) => color(theme).secondary.light};
+    &::placeholder {
+        color: ${({ theme }) => hexToRgba(color(theme).dark, 0.4)};
     }
 `;
 
@@ -122,7 +125,7 @@ const Textfield: React.FC<
                     </Copy>
                 )}
             </FieldHead>
-            <Copy textColor={color(theme).secondary.dark} type="copy-b">
+            <Copy type="copy-b">
                 <Field
                     hasBack={!lightBg}
                     placeholder={placeholder}

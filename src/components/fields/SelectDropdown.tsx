@@ -3,6 +3,7 @@ import AngleUp from 'components/base/icons/AngleUp';
 import Copy from 'components/typography/Copy';
 import React, { useEffect } from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
+import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.div`
@@ -35,18 +36,20 @@ const Select = styled.div<{
 
     position: relative;
 
-    &:focus {
-        border: 1px solid ${({ theme }) => color(theme).primary.medium};
-    }
-
     &:active {
-        border: 1px solid ${({ theme }) => color(theme).primary.medium};
+        border: ${({ theme }) =>
+            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
     }
 
-    ${({ isActive }) =>
+    &:focus {
+        border: ${({ theme }) =>
+            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+    }
+
+    ${({ isActive, theme }) =>
         isActive &&
         css`
-            border: 1px solid ${({ theme }) => color(theme).primary.medium};
+            border: 2px solid ${hexToRgba(color(theme).dark, 0.6)}};
         `}
 
     display: flex;
@@ -87,7 +90,8 @@ const Flyout = styled.ul<{ isVisible?: boolean }>`
 
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
     background: ${({ theme }) => color(theme).light};
-    border: 1px solid ${({ theme }) => color(theme).primary.medium};
+    border: 2px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.6)};
+    border-top: none;
 
     max-height: 300px;
     overflow-y: scroll;
@@ -118,7 +122,7 @@ const Item = styled(Copy)<{ isActive?: boolean }>`
     ${ItemStyle}:hover & {
         &:before {
             content: '';
-            background: ${({ theme }) => color(theme).primary.medium};
+            background: ${({ theme }) => hexToRgba(color(theme).dark, 0.4)};
             opacity: 0.25;
             display: block;
             position: absolute;
@@ -138,7 +142,8 @@ const Item = styled(Copy)<{ isActive?: boolean }>`
 
             &:before {
                 content: '';
-                background-color: ${({ theme }) => color(theme).primary.medium};
+                background-color: ${({ theme }) =>
+                    hexToRgba(color(theme).dark, 0.4)};
                 position: absolute;
                 top: 0;
                 bottom: 0;

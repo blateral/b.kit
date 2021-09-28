@@ -1,6 +1,7 @@
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
+import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import { FormProps } from './Textfield';
 
@@ -58,15 +59,17 @@ const Area = styled.textarea<{
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
     &:active {
-        border: ${({ theme }) => `2px solid ${color(theme).primary.medium}`};
+        border: ${({ theme }) =>
+            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
     }
 
     &:focus {
-        border: ${({ theme }) => `2px solid ${color(theme).primary.medium}`};
+        border: ${({ theme }) =>
+            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
     }
 
-    ::placeholder {
-        color: ${({ theme }) => color(theme).secondary.light};
+    &::placeholder {
+        color: ${({ theme }) => hexToRgba(color(theme).dark, 0.4)};
     }
 `;
 
