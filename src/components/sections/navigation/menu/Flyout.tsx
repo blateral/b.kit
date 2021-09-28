@@ -74,10 +74,16 @@ const Stage = styled.div<{
     height: 100%;
     width: 100%;
 
-    background-color: ${({ theme, isInverted, opacity }) =>
-        isInverted
-            ? hexToRgba(color(theme).dark, opacity || 1)
-            : hexToRgba(color(theme).light, opacity || 1)};
+    background-color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).dark : color(theme).light};
+
+    @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        background-color: ${({ theme, isInverted, opacity }) =>
+            isInverted
+                ? hexToRgba(color(theme).dark, opacity || 1)
+                : hexToRgba(color(theme).light, opacity || 1)};
+    }
+
     pointer-events: all;
 
     @media ${mq.semilarge} {
