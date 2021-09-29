@@ -7,14 +7,16 @@ const View = styled.div``;
 const Slider: FC<{
     className?: string;
 }> = ({ className, children }) => {
-    return <View className={'splide ' + className}>{children}</View>;
+    const additionalClasses = className ? className : '';
+    return <View className={'splide ' + additionalClasses}>{children}</View>;
 };
 
 const Slides: FC<{
     className?: string;
 }> = ({ className, children }) => {
+    const additionalClasses = className ? className : '';
     return (
-        <div className={'splide__track ' + className}>
+        <div className={'splide__track ' + additionalClasses}>
             <ul className="splide__list">{children}</ul>
         </div>
     );
@@ -23,42 +25,18 @@ const Slides: FC<{
 const Slide: FC<{
     className?: string;
 }> = ({ className, children }) => {
-    return <li className={'splide__slide ' + className}>{children}</li>;
+    const additionalClasses = className ? className : '';
+    return <li className={'splide__slide ' + additionalClasses}>{children}</li>;
 };
 
 const SlideContainer: FC<{
     className?: string;
 }> = ({ className, children }) => {
+    const additionalClasses = className ? className : '';
     return (
-        <div className={'splide__slide__container ' + className}>
+        <div className={'splide__slide__container ' + additionalClasses}>
             {children}
         </div>
-    );
-};
-
-const Arrows: FC<{
-    className?: string;
-}> = ({ className, children }) => {
-    return <div className={'splide__arrows ' + className}>{children}</div>;
-};
-
-const ArrowPrev: FC<{
-    className?: string;
-}> = ({ className, children }) => {
-    return (
-        <button className={'splide__arrow splide__arrow--prev ' + className}>
-            {children}
-        </button>
-    );
-};
-
-const ArrowNext: FC<{
-    className?: string;
-}> = ({ className, children }) => {
-    return (
-        <button className={'splide__arrow splide__arrow--next ' + className}>
-            {children}
-        </button>
     );
 };
 
@@ -99,9 +77,6 @@ const useSlider = (options?: SplideOptions) => {
         Slides: Slides,
         Slide: Slide,
         SlideContainer: SlideContainer,
-        Arrows: Arrows,
-        ArrowPrev: ArrowPrev,
-        ArrowNext: ArrowNext,
         slider: splide,
         length: slides,
         index: currentIndex,
@@ -109,3 +84,32 @@ const useSlider = (options?: SplideOptions) => {
 };
 
 export default useSlider;
+
+export const Arrows: FC<{
+    className?: string;
+}> = ({ className, children }) => {
+    const additionalClasses = className ? className : '';
+    return (
+        <div className={'splide__arrows ' + additionalClasses}>{children}</div>
+    );
+};
+
+export const Arrow: FC<{
+    direction?: 'prev' | 'next';
+    onClick?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
+    className?: string;
+}> = ({ direction = 'prev', onClick, className, children }) => {
+    const additionalClasses = className ? className : '';
+    return (
+        <button
+            onClick={onClick}
+            className={
+                `splide__arrow splide__arrow--${
+                    direction === 'prev' ? 'prev' : 'next'
+                } ` + additionalClasses
+            }
+        >
+            {children}
+        </button>
+    );
+};
