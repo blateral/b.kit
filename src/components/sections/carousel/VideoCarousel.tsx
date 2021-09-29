@@ -23,7 +23,7 @@ const VideoCarousel: FC<
 }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
-    const videoCount = videos?.length || 0;
+    // const videoCount = videos?.length || 0;
 
     return (
         <Section
@@ -46,27 +46,27 @@ const VideoCarousel: FC<
                 beforeChange={beforeChange}
                 afterChange={afterChange}
                 onInit={onInit}
-                slidesToShow={videoCount > 1 ? 2.75 : 1}
-                responsive={[
-                    {
-                        breakpoint: 1024,
-                        settings: {
-                            slidesToShow: videoCount > 1 ? 2.25 : 1,
-                        },
-                    },
-                    {
-                        breakpoint: 832,
-                        settings: {
-                            slidesToShow: videoCount > 1 ? 1.15 : 1,
-                        },
-                    },
-                    {
-                        breakpoint: 640,
-                        settings: {
-                            slidesToShow: videoCount > 1 ? 1.15 : 1,
-                        },
-                    },
-                ]}
+                // slidesToShow={videoCount > 1 ? 2.75 : 1}
+                // responsive={[
+                //     {
+                //         breakpoint: 1024,
+                //         settings: {
+                //             slidesToShow: videoCount > 1 ? 2.25 : 1,
+                //         },
+                //     },
+                //     {
+                //         breakpoint: 832,
+                //         settings: {
+                //             slidesToShow: videoCount > 1 ? 1.15 : 1,
+                //         },
+                //     },
+                //     {
+                //         breakpoint: 640,
+                //         settings: {
+                //             slidesToShow: videoCount > 1 ? 1.15 : 1,
+                //         },
+                //     },
+                // ]}
             >
                 {videos &&
                     videos.map((video, i) => <VideoCard key={i} {...video} />)}

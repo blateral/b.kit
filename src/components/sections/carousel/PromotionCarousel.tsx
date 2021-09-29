@@ -30,7 +30,7 @@ const PromotionCarousel: FC<
 }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
-    const promotionCount = promotions?.length || 0;
+    // const promotionCount = promotions?.length || 0;
 
     return (
         <Section
@@ -53,27 +53,27 @@ const PromotionCarousel: FC<
                 beforeChange={beforeChange}
                 afterChange={afterChange}
                 onInit={onInit}
-                slidesToShow={promotionCount > 1 ? 2.75 : 1}
-                responsive={[
-                    {
-                        breakpoint: 1024,
-                        settings: {
-                            slidesToShow: promotionCount > 1 ? 2.25 : 1,
-                        },
-                    },
-                    {
-                        breakpoint: 832,
-                        settings: {
-                            slidesToShow: promotionCount > 1 ? 1.15 : 1,
-                        },
-                    },
-                    {
-                        breakpoint: 640,
-                        settings: {
-                            slidesToShow: promotionCount > 1 ? 1.15 : 1,
-                        },
-                    },
-                ]}
+                // slidesToShow={promotionCount > 1 ? 2.75 : 1}
+                // responsive={[
+                //     {
+                //         breakpoint: 1024,
+                //         settings: {
+                //             slidesToShow: promotionCount > 1 ? 2.25 : 1,
+                //         },
+                //     },
+                //     {
+                //         breakpoint: 832,
+                //         settings: {
+                //             slidesToShow: promotionCount > 1 ? 1.15 : 1,
+                //         },
+                //     },
+                //     {
+                //         breakpoint: 640,
+                //         settings: {
+                //             slidesToShow: promotionCount > 1 ? 1.15 : 1,
+                //         },
+                //     },
+                // ]}
             >
                 {promotions &&
                     promotions.map((promotion, i) => (

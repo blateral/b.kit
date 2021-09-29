@@ -87,27 +87,27 @@ const FeatureCarousel: FC<
                     beforeChange={beforeChange}
                     afterChange={afterChange}
                     onInit={onInit}
-                    slidesToShow={featureCount > 1 ? 3 : 1}
-                    responsive={[
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToShow: featureCount > 1 ? 3 : 1,
-                            },
-                        },
-                        {
-                            breakpoint: 832,
-                            settings: {
-                                slidesToShow: featureCount > 1 ? 2.25 : 1,
-                            },
-                        },
-                        {
-                            breakpoint: 640,
-                            settings: {
-                                slidesToShow: featureCount > 1 ? 1.15 : 1,
-                            },
-                        },
-                    ]}
+                    // slidesToShow={featureCount > 1 ? 3 : 1}
+                    // responsive={[
+                    //     {
+                    //         breakpoint: 1024,
+                    //         settings: {
+                    //             slidesToShow: featureCount > 1 ? 3 : 1,
+                    //         },
+                    //     },
+                    //     {
+                    //         breakpoint: 832,
+                    //         settings: {
+                    //             slidesToShow: featureCount > 1 ? 2.25 : 1,
+                    //         },
+                    //     },
+                    //     {
+                    //         breakpoint: 640,
+                    //         settings: {
+                    //             slidesToShow: featureCount > 1 ? 1.15 : 1,
+                    //         },
+                    //     },
+                    // ]}
                 >
                     {features &&
                         features.map((feature, i) => (
