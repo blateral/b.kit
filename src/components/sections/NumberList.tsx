@@ -82,7 +82,7 @@ const IconBlock: React.FC<{
             {icon && <Icon src={icon.src} alt={icon.alt} />}
             <NumberContainer height={0}>
                 <Number
-                    as="div"
+                    renderAs="div"
                     stringLength={stringLength}
                     isInverted={isInverted}
                 >
