@@ -68,20 +68,20 @@ export const WithShadow: Story = () => (
 
 export const RenderAs: Story = () => (
     <>
-        <Heading as="h1">Lorem Ipsum Dolor Sit</Heading>
+        <Heading renderAs="h1">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading as="h2">Lorem Ipsum Dolor Sit</Heading>
+        <Heading renderAs="h2">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading as="h3">Lorem Ipsum Dolor Sit</Heading>
+        <Heading renderAs="h3">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading as="h4">Lorem Ipsum Dolor Sit</Heading>
+        <Heading renderAs="h4">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading as="h5">Lorem Ipsum Dolor Sit</Heading>
+        <Heading renderAs="h5">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading as="h6">Lorem Ipsum Dolor Sit</Heading>
+        <Heading renderAs="h6">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading as="span">Lorem Ipsum Dolor Sit</Heading>
+        <Heading renderAs="span">Lorem Ipsum Dolor Sit</Heading>
         <Seperator />
-        <Heading as="div">Lorem Ipsum Dolor Sit</Heading>
+        <Heading renderAs="div">Lorem Ipsum Dolor Sit</Heading>
     </>
 );
