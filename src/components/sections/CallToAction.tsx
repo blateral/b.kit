@@ -95,13 +95,17 @@ const Address = styled.div`
 
 const Decorator = styled.div<{ isInverted?: boolean }>`
     flex: 1;
-    width: 25px;
+    width: 30px;
     margin-bottom: ${spacings.nudge * 1.5}px;
 
     color: ${({ theme, isInverted }) =>
         isInverted
             ? font(theme)['copy-b'].big.colorInverted
             : font(theme)['copy-b'].big.color};
+
+    & > * {
+        max-width: 30px;
+    }
 
     @media ${mq.medium} {
         margin-bottom: 0;
