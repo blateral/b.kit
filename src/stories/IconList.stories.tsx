@@ -124,12 +124,31 @@ export const Default: Story = () => (
     />
 );
 
+export const WithToggle: Story = () => (
+    <IconList
+        enableToggle
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+        items={Items}
+    />
+);
+
 export const WithBackground: Story = () => (
-    <IconList bgMode="full" items={Items} />
+    <IconList enableToggle bgMode="full" items={Items} />
 );
 
 export const Inverted: Story = () => (
-    <IconList bgMode="inverted" items={Items} />
+    <IconList enableToggle bgMode="inverted" items={Items} />
 );
 
-export const Centered: Story = () => <IconList isCentered items={Items} />;
+export const Centered: Story = () => (
+    <IconList enableToggle isCentered items={Items} />
+);
