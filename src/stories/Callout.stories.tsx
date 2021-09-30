@@ -53,20 +53,20 @@ export const WithShadow: Story = () => (
 
 export const RenderAs: Story = () => (
     <>
-        <Callout as="h1">Lorem Ipsum Dolor Sit</Callout>
+        <Callout renderAs="h1">Lorem Ipsum Dolor Sit</Callout>
         <Seperator />
-        <Callout as="h2">Lorem Ipsum Dolor Sit</Callout>
+        <Callout renderAs="h2">Lorem Ipsum Dolor Sit</Callout>
         <Seperator />
-        <Callout as="h3">Lorem Ipsum Dolor Sit</Callout>
+        <Callout renderAs="h3">Lorem Ipsum Dolor Sit</Callout>
         <Seperator />
-        <Callout as="h4">Lorem Ipsum Dolor Sit</Callout>
+        <Callout renderAs="h4">Lorem Ipsum Dolor Sit</Callout>
         <Seperator />
-        <Callout as="h5">Lorem Ipsum Dolor Sit</Callout>
+        <Callout renderAs="h5">Lorem Ipsum Dolor Sit</Callout>
         <Seperator />
-        <Callout as="h6">Lorem Ipsum Dolor Sit</Callout>
+        <Callout renderAs="h6">Lorem Ipsum Dolor Sit</Callout>
         <Seperator />
-        <Callout as="span">Lorem Ipsum Dolor Sit</Callout>
+        <Callout renderAs="span">Lorem Ipsum Dolor Sit</Callout>
         <Seperator />
-        <Callout as="div">Lorem Ipsum Dolor Sit</Callout>
+        <Callout renderAs="div">Lorem Ipsum Dolor Sit</Callout>
     </>
 );
