@@ -95,11 +95,12 @@ const Flyout = styled.ul<{ isVisible?: boolean }>`
     border-top: none;
 
     max-height: 300px;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: none;
 
     ::-webkit-scrollbar {
-        display: none;
+        -webkit-appearance: none;
+        width: 14px;
     }
 
     ::-webkit-scrollbar-thumb {
