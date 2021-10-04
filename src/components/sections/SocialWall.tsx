@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 import Instagram from 'components/base/icons/socials/Instagram';
-import {
-    getColors as color,
-    Heading,
-    mq,
-    Section,
-    spacings,
-    Wrapper,
-} from 'index';
+import { getColors as color, mq, spacings } from 'utils/styles';
 import * as React from 'react';
+import Heading from 'components/typography/Heading';
+import Section from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const Content = styled.div`
     display: flex;
@@ -127,4 +124,5 @@ const SocialWall: React.FC<{
     );
 };
 
-export default SocialWall;
+export const SocialWallComponent = SocialWall;
+export default withLibTheme(SocialWall);

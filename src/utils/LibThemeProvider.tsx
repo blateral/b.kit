@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { DefaultTheme, ThemeProvider } from 'styled-components';
+import React, { FC, useContext } from 'react';
+import { DefaultTheme, ThemeContext, ThemeProvider } from 'styled-components';
 
 import { FontBase, getBaseTheme } from 'utils/styles';
 
@@ -72,4 +72,28 @@ export const LibThemeProvider: FC<{
     const combinedBaseTheme = assignFontBase(getBaseTheme(), theme.fonts?.base);
     const combinedTheme = assignTo(combinedBaseTheme, theme);
     return <ThemeProvider theme={combinedTheme}>{children}</ThemeProvider>;
+};
+
+interface WithLibThemeProps {
+    theme?: Theme;
+}
+
+export const withLibTheme = <P extends Record<string, unknown>>(
+    Component: React.ComponentType<P>
+    // eslint-disable-next-line react/display-name
+): React.FC<P & { theme?: Theme }> => ({
+    theme,
+    ...props
+}: WithLibThemeProps) => {
+    const ctx = useContext(ThemeContext);
+    console.log(ctx);
+    // #TODO: Logik zum mergen hinzufügen
+
+    const combinedBaseTheme = assignFontBase(getBaseTheme(), ctx.fonts?.base);
+    const combinedTheme = assignTo(combinedBaseTheme, ctx);
+    return (
+        <ThemeProvider theme={combinedTheme}>
+            <Component {...(props as P)} />
+        </ThemeProvider>
+    );
 };
