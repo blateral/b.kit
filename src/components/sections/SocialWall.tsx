@@ -104,11 +104,11 @@ const SocialWall: React.FC<{
                                         />
                                     )}
                                     <TextContainer>
-                                        {followUs && (
-                                            <FollowUs size="super">
-                                                {followUs}
-                                            </FollowUs>
-                                        )}
+                                        <FollowUs size="super">
+                                            {followUs
+                                                ? followUs
+                                                : 'Follow Us On Instagram'}
+                                        </FollowUs>
                                         {hashtag && (
                                             <Heading size="heading-2">
                                                 {`#${hashtag}`}
