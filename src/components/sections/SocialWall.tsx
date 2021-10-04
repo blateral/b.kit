@@ -40,7 +40,7 @@ const ContentBlock = styled.a`
             bottom: 5px;
             left: 5px;
             right: 5px;
-            background: ${({ theme }) => color(theme).secondary.dark};
+            background: ${({ theme }) => color(theme).secondary.light};
         }
     }
 `;
