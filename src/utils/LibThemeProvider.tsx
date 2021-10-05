@@ -70,14 +70,12 @@ const assignTo = (target: DefaultTheme, source: Theme) => {
 export const LibThemeProvider: FC<{
     theme?: Theme;
 }> = ({ theme, children }) => {
-    if (theme) {
-        const combinedBaseTheme = assignFontBase(
-            getBaseTheme(),
-            theme?.fonts?.base
-        );
-        const combinedTheme = assignTo(combinedBaseTheme, theme);
+    const ctx = useContext(ThemeContext);
 
-        return <ThemeProvider theme={combinedTheme}>{children}</ThemeProvider>;
+    if (theme) {
+        const newTheme = modifyTheme(ctx, theme);
+
+        return <ThemeProvider theme={newTheme}>{children}</ThemeProvider>;
     } else {
         return <React.Fragment>{children}</React.Fragment>;
     }
@@ -87,6 +85,31 @@ interface WithLibThemeProps {
     theme?: Theme;
 }
 
+export const modifyTheme = (
+    activeTheme?: DefaultTheme,
+    modifications?: Theme
+) => {
+    // asigning base font to all settings on top of base theme. If base fonts are undefined return base theme
+    const combinedBaseTheme = assignFontBase(
+        getBaseTheme(),
+        activeTheme?.fonts?.base
+    );
+
+    // adding base theme to active theme context if possible
+    const combinedTheme = activeTheme
+        ? assignTo(combinedBaseTheme, activeTheme)
+        : combinedBaseTheme;
+
+    // adding additional base font styles and other settings to theme
+    let newTheme = combinedTheme;
+    if (modifications) {
+        newTheme = assignFontBase(combinedTheme, modifications?.fonts?.base);
+        newTheme = assignTo(newTheme, modifications);
+    }
+
+    return newTheme;
+};
+
 export const withLibTheme = <P extends Record<string, unknown>>(
     Component: React.ComponentType<P>
     // eslint-disable-next-line react/display-name
@@ -95,21 +118,7 @@ export const withLibTheme = <P extends Record<string, unknown>>(
     ...props
 }: WithLibThemeProps) => {
     const ctx = useContext(ThemeContext);
-
-    // asigning base font to all settings on top of base theme
-    const combinedBaseTheme = assignFontBase(getBaseTheme(), ctx?.fonts?.base);
-
-    // adding base theme to active theme context if possible
-    const combinedTheme = ctx
-        ? assignTo(combinedBaseTheme, ctx)
-        : combinedBaseTheme;
-
-    // if component specific theme exists adding base font styles and other settings to theme
-    let newTheme = combinedTheme;
-    if (theme) {
-        newTheme = assignFontBase(combinedTheme, theme?.fonts?.base);
-        newTheme = assignTo(newTheme, theme);
-    }
+    const newTheme = modifyTheme(ctx, theme);
 
     return (
         <ThemeProvider theme={newTheme}>
