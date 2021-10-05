@@ -4,6 +4,7 @@ import { Meta, Story } from '@storybook/react';
 import ArrowRight from 'components/base/icons/ArrowRight';
 import PromotionCarousel, {
     PromotionCarouselItem,
+    PromotionCarouselComponent,
 } from 'components/sections/carousel/PromotionCarousel';
 import { generateItemList } from 'utils/storyHelpers';
 
@@ -36,7 +37,7 @@ const examplePromotions = generateItemList<PromotionCarouselItem>(
 
 export default {
     title: 'Sections/Carousels/PromotionCarousel',
-    component: PromotionCarousel,
+    component: PromotionCarouselComponent,
 } as Meta;
 
 export const Default: Story = () => (

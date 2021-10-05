@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import ComparisonSlider from 'components/sections/ComparisonSlider';
+import ComparisonSlider, {
+    ComparisonSliderComponent,
+} from 'components/sections/ComparisonSlider';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 
 export default {
     title: 'Sections/ComparisonSlider',
-    component: ComparisonSlider,
+    component: ComparisonSliderComponent,
 } as Meta;
 
 export const Default: Story = () => (

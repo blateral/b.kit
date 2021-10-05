@@ -3,7 +3,9 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import ArrowRight from 'components/base/icons/ArrowRight';
 import { VideoCardProps } from 'components/blocks/VideoCard';
-import VideoCarousel from 'components/sections/carousel/VideoCarousel';
+import VideoCarousel, {
+    VideoCarouselComponent,
+} from 'components/sections/carousel/VideoCarousel';
 
 import { generateItemList } from 'utils/storyHelpers';
 
@@ -37,7 +39,7 @@ const exampleVideos = generateItemList<VideoCardProps>(
 
 export default {
     title: 'Sections/Carousels/VideoCarousel',
-    component: VideoCarousel,
+    component: VideoCarouselComponent,
 } as Meta;
 
 export const Default: Story = () => (

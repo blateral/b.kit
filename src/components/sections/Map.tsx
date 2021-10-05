@@ -12,6 +12,7 @@ import { HeadlineTag } from 'components/typography/Heading';
 import React, { FC, useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { mq, spacings, getColors as color, withRange } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const StyledSection = styled(Section)`
     position: relative;
@@ -569,4 +570,5 @@ const Map: FC<{
     );
 };
 
-export default Map;
+export const MapComponent = Map;
+export default withLibTheme(Map);

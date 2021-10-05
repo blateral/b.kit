@@ -15,6 +15,7 @@ import { HeadlineTag } from 'components/typography/Heading';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import Grid from 'components/base/Grid';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const ContactView = styled.div`
     display: flex;
@@ -390,4 +391,5 @@ export const CallToAction: FC<{
     );
 };
 
-export default CallToAction;
+export const CallToActionComponent = CallToAction;
+export default withLibTheme(CallToAction);

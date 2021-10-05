@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Teaser from 'components/sections/Teaser';
+import Teaser, { TeaserComponent } from 'components/sections/Teaser';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/Teaser',
-    component: Teaser,
+    component: TeaserComponent,
 } as Meta;
 
 export const WithContent: Story = () => (

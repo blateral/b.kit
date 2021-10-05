@@ -11,6 +11,7 @@ import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useContext, useEffect, useState } from 'react';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import Pointer from 'components/buttons/Pointer';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const News = styled.div`
     & > * + * {
@@ -181,4 +182,5 @@ const NewsList: React.FC<{
     );
 };
 
-export default NewsList;
+export const NewsListComponent = NewsList;
+export default withLibTheme(NewsList);

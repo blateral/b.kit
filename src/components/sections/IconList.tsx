@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
@@ -217,4 +218,5 @@ const IconList: React.FC<{
     );
 };
 
-export default IconList;
+export const IconListComponent = IconList;
+export default withLibTheme(IconList);

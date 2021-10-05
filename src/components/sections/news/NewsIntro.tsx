@@ -14,6 +14,7 @@ import {
     getGlobalSettings as global,
 } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const Content = styled.div`
     & > * + * {
@@ -161,4 +162,5 @@ const NewsIntro: React.FC<{
     );
 };
 
-export default NewsIntro;
+export const NewsIntroComponent = NewsIntro;
+export default withLibTheme(NewsIntro);

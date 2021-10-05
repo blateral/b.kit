@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { ThemeContext } from 'styled-components';
 
 import { getColors as color } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import VideoCard, { VideoCardProps } from 'components/blocks/VideoCard';
@@ -75,4 +76,5 @@ const VideoCarousel: FC<
     );
 };
 
-export default VideoCarousel;
+export const VideoCarouselComponent = VideoCarousel;
+export default withLibTheme(VideoCarousel);

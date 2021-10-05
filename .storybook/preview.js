@@ -60,8 +60,8 @@ export const parameters = {
 export const decorators = [
     (Story) => (
         // <LibThemeProvider theme={customTheme}>
-        <LibThemeProvider>
-            <Story />
-        </LibThemeProvider>
+        //     <Story />
+        // </LibThemeProvider>
+        <Story />
     ),
 ];

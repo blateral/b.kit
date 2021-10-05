@@ -6,6 +6,7 @@ import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const AccordionBlock = styled.ul<{
     isInverted?: boolean;
@@ -163,4 +164,5 @@ const Accordion: React.FC<{
     );
 };
 
-export default Accordion;
+export const AccordionComponent = Accordion;
+export default withLibTheme(Accordion);

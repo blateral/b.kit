@@ -10,6 +10,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import Pointer from 'components/buttons/Pointer';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const ContentFlex = styled.div`
     & > * + * {
@@ -160,4 +161,5 @@ const NewsFooter: React.FC<{
     );
 };
 
-export default NewsFooter;
+export const NewsFooterComponent = NewsFooter;
+export default withLibTheme(NewsFooter);

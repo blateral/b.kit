@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Video from 'components/sections/Video';
+import Video, { VideoComponent } from 'components/sections/Video';
 import Play from 'components/base/icons/Play';
 
 export default {
     title: 'Sections/Video',
-    component: Video,
+    component: VideoComponent,
 } as Meta;
 
 export const Default: Story = () => (

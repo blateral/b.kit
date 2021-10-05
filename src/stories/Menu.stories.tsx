@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Menu from 'components/sections/navigation/menu/Menu';
+import Menu, { MenuComponent } from 'components/sections/navigation/menu/Menu';
 import SearchInput from 'components/fields/SearchInput';
 import Magnifier from 'components/base/icons/Magnifier';
 
@@ -224,7 +224,7 @@ const secondaryCtaFn = ({
 
 export default {
     title: 'Sections/Navigation/Menu',
-    component: Menu,
+    component: MenuComponent,
     parameters: {
         backgrounds: {
             default: 'inverted',

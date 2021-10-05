@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import { spacings, mq, getColors as color } from 'utils/styles';
 import Textfield, { FormProps } from 'components/fields/Textfield';
@@ -320,4 +321,5 @@ const Form: React.FC<{
     );
 };
 
-export default Form;
+export const FormComponent = Form;
+export default withLibTheme(Form);

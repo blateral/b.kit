@@ -4,6 +4,7 @@ import styled, { ThemeContext } from 'styled-components';
 import Wrapper from 'components/base/Wrapper';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Link from 'components/typography/Link';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const Socials = styled.div<{ isInverted?: boolean }>`
     display: flex;
@@ -74,4 +75,5 @@ const SocialNav: FC<{
     );
 };
 
-export default SocialNav;
+export const SocialNavComponent = SocialNav;
+export default withLibTheme(SocialNav);

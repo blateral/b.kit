@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Table from 'components/sections/Table';
+import Table, { TableComponent } from 'components/sections/Table';
 
 export default {
     title: 'Sections / Table',
-    components: Table,
+    components: TableComponent,
 } as Meta;
 
 export const Default: Story = () => (

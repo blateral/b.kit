@@ -16,6 +16,7 @@ import {
     getGlobalSettings as global,
 } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
     display: flex;
@@ -262,4 +263,5 @@ const Teaser: FC<{
     );
 };
 
-export default Teaser;
+export const TeaserComponent = Teaser;
+export default withLibTheme(Teaser);

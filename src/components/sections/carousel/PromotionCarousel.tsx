@@ -7,6 +7,7 @@ import CarouselBase, { CarouselProps } from './CarouselBase';
 import PromotionCard, {
     PromotionCardProps,
 } from 'components/blocks/PromotionCard';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 export type PromotionCarouselItem = Omit<
     PromotionCardProps,
@@ -84,4 +85,5 @@ const PromotionCarousel: FC<
     );
 };
 
-export default PromotionCarousel;
+export const PromotionCarouselComponent = PromotionCarousel;
+export default withLibTheme(PromotionCarousel);

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { FlyoutBackgroundSettings, NavGroup } from './menu/Flyout';
+
 import Menu from './menu/Menu';
 
 import TopBar from './TopBar';

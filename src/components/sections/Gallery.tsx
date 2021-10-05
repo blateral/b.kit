@@ -1,5 +1,6 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -101,4 +102,5 @@ const Gallery: FC<{
     );
 };
 
-export default Gallery;
+export const GalleryComponent = Gallery;
+export default withLibTheme(Gallery);

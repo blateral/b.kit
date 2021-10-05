@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Form from 'components/sections/Form';
+import Form, { FormComponent } from 'components/sections/Form';
 import Button from 'components/buttons/Button';
 
 export default {
     title: 'Sections/Form',
-    component: Form,
+    component: FormComponent,
 } as Meta;
 
 export const Default: Story = () => (

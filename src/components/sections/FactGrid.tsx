@@ -2,6 +2,7 @@ import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Fact, { FactProps } from 'components/blocks/Fact';
@@ -176,4 +177,5 @@ const FactGrid: FC<{
     );
 };
 
-export default FactGrid;
+export const FactGridComponent = FactGrid;
+export default withLibTheme(FactGrid);

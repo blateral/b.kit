@@ -8,6 +8,7 @@ import { getColors as color, spacings } from 'utils/styles';
 import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
 import Copy from 'components/typography/Copy';
 import useIE from 'utils/useIE';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const clamp = (num: number, min: number, max: number) => {
     return Math.min(Math.max(num, min), max);
@@ -373,4 +374,5 @@ const ComparisonSlider: FC<{
     );
 };
 
-export default ComparisonSlider;
+export const ComparisonSliderComponent = ComparisonSlider;
+export default withLibTheme(ComparisonSlider);

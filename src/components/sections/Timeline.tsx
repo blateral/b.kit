@@ -13,6 +13,7 @@ import React, {
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import { useObserverSupport } from 'utils/useObserverSupport';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const TimelineBlock = styled.div<{ isSwitched?: boolean; isActive?: boolean }>`
     position: relative;
@@ -179,4 +180,5 @@ const Timeline: React.FC<{
     );
 };
 
-export default Timeline;
+export const TimelineComponent = Timeline;
+export default withLibTheme(Timeline);

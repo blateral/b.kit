@@ -2,13 +2,13 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Header from 'components/sections/header/Header';
+import Header, { HeaderComponent } from 'components/sections/header/Header';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/Header/Header',
-    component: Header,
+    component: HeaderComponent,
     decorators: [
         (Story) => (
             <div style={{ height: '120vh', width: '100%' }}>

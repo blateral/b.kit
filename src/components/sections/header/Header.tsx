@@ -8,6 +8,7 @@ import {
     withRange,
     getGlobalSettings as global,
 } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
 import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
@@ -352,4 +353,5 @@ const Header: FC<{
     );
 };
 
-export default Header;
+export const HeaderComponent = Header;
+export default withLibTheme(Header);

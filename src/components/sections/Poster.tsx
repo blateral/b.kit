@@ -12,6 +12,7 @@ import {
 } from 'utils/styles';
 import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const PosterContainer = styled.div<{
     hasContent?: boolean;
@@ -136,4 +137,5 @@ const Poster: FC<{
     );
 };
 
-export default Poster;
+export const PosterComponent = Poster;
+export default withLibTheme(Poster);

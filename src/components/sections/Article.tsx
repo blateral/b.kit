@@ -8,6 +8,7 @@ import Wrapper from 'components/base/Wrapper';
 import { spacings, mq, getColors as color } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const StyledTitle = styled(Title)`
     @media ${mq.semilarge} {
@@ -152,4 +153,5 @@ const Article: React.FC<{
     );
 };
 
-export default Article;
+export const ArticleComponent = Article;
+export default withLibTheme(Article);

@@ -2,7 +2,9 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { generateItemList } from 'utils/storyHelpers';
-import FeatureCarousel from 'components/sections/carousel/FeatureCarousel';
+import FeatureCarousel, {
+    FeatureCarouselComponent,
+} from 'components/sections/carousel/FeatureCarousel';
 import Button from 'components/buttons/Button';
 import ArrowRight from 'components/base/icons/ArrowRight';
 import { FeatureProps } from 'components/blocks/Feature';
@@ -55,7 +57,7 @@ const exampleFeatures = generateItemList<FeatureProps>(
 
 export default {
     title: 'Sections/Carousels/FeatureCarousel',
-    component: FeatureCarousel,
+    component: FeatureCarouselComponent,
 } as Meta;
 
 export const Default: Story = () => (

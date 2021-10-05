@@ -2,6 +2,7 @@ import React, { FC, useContext } from 'react';
 import styled, { DefaultTheme, ThemeContext } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import { Field, FormikErrors, useFormik } from 'formik';
 import Wrapper from 'components/base/Wrapper';
@@ -749,7 +750,8 @@ const FieldHead = styled.div`
     padding-right: ${spacings.nudge}px;
 `;
 
-export default DynamicForm;
+export const DynamicFormComponent = DynamicForm;
+export default withLibTheme(DynamicForm);
 
 const Fields = styled.div`
     & > * + * {

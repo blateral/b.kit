@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NewsFooter from '../components/sections/news/NewsFooter';
+import NewsFooter, {
+    NewsFooterComponent,
+} from '../components/sections/news/NewsFooter';
 
 export default {
     title: 'Sections/News/NewsFooter',
-    component: NewsFooter,
+    component: NewsFooterComponent,
 } as Meta;
 
 export const Default: Story = () => (
