@@ -46,25 +46,40 @@ const assignFontBase = (
 };
 
 /**
- * Comnbining Theme objects
+ * Combining Theme objects
  * @param target Result theme object
  * @param source Theme object that should be assigned to target
  */
-const assignTo = (target: DefaultTheme, source: Theme) => {
+export const assignTo = <T extends Theme | DefaultTheme>(
+    target: T,
+    source?: Theme
+) => {
     const output = { ...target };
+    if (!source) return output as T;
 
     Object.keys(source).forEach((key) => {
         const sourceVal = source[key];
         const targetVal = target[key];
-        output[key] =
+
+        if (
             targetVal &&
             sourceVal &&
             typeof targetVal === 'object' &&
             typeof sourceVal === 'object'
-                ? assignTo(targetVal, sourceVal)
-                : sourceVal;
+        ) {
+            output[key] = assignTo(targetVal, sourceVal);
+        } else if (sourceVal) {
+            output[key] = sourceVal;
+        }
+        // output[key] =
+        //     targetVal &&
+        //     sourceVal &&
+        //     typeof targetVal === 'object' &&
+        //     typeof sourceVal === 'object'
+        //         ? assignTo(targetVal, sourceVal)
+        //         : sourceVal;
     });
-    return output;
+    return output as T;
 };
 
 export const LibThemeProvider: FC<{
