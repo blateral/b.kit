@@ -224,7 +224,7 @@ const secondaryCtaFn = ({
 
 export default {
     title: 'Sections/Navigation/Menu',
-    component: MenuComponent,
+    component: Menu,
     parameters: {
         backgrounds: {
             default: 'inverted',
