@@ -5,6 +5,7 @@ import { HeadlineTag } from 'components/typography/Heading';
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import { getColors as color } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const Intro: React.FC<{
     title: string;
@@ -71,4 +72,5 @@ const Intro: React.FC<{
     );
 };
 
-export default Intro;
+export const IntroComponent = Intro;
+export default withLibTheme(Intro);

@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
+import { LibThemeProvider, Theme } from 'utils/LibThemeProvider';
 import { FlyoutBackgroundSettings, NavGroup } from './menu/Flyout';
+
 import Menu from './menu/Menu';
 
 import TopBar from './TopBar';
@@ -53,6 +55,7 @@ export interface NavProps {
     search?: (isInverted?: boolean) => React.ReactNode;
     openMenuIcon?: (isInverted?: boolean) => React.ReactNode;
     closeMenuIcon?: (isInverted?: boolean) => React.ReactNode;
+    theme?: Theme;
 }
 
 const Navigation: FC<NavProps> = ({
@@ -74,6 +77,7 @@ const Navigation: FC<NavProps> = ({
     openMenuIcon,
     closeMenuIcon,
     isMirrored,
+    theme,
 }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -88,7 +92,7 @@ const Navigation: FC<NavProps> = ({
     }, [isMenuOpen]);
 
     return (
-        <>
+        <LibThemeProvider theme={theme}>
             <TopBar
                 isMirrored={isMirrored}
                 isBackVisible={hideTopbarBackUnderMenu ? !isMenuOpen : true}
@@ -114,7 +118,7 @@ const Navigation: FC<NavProps> = ({
                 background={background}
                 {...sharedProps}
             />
-        </>
+        </LibThemeProvider>
     );
 };
 

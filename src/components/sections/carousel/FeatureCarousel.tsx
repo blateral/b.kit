@@ -6,6 +6,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const StyledWrapper = styled.div`
     padding-left: ${spacings.nudge * 2}px;
@@ -126,4 +127,5 @@ const FeatureCarousel: FC<
     );
 };
 
-export default FeatureCarousel;
+export const FeatureCarouselComponent = FeatureCarousel;
+export default withLibTheme(FeatureCarousel);

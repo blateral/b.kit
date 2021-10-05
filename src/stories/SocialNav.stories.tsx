@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import SocialNav from 'components/sections/SocialNav';
+import SocialNav, { SocialNavComponent } from 'components/sections/SocialNav';
 import Twitter from 'components/base/icons/socials/Twitter';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
 import Xing from 'components/base/icons/socials/Xing';
@@ -8,7 +8,7 @@ import Facebook from 'components/base/icons/socials/Facebook';
 
 export default {
     title: 'sections/SocialNav',
-    component: SocialNav,
+    component: SocialNavComponent,
 } as Meta;
 
 export const Default: Story = () => (

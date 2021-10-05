@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
 import styled, { ThemeContext } from 'styled-components';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import { getColors, spacings } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
@@ -95,4 +96,5 @@ const FactList: React.FC<{
     );
 };
 
-export default FactList;
+export const FactListComponent = FactList;
+export default withLibTheme(FactList);

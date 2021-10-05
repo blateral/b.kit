@@ -5,6 +5,7 @@ import { getColors as color, getGlobalSettings as global } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const ImageCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'isInverted'> & {
@@ -77,4 +78,5 @@ const FullWidthImg = styled(Image)`
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 `;
 
-export default ImageCarousel;
+export const ImageCarouselComponent = ImageCarousel;
+export default withLibTheme(ImageCarousel);

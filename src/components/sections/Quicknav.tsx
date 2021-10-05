@@ -4,6 +4,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const StyledSection = styled(Section)`
     padding-top: 55px;
@@ -165,4 +166,5 @@ const Quicknav: React.FC<{
     );
 };
 
-export default Quicknav;
+export const QuicknavComponent = Quicknav;
+export default withLibTheme(Quicknav);

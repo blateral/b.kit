@@ -8,6 +8,7 @@ import {
     spacings,
     withRange,
 } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
@@ -381,4 +382,5 @@ const Footer: FC<{
     );
 };
 
-export default Footer;
+export const FooterComponent = Footer;
+export default withLibTheme(Footer);

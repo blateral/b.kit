@@ -1,7 +1,9 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NewsOverview from 'components/sections/news/NewsOverview';
+import NewsOverview, {
+    NewsOverviewComponent,
+} from 'components/sections/news/NewsOverview';
 import { generateItemList } from 'utils/storyHelpers';
 import { NewsCardProps } from 'components/blocks/NewsCard';
 import Button from 'components/buttons/Button';
@@ -9,7 +11,7 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/News/NewsOverview',
-    component: NewsOverview,
+    component: NewsOverviewComponent,
 } as Meta;
 
 const actions = {

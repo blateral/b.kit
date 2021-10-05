@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Intro from 'components/sections/Intro';
+import Intro, { IntroComponent } from 'components/sections/Intro';
 import { Meta, Story } from '@storybook/react';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/Intro',
-    component: Intro,
+    component: IntroComponent,
 } as Meta;
 
 export const Default: Story = () => (

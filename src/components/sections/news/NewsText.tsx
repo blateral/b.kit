@@ -6,6 +6,7 @@ import Actions from 'components/blocks/Actions';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
 import { getColors as color, spacings, withRange } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import { useContext } from 'react';
 
 const ContentBlock = styled(Copy)<{
@@ -70,4 +71,5 @@ const NewsText: React.FC<{
     );
 };
 
-export default NewsText;
+export const NewsTextComponent = NewsText;
+export default withLibTheme(NewsText);

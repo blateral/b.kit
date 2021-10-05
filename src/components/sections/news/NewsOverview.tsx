@@ -6,6 +6,7 @@ import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { getColors, mq, spacings, withRange } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Tag from 'components/blocks/Tag';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
@@ -310,4 +311,5 @@ const NewsOverview: React.FC<{
     );
 };
 
-export default NewsOverview;
+export const NewsOverviewComponent = NewsOverview;
+export default withLibTheme(NewsOverview);

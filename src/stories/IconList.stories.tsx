@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import IconList from 'components/sections/IconList';
+import IconList, { IconListComponent } from 'components/sections/IconList';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
@@ -105,7 +105,7 @@ const Items = [
 
 export default {
     title: 'Sections/IconList',
-    component: IconList,
+    component: IconListComponent,
 } as Meta;
 
 export const Default: Story = () => (

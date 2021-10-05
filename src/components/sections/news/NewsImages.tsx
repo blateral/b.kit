@@ -8,6 +8,7 @@ import {
     withRange,
     getGlobalSettings as global,
 } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -130,4 +131,5 @@ const NewsImages: React.FC<{
     );
 };
 
-export default NewsImages;
+export const NewsImagesComponent = NewsImages;
+export default withLibTheme(NewsImages);

@@ -10,6 +10,7 @@ import Wrapper from 'components/base/Wrapper';
 import Section, { mapToBgMode } from 'components/base/Section';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const WideImage = styled(Image)<{ isMirrored?: boolean }>`
     position: relative;
@@ -194,4 +195,5 @@ const TeaserWide: FC<{
     );
 };
 
-export default TeaserWide;
+export const TeaserWideComponent = TeaserWide;
+export default withLibTheme(TeaserWide);

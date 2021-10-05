@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Map, { MapLocation } from 'components/sections/Map';
+import Map, { MapLocation, MapComponent } from 'components/sections/Map';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 import FlyTo from 'components/base/icons/FlyTo';
@@ -15,7 +15,7 @@ import marker from '../../public/images/Marker.svg';
 
 export default {
     title: 'Sections/Map',
-    component: Map,
+    component: MapComponent,
 } as Meta;
 
 const exampleLocations: MapLocation[] = [

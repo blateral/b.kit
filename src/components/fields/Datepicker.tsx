@@ -29,7 +29,7 @@ const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
 
     .react-datepicker-popper {
         right: ${spacings.spacer * 2}px;
-        z-index: 2 !important;
+        z-index: 9 !important;
         width: 100%;
     }
 

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Quicknav from 'components/sections/Quicknav';
+import Quicknav, { QuicknavComponent } from 'components/sections/Quicknav';
 
 export default {
     title: 'Sections / Quicknav',
-    component: Quicknav,
+    component: QuicknavComponent,
 } as Meta;
 
 export const Default: Story = () => (

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import FactGrid from 'components/sections/FactGrid';
+import FactGrid, { FactGridComponent } from 'components/sections/FactGrid';
 import { generateItemList } from 'utils/storyHelpers';
 import { FactProps } from 'components/blocks/Fact';
 
 export default {
     title: 'Sections/FactGrid',
-    component: FactGrid,
+    component: FactGridComponent,
 } as Meta;
 
 const exampleFact = {
