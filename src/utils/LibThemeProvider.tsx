@@ -19,6 +19,7 @@ const assignFontBase = (
     source?: RecursivePartial<FontBase>
 ) => {
     if (!source) return target;
+
     // deep iterate through target and search matching key
     const assign = (target: any, key: string, value: string) => {
         Object.keys(target).forEach((tKey) => {
@@ -67,11 +68,19 @@ const assignTo = (target: DefaultTheme, source: Theme) => {
 };
 
 export const LibThemeProvider: FC<{
-    theme: Theme;
+    theme?: Theme;
 }> = ({ theme, children }) => {
-    const combinedBaseTheme = assignFontBase(getBaseTheme(), theme.fonts?.base);
-    const combinedTheme = assignTo(combinedBaseTheme, theme);
-    return <ThemeProvider theme={combinedTheme}>{children}</ThemeProvider>;
+    if (theme) {
+        const combinedBaseTheme = assignFontBase(
+            getBaseTheme(),
+            theme?.fonts?.base
+        );
+        const combinedTheme = assignTo(combinedBaseTheme, theme);
+
+        return <ThemeProvider theme={combinedTheme}>{children}</ThemeProvider>;
+    } else {
+        return <React.Fragment>{children}</React.Fragment>;
+    }
 };
 
 interface WithLibThemeProps {
@@ -86,13 +95,24 @@ export const withLibTheme = <P extends Record<string, unknown>>(
     ...props
 }: WithLibThemeProps) => {
     const ctx = useContext(ThemeContext);
-    console.log(ctx);
-    // #TODO: Logik zum mergen hinzufügen
 
-    const combinedBaseTheme = assignFontBase(getBaseTheme(), ctx.fonts?.base);
-    const combinedTheme = assignTo(combinedBaseTheme, ctx);
+    // asigning base font to all settings on top of base theme
+    const combinedBaseTheme = assignFontBase(getBaseTheme(), ctx?.fonts?.base);
+
+    // adding base theme to active theme context if possible
+    const combinedTheme = ctx
+        ? assignTo(combinedBaseTheme, ctx)
+        : combinedBaseTheme;
+
+    // if component specific theme exists adding base font styles and other settings to theme
+    let newTheme = combinedTheme;
+    if (theme) {
+        newTheme = assignFontBase(combinedTheme, theme?.fonts?.base);
+        newTheme = assignTo(newTheme, theme);
+    }
+
     return (
-        <ThemeProvider theme={combinedTheme}>
+        <ThemeProvider theme={newTheme}>
             <Component {...(props as P)} />
         </ThemeProvider>
     );
