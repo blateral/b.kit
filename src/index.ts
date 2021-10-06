@@ -1,4 +1,4 @@
-/***** Version: 1.7.1 *****/
+/***** Version: 1.7.2 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -88,6 +88,7 @@ export { default as SocialNav } from 'components/sections/SocialNav';
 export { default as NumberList } from 'components/sections/NumberList';
 export { default as DynamicForm } from 'components/sections/DynamicForm';
 export { default as SocialWall } from 'components/sections/SocialWall';
+export { default as ParallaxBackground } from 'components/sections/ParallaxBackground';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
