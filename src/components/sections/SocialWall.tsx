@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import Instagram from 'components/base/icons/socials/Instagram';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import * as React from 'react';
 import Heading from 'components/typography/Heading';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
@@ -85,9 +85,24 @@ const SocialWall: React.FC<{
     }[];
     followUs?: string;
     hashtag?: string;
-}> = ({ items, hashtag, followUs }) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ items, hashtag, followUs, bgMode }) => {
+    const theme = React.useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
+
     return (
-        <Section>
+        <Section
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBg
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
+            bgMode={mapToBgMode(bgMode, true)}
+            addSeperation
+        >
             <Wrapper addWhitespace>
                 <Content>
                     {items &&
