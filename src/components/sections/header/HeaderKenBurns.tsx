@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useMediaQuery } from 'utils/useMediaQuery';
-import { getBgImage } from 'utils/backgroundImage';
 import { canUseWebP } from 'utils/usePoster';
-import { FC, useEffect, useRef, useState } from 'react';
+import Image from 'components/blocks/Image';
 
 export interface HeaderKenBurnsImageProps {
     small: string;
@@ -26,19 +25,23 @@ const AnimationContainer = styled.div`
     overflow: hidden;
 `;
 
-const PosterImage = styled.div`
+const PosterImage = styled(Image)`
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
 
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+    height: 100%;
+    width: 100%;
+
+    object-fit: cover;
+    object-position: center;
 `;
 
-const AnimationImage = styled.img<{ scale?: number; opacity?: number }>`
+const AnimationImage = styled.img<{
+    scale?: number;
+    opacity?: number;
+    zoomPoint?: [number, number];
+}>`
     position: absolute;
     top: 0;
     left: 0;
@@ -56,16 +59,27 @@ const AnimationImage = styled.img<{ scale?: number; opacity?: number }>`
     opacity: ${({ opacity }) => opacity && opacity};
     transform: scale(${({ scale }) => scale || 1})
         rotate(${({ scale }) => (scale !== 1 ? 0.04 : 0)}deg);
+    transform-origin: ${({ zoomPoint }) =>
+        zoomPoint ? `${zoomPoint[0] * 100}% ${zoomPoint[1] * 100}%` : 'center'};
 
     will-change: transform, opacity;
 `;
 
 const AnimationImages: FC<{
     zoom?: number;
+    zoomPoint?: [number, number];
     images: { id: number | string; image: string }[];
+    interval?: number;
     onChange?: (imgId: number) => void;
-}> = ({ zoom = 1.08, images, onChange }) => {
+}> = ({
+    zoom = 1.08,
+    zoomPoint = [0.5, 0.5],
+    interval = 10000,
+    images,
+    onChange,
+}) => {
     const intervalRef = useRef<number | null>();
+    const initialTimeoutRef = useRef<number | null>();
     const [activeImg, setActiveImg] = useState<number>(-1);
 
     useEffect(() => {
@@ -76,14 +90,16 @@ const AnimationImages: FC<{
         };
 
         // changeImage();
-        window.setTimeout(changeImage, 200);
+        initialTimeoutRef.current = window.setTimeout(changeImage, 200);
         if (intervalRef.current) window.clearInterval(intervalRef.current);
-        intervalRef.current = window.setInterval(changeImage, 10000);
+        intervalRef.current = window.setInterval(changeImage, interval);
 
         return () => {
+            if (initialTimeoutRef.current)
+                window.clearTimeout(initialTimeoutRef.current);
             if (intervalRef.current) window.clearInterval(intervalRef.current);
         };
-    }, [images]);
+    }, [images, interval]);
 
     useEffect(() => {
         if (activeImg !== -1) onChange && onChange(activeImg);
@@ -96,12 +112,12 @@ const AnimationImages: FC<{
                 <AnimationImage
                     key={i}
                     style={{
-                        // backgroundImage: `url(${img.image})`,
                         zIndex: i === activeImg ? 1 : 0,
                     }}
                     src={img.image}
                     scale={i === activeImg ? zoom : 1}
                     opacity={i === activeImg ? 1 : 0}
+                    zoomPoint={zoomPoint}
                     alt=""
                 />
             ))}
@@ -112,7 +128,7 @@ const AnimationImages: FC<{
 const preloadImages = (imageUrls: string[]) => {
     const images = imageUrls.map((src, i) => {
         return new Promise((res) => {
-            const img = new Image();
+            const img = new window.Image();
             img.src = src;
             img.onload = () => res({ url: src, i });
         });
@@ -125,9 +141,20 @@ type KenBurnsMq = 'small' | 'medium' | 'large' | 'xlarge';
 
 const HeaderKenBurns: React.FC<{
     images: HeaderKenBurnsImageProps[];
+    zoom?: number;
+    zoomPoint?: [number, number];
+    interval?: number;
     onImageChange?: (currentImg: HeaderKenBurnsImageProps) => void;
     className?: string;
-}> = ({ images, onImageChange, className, children }) => {
+}> = ({
+    images,
+    zoom = 1.08,
+    zoomPoint = [0.5, 0.5],
+    interval = 10000,
+    onImageChange,
+    className,
+    children,
+}) => {
     const mqs: KenBurnsMq[] = ['small', 'medium', 'large', 'xlarge'];
     const currentMq = useMediaQuery(mqs) as KenBurnsMq | undefined;
 
@@ -179,21 +206,16 @@ const HeaderKenBurns: React.FC<{
 
     return (
         <AnimationContainer className={className}>
-            {currentMq && loadedImages[currentMq].length >= images.length ? (
+            <PosterImage {...images[0]} />
+            {currentMq && loadedImages[currentMq].length >= images.length && (
                 <AnimationImages
+                    zoom={zoom}
+                    zoomPoint={zoomPoint}
+                    interval={interval}
                     images={loadedImages[currentMq]}
                     onChange={(id) =>
                         images[id] && onImageChange && onImageChange(images[id])
                     }
-                />
-            ) : (
-                <PosterImage
-                    style={{
-                        backgroundImage: `url(${getBgImage(
-                            images[0],
-                            currentMq
-                        )})`,
-                    }}
                 />
             )}
             {children}
