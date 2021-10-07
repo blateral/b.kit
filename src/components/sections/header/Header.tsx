@@ -8,6 +8,7 @@ import {
     withRange,
     getGlobalSettings as global,
 } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
 import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
@@ -106,8 +107,19 @@ const Badge = styled.div<{ showOnMobile?: boolean }>`
 const Poster: FC<{
     videoUrl?: string;
     images?: HeaderImageProps[];
+    kenBurnsZoom?: number;
+    kenBurnsZoomPoint?: [number, number];
+    kenBurnsInterval?: number;
     className?: string;
-}> = ({ videoUrl, images, className, children }) => {
+}> = ({
+    videoUrl,
+    images,
+    kenBurnsZoom,
+    kenBurnsZoomPoint,
+    kenBurnsInterval,
+    className,
+    children,
+}) => {
     if (!videoUrl) {
         if (!images || images.length === 0) return <div>{children}</div>;
         else if (images.length === 1)
@@ -124,6 +136,9 @@ const Poster: FC<{
                             ...img,
                         } as HeaderKenBurnsImageProps;
                     })}
+                    zoom={kenBurnsZoom}
+                    zoomPoint={kenBurnsZoomPoint}
+                    interval={kenBurnsInterval}
                     className={className}
                 >
                     {children}
@@ -220,6 +235,10 @@ const Header: FC<{
         content: React.ReactNode;
         showOnMobile?: boolean;
     };
+    kenBurnsZoom?: number;
+    /** Zoom point of ken burns effect. x and y values in the range from 0 - 1 */
+    kenBurnsZoomPoint?: [number, number];
+    kenBurnsInterval?: number;
 }> = ({
     size = 'full',
     sizeScale,
@@ -234,6 +253,9 @@ const Header: FC<{
     customTopGradient,
     customBottomGradient,
     badge,
+    kenBurnsZoom = 1.08,
+    kenBurnsZoomPoint = [0.5, 0.5],
+    kenBurnsInterval = 10000,
 }) => {
     const theme = useContext(ThemeContext);
     const topGradient = withTopGradient
@@ -263,6 +285,9 @@ const Header: FC<{
                                 : 1
                             : sizeScale
                     }
+                    kenBurnsZoom={kenBurnsZoom}
+                    kenBurnsZoomPoint={kenBurnsZoomPoint}
+                    kenBurnsInterval={kenBurnsInterval}
                 >
                     <Wrapper>
                         <PosterContent>
@@ -276,7 +301,7 @@ const Header: FC<{
                                         <Callout
                                             hyphens
                                             size="medium"
-                                            as={titleAs}
+                                            renderAs={titleAs}
                                             hasShadow
                                             textColor="#fff"
                                             innerHTML={title}
@@ -289,7 +314,7 @@ const Header: FC<{
                                         >
                                             {intro.title && (
                                                 <Heading
-                                                    as="h1"
+                                                    renderAs="h1"
                                                     size="heading-1"
                                                     hasShadow
                                                     textColor="#fff"
@@ -334,7 +359,7 @@ const Header: FC<{
                             <Callout
                                 hyphens
                                 size="small"
-                                as={titleAs}
+                                renderAs={titleAs}
                                 isInverted={false}
                                 innerHTML={title}
                             />
@@ -352,4 +377,5 @@ const Header: FC<{
     );
 };
 
-export default Header;
+export const HeaderComponent = Header;
+export default withLibTheme(Header);

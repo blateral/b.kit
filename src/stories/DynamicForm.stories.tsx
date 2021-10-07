@@ -1,11 +1,13 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import DynamicForm from '../components/sections/DynamicForm';
+import DynamicForm, {
+    DynamicFormComponent,
+} from '../components/sections/DynamicForm';
 
 export default {
     title: 'Sections / DynamicForm',
-    component: DynamicForm,
+    component: DynamicFormComponent,
 } as Meta;
 
 export const Default: Story = () => (

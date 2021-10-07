@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import CrossPromotion from 'components/sections/CrossPromotion';
+import CrossPromotion, {
+    CrossPromotionComponent,
+} from 'components/sections/CrossPromotion';
 
 export default {
     title: 'Sections/CrossPromotion',
-    component: CrossPromotion,
+    component: CrossPromotionComponent,
 } as Meta;
 
 export const SingleImageFull: Story = () => (

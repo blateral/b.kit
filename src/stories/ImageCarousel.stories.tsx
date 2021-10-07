@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import ImageCarousel from 'components/sections/carousel/ImageCarousel';
+import ImageCarousel, {
+    ImageCarouselComponent,
+} from 'components/sections/carousel/ImageCarousel';
 import ArrowRight from 'components/base/icons/ArrowRight';
 import { ImageProps } from 'components/blocks/Image';
 import { generateItemList } from 'utils/storyHelpers';
 
 export default {
     title: 'Sections/Carousels/ImageCarousel',
-    component: ImageCarousel,
+    component: ImageCarouselComponent,
 } as Meta;
 
 const exampleImage: ImageProps = {

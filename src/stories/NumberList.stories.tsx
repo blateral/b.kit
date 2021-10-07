@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NumberList from 'components/sections/NumberList';
+import NumberList, {
+    NumberListComponent,
+} from 'components/sections/NumberList';
 
 export default {
     title: 'Sections/NumberList',
-    component: NumberList,
+    component: NumberListComponent,
 } as Meta;
 
 export const Default: Story = () => (

@@ -1,7 +1,9 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import FeatureList from 'components/sections/FeatureList';
+import FeatureList, {
+    FeatureListComponent,
+} from 'components/sections/FeatureList';
 import Button from 'components/buttons/Button';
 import { FeatureProps } from 'components/blocks/Feature';
 import { generateItemList } from 'utils/storyHelpers';
@@ -63,7 +65,7 @@ const exampleFeaturesEven = generateItemList<FeatureProps>(
 
 export default {
     title: 'Sections/FeatureList',
-    component: FeatureList,
+    component: FeatureListComponent,
 } as Meta;
 
 export const Default: Story = () => (

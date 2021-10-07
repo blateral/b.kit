@@ -5,6 +5,7 @@ import Heading from 'components/typography/Heading';
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const View = styled.div`
     text-align: center;
@@ -82,7 +83,7 @@ const IconBlock: React.FC<{
             {icon && <Icon src={icon.src} alt={icon.alt} />}
             <NumberContainer height={0}>
                 <Number
-                    as="div"
+                    renderAs="div"
                     stringLength={stringLength}
                     isInverted={isInverted}
                 >
@@ -180,4 +181,5 @@ const NumberList: React.FC<NumberListProps> = ({ items, bgMode }) => {
     );
 };
 
-export default NumberList;
+export const NumberListComponent = NumberList;
+export default withLibTheme(NumberList);

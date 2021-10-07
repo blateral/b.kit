@@ -6,6 +6,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import { hexToRgba } from 'utils/hexRgbConverter';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const TableContainer = styled.div`
     overflow-x: scroll;
@@ -197,4 +198,5 @@ const Table: React.FC<{
     );
 };
 
-export default Table;
+export const TableComponent = Table;
+export default withLibTheme(Table);

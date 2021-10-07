@@ -1,4 +1,4 @@
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
@@ -13,8 +13,13 @@ import React, {
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import { useObserverSupport } from 'utils/useObserverSupport';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
-const TimelineBlock = styled.div<{ isSwitched?: boolean; isActive?: boolean }>`
+const TimelineBlock = styled.div<{
+    isSwitched?: boolean;
+    isActive?: boolean;
+    isInverted?: boolean;
+}>`
     position: relative;
 
     @media ${mq.large} {
@@ -27,11 +32,19 @@ const TimelineBlock = styled.div<{ isSwitched?: boolean; isActive?: boolean }>`
         height: 10px;
 
         box-sizing: content-box;
-        border: 2px solid ${({ theme }) => color(theme).dark};
+        border: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted ? color(theme).light : color(theme).dark};
         border-radius: 50%;
 
-        background: ${({ theme, isActive }) =>
-            isActive ? color(theme).dark : color(theme).light};
+        background: ${({ theme, isActive, isInverted }) =>
+            isActive
+                ? isInverted
+                    ? color(theme).light
+                    : color(theme).dark
+                : isInverted
+                ? color(theme).dark
+                : color(theme).light};
 
         position: absolute;
         top: 0;
@@ -56,7 +69,8 @@ const TimelineBlock = styled.div<{ isSwitched?: boolean; isActive?: boolean }>`
         width: 2px;
         min-height: 160px;
         height: 100%;
-        background: ${({ theme }) => color(theme).dark};
+        background: ${({ theme, isInverted }) =>
+            isInverted ? color(theme).light : color(theme).dark};
         left: 5px;
 
         @media ${mq.large} {
@@ -94,8 +108,12 @@ const TimelineText = styled.div<{ isSwitched?: boolean }>`
 
 const Timeline: React.FC<{
     items?: { label?: string; title?: string; text?: string }[];
-}> = ({ items }) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ bgMode, items }) => {
     const theme = useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
+
     const [targetRefs, setTargetRefs] = useState<
         MutableRefObject<HTMLDivElement>[]
     >([]);
@@ -107,7 +125,7 @@ const Timeline: React.FC<{
     useEffect(() => {
         if (observerSupported && targetRefs && targetRefs.length > 0) {
             const options = {
-                rootMargin: '-30% 0% -70% 0%',
+                rootMargin: '-50% 0% -50% 0%',
                 threshold: 0,
             };
 
@@ -142,7 +160,17 @@ const Timeline: React.FC<{
     }, [items?.length]);
 
     return (
-        <Section addSeperation>
+        <Section
+            bgColor={
+                isInverted
+                    ? color(theme).dark
+                    : hasBg
+                    ? color(theme).mono.light
+                    : 'transparent'
+            }
+            bgMode={mapToBgMode(bgMode, true)}
+            addSeperation
+        >
             <Wrapper addWhitespace>
                 {items &&
                     items.map((item, i) => {
@@ -151,6 +179,7 @@ const Timeline: React.FC<{
                                 ref={targetRefs[i]}
                                 isActive={activeItem === i}
                                 isSwitched={i % 2 === 0}
+                                isInverted={isInverted}
                                 key={i}
                             >
                                 <TimelineText isSwitched={i % 2 === 0}>
@@ -158,18 +187,27 @@ const Timeline: React.FC<{
                                         <Heading
                                             size="heading-1"
                                             textColor={
-                                                color(theme).secondary.dark
+                                                isInverted
+                                                    ? color(theme).light
+                                                    : color(theme).secondary
+                                                          .dark
                                             }
                                         >
                                             {item.label}
                                         </Heading>
                                     </div>
                                     <div>
-                                        <Heading size="heading-3">
+                                        <Heading
+                                            size="heading-3"
+                                            isInverted={isInverted}
+                                        >
                                             {item.title}
                                         </Heading>
                                     </div>
-                                    <Copy innerHTML={item.text} />
+                                    <Copy
+                                        innerHTML={item.text}
+                                        isInverted={isInverted}
+                                    />
                                 </TimelineText>
                             </TimelineBlock>
                         );
@@ -179,4 +217,5 @@ const Timeline: React.FC<{
     );
 };
 
-export default Timeline;
+export const TimelineComponent = Timeline;
+export default withLibTheme(Timeline);

@@ -79,7 +79,7 @@ export type HeadlineTag =
     | 'div';
 
 const Heading: React.FC<{
-    as?: HeadlineTag;
+    renderAs?: HeadlineTag;
     isInverted?: boolean;
     size?: HeadingType;
     textColor?: string;
@@ -90,7 +90,7 @@ const Heading: React.FC<{
 
     className?: string;
 }> = ({
-    as,
+    renderAs,
     isInverted,
     className,
     size = 'heading-2',
@@ -129,7 +129,7 @@ const Heading: React.FC<{
 
     return (
         <View
-            as={as || tag}
+            as={renderAs || tag}
             type={size}
             textColor={
                 textColor ||
@@ -157,7 +157,7 @@ const Heading: React.FC<{
 };
 
 Heading.defaultProps = {
-    as: 'h2',
+    renderAs: 'h2',
     size: 'heading-2',
 };
 

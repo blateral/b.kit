@@ -34,6 +34,23 @@ const BaseStyles = styled.h1<{
 
     text-shadow: ${({ hasShadow }) =>
         hasShadow && '1px 2px 8px rgba(0, 0, 0, 0.25)'};
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-weight: inherit;
+        font-style: inherit;
+        font-size: 100%;
+        font-family: inherit;
+        vertical-align: baseline;
+    }
 `;
 
 const View = styled(BaseStyles)`
@@ -61,7 +78,7 @@ export type CalloutTag =
 
 const Callout: React.FC<{
     isInverted?: boolean;
-    as?: CalloutTag;
+    renderAs?: CalloutTag;
     size?: FontOptionType;
     textColor?: string;
     textGradient?: string;
@@ -72,7 +89,7 @@ const Callout: React.FC<{
     className?: string;
 }> = ({
     isInverted,
-    as = 'h2',
+    renderAs = 'h2',
     className,
     size = 'medium',
     textColor,
@@ -87,7 +104,7 @@ const Callout: React.FC<{
 
     return (
         <View
-            as={as}
+            as={renderAs}
             size={size}
             textColor={
                 textColor ||
@@ -111,6 +128,11 @@ const Callout: React.FC<{
             {children}
         </View>
     );
+};
+
+Callout.defaultProps = {
+    renderAs: 'h1',
+    size: 'medium',
 };
 
 export default Callout;

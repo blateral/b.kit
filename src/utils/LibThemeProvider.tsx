@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { DefaultTheme, ThemeProvider } from 'styled-components';
+import React, { FC, useContext } from 'react';
+import { DefaultTheme, ThemeContext, ThemeProvider } from 'styled-components';
 
 import { FontBase, getBaseTheme } from 'utils/styles';
 
@@ -19,6 +19,7 @@ const assignFontBase = (
     source?: RecursivePartial<FontBase>
 ) => {
     if (!source) return target;
+
     // deep iterate through target and search matching key
     const assign = (target: any, key: string, value: string) => {
         Object.keys(target).forEach((tKey) => {
@@ -45,31 +46,98 @@ const assignFontBase = (
 };
 
 /**
- * Comnbining Theme objects
+ * Combining Theme objects
  * @param target Result theme object
  * @param source Theme object that should be assigned to target
  */
-const assignTo = (target: DefaultTheme, source: Theme) => {
+export const assignTo = <T extends Theme | DefaultTheme>(
+    target: T,
+    source?: Theme
+) => {
     const output = { ...target };
+    if (!source) return output as T;
 
     Object.keys(source).forEach((key) => {
         const sourceVal = source[key];
         const targetVal = target[key];
-        output[key] =
+
+        if (
             targetVal &&
             sourceVal &&
             typeof targetVal === 'object' &&
             typeof sourceVal === 'object'
-                ? assignTo(targetVal, sourceVal)
-                : sourceVal;
+        ) {
+            output[key] = assignTo(targetVal, sourceVal);
+        } else if (sourceVal) {
+            output[key] = sourceVal;
+        }
+        // output[key] =
+        //     targetVal &&
+        //     sourceVal &&
+        //     typeof targetVal === 'object' &&
+        //     typeof sourceVal === 'object'
+        //         ? assignTo(targetVal, sourceVal)
+        //         : sourceVal;
     });
-    return output;
+    return output as T;
 };
 
 export const LibThemeProvider: FC<{
-    theme: Theme;
+    theme?: Theme;
 }> = ({ theme, children }) => {
-    const combinedBaseTheme = assignFontBase(getBaseTheme(), theme.fonts?.base);
-    const combinedTheme = assignTo(combinedBaseTheme, theme);
-    return <ThemeProvider theme={combinedTheme}>{children}</ThemeProvider>;
+    const ctx = useContext(ThemeContext);
+
+    if (theme) {
+        const newTheme = modifyTheme(ctx, theme);
+
+        return <ThemeProvider theme={newTheme}>{children}</ThemeProvider>;
+    } else {
+        return <React.Fragment>{children}</React.Fragment>;
+    }
+};
+
+interface WithLibThemeProps {
+    theme?: Theme;
+}
+
+export const modifyTheme = (
+    activeTheme?: DefaultTheme,
+    modifications?: Theme
+) => {
+    // asigning base font to all settings on top of base theme. If base fonts are undefined return base theme
+    const combinedBaseTheme = assignFontBase(
+        getBaseTheme(),
+        activeTheme?.fonts?.base
+    );
+
+    // adding base theme to active theme context if possible
+    const combinedTheme = activeTheme
+        ? assignTo(combinedBaseTheme, activeTheme)
+        : combinedBaseTheme;
+
+    // adding additional base font styles and other settings to theme
+    let newTheme = combinedTheme;
+    if (modifications) {
+        newTheme = assignFontBase(combinedTheme, modifications?.fonts?.base);
+        newTheme = assignTo(newTheme, modifications);
+    }
+
+    return newTheme;
+};
+
+export const withLibTheme = <P extends Record<string, unknown>>(
+    Component: React.ComponentType<P>
+    // eslint-disable-next-line react/display-name
+): React.FC<P & { theme?: Theme }> => ({
+    theme,
+    ...props
+}: WithLibThemeProps) => {
+    const ctx = useContext(ThemeContext);
+    const newTheme = modifyTheme(ctx, theme);
+
+    return (
+        <ThemeProvider theme={newTheme}>
+            <Component {...(props as P)} />
+        </ThemeProvider>
+    );
 };

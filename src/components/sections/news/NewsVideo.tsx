@@ -4,6 +4,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
 import { getColors as color, spacings, withRange } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Wrapper from 'components/base/Wrapper';
 import VideoCard from 'components/blocks/VideoCard';
 import Actions from 'components/blocks/Actions';
@@ -69,4 +70,5 @@ const NewsVideo: React.FC<{
     );
 };
 
-export default NewsVideo;
+export const NewsVideoComponent = NewsVideo;
+export default withLibTheme(NewsVideo);

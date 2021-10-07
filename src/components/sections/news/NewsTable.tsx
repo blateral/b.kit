@@ -6,6 +6,7 @@ import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const TableContainer = styled.div`
     overflow-x: scroll;
@@ -192,4 +193,5 @@ const NewsTable: React.FC<{
     );
 };
 
-export default NewsTable;
+export const NewsTableComponent = NewsTable;
+export default withLibTheme(NewsTable);

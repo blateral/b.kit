@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Footer from 'components/sections/Footer';
+import Footer, { FooterComponent } from 'components/sections/Footer';
 
 import Facebook from 'components/base/icons/socials/Facebook';
 import LinkedIn from 'components/base/icons/socials/LinkedIn';
@@ -27,7 +27,7 @@ const exampleContactData = `
 `;
 export default {
     title: 'Sections/Footer',
-    component: Footer,
+    component: FooterComponent,
 } as Meta;
 
 export const WithContactData: Story = () => (

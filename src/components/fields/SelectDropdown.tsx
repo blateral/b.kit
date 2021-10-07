@@ -39,18 +39,18 @@ const Select = styled.div<{
 
     &:active {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
     }
 
     &:focus {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
     }
 
     ${({ isActive, theme }) =>
         isActive &&
         css`
-            border: 2px solid ${hexToRgba(color(theme).dark, 0.6)}};
+            border: 2px solid ${hexToRgba(color(theme).dark, 0.2)}};
         `}
 
     display: flex;
@@ -91,11 +91,12 @@ const Flyout = styled.ul<{ isVisible?: boolean }>`
 
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
     background: ${({ theme }) => color(theme).light};
-    border: 2px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.6)};
+    border: 2px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.2)};
     border-top: none;
 
     max-height: 300px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    scrollbar-width: none;
 
     ::-webkit-scrollbar {
         -webkit-appearance: none;
@@ -270,7 +271,7 @@ const SelectDropdown: React.FC<{
                                         : color(theme).dark
                                 }
                                 size="medium"
-                                type="copy-b"
+                                type="copy"
                             >
                                 {selectedItem?.label || placeholder}
                             </Label>

@@ -15,6 +15,7 @@ import Wrapper from 'components/base/Wrapper';
 import PromotionCard, {
     PromotionCardProps,
 } from 'components/blocks/PromotionCard';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const FlexGrid = styled.div`
     @media ${mq.semilarge} {
@@ -153,4 +154,5 @@ const CrossPromotion: React.FC<{
     );
 };
 
-export default CrossPromotion;
+export const CrossPromotionComponent = CrossPromotion;
+export default withLibTheme(CrossPromotion);

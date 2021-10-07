@@ -50,12 +50,12 @@ const Field = styled.input<{
 
     &:active {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
     }
 
     &:focus {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.6)}`};
+            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
     }
 
     &::placeholder {
@@ -125,7 +125,7 @@ const Textfield: React.FC<
                     </Copy>
                 )}
             </FieldHead>
-            <Copy type="copy-b">
+            <Copy type="copy">
                 <Field
                     hasBack={!lightBg}
                     placeholder={placeholder}

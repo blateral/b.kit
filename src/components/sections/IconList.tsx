@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
+import { withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
@@ -124,6 +125,7 @@ const IconList: React.FC<{
     showMoreText?: string;
     showLessText?: string;
     isCentered?: boolean;
+    enableToggle?: boolean;
     bgMode?: 'full' | 'inverted';
 }> = ({
     items,
@@ -132,6 +134,7 @@ const IconList: React.FC<{
     secondaryAction,
     showLessText = 'weniger anzeigen',
     showMoreText = 'weitere anzeigen',
+    enableToggle,
     bgMode,
 }) => {
     const [showMore, setShowMore] = useState(false);
@@ -172,26 +175,30 @@ const IconList: React.FC<{
                                 })}
                             </Items>
                         </ItemContainer>
-                        <ListFooter
-                            type="copy"
-                            size="medium"
-                            isInverted={isInverted}
-                            isCentered={isCentered}
-                        >
-                            <ShowMore
-                                itemCount={items.length}
-                                onClick={() => setShowMore((prev) => !prev)}
+                        {enableToggle && (
+                            <ListFooter
+                                type="copy"
+                                size="medium"
+                                isInverted={isInverted}
+                                isCentered={isCentered}
                             >
-                                <Pointer.View
-                                    as="button"
-                                    isInverted={isInverted}
+                                <ShowMore
+                                    itemCount={items.length}
+                                    onClick={() => setShowMore((prev) => !prev)}
                                 >
-                                    <Pointer.Label>
-                                        {showMore ? showLessText : showMoreText}
-                                    </Pointer.Label>
-                                </Pointer.View>
-                            </ShowMore>
-                        </ListFooter>
+                                    <Pointer.View
+                                        as="button"
+                                        isInverted={isInverted}
+                                    >
+                                        <Pointer.Label>
+                                            {showMore
+                                                ? showLessText
+                                                : showMoreText}
+                                        </Pointer.Label>
+                                    </Pointer.View>
+                                </ShowMore>
+                            </ListFooter>
+                        )}
                     </Copy>
                 </ListContainer>
 
@@ -211,4 +218,5 @@ const IconList: React.FC<{
     );
 };
 
-export default IconList;
+export const IconListComponent = IconList;
+export default withLibTheme(IconList);

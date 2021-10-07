@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Accordion from 'components/sections/Accordion';
+import Accordion, { AccordionComponent } from 'components/sections/Accordion';
 
 export default {
     title: 'Sections/Accordion',
-    component: Accordion,
+    component: AccordionComponent,
 } as Meta;
 
 export const Default: Story = () => (

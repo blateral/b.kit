@@ -6,6 +6,7 @@ import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { getColors as color, mq, spacings } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const Seperator = styled.div<{ isInverted?: boolean }>`
     border-bottom: solid 1px
@@ -104,4 +105,5 @@ const NewsAuthorCard: React.FC<{
     );
 };
 
-export default NewsAuthorCard;
+export const NewsAuthorCardComponent = NewsAuthorCard;
+export default withLibTheme(NewsAuthorCard);

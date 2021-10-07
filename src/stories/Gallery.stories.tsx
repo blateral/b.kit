@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Gallery from 'components/sections/Gallery';
+import Gallery, { GalleryComponent } from 'components/sections/Gallery';
 
 export default {
     title: 'Sections/Gallery',
-    component: Gallery,
+    component: GalleryComponent,
 } as Meta;
 
 export const SingleImage: Story = () => (

@@ -15,6 +15,7 @@ import { HeadlineTag } from 'components/typography/Heading';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import Grid from 'components/base/Grid';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const ContactView = styled.div`
     display: flex;
@@ -95,13 +96,17 @@ const Address = styled.div`
 
 const Decorator = styled.div<{ isInverted?: boolean }>`
     flex: 1;
-    width: 25px;
+    width: 30px;
     margin-bottom: ${spacings.nudge * 1.5}px;
 
     color: ${({ theme, isInverted }) =>
         isInverted
             ? font(theme)['copy-b'].big.colorInverted
             : font(theme)['copy-b'].big.color};
+
+    & > * {
+        max-width: 30px;
+    }
 
     @media ${mq.medium} {
         margin-bottom: 0;
@@ -386,4 +391,5 @@ export const CallToAction: FC<{
     );
 };
 
-export default CallToAction;
+export const CallToActionComponent = CallToAction;
+export default withLibTheme(CallToAction);

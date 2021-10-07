@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import FactList from 'components/sections/FactList';
+import FactList, { FactListComponent } from 'components/sections/FactList';
 
 export default {
     title: 'Sections/FactList',
-    component: FactList,
+    component: FactListComponent,
 } as Meta;
 
 export const Default: Story = () => (
