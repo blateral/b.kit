@@ -51,9 +51,9 @@ const ImageCarousel: FC<
                 dot={dot}
                 onChange={onChange}
                 onInit={onInit}
-                perPage={imageCount > 1 ? 2 : 1}
+                perPage={1}
                 padding={{
-                    right: imageCount > 1 ? '25%' : 0,
+                    right: imageCount > 1 ? '20%' : 0,
                     left: 0,
                 }}
                 breakpoints={{
@@ -66,10 +66,20 @@ const ImageCarousel: FC<
                     },
                     640: {
                         perPage: 1,
+                        perMove: 1,
                         padding: {
-                            right: 0,
+                            right: imageCount > 1 ? '20%' : 0,
                             left: 0,
                         },
+                    },
+                    0: {
+                        perPage: 1,
+                        perMove: 1,
+                        padding: {
+                            right: imageCount > 1 ? '20%' : 0,
+                            left: 0,
+                        },
+                        fixedHeight: '400px',
                     },
                 }}
             >

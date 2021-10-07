@@ -39,7 +39,11 @@ const useSlider = ({
         initSlider();
 
         return () => {
-            if (splide) splide?.destroy(true);
+            if (splide) {
+                splide.off('updated');
+                splide.off('moved');
+                splide.destroy(true);
+            }
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
