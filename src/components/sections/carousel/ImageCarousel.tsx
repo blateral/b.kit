@@ -22,8 +22,7 @@ const ImageCarousel: FC<
     images,
     controlNext,
     controlPrev,
-    beforeChange,
-    afterChange,
+    onChange,
     onInit,
     dot,
 }) => {
@@ -50,29 +49,13 @@ const ImageCarousel: FC<
                 controlNext={controlNext}
                 controlPrev={controlPrev}
                 dot={dot}
-                beforeChange={beforeChange}
-                afterChange={afterChange}
+                onChange={onChange}
                 onInit={onInit}
-                // slidesToShow={imageCount > 1 ? 2.75 : 1}
                 perPage={imageCount > 1 ? 2 : 1}
                 padding={{
                     right: imageCount > 1 ? '25%' : 0,
                     left: 0,
                 }}
-                // responsive={[
-                //     {
-                //         breakpoint: 832,
-                //         settings: {
-                //             slidesToShow: imageCount > 1 ? 2.25 : 1,
-                //         },
-                //     },
-                //     {
-                //         breakpoint: 640,
-                //         settings: {
-                //             slidesToShow: imageCount > 1 ? 1.15 : 1,
-                //         },
-                //     },
-                // ]}
                 breakpoints={{
                     832: {
                         perPage: 2,

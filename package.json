@@ -42,7 +42,7 @@
         "@rollup/plugin-node-resolve": "^11.0.0",
         "@storybook/addon-essentials": "^6.3.9",
         "@storybook/react": "6.3.9",
-        "@splidejs/splide": "^2.4.21",
+        "@splidejs/splide": "3.0.8",
         "@storybook/storybook-deployer": "^2.8.7",
         "@storybook/theming": "^6.3.8",
         "@types/react": "^17.0.0",
@@ -78,7 +78,7 @@
         "react-scroll-parallax": "2.4.0"
     },
     "peerDependencies": {
-        "@splidejs/splide": "2.4.21",
+        "@splidejs/splide": "3.0.8",
         "@types/react-datepicker": "^3.1.8",
         "@types/yup": "^0.29.11",
         "formik": "^2.2.8",

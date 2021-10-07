@@ -164,8 +164,7 @@ export const WithHandlers: Story = () => (
     <ImageCarousel
         bgMode="full"
         onInit={(steps) => console.log('carousel has ' + steps + ' steps')}
-        beforeChange={(current) => console.log('before step: ' + current)}
-        afterChange={(current) => console.log('after step: ' + current)}
+        onChange={({ current }) => console.log('before step: ' + current)}
         images={exampleImages.map((img, i) => ({
             ...img,
             small: 'https://unsplash.it/553/431?image=40' + i,

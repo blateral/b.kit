@@ -36,16 +36,7 @@ const FeatureCarousel: FC<
         bgMode?: 'full' | 'splitted' | 'inverted';
         features?: FeatureProps[];
     }
-> = ({
-    bgMode,
-    features,
-    controlNext,
-    controlPrev,
-    beforeChange,
-    afterChange,
-    onInit,
-    dot,
-}) => {
+> = ({ bgMode, features, controlNext, controlPrev, onChange, onInit, dot }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
@@ -85,8 +76,7 @@ const FeatureCarousel: FC<
                     controlNext={controlNext}
                     controlPrev={controlPrev}
                     dot={dot}
-                    beforeChange={beforeChange}
-                    afterChange={afterChange}
+                    onChange={onChange}
                     onInit={onInit}
                     // slidesToShow={featureCount > 1 ? 3 : 1}
                     // responsive={[

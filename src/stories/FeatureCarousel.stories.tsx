@@ -165,8 +165,7 @@ export const WithHandlers: Story = () => (
     <FeatureCarousel
         bgMode="full"
         onInit={(steps) => console.log('carousel has ' + steps + ' steps')}
-        beforeChange={(current) => console.log('before step: ' + current)}
-        afterChange={(current) => console.log('after step: ' + current)}
+        onChange={({ current }) => console.log('before step: ' + current)}
         features={exampleFeatures.map((feature, i) => {
             return {
                 ...feature,

@@ -12,16 +12,7 @@ const VideoCarousel: FC<
         bgMode?: 'full' | 'splitted' | 'inverted';
         videos?: VideoCardProps[];
     }
-> = ({
-    bgMode,
-    videos,
-    controlNext,
-    controlPrev,
-    beforeChange,
-    afterChange,
-    onInit,
-    dot,
-}) => {
+> = ({ bgMode, videos, controlNext, controlPrev, onChange, onInit, dot }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     // const videoCount = videos?.length || 0;
@@ -44,8 +35,7 @@ const VideoCarousel: FC<
                 controlNext={controlNext}
                 controlPrev={controlPrev}
                 dot={dot}
-                beforeChange={beforeChange}
-                afterChange={afterChange}
+                onChange={onChange}
                 onInit={onInit}
                 // slidesToShow={videoCount > 1 ? 2.75 : 1}
                 // responsive={[

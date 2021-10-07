@@ -24,8 +24,7 @@ const PromotionCarousel: FC<
     promotions,
     controlNext,
     controlPrev,
-    beforeChange,
-    afterChange,
+    onChange,
     onInit,
     dot,
 }) => {
@@ -51,8 +50,7 @@ const PromotionCarousel: FC<
                 controlNext={controlNext}
                 controlPrev={controlPrev}
                 dot={dot}
-                beforeChange={beforeChange}
-                afterChange={afterChange}
+                onChange={onChange}
                 onInit={onInit}
                 // slidesToShow={promotionCount > 1 ? 2.75 : 1}
                 // responsive={[

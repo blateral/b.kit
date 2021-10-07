@@ -1640,10 +1640,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@splidejs/splide@^2.4.21":
-  version "2.4.21"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-2.4.21.tgz#ad1954d8d8822c9bfea0d3dc6a119358b88581ad"
-  integrity sha512-LdIwSnmNsGybCCnA3QG2dOeRv/rQl46jf7FflXxMGX0ADYWyL6UJHWJbMZvHBi5I67uRJY1ga/W+CvJ39nH26A==
+"@splidejs/splide@3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-3.0.8.tgz#39d9697babfbb8ddee8ae4492100efe62e608cbf"
+  integrity sha512-GKopTuqpIY+PROoa0btHnU3pFeqhFf2zkdcmy/W8WMUCVPdvDegmfI+Z5ZMwPBDYiMnMvtMWp/AtFopdkxKo6g==
 
 "@storybook/addon-actions@6.3.9":
   version "6.3.9"

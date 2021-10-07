@@ -1,64 +1,33 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Splide, { SplideOptions } from '@splidejs/splide';
+import Splide, { Options } from '@splidejs/splide';
 
 const View = styled.div``;
 
-const Slider: FC<{
-    className?: string;
-}> = ({ className, children }) => {
-    const additionalClasses = className ? className : '';
-    return <View className={'splide ' + additionalClasses}>{children}</View>;
-};
-
-const Slides: FC<{
-    className?: string;
-}> = ({ className, children }) => {
-    const additionalClasses = className ? className : '';
-    return (
-        <div className={'splide__track ' + additionalClasses}>
-            <ul className="splide__list">{children}</ul>
-        </div>
-    );
-};
-
-const Slide: FC<{
-    className?: string;
-}> = ({ className, children }) => {
-    const additionalClasses = className ? className : '';
-    return <li className={'splide__slide ' + additionalClasses}>{children}</li>;
-};
-
-const SlideContainer: FC<{
-    className?: string;
-}> = ({ className, children }) => {
-    const additionalClasses = className ? className : '';
-    return (
-        <div className={'splide__slide__container ' + additionalClasses}>
-            {children}
-        </div>
-    );
-};
-
-const useSlider = (options?: SplideOptions) => {
+const useSlider = ({
+    options,
+    beforeMount,
+}: {
+    options?: Options;
+    beforeMount?: (slider: Splide) => void;
+}) => {
     const [splide, setSplide] = useState<Splide | null>(null);
     const [currentIndex, setIndex] = useState<number>(0);
     const [slides, setSlides] = useState<number>(0);
 
     useEffect(() => {
         const initSlider = async () => {
-            const DynamicSplide = await (await import('@splidejs/splide'))
-                .default;
+            const slider = new Splide('.splide', options);
 
-            const slider = new DynamicSplide('.splide', options);
-
-            slider.on('updated', () => {
+            slider.on('updated' as any, () => {
                 setSlides(slider.length);
             });
 
             slider.on('moved', (newIndex: number) => {
                 setIndex(newIndex);
             });
+
+            beforeMount && beforeMount(slider);
 
             slider.mount();
             setIndex(slider.index);
@@ -69,14 +38,14 @@ const useSlider = (options?: SplideOptions) => {
 
         initSlider();
 
+        return () => {
+            if (splide) splide?.destroy(true);
+        };
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return {
-        View: Slider,
-        Slides: Slides,
-        Slide: Slide,
-        SlideContainer: SlideContainer,
         slider: splide,
         length: slides,
         index: currentIndex,
@@ -84,6 +53,42 @@ const useSlider = (options?: SplideOptions) => {
 };
 
 export default useSlider;
+
+export const Slider: FC<{
+    className?: string;
+}> = ({ className, children }) => {
+    const additionalClasses = className ? className : '';
+    return <View className={'splide ' + additionalClasses}>{children}</View>;
+};
+
+export const Slides: FC<{
+    className?: string;
+}> = ({ className, children }) => {
+    const additionalClasses = className ? className : '';
+    return (
+        <div className={'splide__track ' + additionalClasses}>
+            <ul className="splide__list">{children}</ul>
+        </div>
+    );
+};
+
+export const Slide: FC<{
+    className?: string;
+}> = ({ className, children }) => {
+    const additionalClasses = className ? className : '';
+    return <li className={'splide__slide ' + additionalClasses}>{children}</li>;
+};
+
+export const SlideContainer: FC<{
+    className?: string;
+}> = ({ className, children }) => {
+    const additionalClasses = className ? className : '';
+    return (
+        <div className={'splide__slide__container ' + additionalClasses}>
+            {children}
+        </div>
+    );
+};
 
 export const Arrows: FC<{
     className?: string;

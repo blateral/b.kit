@@ -117,8 +117,7 @@ export const WithHandlers: Story = () => (
             },
         }))}
         onInit={(steps) => console.log('carousel has ' + steps + ' steps')}
-        beforeChange={(current) => console.log('before step: ' + current)}
-        afterChange={(current) => console.log('after step: ' + current)}
+        onChange={({ current }) => console.log('before step: ' + current)}
     />
 );
 
