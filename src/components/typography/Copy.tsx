@@ -9,6 +9,7 @@ import {
     getFonts as font,
     styleTextColor,
 } from 'utils/styles';
+import { headingStyle } from './Heading';
 
 type CopyType = Exclude<
     FontType,
@@ -83,6 +84,18 @@ const BaseStyles = styled.div<{
                 break-inside: avoid;
             }
         `};
+
+    h2 {
+        ${headingStyle('heading-2')}
+    }
+
+    h3 {
+        ${headingStyle('heading-3')}
+    }
+
+    h4 {
+        ${headingStyle('heading-4')}
+    }
 `;
 
 const View = styled(BaseStyles)`

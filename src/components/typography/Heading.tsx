@@ -13,13 +13,11 @@ type HeadingType = Exclude<
     'copy' | 'copy-i' | 'copy-b' | 'label' | 'callout'
 >;
 
-// Styles
-const BaseStyles = styled.h1<{
+const base = css<{
     hyphens?: boolean;
     hasShadow?: boolean;
     textColor?: string;
     textGradient?: string;
-    type: HeadingType;
 }>`
     display: inline-block;
     margin: 0;
@@ -58,14 +56,25 @@ const BaseStyles = styled.h1<{
     }
 `;
 
-const View = styled(BaseStyles)`
-    font-family: ${({ type, theme }) => font(theme)[type].family};
-    font-weight: ${({ type, theme }) => font(theme)[type].weight};
-    font-style: ${({ type, theme }) => font(theme)[type].style};
-    ${({ type, theme }) => withRange(font(theme)[type].size, 'font-size')}
-    line-height: ${({ type, theme }) => font(theme)[type].lineHeight};
-    letter-spacing: ${({ type, theme }) => font(theme)[type].letterSpacing};
-    text-transform: ${({ type, theme }) => font(theme)[type].textTransform};
+export const headingStyle = (type: HeadingType) => css`
+    ${base};
+    font-family: ${({ theme }) => font(theme)[type].family};
+    font-weight: ${({ theme }) => font(theme)[type].weight};
+    font-style: ${({ theme }) => font(theme)[type].style};
+    ${({ theme }) => withRange(font(theme)[type].size, 'font-size')}
+    line-height: ${({ theme }) => font(theme)[type].lineHeight};
+    letter-spacing: ${({ theme }) => font(theme)[type].letterSpacing};
+    text-transform: ${({ theme }) => font(theme)[type].textTransform};
+`;
+
+const View = styled.h1<{
+    hyphens?: boolean;
+    hasShadow?: boolean;
+    textColor?: string;
+    textGradient?: string;
+    type: HeadingType;
+}>`
+    ${({ type }) => headingStyle(type)}
 `;
 
 export type HeadlineTag =
