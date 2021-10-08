@@ -66,6 +66,76 @@ export const WithContact: Story = () => (
     />
 );
 
+export const WithContactAsRichtext: Story = () => (
+    <CallToAction
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        contact={{
+            avatar: {
+                src: 'https://via.placeholder.com/196',
+                alt: 'avatar',
+            },
+            description: `<b>Frau Manuela Müller</b>
+                <br/> 
+                Ihre Ansprechpartnerin im Haus St. Franziskus
+                <br/>
+                <p class="contact__label">
+                    +49 (0) 7551-9534-41
+                    <br/>
+                    <a href="mailto:mueller@ueberlingen.de">mueller@ueberlingen.de</a>
+                </p>
+            `,
+        }}
+    />
+);
+
+export const WithContactAndSecondColumn: Story = () => (
+    <CallToAction
+        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        superTitle="Haus St. Franziskus"
+        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        contact={{
+            avatar: {
+                src: 'https://via.placeholder.com/196',
+                alt: 'avatar',
+            },
+            description: `<b>Frau Manuela Müller</b>
+                <br/> 
+                Ihre Ansprechpartnerin im Haus St. Franziskus
+                <br/>
+                <p class="contact__label">
+                    +49 (0) 7551-9534-41
+                    <br/>
+                    <a href="mailto:mueller@ueberlingen.de">mueller@ueberlingen.de</a>
+                </p>
+            `,
+        }}
+        column={{
+            title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            superTitle: 'Haus St. Franziskus',
+            text:
+                'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
+            contact: {
+                avatar: {
+                    src: 'https://via.placeholder.com/196',
+                    alt: 'avatar',
+                },
+                description: `<b>Frau Manuela Müller</b>
+                        <br/> 
+                        Ihre Ansprechpartnerin im Haus St. Franziskus
+                        <br/>
+                        <p class="contact__label">
+                            +49 (0) 7551-9534-41
+                            <br/>
+                            <a href="mailto:mueller@ueberlingen.de">mueller@ueberlingen.de</a>
+                        </p>
+                    `,
+            },
+        }}
+    />
+);
+
 export const WithActions: Story = () => (
     <CallToAction
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"

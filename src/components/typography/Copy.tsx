@@ -29,6 +29,23 @@ const BaseStyles = styled.div<{
     type: CopyType;
     size: FontOptionType;
 }>`
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-weight: inherit;
+        font-style: inherit;
+        font-size: 100%;
+        font-family: inherit;
+        vertical-align: baseline;
+    }
+
     hyphens: auto;
     ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
 
@@ -95,6 +112,11 @@ const BaseStyles = styled.div<{
 
     h4 {
         ${headingStyle('heading-4')}
+    }
+
+    // classes for richtext
+    .contact__label {
+        // #TODO: Styles für richText erstellen
     }
 `;
 

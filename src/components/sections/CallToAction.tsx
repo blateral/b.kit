@@ -117,17 +117,8 @@ const AddressLabel = styled(Copy)`
     flex: 0 100%;
     text-align: center;
 
-    a {
-        color: ${({ textColor }) => textColor && textColor};
-        text-decoration: none;
-    }
-
     p {
         margin: 0;
-    }
-
-    a:hover {
-        text-decoration: underline;
     }
 
     @media ${mq.medium} {
@@ -155,11 +146,13 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
         <ContactView className={className}>
             {avatar && <Avatar src={avatar?.src} alt={avatar?.alt} />}
             <Info>
-                {name && (
+                {(name || description) && (
                     <div>
-                        <Copy type="copy-b" isInverted={isInverted}>
-                            {name}
-                        </Copy>
+                        {name && (
+                            <Copy type="copy-b" isInverted={isInverted}>
+                                {name}
+                            </Copy>
+                        )}
                         {description && (
                             <Copy
                                 type="copy"
@@ -169,9 +162,9 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
                         )}
                     </div>
                 )}
-                <div>
-                    {addresses &&
-                        addresses.map((address, i) => (
+                {addresses && addresses.length > 0 && (
+                    <div>
+                        {addresses?.map((address, i) => (
                             <Address key={i}>
                                 <Decorator isInverted={isInverted}>
                                     {address.decorator}
@@ -184,7 +177,8 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
                                 />
                             </Address>
                         ))}
-                </div>
+                    </div>
+                )}
             </Info>
         </ContactView>
     );
@@ -273,7 +267,7 @@ export const CallToAction: FC<{
     bgMode?: 'full' | 'inverted';
 }> = ({
     title,
-    titleAs = 'h1',
+    titleAs = 'h2',
     superTitle,
     superTitleAs,
     text,
