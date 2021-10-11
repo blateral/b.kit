@@ -31,3 +31,17 @@ export const WithActiveItem: Story = () => (
         ]}
     />
 );
+
+export const IsInverted: Story = () => (
+    <Quicknav
+        activeNavItem="Hautchirurgie"
+        navItems={[
+            { label: 'Dsygnathie', link: '#0' },
+            { label: 'Dentalveoläre Chirurgie', link: '#0' },
+            { label: 'Implantologie', link: '#0' },
+            { label: 'Ästhetische Chirurgie', link: '#0' },
+            { label: 'Hautchirurgie', link: '#0' },
+        ]}
+        bgMode="inverted"
+    />
+);
