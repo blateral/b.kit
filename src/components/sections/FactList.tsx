@@ -38,10 +38,10 @@ const Icon = styled.img`
 
 const ContentBlock = styled.div`
     max-width: 80%;
-`;
 
-const Text = styled(Copy)`
-    margin-top: ${spacings.spacer}px;
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
+    }
 `;
 
 const FactList: React.FC<{
@@ -78,9 +78,11 @@ const FactList: React.FC<{
                                         <Icon src={icon.src} alt={icon.alt} />
                                     )}
                                     <ContentBlock>
-                                        <Copy type="copy-b">{label}</Copy>
+                                        {label && (
+                                            <Copy type="copy-b">{label}</Copy>
+                                        )}
                                         {text && (
-                                            <Text
+                                            <Copy
                                                 type="copy"
                                                 innerHTML={text}
                                             />
