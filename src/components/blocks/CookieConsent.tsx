@@ -9,6 +9,7 @@ import {
     isUrlInWhitelist,
     updateConsentStatusElements,
 } from 'utils/cookie-consent/mutations';
+import { LibThemeProvider, Theme } from 'utils/LibThemeProvider';
 import { getColors as color, mq, spacings } from 'utils/styles';
 
 const Stage = styled.div<{ zIndex?: number; bgOpacity?: number }>`
@@ -85,6 +86,7 @@ export const CookieConsent: FC<
     CookieConfig & {
         className?: string;
         children?: (props: RenderProps) => React.ReactElement;
+        theme?: Theme;
     }
 > = ({
     cookieName = 'cookie-consent',
@@ -100,6 +102,7 @@ export const CookieConsent: FC<
     overlayOpacity = 0.4,
     className,
     children,
+    theme,
 }) => {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -146,44 +149,46 @@ export const CookieConsent: FC<
 
     if (!isVisible) return null;
     return (
-        <Stage zIndex={zIndex} bgOpacity={overlayOpacity}>
-            <View className={className}>
-                {children &&
-                    children({
-                        handleDecline: () => {
-                            console.log('decline');
-                            setCookie<CookieConsentData>({
-                                name: cookieName,
-                                data: {
-                                    consent: false,
-                                    updatedAt: new Date().getTime(),
-                                },
-                                days: lifetime,
-                            });
-                            setIsVisible(false);
-                        },
-                        handleAccept: () => {
-                            console.log('accept');
-                            setCookie<CookieConsentData>({
-                                name: cookieName,
-                                data: {
-                                    consent: true,
-                                    updatedAt: new Date().getTime(),
-                                },
-                                days: lifetime,
-                            });
-                            setIsVisible(false);
-                            activateTrackingScripts();
-                        },
-                        additionalAcceptProps: {
-                            ['data-gtm']: 'button-cookie-consent-accept',
-                        },
-                        additionalDeclineProps: {
-                            ['data-gtm']: 'button-cookie-consent-decline',
-                        },
-                    })}
-            </View>
-        </Stage>
+        <LibThemeProvider theme={theme}>
+            <Stage zIndex={zIndex} bgOpacity={overlayOpacity}>
+                <View className={className}>
+                    {children &&
+                        children({
+                            handleDecline: () => {
+                                console.log('decline');
+                                setCookie<CookieConsentData>({
+                                    name: cookieName,
+                                    data: {
+                                        consent: false,
+                                        updatedAt: new Date().getTime(),
+                                    },
+                                    days: lifetime,
+                                });
+                                setIsVisible(false);
+                            },
+                            handleAccept: () => {
+                                console.log('accept');
+                                setCookie<CookieConsentData>({
+                                    name: cookieName,
+                                    data: {
+                                        consent: true,
+                                        updatedAt: new Date().getTime(),
+                                    },
+                                    days: lifetime,
+                                });
+                                setIsVisible(false);
+                                activateTrackingScripts();
+                            },
+                            additionalAcceptProps: {
+                                ['data-gtm']: 'button-cookie-consent-accept',
+                            },
+                            additionalDeclineProps: {
+                                ['data-gtm']: 'button-cookie-consent-decline',
+                            },
+                        })}
+                </View>
+            </Stage>
+        </LibThemeProvider>
     );
 };
 
