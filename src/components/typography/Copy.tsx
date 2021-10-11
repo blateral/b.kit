@@ -99,6 +99,11 @@ const base = css<{
         margin-left: 1.1em;
     }
 
+    & > p {
+        margin: 0;
+        padding: 0;
+    }
+
     ${({ columns }) =>
         columns &&
         css`
