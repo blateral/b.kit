@@ -8,6 +8,7 @@ import {
     FontOptionType,
     getFonts as font,
     styleTextColor,
+    FontOptions,
 } from 'utils/styles';
 import { headingStyle } from './Heading';
 
@@ -22,12 +23,23 @@ type CopyType = Exclude<
     | 'label'
 >;
 
-const BaseStyles = styled.div<{
+export const copyStyle = (
+    type: CopyType,
+    size: keyof FontOptions = 'medium'
+) => css`
+    font-family: ${({ theme }) => font(theme)[type][size].family};
+    font-weight: ${({ theme }) => font(theme)[type][size].weight};
+    font-style: ${({ theme }) => font(theme)[type][size].style};
+    ${({ theme }) => withRange(font(theme)[type][size].size, 'font-size')}
+    line-height: ${({ theme }) => font(theme)[type][size].lineHeight};
+    letter-spacing: ${({ theme }) => font(theme)[type][size].letterSpacing};
+    text-transform: ${({ theme }) => font(theme)[type][size].textTransform};
+`;
+
+const base = css<{
     textColor?: string;
     textGradient?: string;
     columns?: boolean;
-    type: CopyType;
-    size: FontOptionType;
 }>`
     h1,
     h2,
@@ -115,23 +127,50 @@ const BaseStyles = styled.div<{
     }
 
     // classes for richtext
-    .contact__label {
-        // #TODO: Styles für richText erstellen
+    // styles child DOM elements as label list
+    .label-list {
+        display: inline-flex;
+        flex-direction: column;
+        padding: ${spacings.spacer * 1.5}px 0;
+
+        & > * {
+            margin: 0;
+            padding: 0;
+        }
+
+        & > * + * {
+            margin-top: ${spacings.nudge * 3}px;
+        }
+    }
+
+    /** DOM element with icon and/or label */
+    .icon-label {
+        display: inline-flex;
+        align-items: center;
+        padding-left: ${spacings.nudge}px;
+        padding-right: ${spacings.nudge}px;
+        ${copyStyle('copy-b', 'big')}
+
+        & > * + * {
+            margin-left: ${spacings.spacer}px;
+        }
+
+        svg {
+            max-width: 30px;
+            fill: currentColor;
+        }
     }
 `;
 
-const View = styled(BaseStyles)`
-    font-family: ${({ type, size, theme }) => font(theme)[type][size].family};
-    font-weight: ${({ type, size, theme }) => font(theme)[type][size].weight};
-    font-style: ${({ type, size, theme }) => font(theme)[type][size].style};
-    ${({ type, size, theme }) =>
-        withRange(font(theme)[type][size].size, 'font-size')}
-    line-height: ${({ type, size, theme }) =>
-        font(theme)[type][size].lineHeight};
-    letter-spacing: ${({ type, size, theme }) =>
-        font(theme)[type][size].letterSpacing};
-    text-transform: ${({ type, size, theme }) =>
-        font(theme)[type][size].textTransform};
+const View = styled.div<{
+    type: CopyType;
+    size: FontOptionType;
+    textColor?: string;
+    textGradient?: string;
+    columns?: boolean;
+}>`
+    ${base}
+    ${({ type, size }) => copyStyle(type, size)}
 `;
 
 const Copy: React.FC<{

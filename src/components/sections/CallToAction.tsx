@@ -68,6 +68,14 @@ const Info = styled.div`
     }
 `;
 
+const Description = styled(Copy)`
+    text-align: center;
+
+    @media ${mq.medium} {
+        text-align: left;
+    }
+`;
+
 const Address = styled.div`
     display: flex;
     flex-direction: column;
@@ -154,7 +162,7 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
                             </Copy>
                         )}
                         {description && (
-                            <Copy
+                            <Description
                                 type="copy"
                                 isInverted={isInverted}
                                 innerHTML={description}
