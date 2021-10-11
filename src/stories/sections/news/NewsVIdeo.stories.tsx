@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NewsVideo from '../components/sections/news/NewsVideo';
+import NewsVideo from 'components/sections/news/NewsVideo';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
