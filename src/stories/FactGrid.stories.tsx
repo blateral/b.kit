@@ -40,6 +40,30 @@ export const Default: Story = () => (
     />
 );
 
+export const AsRichText: Story = () => (
+    <FactGrid
+        facts={generateItemList<FactProps>(exampleFact, 4, (item, i) => ({
+            ...item,
+            subTitle: undefined,
+            text: `
+                <b>Subheadline</b>
+                <br/>
+                Lorem ipsum dolor sit amet consetetur 
+                sadipscing elitr, sed diam nonumy eirmod 
+                tempor invidunt ut labore Lorem ipsum dolor sit amet consetetur 
+                sadipscing elitr, sed diam nonumy eirmod 
+                tempor invidunt ut labore `,
+            image: {
+                small: 'https://unsplash.it/620/310?image=70' + i,
+                medium: 'https://unsplash.it/250/188?image=70' + i,
+                semilarge: 'https://unsplash.it/310/233?image=70' + i,
+                large: 'https://unsplash.it/350/263?image=70' + i,
+                coverSpace: true,
+            },
+        }))}
+    />
+);
+
 export const Centered: Story = () => (
     <FactGrid
         isCentered
