@@ -46,7 +46,9 @@ const QuicknavButton: React.FC<{
             isDisabled={isDisabled}
             isInverted={isInverted}
         >
-            <Copy type={isActive ? 'copy-b' : 'copy'}>{label}</Copy>
+            <Copy type={isActive ? 'copy-b' : 'copy'} isInverted={isInverted}>
+                {label}
+            </Copy>
         </View>
     );
 };
