@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NewsText, {
-    NewsTextComponent,
-} from '../components/sections/news/NewsText';
+import NewsText, { NewsTextComponent } from 'components/sections/news/NewsText';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 

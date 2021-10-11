@@ -8,7 +8,9 @@ import {
     FontOptionType,
     getFonts as font,
     styleTextColor,
+    FontOptions,
 } from 'utils/styles';
+import { headingStyle } from './Heading';
 
 type CopyType = Exclude<
     FontType,
@@ -21,13 +23,41 @@ type CopyType = Exclude<
     | 'label'
 >;
 
-const BaseStyles = styled.div<{
+export const copyStyle = (
+    type: CopyType,
+    size: keyof FontOptions = 'medium'
+) => css`
+    font-family: ${({ theme }) => font(theme)[type][size].family};
+    font-weight: ${({ theme }) => font(theme)[type][size].weight};
+    font-style: ${({ theme }) => font(theme)[type][size].style};
+    ${({ theme }) => withRange(font(theme)[type][size].size, 'font-size')}
+    line-height: ${({ theme }) => font(theme)[type][size].lineHeight};
+    letter-spacing: ${({ theme }) => font(theme)[type][size].letterSpacing};
+    text-transform: ${({ theme }) => font(theme)[type][size].textTransform};
+`;
+
+const base = css<{
     textColor?: string;
     textGradient?: string;
     columns?: boolean;
-    type: CopyType;
-    size: FontOptionType;
 }>`
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-weight: inherit;
+        font-style: inherit;
+        font-size: 100%;
+        font-family: inherit;
+        vertical-align: baseline;
+    }
+
     hyphens: auto;
     ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
 
@@ -69,6 +99,11 @@ const BaseStyles = styled.div<{
         margin-left: 1.1em;
     }
 
+    & > p {
+        margin: 0;
+        padding: 0;
+    }
+
     ${({ columns }) =>
         columns &&
         css`
@@ -83,20 +118,64 @@ const BaseStyles = styled.div<{
                 break-inside: avoid;
             }
         `};
+
+    h2 {
+        ${headingStyle('heading-2')}
+    }
+
+    h3 {
+        ${headingStyle('heading-3')}
+    }
+
+    h4 {
+        ${headingStyle('heading-4')}
+    }
+
+    // classes for richtext
+    // styles child DOM elements as label list
+    .label-list {
+        display: inline-flex;
+        flex-direction: column;
+        padding: ${spacings.spacer * 1.5}px 0;
+
+        & > * {
+            margin: 0;
+            padding: 0;
+        }
+
+        & > * + * {
+            margin-top: ${spacings.nudge * 3}px;
+        }
+    }
+
+    /** DOM element with icon and/or label */
+    .icon-label {
+        display: inline-flex;
+        align-items: center;
+        padding-left: ${spacings.nudge}px;
+        padding-right: ${spacings.nudge}px;
+        ${copyStyle('copy-b', 'big')}
+
+        & > * + * {
+            margin-left: ${spacings.spacer}px;
+        }
+
+        svg {
+            max-width: 30px;
+            fill: currentColor;
+        }
+    }
 `;
 
-const View = styled(BaseStyles)`
-    font-family: ${({ type, size, theme }) => font(theme)[type][size].family};
-    font-weight: ${({ type, size, theme }) => font(theme)[type][size].weight};
-    font-style: ${({ type, size, theme }) => font(theme)[type][size].style};
-    ${({ type, size, theme }) =>
-        withRange(font(theme)[type][size].size, 'font-size')}
-    line-height: ${({ type, size, theme }) =>
-        font(theme)[type][size].lineHeight};
-    letter-spacing: ${({ type, size, theme }) =>
-        font(theme)[type][size].letterSpacing};
-    text-transform: ${({ type, size, theme }) =>
-        font(theme)[type][size].textTransform};
+const View = styled.div<{
+    type: CopyType;
+    size: FontOptionType;
+    textColor?: string;
+    textGradient?: string;
+    columns?: boolean;
+}>`
+    ${base}
+    ${({ type, size }) => copyStyle(type, size)}
 `;
 
 const Copy: React.FC<{

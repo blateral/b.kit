@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsIntro, {
     NewsIntroComponent,
-} from '../components/sections/news/NewsIntro';
+} from 'components/sections/news/NewsIntro';
 
 export default {
     title: 'Sections/News/NewsIntro',

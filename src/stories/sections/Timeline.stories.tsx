@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Timeline, { TimelineComponent } from '../components/sections/Timeline';
+import Timeline, { TimelineComponent } from 'components/sections/Timeline';
 
 export default {
     title: 'sections/Timeline',

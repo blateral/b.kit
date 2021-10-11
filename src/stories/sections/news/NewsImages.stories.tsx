@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsImages, {
     NewsImagesComponent,
-} from '../components/sections/news/NewsImages';
+} from 'components/sections/news/NewsImages';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 

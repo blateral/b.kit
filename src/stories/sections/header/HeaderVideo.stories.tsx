@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import HeaderVideo from '../components/sections/header/HeaderVideo';
+import HeaderVideo from 'components/sections/header/HeaderVideo';
 
 export default {
     title: 'Sections/Header/HeaderVideo',

@@ -7,7 +7,7 @@ import Xing from 'components/base/icons/socials/Xing';
 import Facebook from 'components/base/icons/socials/Facebook';
 
 export default {
-    title: 'sections/SocialNav',
+    title: 'Sections/SocialNav',
     component: SocialNavComponent,
 } as Meta;
 
