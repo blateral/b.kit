@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsAuthorCard, {
     NewsAuthorCardComponent,
-} from '../components/sections/news/NewsAuthorCard';
+} from 'components/sections/news/NewsAuthorCard';
 
 export default {
     title: 'Sections/News/NewsAuthorCard',

@@ -1,9 +1,7 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NewsList, {
-    NewsListComponent,
-} from '../components/sections/news/NewsList';
+import NewsList, { NewsListComponent } from 'components/sections/news/NewsList';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 import { NewsCardProps } from 'components/blocks/NewsCard';

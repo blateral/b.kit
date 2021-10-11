@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsFooter, {
     NewsFooterComponent,
-} from '../components/sections/news/NewsFooter';
+} from 'components/sections/news/NewsFooter';
 
 export default {
     title: 'Sections/News/NewsFooter',

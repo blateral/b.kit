@@ -1,12 +1,13 @@
 import { spacings, getColors as color, mq } from 'utils/styles';
 import QuicknavButton from 'components/buttons/QuicknavButton';
 import * as React from 'react';
-import styled from 'styled-components';
-import Section from 'components/base/Section';
+import styled, { ThemeContext } from 'styled-components';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
 const StyledSection = styled(Section)`
+    position: relative;
     padding-top: 55px;
 `;
 
@@ -40,23 +41,28 @@ const NavItem = styled.li`
 `;
 
 const NavItemContainer = styled.div`
+    position: relative;
     display: inline-block;
     padding: ${spacings.nudge * 3}px;
 `;
 
-const Test = styled.div`
+const SliderBorder = styled.div<{ isInverted?: boolean }>`
+    position: relative;
     width: 100%;
     height: 1px;
 
-    background: rgba(0, 0, 0, 0.1);
+    background: ${({ isInverted }) =>
+        isInverted ? `rgba(255, 255, 255, 0.2)` : `rgba(0, 0, 0, 0.1)`};
 `;
 
-const Slider = styled.div<{ isActive?: boolean }>`
-    /* display: ${({ isActive }) => (isActive ? 'block' : 'block')}; */
+const Slider = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     height: 4px;
     position: absolute;
     bottom: 0;
-    background-color: ${({ theme }) => color(theme).primary.light};
+    background-color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).light : color(theme).dark};
+    left: 15px;
+    right: 15px;
 `;
 
 const Quicknav: React.FC<{
@@ -64,7 +70,8 @@ const Quicknav: React.FC<{
     activeNavItem?: string;
     onNavClick?: (index: number, label: string) => void;
     className?: string;
-}> = ({ navItems, activeNavItem, onNavClick, className }) => {
+    bgMode?: 'inverted';
+}> = ({ navItems, activeNavItem, onNavClick, className, bgMode }) => {
     const [isActiveItem, setIsActiveItem] = React.useState<number>(
         activeNavItem
             ? navItems?.findIndex(
@@ -74,9 +81,6 @@ const Quicknav: React.FC<{
               )
             : -1
     );
-
-    const [pos, setPos] = React.useState(0);
-    const [width, setWidth] = React.useState(0);
     const parentRef = React.useRef(null);
 
     const itemRef = React.useRef<any>();
@@ -92,34 +96,21 @@ const Quicknav: React.FC<{
     }, [activeNavItem, navItems]);
 
     React.useEffect(() => {
-        const element = document.querySelector(
-            `[data-index=tabnav-${isActiveItem}]`
-        );
-
-        const parent = parentRef.current;
-
-        if (element && parent) {
-            const Box = element.getBoundingClientRect();
-            const ParentBox = (parent as Element).getBoundingClientRect();
-
-            setWidth(Box.width - spacings.spacer * 1.5);
-            setPos(
-                Box.left -
-                    ParentBox.left +
-                    (parent as HTMLElement).scrollLeft +
-                    spacings.nudge * 3
-            );
-        }
-    }, [isActiveItem]);
-
-    React.useEffect(() => {
         if (itemRef && itemRef.current && isActiveItem) {
             itemRef.current.scrollIntoView();
         }
     }, [isActiveItem]);
 
+    const isInverted = bgMode === 'inverted';
+    const theme = React.useContext(ThemeContext);
+
     return (
-        <StyledSection addSeperation className={className}>
+        <StyledSection
+            bgColor={isInverted ? color(theme).dark : 'transparent'}
+            bgMode={mapToBgMode(bgMode, true)}
+            addSeperation
+            className={className}
+        >
             <Wrapper addWhitespace>
                 <NavList ref={parentRef}>
                     {navItems.map((item, i) => {
@@ -141,27 +132,23 @@ const Quicknav: React.FC<{
                                         label={item.label}
                                         link={item.link}
                                         isActive={isActiveItem === i}
+                                        isInverted={isInverted}
                                     />
+                                    <div
+                                        style={{
+                                            paddingTop: '40px',
+                                        }}
+                                    />
+                                    {isActiveItem === i && (
+                                        <Slider isInverted={isInverted} />
+                                    )}
                                 </NavItemContainer>
                             </NavItem>
                         );
                     })}
-                    <div
-                        style={{
-                            paddingTop: '35px',
-                        }}
-                    >
-                        <Slider
-                            style={{
-                                transform: `translateX(${pos}px)`,
-                                transition: `.2s ease-in-out`,
-                                width: `${width}px`,
-                            }}
-                        />
-                    </div>
                 </NavList>
             </Wrapper>
-            <Test />
+            <SliderBorder isInverted={isInverted} />
         </StyledSection>
     );
 };
