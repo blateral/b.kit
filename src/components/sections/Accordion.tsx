@@ -63,6 +63,7 @@ const AccordionText = styled.div<{
     hasBg?: boolean;
     borderColor?: string;
     hasAside?: boolean;
+    hasColumns?: boolean;
 }>`
     display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
     flex-direction: column;
@@ -92,6 +93,19 @@ const AccordionText = styled.div<{
             margin-top: 0;
             margin-left: ${spacings.spacer}px;
         }
+
+        & > *:first-child {
+            flex: ${({ hasAside, hasColumns }) =>
+                !hasAside && !hasColumns
+                    ? '0 1 75%'
+                    : hasAside
+                    ? '0 1 50%'
+                    : undefined};
+        }
+
+        & > *:last-child {
+            flex: ${({ hasAside }) => hasAside && ' 0 1 50%'};
+        }
     }
 `;
 
@@ -111,6 +125,7 @@ const Accordion: React.FC<{
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
     return (
         <Section
             addSeperation
@@ -174,6 +189,7 @@ const Accordion: React.FC<{
                                         hasBg={hasBg}
                                         isVisible={isSelected}
                                         hasAside={!!aside}
+                                        hasColumns={hasColumns}
                                     >
                                         {text && (
                                             <Copy
