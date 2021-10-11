@@ -200,12 +200,12 @@ const LocationInfoCard: FC<{
                             ?.filter((c) => c.label)
                             .map((contact, i) => (
                                 <li key={i}>
-                                    <span>{contact.icon}</span>
+                                    <span>{contact?.icon}</span>
                                     <ContactListLabel
                                         type="copy-b"
                                         size="big"
                                         isInverted={isInverted}
-                                        innerHTML={contact.label}
+                                        innerHTML={contact?.label}
                                     />
                                 </li>
                             ))}
