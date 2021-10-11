@@ -4,7 +4,7 @@ import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { spacings, getColors as color } from 'utils/styles';
+import { spacings, getColors as color, mq } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
@@ -57,13 +57,15 @@ const IconContainer = styled.div`
     }
 `;
 
-const AccordionText = styled(Copy)<{
+const AccordionText = styled.div<{
     isVisible?: boolean;
     inverted?: boolean;
     hasBg?: boolean;
     borderColor?: string;
+    hasAside?: boolean;
 }>`
-    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+    display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+    flex-direction: column;
 
     border-top: 2px solid
         ${({ borderColor, inverted, theme, hasBg }) =>
@@ -76,10 +78,30 @@ const AccordionText = styled(Copy)<{
                 : color(theme).light};
 
     padding: ${spacings.spacer}px;
+
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
+    }
+
+    @media ${mq.medium} {
+        flex-direction: row;
+        padding-bottom: ${({ hasAside }) =>
+            hasAside && spacings.spacer * 2 + 'px'};
+
+        & > * + * {
+            margin-top: 0;
+            margin-left: ${spacings.spacer}px;
+        }
+    }
 `;
 
 const Accordion: React.FC<{
-    items: { label?: string; text?: string; hasColumns?: boolean }[];
+    items: {
+        label?: string;
+        text?: string;
+        aside?: string;
+        hasColumns?: boolean;
+    }[];
     borderColor?: string;
 
     bgMode?: 'full' | 'inverted';
@@ -103,7 +125,7 @@ const Accordion: React.FC<{
         >
             <Wrapper addWhitespace>
                 {items &&
-                    items.map(({ label, text, hasColumns }, i) => {
+                    items.map(({ label, text, aside, hasColumns }, i) => {
                         const isSelected = currentItems.indexOf(i) !== -1;
                         return (
                             <AccordionBlock
@@ -151,10 +173,24 @@ const Accordion: React.FC<{
                                         inverted={isInverted}
                                         hasBg={hasBg}
                                         isVisible={isSelected}
-                                        type="copy"
-                                        innerHTML={text}
-                                        columns={hasColumns}
-                                    />
+                                        hasAside={!!aside}
+                                    >
+                                        {text && (
+                                            <Copy
+                                                type="copy"
+                                                innerHTML={text}
+                                                columns={
+                                                    !aside ? hasColumns : false
+                                                }
+                                            />
+                                        )}
+                                        {aside && (
+                                            <Copy
+                                                type="copy"
+                                                innerHTML={aside}
+                                            />
+                                        )}
+                                    </AccordionText>
                                 </AccordionItems>
                             </AccordionBlock>
                         );
