@@ -409,7 +409,18 @@ export const WithNewsletterForm: Story = () => (
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        newsForm={(isInverted) => (
+        newsFormMain={(isInverted) => (
+            <CompactForm
+                isInverted={isInverted}
+                placeholder="Geben Sie Ihre E-Mail Adresse an"
+                buttonIcon={'Primary'}
+                onSubmit={console.log}
+                onClick={console.log}
+                onBlur={console.log}
+                backgroundStyle="white"
+            />
+        )}
+        newsFormSecondary={(isInverted) => (
             <CompactForm
                 isInverted={isInverted}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
@@ -435,7 +446,7 @@ export const WithNewsletterFormInverted: Story = () => (
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
-        newsForm={(isInverted) => (
+        newsFormMain={(isInverted) => (
             <CompactForm
                 isInverted={isInverted}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"

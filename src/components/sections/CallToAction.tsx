@@ -255,6 +255,7 @@ export const CallToAction: FC<{
     superTitleAs?: HeadlineTag;
     text?: string;
     contact?: ContactBoxProps;
+    hasNewsletter?: boolean;
 
     column?: {
         title?: string;
@@ -265,13 +266,16 @@ export const CallToAction: FC<{
         contact?: ContactBoxProps;
         primaryAction?: (isInverted?: boolean) => React.ReactNode;
         secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+        hasNewsletter?: boolean;
     };
 
     badge?: React.ReactNode;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-    newsForm?: (isInverted?: boolean) => React.ReactNode;
+    newsFormMain?: (isInverted?: boolean) => React.ReactNode;
+    newsFormSecondary?: (isInverted?: boolean) => React.ReactNode;
+
     bgMode?: 'full' | 'inverted';
 }> = ({
     title,
@@ -283,7 +287,9 @@ export const CallToAction: FC<{
     badge,
     primaryAction,
     secondaryAction,
-    newsForm,
+    hasNewsletter,
+    newsFormMain,
+    newsFormSecondary,
     bgMode,
     column,
 }) => {
@@ -322,9 +328,9 @@ export const CallToAction: FC<{
                                     avatar={contact.avatar}
                                 />
                             )}
-                            {newsForm && (
+                            {newsFormMain && hasNewsletter && (
                                 <NewsletterWrapper>
-                                    {newsForm(isInverted)}
+                                    {newsFormMain(isInverted)}
                                 </NewsletterWrapper>
                             )}
                             {(primaryAction || secondaryAction) && (
@@ -366,9 +372,9 @@ export const CallToAction: FC<{
                                         avatar={column.contact.avatar}
                                     />
                                 )}
-                                {newsForm && (
+                                {newsFormSecondary && column.hasNewsletter && (
                                     <NewsletterWrapper>
-                                        {newsForm(isInverted)}
+                                        {newsFormSecondary(isInverted)}
                                     </NewsletterWrapper>
                                 )}
                                 {(column.primaryAction ||
