@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import SocialWall, {
     SocialWallComponent,
-} from '../components/sections/SocialWall';
+} from 'components/sections/SocialWall';
 
 export default {
     title: 'Sections / SocialWall',

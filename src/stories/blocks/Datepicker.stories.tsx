@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
-import Datepicker from '../components/fields/Datepicker';
+import Datepicker from 'components/fields/Datepicker';
 
 export default {
     title: 'Fields / Datepicker',
