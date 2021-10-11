@@ -1,6 +1,6 @@
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { spacings, getColors as color } from 'utils/styles';
 
 const View = styled.a<{
@@ -20,30 +20,10 @@ const View = styled.a<{
 
     pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 
-    ${({ isActive, isDisabled, theme }) =>
-        !isDisabled &&
-        isActive &&
-        css`
-            color: ${color(theme).primary.light};
-
-            & > * {
-                font-weight: 700;
-            }
-        `}
-
     &:hover {
-        color: ${({ theme }) => color(theme).primary.light};
-    }
-
-    &:focus {
         & > * {
-            font-weight: 700;
-        }
-    }
-
-    &:active {
-        & > * {
-            font-weight: 700;
+            transition: opacity 0.2s ease-in-out;
+            opacity: ${({ isActive }) => !isActive && 0.4};
         }
     }
 
@@ -66,9 +46,7 @@ const QuicknavButton: React.FC<{
             isDisabled={isDisabled}
             isInverted={isInverted}
         >
-            <Copy textColor="inherit" type="copy">
-                {label}
-            </Copy>
+            <Copy type={isActive ? 'copy-b' : 'copy'}>{label}</Copy>
         </View>
     );
 };

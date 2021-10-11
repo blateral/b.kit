@@ -56,7 +56,7 @@ const Slider = styled.div<{ isActive?: boolean }>`
     height: 4px;
     position: absolute;
     bottom: 0;
-    background-color: ${({ theme }) => color(theme).primary.light};
+    background-color: ${({ theme }) => color(theme).dark};
 `;
 
 const Quicknav: React.FC<{
