@@ -260,13 +260,13 @@ const defaultFonts: Fonts = {
     },
     'heading-3': {
         ...headingBase,
-        size: [19, 22],
-        lineHeight: '1.14',
+        size: [27, 30],
+        lineHeight: '1.16',
     },
     'heading-4': {
         ...headingBase,
-        size: [16, 19],
-        lineHeight: '1.5',
+        size: [20, 25],
+        lineHeight: '1.16',
     },
     label: {
         small: {

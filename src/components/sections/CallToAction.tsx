@@ -68,6 +68,14 @@ const Info = styled.div`
     }
 `;
 
+const Description = styled(Copy)`
+    text-align: center;
+
+    @media ${mq.medium} {
+        text-align: left;
+    }
+`;
+
 const Address = styled.div`
     display: flex;
     flex-direction: column;
@@ -117,17 +125,8 @@ const AddressLabel = styled(Copy)`
     flex: 0 100%;
     text-align: center;
 
-    a {
-        color: ${({ textColor }) => textColor && textColor};
-        text-decoration: none;
-    }
-
     p {
         margin: 0;
-    }
-
-    a:hover {
-        text-decoration: underline;
     }
 
     @media ${mq.medium} {
@@ -155,13 +154,15 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
         <ContactView className={className}>
             {avatar && <Avatar src={avatar?.src} alt={avatar?.alt} />}
             <Info>
-                {name && (
+                {(name || description) && (
                     <div>
-                        <Copy type="copy-b" isInverted={isInverted}>
-                            {name}
-                        </Copy>
+                        {name && (
+                            <Copy type="copy-b" isInverted={isInverted}>
+                                {name}
+                            </Copy>
+                        )}
                         {description && (
-                            <Copy
+                            <Description
                                 type="copy"
                                 isInverted={isInverted}
                                 innerHTML={description}
@@ -169,9 +170,9 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
                         )}
                     </div>
                 )}
-                <div>
-                    {addresses &&
-                        addresses.map((address, i) => (
+                {addresses && addresses.length > 0 && (
+                    <div>
+                        {addresses?.map((address, i) => (
                             <Address key={i}>
                                 <Decorator isInverted={isInverted}>
                                     {address.decorator}
@@ -184,7 +185,8 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
                                 />
                             </Address>
                         ))}
-                </div>
+                    </div>
+                )}
             </Info>
         </ContactView>
     );
@@ -253,6 +255,7 @@ export const CallToAction: FC<{
     superTitleAs?: HeadlineTag;
     text?: string;
     contact?: ContactBoxProps;
+    hasNewsletter?: boolean;
 
     column?: {
         title?: string;
@@ -263,17 +266,20 @@ export const CallToAction: FC<{
         contact?: ContactBoxProps;
         primaryAction?: (isInverted?: boolean) => React.ReactNode;
         secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+        hasNewsletter?: boolean;
     };
 
     badge?: React.ReactNode;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-    newsForm?: (isInverted?: boolean) => React.ReactNode;
+    newsFormMain?: (isInverted?: boolean) => React.ReactNode;
+    newsFormSecondary?: (isInverted?: boolean) => React.ReactNode;
+
     bgMode?: 'full' | 'inverted';
 }> = ({
     title,
-    titleAs = 'h1',
+    titleAs = 'h2',
     superTitle,
     superTitleAs,
     text,
@@ -281,7 +287,9 @@ export const CallToAction: FC<{
     badge,
     primaryAction,
     secondaryAction,
-    newsForm,
+    hasNewsletter,
+    newsFormMain,
+    newsFormSecondary,
     bgMode,
     column,
 }) => {
@@ -320,9 +328,9 @@ export const CallToAction: FC<{
                                     avatar={contact.avatar}
                                 />
                             )}
-                            {newsForm && (
+                            {newsFormMain && hasNewsletter && (
                                 <NewsletterWrapper>
-                                    {newsForm(isInverted)}
+                                    {newsFormMain(isInverted)}
                                 </NewsletterWrapper>
                             )}
                             {(primaryAction || secondaryAction) && (
@@ -364,9 +372,9 @@ export const CallToAction: FC<{
                                         avatar={column.contact.avatar}
                                     />
                                 )}
-                                {newsForm && (
+                                {newsFormSecondary && column.hasNewsletter && (
                                     <NewsletterWrapper>
-                                        {newsForm(isInverted)}
+                                        {newsFormSecondary(isInverted)}
                                     </NewsletterWrapper>
                                 )}
                                 {(column.primaryAction ||

@@ -111,7 +111,10 @@ const InfoCardView = styled.div`
     pointer-events: all;
 
     & > * + * {
-        ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')}
+        ${withRange(
+            [spacings.spacer * 1.5, spacings.spacer * 2.5],
+            'margin-top'
+        )}
     }
 `;
 
@@ -189,20 +192,33 @@ const LocationInfoCard: FC<{
                     />
                 </CardHeader>
             )}
-            {location.meta?.contact && location.meta.contact.length > 0 && (
-                <ContactList isInverted={isInverted}>
-                    {location.meta?.contact
-                        ?.filter((c) => c.label)
-                        .map((contact, i) => (
-                            <li key={i}>
-                                <span>{contact.icon}</span>
-                                <ContactListLabel
-                                    isInverted={isInverted}
-                                    innerHTML={contact.label}
-                                />
-                            </li>
-                        ))}
-                </ContactList>
+            {location.meta?.contact ? (
+                Array.isArray(location.meta?.contact) &&
+                location.meta.contact.length > 0 ? (
+                    <ContactList isInverted={isInverted}>
+                        {location.meta?.contact
+                            ?.filter((c) => c.label)
+                            .map((contact, i) => (
+                                <li key={i}>
+                                    <span>{contact?.icon}</span>
+                                    <ContactListLabel
+                                        type="copy-b"
+                                        size="big"
+                                        isInverted={isInverted}
+                                        innerHTML={contact?.label}
+                                    />
+                                </li>
+                            ))}
+                    </ContactList>
+                ) : (
+                    <Copy
+                        type="copy"
+                        size="medium"
+                        innerHTML={location.meta?.contact as string}
+                    />
+                )
+            ) : (
+                ''
             )}
             {(location?.meta?.primaryAction ||
                 location?.meta?.secondaryAction) && (
@@ -335,7 +351,7 @@ export interface MapLocation {
         titleAs?: HeadlineTag;
         superTitle?: string;
         superTitleAs?: HeadlineTag;
-        contact?: Array<{ icon?: React.ReactNode; label?: string }>;
+        contact?: Array<{ icon?: React.ReactNode; label?: string }> | string;
         primaryAction?: (isInverted?: boolean) => React.ReactNode;
         secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     };
