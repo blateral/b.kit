@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
-import QuicknavButton from '../components/buttons/QuicknavButton';
+import QuicknavButton from 'components/buttons/QuicknavButton';
 
 const Helper = styled.div`
     height: 150px;

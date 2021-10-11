@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
-import SelectDropdown from '../components/fields/SelectDropdown';
+import SelectDropdown from 'components/fields/SelectDropdown';
 
 export default {
     title: 'Fields / SelectDropdown',

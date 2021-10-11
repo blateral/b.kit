@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
-import FileUpload from '../components/fields/FileUpload';
+import FileUpload from 'components/fields/FileUpload';
 
 export default {
     title: 'fields/FileUpload',
