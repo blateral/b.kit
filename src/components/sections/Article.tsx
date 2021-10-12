@@ -36,15 +36,18 @@ const Content = styled.div<{ withAsideText?: boolean }>`
         `}
 `;
 
-const ContentBlock = styled.div<{ isAside?: boolean }>`
+const ContentBlock = styled.div<{ isAside?: boolean; isHalf?: boolean }>`
     & + & {
-        padding-top: ${({ isAside }) => (isAside ? spacings.spacer : '0')}px;
+        padding-top: ${({ isAside, isHalf }) =>
+            isAside || isHalf ? spacings.spacer : '0'}px;
     }
 
-    flex: ${({ isAside }) => (isAside ? '1 0 30%' : '1 0 60%')};
+    flex: ${({ isAside, isHalf }) =>
+        isHalf ? '1 0 50%' : isAside ? '1 0 30%' : '1 0 60%'};
 
     @media ${mq.semilarge} {
-        max-width: ${({ isAside }) => (isAside ? '100%' : '60%')};
+        max-width: ${({ isAside, isHalf }) =>
+            isHalf ? '50%' : isAside ? '100%' : '60%'};
 
         & + & {
             padding-top: 0;
@@ -72,6 +75,7 @@ const Article: React.FC<{
     intro?: string;
     text?: string;
     asideText?: string;
+    halfAside?: boolean;
 
     bgMode?: 'full' | 'splitted' | 'inverted';
 
@@ -85,6 +89,7 @@ const Article: React.FC<{
     intro,
     text,
     asideText,
+    halfAside,
     bgMode,
     primaryAction,
     secondaryAction,
@@ -113,7 +118,7 @@ const Article: React.FC<{
                     colorMode={isInverted ? 'inverted' : 'default'}
                 />
                 <Content withAsideText={asideText ? true : false}>
-                    <ContentBlock>
+                    <ContentBlock isHalf={halfAside}>
                         {intro && (
                             <ContentText
                                 type="copy-b"
