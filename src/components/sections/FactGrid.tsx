@@ -120,11 +120,7 @@ const FactGrid: FC<{
 
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: factCount,
-        identifiers: [
-            '[data-sheet="title"]',
-            '[data-sheet="subtitle"]',
-            '[data-sheet="text"]',
-        ],
+        identifiers: ['[data-sheet="title"]', '[data-sheet="subtitle"]'],
         responsive: {
             small: 1,
             medium: columns < 3 ? columns : 3,
