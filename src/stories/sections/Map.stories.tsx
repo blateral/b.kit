@@ -81,8 +81,8 @@ const exampleLocations: MapLocation[] = [
             //             '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
             //     },
             // ],
-            contact: `<span class="label-list">
-                <p class="icon-label">
+            contact: `
+                <p class="icon-label icon-label--list">
                     <svg
                         width="25"
                         height="25"
@@ -96,7 +96,7 @@ const exampleLocations: MapLocation[] = [
                     </svg>
                     <span>9879534957943</span>
                 </p>
-                <p class="icon-label">
+                <p class="icon-label icon-label--list">
                     <svg
                         width="25"
                         height="25"
@@ -110,7 +110,7 @@ const exampleLocations: MapLocation[] = [
                     </svg>
                     <a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>
                 </p>
-            </span>`,
+            `,
         },
         icon: {
             size: [20, 28],

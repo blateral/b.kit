@@ -165,6 +165,17 @@ const base = css<{
             fill: currentColor;
         }
     }
+
+    .icon-label--list {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .icon-label--list + .icon-label--list {
+        margin-top: ${spacings.nudge * 3}px;
+    }
 `;
 
 const View = styled.div<{
