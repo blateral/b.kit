@@ -260,3 +260,16 @@ export const WithCustomDots: Story = () => (
         )}
     />
 );
+
+export const WithCustomMapProvider: Story = () => (
+    <Map
+        provider="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+        attribution="Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012"
+        initialLocation="Sipplingen"
+        locations={exampleLocations}
+        flyToControl={<FlyTo />}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
+    />
+);
