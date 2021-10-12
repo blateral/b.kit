@@ -132,21 +132,6 @@ const base = css<{
     }
 
     // classes for richtext
-    // styles child DOM elements as label list
-    .label-list {
-        display: inline-flex;
-        flex-direction: column;
-        padding: ${spacings.spacer * 1.5}px 0;
-
-        & > * {
-            margin: 0;
-            padding: 0;
-        }
-
-        & > * + * {
-            margin-top: ${spacings.nudge * 3}px;
-        }
-    }
 
     /** DOM element with icon and/or label */
     .icon-label {
