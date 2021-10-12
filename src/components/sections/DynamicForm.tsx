@@ -896,14 +896,17 @@ const generateDatepicker = ({
 }: FieldGenerationProps<Datepicker>) => {
     const dates = value as [Date | null, Date | null];
 
+    const handleSubmit = async (start?: Date | null, end?: Date | null) => {
+        await setField(key, [start || null, end || null]);
+        await setTouched(key, true);
+        validateField(key);
+    };
+
     return (
         <Datepicker
             key={key}
-            onSubmit={async (start?: Date, end?: Date) => {
-                await setField(key, [start, end]);
-                await setTouched(key, true);
-                validateField(key);
-            }}
+            onSubmit={handleSubmit}
+            onDataChange={handleSubmit}
             values={[dates?.[0] as Date, dates?.[1] as Date]}
             label={`${key}${field.isRequired ? '*' : ''}`}
             placeholder={field.placeholder}
@@ -1010,6 +1013,7 @@ const generateSelect = ({
     hasBg,
     setField,
     setTouched,
+    validateField,
 }: FieldGenerationProps<Select>) => (
     <SelectDropdown
         key={key}
@@ -1019,9 +1023,10 @@ const generateSelect = ({
         errorMessage={error && isTouched ? error : undefined}
         items={field.dropdownItems || []}
         value={value as string}
-        onChange={(value) => {
-            setField(key, value);
-            setTouched(key, true);
+        onChange={async (value) => {
+            await setField(key, value);
+            await setTouched(key, true);
+            validateField(key);
         }}
         onBlur={() => setTouched(key, true, true)}
         icon={field.icon}
