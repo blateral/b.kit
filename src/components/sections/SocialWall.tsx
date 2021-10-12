@@ -6,6 +6,7 @@ import Heading from 'components/typography/Heading';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import Link, { LinkProps } from 'components/typography/Link';
 
 const Content = styled.div`
     display: flex;
@@ -16,28 +17,40 @@ const Content = styled.div`
     margin: -${spacings.nudge}px;
 `;
 
-const ContentBlock = styled.a`
+const ContentBlock = styled(Link)`
     position: relative;
     text-decoration: none;
     color: inherit;
 
     padding: ${spacings.nudge}px;
+    flex: 0 1 100%;
 
-    flex: 1 0 50%;
+    @media ${mq.medium} {
+        flex: 0 1 50%;
+    }
 
     @media ${mq.large} {
-        flex: 1 0 33.33%;
+        flex: 0 1 33.33%;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        bottom: 5px;
+        left: 5px;
+        right: 5px;
+        background: ${({ theme }) => color(theme).secondary.light};
+
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.1s ease-in-out;
     }
 
     &:hover {
         &:before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            bottom: 5px;
-            left: 5px;
-            right: 5px;
-            background: ${({ theme }) => color(theme).secondary.light};
+            opacity: 1;
+            pointer-events: all;
         }
     }
 `;
@@ -48,15 +61,19 @@ const Image = styled.img`
 `;
 
 const TextContainer = styled.div`
-    display: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
 
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-in-out;
+
     ${ContentBlock}:hover & {
-        display: block;
+        opacity: 1;
+        pointer-events: all;
     }
 `;
 
@@ -68,25 +85,27 @@ const InstagramIcon = styled.div`
     position: absolute;
     left: 20px;
     bottom: 20px;
+    color: ${({ theme }) => color(theme).light};
 
     & > * {
         fill: #fff;
 
         ${ContentBlock}:hover & {
-            fill: ${({ theme }) => color(theme).dark};
+            color: ${({ theme }) => color(theme).dark};
         }
     }
 `;
 
 const SocialWall: React.FC<{
     items?: {
-        link?: string;
+        link?: LinkProps;
         image?: { src: string; alt?: string };
     }[];
     followUs?: string;
     hashtag?: string;
+    socialIcon?: React.ReactNode;
     bgMode?: 'full' | 'inverted';
-}> = ({ items, hashtag, followUs, bgMode }) => {
+}> = ({ items, hashtag, followUs, socialIcon, bgMode }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -108,7 +127,7 @@ const SocialWall: React.FC<{
                     {items &&
                         items.map((item, i) => {
                             return (
-                                <ContentBlock href={item.link} key={i}>
+                                <ContentBlock isExternal {...item.link} key={i}>
                                     {item.image && (
                                         <Image
                                             src={item.image.src}
@@ -128,7 +147,7 @@ const SocialWall: React.FC<{
                                         )}
                                     </TextContainer>
                                     <InstagramIcon>
-                                        <Instagram iconColor="inherit" />
+                                        {socialIcon || <Instagram />}
                                     </InstagramIcon>
                                 </ContentBlock>
                             );
