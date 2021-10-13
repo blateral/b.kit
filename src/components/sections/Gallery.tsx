@@ -58,20 +58,20 @@ const Gallery: FC<{
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
 
-    const isNextImgFull = (images: ImageType[], currentIndex: number) => {
-        const newIndex = ++currentIndex;
-        if (images && images[newIndex]) return images[newIndex]?.isFull;
-        else return false;
-    };
+    // const isNextImgFull = (images: ImageType[], currentIndex: number) => {
+    //     const newIndex = ++currentIndex;
+    //     if (images && images[newIndex]) return images[newIndex]?.isFull;
+    //     else return false;
+    // };
 
-    // map images to fill always full width
-    images = images?.map((img, i, array) => {
-        if (!img.isFull) {
-            img.isFull =
-                (i % 2 === 0 && isNextImgFull(array, i)) || array.length === 1;
-        }
-        return img;
-    });
+    // // map images to fill always full width
+    // images = images?.map((img, i, array) => {
+    //     if (!img.isFull) {
+    //         img.isFull =
+    //             (i % 2 === 0 && isNextImgFull(array, i)) || array.length === 1;
+    //     }
+    //     return img;
+    // });
 
     return (
         <Section
