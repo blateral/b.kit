@@ -51,7 +51,7 @@ const StyledImage = styled(Image)`
 type ImageType = ImageProps & { isFull?: boolean };
 
 const Gallery: FC<{
-    bgMode?: 'full' | 'inverted';
+    bgMode?: 'full' | 'splitted' | 'inverted';
     images?: Array<ImageType>;
     className?: string;
 }> = ({ bgMode, images, className }) => {
@@ -76,14 +76,14 @@ const Gallery: FC<{
     return (
         <Section
             addSeperation
-            bgMode={mapToBgMode(bgMode, true)}
             bgColor={
                 isInverted
                     ? color(theme).dark
-                    : bgMode === 'full'
+                    : bgMode
                     ? color(theme).mono.light
                     : 'transparent'
             }
+            bgMode={mapToBgMode(bgMode)}
             className={className}
         >
             <Wrapper

@@ -81,8 +81,8 @@ const exampleLocations: MapLocation[] = [
             //             '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
             //     },
             // ],
-            contact: `<span class="label-list">
-                <p class="icon-label">
+            contact: `
+                <p class="icon-label icon-label--list">
                     <svg
                         width="25"
                         height="25"
@@ -96,7 +96,7 @@ const exampleLocations: MapLocation[] = [
                     </svg>
                     <span>9879534957943</span>
                 </p>
-                <p class="icon-label">
+                <p class="icon-label icon-label--list">
                     <svg
                         width="25"
                         height="25"
@@ -110,7 +110,7 @@ const exampleLocations: MapLocation[] = [
                     </svg>
                     <a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>
                 </p>
-            </span>`,
+            `,
         },
         icon: {
             size: [20, 28],
@@ -258,5 +258,18 @@ export const WithCustomDots: Story = () => (
         dot={({ isActive }) => (
             <ArrowRight iconColor={isActive ? 'red' : 'grey'} />
         )}
+    />
+);
+
+export const WithCustomMapProvider: Story = () => (
+    <Map
+        provider="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+        attribution="Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012"
+        initialLocation="Sipplingen"
+        locations={exampleLocations}
+        flyToControl={<FlyTo />}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
     />
 );

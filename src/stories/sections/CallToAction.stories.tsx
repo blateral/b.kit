@@ -286,8 +286,7 @@ export const WithBadge: Story = () => (
                     <br/> 
                     Ihre Ansprechpartnerin im Haus St. Franziskus
                     <br/>
-                    <span class="label-list">
-                        <p class="icon-label">
+                        <p class="icon-label icon-label--list">
                             <svg
                                 width="25"
                                 height="25"
@@ -301,7 +300,7 @@ export const WithBadge: Story = () => (
                             </svg>
                             <span>+49 (0) 7551-9534-41</span>
                         </p>
-                        <p class="icon-label">
+                        <p class="icon-label icon-label--list">
                             <SVG
                                 width="25"
                                 height="25"
@@ -315,7 +314,6 @@ export const WithBadge: Story = () => (
                             </SVG>
                             <a href="mailto:mueller@ueberlingen.de">mueller@ueberlingen.de</a>
                         </p>
-                    </span>
                 `,
         }}
         primaryAction={(isInverted) => (
@@ -353,7 +351,7 @@ export const IsInverted: Story = () => (
                     <br/> 
                     Ihre Ansprechpartnerin im Haus St. Franziskus
                     <br/>
-                    <span class="label-list">
+                    
                         <p class="icon-label">
                             <svg
                                 width="25"
@@ -382,7 +380,7 @@ export const IsInverted: Story = () => (
                             </SVG>
                             <a href="mailto:mueller@ueberlingen.de">mueller@ueberlingen.de</a>
                         </p>
-                    </span>
+                    
                 `,
         }}
         primaryAction={(isInverted) => (
