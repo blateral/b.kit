@@ -369,12 +369,17 @@ const TopBar: FC<{
     const logoTopHeight =
         scalePageTop && scaleScrolled
             ? clampValue(
-                  115 * (isLargeOnPageTop ? scalePageTop[1] : scaleScrolled[1]),
+                  (currentMq === 'large' ? 115 : 86) *
+                      (isLargeOnPageTop ? scalePageTop[1] : scaleScrolled[1]),
                   20,
                   300
               )
             : 60;
-    const topSpace = clampValue(logoTopHeight, 86, 300);
+    const topSpace = clampValue(
+        logoTopHeight,
+        86,
+        currentMq === 'large' ? 300 : 111
+    );
 
     // calculate top scroll offset
     useEffect(() => {
