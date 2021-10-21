@@ -8,6 +8,7 @@ import { spacings, getColors as color, mq, withRange } from 'utils/styles';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { ScrollDirection, useScroll } from 'utils/useScroll';
 import { LogoProps } from './Navigation';
+import { clampValue } from 'utils/clamp';
 
 const TopWhitespace = styled.div<{ height?: number; showLarge?: boolean }>`
     width: 100%;
@@ -192,11 +193,17 @@ const StyledMenuBurger = styled(MenuBurger)`
     margin-top: ${spacings.nudge}px;
 `;
 
-const LogoLink = styled(Link)<{ logoHeight?: number; isAnimated?: boolean }>`
+const LogoLink = styled(Link)<{
+    logoHeight?: [number, number?];
+    isAnimated?: boolean;
+}>`
     display: flex;
     justify-content: center;
     position: relative;
-    height: ${({ logoHeight }) => logoHeight && logoHeight + 'px'};
+    ${({ logoHeight }) =>
+        logoHeight && logoHeight[1]
+            ? withRange([logoHeight[0], logoHeight[1]], 'height')
+            : `height: ${logoHeight?.[0]}`};
     width: auto;
 
     color: ${({ theme }) => color(theme).light};
@@ -210,11 +217,37 @@ const LogoLink = styled(Link)<{ logoHeight?: number; isAnimated?: boolean }>`
     }
 `;
 
-const clampValue = (num: number, min: number, max: number) => {
-    return Math.min(Math.max(num, min), max);
+export const getMinMaxScale = (
+    initial?: [number, number],
+    scale?: number | [number, number?]
+) => {
+    let minMaxScale: [number, number] = initial || [1, 1];
+
+    if (scale) {
+        if (Array.isArray(scale)) {
+            if (scale.length === 1) minMaxScale = [scale[0], scale[0]];
+            else if (scale.length === 2)
+                minMaxScale = [scale[0], scale[1] || minMaxScale[1]];
+        } else {
+            minMaxScale = [scale, scale];
+        }
+    }
+
+    return minMaxScale;
 };
 
 type TopBarMq = 'semilarge' | 'large';
+
+export interface DefaultLogoProps extends LogoProps {
+    pageTopScale: {
+        mobile: [number, number];
+        desktop: [number, number];
+    };
+    scrolledScale: {
+        mobile: [number, number];
+        desktop: [number, number];
+    };
+}
 
 const TopBar: FC<{
     isVisible?: boolean;
@@ -257,18 +290,16 @@ const TopBar: FC<{
     const [isLarge, setIsLarge] = useState<boolean>(isLargeOnPageTop);
     const [isAnimated, setIsAnimated] = useState(false);
     const defaultLogoScale: Pick<
-        LogoProps,
+        DefaultLogoProps,
         'pageTopScale' | 'scrolledScale'
     > = {
         pageTopScale: {
-            mobile: 1,
-            desktop: 1,
-            ...logo?.pageTopScale,
+            mobile: getMinMaxScale([1, 1], logo?.pageTopScale?.mobile),
+            desktop: getMinMaxScale([1, 1], logo?.pageTopScale?.desktop),
         },
         scrolledScale: {
-            mobile: 0.6,
-            desktop: 0.6,
-            ...logo?.scrolledScale,
+            mobile: getMinMaxScale([0.6, 0.6], logo?.scrolledScale?.mobile),
+            desktop: getMinMaxScale([0.6, 0.6], logo?.scrolledScale?.desktop),
         },
     };
 
@@ -310,28 +341,35 @@ const TopBar: FC<{
         (isLarge && allowTopOverlow) || isInverted || !isBackVisible;
 
     // get scale factor of topbar logo
-    let logoScale = 1;
+
     // get scale for current media query
     const scalePageTop =
         defaultLogoScale.pageTopScale?.[
             currentMq === 'large' ? 'desktop' : 'mobile'
         ];
+
     const scaleScrolled =
         defaultLogoScale.scrolledScale?.[
             currentMq === 'large' ? 'desktop' : 'mobile'
         ];
 
+    let logoScale: [number, number] = [1, 1];
     const scale = (isLargeOnPageTop ? isLarge : false)
         ? scalePageTop
         : scaleScrolled;
-    if (scale !== undefined) logoScale = scale;
+    if (scale !== undefined) {
+        logoScale = scale;
+    }
 
     // calc logo height
-    const logoHeight = clampValue(115 * logoScale, 20, 300);
+    const minLogoHeight = clampValue(115 * logoScale[0], 1, 299);
+    const maxLogoHeight = clampValue(115 * logoScale[1], 20, 300);
+
+    // calculate logo height for top space
     const logoTopHeight =
         scalePageTop && scaleScrolled
             ? clampValue(
-                  115 * (isLargeOnPageTop ? scalePageTop : scaleScrolled),
+                  115 * (isLargeOnPageTop ? scalePageTop[1] : scaleScrolled[1]),
                   20,
                   300
               )
@@ -393,7 +431,7 @@ const TopBar: FC<{
                         {logo && (
                             <LogoLink
                                 href={logo.link}
-                                logoHeight={logoHeight}
+                                logoHeight={[minLogoHeight, maxLogoHeight]}
                                 isAnimated={isAnimated}
                             >
                                 {logo.icon &&

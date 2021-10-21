@@ -356,9 +356,9 @@ const Header: FC<{
                 <PosterContentMobile>
                     <Wrapper addWhitespace>
                         {title && (
-                            <Callout
+                            <Heading
                                 hyphens
-                                size="small"
+                                size="heading-2"
                                 renderAs={titleAs}
                                 isInverted={false}
                                 innerHTML={title}

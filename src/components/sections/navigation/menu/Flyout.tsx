@@ -14,6 +14,8 @@ import Cross from 'components/base/icons/Cross';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { LogoProps } from '../Navigation';
 import { hexToRgba } from 'utils/hexRgbConverter';
+import { DefaultLogoProps, getMinMaxScale } from '../TopBar';
+import { clampValue } from 'utils/clamp';
 
 const View = styled.div<{
     isOpen?: boolean;
@@ -247,13 +249,22 @@ const SearchContainer = styled.div<{ isLarge?: boolean; isMirrored?: boolean }>`
     }
 `;
 
-const LogoLink = styled(Link)`
+const LogoLink = styled(Link)<{
+    logoHeight?: [number, number?];
+    isAnimated?: boolean;
+}>`
     display: flex;
     justify-content: center;
     position: relative;
+    ${({ logoHeight }) =>
+        logoHeight && logoHeight[1]
+            ? withRange([logoHeight[0], logoHeight[1]], 'height')
+            : `height: ${logoHeight?.[0]}`};
+    width: auto;
 
     color: ${({ theme }) => color(theme).light};
-    transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+    transition: ${({ isAnimated }) =>
+        isAnimated && 'height 0.2s ease-in-out, width 0.2s ease-in-out'};
     will-change: height, width;
 
     & > * {
@@ -339,6 +350,28 @@ const Flyout: FC<{
     const theme = useContext(ThemeContext);
     const mqs: FlyoutMq[] = ['semilarge', 'large'];
     const currentMq = useMediaQuery(mqs) as FlyoutMq | undefined;
+    const defaultLogoScale: Pick<
+        DefaultLogoProps,
+        'pageTopScale' | 'scrolledScale'
+    > = {
+        pageTopScale: {
+            mobile: getMinMaxScale([1, 1], logo?.pageTopScale?.mobile),
+            desktop: getMinMaxScale([1, 1], logo?.pageTopScale?.desktop),
+        },
+        scrolledScale: {
+            mobile: getMinMaxScale([0.6, 0.6], logo?.scrolledScale?.mobile),
+            desktop: getMinMaxScale([0.6, 0.6], logo?.scrolledScale?.desktop),
+        },
+    };
+
+    const scaleScrolled =
+        defaultLogoScale.scrolledScale[
+            currentMq === 'large' ? 'desktop' : 'mobile'
+        ];
+
+    // calc logo height
+    const minLogoHeight = clampValue(115 * scaleScrolled[0], 1, 299);
+    const maxLogoHeight = clampValue(115 * scaleScrolled[1], 20, 300);
 
     return (
         <View
@@ -450,7 +483,13 @@ const Flyout: FC<{
                                     <>
                                         <CenterCol>
                                             {logo && (
-                                                <LogoLink href={logo.link}>
+                                                <LogoLink
+                                                    logoHeight={[
+                                                        minLogoHeight,
+                                                        maxLogoHeight,
+                                                    ]}
+                                                    href={logo.link}
+                                                >
                                                     {logo.icon &&
                                                         logo.icon({
                                                             isInverted: isInverted,
