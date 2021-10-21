@@ -15,14 +15,14 @@ export interface LogoProps {
     link?: string;
     pageTopScale?: {
         // icon scale factor
-        mobile?: number;
-        desktop?: number;
+        mobile?: number | [number, number];
+        desktop?: number | [number, number];
     };
     /** Logo scale if is shown from scroll up */
     scrolledScale?: {
         /** Default is 0.6 */
-        mobile?: number;
-        desktop?: number;
+        mobile?: number | [number, number];
+        desktop?: number | [number, number];
     };
 }
 
