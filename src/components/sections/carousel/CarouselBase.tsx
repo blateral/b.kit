@@ -61,13 +61,13 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
         cursor: pointer;
     }
 
-    &:enabled:hover {
+    /* &:enabled:hover {
         transform: scale(1.05);
     }
 
     &:enabled:active {
         transform: scale(0.95);
-    }
+    } */
 
     &:disabled {
         color: ${({ theme, isInverted }) =>

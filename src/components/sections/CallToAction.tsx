@@ -41,9 +41,10 @@ const Avatar = styled.img`
     border: solid 1px transparent;
     border-radius: 50%;
     padding: ${spacings.nudge}px;
+    margin-right: ${spacings.nudge}px;
 
-    @media ${mq.medium} {
-        margin-right: ${spacings.nudge * 6}px;
+    @media ${mq.xlarge} {
+        margin-right: ${spacings.spacer * 1.5}px;
     }
 `;
 
@@ -71,8 +72,16 @@ const Info = styled.div`
 const Description = styled(Copy)`
     text-align: center;
 
+    & > * {
+        justify-content: center;
+    }
+
     @media ${mq.medium} {
         text-align: left;
+
+        & > * {
+            justify-content: left;
+        }
     }
 `;
 
@@ -210,6 +219,10 @@ const Content = styled.div`
     & > * + * {
         ${withRange([spacings.spacer * 1, spacings.spacer * 1.5], 'margin-top')}
     }
+
+    @media ${mq.large} {
+        align-items: flex-start;
+    }
 `;
 
 const StyledContactBox = styled(ContactBox)`
@@ -335,7 +348,6 @@ export const CallToAction: FC<{
                             )}
                             {(primaryAction || secondaryAction) && (
                                 <StyledActions
-                                    isCentered
                                     primary={
                                         primaryAction &&
                                         primaryAction(isInverted)
