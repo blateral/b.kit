@@ -16,7 +16,7 @@ const View = styled.div`
 
 const Label = styled(Copy)`
     padding-top: 2px;
-
+    text-align: left;
     & > * {
         margin: 0;
     }

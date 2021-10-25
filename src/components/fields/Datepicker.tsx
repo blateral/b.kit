@@ -472,6 +472,8 @@ const Datepicker: React.FC<{
     placeholder?: string;
     errorMessage?: string;
     infoMessage?: string;
+    dateSubmitLabel?: string;
+    dateDeleteLabel?: string;
 
     values?: [Date, Date];
     minDate?: Date;
@@ -496,6 +498,8 @@ const Datepicker: React.FC<{
     label,
     name,
     icon,
+    dateSubmitLabel,
+    dateDeleteLabel,
     placeholder,
     singleSelect = false,
     values,
@@ -673,14 +677,18 @@ const Datepicker: React.FC<{
                             deleteAction(handleReset)
                         ) : (
                             <ButtonGhost.View as="button" onClick={handleReset}>
-                                <ButtonGhostLabel>Delete</ButtonGhostLabel>
+                                <ButtonGhostLabel>
+                                    {dateDeleteLabel || 'Delete'}
+                                </ButtonGhostLabel>
                             </ButtonGhost.View>
                         )}
                         {submitAction ? (
                             submitAction(handleSubmit)
                         ) : (
                             <Button.View as="button" onClick={handleSubmit}>
-                                <ButtonLabel>Submit</ButtonLabel>
+                                <ButtonLabel>
+                                    {dateSubmitLabel || 'Submit'}
+                                </ButtonLabel>
                             </Button.View>
                         )}
                     </FootFlex>

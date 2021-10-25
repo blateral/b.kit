@@ -517,7 +517,7 @@ export const WithCustomErrorMessages: Story = () => (
                 placeholder: 'Reisezeitraum wählen..',
                 icon: { src: 'http://placehold.it/25' },
                 singleDateError: 'Bitte geben Sie ein Datum an',
-                mutliDateError: 'Bitte geben Sie ein Start- und Enddatum an',
+                multiDateError: 'Bitte geben Sie ein Start- und Enddatum an',
             },
             Leistungen: {
                 type: 'FieldGroup',
