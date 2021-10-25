@@ -82,7 +82,7 @@ export interface FormField {
 export interface Field extends FormField {
     type: 'Field';
     inputType?: 'text' | 'number' | 'email' | 'password' | 'tel';
-    initalValue?: string;
+    initialValue?: string;
     placeholder?: string;
     info?: string;
     icon?: { src: string; alt?: string };
@@ -92,7 +92,7 @@ export interface Field extends FormField {
 
 export interface Area extends FormField {
     type: 'Area';
-    initalValue?: string;
+    initialValue?: string;
     placeholder?: string;
     info?: string;
     validate?: (value: string, config: Area) => Promise<string>;
@@ -101,7 +101,7 @@ export interface Area extends FormField {
 
 export interface Select extends FormField {
     type: 'Select';
-    initalValue?: string;
+    initialValue?: string;
     placeholder?: string;
     dropdownItems: {
         value?: string;
@@ -124,7 +124,7 @@ export interface Datepicker extends FormField {
     info?: string;
 
     singleDateError?: string;
-    mutliDateError?: string;
+    multiDateError?: string;
     nextCtrlUrl?: string;
     prevCtrlUrl?: string;
     validate?: (
@@ -249,13 +249,13 @@ const DynamicForm: FC<{
     for (const key in fields) {
         switch (fields[key].type) {
             case 'Field':
-                initalData[key] = (fields[key] as Field).initalValue || '';
+                initalData[key] = (fields[key] as Field).initialValue || '';
                 break;
             case 'Area':
-                initalData[key] = (fields[key] as Area).initalValue || '';
+                initalData[key] = (fields[key] as Area).initialValue || '';
                 break;
             case 'Select':
-                initalData[key] = (fields[key] as Select).initalValue || '';
+                initalData[key] = (fields[key] as Select).initialValue || '';
                 break;
             case 'Datepicker':
                 initalData[key] = (fields[key] as Datepicker).initialDates || [
@@ -330,10 +330,14 @@ const DynamicForm: FC<{
                             }
                             break;
                         case 'tel':
-                            // validator = validator.matches(
-                            //     /^\+(?:[0-9]⋅?){6,14}[0-9]$/,
-                            //     'Format der Telefonnummer ungültig'
-                            // );
+                            if (
+                                values[key] &&
+                                /[A-Z]/gi.test(values[key] as string)
+                            ) {
+                                errors[key] =
+                                    (fields[key] as Field).errorMsg ||
+                                    'Ungültige Telefonnummer';
+                            }
                             break;
                         case 'number':
                             if (
@@ -342,7 +346,9 @@ const DynamicForm: FC<{
                                     values[key] as string
                                 )
                             ) {
-                                errors[key] = 'Zahlenformat ungültig';
+                                errors[key] =
+                                    (fields[key] as Field).errorMsg ||
+                                    'Zahlenformat ungültig';
                             }
                             break;
                     }
@@ -406,7 +412,7 @@ const DynamicForm: FC<{
                         errors[key] = single
                             ? (fields[key] as Datepicker).singleDateError ||
                               'Please submit date!'
-                            : (fields[key] as Datepicker).mutliDateError ||
+                            : (fields[key] as Datepicker).multiDateError ||
                               'Please submit start- and enddate!';
                         break;
                     }
@@ -417,7 +423,7 @@ const DynamicForm: FC<{
                             'Please submit date!';
                     } else if (!single && (!value[0] || !value[1])) {
                         errors[key] =
-                            (fields[key] as Datepicker).mutliDateError ||
+                            (fields[key] as Datepicker).multiDateError ||
                             'Please submit start- and enddate!';
                     }
                     break;
@@ -917,6 +923,8 @@ const generateDatepicker = ({
             name={key}
             isInverted={isInverted}
             hasBg={!hasBg}
+            minDate={field.minDate}
+            maxDate={field.maxDate}
             deleteAction={field.deleteAction}
             submitAction={field.submitAction}
             nextCtrlUrl={field.nextCtrlUrl}

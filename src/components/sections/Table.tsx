@@ -46,7 +46,11 @@ const TableBody = styled.table`
     }
 `;
 
-const TableHead = styled.th<{ isInverted?: boolean; hasBack?: boolean }>`
+const TableHead = styled.th<{
+    isInverted?: boolean;
+    hasBack?: boolean;
+    alignRight?: boolean;
+}>`
     text-align: left;
     color: ${({ theme }) => color(theme).dark};
     background-color: ${({ theme, hasBack, isInverted }) =>
@@ -59,10 +63,15 @@ const TableHead = styled.th<{ isInverted?: boolean; hasBack?: boolean }>`
 
     :last-child {
         padding-right: ${spacings.spacer * 2.5}px;
+        text-align: ${({ alignRight }) => (alignRight ? 'right' : 'left')};
     }
 `;
 
-const TableData = styled.td<{ isInverted?: boolean; hasBack?: boolean }>`
+const TableData = styled.td<{
+    isInverted?: boolean;
+    hasBack?: boolean;
+    alignRight?: boolean;
+}>`
     padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px
         ${spacings.nudge * 3.5}px ${spacings.spacer * 2}px;
     min-width: 60px;
@@ -77,6 +86,7 @@ const TableData = styled.td<{ isInverted?: boolean; hasBack?: boolean }>`
         )};
 
     :last-child {
+        text-align: ${({ alignRight }) => (alignRight ? 'right' : 'left')};
         padding-right: ${spacings.spacer * 2.5}px;
     }
 `;
@@ -89,6 +99,7 @@ export interface TableProps {
     }[];
     isInverted?: boolean;
     hasBack?: boolean;
+    lastCol?: 'left' | 'right';
 }
 
 const TableBlock: React.FC<TableProps> = ({
@@ -97,6 +108,7 @@ const TableBlock: React.FC<TableProps> = ({
     rowTitle,
     isInverted = false,
     hasBack = false,
+    lastCol = 'left',
 }) => {
     return (
         <div>
@@ -118,6 +130,7 @@ const TableBlock: React.FC<TableProps> = ({
                                             key={ii}
                                             isInverted={isInverted}
                                             hasBack={hasBack}
+                                            alignRight={lastCol === 'right'}
                                         >
                                             <Copy type="copy-b">{item}</Copy>
                                         </TableHead>
@@ -135,6 +148,7 @@ const TableBlock: React.FC<TableProps> = ({
                                             key={ii}
                                             isInverted={isInverted}
                                             hasBack={hasBack}
+                                            alignRight={lastCol === 'right'}
                                         >
                                             <Copy isInverted={isInverted}>
                                                 {itemText}
