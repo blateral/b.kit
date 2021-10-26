@@ -62,6 +62,7 @@ const StyledRadioButton = styled.span<{
 
 const Label = styled(Copy)`
     padding-top: 2px;
+    text-align: left;
 
     & > * {
         margin: 0;
