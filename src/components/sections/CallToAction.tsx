@@ -209,7 +209,7 @@ const StyledIntro = styled(IntroBlock)`
     }
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ multiCols?: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -221,7 +221,8 @@ const Content = styled.div`
     }
 
     @media ${mq.large} {
-        align-items: flex-start;
+        align-items: ${({ multiCols }) =>
+            multiCols ? 'flex-start' : 'center'};
     }
 `;
 
@@ -318,7 +319,7 @@ export const CallToAction: FC<{
                 {badge && <Badge>{badge}</Badge>}
                 <Grid.Row gutter={!column ? 0 : spacings.spacer * 4}>
                     <Grid.Col large={{ span: column ? 1 / 2 : 28 / 28 }}>
-                        <Content>
+                        <Content multiCols={!!column}>
                             {title && (
                                 <StyledIntro
                                     isCentered={!column}
@@ -362,7 +363,7 @@ export const CallToAction: FC<{
                     </Grid.Col>
                     <Grid.Col large={{ span: 1 / 2 }}>
                         {column && (
-                            <Content>
+                            <Content multiCols={!!column}>
                                 {column.title && (
                                     <StyledIntro
                                         colorMode={
