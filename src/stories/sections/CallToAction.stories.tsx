@@ -81,8 +81,8 @@ export const WithContactAsRichtext: Story = () => (
                 <br/> 
                 Ihre Ansprechpartnerin im Haus St. Franziskus
                 <br/>
-                <span class="label-list">
-                    <p class="icon-label">
+                <br/>
+                    <p class="icon-label icon-label--list">
                         <svg
                             width="25"
                             height="25"
@@ -96,7 +96,7 @@ export const WithContactAsRichtext: Story = () => (
                         </svg>
                         <span>+49 (0) 7551-9534-41</span>
                     </p>
-                    <p class="icon-label">
+                    <p class="icon-label icon-label--list">
                         <SVG
                             width="25"
                             height="25"
@@ -110,7 +110,6 @@ export const WithContactAsRichtext: Story = () => (
                         </SVG>
                         <a href="mailto:mueller@ueberlingen.de">mueller@ueberlingen.de</a>
                     </p>
-                </span>
             `,
         }}
     />
@@ -126,13 +125,12 @@ export const WithActions: Story = () => (
                 src: 'https://via.placeholder.com/196',
                 alt: 'avatar',
             },
-            name: 'Frau Manuela Müller',
             description: `<b>Frau Manuela Müller</b>
                     <br/> 
                     Ihre Ansprechpartnerin im Haus St. Franziskus
                     <br/>
-                    <span class="label-list">
-                        <p class="icon-label">
+                    <br/>
+                        <p class="icon-label icon-label--list">
                             <svg
                                 width="25"
                                 height="25"
@@ -146,7 +144,7 @@ export const WithActions: Story = () => (
                             </svg>
                             <span>+49 (0) 7551-9534-41</span>
                         </p>
-                        <p class="icon-label">
+                        <p class="icon-label icon-label--list">
                             <SVG
                                 width="25"
                                 height="25"
@@ -160,7 +158,6 @@ export const WithActions: Story = () => (
                             </SVG>
                             <a href="mailto:mueller@ueberlingen.de">mueller@ueberlingen.de</a>
                         </p>
-                    </span>
                 `,
         }}
         primaryAction={(isInverted) => (
