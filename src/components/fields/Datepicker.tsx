@@ -570,6 +570,16 @@ const Datepicker: React.FC<{
         }
     }, [focused]);
 
+    
+    const handleSubmit = useCallback(
+        (ev: React.SyntheticEvent<HTMLButtonElement, Event>) => {
+            ev.preventDefault();
+            setFocused(false);
+            onSubmit && onSubmit(startDate, endDate);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [endDate, startDate]
+    );
     const handleReset = useCallback(
         (ev: React.SyntheticEvent<HTMLButtonElement, Event>) => {
             ev.preventDefault();
@@ -580,15 +590,6 @@ const Datepicker: React.FC<{
         []
     );
 
-    const handleSubmit = useCallback(
-        (ev: React.SyntheticEvent<HTMLButtonElement, Event>) => {
-            ev.preventDefault();
-            setFocused(false);
-            onSubmit && onSubmit(startDate, endDate);
-        },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [endDate, startDate]
-    );
 
     return (
         <PickerView nextUrl={nextCtrlUrl} prevUrl={prevCtrlUrl}>

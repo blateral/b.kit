@@ -131,8 +131,13 @@ export interface Datepicker extends FormField {
         value: [Date | null, Date | null],
         config: Datepicker
     ) => Promise<string>;
-    deleteAction?: (
-        handleClick: (e: React.SyntheticEvent<HTMLButtonElement, Event>) => void
+    datepickerDeleteAction?: (
+        handleReset: (e: React.SyntheticEvent<HTMLButtonElement, Event>) => void
+    ) => React.ReactNode;
+    datepickerSubmitAction?: (
+        handleClick?: (
+            e: React.SyntheticEvent<HTMLButtonElement, Event>
+        ) => void
     ) => React.ReactNode;
     submitAction?: (
         handleClick?: (
@@ -417,11 +422,15 @@ const DynamicForm: FC<{
                         break;
                     }
 
-                    if (single && !value[0]) {
+                    if (config.isRequired && single && !value[0]) {
                         errors[key] =
                             (fields[key] as Datepicker).singleDateError ||
                             'Please submit date!';
-                    } else if (!single && (!value[0] || !value[1])) {
+                    } else if (
+                        config.isRequired &&
+                        !single &&
+                        (!value[0] || !value[1])
+                    ) {
                         errors[key] =
                             (fields[key] as Datepicker).multiDateError ||
                             'Please submit start- and enddate!';
@@ -925,8 +934,14 @@ const generateDatepicker = ({
             hasBg={!hasBg}
             minDate={field.minDate}
             maxDate={field.maxDate}
-            deleteAction={field.deleteAction}
-            submitAction={field.submitAction}
+            deleteAction={(handleReset) =>
+                field?.datepickerDeleteAction &&
+                field.datepickerDeleteAction(handleReset)
+            }
+            submitAction={(handleSubmit) =>
+                (field?.submitAction && field.submitAction(handleSubmit)) ||
+                undefined
+            }
             nextCtrlUrl={field.nextCtrlUrl}
             prevCtrlUrl={field.prevCtrlUrl}
         />
