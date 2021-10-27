@@ -1,4 +1,4 @@
-/***** Version: 1.8.5 *****/
+/***** Version: 1.8.7 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -123,6 +123,7 @@ export {
     CookieText,
     CookieActions,
 } from 'components/blocks/CookieConsent';
+export { default as Slider } from 'components/blocks/Slider';
 export { default as Navigation } from 'components/sections/navigation/Navigation';
 export { default as Menu } from 'components/sections/navigation/menu/Menu';
 export { default as TopBar } from 'components/sections/navigation/TopBar';
