@@ -8,6 +8,7 @@ import { Field, FormikErrors, useFormik } from 'formik';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
 import Button from 'components/buttons/Button';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 import Datepicker from 'components/fields/Datepicker';
 import Checkbox from 'components/fields/Checkbox';
 import RadioButton from 'components/fields/Radio';
@@ -131,10 +132,7 @@ export interface Datepicker extends FormField {
         value: [Date | null, Date | null],
         config: Datepicker
     ) => Promise<string>;
-    datepickerDeleteAction?: (
-        handleReset: (e: React.SyntheticEvent<HTMLButtonElement, Event>) => void
-    ) => React.ReactNode;
-    datepickerSubmitAction?: (
+    deleteAction?: (
         handleClick?: (
             e: React.SyntheticEvent<HTMLButtonElement, Event>
         ) => void
@@ -935,12 +933,20 @@ const generateDatepicker = ({
             minDate={field.minDate}
             maxDate={field.maxDate}
             deleteAction={(handleReset) =>
-                field?.datepickerDeleteAction &&
-                field.datepickerDeleteAction(handleReset)
+                field?.deleteAction ? (
+                    field.deleteAction(handleReset)
+                ) : (
+                    <ButtonGhost.View onClick={handleReset}>
+                        delete
+                    </ButtonGhost.View>
+                )
             }
             submitAction={(handleSubmit) =>
-                (field?.submitAction && field.submitAction(handleSubmit)) ||
-                undefined
+                field?.submitAction ? (
+                    field.submitAction(handleSubmit)
+                ) : (
+                    <Button.View onClick={handleSubmit}>submit</Button.View>
+                )
             }
             nextCtrlUrl={field.nextCtrlUrl}
             prevCtrlUrl={field.prevCtrlUrl}
