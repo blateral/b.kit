@@ -166,7 +166,7 @@ export interface FileUpload extends FormField {
 }
 
 export interface FormData {
-    [key: string]: FormDataTypes;
+    [key: string]: FormDataTypes | string;
 }
 
 export type FormDataTypes =
@@ -222,7 +222,7 @@ const DynamicForm: FC<{
         handleSubmit?: () => Promise<any>;
         isDisabled?: boolean;
     }) => React.ReactNode;
-
+    targetEmails?: string;
     bgMode?: 'full' | 'inverted';
     definitions?: {
         field?: (props: FieldGenerationProps<Field>) => React.ReactNode;
@@ -240,7 +240,7 @@ const DynamicForm: FC<{
     onSubmit,
     submitAction,
     definitions,
-
+    targetEmails,
     bgMode,
 }) => {
     const isInverted = bgMode === 'inverted';
@@ -519,7 +519,11 @@ const DynamicForm: FC<{
         } as FormData,
 
         onSubmit: async (values) => {
-            onSubmit && (await onSubmit(values));
+            const valuesAndMails = {
+                ...values,
+                targetEmails: targetEmails || '',
+            };
+            onSubmit && (await onSubmit(valuesAndMails));
             setSubmitting(false);
         },
         validateOnBlur: true,
