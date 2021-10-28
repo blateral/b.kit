@@ -196,10 +196,10 @@ export const WithCustomDatepickerButtons: Story = () => (
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
                 icon: { src: 'http://placehold.it/25' },
-                datepickerSubmitAction: (clickHandler) => (
+                submitAction: (clickHandler) => (
                     <button onClick={clickHandler}>auswählen</button>
                 ),
-                datepickerDeleteAction: (clickHandler) => (
+                deleteAction: (clickHandler) => (
                     <button onClick={clickHandler}>löschen</button>
                 ),
                 nextCtrlUrl: '/images/Arrow-Right.svg',
