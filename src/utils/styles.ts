@@ -315,6 +315,9 @@ export interface GlobalSettings {
         newsDateFormat: string;
         newsTimeFormat: string;
         newsLocaleKey: 'de' | 'en';
+        /** Date and Time Formats for Datepickers */
+        datepickerLocaleKey: 'de' | 'en';
+        datepickerDateFormat: string;
     };
 }
 
@@ -332,7 +335,9 @@ const defaultGlobalSettings: GlobalSettings = {
         `,
         newsDateFormat: 'dd/mm/yy',
         newsTimeFormat: 'hh:mm',
-        newsLocaleKey: 'en',
+        newsLocaleKey: 'de',
+        datepickerLocaleKey: 'de',
+        datepickerDateFormat: 'dd.MM.yyyy',
     },
 };
 
