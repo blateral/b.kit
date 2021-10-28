@@ -8,7 +8,12 @@ import React, {
 } from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
 
-import { getColors as color, mq, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    mq,
+    spacings,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import { format, isBefore, isValid } from 'date-fns';
 import de from 'date-fns/locale/de';
 
@@ -22,7 +27,7 @@ import AngleUp from 'components/base/icons/AngleUp';
 import ReactDatePicker from 'react-datepicker';
 import { hexToRgba } from 'utils/hexRgbConverter';
 
-const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
+const PickerView = styled.div`
     position: relative;
     width: 100%;
     text-align: left;
@@ -215,40 +220,8 @@ const PickerView = styled.div<{ prevUrl?: string; nextUrl?: string }>`
         display: none !important;
     }
 
-    .react-datepicker__navigation--next {
-        ${({ nextUrl }) =>
-            nextUrl &&
-            css`
-                background: url(${nextUrl}) no-repeat !important;
-                width: 19px;
-                height: 19px;
-                border: none;
-                right: 1em !important;
-            `};
-    }
-
-    .react-datepicker__navigation--previous {
-        ${({ prevUrl }) =>
-            prevUrl &&
-            css`
-                background: url(${prevUrl}) no-repeat !important;
-                width: 19px;
-                height: 19px;
-                border: none;
-                left: 2em !important;
-            `};
-    }
-
-    .react-datepicker__navigation-icon--next {
-        display: none !important;
-    }
-
-    .react-datepicker__navigation-icon--previous {
-        display: none !important;
-    }
-
     .react-datepicker__navigation {
-        top: 2.8em !important;
+        top: 0 !important;
     }
 `;
 
@@ -377,6 +350,7 @@ interface PickerBtnProps {
     onClick?: (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     hasBg?: boolean;
     isInverted?: boolean;
+    dateFormat?: string;
 }
 
 const PickerButton = forwardRef<HTMLDivElement, PickerBtnProps>(
@@ -394,6 +368,7 @@ const PickerButton = forwardRef<HTMLDivElement, PickerBtnProps>(
             hasBg,
             setFocused,
             onClick,
+            dateFormat = 'dd.MM.yyyy',
         },
         ref
     ) => {
@@ -428,12 +403,9 @@ const PickerButton = forwardRef<HTMLDivElement, PickerBtnProps>(
 
                         <Copy type="copy">
                             {startDate
-                                ? `${format(startDate, 'dd.MM.yyyy')}${
+                                ? `${format(startDate, dateFormat)}${
                                       endDate
-                                          ? ` – ${format(
-                                                endDate,
-                                                'dd.MM.yyyy'
-                                            )}`
+                                          ? ` – ${format(endDate, dateFormat)}`
                                           : ''
                                   }`
                                 : altText}
@@ -465,6 +437,95 @@ const PickerButton = forwardRef<HTMLDivElement, PickerBtnProps>(
 );
 PickerButton.displayName = 'PickerButton';
 
+const PickerHeader = styled.div`
+    margin-bottom: ${spacings.nudge * 2}px;
+`;
+
+const getPickerHeader = (
+    locale: string,
+    prevMonthAction?: React.ReactNode,
+    nextMonthAction?: React.ReactNode
+    // eslint-disable-next-line react/display-name
+) => ({
+    monthDate,
+    customHeaderCount,
+    decreaseMonth,
+    increaseMonth,
+}: {
+    monthDate: Date;
+    customHeaderCount: number;
+    decreaseMonth: () => void;
+    increaseMonth: () => void;
+}) => (
+    <PickerHeader>
+        <button
+            aria-label="Previous Month"
+            className={
+                'react-datepicker__navigation react-datepicker__navigation--previous'
+            }
+            style={
+                customHeaderCount === 1 ? { visibility: 'hidden' } : undefined
+            }
+            onClick={(ev) => {
+                ev.preventDefault();
+                decreaseMonth();
+            }}
+        >
+            {prevMonthAction ? (
+                typeof prevMonthAction === 'string' ? (
+                    <img src={prevMonthAction} />
+                ) : (
+                    prevMonthAction
+                )
+            ) : (
+                <span
+                    className={
+                        'react-datepicker__navigation-icon react-datepicker__navigation-icon--previous'
+                    }
+                >
+                    {'<'}
+                </span>
+            )}
+        </button>
+        <span className="react-datepicker__current-month">
+            {/* {monthDate.toLocaleString(locale, {
+                month: 'long',
+                year: 'numeric',
+            })} */}
+            {format(monthDate, 'LLLL', { locale: de })}
+        </span>
+        <button
+            aria-label="Next Month"
+            className={
+                'react-datepicker__navigation react-datepicker__navigation--next'
+            }
+            style={
+                customHeaderCount === 0 ? { visibility: 'hidden' } : undefined
+            }
+            onClick={(ev) => {
+                ev.preventDefault();
+                increaseMonth();
+            }}
+        >
+            {nextMonthAction ? (
+                typeof nextMonthAction === 'string' ? (
+                    <img src={nextMonthAction} />
+                ) : (
+                    nextMonthAction
+                )
+            ) : (
+                <span
+                    className={
+                        'react-datepicker__navigation-icon react-datepicker__navigation-icon--next'
+                    }
+                >
+                    {'>'}
+                </span>
+            )}
+        </button>
+    </PickerHeader>
+);
+
 const Datepicker: React.FC<{
     label?: string;
     name?: string;
@@ -488,8 +549,8 @@ const Datepicker: React.FC<{
             e: React.SyntheticEvent<HTMLButtonElement, Event>
         ) => void
     ) => React.ReactNode;
-    nextCtrlUrl?: string;
-    prevCtrlUrl?: string;
+    nextCtrlUrl?: React.ReactNode;
+    prevCtrlUrl?: React.ReactNode;
 
     singleSelect?: boolean;
     hasBg?: boolean;
@@ -517,6 +578,9 @@ const Datepicker: React.FC<{
     prevCtrlUrl,
 }) => {
     const theme = useContext(ThemeContext);
+    const locale = global(theme).sections.datepickerLocaleKey;
+    const dateFormat = global(theme).sections.datepickerDateFormat;
+
     const pickerRef = useRef<ReactDatePicker | undefined>(null);
     const pickerBtnRef = useRef<HTMLDivElement | null>(null);
     const [isSmall, setIsSmall] = useState<boolean>(false);
@@ -528,14 +592,15 @@ const Datepicker: React.FC<{
 
     useEffect(() => {
         const x = async () => {
-            const { registerLocale } = await import('react-datepicker');
-            registerLocale('de', de);
+            await import('react-datepicker');
+
+            // if (locale === 'de') registerLocale('de', de);
         };
 
         if (!singleSelect) setIsSmall(!window.matchMedia(mq.medium).matches);
 
         x();
-    }, [singleSelect]);
+    }, [locale, singleSelect]);
 
     useEffect(() => {
         if (values) {
@@ -570,7 +635,6 @@ const Datepicker: React.FC<{
         }
     }, [focused]);
 
-    
     const handleSubmit = useCallback(
         (ev: React.SyntheticEvent<HTMLButtonElement, Event>) => {
             ev.preventDefault();
@@ -590,13 +654,12 @@ const Datepicker: React.FC<{
         []
     );
 
-
     return (
-        <PickerView nextUrl={nextCtrlUrl} prevUrl={prevCtrlUrl}>
+        <PickerView>
             <ReactDatePicker
-                locale="de"
+                locale={locale === 'de' ? de : undefined}
                 ref={pickerRef as any}
-                dateFormat="dd.MM.yyyy"
+                dateFormat={dateFormat}
                 onChange={(date) => {
                     if (date) {
                         if (singleSelect) {
@@ -648,6 +711,7 @@ const Datepicker: React.FC<{
                         setFocused={setFocused}
                         isInverted={isInverted}
                         hasBg={hasBg}
+                        dateFormat={dateFormat}
                     />
                 }
                 showPopperArrow
@@ -660,20 +724,14 @@ const Datepicker: React.FC<{
                     setFocused(false);
                     onSubmit && onSubmit(startDate, endDate);
                 }}
+                renderCustomHeader={getPickerHeader(
+                    locale,
+                    prevCtrlUrl,
+                    nextCtrlUrl
+                )}
             >
                 <DatepickerFoot>
                     <FootFlex>
-                        {/* <ButtonGhost.View
-                            as="button"
-                            onClick={(ev) => {
-                                ev.preventDefault();
-                                setStartDate(undefined);
-                                setEndDate(undefined);
-                                new Date();
-                            }}
-                        >
-                            <ButtonGhostLabel>Löschen</ButtonGhostLabel>
-                        </ButtonGhost.View> */}
                         {deleteAction ? (
                             deleteAction(handleReset)
                         ) : (

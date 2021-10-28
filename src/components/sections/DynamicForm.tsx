@@ -126,8 +126,8 @@ export interface Datepicker extends FormField {
 
     singleDateError?: string;
     multiDateError?: string;
-    nextCtrlUrl?: string;
-    prevCtrlUrl?: string;
+    nextCtrlUrl?: React.ReactNode;
+    prevCtrlUrl?: React.ReactNode;
     validate?: (
         value: [Date | null, Date | null],
         config: Datepicker
