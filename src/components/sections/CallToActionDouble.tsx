@@ -1,20 +1,19 @@
-import React, { FC, useContext } from 'react';
+import Section, { mapToBgMode } from 'components/base/Section';
+import { HeadlineTag } from 'components/typography/Heading';
+import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-
 import {
     getColors as color,
-    getFonts as font,
-    mq,
     spacings,
     withRange,
+    mq,
+    getFonts as font,
 } from 'utils/styles';
 import Copy from 'components/typography/Copy';
-import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { HeadlineTag } from 'components/typography/Heading';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
 
 const ContactView = styled.div`
     display: flex;
@@ -150,7 +149,7 @@ export interface ContactBoxProps {
     avatar?: { src: string; alt: string };
 }
 
-const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
+const ContactBox: React.FC<ContactBoxProps & { className?: string }> = ({
     isInverted,
     name,
     description,
@@ -220,7 +219,7 @@ const Content = styled.div`
     }
 
     @media ${mq.large} {
-        align-items: center;
+        align-items: flex-start;
     }
 `;
 
@@ -236,61 +235,40 @@ const StyledActions = styled(Actions)`
     }
 `;
 
-const NewsletterWrapper = styled.div`
-    width: 100%;
-    margin-top: ${spacings.spacer * 2.5}px;
-
-    @media ${mq.semilarge} {
-        max-width: 400px;
-    }
-`;
-
-const Badge = styled.div`
-    display: none;
-    position: relative;
-    height: 241px;
-    width: 241px;
-    margin-left: auto;
-    margin-bottom: -110px;
-    z-index: 3;
-
-    @media ${mq.xlarge} {
-        display: block;
-        margin-right: ${1440 * (1 / 28) + 'px'};
-    }
-`;
-
-export const CallToAction: FC<{
+const CallToActionDouble: React.FC<{
+    bgMode?: 'full' | 'inverted';
     title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     text?: string;
     contact?: ContactBoxProps;
-    hasNewsletter?: boolean;
-
-    badge?: React.ReactNode;
-
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-    newsFormMain?: (isInverted?: boolean) => React.ReactNode;
 
-    bgMode?: 'full' | 'inverted';
+    column?: {
+        title?: string;
+        titleAs?: HeadlineTag;
+        superTitle?: string;
+        superTitleAs?: HeadlineTag;
+        text?: string;
+        contact?: ContactBoxProps;
+        primaryAction?: (isInverted?: boolean) => React.ReactNode;
+        secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    };
 }> = ({
+    bgMode,
     title,
-    titleAs = 'h2',
+    titleAs,
     superTitle,
     superTitleAs,
     text,
     contact,
-    badge,
+    column,
     primaryAction,
     secondaryAction,
-    hasNewsletter,
-    newsFormMain,
-    bgMode,
 }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     return (
         <Section
@@ -299,45 +277,88 @@ export const CallToAction: FC<{
             bgMode={bgMode ? mapToBgMode(bgMode, true) : 'full'}
         >
             <Wrapper addWhitespace clampWidth="normal">
-                {badge && <Badge>{badge}</Badge>}
-                <Content>
-                    {title && (
-                        <StyledIntro
-                            colorMode={isInverted ? 'inverted' : 'default'}
-                            title={title}
-                            titleAs={titleAs}
-                            superTitle={superTitle}
-                            superTitleAs={superTitleAs}
-                            text={text}
-                        />
-                    )}
-                    {contact && (
-                        <StyledContactBox
-                            isInverted={isInverted}
-                            name={contact.name}
-                            description={contact.description}
-                            addresses={contact.addresses}
-                            avatar={contact.avatar}
-                        />
-                    )}
-                    {newsFormMain && hasNewsletter && (
-                        <NewsletterWrapper>
-                            {newsFormMain(isInverted)}
-                        </NewsletterWrapper>
-                    )}
-                    {(primaryAction || secondaryAction) && (
-                        <StyledActions
-                            primary={primaryAction && primaryAction(isInverted)}
-                            secondary={
-                                secondaryAction && secondaryAction(isInverted)
-                            }
-                        />
-                    )}
-                </Content>
+                <Grid.Row gutter={spacings.spacer * 4}>
+                    <Grid.Col large={{ span: 1 / 2 }}>
+                        <Content>
+                            {title && (
+                                <StyledIntro
+                                    colorMode={
+                                        isInverted ? 'inverted' : 'default'
+                                    }
+                                    title={title}
+                                    titleAs={titleAs}
+                                    superTitle={superTitle}
+                                    superTitleAs={superTitleAs}
+                                    text={text}
+                                />
+                            )}
+                            {contact && (
+                                <StyledContactBox
+                                    isInverted={isInverted}
+                                    name={contact.name}
+                                    description={contact.description}
+                                    addresses={contact.addresses}
+                                    avatar={contact.avatar}
+                                />
+                            )}
+                            {(primaryAction || secondaryAction) && (
+                                <StyledActions
+                                    primary={
+                                        primaryAction &&
+                                        primaryAction(isInverted)
+                                    }
+                                    secondary={
+                                        secondaryAction &&
+                                        secondaryAction(isInverted)
+                                    }
+                                />
+                            )}
+                        </Content>
+                    </Grid.Col>
+                    <Grid.Col large={{ span: 1 / 2 }}>
+                        {column && (
+                            <Content>
+                                {column.title && (
+                                    <StyledIntro
+                                        colorMode={
+                                            isInverted ? 'inverted' : 'default'
+                                        }
+                                        title={column.title}
+                                        titleAs={column.titleAs}
+                                        superTitle={column.superTitle}
+                                        superTitleAs={column.superTitleAs}
+                                        text={column.text}
+                                    />
+                                )}
+                                {column.contact && (
+                                    <StyledContactBox
+                                        isInverted={isInverted}
+                                        name={column.contact.name}
+                                        description={column.contact.description}
+                                        addresses={column.contact.addresses}
+                                        avatar={column.contact.avatar}
+                                    />
+                                )}
+                                {(column.primaryAction ||
+                                    column.secondaryAction) && (
+                                    <StyledActions
+                                        primary={
+                                            column.primaryAction &&
+                                            column.primaryAction(isInverted)
+                                        }
+                                        secondary={
+                                            column.secondaryAction &&
+                                            column.secondaryAction(isInverted)
+                                        }
+                                    />
+                                )}
+                            </Content>
+                        )}
+                    </Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
 };
 
-export const CallToActionComponent = CallToAction;
-export default withLibTheme(CallToAction);
+export default CallToActionDouble;
