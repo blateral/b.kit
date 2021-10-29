@@ -1,15 +1,9 @@
-import {
-    Copy,
-    getColors as color,
-    mapToBgMode,
-    mq,
-    Section,
-    spacings,
-    withRange,
-    Wrapper,
-} from 'index';
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
+import Section, { mapToBgMode } from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
+import Copy from 'components/typography/Copy';
 
 const ItemList = styled.ul`
     margin: 0;
