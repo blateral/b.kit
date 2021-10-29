@@ -14,6 +14,7 @@ import Wrapper from 'components/base/Wrapper';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import Grid from 'components/base/Grid';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const ContactView = styled.div`
     display: flex;
@@ -199,14 +200,6 @@ const ContactBox: React.FC<ContactBoxProps & { className?: string }> = ({
     );
 };
 
-const StyledIntro = styled(IntroBlock)`
-    @media ${mq.semilarge} {
-        & > *:first-child {
-            min-height: 110px;
-        }
-    }
-`;
-
 const Content = styled.div`
     display: flex;
     flex-direction: column;
@@ -281,7 +274,7 @@ const CallToActionDouble: React.FC<{
                     <Grid.Col large={{ span: 1 / 2 }}>
                         <Content>
                             {title && (
-                                <StyledIntro
+                                <IntroBlock
                                     colorMode={
                                         isInverted ? 'inverted' : 'default'
                                     }
@@ -319,7 +312,7 @@ const CallToActionDouble: React.FC<{
                         {column && (
                             <Content>
                                 {column.title && (
-                                    <StyledIntro
+                                    <IntroBlock
                                         colorMode={
                                             isInverted ? 'inverted' : 'default'
                                         }
@@ -361,4 +354,5 @@ const CallToActionDouble: React.FC<{
     );
 };
 
-export default CallToActionDouble;
+export const CallToActionDoubleComponent = CallToActionDouble;
+export default withLibTheme(CallToActionDouble);

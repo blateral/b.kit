@@ -169,10 +169,10 @@ export const WithBadge: Story = () => (
                 src: 'https://via.placeholder.com/196',
                 alt: 'avatar',
             },
-            name: 'Frau Manuela Müller',
             description: `<b>Frau Manuela Müller</b>
                     <br/> 
                     Ihre Ansprechpartnerin im Haus St. Franziskus
+                    <br/>
                     <br/>
                         <p class="icon-label icon-label--list">
                             <svg
@@ -234,13 +234,12 @@ export const IsInverted: Story = () => (
                 src: 'https://via.placeholder.com/196',
                 alt: 'avatar',
             },
-            name: 'Frau Manuela Müller',
             description: `<b>Frau Manuela Müller</b>
                     <br/> 
                     Ihre Ansprechpartnerin im Haus St. Franziskus
                     <br/>
-                    
-                        <p class="icon-label">
+                    <br/>
+                        <p class="icon-label icon-label--list">
                             <svg
                                 width="25"
                                 height="25"
@@ -254,7 +253,7 @@ export const IsInverted: Story = () => (
                             </svg>
                             <span>+49 (0) 7551-9534-41</span>
                         </p>
-                        <p class="icon-label">
+                        <p class="icon-label icon-label--list">
                             <SVG
                                 width="25"
                                 height="25"
@@ -295,6 +294,7 @@ export const WithNewsletterForm: Story = () => (
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        hasNewsletter
         newsFormMain={(isInverted) => (
             <CompactForm
                 isInverted={isInverted}
@@ -321,6 +321,7 @@ export const WithNewsletterFormInverted: Story = () => (
         title="Haus St. Franziskus – lorem ipsum dolor sit amet"
         superTitle="Haus St. Franziskus"
         text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        hasNewsletter
         newsFormMain={(isInverted) => (
             <CompactForm
                 isInverted={isInverted}
