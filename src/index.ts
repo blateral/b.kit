@@ -1,4 +1,4 @@
-/***** Version: 1.9.0 *****/
+/***** Version: 1.9.2 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -89,8 +89,8 @@ export { default as NumberList } from 'components/sections/NumberList';
 export { default as DynamicForm } from 'components/sections/DynamicForm';
 export { default as SocialWall } from 'components/sections/SocialWall';
 export { default as ParallaxBackground } from 'components/sections/ParallaxBackground';
+export { default as CallToActionDouble } from 'components/sections/CallToActionDouble';
 export { default as PriceList } from 'components/sections/PriceList';
-
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';

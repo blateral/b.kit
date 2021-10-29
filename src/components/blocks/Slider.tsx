@@ -537,6 +537,7 @@ const DotGroup: FC<{
 
 export default {
     Provider: Slider,
+    Consumer: SliderContext.Consumer,
     Slides: Slides,
     Slide: Slide,
     Control: Control,
