@@ -15,6 +15,7 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    justify-content: space-between;
 
     ${withRange([spacings.nudge * 2, spacings.spacer], 'padding')};
 
