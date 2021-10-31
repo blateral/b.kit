@@ -303,6 +303,7 @@ export const CallToAction: FC<{
                 <Content>
                     {title && (
                         <StyledIntro
+                            isCentered
                             colorMode={isInverted ? 'inverted' : 'default'}
                             title={title}
                             titleAs={titleAs}

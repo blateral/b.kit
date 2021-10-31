@@ -1,12 +1,15 @@
+/* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import CallToActionDouble from '../../components/sections/CallToActionDouble';
-import { Button } from 'index';
+import CallToActionDouble, {
+    CallToActionDoubleComponent,
+} from '../../components/sections/CallToActionDouble';
 import ButtonGhost from 'components/buttons/ButtonGhost';
+import Button from 'components/buttons/Button';
 
 export default {
     title: 'Sections / CallToActionDouble',
-    component: CallToActionDouble,
+    component: CallToActionDoubleComponent,
 } as Meta;
 
 export const Default: Story = () => (
@@ -154,16 +157,16 @@ export const WithActions: Story = () => (
             superTitle: 'Kontakt',
             title: 'Expertenchat',
             text: 'Wir sind im Chat für Sie da. Probieren Sie es gleich aus!',
-            // primaryAction: (isInverted) => (
-            //     <Button.View isInverted={isInverted}>
-            //         <Button.Label>Primary</Button.Label>
-            //     </Button.View>
-            // ),
-            // secondaryAction: (isInverted) => (
-            //     <ButtonGhost.View isInverted={isInverted}>
-            //         <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            //     </ButtonGhost.View>
-            // ),
+            primaryAction: (isInverted) => (
+                <Button.View isInverted={isInverted}>
+                    <Button.Label>Primary</Button.Label>
+                </Button.View>
+            ),
+            secondaryAction: (isInverted) => (
+                <ButtonGhost.View isInverted={isInverted}>
+                    <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+                </ButtonGhost.View>
+            ),
             contact: {
                 avatar: {
                     src: 'https://via.placeholder.com/196',
@@ -268,16 +271,16 @@ export const isInverted: Story = () => (
             superTitle: 'Kontakt',
             title: 'Expertenchat',
             text: 'Wir sind im Chat für Sie da. Probieren Sie es gleich aus!',
-            // primaryAction: (isInverted) => (
-            //     <Button.View isInverted={isInverted}>
-            //         <Button.Label>Primary</Button.Label>
-            //     </Button.View>
-            // ),
-            // secondaryAction: (isInverted) => (
-            //     <ButtonGhost.View isInverted={isInverted}>
-            //         <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            //     </ButtonGhost.View>
-            // ),
+            primaryAction: (isInverted) => (
+                <Button.View isInverted={isInverted}>
+                    <Button.Label>Primary</Button.Label>
+                </Button.View>
+            ),
+            secondaryAction: (isInverted) => (
+                <ButtonGhost.View isInverted={isInverted}>
+                    <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+                </ButtonGhost.View>
+            ),
             contact: {
                 avatar: {
                     src: 'https://via.placeholder.com/196',
