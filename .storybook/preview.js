@@ -61,11 +61,10 @@ export const parameters = {
             const [nextStory, nextMeta] = next;
 
             if (
-                nextMeta.kind.search('HowTo') ||
-                nextMeta.kind.search('Introduction') ||
-                nextMeta.kind.search('Intro')
+                nextMeta.kind.search('Info') ||
+                nextMeta.kind.search('Introduction')
             ) {
-                return 1;
+                return -1;
             } else return 0;
         },
     },

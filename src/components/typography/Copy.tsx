@@ -100,8 +100,17 @@ const base = css<{
     }
 
     & > p {
-        margin: 0;
+        margin-right: 0;
+        margin-left: 0;
         padding: 0;
+    }
+
+    & > p:first-child {
+        margin-top: 0;
+    }
+
+    & > p:last-child {
+        margin-bottom: 0;
     }
 
     ${({ columns }) =>
