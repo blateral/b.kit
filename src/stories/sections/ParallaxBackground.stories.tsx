@@ -99,14 +99,3 @@ export const WithDownDirection: Story = () => (
         image={<img src="/images/ParallaxBackground.svg" />}
     />
 );
-
-export const ClampToElementHeight: Story = () => (
-    <ParallaxBackground
-        clampToElementHeight
-        moveRatio={0.7}
-        direction="down"
-        hAlign="center"
-        contentWidth={0.6}
-        image={<img src="/images/ParallaxBackground.svg" />}
-    />
-);

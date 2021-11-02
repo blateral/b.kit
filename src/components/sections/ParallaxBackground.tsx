@@ -37,35 +37,31 @@ const ParallaxBackground: FC<{
     contentWidth?: number;
     moveRatio?: number;
     direction?: 'down' | 'up';
-    clampToElementHeight?: boolean;
     className?: string;
 }> = ({
     image,
     hAlign = 'left',
     contentWidth = 1,
-    moveRatio = 0.3,
+    moveRatio = 0.2,
     direction = 'up',
-    clampToElementHeight,
     className,
 }) => {
     const [yTransform, setYTransform] = useState<number>(0);
+    const cRef = useRef<HTMLDivElement>(null);
     const parallaxRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleScroll = () => {
-            const scrolled = window.pageYOffset;
-            const ratio = scrolled * moveRatio;
-            const offset = ratio * (direction === 'up' ? -1 : 1);
+            if (!cRef.current) return;
 
-            if (clampToElementHeight && parallaxRef.current) {
-                const maxOffset = parallaxRef.current.getBoundingClientRect()
-                    .height;
+            const containerPos = cRef.current.getBoundingClientRect().top;
+            const ratio = containerPos * moveRatio;
+            const offset = ratio * (direction === 'up' ? 1 : -1);
 
-                if (Math.abs(offset) > maxOffset) return;
-                else setYTransform(offset);
-            } else setYTransform(offset);
+            setYTransform(offset);
         };
 
+        handleScroll();
         window.addEventListener('scroll', handleScroll);
 
         return () => {
@@ -74,10 +70,12 @@ const ParallaxBackground: FC<{
     });
 
     return (
-        <View>
+        <View ref={cRef}>
             <Parallax
                 ref={parallaxRef}
-                style={{ transform: `translate3d(0px, ${yTransform}px, 0px)` }}
+                style={{
+                    transform: `translate3d(0px, ${yTransform}px, 0px)`,
+                }}
                 className={className}
             >
                 <Content hAlign={hAlign} contentWidth={contentWidth}>
