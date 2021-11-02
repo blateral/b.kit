@@ -5,7 +5,6 @@ import Grid from 'components/base/Grid';
 import { HeadlineTag } from 'components/typography/Heading';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
-import Title from 'components/blocks/Title';
 import Wrapper from 'components/base/Wrapper';
 import Section, { mapToBgMode } from 'components/base/Section';
 import {
@@ -17,6 +16,7 @@ import {
 } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import IntroBlock from 'components/blocks/IntroBlock';
 
 const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
     display: flex;
@@ -86,12 +86,6 @@ const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
             !isMirrored
                 ? spacings.spacer * 1.5
                 : (1 / 28) * spacings.wrapper}px;
-    }
-`;
-
-const StyledTitle = styled(Title)`
-    & + * {
-        margin-top: ${spacings.nudge * 6}px;
     }
 `;
 
@@ -184,20 +178,14 @@ const Teaser: FC<{
                         }}
                     >
                         <InfoWrapper isMirrored={isMirrored}>
-                            <StyledTitle
-                                colorMode={isInverted ? 'inverted' : 'default'}
+                            <IntroBlock
                                 title={title}
                                 titleAs={titleAs}
                                 superTitle={superTitle}
                                 superTitleAs={superTitleAs}
+                                text={intro}
+                                colorMode={isInverted ? 'inverted' : 'default'}
                             />
-                            {intro && (
-                                <ContentBlock
-                                    type="copy-b"
-                                    isInverted={isInverted}
-                                    innerHTML={intro}
-                                />
-                            )}
                             {text && (
                                 <ContentBlock
                                     isInverted={isInverted}

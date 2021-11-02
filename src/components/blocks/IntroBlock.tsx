@@ -46,7 +46,7 @@ const StyledActions = styled(Actions)`
 
 const IntroBlock: React.FC<{
     colorMode?: 'default' | 'inverted' | 'onImage';
-    title: string;
+    title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
@@ -75,15 +75,17 @@ const IntroBlock: React.FC<{
 }) => {
     return (
         <View isCentered={isCentered} className={className}>
-            <StyledTitle
-                colorMode={colorMode}
-                title={title}
-                titleAs={titleAs}
-                superTitle={superTitle}
-                superTitleAs={superTitleAs}
-                isCentered={isCentered}
-                clampTitle={clampTitle}
-            />
+            {(title || superTitle) && (
+                <StyledTitle
+                    colorMode={colorMode}
+                    title={title}
+                    titleAs={titleAs}
+                    superTitle={superTitle}
+                    superTitleAs={superTitleAs}
+                    isCentered={isCentered}
+                    clampTitle={clampTitle}
+                />
+            )}
             {text && (
                 <ContentBlock
                     type="copy-b"
