@@ -78,11 +78,11 @@ const base = css<{
         margin-top: 0;
     }
 
-    // *:last-child {
-    //     margin-bottom: 0;
-    // }
+    *:last-child {
+        margin-bottom: 0;
+    }
 
-    :not(li) > ul,
+    /* :not(li) > ul,
     :not(li) > ol {
         display: inline-block;
         padding-left: 0;
@@ -91,26 +91,18 @@ const base = css<{
     li > ul,
     li > ol {
         padding-left: 0;
-    }
+    } */
 
-    ul,
+    /* ul,
     ol li {
         list-style-position: outside;
         margin-left: 1.1em;
-    }
+    } */
 
     & > p {
         margin-right: 0;
         margin-left: 0;
         padding: 0;
-    }
-
-    & > p:first-child {
-        margin-top: 0;
-    }
-
-    & > p:last-child {
-        margin-bottom: 0;
     }
 
     ${({ columns }) =>
