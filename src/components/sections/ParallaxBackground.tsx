@@ -1,9 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import {
-    Parallax as ReactParallax,
-    ParallaxProvider,
-} from 'react-scroll-parallax';
 
 const View = styled.div`
     position: relative;
@@ -11,7 +7,7 @@ const View = styled.div`
     z-index: -1;
 `;
 
-const StyledParallax = styled(ReactParallax)`
+const Parallax = styled.div`
     position: absolute;
     top: 0;
     left: 0;
@@ -39,22 +35,56 @@ const ParallaxBackground: FC<{
     image?: React.ReactNode;
     hAlign?: 'left' | 'center' | 'right';
     contentWidth?: number;
+    moveRatio?: number;
+    direction?: 'down' | 'up';
+    clampToElementHeight?: boolean;
     className?: string;
-}> = ({ image, hAlign = 'left', contentWidth = 1, className }) => {
+}> = ({
+    image,
+    hAlign = 'left',
+    contentWidth = 1,
+    moveRatio = 0.3,
+    direction = 'up',
+    clampToElementHeight,
+    className,
+}) => {
+    const [yTransform, setYTransform] = useState<number>(0);
+    const parallaxRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrolled = window.pageYOffset;
+            const ratio = scrolled * moveRatio;
+            const offset = ratio * (direction === 'up' ? -1 : 1);
+
+            if (clampToElementHeight && parallaxRef.current) {
+                const maxOffset = parallaxRef.current.getBoundingClientRect()
+                    .height;
+
+                if (Math.abs(offset) > maxOffset) return;
+                else setYTransform(offset);
+            } else setYTransform(offset);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    });
+
     return (
-        <ParallaxProvider>
-            <View>
-                <StyledParallax
-                    className={className}
-                    y={[20, -20]}
-                    tagOuter="figure"
-                >
-                    <Content hAlign={hAlign} contentWidth={contentWidth}>
-                        {image}
-                    </Content>
-                </StyledParallax>
-            </View>
-        </ParallaxProvider>
+        <View>
+            <Parallax
+                ref={parallaxRef}
+                style={{ transform: `translate3d(0px, ${yTransform}px, 0px)` }}
+                className={className}
+            >
+                <Content hAlign={hAlign} contentWidth={contentWidth}>
+                    {image}
+                </Content>
+            </Parallax>
+        </View>
     );
 };
 

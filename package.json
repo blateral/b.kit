@@ -65,7 +65,6 @@
         "react": "^17.0.1",
         "react-datepicker": "4.3.0",
         "react-dom": "^17.0.1",
-        "react-scroll-parallax": "2.4.0",
         "react-slick": "0.27.1",
         "rollup": "^2.34.1",
         "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -84,7 +83,6 @@
         "react": "^17.0.1",
         "react-datepicker": "4.3.0",
         "react-dom": "^17.0.1",
-        "react-scroll-parallax": "2.4.0",
         "react-slick": "0.27.1",
         "slick-carousel": "1.8.1",
         "styled-components": "^5.2.1"
