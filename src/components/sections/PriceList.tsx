@@ -4,6 +4,7 @@ import styled, { ThemeContext } from 'styled-components';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const ItemList = styled.ul`
     margin: 0;
@@ -74,4 +75,5 @@ const PriceList: React.FC<{
     );
 };
 
-export default PriceList;
+export const PriceListComponent = PriceList;
+export default withLibTheme(PriceList);

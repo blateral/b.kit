@@ -64,10 +64,17 @@ const AutoplayVideo = styled.video<{ isVisible?: boolean }>`
 type HeaderVideoMq = 'small' | 'medium' | 'semilarge' | 'large' | 'xlarge';
 
 const HeaderVideo: React.FC<{
+    loadOnMobile?: boolean;
     placeholderImg?: HeaderVideoImageProps;
     videoUrl?: string;
     className?: string;
-}> = ({ placeholderImg, videoUrl, className, children }) => {
+}> = ({
+    loadOnMobile = true,
+    placeholderImg,
+    videoUrl,
+    className,
+    children,
+}) => {
     const [isLoaded, setLoaded] = useState<boolean>(false);
     const currentMq = useMediaQuery([
         'small',
@@ -78,17 +85,18 @@ const HeaderVideo: React.FC<{
     ]) as HeaderVideoMq | undefined;
 
     const isMobile = currentMq === undefined || currentMq === 'small';
+    const isVideoAllowed = loadOnMobile || !isMobile;
 
     useEffect(() => {
-        if (isMobile) setLoaded(false);
-    }, [isMobile]);
+        if (!isVideoAllowed) setLoaded(false);
+    }, [isMobile, isVideoAllowed, loadOnMobile]);
 
     return (
         <PosterView className={className}>
             {placeholderImg?.small && !isLoaded && (
                 <PlaceholderImg coverSpace {...placeholderImg} />
             )}
-            {videoUrl && !isMobile && (
+            {videoUrl && isVideoAllowed && (
                 <AutoplayVideo
                     isVisible={isLoaded}
                     src={videoUrl}

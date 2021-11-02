@@ -1,15 +1,23 @@
-import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import Copy from '../../../components/typography/Copy';
 
-<Meta title="Typography/Copy/How To" />
+<Meta title="Typography/Copy/Info" />
 
 # Copy
 
+The copy component is meant to display text blocks in different scenarios like long Article block texts for example.
+Content can be inserted as a child of the React component or by using the `innerHTML` prop.
+
+<ArgsTable of={Copy} />
+
 ## Rich Text
 
-If text is passed through the `innerHTML` prop you can use some HTML classes to style the children:
+If text is passed through the `innerHTML` prop you can use some HTML classes to style the children.
+
+> **Important:** The `innerHTML` prop only works if **no** children are defined directly through the `children` prop!
 
 -   `.icon-label` For adding icon (img/svg) with / or label text
+-   `.icon-label--list` Modificator to display neighbored items as a list
 
 <Canvas>
     <Copy

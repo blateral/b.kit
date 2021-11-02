@@ -48,6 +48,12 @@ const Head = styled(Copy)`
     }
 `;
 
+const PublishDate = styled.div`
+    &:only-child {
+        margin-left: auto;
+    }
+`;
+
 const Main = styled.div`
     max-width: 95%;
 
@@ -136,7 +142,7 @@ const NewsCard: React.FC<
                         {tag}
                     </Tag>
                 )}
-                {publishedAt && <div>{publishedAt}</div>}
+                {publishedAt && <PublishDate>{publishedAt}</PublishDate>}
             </Head>
             <Main>
                 {title && (

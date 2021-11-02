@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import PriceList from '../../components/sections/PriceList';
+import PriceList, { PriceListComponent } from 'components/sections/PriceList';
 
 export default {
     title: 'Sections / PriceList',
-    component: PriceList,
+    component: PriceListComponent,
 } as Meta;
 
 export const Default: Story = () => (
