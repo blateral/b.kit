@@ -55,6 +55,20 @@ export const parameters = {
     controls: {
         disabled: true,
     },
+    options: {
+        storySort: (previous, next) => {
+            // const [previousStory, previousMeta] = previous;
+            const [nextStory, nextMeta] = next;
+
+            if (
+                nextMeta.kind.search('HowTo') ||
+                nextMeta.kind.search('Introduction') ||
+                nextMeta.kind.search('Intro')
+            ) {
+                return 1;
+            } else return 0;
+        },
+    },
 };
 
 export const decorators = [
