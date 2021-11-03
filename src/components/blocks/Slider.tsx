@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import SlickSlider, { Settings } from 'react-slick';
@@ -75,7 +75,7 @@ const Slider: FC<
             nextStep: number;
         }) => void;
         afterChange?: (currentStep: number) => void;
-        onInit?: (steps: number) => void;
+        onInit?: (steps: number, goToStep: (step: number) => void) => void;
     }
 > = ({
     initialStep = 0,
@@ -96,14 +96,17 @@ const Slider: FC<
     const [visibleSlides, setVisibleSlides] = useState<number | null>();
     const [steps, setSteps] = useState<number>(0);
 
-    const goToStep = (step: number) => {
-        if (sliderRef) {
-            const intNum = Math.floor(step);
-            if (intNum >= 0 && intNum < steps) {
-                sliderRef.slickGoTo(intNum);
+    const goToStep = useCallback(
+        (step: number) => {
+            if (sliderRef) {
+                const intNum = Math.floor(step);
+                if (intNum >= 0 && intNum < steps) {
+                    sliderRef.slickGoTo(intNum);
+                }
             }
-        }
-    };
+        },
+        [sliderRef, steps]
+    );
 
     const nextStep = () => {
         if (sliderRef) {
@@ -199,9 +202,10 @@ const Slider: FC<
 
     useEffect(() => {
         if (steps && steps > 0) {
-            onInit && onInit(steps);
+            onInit && onInit(steps, goToStep);
         }
-    }, [onInit, steps]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [steps]);
 
     return (
         <SliderContext.Provider
