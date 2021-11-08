@@ -157,13 +157,13 @@ const Poster: FC<{
     }
 };
 
-const StyledPoster = styled(Poster)<{ gradient?: string; size?: number }>`
+const StyledPoster = styled(Poster)<{ gradient?: string; size?: string }>`
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
-    height: ${({ size }) => (size ? size * 100 + 'vh' : '100vh')};
+    height: ${({ size }) => size && size};
     max-height: 1100px;
 
     ${withRange([spacings.spacer * 7, spacings.spacer * 8], 'padding-top')};
@@ -214,8 +214,8 @@ const IntroBlock = styled.div<{ noTitle?: boolean }>`
 
 const Header: FC<{
     size?: 'full' | 'small';
-    /** Optional explicit height scale value: 100vh * [0...1] */
-    sizeScale?: number;
+    /** Optional explicit CSS height value */
+    height?: string;
     title?: string;
     titleAs?: CalloutTag;
 
@@ -241,7 +241,7 @@ const Header: FC<{
     kenBurnsInterval?: number;
 }> = ({
     size = 'full',
-    sizeScale,
+    height,
     title,
     titleAs,
     intro,
@@ -279,11 +279,7 @@ const Header: FC<{
                     images={images}
                     gradient={withTopGradient ? gradient : undefined}
                     size={
-                        sizeScale === undefined
-                            ? size === 'small'
-                                ? 0.8
-                                : 1
-                            : sizeScale
+                        !height ? (size === 'small' ? '80vh' : '100vh') : height
                     }
                     kenBurnsZoom={kenBurnsZoom}
                     kenBurnsZoomPoint={kenBurnsZoomPoint}
