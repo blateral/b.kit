@@ -37,8 +37,8 @@ const WideImage = styled(Image)<{ isMirrored?: boolean }>`
 `;
 
 const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
-    padding-left: ${spacings.nudge * 2}px;
-    padding-right: ${spacings.nudge * 2}px;
+    padding-left: ${spacings.spacer}px;
+    padding-right: ${spacings.spacer}px;
     padding-top: ${spacings.nudge}px;
     padding-bottom: ${spacings.nudge * 2}px;
 
