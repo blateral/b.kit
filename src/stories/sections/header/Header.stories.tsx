@@ -285,7 +285,7 @@ export const SmallerHeaderSize: Story = () => (
 export const WithExplicitSizeScale: Story = () => (
     <Header
         size="small"
-        sizeScale={0.6} // is overriting size prop
+        height="60vh" // is overriting size prop
         title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
             {
