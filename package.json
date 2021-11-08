@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "1.9.6",
+    "version": "1.10.0",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
