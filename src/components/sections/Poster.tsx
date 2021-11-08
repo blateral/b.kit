@@ -111,10 +111,7 @@ const Poster: FC<{
                 addWhitespace={hasWrapper}
                 clampWidth={hasWrapper ? 'normal' : 'large'}
             >
-                <PosterContainer
-                    hasWrapper={hasWrapper}
-                    hasContent={title !== undefined}
-                >
+                <PosterContainer hasWrapper={hasWrapper} hasContent={!!title}>
                     <StyledImage {...image} coverSpace />
                     {title && (
                         <IntroContainer addWhitespace>

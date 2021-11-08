@@ -15,7 +15,7 @@ const ItemList = styled.ul`
 const ItemBlock = styled.li<{ hasBg?: boolean }>`
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: baseline;
     justify-content: space-between;
 
     ${withRange([spacings.nudge * 2, spacings.spacer], 'padding')};
