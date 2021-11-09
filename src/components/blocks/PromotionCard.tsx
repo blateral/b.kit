@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import styled, { css } from 'styled-components';
 
 import {
@@ -8,8 +9,9 @@ import {
     getGlobalSettings as global,
 } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
-import IntroBlock from './IntroBlock';
 import Link, { LinkProps } from 'components/typography/Link';
+import Title from 'components/blocks/Title';
+import External from 'components/base/icons/External';
 
 const View = styled.div<{
     clickable?: boolean;
@@ -94,29 +96,35 @@ const IntroContainer = styled.div`
     }
 `;
 
+const StyledTitle = styled(Title)<{ clampTitle?: boolean }>`
+    max-width: ${({ clampTitle }) =>
+        clampTitle && (13 / 28) * spacings.wrapper + 'px'};
+`;
+
+const ExternalIconHolder = styled.span`
+    margin-left: ${spacings.nudge * 2}px;
+
+    & > * {
+        display: inline-block;
+    }
+`;
+
 export interface PromotionCardProps {
     image: ImageProps;
     title?: string;
-    superTitle?: string;
-    text?: string;
-    /** Depreceated */
     href?: string;
     link?: LinkProps;
-    primaryAction?: React.ReactNode;
-    secondaryAction?: React.ReactNode;
     onClick?: () => void;
+    externalLinkIcon?: React.ReactNode;
 }
 
 const PromotionCard: FC<PromotionCardProps> = ({
     image,
     title,
-    superTitle,
-    text,
     href,
     link,
-    primaryAction,
-    secondaryAction,
     onClick,
+    externalLinkIcon,
 }) => {
     // fallback for older versions
     let linkObj = link;
@@ -127,20 +135,26 @@ const PromotionCard: FC<PromotionCardProps> = ({
         };
     }
 
+    const externalIconString = ReactDOMServer.renderToString(
+        <ExternalIconHolder>
+            {externalLinkIcon || <External />}
+        </ExternalIconHolder>
+    );
+
     return (
         <View onClick={onClick} clickable={onClick || link ? true : false}>
             <StyledImage {...image} coverSpace />
             {title && (
                 <IntroContainer>
                     <LinkHelper {...linkObj} />
-                    <IntroBlock
+                    <StyledTitle
                         colorMode="onImage"
-                        title={title}
-                        superTitle={superTitle}
-                        text={text}
-                        secondaryAction={() => secondaryAction}
-                        primaryAction={() => primaryAction}
-                        clampText={text !== undefined}
+                        title={
+                            linkObj?.isExternal
+                                ? title + externalIconString
+                                : title
+                        }
+                        clampTitle
                     />
                 </IntroContainer>
             )}

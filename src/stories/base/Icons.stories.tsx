@@ -22,6 +22,7 @@ import LinkedIn from 'components/base/icons/socials/LinkedIn';
 import Twitter from 'components/base/icons/socials/Twitter';
 import Xing from 'components/base/icons/socials/Xing';
 import Youtube from 'components/base/icons/socials/Youtube';
+import External from 'components/base/icons/External';
 
 export default {
     title: 'Base/Icons',
@@ -46,6 +47,7 @@ export default {
         Mail,
         FlyTo,
         Route,
+        External,
     },
     decorators: [
         (Story) => (
@@ -100,6 +102,9 @@ IconRoute.storyName = 'Routing';
 
 export const IconFlyTo: Story = () => <FlyTo />;
 IconFlyTo.storyName = 'Fly to';
+
+export const IconExternal: Story = () => <External />;
+IconExternal.storyName = 'External';
 
 export const IconFacebook: Story = () => <Facebook />;
 IconFacebook.storyName = 'Facebook logo';

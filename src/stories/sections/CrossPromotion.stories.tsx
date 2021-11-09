@@ -3,6 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import CrossPromotion, {
     CrossPromotionComponent,
 } from 'components/sections/CrossPromotion';
+import Route from 'components/base/icons/Route';
 
 export default {
     title: 'Sections/CrossPromotion',
@@ -21,9 +22,6 @@ export const SingleImageFull: Story = () => (
                     xlarge: 'https://unsplash.it/1400/826?image=409',
                 },
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
-                superTitle: 'Haus St. Franziskus',
-                text:
-                    'Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken.',
             },
         ]}
     />
@@ -368,6 +366,58 @@ export const isMirroredAndWithSplittedBackground: Story = () => (
 
 export const WithLinks: Story = () => (
     <CrossPromotion
+        main={[
+            {
+                link: {
+                    href: '#0',
+                },
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=411',
+                    medium: 'https://unsplash.it/791/592?image=411',
+                    semilarge: 'https://unsplash.it/689/1054?image=411',
+                    large: 'https://unsplash.it/790/1054?image=411',
+                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+        ]}
+        aside={[
+            {
+                link: {
+                    href: '#0',
+                    isExternal: true,
+                },
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+            {
+                link: {
+                    href: '#0',
+                    isExternal: true,
+                },
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
+                },
+                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+            },
+        ]}
+    />
+);
+
+export const CustomLinkIcons: Story = () => (
+    <CrossPromotion
+        externalLinkIcon={<Route />}
         main={[
             {
                 link: {
