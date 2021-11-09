@@ -57,15 +57,21 @@ const PosterContainer = styled.div`
 `;
 
 const CrossPromotion: React.FC<{
-    main?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
-    aside?: Array<PromotionCardProps & { size?: 'full' | 'half' }>;
+    main?: Array<
+        Omit<PromotionCardProps, 'externalLinkIcon'> & {
+            size?: 'full' | 'half';
+        }
+    >;
+    aside?: Array<
+        Omit<PromotionCardProps, 'externalLinkIcon'> & {
+            size?: 'full' | 'half';
+        }
+    >;
 
     bgMode?: 'full' | 'inverted' | 'splitted';
     isMirrored?: boolean;
-
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-}> = ({ main, aside, bgMode, isMirrored }) => {
+    externalLinkIcon?: React.ReactNode;
+}> = ({ main, aside, bgMode, isMirrored, externalLinkIcon }) => {
     const theme = React.useContext(ThemeContext);
 
     const isInverted = bgMode === 'inverted';
@@ -95,7 +101,12 @@ const CrossPromotion: React.FC<{
                                         {main &&
                                             main.map((card, i) => (
                                                 <PosterContainer key={i}>
-                                                    <PromotionCard {...card} />
+                                                    <PromotionCard
+                                                        {...card}
+                                                        externalLinkIcon={
+                                                            externalLinkIcon
+                                                        }
+                                                    />
                                                 </PosterContainer>
                                             ))}
                                     </FlexGridCol>
@@ -103,7 +114,12 @@ const CrossPromotion: React.FC<{
                                     <FlexGridCol>
                                         {aside.map((card, i) => (
                                             <PosterContainer key={i}>
-                                                <PromotionCard {...card} />
+                                                <PromotionCard
+                                                    {...card}
+                                                    externalLinkIcon={
+                                                        externalLinkIcon
+                                                    }
+                                                />
                                             </PosterContainer>
                                         ))}
                                     </FlexGridCol>
@@ -113,7 +129,12 @@ const CrossPromotion: React.FC<{
                                     <FlexGridCol>
                                         {aside.map((card, i) => (
                                             <PosterContainer key={i}>
-                                                <PromotionCard {...card} />
+                                                <PromotionCard
+                                                    {...card}
+                                                    externalLinkIcon={
+                                                        externalLinkIcon
+                                                    }
+                                                />
                                             </PosterContainer>
                                         ))}
                                     </FlexGridCol>
@@ -121,7 +142,12 @@ const CrossPromotion: React.FC<{
                                         {main &&
                                             main.map((card, i) => (
                                                 <PosterContainer key={i}>
-                                                    <PromotionCard {...card} />
+                                                    <PromotionCard
+                                                        {...card}
+                                                        externalLinkIcon={
+                                                            externalLinkIcon
+                                                        }
+                                                    />
                                                 </PosterContainer>
                                             ))}
                                     </FlexGridCol>
@@ -141,7 +167,12 @@ const CrossPromotion: React.FC<{
                                             key={i}
                                         >
                                             <PosterContainer key={i}>
-                                                <PromotionCard {...card} />
+                                                <PromotionCard
+                                                    {...card}
+                                                    externalLinkIcon={
+                                                        externalLinkIcon
+                                                    }
+                                                />
                                             </PosterContainer>
                                         </Grid.Col>
                                     ))}

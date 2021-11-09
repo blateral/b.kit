@@ -138,9 +138,11 @@ const base = css<{
     .icon-label {
         display: inline-flex;
         align-items: center;
+        margin: 0;
         padding-left: ${spacings.nudge}px;
         padding-right: ${spacings.nudge}px;
-        ${copyStyle('copy-b', 'big')}
+        ${copyStyle('copy', 'big')}
+        vertical-align: middle;
 
         & > * + * {
             margin-left: ${spacings.spacer}px;

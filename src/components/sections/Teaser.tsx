@@ -111,6 +111,14 @@ const StyledActions = styled(Actions)`
     }
 `;
 
+const RowHelper = styled.div`
+    display: none;
+
+    @media ${mq.semilarge} {
+        display: block;
+    }
+`;
+
 const Teaser: FC<{
     isMirrored?: boolean;
     bgMode?: 'full' | 'inverted' | 'splitted';
@@ -214,38 +222,40 @@ const Teaser: FC<{
                         </InfoWrapper>
                     </Grid.Col>
                 </Grid.Row>
-                <Grid.Row gutter={spacings.spacer}>
-                    <Grid.Col
-                        semilarge={{
-                            span: (bgMode === 'splitted' ? 11.2 : 14) / 28,
-                            move:
-                                (isMirrored
-                                    ? bgMode === 'splitted'
-                                        ? 16.8
-                                        : 14
-                                    : 0) / 28,
-                        }}
-                    >
-                        {image?.description && (
-                            <ImgDescDesktop
-                                size="small"
-                                isInverted={isInverted}
-                                innerHTML={image.description}
-                            />
-                        )}
-                    </Grid.Col>
-                    <Grid.Col
-                        semilarge={{
-                            span: (bgMode === 'splitted' ? 16.8 : 14) / 28,
-                            move:
-                                (isMirrored
-                                    ? bgMode === 'splitted'
-                                        ? -11.2
-                                        : -14
-                                    : 0) / 28,
-                        }}
-                    />
-                </Grid.Row>
+                <RowHelper>
+                    <Grid.Row gutter={spacings.spacer}>
+                        <Grid.Col
+                            semilarge={{
+                                span: (bgMode === 'splitted' ? 11.2 : 14) / 28,
+                                move:
+                                    (isMirrored
+                                        ? bgMode === 'splitted'
+                                            ? 16.8
+                                            : 14
+                                        : 0) / 28,
+                            }}
+                        >
+                            {image?.description && (
+                                <ImgDescDesktop
+                                    size="small"
+                                    isInverted={isInverted}
+                                    innerHTML={image.description}
+                                />
+                            )}
+                        </Grid.Col>
+                        <Grid.Col
+                            semilarge={{
+                                span: (bgMode === 'splitted' ? 16.8 : 14) / 28,
+                                move:
+                                    (isMirrored
+                                        ? bgMode === 'splitted'
+                                            ? -11.2
+                                            : -14
+                                        : 0) / 28,
+                            }}
+                        />
+                    </Grid.Row>
+                </RowHelper>
             </Wrapper>
         </Section>
     );

@@ -107,10 +107,7 @@ const Poster: FC<{
 }) => {
     return (
         <Section bgColor="undefined" bgMode="full">
-            <Wrapper
-                addWhitespace={hasWrapper}
-                clampWidth={hasWrapper ? 'normal' : 'large'}
-            >
+            <Wrapper clampWidth={hasWrapper ? 'normal' : 'large'}>
                 <PosterContainer hasWrapper={hasWrapper} hasContent={!!title}>
                     <StyledImage {...image} coverSpace />
                     {title && (
