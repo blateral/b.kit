@@ -527,10 +527,6 @@ const DynamicForm: FC<{
             };
             onSubmit && (await onSubmit(valuesAndMails));
             setSubmitting(false);
-
-            if (window) {
-                window?.location?.replace(successPage || '/');
-            }
         },
         validateOnBlur: true,
         validateOnChange: true,
