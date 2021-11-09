@@ -366,10 +366,13 @@ export const isMirroredAndWithSplittedBackground: Story = () => (
     />
 );
 
-export const WithClickHandlers: Story = () => (
+export const WithLinks: Story = () => (
     <CrossPromotion
         main={[
             {
+                link: {
+                    href: '#0',
+                },
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=411',
@@ -383,6 +386,10 @@ export const WithClickHandlers: Story = () => (
         ]}
         aside={[
             {
+                link: {
+                    href: '#0',
+                    isExternal: true,
+                },
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=409',
@@ -393,6 +400,10 @@ export const WithClickHandlers: Story = () => (
                 title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
             },
             {
+                link: {
+                    href: '#0',
+                    isExternal: true,
+                },
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',

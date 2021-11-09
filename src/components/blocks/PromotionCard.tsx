@@ -9,6 +9,7 @@ import {
 } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import IntroBlock from './IntroBlock';
+import Link, { LinkProps } from 'components/typography/Link';
 
 const View = styled.div<{
     clickable?: boolean;
@@ -49,7 +50,7 @@ const StyledImage = styled(Image)`
     min-height: 300px;
 `;
 
-const LinkHelper = styled.a`
+const LinkHelper = styled(Link)`
     display: block;
     position: absolute;
     top: 0;
@@ -98,7 +99,9 @@ export interface PromotionCardProps {
     title?: string;
     superTitle?: string;
     text?: string;
+    /** Depreceated */
     href?: string;
+    link?: LinkProps;
     primaryAction?: React.ReactNode;
     secondaryAction?: React.ReactNode;
     onClick?: () => void;
@@ -110,16 +113,26 @@ const PromotionCard: FC<PromotionCardProps> = ({
     superTitle,
     text,
     href,
+    link,
     primaryAction,
     secondaryAction,
     onClick,
 }) => {
+    // fallback for older versions
+    let linkObj = link;
+    if (href && !link) {
+        linkObj = {
+            href: href,
+            isExternal: false,
+        };
+    }
+
     return (
-        <View onClick={onClick} clickable={onClick || href ? true : false}>
+        <View onClick={onClick} clickable={onClick || link ? true : false}>
             <StyledImage {...image} coverSpace />
             {title && (
                 <IntroContainer>
-                    <LinkHelper href={href} />
+                    <LinkHelper {...linkObj} />
                     <IntroBlock
                         colorMode="onImage"
                         title={title}
