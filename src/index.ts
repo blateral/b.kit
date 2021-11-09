@@ -146,6 +146,7 @@ export { default as StarGhostIcon } from 'components/base/icons/StarGhost';
 export { default as MailIcon } from 'components/base/icons/Mail';
 export { default as PhoneIcon } from 'components/base/icons/Phone';
 export { default as RouteIcon } from 'components/base/icons/Route';
+export { default as ExternalIcon } from 'components/base/icons/External';
 
 /***** Social Icons *****/
 export { default as FacebookIcon } from 'components/base/icons/socials/Facebook';
