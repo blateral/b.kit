@@ -70,11 +70,6 @@ const CrossPromotion: React.FC<{
 
     bgMode?: 'full' | 'inverted' | 'splitted';
     isMirrored?: boolean;
-
-    /** Depreceated */
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    /** Depreceated */
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     externalLinkIcon?: React.ReactNode;
 }> = ({ main, aside, bgMode, isMirrored, externalLinkIcon }) => {
     const theme = React.useContext(ThemeContext);
