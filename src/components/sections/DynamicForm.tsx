@@ -223,7 +223,7 @@ const DynamicForm: FC<{
         isDisabled?: boolean;
     }) => React.ReactNode;
     targetEmails?: string;
-    successPage?: string;
+    subjectLine?: string;
     bgMode?: 'full' | 'inverted';
     definitions?: {
         field?: (props: FieldGenerationProps<Field>) => React.ReactNode;
@@ -241,8 +241,8 @@ const DynamicForm: FC<{
     onSubmit,
     submitAction,
     definitions,
+    subjectLine,
     targetEmails,
-    successPage,
     bgMode,
 }) => {
     const isInverted = bgMode === 'inverted';
@@ -524,6 +524,7 @@ const DynamicForm: FC<{
             const valuesAndMails = {
                 ...values,
                 targetEmails: targetEmails || '',
+                subjectLine: subjectLine || '',
             };
             onSubmit && (await onSubmit(valuesAndMails));
             setSubmitting(false);
