@@ -31,6 +31,7 @@ const View = styled.div<{
     allowOffset?: boolean;
     isBackVisible?: boolean;
     showLarge?: boolean;
+    gradient: string;
 }>`
     display: flex;
     align-items: ${({ showLarge }) => !showLarge && 'center'};
@@ -49,18 +50,22 @@ const View = styled.div<{
     margin: 0 auto;
     overflow: hidden;
 
-    background-color: ${({
+    background: ${({
         theme,
         isInverted,
         isLarge,
         isBackVisible,
         allowOffset,
+        gradient,
     }) =>
         isBackVisible
             ? isInverted
-                ? (!isLarge || !allowOffset) &&
-                  `rgba(0, 0, 0, ${!isLarge ? 0.3 : 0})`
-                : (!isLarge || !allowOffset) && color(theme).light
+                ? !isLarge || !allowOffset
+                    ? 'transparent'
+                    : gradient
+                : !isLarge || !allowOffset
+                ? color(theme).light
+                : gradient
             : 'transparent'};
 
     box-shadow: 0px 4px 4px
@@ -79,10 +84,9 @@ const View = styled.div<{
     transition: ${({ animated }) =>
                 animated ? 'transform 0.3s cubic-bezier(.71,0,.29,1),' : ''}
             height 0.2s ease-in-out,
-        background-color 0.3s ease-in-out, padding 0.2s ease-in-out,
+        background 0.3s ease-in-out, padding 0.2s ease-in-out,
         box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
-    will-change: transform, background-color, padding, height, box-shadow,
-        opacity;
+    will-change: transform, background, padding, height, box-shadow, opacity;
 
     @media ${mq.semilarge} {
         padding: ${({ showLarge, isOpen }) =>
@@ -256,6 +260,7 @@ const TopBar: FC<{
     isMirrored?: boolean;
     allowTopOverlow?: boolean;
     isLargeOnPageTop?: boolean;
+    customGradient?: string;
     onToggleClick?: () => void;
     toggleIcon?: (isInverted?: boolean) => React.ReactNode;
     logo?: LogoProps;
@@ -277,6 +282,7 @@ const TopBar: FC<{
     isBackVisible = true,
     allowTopOverlow = true,
     isLargeOnPageTop = true,
+    customGradient,
     onToggleClick,
     toggleIcon,
     logo,
@@ -405,6 +411,10 @@ const TopBar: FC<{
                 animated={isAnimated}
                 allowOffset={allowTopOverlow}
                 showLarge={isLargeOnPageTop ? isLarge : false}
+                gradient={
+                    customGradient ||
+                    'linear-gradient(180deg,rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 100%)'
+                }
                 className={className}
             >
                 <Content clampWidth="normal" addWhitespace>

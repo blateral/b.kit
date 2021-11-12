@@ -42,6 +42,7 @@ export interface NavProps {
     /** Hide topbar background if menu overlay is open */
     hideTopbarBackUnderMenu?: boolean;
     isTopbarLargeOnPageTop?: boolean;
+    customGradient?: string;
     primaryCta?: (props: {
         isInverted?: boolean;
         size?: 'desktop' | 'mobile';
@@ -68,6 +69,7 @@ const Navigation: FC<NavProps> = ({
     logo,
     background,
     backdropOpacity,
+    customGradient,
     primaryCta,
     secondaryCta,
     isTopbarInverted,
@@ -99,6 +101,7 @@ const Navigation: FC<NavProps> = ({
                 isInverted={isTopbarInverted}
                 allowTopOverlow={allowTopbarOverflow}
                 isLargeOnPageTop={isTopbarLargeOnPageTop}
+                customGradient={customGradient}
                 toggleIcon={openMenuIcon}
                 onToggleClick={() => setIsMenuOpen(true)}
                 {...sharedProps}
