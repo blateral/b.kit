@@ -128,7 +128,7 @@ const StyledActions = styled(Actions)`
     padding-bottom: ${spacings.nudge}px;
 
     @media ${mq.medium} {
-        & > * {
+        & > * + * {
             max-width: calc(50% - ${spacings.spacer}px);
         }
     }
