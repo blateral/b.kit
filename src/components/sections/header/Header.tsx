@@ -157,7 +157,10 @@ const Poster: FC<{
     }
 };
 
-const StyledPoster = styled(Poster)<{ gradient?: string; size?: string }>`
+const StyledPoster = styled(Poster)<{
+    gradientBottom?: string;
+    size?: string;
+}>`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -181,9 +184,15 @@ const StyledPoster = styled(Poster)<{ gradient?: string; size?: string }>`
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: ${({ gradient }) => gradient || undefined};
+            background-image: ${({ gradientBottom }) =>
+                gradientBottom || undefined};
             pointer-events: none;
             z-index: 2;
+
+            *[data-type='overflow'] ~ ${View} & {
+                background-image: ${({ gradientBottom }) =>
+                    gradientBottom || undefined};
+            }
         }
     }
 
@@ -228,8 +237,6 @@ const Header: FC<{
     secondaryCta?: (isInverted?: boolean) => React.ReactNode;
     videoUrl?: string;
     images?: HeaderImageProps[];
-    withTopGradient?: boolean;
-    customTopGradient?: string;
     customBottomGradient?: string;
     badge?: {
         content: React.ReactNode;
@@ -249,8 +256,6 @@ const Header: FC<{
     secondaryCta,
     videoUrl,
     images,
-    withTopGradient = true,
-    customTopGradient,
     customBottomGradient,
     badge,
     kenBurnsZoom = 1.08,
@@ -258,26 +263,19 @@ const Header: FC<{
     kenBurnsInterval = 10000,
 }) => {
     const theme = useContext(ThemeContext);
-    const topGradient = withTopGradient
-        ? customTopGradient ||
-          'linear-gradient(179deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 40%)'
-        : undefined;
 
     const bottomGradient =
         title || primaryCta || secondaryCta
             ? customBottomGradient || global(theme).sections.imageTextGradient
             : undefined;
 
-    const gradient = `${bottomGradient ? bottomGradient + ', ' : ''}${
-        topGradient || ''
-    }`;
     return (
         <View>
             <HeaderWrapper clampWidth="large">
                 <StyledPoster
                     videoUrl={videoUrl}
                     images={images}
-                    gradient={withTopGradient ? gradient : undefined}
+                    gradientBottom={bottomGradient}
                     size={
                         !height ? (size === 'small' ? '80vh' : '100vh') : height
                     }

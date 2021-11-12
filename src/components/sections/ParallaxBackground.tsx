@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import Image, { ImageProps } from 'components/blocks/Image';
+
 const View = styled.div`
     position: relative;
     width: 100vw;
@@ -31,10 +33,12 @@ const Content = styled.div<{
     }
 `;
 
+export type ParallaxWidth = '1/4' | 'half' | '3/4' | 'full';
+
 const ParallaxBackground: FC<{
-    image?: React.ReactNode;
+    image?: ImageProps;
     hAlign?: 'left' | 'center' | 'right';
-    contentWidth?: number;
+    contentWidth?: ParallaxWidth | number;
     moveRatio?: number;
     direction?: 'down' | 'up';
     className?: string;
@@ -49,6 +53,34 @@ const ParallaxBackground: FC<{
     const [yTransform, setYTransform] = useState<number>(0);
     const cRef = useRef<HTMLDivElement>(null);
     const parallaxRef = useRef<HTMLDivElement>(null);
+
+    let width = 1;
+    if (typeof contentWidth === 'string') {
+        switch (contentWidth) {
+            case '1/4': {
+                width = 0.25;
+                break;
+            }
+
+            case 'half': {
+                width = 0.5;
+                break;
+            }
+
+            case '3/4': {
+                width = 0.75;
+                break;
+            }
+
+            default:
+            case 'full': {
+                width = 1;
+                break;
+            }
+        }
+    } else if (!isNaN(contentWidth)) {
+        width = contentWidth;
+    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -78,8 +110,8 @@ const ParallaxBackground: FC<{
                 }}
                 className={className}
             >
-                <Content hAlign={hAlign} contentWidth={contentWidth}>
-                    {image}
+                <Content hAlign={hAlign} contentWidth={width}>
+                    {image && <Image {...image} />}
                 </Content>
             </Parallax>
         </View>

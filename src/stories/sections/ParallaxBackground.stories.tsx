@@ -56,13 +56,33 @@ export default {
 } as Meta;
 
 export const Default: Story = () => (
-    <ParallaxBackground image={<img src="/images/ParallaxBackground.svg" />} />
+    <ParallaxBackground
+        image={{
+            small: 'https://unsplash.it/832/500?image=409',
+            medium: 'https://unsplash.it/1023/500?image=409',
+            large: 'https://unsplash.it/1439/511?image=409',
+            xlarge: 'https://unsplash.it/2400/854?image=409',
+        }}
+    />
+);
+
+export const WithSVG: Story = () => (
+    <ParallaxBackground
+        image={{
+            small: '/images/ParallaxBackground.svg',
+        }}
+    />
 );
 
 export const SmallerContentWidth: Story = () => (
     <ParallaxBackground
         contentWidth={0.6}
-        image={<img src="/images/ParallaxBackground.svg" />}
+        image={{
+            small: 'https://unsplash.it/832/500?image=409',
+            medium: 'https://unsplash.it/1023/500?image=409',
+            large: 'https://unsplash.it/1439/511?image=409',
+            xlarge: 'https://unsplash.it/2400/854?image=409',
+        }}
     />
 );
 
@@ -70,7 +90,12 @@ export const RightAlign: Story = () => (
     <ParallaxBackground
         hAlign="right"
         contentWidth={0.6}
-        image={<img src="/images/ParallaxBackground.svg" />}
+        image={{
+            small: 'https://unsplash.it/832/500?image=409',
+            medium: 'https://unsplash.it/1023/500?image=409',
+            large: 'https://unsplash.it/1439/511?image=409',
+            xlarge: 'https://unsplash.it/2400/854?image=409',
+        }}
     />
 );
 
@@ -78,7 +103,12 @@ export const CenterAlign: Story = () => (
     <ParallaxBackground
         hAlign="center"
         contentWidth={0.6}
-        image={<img src="/images/ParallaxBackground.svg" />}
+        image={{
+            small: 'https://unsplash.it/832/500?image=409',
+            medium: 'https://unsplash.it/1023/500?image=409',
+            large: 'https://unsplash.it/1439/511?image=409',
+            xlarge: 'https://unsplash.it/2400/854?image=409',
+        }}
     />
 );
 
@@ -87,7 +117,12 @@ export const WithDifferentMoveRatio: Story = () => (
         moveRatio={0.7}
         hAlign="center"
         contentWidth={0.6}
-        image={<img src="/images/ParallaxBackground.svg" />}
+        image={{
+            small: 'https://unsplash.it/832/500?image=409',
+            medium: 'https://unsplash.it/1023/500?image=409',
+            large: 'https://unsplash.it/1439/511?image=409',
+            xlarge: 'https://unsplash.it/2400/854?image=409',
+        }}
     />
 );
 
@@ -96,6 +131,11 @@ export const WithDownDirection: Story = () => (
         direction="down"
         hAlign="center"
         contentWidth={0.6}
-        image={<img src="/images/ParallaxBackground.svg" />}
+        image={{
+            small: 'https://unsplash.it/832/500?image=409',
+            medium: 'https://unsplash.it/1023/500?image=409',
+            large: 'https://unsplash.it/1439/511?image=409',
+            xlarge: 'https://unsplash.it/2400/854?image=409',
+        }}
     />
 );

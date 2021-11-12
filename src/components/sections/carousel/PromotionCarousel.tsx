@@ -11,17 +11,24 @@ import { withLibTheme } from 'utils/LibThemeProvider';
 
 export type PromotionCarouselItem = Omit<
     PromotionCardProps,
-    'text' | 'superTitle' | 'text' | 'primaryAction' | 'secondaryAction'
+    | 'text'
+    | 'superTitle'
+    | 'text'
+    | 'primaryAction'
+    | 'secondaryAction'
+    | 'externalLinkIcon'
 >;
 
 const PromotionCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing' | 'isInverted'> & {
         bgMode?: 'full' | 'splitted' | 'inverted';
         promotions?: PromotionCarouselItem[];
+        externalLinkIcon?: React.ReactNode;
     }
 > = ({
     bgMode,
     promotions,
+    externalLinkIcon,
     controlNext,
     controlPrev,
     beforeChange,
@@ -78,7 +85,11 @@ const PromotionCarousel: FC<
             >
                 {promotions &&
                     promotions.map((promotion, i) => (
-                        <PromotionCard key={i} {...promotion} />
+                        <PromotionCard
+                            key={i}
+                            {...promotion}
+                            externalLinkIcon={externalLinkIcon}
+                        />
                     ))}
             </CarouselBase>
         </Section>
