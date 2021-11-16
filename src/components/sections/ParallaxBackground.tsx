@@ -33,6 +33,10 @@ const Content = styled.div<{
     }
 `;
 
+const StyledImage = styled(Image)`
+    width: 100%;
+`;
+
 export type ParallaxWidth = '1/4' | 'half' | '3/4' | 'full';
 
 const ParallaxBackground: FC<{
@@ -111,7 +115,7 @@ const ParallaxBackground: FC<{
                 className={className}
             >
                 <Content hAlign={hAlign} contentWidth={width}>
-                    {image && <Image {...image} />}
+                    {image && <StyledImage {...image} />}
                 </Content>
             </Parallax>
         </View>
