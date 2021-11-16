@@ -7,6 +7,11 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 export default {
     title: 'Sections/News/NewsText',
     component: NewsTextComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

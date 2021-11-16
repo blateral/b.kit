@@ -10,6 +10,11 @@ import Button from 'components/buttons/Button';
 export default {
     title: 'Sections / CallToActionDouble',
     component: CallToActionDoubleComponent,
+    parameters: {
+        status: {
+            type: 'releaseCandidate',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

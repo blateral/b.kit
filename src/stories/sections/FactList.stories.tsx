@@ -5,6 +5,11 @@ import FactList, { FactListComponent } from 'components/sections/FactList';
 export default {
     title: 'Sections/FactList',
     component: FactListComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

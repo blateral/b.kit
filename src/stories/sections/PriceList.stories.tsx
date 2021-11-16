@@ -5,6 +5,11 @@ import PriceList, { PriceListComponent } from 'components/sections/PriceList';
 export default {
     title: 'Sections / PriceList',
     component: PriceListComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

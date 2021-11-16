@@ -90,6 +90,9 @@ export default {
             default: 'inverted',
             values: [{ name: 'inverted', value: 'grey' }],
         },
+        status: {
+            type: 'stable',
+        },
     },
     decorators: [
         (Story) => (

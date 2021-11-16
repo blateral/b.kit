@@ -12,6 +12,11 @@ export default {
             </div>
         ),
     ],
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const ThreeImages: Story = () => (

@@ -6,6 +6,11 @@ import Button from 'components/buttons/Button';
 export default {
     title: 'Sections/Form',
     component: FormComponent,
+    parameters: {
+        status: {
+            type: 'deprecated',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

@@ -230,6 +230,9 @@ export default {
             default: 'inverted',
             values: [{ name: 'inverted', value: 'white', color: 'black' }],
         },
+        status: {
+            type: 'stable',
+        },
     },
     decorators: [
         (Story) => (

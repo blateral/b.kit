@@ -8,6 +8,11 @@ import Route from 'components/base/icons/Route';
 export default {
     title: 'Sections/CrossPromotion',
     component: CrossPromotionComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const SingleImageFull: Story = () => (

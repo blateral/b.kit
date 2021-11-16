@@ -9,6 +9,11 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 export default {
     title: 'Sections/TeaserWide',
     component: TeaserWideComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const WithContent: Story = () => (

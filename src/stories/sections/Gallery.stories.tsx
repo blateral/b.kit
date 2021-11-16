@@ -5,6 +5,11 @@ import Gallery, { GalleryComponent } from 'components/sections/Gallery';
 export default {
     title: 'Sections/Gallery',
     component: GalleryComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const SingleImage: Story = () => (

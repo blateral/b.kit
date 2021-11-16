@@ -10,6 +10,11 @@ import { generateItemList } from 'utils/storyHelpers';
 export default {
     title: 'Sections/News/NewsList',
     component: NewsListComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 const actions = {

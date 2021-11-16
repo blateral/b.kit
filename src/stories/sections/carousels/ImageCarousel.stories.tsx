@@ -11,6 +11,11 @@ import { generateItemList } from 'utils/storyHelpers';
 export default {
     title: 'Sections/Carousels/ImageCarousel',
     component: ImageCarouselComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 const exampleImage: ImageProps = {

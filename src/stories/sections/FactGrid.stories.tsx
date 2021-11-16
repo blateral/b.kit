@@ -7,6 +7,11 @@ import { FactProps } from 'components/blocks/Fact';
 export default {
     title: 'Sections/FactGrid',
     component: FactGridComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 const exampleFact = {

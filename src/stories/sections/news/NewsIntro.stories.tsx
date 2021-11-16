@@ -7,6 +7,11 @@ import NewsIntro, {
 export default {
     title: 'Sections/News/NewsIntro',
     component: NewsIntroComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

@@ -53,6 +53,11 @@ export default {
             </>
         ),
     ],
+    parameters: {
+        status: {
+            type: 'releaseCandidate',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

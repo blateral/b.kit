@@ -40,6 +40,11 @@ const exampleVideos = generateItemList<VideoCardProps>(
 export default {
     title: 'Sections/Carousels/VideoCarousel',
     component: VideoCarouselComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

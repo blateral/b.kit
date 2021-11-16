@@ -28,6 +28,11 @@ const exampleContactData = `
 export default {
     title: 'Sections/Footer',
     component: FooterComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const WithContactData: Story = () => (

@@ -7,6 +7,11 @@ import NewsAuthorCard, {
 export default {
     title: 'Sections/News/NewsAuthorCard',
     component: NewsAuthorCardComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => <NewsAuthorCard />;

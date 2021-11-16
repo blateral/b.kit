@@ -8,6 +8,11 @@ import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 export default {
     title: 'Sections/ComparisonSlider',
     component: ComparisonSliderComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

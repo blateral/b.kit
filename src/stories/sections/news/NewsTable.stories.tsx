@@ -9,6 +9,11 @@ import Button from 'components/buttons/Button';
 export default {
     title: 'Sections / News / NewsTable',
     components: NewsTableComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

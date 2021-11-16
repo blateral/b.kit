@@ -6,6 +6,11 @@ import Play from 'components/base/icons/Play';
 export default {
     title: 'Sections/Video',
     component: VideoComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

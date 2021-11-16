@@ -8,5 +8,6 @@ module.exports = {
                 controls: false,
             },
         },
+        '@etchteam/storybook-addon-status',
     ],
 };
