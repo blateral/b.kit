@@ -7,8 +7,6 @@ import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Slider from 'components/blocks/Slider';
 import { ResponsiveObject } from 'react-slick';
-// import IntroBlock from 'components/blocks/IntroBlock';
-// import { HeadlineTag } from 'components/typography/Heading';
 
 const View = styled(Wrapper)`
     position: relative;
@@ -24,11 +22,6 @@ const Head = styled(Wrapper)`
     display: flex;
     flex-direction: row;
 `;
-
-// const IntroContainer = styled.div`
-//     flex: 1;
-//     ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
-// `;
 
 const TopControls = styled.div`
     display: none;
@@ -61,14 +54,6 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
         cursor: pointer;
     }
 
-    /* &:enabled:hover {
-        transform: scale(1.05);
-    }
-
-    &:enabled:active {
-        transform: scale(0.95);
-    } */
-
     &:disabled {
         color: ${({ theme, isInverted }) =>
             isInverted ? color(theme).mono.dark : color(theme).mono.medium};
@@ -92,23 +77,23 @@ const Footer = styled.div`
     justify-content: center;
 `;
 
-const CtrlWrapper = styled.div`
-    display: block;
+// const CtrlWrapper = styled.div`
+//     display: block;
 
-    @media ${mq.semilarge} {
-        display: none;
-    }
-`;
+//     @media ${mq.semilarge} {
+//         display: none;
+//     }
+// `;
 
-const CtrlWrapperLeft = styled(CtrlWrapper)`
-    flex: 1;
-    text-align: left;
-`;
+// const CtrlWrapperLeft = styled(CtrlWrapper)`
+//     flex: 1;
+//     text-align: left;
+// `;
 
-const CtrlWrapperRight = styled(CtrlWrapper)`
-    flex: 1;
-    text-align: right;
-`;
+// const CtrlWrapperRight = styled(CtrlWrapper)`
+//     flex: 1;
+//     text-align: right;
+// `;
 
 const StyledDotGroup = styled(Slider.DotGroup)`
     display: inline-block;
@@ -245,7 +230,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                 </StyledSlides>
                 {React.Children.count(children) > 1 && (
                     <Footer>
-                        <CtrlWrapperLeft>
+                        {/* <CtrlWrapperLeft>
                             <StyledControl type="prev" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlPrev ? (
@@ -259,7 +244,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                                     )
                                 }
                             </StyledControl>
-                        </CtrlWrapperLeft>
+                        </CtrlWrapperLeft> */}
                         <StyledDotGroup>
                             {(i, isActive, onClick) => (
                                 <DotWrapper key={i} onClick={onClick}>
@@ -274,7 +259,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                                 </DotWrapper>
                             )}
                         </StyledDotGroup>
-                        <CtrlWrapperRight>
+                        {/* <CtrlWrapperRight>
                             <StyledControl type="next" isInverted={isInverted}>
                                 {(isActive) =>
                                     controlNext ? (
@@ -288,7 +273,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                                     )
                                 }
                             </StyledControl>
-                        </CtrlWrapperRight>
+                        </CtrlWrapperRight> */}
                     </Footer>
                 )}
             </Slider.Provider>
