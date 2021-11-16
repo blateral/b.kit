@@ -12,7 +12,7 @@ import {
 } from 'utils/styles';
 import { headingStyle } from './Heading';
 
-type CopyType = Exclude<
+export type CopyType = Exclude<
     FontType,
     | 'heading-1'
     | 'heading-2'

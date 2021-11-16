@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { spacings, mq, withRange } from 'utils/styles';
 
 import Title from 'components/blocks/Title';
-import Copy from 'components/typography/Copy';
+import Copy, { CopyType } from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
 
@@ -51,6 +51,7 @@ const IntroBlock: React.FC<{
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     text?: string;
+    textType?: CopyType;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -66,6 +67,7 @@ const IntroBlock: React.FC<{
     superTitle,
     superTitleAs,
     text,
+    textType = 'copy-b',
     primaryAction,
     secondaryAction,
     isCentered = false,
@@ -88,7 +90,7 @@ const IntroBlock: React.FC<{
             )}
             {text && (
                 <ContentBlock
-                    type="copy-b"
+                    type={textType}
                     textColor={colorMode === 'onImage' ? '#fff' : undefined}
                     isInverted={colorMode === 'inverted'}
                     isCentered={isCentered}

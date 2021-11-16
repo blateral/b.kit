@@ -339,7 +339,7 @@ const TopBar: FC<{
     }, [isInOffset, isLarge, isTop]);
 
     useEffect(() => {
-        if (isTop) setIsLarge(true);
+        if (isTop && isLargeOnPageTop) setIsLarge(true);
     }, [isLargeOnPageTop, isTop]);
 
     // check if top bar is inverted

@@ -283,6 +283,7 @@ const CallToActionDouble: React.FC<{
                                     superTitle={superTitle}
                                     superTitleAs={superTitleAs}
                                     text={text}
+                                    textType="copy"
                                 />
                             )}
                             {contact && (
@@ -321,6 +322,7 @@ const CallToActionDouble: React.FC<{
                                         superTitle={column.superTitle}
                                         superTitleAs={column.superTitleAs}
                                         text={column.text}
+                                        textType="copy"
                                     />
                                 )}
                                 {column.contact && (
