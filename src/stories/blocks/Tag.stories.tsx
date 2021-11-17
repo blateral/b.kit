@@ -5,6 +5,11 @@ import Tag from 'components/blocks/Tag';
 export default {
     title: 'Blocks/Tag',
     component: Tag,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => <Tag>Tag Default</Tag>;

@@ -13,6 +13,11 @@ export default {
             </Helper>
         ),
     ],
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 // Story Helper

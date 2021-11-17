@@ -15,6 +15,11 @@ const Seperator = () => (
 export default {
     title: 'Typography/Callout',
     component: Callout,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => <Callout>Lorem Ipsum Dolor Sit</Callout>;

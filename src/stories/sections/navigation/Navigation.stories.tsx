@@ -32,6 +32,11 @@ export default {
             </div>
         ),
     ],
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 const logoFn = ({

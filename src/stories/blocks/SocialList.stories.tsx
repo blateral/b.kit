@@ -11,6 +11,11 @@ import TwitterIcon from 'components/base/icons/socials/Twitter';
 export default {
     title: 'Blocks/SocialList',
     component: SocialList,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

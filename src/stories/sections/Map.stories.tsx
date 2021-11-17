@@ -16,6 +16,11 @@ import marker from '../../../public/images/Marker.svg';
 export default {
     title: 'Sections/Map',
     component: MapComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 const exampleLocations: MapLocation[] = [

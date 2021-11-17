@@ -7,6 +7,11 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 export default {
     title: 'Blocks/Actions',
     component: Actions,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

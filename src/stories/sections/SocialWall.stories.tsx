@@ -7,6 +7,11 @@ import SocialWall, {
 export default {
     title: 'Sections / SocialWall',
     component: SocialWallComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

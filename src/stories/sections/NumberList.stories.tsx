@@ -7,6 +7,11 @@ import NumberList, {
 export default {
     title: 'Sections/NumberList',
     component: NumberListComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

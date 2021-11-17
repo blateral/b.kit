@@ -6,6 +6,11 @@ import Nl2Br from 'components/base/nl2br';
 export default {
     title: 'Typography/nl2br',
     component: Nl2Br,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

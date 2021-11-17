@@ -5,6 +5,11 @@ import Title from 'components/blocks/Title';
 export default {
     title: 'Blocks/Title',
     component: Title,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

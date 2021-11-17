@@ -5,6 +5,11 @@ import Timeline, { TimelineComponent } from 'components/sections/Timeline';
 export default {
     title: 'sections/Timeline',
     component: TimelineComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

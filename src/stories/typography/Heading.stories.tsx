@@ -15,6 +15,11 @@ const Seperator = () => (
 export default {
     title: 'Typography/Heading',
     component: Heading,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => <Heading>Lorem Ipsum Dolor Sit</Heading>;

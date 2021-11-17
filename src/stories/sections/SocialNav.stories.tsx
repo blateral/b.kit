@@ -9,6 +9,11 @@ import Facebook from 'components/base/icons/socials/Facebook';
 export default {
     title: 'Sections/SocialNav',
     component: SocialNavComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

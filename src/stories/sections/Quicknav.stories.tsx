@@ -5,6 +5,11 @@ import Quicknav, { QuicknavComponent } from 'components/sections/Quicknav';
 export default {
     title: 'Sections / Quicknav',
     component: QuicknavComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

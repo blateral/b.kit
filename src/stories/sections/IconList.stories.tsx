@@ -106,6 +106,11 @@ const Items = [
 export default {
     title: 'Sections/IconList',
     component: IconListComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

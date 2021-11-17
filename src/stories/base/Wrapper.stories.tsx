@@ -18,6 +18,11 @@ const ExampleContent = () => (
 export default {
     title: 'Base/Wrapper',
     component: Wrapper,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

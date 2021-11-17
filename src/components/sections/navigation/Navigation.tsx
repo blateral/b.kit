@@ -33,6 +33,7 @@ export interface NavProps {
     isMirrored?: boolean;
     activeNavItem?: string;
     navItems?: NavGroup[];
+    navItemIndicator?: (isInverted: boolean) => React.ReactNode;
     backdropOpacity?: number;
     socials?: Array<{ icon: React.ReactNode; href: string }>;
     logo?: LogoProps;
@@ -64,6 +65,7 @@ const Navigation: FC<NavProps> = ({
     isLargeMenu,
     activeNavItem,
     navItems,
+    navItemIndicator,
     socials,
     search,
     logo,
@@ -119,6 +121,7 @@ const Navigation: FC<NavProps> = ({
                 onCloseClick={() => setIsMenuOpen(false)}
                 toggleIcon={closeMenuIcon}
                 background={background}
+                navItemIndicator={navItemIndicator}
                 {...sharedProps}
             />
         </LibThemeProvider>

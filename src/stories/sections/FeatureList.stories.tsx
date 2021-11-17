@@ -66,6 +66,11 @@ const exampleFeaturesEven = generateItemList<FeatureProps>(
 export default {
     title: 'Sections/FeatureList',
     component: FeatureListComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

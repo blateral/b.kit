@@ -230,6 +230,9 @@ export default {
             default: 'inverted',
             values: [{ name: 'inverted', value: 'white', color: 'black' }],
         },
+        status: {
+            type: 'stable',
+        },
     },
     decorators: [
         (Story) => (
@@ -280,6 +283,31 @@ export const WithNavItems: Story = () => (
                 placeholder="Search"
                 submitIcon={<Magnifier />}
                 onSubmit={() => console.log('submit')}
+            />
+        )}
+        {...exampleNavItems}
+    />
+);
+
+export const WithCustomNavIndicator: Story = () => (
+    <Menu
+        isOpen
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        navItemIndicator={(isInverted) => (
+            <div
+                style={{
+                    background: isInverted ? 'white' : 'red',
+                    width: '10px',
+                    height: '10px',
+                    marginRight: '5px',
+                }}
             />
         )}
         {...exampleNavItems}

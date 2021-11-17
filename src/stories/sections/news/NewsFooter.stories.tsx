@@ -7,6 +7,11 @@ import NewsFooter, {
 export default {
     title: 'Sections/News/NewsFooter',
     component: NewsFooterComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

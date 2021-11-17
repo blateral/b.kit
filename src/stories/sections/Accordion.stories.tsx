@@ -5,6 +5,11 @@ import Accordion, { AccordionComponent } from 'components/sections/Accordion';
 export default {
     title: 'Sections/Accordion',
     component: AccordionComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

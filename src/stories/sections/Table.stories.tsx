@@ -6,6 +6,11 @@ import Table, { TableComponent } from 'components/sections/Table';
 export default {
     title: 'Sections / Table',
     components: TableComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

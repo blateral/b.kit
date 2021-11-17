@@ -5,6 +5,11 @@ import Fact from 'components/blocks/Fact';
 export default {
     title: 'Blocks/Fact',
     component: Fact,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const WithTitle: Story = () => (

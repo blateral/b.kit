@@ -55,6 +55,9 @@ export const parameters = {
     controls: {
         disabled: true,
     },
+    status: {
+        type: 'beta',
+    },
     options: {
         storySort: (previous, next) => {
             // const [previousStory, previousMeta] = previous;

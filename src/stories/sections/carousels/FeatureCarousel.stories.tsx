@@ -58,6 +58,11 @@ const exampleFeatures = generateItemList<FeatureProps>(
 export default {
     title: 'Sections/Carousels/FeatureCarousel',
     component: FeatureCarouselComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

@@ -15,6 +15,11 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 export default {
     title: 'Blocks/CookieConsent',
     component: CookieConsent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const WithIcon: Story = () => (

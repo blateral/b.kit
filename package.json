@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "1.12.3",
+    "version": "1.12.4",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
@@ -37,6 +37,7 @@
         }
     },
     "devDependencies": {
+        "@etchteam/storybook-addon-status": "^4.1.0",
         "@rollup/plugin-babel": "^5.3.0",
         "@rollup/plugin-commonjs": "^17.0.0",
         "@rollup/plugin-node-resolve": "^11.0.0",

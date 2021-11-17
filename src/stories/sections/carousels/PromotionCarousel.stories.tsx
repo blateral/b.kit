@@ -38,6 +38,11 @@ const examplePromotions = generateItemList<PromotionCarouselItem>(
 export default {
     title: 'Sections/Carousels/PromotionCarousel',
     component: PromotionCarouselComponent,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (
