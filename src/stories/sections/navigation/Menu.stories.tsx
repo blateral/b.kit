@@ -289,6 +289,31 @@ export const WithNavItems: Story = () => (
     />
 );
 
+export const WithCustomNavIndicator: Story = () => (
+    <Menu
+        isOpen
+        search={(isInverted) => (
+            <SearchInput
+                isInverted={isInverted}
+                placeholder="Search"
+                submitIcon={<Magnifier />}
+                onSubmit={() => console.log('submit')}
+            />
+        )}
+        navItemIndicator={(isInverted) => (
+            <div
+                style={{
+                    background: isInverted ? 'white' : 'red',
+                    width: '10px',
+                    height: '10px',
+                    marginRight: '5px',
+                }}
+            />
+        )}
+        {...exampleNavItems}
+    />
+);
+
 export const WithSocials: Story = () => (
     <Menu
         isOpen

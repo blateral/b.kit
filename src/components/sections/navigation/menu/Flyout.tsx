@@ -716,21 +716,27 @@ const ItemLabel = styled.label<{ isActive?: boolean; isInverted?: boolean }>`
     ${ItemLink}:hover + & {
         border-bottom: solid 2px ${({ theme }) => color(theme).primary.medium};
     }
+`;
 
-    &:before {
-        content: ${({ isActive }) => (isActive ? `""` : undefined)};
-        position: absolute;
-        left: -13px;
-        top: 50%;
-        height: 6px;
-        width: 6px;
+const IndicatorContainer = styled.div`
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(-100%);
+`;
 
-        background-color: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).light : color(theme).dark};
-        border-radius: 4px;
+const Indicator = styled.div<{ isInverted?: boolean }>`
+    height: 6px;
+    width: 6px;
+    margin-right: ${spacings.nudge * 1.5}px;
 
-        transform: translateY(-50%);
-    }
+    background-color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).light : color(theme).dark};
+    border-radius: 4px;
 `;
 
 const NavList: FC<{
@@ -738,12 +744,14 @@ const NavList: FC<{
     activeNavItem?: string;
     navGroups?: NavGroup[];
     isLarge?: boolean;
+    itemIndicator?: (isInverted: boolean) => React.ReactNode;
     className?: string;
 }> = ({
     isInverted = false,
     activeNavItem,
     navGroups,
     isLarge = false,
+    itemIndicator,
     className,
 }) => {
     const [activeGroup, activeItem] = activeNavItem
@@ -767,31 +775,50 @@ const NavList: FC<{
                                         .filter((item) => {
                                             return item.label && item.link;
                                         })
-                                        .map((item, itemIndex) => (
-                                            <NavItem
-                                                key={itemIndex}
-                                                isSmall={group.isSmall}
-                                                onClick={() =>
-                                                    item.onClick &&
-                                                    item.onClick(
-                                                        item.id,
-                                                        group.id + '.' + item.id
-                                                    )
-                                                }
-                                            >
-                                                <ItemLink {...item.link} />
-                                                <ItemLabel
-                                                    isActive={
-                                                        activeGroup ===
-                                                            group.id &&
-                                                        activeItem === item.id
+                                        .map((item, itemIndex) => {
+                                            const isActive =
+                                                activeGroup === group.id &&
+                                                activeItem === item.id;
+
+                                            return (
+                                                <NavItem
+                                                    key={itemIndex}
+                                                    isSmall={group.isSmall}
+                                                    onClick={() =>
+                                                        item.onClick &&
+                                                        item.onClick(
+                                                            item.id,
+                                                            group.id +
+                                                                '.' +
+                                                                item.id
+                                                        )
                                                     }
-                                                    isInverted={isInverted}
                                                 >
-                                                    {item.label}
-                                                </ItemLabel>
-                                            </NavItem>
-                                        ))}
+                                                    <ItemLink {...item.link} />
+                                                    <ItemLabel
+                                                        isActive={isActive}
+                                                        isInverted={isInverted}
+                                                    >
+                                                        {isActive && (
+                                                            <IndicatorContainer>
+                                                                {itemIndicator ? (
+                                                                    itemIndicator(
+                                                                        isInverted
+                                                                    )
+                                                                ) : (
+                                                                    <Indicator
+                                                                        isInverted={
+                                                                            isInverted
+                                                                        }
+                                                                    />
+                                                                )}
+                                                            </IndicatorContainer>
+                                                        )}
+                                                        {item.label}
+                                                    </ItemLabel>
+                                                </NavItem>
+                                            );
+                                        })}
                             </ItemContainer>
                         </Group>
                     ))}

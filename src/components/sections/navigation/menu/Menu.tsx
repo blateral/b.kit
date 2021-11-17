@@ -71,6 +71,7 @@ interface MenuProps {
     search?: (isInverted?: boolean) => React.ReactNode;
     activeNavItem?: string;
     navItems?: NavGroup[];
+    navItemIndicator?: (isInverted: boolean) => React.ReactNode;
     socials?: Array<{ icon: React.ReactNode; href: string }>;
     onCloseClick?: () => void;
 }
@@ -89,6 +90,7 @@ const Menu: FC<MenuProps> = ({
     search,
     activeNavItem,
     navItems,
+    navItemIndicator,
     socials,
     onCloseClick,
 }) => {
@@ -118,6 +120,7 @@ const Menu: FC<MenuProps> = ({
                         navGroups={navItems}
                         isLarge={size === 'full'}
                         isInverted={isInverted}
+                        itemIndicator={navItemIndicator}
                     />
                 )}
                 {socials && (
