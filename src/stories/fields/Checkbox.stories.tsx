@@ -13,6 +13,11 @@ export default {
             </Background>
         ),
     ],
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 const Background = styled.div<{ dark?: boolean }>`

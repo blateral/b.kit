@@ -33,6 +33,11 @@ const ExampleCol2 = (props: any) => {
 export default {
     title: 'Base/Grid',
     component: Grid.Row,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

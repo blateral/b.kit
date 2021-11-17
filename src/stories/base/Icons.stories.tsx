@@ -56,6 +56,11 @@ export default {
             </div>
         ),
     ],
+    parameters: {
+        status: {
+            type: '',
+        },
+    },
 } as Meta;
 
 export const IconArrowRight: Story = () => <ArrowRight />;

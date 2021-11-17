@@ -6,6 +6,11 @@ import Link from 'components/typography/Link';
 export default {
     title: 'Typography/Link',
     component: Link,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => <Link href="#">My Link</Link>;

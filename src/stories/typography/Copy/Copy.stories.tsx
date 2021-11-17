@@ -71,6 +71,11 @@ const Separator = () => (
 export default {
     title: 'Typography/Copy',
     component: Copy,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

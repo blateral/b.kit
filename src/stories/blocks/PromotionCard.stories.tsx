@@ -5,6 +5,11 @@ import PromotionCard from 'components/blocks/PromotionCard';
 export default {
     title: 'Blocks/PromotionCard',
     component: PromotionCard,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

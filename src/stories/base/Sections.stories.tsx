@@ -17,6 +17,11 @@ const ExampleContent = () => (
 export default {
     title: 'Base/Section',
     component: Section,
+    parameters: {
+        status: {
+            type: 'stable',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (
