@@ -2,7 +2,7 @@ import MenuBurger from 'components/base/icons/MenuBurger';
 import Wrapper from 'components/base/Wrapper';
 import Link from 'components/typography/Link';
 import React, { FC, useContext, useEffect, useRef, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { css, ThemeContext } from 'styled-components';
 
 import { spacings, getColors as color, mq, withRange } from 'utils/styles';
 import { useMediaQuery } from 'utils/useMediaQuery';
@@ -197,18 +197,83 @@ const StyledMenuBurger = styled(MenuBurger)`
     margin-top: ${spacings.nudge}px;
 `;
 
+const getLogoScaleRange = ({
+    logoScale,
+    breakpoint = 'mobile',
+    isLargeOnPageTop,
+    isLarge,
+}: {
+    logoScale: Pick<DefaultLogoProps, 'pageTopScale' | 'scrolledScale'>;
+    breakpoint: 'mobile' | 'desktop';
+    isLargeOnPageTop?: boolean;
+    isLarge?: boolean;
+}) => {
+    const scalePageTop =
+        logoScale.pageTopScale?.[
+            breakpoint === 'desktop' ? 'desktop' : 'mobile'
+        ];
+    const scaleScrolled =
+        logoScale.scrolledScale?.[
+            breakpoint === 'desktop' ? 'desktop' : 'mobile'
+        ];
+
+    let scale: [number, number] = [1, 1];
+    const currentScale = (isLargeOnPageTop ? isLarge : false)
+        ? scalePageTop
+        : scaleScrolled;
+    if (currentScale !== undefined) {
+        scale = currentScale;
+    }
+
+    // calc logo height
+    return {
+        min: clampValue(115 * scale[0], 1, 299),
+        max: clampValue(115 * scale[1], 20, 300),
+    };
+};
+
 const LogoLink = styled(Link)<{
-    logoHeight?: [number, number?];
+    isLarge?: boolean;
+    isLargeOnPageTop?: boolean;
+    logoScale?: Pick<DefaultLogoProps, 'pageTopScale' | 'scrolledScale'>;
     isAnimated?: boolean;
 }>`
     display: flex;
     justify-content: center;
     position: relative;
-    ${({ logoHeight }) =>
-        logoHeight && logoHeight[1]
-            ? withRange([logoHeight[0], logoHeight[1]], 'height')
-            : `height: ${logoHeight?.[0]}`};
     width: auto;
+
+    ${({ logoScale, isLarge, isLargeOnPageTop }) => {
+        if (logoScale) {
+            const { min, max } = getLogoScaleRange({
+                logoScale,
+                isLarge,
+                isLargeOnPageTop,
+                breakpoint: 'mobile',
+            });
+
+            return css`
+                ${withRange([min, max], 'height')}
+            `;
+        } else return null;
+    }}
+
+    @media ${mq.large} {
+        ${({ logoScale, isLarge, isLargeOnPageTop }) => {
+            if (logoScale) {
+                const { min, max } = getLogoScaleRange({
+                    logoScale,
+                    isLarge,
+                    isLargeOnPageTop,
+                    breakpoint: 'desktop',
+                });
+
+                return css`
+                    ${withRange([min, max], 'height')}
+                `;
+            } else return null;
+        }}
+    }
 
     color: ${({ theme }) => color(theme).light};
     transition: ${({ isAnimated }) =>
@@ -351,25 +416,13 @@ const TopBar: FC<{
     // get scale for current media query
     const scalePageTop =
         defaultLogoScale.pageTopScale?.[
-            currentMq === 'large' ? 'desktop' : 'mobile'
+            !currentMq || currentMq === 'large' ? 'desktop' : 'mobile'
         ];
 
     const scaleScrolled =
         defaultLogoScale.scrolledScale?.[
-            currentMq === 'large' ? 'desktop' : 'mobile'
+            !currentMq || currentMq === 'large' ? 'desktop' : 'mobile'
         ];
-
-    let logoScale: [number, number] = [1, 1];
-    const scale = (isLargeOnPageTop ? isLarge : false)
-        ? scalePageTop
-        : scaleScrolled;
-    if (scale !== undefined) {
-        logoScale = scale;
-    }
-
-    // calc logo height
-    const minLogoHeight = clampValue(115 * logoScale[0], 1, 299);
-    const maxLogoHeight = clampValue(115 * logoScale[1], 20, 300);
 
     // calculate logo height for top space
     const logoTopHeight =
@@ -446,8 +499,10 @@ const TopBar: FC<{
                         {logo && (
                             <LogoLink
                                 href={logo.link}
-                                logoHeight={[minLogoHeight, maxLogoHeight]}
                                 isAnimated={isAnimated}
+                                isLargeOnPageTop={isLargeOnPageTop}
+                                isLarge={isLarge}
+                                logoScale={defaultLogoScale}
                             >
                                 {logo.icon &&
                                     logo.icon({
