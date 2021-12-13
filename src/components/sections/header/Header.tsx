@@ -293,7 +293,6 @@ const Header: FC<{
                                 >
                                     {!intro?.title && title && (
                                         <Callout
-                                            hyphens
                                             size="medium"
                                             renderAs={titleAs}
                                             hasShadow
@@ -312,7 +311,6 @@ const Header: FC<{
                                                     size="heading-1"
                                                     hasShadow
                                                     textColor="#fff"
-                                                    hyphens
                                                 >
                                                     {intro.title}
                                                 </Heading>
