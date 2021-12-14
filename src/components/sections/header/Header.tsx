@@ -265,7 +265,7 @@ const Header: FC<{
     const theme = useContext(ThemeContext);
 
     const bottomGradient =
-        title || primaryCta || secondaryCta
+        title || intro?.title || intro?.text || primaryCta || secondaryCta
             ? customBottomGradient || global(theme).sections.imageTextGradient
             : undefined;
 
