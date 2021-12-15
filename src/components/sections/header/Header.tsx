@@ -274,7 +274,6 @@ const Header: FC<{
                                 >
                                     {!intro?.title && title && (
                                         <Callout
-                                            hyphens
                                             size="medium"
                                             as={titleAs}
                                             hasShadow
@@ -293,15 +292,14 @@ const Header: FC<{
                                                     size="heading-1"
                                                     hasShadow
                                                     textColor="#fff"
-                                                    hyphens
-                                                >
-                                                    {intro.title}
-                                                </Heading>
+                                                    innerHTML={intro.title}
+                                                />
                                             )}
                                             {intro.text && (
-                                                <Copy textColor="#fff">
-                                                    {intro.text}
-                                                </Copy>
+                                                <Copy
+                                                    textColor="#fff"
+                                                    innerHTML={intro.text}
+                                                />
                                             )}
                                         </IntroBlock>
                                     )}
@@ -332,7 +330,6 @@ const Header: FC<{
                     <Wrapper addWhitespace>
                         {title && (
                             <Callout
-                                hyphens
                                 size="small"
                                 as={titleAs}
                                 isInverted={false}
