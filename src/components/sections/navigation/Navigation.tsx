@@ -49,8 +49,14 @@ export interface NavProps {
         name?: string;
     }) => React.ReactNode;
     search?: (isInverted?: boolean) => React.ReactNode;
-    openMenuIcon?: (isInverted?: boolean) => React.ReactNode;
-    closeMenuIcon?: (isInverted?: boolean) => React.ReactNode;
+    openMenuIcon?: (props: {
+        isInverted?: boolean;
+        clickHandler?: () => void;
+    }) => React.ReactNode;
+    closeMenuIcon?: (props: {
+        isInverted?: boolean;
+        clickHandler?: () => void;
+    }) => React.ReactNode;
 }
 
 const Navigation: FC<NavProps> = ({
@@ -69,6 +75,7 @@ const Navigation: FC<NavProps> = ({
     hideTopbarBackUnderMenu,
     isTopbarLargeOnPageTop,
     openMenuIcon,
+    closeMenuIcon,
 }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -102,6 +109,7 @@ const Navigation: FC<NavProps> = ({
                 navItems={navItems}
                 socials={socials}
                 search={search}
+                toggleIcon={closeMenuIcon}
                 onCloseClick={() => setIsMenuOpen(false)}
                 {...sharedProps}
             />

@@ -175,8 +175,13 @@ const ToggleContainer = styled.div<{ iconColor?: string }>`
     color: ${({ iconColor }) => iconColor && iconColor};
 `;
 
-const StyledMenuBurger = styled(MenuBurger)`
+const MenuBtn = styled.button`
+    margin: 0;
+    border: 0;
+    background: none;
     margin-top: ${spacings.nudge}px;
+
+    cursor: pointer;
 `;
 
 const LogoLink = styled(Link)<{ logoHeight?: number }>`
@@ -209,7 +214,10 @@ const TopBar: FC<{
     allowTopOverlow?: boolean;
     isLargeOnPageTop?: boolean;
     onToggleClick?: () => void;
-    toggleIcon?: (isInverted?: boolean) => React.ReactNode;
+    toggleIcon?: (props: {
+        isInverted?: boolean;
+        clickHandler?: () => void;
+    }) => React.ReactNode;
     logo?: LogoProps;
     primaryAction?: (props: {
         isInverted?: boolean;
@@ -351,7 +359,7 @@ const TopBar: FC<{
                 <Content clampWidth="normal" addWhitespace>
                     <LeftCol isTop={isLargeOnPageTop ? isLarge : false}>
                         <ToggleContainer
-                            onClick={onToggleClick}
+                            // onClick={onToggleClick}
                             iconColor={
                                 isInverted
                                     ? color(theme).light
@@ -359,15 +367,23 @@ const TopBar: FC<{
                             }
                         >
                             {toggleIcon ? (
-                                toggleIcon(isBarInverted)
+                                toggleIcon({
+                                    isInverted: isBarInverted,
+                                    clickHandler: onToggleClick,
+                                })
                             ) : (
-                                <StyledMenuBurger
-                                    iconColor={
-                                        isBarInverted
-                                            ? color(theme).light
-                                            : color(theme).dark
-                                    }
-                                />
+                                <MenuBtn
+                                    onClick={onToggleClick}
+                                    aria-haspopup="menu"
+                                >
+                                    <MenuBurger
+                                        iconColor={
+                                            isBarInverted
+                                                ? color(theme).light
+                                                : color(theme).dark
+                                        }
+                                    />
+                                </MenuBtn>
                             )}
                         </ToggleContainer>
                     </LeftCol>

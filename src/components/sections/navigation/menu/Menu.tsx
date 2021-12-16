@@ -51,7 +51,10 @@ interface MenuProps {
     size?: 'small' | 'full';
     isInverted?: boolean;
     backdropOpacity?: number;
-    toggleIcon?: (isInverted?: boolean) => React.ReactNode;
+    toggleIcon?: (props: {
+        isInverted?: boolean;
+        clickHandler?: () => void;
+    }) => React.ReactNode;
     logo?: LogoProps;
     primaryAction?: (props: {
         isInverted?: boolean;

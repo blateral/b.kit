@@ -152,8 +152,13 @@ const ToggleContainer = styled.div<{ iconColor?: string }>`
     color: ${({ iconColor }) => iconColor && iconColor};
 `;
 
-const StyledMenuClose = styled(Cross)`
+const CloseBtn = styled.button`
+    display: block;
+    border: none;
+    background: none;
     margin-top: ${spacings.nudge}px;
+
+    cursor: pointer;
 `;
 
 const SearchContainer = styled.div<{ isLarge?: boolean }>`
@@ -209,7 +214,10 @@ const Flyout: FC<{
     isOpen?: boolean;
     isLarge?: boolean;
     isInverted?: boolean;
-    toggleIcon?: (isInverted?: boolean) => React.ReactNode;
+    toggleIcon?: (props: {
+        isInverted?: boolean;
+        clickHandler?: () => void;
+    }) => React.ReactNode;
     logo?: LogoProps;
     primaryAction?: (props: {
         isInverted?: boolean;
@@ -253,7 +261,7 @@ const Flyout: FC<{
                         <Header>
                             <LeftCol>
                                 <ToggleContainer
-                                    onClick={onCloseClick}
+                                    // onClick={onCloseClick}
                                     iconColor={
                                         isInverted
                                             ? color(theme).light
@@ -261,15 +269,23 @@ const Flyout: FC<{
                                     }
                                 >
                                     {toggleIcon ? (
-                                        toggleIcon(isInverted)
+                                        toggleIcon({
+                                            isInverted,
+                                            clickHandler: onCloseClick,
+                                        })
                                     ) : (
-                                        <StyledMenuClose
-                                            iconColor={
-                                                isInverted
-                                                    ? color(theme).light
-                                                    : color(theme).dark
-                                            }
-                                        />
+                                        <CloseBtn
+                                            onClick={onCloseClick}
+                                            aria-haspopup="menu"
+                                        >
+                                            <Cross
+                                                iconColor={
+                                                    isInverted
+                                                        ? color(theme).light
+                                                        : color(theme).dark
+                                                }
+                                            />
+                                        </CloseBtn>
                                     )}
                                 </ToggleContainer>
                                 {search && (
