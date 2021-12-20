@@ -87,7 +87,7 @@ export type FormProps = {
 
 const Textfield: React.FC<
     FormProps & {
-        type?: 'text' | 'email' | 'tel';
+        type?: 'number' | 'text' | 'tel' | 'email' | 'password';
         isInverted?: boolean;
         lightBg?: boolean;
         onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
@@ -109,6 +109,7 @@ const Textfield: React.FC<
     onBlur,
 }) => {
     const theme = useContext(ThemeContext);
+
     return (
         <View>
             <FieldHead>
