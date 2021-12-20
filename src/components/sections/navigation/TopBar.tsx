@@ -69,8 +69,8 @@ const View = styled.div<{
             : 'transparent'};
 
     box-shadow: 0px 4px 4px
-        ${({ isInverted, isLarge, isOpen, isBackVisible }) =>
-            isInverted || !isBackVisible
+        ${({ isInverted, isLarge, isOpen, isBackVisible, isTop }) =>
+            isInverted || !isBackVisible || isTop
                 ? `transparent`
                 : isOpen && !isLarge
                 ? `rgba(0, 0, 0, 0.13)`
@@ -456,6 +456,7 @@ const TopBar: FC<{
             )}
             <View
                 ref={viewRef}
+                isTop={isTop}
                 isInverted={isInverted}
                 isVisible={isVisible}
                 isBackVisible={isBackVisible}
