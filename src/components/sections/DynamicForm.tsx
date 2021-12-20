@@ -87,7 +87,7 @@ export interface Field extends FormField {
     placeholder?: string;
     info?: string;
     icon?: { src: string; alt?: string };
-    validate?: (value: string, config: Field) => Promise<string>;
+    validate?: (key: string, value: string, config: Field) => Promise<string>;
     errorMsg?: string;
 }
 
@@ -96,7 +96,7 @@ export interface Area extends FormField {
     initialValue?: string;
     placeholder?: string;
     info?: string;
-    validate?: (value: string, config: Area) => Promise<string>;
+    validate?: (key: string, value: string, config: Area) => Promise<string>;
     errorMsg?: string;
 }
 
@@ -110,7 +110,7 @@ export interface Select extends FormField {
     }[];
     info?: string;
     icon?: { src: string; alt?: string };
-    validate?: (value: string, config: Select) => Promise<string>;
+    validate?: (key: string, value: string, config: Select) => Promise<string>;
     errorMsg?: string;
 }
 
@@ -129,6 +129,7 @@ export interface Datepicker extends FormField {
     nextCtrlUrl?: React.ReactNode;
     prevCtrlUrl?: React.ReactNode;
     validate?: (
+        key: string,
         value: [Date | null, Date | null],
         config: Datepicker
     ) => Promise<string>;
@@ -149,6 +150,7 @@ export interface FieldGroup extends FormField {
     groupType: 'Radio' | 'Checkbox';
     fields: Array<{ initialChecked?: boolean; text?: string }>;
     validate?: (
+        key: string,
         value: Array<string> | string,
         config: FieldGroup
     ) => Promise<string>;
@@ -161,7 +163,11 @@ export interface FileUpload extends FormField {
     removeBtnLabel?: string;
     info?: string;
     acceptedFormats?: string;
-    validate?: (value: Array<File>, config: FileUpload) => Promise<string>;
+    validate?: (
+        key: string,
+        value: Array<File>,
+        config: FileUpload
+    ) => Promise<string>;
     errorMsg?: string;
 }
 
@@ -309,6 +315,7 @@ const DynamicForm: FC<{
                     // custom validation
                     if (config.validate) {
                         errors[key] = await config.validate(
+                            key,
                             values[key] as string,
                             config
                         );
@@ -365,6 +372,7 @@ const DynamicForm: FC<{
                     // custom validation
                     if (config.validate) {
                         errors[key] = await config.validate(
+                            key,
                             values[key] as string,
                             config
                         );
@@ -384,6 +392,7 @@ const DynamicForm: FC<{
                     // custom validation
                     if (config.validate) {
                         errors[key] = await config.validate(
+                            key,
                             values[key] as string,
                             config
                         );
@@ -406,6 +415,7 @@ const DynamicForm: FC<{
                     // custom validation
                     if (config.validate) {
                         errors[key] = await config.validate(
+                            key,
                             values[key] as [Date | null, Date | null],
                             config
                         );
@@ -444,6 +454,7 @@ const DynamicForm: FC<{
                     // custom validation
                     if (config.validate) {
                         errors[key] = await config.validate(
+                            key,
                             values[key] as Array<string> | string,
                             config
                         );
@@ -480,6 +491,7 @@ const DynamicForm: FC<{
                     // custom validation
                     if (config.validate) {
                         errors[key] = await config.validate(
+                            key,
                             values[key] as Array<File>,
                             config
                         );
@@ -1029,6 +1041,7 @@ const generateField = ({
         label={`${key}${field.isRequired ? '*' : ''}`}
         placeholder={field.placeholder}
         name={key}
+        type={field.inputType}
         isInverted={isInverted}
         value={value as string}
         onChange={handleChange}

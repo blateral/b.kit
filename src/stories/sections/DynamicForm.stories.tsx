@@ -584,7 +584,7 @@ export const CustomValidation: Story = () => (
                 isRequired: true,
                 info: 'Nachname eingeben',
                 icon: { src: 'http://placehold.it/25' },
-                validate: async (value, config) => {
+                validate: async (key, value, config) => {
                     let error = '';
                     if (!value && config.isRequired)
                         error = 'Something is missing!';
@@ -596,7 +596,7 @@ export const CustomValidation: Story = () => (
                 placeholder: 'Nachricht eingeben..',
                 info: 'Nachricht eingeben',
                 isRequired: true,
-                validate: async (value, config) => {
+                validate: async (key, value, config) => {
                     let error = '';
                     if (!value && config.isRequired)
                         error = 'Something is missing!';
@@ -609,7 +609,7 @@ export const CustomValidation: Story = () => (
                 info: 'Email eingeben',
                 isRequired: true,
                 inputType: 'email',
-                validate: async (value, config) => {
+                validate: async (key, value, config) => {
                     let error = '';
                     if (!value && config.isRequired) {
                         error = 'Value is missing!';
@@ -636,7 +636,7 @@ export const CustomValidation: Story = () => (
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
                 icon: { src: 'http://placehold.it/25' },
-                validate: async (value, config) => {
+                validate: async (key, value, config) => {
                     let error = '';
                     if (config.isRequired && (!value?.[0] || !value?.[1]))
                         error = 'Invalid or missing date!';
@@ -651,7 +651,7 @@ export const CustomValidation: Story = () => (
                     { text: 'mit Bad' },
                     { text: 'mit Küche', initialChecked: true },
                 ],
-                validate: async (value, config) => {
+                validate: async (key, value, config) => {
                     let error = '';
                     const values = value as string[];
                     if (config.isRequired && (!value || values?.length < 1))
@@ -664,7 +664,7 @@ export const CustomValidation: Story = () => (
                 groupType: 'Radio',
                 isRequired: true,
                 fields: [{ text: '1' }, { text: '2', initialChecked: true }],
-                validate: async (value, config) => {
+                validate: async (key, value, config) => {
                     let error = '';
                     if (config.isRequired && !value) error = 'Select a item!';
                     return error;
@@ -675,7 +675,7 @@ export const CustomValidation: Story = () => (
                 placeholder: 'Alter eingeben',
                 info: 'Bitte geben Sie Ihr Alter an',
                 inputType: 'number',
-                validate: async (value, config) => {
+                validate: async (key, value, config) => {
                     let error = '';
                     if (!value && config.isRequired)
                         error = 'Something is missing!';
@@ -691,7 +691,7 @@ export const CustomValidation: Story = () => (
                     { label: 'Deutschland', value: 'Germany' },
                 ],
                 icon: { src: 'http://placehold.it/25' },
-                validate: async (value, config) => {
+                validate: async (key, value, config) => {
                     let error = '';
                     if (!value && config.isRequired)
                         error = 'Selection is missing!';
@@ -703,7 +703,7 @@ export const CustomValidation: Story = () => (
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
-                validate: async (value, config) => {
+                validate: async (key, value, config) => {
                     let error = '';
                     if (config.isRequired && (!value || value?.length < 1))
                         error = 'Select files please!';

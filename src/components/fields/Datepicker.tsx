@@ -61,7 +61,7 @@ const PickerView = styled.div`
 
     .react-datepicker__header {
         border: none !important;
-        background-color: ${({ theme }) => color(theme).light} !important;
+        background-color: transparent !important;
     }
 
     /* Month */
@@ -99,7 +99,7 @@ const PickerView = styled.div`
         display: flex;
         font-size: 11px;
         line-height: 1.25;
-        background: ${({ theme }) => color(theme).light};
+        background: transparent;
     }
 
     @media ${mq.medium} {
