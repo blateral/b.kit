@@ -312,20 +312,21 @@ const DynamicForm: FC<{
                     const config = fields[key] as Field;
                     const inputType = config.inputType;
 
-                    // custom validation
-                    if (config.validate) {
-                        errors[key] = await config.validate(
-                            key,
-                            values[key] as string,
-                            config
-                        );
-                        break;
-                    }
-
                     // default
                     if (fields[key].isRequired && !values[key]) {
                         errors[key] =
                             (fields[key] as Field).errorMsg || 'Required field';
+                    }
+
+                    // custom validation
+                    if (config.validate) {
+                        const error = await config.validate(
+                            key,
+                            values[key] as string,
+                            config
+                        );
+                        if (error) errors[key] = error;
+                        break;
                     }
 
                     switch (inputType) {
@@ -369,41 +370,41 @@ const DynamicForm: FC<{
                 case 'Area': {
                     const config = fields[key] as Area;
 
-                    // custom validation
-                    if (config.validate) {
-                        errors[key] = await config.validate(
-                            key,
-                            values[key] as string,
-                            config
-                        );
-                        break;
-                    }
-
                     // default
                     if (config.isRequired && !values[key]) {
                         errors[key] =
                             (fields[key] as Area).errorMsg || 'Required field';
+                    }
+
+                    // custom validation
+                    if (config.validate) {
+                        const error = await config.validate(
+                            key,
+                            values[key] as string,
+                            config
+                        );
+                        if (error) errors[key] = error;
                     }
                     break;
                 }
                 case 'Select': {
                     const config = fields[key] as Select;
 
-                    // custom validation
-                    if (config.validate) {
-                        errors[key] = await config.validate(
-                            key,
-                            values[key] as string,
-                            config
-                        );
-                        break;
-                    }
-
                     // default
                     if (config.isRequired && !values[key]) {
                         errors[key] =
                             (fields[key] as Select).errorMsg ||
                             'Required field';
+                    }
+
+                    // custom validation
+                    if (config.validate) {
+                        const error = await config.validate(
+                            key,
+                            values[key] as string,
+                            config
+                        );
+                        if (error) errors[key] = error;
                     }
                     break;
                 }
@@ -412,16 +413,6 @@ const DynamicForm: FC<{
                     const single = config.singleSelect;
                     const value = values[key] as [Date | null, Date | null];
 
-                    // custom validation
-                    if (config.validate) {
-                        errors[key] = await config.validate(
-                            key,
-                            values[key] as [Date | null, Date | null],
-                            config
-                        );
-                        break;
-                    }
-
                     // default
                     if (config.isRequired && !values[key]) {
                         errors[key] = single
@@ -429,10 +420,7 @@ const DynamicForm: FC<{
                               'Please submit date!'
                             : (fields[key] as Datepicker).multiDateError ||
                               'Please submit start- and enddate!';
-                        break;
-                    }
-
-                    if (config.isRequired && single && !value[0]) {
+                    } else if (config.isRequired && single && !value[0]) {
                         errors[key] =
                             (fields[key] as Datepicker).singleDateError ||
                             'Please submit date!';
@@ -445,21 +433,21 @@ const DynamicForm: FC<{
                             (fields[key] as Datepicker).multiDateError ||
                             'Please submit start- and enddate!';
                     }
+
+                    // custom validation
+                    if (config.validate) {
+                        const error = await config.validate(
+                            key,
+                            values[key] as [Date | null, Date | null],
+                            config
+                        );
+                        if (error) errors[key] = error;
+                    }
                     break;
                 }
                 case 'FieldGroup': {
                     const config = fields[key] as FieldGroup;
                     const type = config.groupType;
-
-                    // custom validation
-                    if (config.validate) {
-                        errors[key] = await config.validate(
-                            key,
-                            values[key] as Array<string> | string,
-                            config
-                        );
-                        break;
-                    }
 
                     // default
                     if (type === 'Checkbox') {
@@ -472,9 +460,7 @@ const DynamicForm: FC<{
                                 (fields[key] as FieldGroup).errorMsg ||
                                 'Please select at least one item!';
                         }
-                        break;
-                    }
-                    if (type === 'Radio') {
+                    } else if (type === 'Radio') {
                         const value = values[key] as string;
                         if (config.isRequired && !value) {
                             errors[key] =
@@ -482,27 +468,37 @@ const DynamicForm: FC<{
                                 'Selection required';
                         }
                     }
+
+                    // custom validation
+                    if (config.validate) {
+                        const error = await config.validate(
+                            key,
+                            values[key] as Array<string> | string,
+                            config
+                        );
+                        if (error) errors[key] = error;
+                    }
                     break;
                 }
                 case 'Upload': {
                     const config = fields[key] as FileUpload;
                     const files = values[key] as File[];
 
-                    // custom validation
-                    if (config.validate) {
-                        errors[key] = await config.validate(
-                            key,
-                            values[key] as Array<File>,
-                            config
-                        );
-                        break;
-                    }
-
                     // default
                     if (config.isRequired && (!files || files?.length < 1)) {
                         errors[key] =
                             (fields[key] as Field).errorMsg ||
                             'Please submit at least one file!';
+                    }
+
+                    // custom validation
+                    if (config.validate) {
+                        const error = await config.validate(
+                            key,
+                            values[key] as Array<File>,
+                            config
+                        );
+                        if (error) errors[key] = error;
                     }
                     break;
                 }
