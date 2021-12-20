@@ -316,9 +316,10 @@ const Header: FC<{
                                                 </Heading>
                                             )}
                                             {intro.text && (
-                                                <Copy textColor="#fff">
-                                                    {intro.text}
-                                                </Copy>
+                                                <Copy
+                                                    textColor="#fff"
+                                                    innerHTML={intro.text}
+                                                />
                                             )}
                                         </IntroBlock>
                                     )}
