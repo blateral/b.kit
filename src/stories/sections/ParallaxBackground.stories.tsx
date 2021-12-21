@@ -91,6 +91,19 @@ export const SmallerContentWidth: Story = () => (
     />
 );
 
+export const WithoutWidthScaling: Story = () => (
+    <ParallaxBackground
+        contentWidth="auto"
+        hAlign="center"
+        image={{
+            small: 'https://unsplash.it/832/500?image=409',
+            medium: 'https://unsplash.it/1023/500?image=409',
+            large: 'https://unsplash.it/1439/511?image=409',
+            xlarge: 'https://unsplash.it/2400/854?image=409',
+        }}
+    />
+);
+
 export const RightAlign: Story = () => (
     <ParallaxBackground
         hAlign="right"

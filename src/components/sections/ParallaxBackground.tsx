@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Image, { ImageProps } from 'components/blocks/Image';
+import { spacings } from 'utils/styles';
 
 const View = styled.div`
     position: relative;
@@ -26,18 +27,38 @@ const Content = styled.div<{
     margin-right: ${({ hAlign }) =>
         (hAlign === 'left' || hAlign === 'center') && 'auto'};
 
-    width: ${({ contentWidth }) => contentWidth && contentWidth * 100 + '%'};
+    width: ${({ contentWidth }) =>
+        contentWidth
+            ? contentWidth === -1
+                ? 'auto'
+                : contentWidth * 100 + '%'
+            : undefined};
+
+    max-width: ${spacings.wrapperLarge}px;
+    overflow: hidden;
 
     & > * {
-        width: 100%;
+        width: ${({ contentWidth }) => contentWidth !== -1 && '100%'};
     }
 `;
 
-const StyledImage = styled(Image)`
-    width: 100%;
+const StyledImage = styled(Image)<{
+    coverSpace?: boolean;
+    hAlign?: 'left' | 'center' | 'right';
+}>`
+    max-width: ${({ coverSpace }) => !coverSpace && 'none'};
+    float: ${({ hAlign }) =>
+        hAlign === 'left' || hAlign === 'right' ? hAlign : undefined};
+    ${({ coverSpace, hAlign }) =>
+        !coverSpace &&
+        hAlign === 'center' &&
+        css`
+            transform: translateX(-50%);
+            margin-left: 50%;
+        `}
 `;
 
-export type ParallaxWidth = '1/4' | 'half' | '3/4' | 'full';
+export type ParallaxWidth = '1/4' | 'half' | '3/4' | 'full' | 'auto';
 
 const ParallaxBackground: FC<{
     image?: ImageProps;
@@ -73,6 +94,11 @@ const ParallaxBackground: FC<{
 
             case '3/4': {
                 width = 0.75;
+                break;
+            }
+
+            case 'auto': {
+                width = -1;
                 break;
             }
 
@@ -115,7 +141,13 @@ const ParallaxBackground: FC<{
                 className={className}
             >
                 <Content hAlign={hAlign} contentWidth={width}>
-                    {image && <StyledImage {...image} />}
+                    {image && (
+                        <StyledImage
+                            hAlign={hAlign}
+                            coverSpace={width !== -1}
+                            {...image}
+                        />
+                    )}
                 </Content>
             </Parallax>
         </View>
