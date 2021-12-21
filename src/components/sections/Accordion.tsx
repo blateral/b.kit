@@ -8,30 +8,13 @@ import { spacings, getColors as color, mq } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
-const AccordionBlock = styled.ul<{
-    isInverted?: boolean;
-    hasBg?: boolean;
-    borderColor?: string;
-}>`
+const AccordionBlock = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
 
-    background: ${({ isInverted, hasBg, theme }) =>
-        isInverted || hasBg ? color(theme).light : color(theme).mono.light};
-
-    border-bottom: 10px solid
-        ${({ borderColor, isInverted, theme, hasBg }) =>
-            borderColor
-                ? borderColor
-                : isInverted
-                ? color(theme).dark
-                : hasBg
-                ? color(theme).mono.light
-                : color(theme).light};
-
-    &:last-child {
-        border-bottom: none;
+    & + & {
+        margin-top: ${spacings.nudge * 2}px;
     }
 `;
 
@@ -39,13 +22,19 @@ const AccordionItems = styled.li`
     cursor: pointer;
 `;
 
-const AccordionHead = styled.div`
+const AccordionHead = styled.div<{
+    isInverted?: boolean;
+    hasBg?: boolean;
+}>`
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 
     padding: ${spacings.spacer}px;
+
+    background: ${({ isInverted, hasBg, theme }) =>
+        isInverted || hasBg ? color(theme).light : color(theme).mono.light};
 `;
 
 const IconContainer = styled.div`
@@ -59,26 +48,18 @@ const IconContainer = styled.div`
 
 const AccordionText = styled.div<{
     isVisible?: boolean;
-    inverted?: boolean;
+    isInverted?: boolean;
     hasBg?: boolean;
-    borderColor?: string;
     hasAside?: boolean;
     hasColumns?: boolean;
 }>`
     display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
     flex-direction: column;
 
-    border-top: 2px solid
-        ${({ borderColor, inverted, theme, hasBg }) =>
-            borderColor
-                ? borderColor
-                : inverted
-                ? color(theme).dark
-                : hasBg
-                ? color(theme).mono.light
-                : color(theme).light};
-
     padding: ${spacings.spacer}px;
+    margin-top: 2px;
+    background: ${({ isInverted, hasBg, theme }) =>
+        isInverted || hasBg ? color(theme).light : color(theme).mono.light};
 
     & > * + * {
         margin-top: ${spacings.spacer}px;
@@ -116,10 +97,9 @@ const Accordion: React.FC<{
         aside?: string;
         hasColumns?: boolean;
     }[];
-    borderColor?: string;
 
     bgMode?: 'full' | 'inverted';
-}> = ({ items, borderColor, bgMode }) => {
+}> = ({ items, bgMode }) => {
     const [currentItems, setCurrentItems] = React.useState<number[]>([]);
 
     const theme = React.useContext(ThemeContext);
@@ -143,14 +123,11 @@ const Accordion: React.FC<{
                     items.map(({ label, text, aside, hasColumns }, i) => {
                         const isSelected = currentItems.indexOf(i) !== -1;
                         return (
-                            <AccordionBlock
-                                key={i}
-                                borderColor={borderColor}
-                                isInverted={isInverted}
-                                hasBg={hasBg}
-                            >
+                            <AccordionBlock key={i}>
                                 <AccordionItems>
                                     <AccordionHead
+                                        isInverted={isInverted}
+                                        hasBg={hasBg}
                                         onClick={() => {
                                             setCurrentItems((prev) => {
                                                 const copy = [...prev];
@@ -184,8 +161,7 @@ const Accordion: React.FC<{
                                         </IconContainer>
                                     </AccordionHead>
                                     <AccordionText
-                                        borderColor={borderColor}
-                                        inverted={isInverted}
+                                        isInverted={isInverted}
                                         hasBg={hasBg}
                                         isVisible={isSelected}
                                         hasAside={!!aside}
