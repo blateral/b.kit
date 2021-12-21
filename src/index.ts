@@ -91,6 +91,7 @@ export { default as SocialWall } from 'components/sections/SocialWall';
 export { default as ParallaxBackground } from 'components/sections/ParallaxBackground';
 export { default as CallToActionDouble } from 'components/sections/CallToActionDouble';
 export { default as PriceList } from 'components/sections/PriceList';
+export { default as SimpleImage } from 'components/sections/SimpleImage';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
