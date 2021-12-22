@@ -17,8 +17,8 @@ import Bdot from 'components/blocks/Bdot';
 import SocialList from 'components/blocks/SocialList';
 
 const MainView = styled(Wrapper)<{ isInverted?: boolean }>`
-    background-color: ${({ theme, isInverted }) =>
-        isInverted && color(theme).dark};
+    background: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).dark : color(theme).light};
 `;
 
 const StyledLink = styled(Link)`
