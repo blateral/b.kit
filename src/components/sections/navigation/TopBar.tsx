@@ -507,6 +507,7 @@ const TopBar: FC<{
                             >
                                 {logo.icon &&
                                     logo.icon({
+                                        isNavLarge: isLarge,
                                         isInverted: isBarInverted,
                                         name: 'topbar_logo',
                                         size:
