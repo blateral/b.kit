@@ -11,6 +11,7 @@ export interface LogoProps {
         isInverted?: boolean;
         size?: 'full' | 'small';
         name?: string;
+        isNavLarge?: boolean;
     }) => React.ReactNode;
     link?: string;
     pageTopScale?: {
