@@ -44,7 +44,6 @@ const Intro: React.FC<{
         <Section
             addSeperation
             isStackable={isStackable}
-            humbug={toast}
             bgColor={
                 isInverted
                     ? color(theme).dark
