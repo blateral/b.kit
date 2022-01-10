@@ -18,7 +18,8 @@
         "tc": "tsc --noEmit",
         "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
         "deploy": "yarn tc && yarn build && yarn publish",
-        "deploy-patch": "yarn tc && yarn build && yarn publish --tag patch"
+        "deploy-patch": "yarn tc && yarn build && yarn publish --tag patch",
+        "prepare": "npx husky install"
     },
     "repository": {
         "type": "git",
@@ -31,11 +32,6 @@
         "url": "https://github.com/blateral/b.kit/issues"
     },
     "homepage": "https://github.com/blateral/b.kit#readme",
-    "husky": {
-        "hooks": {
-            "pre-push": "yarn tc"
-        }
-    },
     "devDependencies": {
         "@etchteam/storybook-addon-status": "^4.1.0",
         "@rollup/plugin-babel": "^5.3.0",
@@ -60,7 +56,7 @@
         "eslint-plugin-react": "^7.21.5",
         "eslint-plugin-react-hooks": "^4.2.0",
         "formik": "^2.2.8",
-        "husky": "^4.3.0",
+        "husky": "^7.0.0",
         "leaflet": "1.7.1",
         "react": "^17.0.1",
         "react-datepicker": "4.3.0",
