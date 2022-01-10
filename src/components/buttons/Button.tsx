@@ -152,7 +152,7 @@ const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
                             ? 'noopener noreferrer'
                             : undefined
                     }
-                    inverted={isInvegrted}
+                    inverted={isInverted}
                     disable={isDisabled}
                     onClick={onClick}
                     className={className}
