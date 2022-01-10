@@ -266,7 +266,7 @@ const Footer: FC<{
             : undefined;
 
     return (
-        <Sectiona renderAs="footer" bgMode="full" bgColor="transparent">
+        <Sectionab renderAs="footer" bgMode="full" bgColor="transparent">
             <MainView clampWidth="large" isInverted={isInverted}>
                 <Wrapper addWhitespace>
                     <Content isInverted={isInverted}>
@@ -378,7 +378,7 @@ const Footer: FC<{
                     </BottomView>
                 </BottomWrapper>
             )}
-        </Sectiona>
+        </Sectionab>
     );
 };
 
