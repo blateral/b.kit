@@ -2,4 +2,3 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npm run tc
-echo "No errors found. Push to remote..."
