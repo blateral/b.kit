@@ -305,7 +305,7 @@ export const getMinMaxScale = (
     return minMaxScale;
 };
 
-type TopBarMq = 'semilarge' | 'large';
+export type TopBarMq = 'small' | 'semilarge' | 'large';
 
 export interface DefaultLogoProps extends LogoProps {
     pageTopScale: {
@@ -509,6 +509,7 @@ const TopBar: FC<{
                                     logo.icon({
                                         isNavLarge: isLarge,
                                         isInverted: isBarInverted,
+                                        currentMq: currentMq,
                                         name: 'topbar_logo',
                                         size:
                                             currentMq !== 'large' ||
