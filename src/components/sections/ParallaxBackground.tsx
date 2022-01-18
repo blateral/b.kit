@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import Image, { ImageProps } from 'components/blocks/Image';
 import { spacings } from 'utils/styles';
 
-const View = styled.div`
+const View = styled.section`
     position: relative;
     width: 100vw;
     z-index: -1;
@@ -75,8 +75,10 @@ const ParallaxBackground: FC<{
     direction = 'up',
     className,
 }) => {
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [yTransform, setYTransform] = useState<number>(0);
-    const cRef = useRef<HTMLDivElement>(null);
+    // const cRef = useRef<HTMLDivElement>(null);
+    const [cRef, setContainerRef] = useState<HTMLElement | null>(null);
     const parallaxRef = useRef<HTMLDivElement>(null);
 
     let width = 1;
@@ -113,10 +115,32 @@ const ParallaxBackground: FC<{
     }
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (!cRef.current) return;
+        setIsLoaded(true);
+    }, []);
 
-            const containerPos = cRef.current.getBoundingClientRect().top;
+    useEffect(() => {
+        const prevEl = cRef?.previousElementSibling;
+        if (prevEl) {
+            const bgIdent = (prevEl as HTMLElement).dataset.bgIdent;
+            const stackIdent = (prevEl as HTMLElement).dataset.stackIdent;
+
+            if (bgIdent) {
+                // set data background from previous element
+                cRef?.setAttribute('data-bg-ident', bgIdent);
+            }
+
+            if (stackIdent) {
+                // set data stack flag from previous element
+                cRef?.setAttribute('data-stack-ident', stackIdent);
+            }
+        }
+    }, [cRef]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!cRef) return;
+
+            const containerPos = cRef.getBoundingClientRect().top;
             const ratio = containerPos * moveRatio;
             const offset = ratio * (direction === 'up' ? 1 : -1);
 
@@ -129,28 +153,32 @@ const ParallaxBackground: FC<{
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    });
+    }, [cRef, direction, moveRatio]);
 
     return (
-        <View ref={cRef}>
-            <Parallax
-                ref={parallaxRef}
-                style={{
-                    transform: `translate3d(0px, ${yTransform}px, 0px)`,
-                }}
-                className={className}
-            >
-                <Content hAlign={hAlign} contentWidth={width}>
-                    {image && (
-                        <StyledImage
-                            hAlign={hAlign}
-                            coverSpace={width !== -1}
-                            {...image}
-                        />
-                    )}
-                </Content>
-            </Parallax>
-        </View>
+        <>
+            {isLoaded && (
+                <View ref={setContainerRef}>
+                    <Parallax
+                        ref={parallaxRef}
+                        style={{
+                            transform: `translate3d(0px, ${yTransform}px, 0px)`,
+                        }}
+                        className={className}
+                    >
+                        <Content hAlign={hAlign} contentWidth={width}>
+                            {image && (
+                                <StyledImage
+                                    hAlign={hAlign}
+                                    coverSpace={width !== -1}
+                                    {...image}
+                                />
+                            )}
+                        </Content>
+                    </Parallax>
+                </View>
+            )}
+        </>
     );
 };
 
