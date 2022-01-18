@@ -4,12 +4,13 @@ import { FlyoutBackgroundSettings, NavGroup } from './menu/Flyout';
 
 import Menu from './menu/Menu';
 
-import TopBar from './TopBar';
+import TopBar, { TopBarMq } from './TopBar';
 
 export interface LogoProps {
     icon?: (props: {
         isInverted?: boolean;
         size?: 'full' | 'small';
+        currentMq?: TopBarMq;
         name?: string;
         isNavLarge?: boolean;
     }) => React.ReactNode;
