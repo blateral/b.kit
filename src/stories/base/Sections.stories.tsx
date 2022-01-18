@@ -37,31 +37,31 @@ export const Default: Story = () => (
 
 export const WithBgColor: Story = () => (
     <>
-        <Section>
+        <Section bgMode="full">
             <ExampleContent />
         </Section>
-        <Section>
+        <Section bgMode="full">
             <ExampleContent />
         </Section>
-        <Section bgColor="hotpink">
+        <Section bgMode="full" bgColor="aquamarine">
             <ExampleContent />
         </Section>
-        <Section bgColor="hotpink">
+        <Section bgMode="full" bgColor="blueviolet">
             <ExampleContent />
         </Section>
-        <Section bgColor="hotpink">
+        <Section bgMode="full" bgColor="aquamarine">
             <ExampleContent />
         </Section>
-        <Section bgColor="green">
+        <Section bgMode="full" bgColor="blueviolet">
             <ExampleContent />
         </Section>
-        <Section bgColor="blue">
+        <Section bgMode="full" bgColor="aquamarine">
             <ExampleContent />
         </Section>
     </>
 );
 
-export const WithBgMode: Story = () => (
+export const WithDifferentBgModes: Story = () => (
     <>
         <Section bgColor="aquamarine" bgMode="full">
             <ExampleContent />
@@ -86,30 +86,45 @@ export const WithSeperation: Story = () => (
         <Section addSeperation>
             <ExampleContent />
         </Section>
-        <Section bgColor="hotpink" addSeperation>
+        <Section addSeperation bgColor="blueviolet" bgMode="full">
             <ExampleContent />
         </Section>
-        <Section bgColor="hotpink" addSeperation>
+        <Section addSeperation bgColor="blueviolet" bgMode="full">
             <ExampleContent />
         </Section>
-        <Section bgColor="hotpink" addSeperation>
+        <Section addSeperation bgColor="blueviolet" bgMode="larger-right">
             <ExampleContent />
         </Section>
-        <Section bgColor="green" addSeperation>
+        <Section addSeperation bgColor="blueviolet" bgMode="larger-right">
             <ExampleContent />
         </Section>
-        <Section bgColor="blue" addSeperation>
+        <Section addSeperation bgColor="blueviolet" bgMode="larger-left">
+            <ExampleContent />
+        </Section>
+        <Section addSeperation bgColor="blueviolet" bgMode="larger-left">
+            <ExampleContent />
+        </Section>
+        <Section addSeperation>
             <ExampleContent />
         </Section>
     </>
 );
 
-export const SplittedBackground: Story = () => (
+export const WithStackable: Story = () => (
     <>
-        <Section addSeperation bgColor="red" bgMode="larger-left">
+        <Section addSeperation>
             <ExampleContent />
         </Section>
-        <Section addSeperation bgColor="blue" bgMode="larger-right">
+        <Section addSeperation isStackable>
+            <ExampleContent />
+        </Section>
+        <Section addSeperation bgColor="blueviolet" bgMode="full">
+            <ExampleContent />
+        </Section>
+        <Section addSeperation isStackable bgColor="blueviolet" bgMode="full">
+            <ExampleContent />
+        </Section>
+        <Section isStackable bgColor="blueviolet" bgMode="full">
             <ExampleContent />
         </Section>
     </>

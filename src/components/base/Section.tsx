@@ -51,11 +51,16 @@ const View = styled.section<{
                 ],
                 'padding-bottom'
             )}
-            &[data-stack-ident='true'] + & {
+            section[data-stack-ident='true'] + & {
                 ${withRange([spacings.spacer, spacings.spacer], 'padding-top')};
             }
-            &[data-bg-ident='${bgIdent}'] + &[data-bg-ident='${bgIdent}'] {
-                ${withRange([0, 0], 'padding-top')}
+            section[data-bg-ident='${bgIdent}']
+                + &[data-bg-ident='${bgIdent}'] {
+                padding-top: 0 !important;
+
+                @media ${mq.xxlarge} {
+                    padding-top: 0 !important;
+                }
             }
         `}
 
@@ -77,7 +82,7 @@ const View = styled.section<{
                     'margin-top'
                 )};
             }
-            &[data-bg-ident='larger-left']
+            section[data-bg-ident='larger-left']
                 + &:not([data-bg-ident='transparent']) {
                 ${withRange(
                     [
@@ -87,7 +92,7 @@ const View = styled.section<{
                     'margin-top'
                 )};
             }
-            &[data-bg-ident='larger-right']
+            section[data-bg-ident='larger-right']
                 + &:not([data-bg-ident='transparent']) {
                 ${withRange(
                     [
@@ -97,8 +102,13 @@ const View = styled.section<{
                     'margin-top'
                 )};
             }
-            &[data-bg-ident='${bgIdent}'] + &[data-bg-ident='${bgIdent}'] {
-                ${withRange([0, 0], 'margin-top')}
+            section[data-bg-ident='${bgIdent}']
+                + &[data-bg-ident='${bgIdent}'] {
+                margin-top: 0 !important;
+
+                @media ${mq.xxlarge} {
+                    margin-top: 0 !important;
+                }
             }
         `}
 `;

@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "1.14.1",
+    "version": "1.15.0",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
@@ -12,13 +12,14 @@
         "build": "rollup -c",
         "watch": "rollup -c -w",
         "storybook": "start-storybook -s ./public -p 9000 -c .storybook --no-manager-cache",
-        "deploy-storybook": "if git-branch-is master; then yarn storybook-to-ghpages; fi",
+        "deploy-storybook": "yarn storybook-to-ghpages",
         "build-storybook": "build-storybook -c .storybook -s ./public",
         "publish-yalc": "rm -rf lib && yarn build && yalc publish",
         "tc": "tsc --noEmit",
         "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
         "deploy": "yarn tc && yarn build && yarn publish",
-        "deploy-patch": "yarn tc && yarn build && yarn publish --tag patch"
+        "deploy-patch": "yarn tc && yarn build && yarn publish --tag patch",
+        "prepare": "npx husky install"
     },
     "repository": {
         "type": "git",
@@ -31,20 +32,15 @@
         "url": "https://github.com/blateral/b.kit/issues"
     },
     "homepage": "https://github.com/blateral/b.kit#readme",
-    "husky": {
-        "hooks": {
-            "pre-push": "yarn tc"
-        }
-    },
     "devDependencies": {
         "@etchteam/storybook-addon-status": "^4.1.0",
         "@rollup/plugin-babel": "^5.3.0",
         "@rollup/plugin-commonjs": "^17.0.0",
         "@rollup/plugin-node-resolve": "^11.0.0",
-        "@storybook/addon-essentials": "^6.3.9",
-        "@storybook/react": "6.3.9",
+        "@storybook/addon-essentials": "^6.4.13",
+        "@storybook/react": "6.4.13",
         "@storybook/storybook-deployer": "^2.8.7",
-        "@storybook/theming": "^6.3.8",
+        "@storybook/theming": "^6.4.13",
         "@types/react": "^17.0.0",
         "@types/react-datepicker": "4.1.7",
         "@types/react-dom": "^17.0.0",
@@ -60,8 +56,7 @@
         "eslint-plugin-react": "^7.21.5",
         "eslint-plugin-react-hooks": "^4.2.0",
         "formik": "^2.2.8",
-        "git-branch-is": "^4.0.0",
-        "husky": "^4.3.0",
+        "husky": "^7.0.0",
         "leaflet": "1.7.1",
         "react": "^17.0.1",
         "react-datepicker": "4.3.0",
