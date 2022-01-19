@@ -307,6 +307,18 @@ const defaultFonts: Fonts = {
 /***** Global Settings *****/
 export interface GlobalSettings {
     sections: {
+        /** Paddings and Margins for seperating each section */
+        seperation: {
+            padding: {
+                default: [number, number];
+                stackable: [number, number];
+            };
+            margin: {
+                default: [number, number];
+                stackable: [number, number];
+            };
+        };
+
         /** Radius of image and card edges */
         edgeRadius: string | null;
         /** Customnize gradient for all text on image background gradients */
@@ -323,6 +335,16 @@ export interface GlobalSettings {
 
 const defaultGlobalSettings: GlobalSettings = {
     sections: {
+        seperation: {
+            padding: {
+                default: [spacings.spacer * 2, spacings.spacer * 4],
+                stackable: [spacings.spacer, spacings.spacer],
+            },
+            margin: {
+                default: [spacings.spacer * 2, spacings.spacer * 4],
+                stackable: [spacings.spacer, spacings.spacer],
+            },
+        },
         edgeRadius: null,
         imageTextGradient: `
             linear-gradient(

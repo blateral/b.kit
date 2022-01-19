@@ -1,6 +1,11 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { mq, spacings, withRange } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    withRange,
+    getGlobalSettings as global,
+} from 'utils/styles';
 
 export type BgMode = 'full' | 'larger-left' | 'larger-right' | 'inverted';
 
@@ -37,80 +42,80 @@ const View = styled.section<{
     overflow: ${({ as }) => (as === 'div' ? 'visible' : 'hidden')};
 
     // section paddings
-    ${({ addSeperation, isStackable, bgIdent }) =>
-        addSeperation &&
-        css`
-            ${withRange(
-                [spacings.spacer * 2, spacings.spacer * 4],
-                'padding-top'
-            )}
-            ${withRange(
-                [
-                    isStackable ? spacings.spacer : spacings.spacer * 2,
-                    isStackable ? spacings.spacer : spacings.spacer * 4,
-                ],
-                'padding-bottom'
-            )}
-            section[data-stack-ident='true'] + & {
-                ${withRange([spacings.spacer, spacings.spacer], 'padding-top')};
-            }
-            section[data-bg-ident='${bgIdent}']
-                + &[data-bg-ident='${bgIdent}'] {
-                padding-top: 0 !important;
+    ${({ addSeperation, isStackable, bgIdent, theme }) => {
+        const padding = global(theme).sections.seperation.padding.default;
+        const paddingStacked = global(theme).sections.seperation.padding
+            .stackable;
 
-                @media ${mq.xxlarge} {
-                    padding-top: 0 !important;
+        if (addSeperation) {
+            return css`
+                ${withRange(padding, 'padding-top')}
+                ${withRange(
+                    isStackable ? paddingStacked : padding,
+                    'padding-bottom'
+                )}
+
+                section[data-stack-ident='true'] + & {
+                    ${withRange(paddingStacked, 'padding-top')};
                 }
-            }
-        `}
+
+                section[data-bg-ident='${bgIdent}']
+                    + &[data-bg-ident='${bgIdent}'] {
+                    padding-top: 0 !important;
+
+                    @media ${mq.xxlarge} {
+                        padding-top: 0 !important;
+                    }
+                }
+            `;
+        } else return '';
+    }}
 
     // section margins
-    ${({ addSeperation, isStackable, bgIdent }) =>
-        addSeperation &&
-        css`
-            *:not([data-bg-ident='transparent'])
-                + &[data-bg-ident='larger-left'] {
-                ${withRange(
-                    [spacings.spacer * 2, spacings.spacer * 4],
-                    'margin-top'
-                )};
-            }
-            *:not([data-bg-ident='transparent'])
-                + &[data-bg-ident='larger-right'] {
-                ${withRange(
-                    [spacings.spacer * 2, spacings.spacer * 4],
-                    'margin-top'
-                )};
-            }
-            section[data-bg-ident='larger-left']
-                + &:not([data-bg-ident='transparent']) {
-                ${withRange(
-                    [
-                        isStackable ? spacings.spacer : spacings.spacer * 2,
-                        isStackable ? spacings.spacer : spacings.spacer * 4,
-                    ],
-                    'margin-top'
-                )};
-            }
-            section[data-bg-ident='larger-right']
-                + &:not([data-bg-ident='transparent']) {
-                ${withRange(
-                    [
-                        isStackable ? spacings.spacer : spacings.spacer * 2,
-                        isStackable ? spacings.spacer : spacings.spacer * 4,
-                    ],
-                    'margin-top'
-                )};
-            }
-            section[data-bg-ident='${bgIdent}']
-                + &[data-bg-ident='${bgIdent}'] {
-                margin-top: 0 !important;
+    ${({ addSeperation, isStackable, bgIdent, theme }) => {
+        const margin = global(theme).sections.seperation.margin.default;
+        const marginStacked = global(theme).sections.seperation.margin
+            .stackable;
 
-                @media ${mq.xxlarge} {
-                    margin-top: 0 !important;
+        if (addSeperation) {
+            return css`
+                *:not([data-bg-ident='transparent'])
+                    + &[data-bg-ident='larger-left'] {
+                    ${withRange(margin, 'margin-top')};
                 }
-            }
-        `}
+
+                *:not([data-bg-ident='transparent'])
+                    + &[data-bg-ident='larger-right'] {
+                    ${withRange(margin, 'margin-top')};
+                }
+
+                section[data-bg-ident='larger-left']
+                    + &:not([data-bg-ident='transparent']) {
+                    ${withRange(
+                        isStackable ? marginStacked : margin,
+                        'margin-top'
+                    )};
+                }
+
+                section[data-bg-ident='larger-right']
+                    + &:not([data-bg-ident='transparent']) {
+                    ${withRange(
+                        isStackable ? marginStacked : margin,
+                        'margin-top'
+                    )};
+                }
+
+                section[data-bg-ident='${bgIdent}']
+                    + &[data-bg-ident='${bgIdent}'] {
+                    margin-top: 0 !important;
+
+                    @media ${mq.xxlarge} {
+                        margin-top: 0 !important;
+                    }
+                }
+            `;
+        } else return '';
+    }}
 `;
 
 const Back = styled.div<{
