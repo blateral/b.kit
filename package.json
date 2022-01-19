@@ -19,7 +19,7 @@
         "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
         "deploy": "yarn tc && yarn build && yarn publish",
         "deploy-patch": "yarn tc && yarn build && yarn publish --tag patch",
-        "prepare": "npx husky install"
+        "prepare": "npx husky install && npx yalc --version"
     },
     "repository": {
         "type": "git",
