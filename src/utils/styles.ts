@@ -309,6 +309,7 @@ export interface GlobalSettings {
     sections: {
         /** Paddings and Margins for seperating each section */
         seperation: {
+            forcePadding: boolean;
             padding: {
                 default: [number, number];
                 stackable: [number, number];
@@ -336,6 +337,7 @@ export interface GlobalSettings {
 const defaultGlobalSettings: GlobalSettings = {
     sections: {
         seperation: {
+            forcePadding: false,
             padding: {
                 default: [spacings.spacer * 2, spacings.spacer * 4],
                 stackable: [spacings.spacer, spacings.spacer],

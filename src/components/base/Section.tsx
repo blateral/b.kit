@@ -46,6 +46,7 @@ const View = styled.section<{
         const padding = global(theme).sections.seperation.padding.default;
         const paddingStacked = global(theme).sections.seperation.padding
             .stackable;
+        const forcePadding = global(theme).sections.seperation.forcePadding;
 
         if (addSeperation) {
             return css`
@@ -61,10 +62,12 @@ const View = styled.section<{
 
                 section[data-bg-ident='${bgIdent}']
                     + &[data-bg-ident='${bgIdent}'] {
-                    padding-top: 0 !important;
+                    padding-top: ${forcePadding ? undefined : '0 !important'};
 
                     @media ${mq.xxlarge} {
-                        padding-top: 0 !important;
+                        padding-top: ${forcePadding
+                            ? undefined
+                            : '0 !important'};
                     }
                 }
             `;
