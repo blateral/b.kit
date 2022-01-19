@@ -158,7 +158,7 @@ const ParallaxBackground: FC<{
     return (
         <>
             {isLoaded && (
-                <View ref={setContainerRef}>
+                <View ref={setContainerRef} data-bg-ident="transparent">
                     <Parallax
                         ref={parallaxRef}
                         style={{
