@@ -17,7 +17,7 @@ const SimpleImage: FC<{
     hAlign?: 'left' | 'center' | 'right';
 }> = ({ image, hAlign = 'left' }) => {
     return (
-        <Section bgColor="undefined" bgMode="full">
+        <Section addSeperation bgColor="undefined" bgMode="full">
             <Wrapper>
                 {image && <StyledImage hAlign={hAlign} {...image} />}
             </Wrapper>
