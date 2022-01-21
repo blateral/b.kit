@@ -23,7 +23,6 @@ export const Default: Story = () => (
                 <h2>199,-</h2>
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
-                isInverted: true,
             },
             {
                 text: `<b>Pro Tarif</b>
@@ -54,5 +53,91 @@ export const Default: Story = () => (
                 action: button,
             },
         ]}
+    />
+);
+
+export const HasBackground: Story = () => (
+    <PriceTable
+        items={[
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+        ]}
+        bgMode="full"
+    />
+);
+
+export const IsInverted: Story = () => (
+    <PriceTable
+        items={[
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+            {
+                text: `<b>Pro Tarif</b>
+                <br />
+                <h2>199,-</h2>
+                <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
+                action: button,
+            },
+        ]}
+        bgMode="inverted"
     />
 );

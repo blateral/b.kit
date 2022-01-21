@@ -1,7 +1,7 @@
 import PriceTag from 'components/blocks/PriceTag';
-import { spacings, mq, Section, Wrapper } from 'index';
+import { spacings, mq, Section, Wrapper, mapToBgMode, getColors } from 'index';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 
 const PriceFlex = styled.div`
     display: flex;
@@ -31,11 +31,24 @@ const PriceTable: React.FC<{
     items: {
         text?: string;
         action?: (isInverted?: boolean) => React.ReactNode;
-        isInverted?: boolean;
     }[];
-}> = ({ items }) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ items, bgMode }) => {
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
+
+    const theme = React.useContext(ThemeContext);
     return (
-        <Section>
+        <Section
+            bgColor={
+                isInverted
+                    ? getColors(theme).dark
+                    : hasBg
+                    ? getColors(theme).mono.light
+                    : 'transparent'
+            }
+            bgMode={mapToBgMode(bgMode)}
+        >
             <Wrapper addWhitespace>
                 <PriceFlex>
                     {items.map((item, i) => {
@@ -44,7 +57,8 @@ const PriceTable: React.FC<{
                                 <PriceTag
                                     text={item.text}
                                     action={item.action}
-                                    isInverted={item.isInverted}
+                                    isInverted={isInverted}
+                                    hasBackground={hasBg}
                                 />
                             </PriceTagContainer>
                         );
