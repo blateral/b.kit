@@ -46,3 +46,27 @@ export const Centered: Story = () => (
         }}
     />
 );
+
+export const WithBackground: Story = () => (
+    <SimpleImage
+        bgMode="full"
+        image={{
+            small: 'https://unsplash.it/500/500?image=409',
+            medium: 'https://unsplash.it/500/500?image=409',
+            large: 'https://unsplash.it/511/511?image=409',
+            xlarge: 'https://unsplash.it/854/854?image=409',
+        }}
+    />
+);
+
+export const Inverted: Story = () => (
+    <SimpleImage
+        bgMode="inverted"
+        image={{
+            small: 'https://unsplash.it/500/500?image=409',
+            medium: 'https://unsplash.it/500/500?image=409',
+            large: 'https://unsplash.it/511/511?image=409',
+            xlarge: 'https://unsplash.it/854/854?image=409',
+        }}
+    />
+);
