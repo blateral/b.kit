@@ -92,6 +92,7 @@ export { default as ParallaxBackground } from 'components/sections/ParallaxBackg
 export { default as CallToActionDouble } from 'components/sections/CallToActionDouble';
 export { default as PriceList } from 'components/sections/PriceList';
 export { default as SimpleImage } from 'components/sections/SimpleImage';
+export { default as PriceTable } from 'components/sections/PriceTable';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
