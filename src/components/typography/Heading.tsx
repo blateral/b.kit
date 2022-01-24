@@ -19,7 +19,7 @@ const base = css<{
     textColor?: string;
     textGradient?: string;
 }>`
-    display: inline-block;
+    display: block;
     margin: 0;
     padding: 0;
     ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}

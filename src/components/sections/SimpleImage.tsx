@@ -1,9 +1,10 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Wrapper from 'components/base/Wrapper';
+import { getColors } from 'utils/styles';
 
 const StyledImage = styled(Image)<{ hAlign?: 'left' | 'center' | 'right' }>`
     margin-right: ${({ hAlign }) =>
@@ -15,9 +16,24 @@ const StyledImage = styled(Image)<{ hAlign?: 'left' | 'center' | 'right' }>`
 const SimpleImage: FC<{
     image?: ImageProps;
     hAlign?: 'left' | 'center' | 'right';
-}> = ({ image, hAlign = 'left' }) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ image, hAlign = 'left', bgMode }) => {
+    const theme = useContext(ThemeContext);
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
+
     return (
-        <Section addSeperation bgColor="undefined" bgMode="full">
+        <Section
+            addSeperation
+            bgColor={
+                isInverted
+                    ? getColors(theme).dark
+                    : hasBg
+                    ? getColors(theme).mono.light
+                    : 'transparent'
+            }
+            bgMode={mapToBgMode(bgMode)}
+        >
             <Wrapper>
                 {image && <StyledImage hAlign={hAlign} {...image} />}
             </Wrapper>
