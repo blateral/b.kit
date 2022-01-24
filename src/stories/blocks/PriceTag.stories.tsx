@@ -6,14 +6,19 @@ import Button from 'components/buttons/Button';
 export default {
     title: 'Blocks / PriceTag',
     component: PriceTag,
+    parameters: {
+        status: {
+            type: 'releaseCandidate',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (
     <PriceTag
-        text={`<b>Pro Tarif</b>
-<br />
-<h2>199,-</h2>
-<p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`}
+        superTitle="Pro Tarif"
+        title="199,-"
+        text={`
+            <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`}
         action={(isInverted) => (
             <Button.View
                 isInverted={isInverted}
@@ -28,10 +33,10 @@ export const Default: Story = () => (
 
 export const hasBackground: Story = () => (
     <PriceTag
-        text={`<b>Pro Tarif</b>
-<br />
-<h2>199,-</h2>
-<p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`}
+        superTitle="Pro Tarif"
+        title="199,-"
+        text={`
+        <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`}
         action={(isInverted) => (
             <Button.View
                 isInverted={isInverted}
@@ -47,10 +52,10 @@ export const hasBackground: Story = () => (
 
 export const IsInverted: Story = () => (
     <PriceTag
-        text={`<b>Pro Tarif</b>
-<br />
-<h2>199,-</h2>
-<p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`}
+        superTitle="Pro Tarif"
+        title="199,-"
+        text={`
+        <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`}
         action={(isInverted) => (
             <Button.View
                 isInverted={isInverted}

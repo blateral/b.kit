@@ -1,11 +1,16 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import PriceTable from 'components/sections/PriceTable';
+import { PriceTableComponent } from 'components/sections/PriceTable';
 import { Button } from 'index';
 
 export default {
     title: 'Sections / PriceTable',
-    component: PriceTable,
+    component: PriceTableComponent,
+    parameters: {
+        status: {
+            type: 'releaseCandidate',
+        },
+    },
 } as Meta;
 
 const button = (isInverted: boolean) => (
@@ -15,40 +20,40 @@ const button = (isInverted: boolean) => (
 );
 
 export const Default: Story = () => (
-    <PriceTable
+    <PriceTableComponent
         items={[
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
@@ -57,40 +62,40 @@ export const Default: Story = () => (
 );
 
 export const HasBackground: Story = () => (
-    <PriceTable
+    <PriceTableComponent
         items={[
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
@@ -100,40 +105,40 @@ export const HasBackground: Story = () => (
 );
 
 export const IsInverted: Story = () => (
-    <PriceTable
+    <PriceTableComponent
         items={[
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
             {
-                text: `<b>Pro Tarif</b>
-                <br />
-                <h2>199,-</h2>
+                superTitle: 'Pro Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
             },
