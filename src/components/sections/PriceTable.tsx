@@ -15,11 +15,15 @@ const PriceFlex = styled.div`
     flex-wrap: wrap;
 
     margin: -${spacings.spacer * 1.5}px;
+    margin-right: -${spacings.nudge * 3}px;
+    margin-left: -${spacings.nudge * 3}px;
 `;
 
 const PriceTagContainer = styled.div`
     flex: 1 1 100%;
     padding: ${spacings.spacer * 1.5}px;
+    padding-right: ${spacings.nudge * 3}px;
+    padding-left: ${spacings.nudge * 3}px;
 
     & > * {
         min-height: 400px;
