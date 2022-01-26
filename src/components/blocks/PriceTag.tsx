@@ -38,13 +38,17 @@ const View = styled.div<{
 const StyledActions = styled(Actions)`
     margin-top: auto;
     padding: 0 ${spacings.spacer}px;
+    padding-top: ${spacings.spacer}px;
 `;
 
 export interface PriceTagProps {
     title?: string;
     superTitle?: string;
     text?: string;
-    action?: (isInverted?: boolean) => React.ReactNode;
+    action?: (props: {
+        isInverted?: boolean;
+        isHighlighted?: boolean;
+    }) => React.ReactNode;
     isInverted?: boolean;
     hasBackground?: boolean;
     isHighlighted?: boolean;
@@ -60,8 +64,8 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
     hasBackground,
     className,
 }) => {
-    const highlighted = isHighlighted && !isInverted;
-    const inverted = !isHighlighted && isInverted;
+    const inverted = isHighlighted ? !isInverted : false;
+
     return (
         <View
             isInverted={isInverted}
@@ -73,7 +77,7 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
                 <Copy
                     type="copy-b"
                     size="big"
-                    isInverted={highlighted}
+                    isInverted={inverted}
                     innerHTML={superTitle}
                     data-sheet="superTitle"
                 />
@@ -82,7 +86,7 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
                 <Callout
                     renderAs="div"
                     size="big"
-                    isInverted={highlighted}
+                    isInverted={inverted}
                     innerHTML={title}
                     data-sheet="title"
                 />
@@ -90,13 +94,19 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
             {text && (
                 <Copy
                     size="medium"
-                    isInverted={highlighted}
+                    isInverted={inverted}
                     innerHTML={text}
                     data-sheet="desc"
                 />
             )}
             <StyledActions
-                primary={action && action(highlighted || inverted)}
+                primary={
+                    action &&
+                    action({
+                        isInverted: inverted,
+                        isHighlighted: isHighlighted,
+                    })
+                }
             />
         </View>
     );

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { PriceTableComponent } from 'components/sections/PriceTable';
-import { Button } from 'index';
+import Button from 'components/buttons/Button';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections / PriceTable',
@@ -13,11 +14,21 @@ export default {
     },
 } as Meta;
 
-const button = (isInverted: boolean) => (
-    <Button.View isInverted={isInverted} as="button" onClick={console.log}>
-        <Button.Label>Jetzt testen</Button.Label>
-    </Button.View>
-);
+const button = (props: { isInverted?: boolean; isHighlighted?: boolean }) => {
+    if (props.isHighlighted) {
+        return (
+            <Button.View isInverted={props.isInverted} as="button">
+                <Button.Label>Jetzt testen</Button.Label>
+            </Button.View>
+        );
+    } else {
+        return (
+            <ButtonGhost.View isInverted={props.isInverted} as="button">
+                <ButtonGhost.Label>Jetzt testen</ButtonGhost.Label>
+            </ButtonGhost.View>
+        );
+    }
+};
 
 export const Default: Story = () => (
     <PriceTableComponent
