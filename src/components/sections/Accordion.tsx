@@ -7,6 +7,9 @@ import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color, mq } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import { helmetJsonLdProp } from 'react-schemaorg';
+import { FAQPage } from 'schema-dts';
+import { Helmet } from 'react-helmet';
 
 const AccordionBlock = styled.ul`
     margin: 0;
@@ -124,6 +127,22 @@ const Accordion: React.FC<{
                         const isSelected = currentItems.indexOf(i) !== -1;
                         return (
                             <AccordionBlock key={i}>
+                                <Helmet
+                                    script={[
+                                        helmetJsonLdProp<FAQPage>({
+                                            '@context': 'https://schema.org',
+                                            '@type': 'FAQPage',
+                                            mainEntity: {
+                                                '@type': 'Question',
+                                                name: label,
+                                                acceptedAnswer: {
+                                                    '@type': 'Answer',
+                                                    text: text,
+                                                },
+                                            },
+                                        }),
+                                    ]}
+                                />
                                 <AccordionItems>
                                     <AccordionHead
                                         isInverted={isInverted}
