@@ -98,6 +98,7 @@ const Callout: React.FC<{
     hasShadow = false,
     innerHTML,
     children,
+    ...rest
 }) => {
     const theme = React.useContext(ThemeContext);
     const fontSettings = font(theme)?.callout?.[size];
@@ -124,6 +125,7 @@ const Callout: React.FC<{
                 innerHTML && !children ? { __html: innerHTML } : undefined
             }
             className={className}
+            {...rest}
         >
             {children}
         </View>

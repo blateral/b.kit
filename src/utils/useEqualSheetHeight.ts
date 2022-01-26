@@ -6,6 +6,7 @@ import {
     useCallback,
 } from 'react';
 import { useMediaQuery } from './useMediaQuery';
+import { useFontsLoaded } from 'utils/useFontsLoaded';
 
 interface ItemsPerRow {
     small?: number;
@@ -43,6 +44,8 @@ export const useEqualSheetHeight = (props: {
     const [sheetRefs, setSheetRefs] = useState<
         MutableRefObject<HTMLDivElement>[]
     >([]);
+
+    const fontsLoaded = useFontsLoaded();
 
     const setHeights = useCallback(
         (
@@ -132,14 +135,10 @@ export const useEqualSheetHeight = (props: {
 
         window.addEventListener('resize', resizeHandler);
 
-        (document as any)?.fonts?.ready?.then(() => {
-            resizeHandler();
-        });
-
         return () => {
             window.removeEventListener('resize', resizeHandler);
         };
-    }, [sheetRefs, currentMq, props.identifiers, setHeights]);
+    }, [sheetRefs, currentMq, props.identifiers, setHeights, fontsLoaded]);
 
     const triggerCalculation = () => {
         setSheetRefs((prev) =>

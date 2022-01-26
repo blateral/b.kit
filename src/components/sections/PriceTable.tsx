@@ -29,21 +29,22 @@ const PriceTagContainer = styled.div`
         min-height: 400px;
     }
 
-    @media ${mq.medium} {
-        flex: 0 1 33.33%;
-
-        & > * {
-            max-width: 370px;
-        }
+    @media ${mq.semilarge} {
+        flex: 0 1 50%;
     }
 
     @media ${mq.large} {
+        flex: 0 1 33.33%;
         max-width: 33.33%;
+
+        & > * {
+            max-width: 400px;
+        }
     }
 `;
 
 const PriceTable: React.FC<{
-    items: Array<PriceTagProps>;
+    items: Array<Omit<PriceTagProps, 'isInverted'>>;
     bgMode?: 'full' | 'inverted';
 }> = ({ items, bgMode }) => {
     const isInverted = bgMode === 'inverted';
@@ -62,7 +63,7 @@ const PriceTable: React.FC<{
         responsive: {
             small: 1,
             medium: 1,
-            semilarge: 3,
+            semilarge: 2,
             large: 3,
             xlarge: 3,
         },
@@ -82,17 +83,15 @@ const PriceTable: React.FC<{
         >
             <Wrapper addWhitespace>
                 <PriceFlex>
-                    {items.map((item, i) => {
-                        return (
-                            <PriceTagContainer key={i} ref={cardRefs[i]}>
-                                <PriceTag
-                                    {...item}
-                                    isInverted={isInverted}
-                                    hasBackground={hasBg}
-                                />
-                            </PriceTagContainer>
-                        );
-                    })}
+                    {items.map((item, i) => (
+                        <PriceTagContainer key={i} ref={cardRefs[i]}>
+                            <PriceTag
+                                {...item}
+                                isInverted={isInverted}
+                                hasBackground={hasBg}
+                            />
+                        </PriceTagContainer>
+                    ))}
                 </PriceFlex>
             </Wrapper>
         </Section>

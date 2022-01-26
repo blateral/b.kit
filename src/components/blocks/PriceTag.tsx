@@ -5,15 +5,23 @@ import Copy from 'components/typography/Copy';
 import Actions from './Actions';
 import Callout from 'components/typography/Callout';
 
-const View = styled.div<{ isInverted?: boolean; hasBg?: boolean }>`
+const View = styled.div<{
+    isInverted?: boolean;
+    hasBg?: boolean;
+    isHighlighted?: boolean;
+}>`
     padding: ${spacings.spacer * 2}px;
 
     border: 1px solid transparent;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
-    background: ${({ theme, isInverted, hasBg }) =>
+    background: ${({ theme, hasBg, isInverted, isHighlighted }) =>
         isInverted
-            ? getColors(theme).primary.dark
+            ? isHighlighted
+                ? getColors(theme).light
+                : getColors(theme).mono.light
+            : isHighlighted
+            ? getColors(theme).dark
             : hasBg
             ? getColors(theme).light
             : getColors(theme).mono.light};
@@ -30,15 +38,20 @@ const View = styled.div<{ isInverted?: boolean; hasBg?: boolean }>`
 const StyledActions = styled(Actions)`
     margin-top: auto;
     padding: 0 ${spacings.spacer}px;
+    padding-top: ${spacings.spacer}px;
 `;
 
 export interface PriceTagProps {
     title?: string;
     superTitle?: string;
     text?: string;
-    action?: (isInverted?: boolean) => React.ReactNode;
+    action?: (props: {
+        isInverted?: boolean;
+        isHighlighted?: boolean;
+    }) => React.ReactNode;
     isInverted?: boolean;
     hasBackground?: boolean;
+    isHighlighted?: boolean;
 }
 
 const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
@@ -47,45 +60,54 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
     text,
     action,
     isInverted,
+    isHighlighted,
     hasBackground,
     className,
 }) => {
+    const inverted = isHighlighted ? !isInverted : false;
+
     return (
         <View
             isInverted={isInverted}
+            isHighlighted={isHighlighted}
             hasBg={hasBackground}
             className={className}
         >
             {superTitle && (
-                <div>
-                    <Copy
-                        type="copy-b"
-                        size="big"
-                        isInverted={isInverted}
-                        innerHTML={superTitle}
-                        data-sheet="superTitle"
-                    />
-                </div>
+                <Copy
+                    type="copy-b"
+                    size="big"
+                    isInverted={inverted}
+                    innerHTML={superTitle}
+                    data-sheet="superTitle"
+                />
             )}
             {title && (
-                <div>
-                    <Callout
-                        size="big"
-                        isInverted={isInverted}
-                        innerHTML={title}
-                        data-sheet="title"
-                    />
-                </div>
+                <Callout
+                    renderAs="div"
+                    size="big"
+                    isInverted={inverted}
+                    innerHTML={title}
+                    data-sheet="title"
+                />
             )}
             {text && (
                 <Copy
                     size="medium"
-                    isInverted={isInverted}
+                    isInverted={inverted}
                     innerHTML={text}
                     data-sheet="desc"
                 />
             )}
-            <StyledActions primary={action && action(isInverted)} />
+            <StyledActions
+                primary={
+                    action &&
+                    action({
+                        isInverted: inverted,
+                        isHighlighted: isHighlighted,
+                    })
+                }
+            />
         </View>
     );
 };

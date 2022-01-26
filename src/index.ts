@@ -1,4 +1,4 @@
-/***** Version: 1.17.2 *****/
+/***** Version: 1.17.3 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -35,6 +35,7 @@ export {
 } from 'utils/cookie-consent/cookie';
 export { default as useIE } from 'utils/useIE';
 export { useItemHeight } from 'utils/useItemHeight';
+export { useFontsLoaded } from 'utils/useFontsLoaded';
 export { getMediaQuery, isBrowser, useMediaQuery } from 'utils/useMediaQuery';
 export { useScroll, ScrollDirection } from 'utils/useScroll';
 export { useScrollTo } from 'utils/useScrollTo';
