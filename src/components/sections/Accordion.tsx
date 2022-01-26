@@ -121,17 +121,12 @@ const Accordion: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            {/* '@type': 'Question',
-                                                    name: label,
-                                                    acceptedAnswer: {
-                                                        '@type': 'Answer',
-                                                        text: text,
-                                                    }, */}
             <Helmet
                 script={[
                     helmetJsonLdProp<FAQPage>({
                         '@context': 'https://schema.org',
                         '@type': 'FAQPage',
+                        name: 'FAQ',
                         mainEntity: items.map(({ label, text }) => {
                             return {
                                 '@type': 'Question',
