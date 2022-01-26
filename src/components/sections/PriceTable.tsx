@@ -33,7 +33,7 @@ const PriceTagContainer = styled.div`
         flex: 0 1 33.33%;
 
         & > * {
-            max-width: 340px;
+            max-width: 370px;
         }
     }
 
@@ -62,7 +62,7 @@ const PriceTable: React.FC<{
         responsive: {
             small: 1,
             medium: 1,
-            semilarge: 2,
+            semilarge: 3,
             large: 3,
             xlarge: 3,
         },

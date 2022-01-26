@@ -3,9 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Copy from 'components/typography/Copy';
 import Actions from './Actions';
+import Callout from 'components/typography/Callout';
 
 const View = styled.div<{ isInverted?: boolean; hasBg?: boolean }>`
-    padding: ${spacings.spacer}px;
+    padding: ${spacings.spacer * 2}px;
 
     border: 1px solid transparent;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
@@ -22,7 +23,7 @@ const View = styled.div<{ isInverted?: boolean; hasBg?: boolean }>`
     justify-content: flex-start;
 
     & > * + * {
-        margin-top: ${spacings.spacer}px;
+        margin-top: 20px;
     }
 `;
 
@@ -56,25 +57,29 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
             className={className}
         >
             {superTitle && (
-                <Copy
-                    type="copy-b"
-                    isInverted={isInverted}
-                    innerHTML={superTitle}
-                    data-sheet="superTitle"
-                />
+                <div>
+                    <Copy
+                        type="copy-b"
+                        size="big"
+                        isInverted={isInverted}
+                        innerHTML={superTitle}
+                        data-sheet="superTitle"
+                    />
+                </div>
             )}
             {title && (
-                <Copy
-                    type="copy-b"
-                    size="big"
-                    isInverted={isInverted}
-                    innerHTML={title}
-                    data-sheet="title"
-                />
+                <div>
+                    <Callout
+                        size="big"
+                        isInverted={isInverted}
+                        innerHTML={title}
+                        data-sheet="title"
+                    />
+                </div>
             )}
             {text && (
                 <Copy
-                    size="small"
+                    size="medium"
                     isInverted={isInverted}
                     innerHTML={text}
                     data-sheet="desc"
