@@ -57,25 +57,22 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
             className={className}
         >
             {superTitle && (
-                <div>
-                    <Copy
-                        type="copy-b"
-                        size="big"
-                        isInverted={isInverted}
-                        innerHTML={superTitle}
-                        data-sheet="superTitle"
-                    />
-                </div>
+                <Copy
+                    type="copy-b"
+                    size="big"
+                    isInverted={isInverted}
+                    innerHTML={superTitle}
+                    data-sheet="superTitle"
+                />
             )}
             {title && (
-                <div>
-                    <Callout
-                        size="big"
-                        isInverted={isInverted}
-                        innerHTML={title}
-                        data-sheet="title"
-                    />
-                </div>
+                <Callout
+                    renderAs="div"
+                    size="big"
+                    isInverted={isInverted}
+                    innerHTML={title}
+                    data-sheet="title"
+                />
             )}
             {text && (
                 <Copy
