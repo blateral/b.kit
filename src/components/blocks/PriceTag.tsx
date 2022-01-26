@@ -5,17 +5,27 @@ import Copy from 'components/typography/Copy';
 import Actions from './Actions';
 import Callout from 'components/typography/Callout';
 
-const View = styled.div<{ isInverted?: boolean; hasBg?: boolean }>`
+const View = styled.div<{
+    isInverted?: boolean;
+    hasBg?: boolean;
+    isHighlighted?: boolean;
+}>`
     padding: ${spacings.spacer * 2}px;
 
     border: 1px solid transparent;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
-    background: ${({ theme, isInverted, hasBg }) =>
+    background: ${({ theme, hasBg, isInverted, isHighlighted }) =>
         isInverted
-            ? getColors(theme).primary.dark
+            ? isHighlighted
+                ? getColors(theme).light
+                : getColors(theme).mono.light
             : hasBg
-            ? getColors(theme).light
+            ? isHighlighted
+                ? getColors(theme).primary.dark
+                : getColors(theme).light
+            : isHighlighted
+            ? getColors(theme).primary.dark
             : getColors(theme).mono.light};
 
     display: flex;
@@ -39,6 +49,7 @@ export interface PriceTagProps {
     action?: (isInverted?: boolean) => React.ReactNode;
     isInverted?: boolean;
     hasBackground?: boolean;
+    isHighlighted?: boolean;
 }
 
 const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
@@ -47,12 +58,15 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
     text,
     action,
     isInverted,
+    isHighlighted,
     hasBackground,
     className,
 }) => {
+    const inverted = isHighlighted && !isInverted;
     return (
         <View
             isInverted={isInverted}
+            isHighlighted={isHighlighted}
             hasBg={hasBackground}
             className={className}
         >
@@ -61,7 +75,7 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
                     <Copy
                         type="copy-b"
                         size="big"
-                        isInverted={isInverted}
+                        isInverted={inverted}
                         innerHTML={superTitle}
                         data-sheet="superTitle"
                     />
@@ -71,7 +85,7 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
                 <div>
                     <Callout
                         size="big"
-                        isInverted={isInverted}
+                        isInverted={inverted}
                         innerHTML={title}
                         data-sheet="title"
                     />
@@ -80,12 +94,16 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
             {text && (
                 <Copy
                     size="medium"
-                    isInverted={isInverted}
+                    isInverted={inverted}
                     innerHTML={text}
                     data-sheet="desc"
                 />
             )}
-            <StyledActions primary={action && action(isInverted)} />
+            <StyledActions
+                primary={
+                    action && action(inverted || (isInverted && !isHighlighted))
+                }
+            />
         </View>
     );
 };

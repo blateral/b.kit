@@ -53,6 +53,7 @@ export const Default: Story = () => (
                 text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
+                isHighlighted: true,
             },
             {
                 superTitle: 'Pro Tarif',
@@ -102,6 +103,7 @@ export const HasBackground: Story = () => (
                 text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
+                isHighlighted: true,
             },
             {
                 superTitle: 'Pro Tarif',
@@ -145,6 +147,7 @@ export const IsInverted: Story = () => (
                 text: `
                 <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`,
                 action: button,
+                isHighlighted: true,
             },
             {
                 superTitle: 'Pro Tarif',
