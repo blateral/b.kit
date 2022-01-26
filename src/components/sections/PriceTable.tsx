@@ -29,16 +29,17 @@ const PriceTagContainer = styled.div`
         min-height: 400px;
     }
 
-    @media ${mq.medium} {
-        flex: 0 1 33.33%;
-
-        & > * {
-            max-width: 340px;
-        }
+    @media ${mq.semilarge} {
+        flex: 0 1 50%;
     }
 
     @media ${mq.large} {
+        flex: 0 1 33.33%;
         max-width: 33.33%;
+
+        & > * {
+            max-width: 400px;
+        }
     }
 `;
 
