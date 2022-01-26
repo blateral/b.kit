@@ -20,12 +20,10 @@ const View = styled.div<{
             ? isHighlighted
                 ? getColors(theme).light
                 : getColors(theme).mono.light
-            : hasBg
-            ? isHighlighted
-                ? getColors(theme).primary.dark
-                : getColors(theme).light
             : isHighlighted
             ? getColors(theme).primary.dark
+            : hasBg
+            ? getColors(theme).light
             : getColors(theme).mono.light};
 
     display: flex;
