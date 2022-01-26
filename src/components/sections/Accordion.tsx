@@ -121,28 +121,36 @@ const Accordion: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
+            {/* '@type': 'Question',
+                                                    name: label,
+                                                    acceptedAnswer: {
+                                                        '@type': 'Answer',
+                                                        text: text,
+                                                    }, */}
+            <Helmet
+                script={[
+                    helmetJsonLdProp<FAQPage>({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: items.map(({ label, text }) => {
+                            return {
+                                '@type': 'Question',
+                                name: label,
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: text,
+                                },
+                            };
+                        }),
+                    }),
+                ]}
+            />
             <Wrapper addWhitespace>
                 {items &&
                     items.map(({ label, text, aside, hasColumns }, i) => {
                         const isSelected = currentItems.indexOf(i) !== -1;
                         return (
                             <AccordionBlock key={i}>
-                                <Helmet
-                                    script={[
-                                        helmetJsonLdProp<FAQPage>({
-                                            '@context': 'https://schema.org',
-                                            '@type': 'FAQPage',
-                                            mainEntity: {
-                                                '@type': 'Question',
-                                                name: label,
-                                                acceptedAnswer: {
-                                                    '@type': 'Answer',
-                                                    text: text,
-                                                },
-                                            },
-                                        }),
-                                    ]}
-                                />
                                 <AccordionItems>
                                     <AccordionHead
                                         isInverted={isInverted}
