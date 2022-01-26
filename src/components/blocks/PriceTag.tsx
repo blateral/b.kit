@@ -21,7 +21,7 @@ const View = styled.div<{
                 ? getColors(theme).light
                 : getColors(theme).mono.light
             : isHighlighted
-            ? getColors(theme).primary.dark
+            ? getColors(theme).dark
             : hasBg
             ? getColors(theme).light
             : getColors(theme).mono.light};
