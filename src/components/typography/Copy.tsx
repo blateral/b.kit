@@ -61,9 +61,9 @@ const base = css<{
     hyphens: auto;
     ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
 
-    @media ${mq.medium} {
+    /* @media ${mq.medium} {
         hyphens: none;
-    }
+    } */
 
     a:not([class]) {
         color: currentColor;
