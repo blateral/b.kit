@@ -124,7 +124,6 @@ const Accordion: React.FC<{
                 item={{
                     '@context': 'https://schema.org',
                     '@type': 'FAQPage',
-                    name: 'FAQ',
                     mainEntity: items.map(({ label, text }) => {
                         return {
                             '@type': 'Question',
