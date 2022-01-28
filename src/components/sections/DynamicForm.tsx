@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useCallback, useContext } from 'react';
 import styled, { DefaultTheme, ThemeContext } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
@@ -513,11 +513,11 @@ const DynamicForm: FC<{
         handleSubmit,
         handleChange,
         handleBlur,
-        setFieldValue,
         setFieldTouched,
         setSubmitting,
         validateField,
         submitForm,
+        setValues,
         isSubmitting,
         touched,
         values,
@@ -544,6 +544,14 @@ const DynamicForm: FC<{
     });
 
     const theme = useContext(ThemeContext);
+
+    // rewrite setFieldValue to prevent loadash feature of Formik: https://github.com/jaredpalmer/formik/issues/2262
+    const setField = useCallback(
+        async (key: string, value: any, shouldValidate?: boolean) => {
+            return setValues({ ...values, [key]: value }, shouldValidate);
+        },
+        [setValues, values]
+    );
 
     const leftColumn =
         fields &&
@@ -581,7 +589,7 @@ const DynamicForm: FC<{
                                     isTouched: touched[label] || false,
                                     isInverted: isInverted,
                                     hasBg: hasBg,
-                                    setField: setFieldValue,
+                                    setField: setField,
                                     setTouched: setFieldTouched,
                                     validateField: validateField,
                                     handleChange: handleChange,
@@ -658,7 +666,7 @@ const DynamicForm: FC<{
                                         isTouched: touched[label] || false,
                                         isInverted: isInverted,
                                         hasBg: hasBg,
-                                        setField: setFieldValue,
+                                        setField: setField,
                                         setTouched: setFieldTouched,
                                         validateField: validateField,
                                         handleChange: handleChange,
@@ -984,7 +992,7 @@ const generateArea = ({
         key={key}
         label={`${key}${field.isRequired ? '*' : ''}`}
         placeholder={field.placeholder}
-        name={key}
+        name={`['${key}']`}
         value={value as string}
         isInverted={isInverted}
         onChange={handleChange}
@@ -1036,7 +1044,7 @@ const generateField = ({
         key={key}
         label={`${key}${field.isRequired ? '*' : ''}`}
         placeholder={field.placeholder}
-        name={key}
+        name={`['${key}']`}
         type={field.inputType}
         isInverted={isInverted}
         value={value as string}
