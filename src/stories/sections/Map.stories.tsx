@@ -27,6 +27,16 @@ const exampleLocations: MapLocation[] = [
     {
         id: 'Sipplingen',
         meta: {
+            structuredData: {
+                address: {
+                    street: 'Example Street 1',
+                    postalCode: '78354',
+                    region: 'Baden-Württemberg',
+                    country: 'DE',
+                },
+                image: ['https://placehold.it/40'],
+                telephone: '+49 176 1234567',
+            },
             title: `b.lateral GmbH & Co. KG </br>
                 Lenzensteig 3 </br>
                 78354 Sipplingen </br>
@@ -47,8 +57,7 @@ const exampleLocations: MapLocation[] = [
                 { icon: <Phone />, label: '9879534957943' },
                 {
                     icon: <Mail />,
-                    label:
-                        '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
+                    label: '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
                 },
                 { icon: <Youtube />, label: '9879534957943' },
             ],
@@ -66,6 +75,16 @@ const exampleLocations: MapLocation[] = [
         id: 'Paris',
         position: [48.864716, 2.349014],
         meta: {
+            structuredData: {
+                address: {
+                    street: 'Example Street 1',
+                    postalCode: '75000',
+                    region: 'Paris',
+                    country: 'FR',
+                },
+                image: ['https://placehold.it/40'],
+                telephone: '+49 176 1234567',
+            },
             title: 'Standort Paris',
             superTitle: 'Standort',
             primaryAction: (isInverted) => (
@@ -141,6 +160,16 @@ const exampleLocations: MapLocation[] = [
                     <ButtonGhost.Label>Kontakt</ButtonGhost.Label>
                 </ButtonGhost.View>
             ),
+            structuredData: {
+                address: {
+                    street: 'Example Street 1',
+                    postalCode: '20095',
+                    region: 'Hamburg',
+                    country: 'DE',
+                },
+                image: ['https://placehold.it/40'],
+                telephone: '+49 176 1234567',
+            },
         },
         icon: {
             size: [20, 28],

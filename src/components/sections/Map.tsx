@@ -13,6 +13,8 @@ import React, { FC, useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { mq, spacings, getColors as color, withRange } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import { JsonLd } from 'react-schemaorg';
+import { LocalBusiness } from 'schema-dts';
 
 const StyledSection = styled(Section)`
     position: relative;
@@ -354,6 +356,16 @@ export interface MapLocation {
         contact?: Array<{ icon?: React.ReactNode; label?: string }> | string;
         primaryAction?: (isInverted?: boolean) => React.ReactNode;
         secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+        structuredData?: {
+            address: {
+                street: string;
+                postalCode: string;
+                region?: string;
+                country: string;
+            };
+            telephone?: string;
+            image: string[];
+        };
     };
 }
 
@@ -416,6 +428,42 @@ const Map: FC<{
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
             bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
         >
+            {locations && (
+                <JsonLd<LocalBusiness>
+                    item={{
+                        '@context': 'https://schema.org',
+                        '@type': 'LocalBusiness',
+                        name: 'LocalBusiness',
+                        geo: locations?.map(({ position }) => {
+                            return {
+                                '@type': 'GeoCoordinates',
+                                name: 'Coordinates',
+                                latitude: position[0],
+                                longitude: position[1],
+                            };
+                        }),
+
+                        address: locations?.map(({ meta, id }) => {
+                            return {
+                                '@type': 'PostalAddress',
+                                streetAddress:
+                                    meta?.structuredData?.address.street,
+                                addressLocality: id,
+                                addressRegion:
+                                    meta?.structuredData?.address.region,
+                                postalCode:
+                                    meta?.structuredData?.address.postalCode,
+                                addressCountry:
+                                    meta?.structuredData?.address.country,
+                            };
+                        }),
+
+                        telephone: locations.map(({ meta }) => {
+                            return `${meta?.structuredData?.telephone}`;
+                        }),
+                    }}
+                />
+            )}
             <Slider.Provider
                 fade={true}
                 swipe={false}
@@ -518,8 +566,7 @@ const Map: FC<{
                                                         controlNext({
                                                             isInverted,
                                                             isActive,
-                                                            name:
-                                                                'control_next_head',
+                                                            name: 'control_next_head',
                                                         })
                                                     ) : (
                                                         <ArrowRightGhost />
@@ -535,8 +582,7 @@ const Map: FC<{
                                                         controlPrev({
                                                             isInverted,
                                                             isActive,
-                                                            name:
-                                                                'control_prev_head',
+                                                            name: 'control_prev_head',
                                                         })
                                                     ) : (
                                                         <ArrowLeftGhost />
