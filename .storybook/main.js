@@ -9,5 +9,6 @@ module.exports = {
             },
         },
         '@etchteam/storybook-addon-status',
+        '@storybook/addon-a11y',
     ],
 };

@@ -5,12 +5,13 @@ import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import { FormProps } from './Textfield';
 
-const View = styled.div`
+const View = styled(Copy)`
+    display: block;
     text-align: left;
 `;
 
-const FieldHead = styled.div`
-    display: flex;
+const FieldHead = styled(Copy)`
+    display: inline-flex;
     flex-direction: row;
     align-items: top;
     justify-content: space-between;
@@ -104,35 +105,30 @@ const Textarea: React.FC<
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <View>
-            <FieldHead>
-                {label && (
-                    <Copy
-                        isInverted={isInverted}
-                        textColor={
-                            isDisabled ? color(theme).mono.dark : undefined
-                        }
-                        size="medium"
-                        type="copy-b"
-                    >
-                        {`${label}${isRequired ? ' *' : ''}`}
-                    </Copy>
-                )}
-            </FieldHead>
-            <Copy type="copy">
-                <Area
-                    value={value}
-                    name={name}
-                    placeholder={placeholder}
-                    hasError={!!errorMessage}
-                    isDisabled={isDisabled}
+        <View renderAs="label">
+            {label && (
+                <FieldHead
+                    renderAs="span"
                     isInverted={isInverted}
-                    required={isRequired}
-                    hasBack={!lightBg}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                />
-            </Copy>
+                    textColor={isDisabled ? color(theme).mono.dark : undefined}
+                    size="medium"
+                    type="copy-b"
+                >
+                    {`${label}${isRequired ? ' *' : ''}`}
+                </FieldHead>
+            )}
+            <Area
+                value={value}
+                name={name}
+                placeholder={placeholder}
+                hasError={!!errorMessage}
+                isDisabled={isDisabled}
+                isInverted={isInverted}
+                required={isRequired}
+                hasBack={!lightBg}
+                onChange={onChange}
+                onBlur={onBlur}
+            />
             {infoMessage && (
                 <InfoMessage textColor={color(theme).mono.dark} size="small">
                     {infoMessage}
