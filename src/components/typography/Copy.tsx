@@ -177,8 +177,10 @@ const View = styled.div<{
     ${({ copyType, size }) => copyStyle(copyType, size)}
 `;
 
+export type CopyTag = 'label' | 'span' | 'div';
+
 const Copy: React.FC<{
-    renderAs?: string;
+    renderAs?: CopyTag;
     isInverted?: boolean;
     textColor?: string;
     textGradient?: string;
@@ -205,7 +207,7 @@ const Copy: React.FC<{
 
     return (
         <View
-            as={renderAs as any}
+            as={renderAs}
             copyType={type}
             size={size}
             textColor={
