@@ -47,10 +47,29 @@ export const isDisabled: Story = () => (
     <FileUpload label="Label" infoMessage="Optionale Info Message" isDisabled />
 );
 
+export const IsInverted: Story = () => (
+    <FileUpload isInverted label="Label" infoMessage="Optionale Info Message" />
+);
+IsInverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};
+
 export const HasError: Story = () => (
     <FileUpload
         label="Label"
         infoMessage="Optionale Info Message"
         errorMessage="Ich bin eine Error Message"
+    />
+);
+
+export const WithCustomButton: Story = () => (
+    <FileUpload
+        label="Label"
+        action={(props) => (
+            <button onClick={props?.clickHandler}>Start upload</button>
+        )}
     />
 );

@@ -1,17 +1,17 @@
+import ButtonGhost from 'components/buttons/ButtonGhost';
 import Copy from 'components/typography/Copy';
 import React, { FC, useEffect, useContext, useState, useRef } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 import { FormProps } from './Textfield';
 
-const View = styled.div`
+const View = styled(Copy)`
+    display: block;
     text-align: left;
 `;
 
-const Label = styled(Copy)``;
-
-const FieldHead = styled.div`
-    display: flex;
+const FieldHead = styled(Copy)`
+    display: inline-flex;
     flex-direction: row;
     align-items: top;
     justify-content: space-between;
@@ -54,10 +54,10 @@ const Original = styled.input`
 `;
 
 const InputView = styled.div<{ isDisabled?: boolean }>`
-    display: block;
+    /* display: block;
     border: 1px solid
         ${({ isDisabled, theme }) =>
-            isDisabled ? color(theme).mono.medium : 'rgba(56, 56, 56, 0.94)'};
+        isDisabled ? color(theme).mono.medium : 'rgba(56, 56, 56, 0.94)'};
     cursor: pointer;
     outline: none;
     width: 100%;
@@ -100,7 +100,7 @@ const InputView = styled.div<{ isDisabled?: boolean }>`
         &::placeholder {
             color: ${({ theme }) => color(theme).dark};
         }
-    }
+    } */
 `;
 
 const File = styled.div`
@@ -175,6 +175,11 @@ const FileUpload: FC<
         addBtnLabel?: string;
         removeBtnLabel?: string;
         acceptedFormats?: string;
+        action?: (props?: {
+            isInverted?: boolean;
+            isDisabled?: boolean;
+            clickHandler?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+        }) => React.ReactNode;
     }
 > = ({
     onUploadFiles,
@@ -188,6 +193,7 @@ const FileUpload: FC<
     addBtnLabel,
     removeBtnLabel,
     acceptedFormats,
+    action,
 }) => {
     const theme = useContext(ThemeContext);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -202,46 +208,49 @@ const FileUpload: FC<
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedFiles]);
 
+    const handleClick = (ev: React.MouseEvent<HTMLButtonElement>) => {
+        ev.preventDefault();
+        fileInputRef.current?.click();
+    };
+
     return (
-        <View>
-            <FieldHead>
-                {label && (
-                    <Label
-                        isInverted={isInverted}
-                        textColor={
-                            isDisabled ? color(theme).mono.medium : undefined
-                        }
-                        size="medium"
-                        type="copy-b"
-                    >
-                        {label}
-                        {isRequired && '*'}
-                    </Label>
-                )}
-            </FieldHead>
+        <View renderAs="label">
+            {label && (
+                <FieldHead
+                    renderAs="span"
+                    isInverted={isInverted}
+                    textColor={isDisabled ? color(theme).mono.dark : undefined}
+                    size="medium"
+                    type="copy-b"
+                >
+                    {`${label}${isRequired ? ' *' : ''}`}
+                </FieldHead>
+            )}
             <FieldWrapper
                 hasError={!!errorMessage}
                 hasBg={hasBg && !isInverted}
             >
                 <FieldMain>
-                    <InputView
-                        onClick={(event: any) => {
-                            event.preventDefault();
-                            fileInputRef.current?.click();
-                        }}
-                        isDisabled={isDisabled}
-                    >
-                        <Copy
-                            textColor={
-                                isDisabled
-                                    ? color(theme).mono.medium
-                                    : undefined
-                            }
-                            size="medium"
-                            type="copy-b"
-                        >
-                            {addBtnLabel || 'Select file'}
-                        </Copy>
+                    <InputView isDisabled={isDisabled}>
+                        {action ? (
+                            action({
+                                isDisabled,
+                                isInverted: false,
+                                clickHandler: handleClick,
+                            })
+                        ) : (
+                            <ButtonGhost.View
+                                as="button"
+                                size="small"
+                                isInverted={false}
+                                isDisabled={isDisabled}
+                                onClick={handleClick}
+                            >
+                                <ButtonGhost.Label>
+                                    {addBtnLabel || 'Select file'}
+                                </ButtonGhost.Label>
+                            </ButtonGhost.View>
+                        )}
                     </InputView>
                     {previews.length > 0 && (
                         <Delete
