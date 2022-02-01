@@ -1,26 +1,27 @@
 import AngleDown from 'components/base/icons/AngleDown';
 import AngleUp from 'components/base/icons/AngleUp';
 import Copy from 'components/typography/Copy';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
 import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, spacings } from 'utils/styles';
 
-const View = styled.div`
-    position: relative;
+const View = styled(Copy)`
+    display: block;
     text-align: left;
 `;
 
-const FieldHead = styled.div`
-    display: flex;
+const FieldHead = styled(Copy)`
+    display: inline-flex;
     flex-direction: row;
-    align-items: center;
+    align-items: top;
+    justify-content: space-between;
     padding-bottom: ${spacings.nudge * 3}px;
     padding-left: ${spacings.nudge}px;
     padding-right: ${spacings.nudge}px;
 `;
 
-const Select = styled.div<{
+const Select = styled.button<{
     hasError?: boolean;
     isActive?: boolean;
     hasBg?: boolean;
@@ -50,7 +51,7 @@ const Select = styled.div<{
     ${({ isActive, theme }) =>
         isActive &&
         css`
-            border: 2px solid ${hexToRgba(color(theme).dark, 0.2)}};
+            border: 2px solid ${hexToRgba(color(theme).dark, 0.2)};
         `}
 
     display: flex;
@@ -118,8 +119,8 @@ const ItemStyle = styled.li`
     position: relative;
 `;
 
-const Item = styled(Copy)<{ isActive?: boolean }>`
-    z-index: 1;
+const Item = styled(Copy)<{ isSelected?: boolean }>`
+    z-index: 0;
 
     ${ItemStyle}:hover & {
         &:before {
@@ -132,11 +133,12 @@ const Item = styled(Copy)<{ isActive?: boolean }>`
             bottom: 0;
             right: 0;
             left: 0;
+            z-index: -1;
         }
     }
 
-    ${({ isActive }) =>
-        isActive &&
+    ${({ isSelected }) =>
+        isSelected &&
         css`
             &:hover {
                 color: ${({ theme }) => color(theme).dark};
@@ -152,14 +154,9 @@ const Item = styled(Copy)<{ isActive?: boolean }>`
                 right: 0;
                 left: 0;
 
-                z-index: 0;
+                z-index: -1;
             }
         `}
-`;
-
-const Text = styled.span`
-    position: relative;
-    z-index: 1;
 `;
 
 const ErrorMessage = styled(Copy)`
@@ -167,10 +164,15 @@ const ErrorMessage = styled(Copy)`
     padding-left: ${spacings.nudge}px;
 `;
 
-const FocusContainer = styled.div`
-    outline: none;
+const Container = styled.div`
     position: relative;
+    outline: none;
 `;
+
+interface SelectItem {
+    value?: string;
+    label?: string;
+}
 
 const SelectDropdown: React.FC<{
     icon?: { src: string; alt?: string };
@@ -178,10 +180,7 @@ const SelectDropdown: React.FC<{
     placeholder?: string;
     name?: string;
     value?: string;
-    items: {
-        value?: string;
-        label?: string;
-    }[];
+    items: SelectItem[];
 
     isDisabled?: boolean;
     errorMessage?: string;
@@ -206,64 +205,96 @@ const SelectDropdown: React.FC<{
     onChange,
     onBlur,
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const initialItemIndex = items?.findIndex((item) => item.value === value);
-    const [isOpen, setIsOpen] = React.useState(false);
-    const [selectedItem, setSelectedItem] = React.useState<
-        | {
-              value?: string;
-              id: number;
-              label?: string;
-          }
-        | undefined
-    >(
-        initialItemIndex !== -1
-            ? { ...items[initialItemIndex], id: initialItemIndex }
-            : undefined
+    const theme = useContext(ThemeContext);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const [activeItemIndex, setActiveItemIndex] = useState<number>(
+        items?.findIndex((item) => item.value === value) || -1
     );
+    const [selectItems, setSelectItems] = useState<SelectItem[]>(items || []);
+    const selectBtnRef = useRef<HTMLButtonElement>(null);
+    const isMounted = useRef<boolean>(false);
+    const itemHasBeenClicked = useRef<boolean>(false);
 
     useEffect(() => {
-        if (onChange && selectedItem) {
-            onChange(selectedItem.value || '');
+        isMounted.current = true;
+    }, []);
+
+    useEffect(() => {
+        const index = items?.findIndex((item) => item.value === value);
+        if (index !== -1) setActiveItemIndex(index);
+
+        setSelectItems(items || []);
+    }, [items, value]);
+
+    useEffect(() => {
+        const newItem = selectItems[activeItemIndex];
+
+        if (newItem && isMounted) {
+            onChange && onChange(newItem.value || '');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedItem]);
+    }, [selectItems, activeItemIndex, value]);
+
+    const activeItem =
+        activeItemIndex >= 0 && activeItemIndex < selectItems.length
+            ? selectItems[activeItemIndex]
+            : undefined;
 
     return (
-        <View>
-            <FieldHead>
-                <Copy
+        <View renderAs="label">
+            {label && (
+                <FieldHead
+                    renderAs="span"
                     isInverted={isInverted}
-                    textColor={
-                        isDisabled ? color(theme).mono.medium : undefined
-                    }
+                    textColor={isDisabled ? color(theme).mono.dark : undefined}
                     size="medium"
                     type="copy-b"
                 >
-                    {label}
-                    {label && label !== ' ' && isRequired && '*'}
-                </Copy>
-            </FieldHead>
-            <FocusContainer
-                tabIndex={0}
-                onBlur={() => {
-                    setIsOpen(false);
-                    onBlur && onBlur();
-                }}
-            >
+                    {`${label}${isRequired ? ' *' : ''}`}
+                </FieldHead>
+            )}
+            <Container>
                 <Select
-                    onClick={() => {
-                        isOpen ? setIsOpen(false) : setIsOpen(true);
-                    }}
+                    ref={selectBtnRef}
+                    aria-label={
+                        activeItem?.label || placeholder || 'Select item'
+                    }
                     isActive={isOpen}
                     hasBg={hasBg && !isInverted}
                     hasError={!!errorMessage}
+                    onClick={() => {
+                        setIsOpen((prev) => !prev);
+                    }}
+                    onBlur={() => {
+                        if (!itemHasBeenClicked.current) {
+                            setIsOpen(false);
+                            onBlur && onBlur();
+                        }
+                    }}
+                    onKeyDown={(ev) => {
+                        if (ev.key === 'ArrowDown') {
+                            ev.preventDefault();
+                            setIsOpen(true);
+
+                            if (isOpen && selectItems[activeItemIndex + 1]) {
+                                setActiveItemIndex((prev) => prev + 1);
+                            }
+                        } else if (ev.key === 'ArrowUp') {
+                            ev.preventDefault();
+                            setIsOpen(true);
+
+                            if (isOpen && selectItems[activeItemIndex - 1]) {
+                                setActiveItemIndex((prev) => prev - 1);
+                            }
+                        }
+                    }}
                 >
                     <SelectMain>
                         {icon?.src && (
                             <Icon src={icon.src} alt={icon.alt || ''} />
                         )}
-                        {(placeholder || selectedItem?.label) && (
+                        {(placeholder || activeItem?.label) && (
                             <Label
                                 textColor={
                                     isDisabled
@@ -273,7 +304,7 @@ const SelectDropdown: React.FC<{
                                 size="medium"
                                 type="copy"
                             >
-                                {selectedItem?.label || placeholder}
+                                {activeItem?.label || placeholder}
                             </Label>
                         )}
                     </SelectMain>
@@ -300,32 +331,42 @@ const SelectDropdown: React.FC<{
                         return (
                             <ItemStyle
                                 key={i}
-                                onClick={() => {
+                                onMouseDown={() => {
+                                    itemHasBeenClicked.current = true;
+                                }}
+                                onClick={(ev) => {
+                                    ev.preventDefault();
+
+                                    // set new item
+                                    setActiveItemIndex(i);
+
+                                    // set focus back to toggle
+                                    selectBtnRef.current?.focus();
+
+                                    // close flyout
                                     setIsOpen(false);
-                                    setSelectedItem({
-                                        ...item,
-                                        id: i,
-                                    });
+                                    itemHasBeenClicked.current = false;
                                 }}
                             >
                                 <Item
-                                    isActive={i === selectedItem?.id}
+                                    renderAs="span"
+                                    isSelected={i === activeItemIndex}
                                     size="small"
                                     textColor={
-                                        i === selectedItem?.id
+                                        i === activeItemIndex
                                             ? color(theme).light
                                             : color(theme).dark
                                     }
                                 >
-                                    <Text>{item.label}</Text>
+                                    {item.label}
                                 </Item>
                             </ItemStyle>
                         );
                     })}
                 </Flyout>
-            </FocusContainer>
-            {selectedItem && (
-                <input type="hidden" name={name} value={selectedItem.value} />
+            </Container>
+            {activeItem && (
+                <input type="hidden" name={name} value={activeItem.value} />
             )}
             {errorMessage && (
                 <ErrorMessage

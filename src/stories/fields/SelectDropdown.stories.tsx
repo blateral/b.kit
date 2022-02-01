@@ -55,6 +55,7 @@ export const Default: Story = () => (
                 value: '5',
             },
         ]}
+        onChange={console.log}
     />
 );
 
@@ -84,6 +85,7 @@ export const WithLabel: Story = () => (
                 value: '5',
             },
         ]}
+        onChange={console.log}
     />
 );
 
@@ -114,6 +116,7 @@ export const WithInitial: Story = () => (
                 value: '5',
             },
         ]}
+        onChange={console.log}
     />
 );
 
@@ -144,6 +147,7 @@ export const AsRequired: Story = () => (
             },
         ]}
         isRequired
+        onChange={console.log}
     />
 );
 
@@ -174,6 +178,7 @@ export const IsDisabled: Story = () => (
             },
         ]}
         isDisabled
+        onChange={console.log}
     />
 );
 
@@ -213,6 +218,7 @@ export const WithIcon: Story = () => (
             },
         ]}
         isRequired
+        onChange={console.log}
     />
 );
 
@@ -244,5 +250,6 @@ export const HasError: Story = () => (
         ]}
         isRequired
         errorMessage="Bitte wählen Sie etwas aus!"
+        onChange={console.log}
     />
 );
