@@ -182,6 +182,44 @@ export const IsDisabled: Story = () => (
     />
 );
 
+export const IsInverted: Story = () => (
+    <SelectDropdown
+        label="Label"
+        placeholder="Prompt Text"
+        items={[
+            {
+                label: 'Item 1',
+                value: '1',
+            },
+            {
+                label: 'Item 2',
+                value: '2',
+            },
+            {
+                label: 'Item 3',
+                value: '3',
+            },
+            {
+                label: 'Item 4',
+                value: '4',
+            },
+            {
+                label: 'Item 5',
+                value: '5',
+            },
+        ]}
+        isInverted
+        onChange={console.log}
+    />
+);
+
+IsInverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};
+
 export const WithIcon: Story = () => (
     <SelectDropdown
         icon={{ src: 'http://placehold.it/25' }}
@@ -250,6 +288,45 @@ export const HasError: Story = () => (
         ]}
         isRequired
         errorMessage="Bitte wählen Sie etwas aus!"
+        onChange={console.log}
+    />
+);
+
+export const WithCustomIndicator: Story = () => (
+    <SelectDropdown
+        label="Label"
+        placeholder="Prompt Text"
+        items={[
+            {
+                label: 'Item 1',
+                value: '1',
+            },
+            {
+                label: 'Item 2',
+                value: '2',
+            },
+            {
+                label: 'Item 3',
+                value: '3',
+            },
+            {
+                label: 'Item 4',
+                value: '4',
+            },
+            {
+                label: 'Item 5',
+                value: '5',
+            },
+            {
+                label: 'Item 6',
+                value: '6',
+            },
+            {
+                label: 'Item 7',
+                value: '7',
+            },
+        ]}
+        indicator={({ isOpen }) => <div>{isOpen ? 'close' : 'open'}</div>}
         onChange={console.log}
     />
 );

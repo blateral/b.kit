@@ -212,6 +212,10 @@ const SelectDropdown: React.FC<{
 
     onChange?: (value: string) => void;
     onBlur?: () => void;
+    indicator?: (props: {
+        isOpen: boolean;
+        isDisabled?: boolean;
+    }) => React.ReactNode;
 }> = ({
     label,
     items,
@@ -226,6 +230,7 @@ const SelectDropdown: React.FC<{
     icon,
     onChange,
     onBlur,
+    indicator,
 }) => {
     const theme = useContext(ThemeContext);
     const [isOpen, setIsOpen] = useState(false);
@@ -330,23 +335,25 @@ const SelectDropdown: React.FC<{
                             </Label>
                         )}
                     </SelectMain>
-                    {isOpen ? (
-                        <AngleUp
-                            iconColor={
-                                isDisabled
-                                    ? color(theme).mono.medium
-                                    : color(theme).dark
-                            }
-                        />
-                    ) : (
-                        <AngleDown
-                            iconColor={
-                                isDisabled
-                                    ? color(theme).mono.medium
-                                    : color(theme).dark
-                            }
-                        />
-                    )}
+                    {indicator && indicator({ isOpen, isDisabled })}
+                    {!indicator &&
+                        (isOpen ? (
+                            <AngleUp
+                                iconColor={
+                                    isDisabled
+                                        ? color(theme).mono.medium
+                                        : color(theme).dark
+                                }
+                            />
+                        ) : (
+                            <AngleDown
+                                iconColor={
+                                    isDisabled
+                                        ? color(theme).mono.medium
+                                        : color(theme).dark
+                                }
+                            />
+                        ))}
                 </Select>
                 <Flyout isVisible={isOpen}>
                     {items.map((item, i) => {
