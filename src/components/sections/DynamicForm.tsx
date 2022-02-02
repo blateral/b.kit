@@ -884,7 +884,12 @@ const generateRadioGroup = ({
         <div key={key}>
             <FieldHead>
                 {key && (
-                    <Copy type="copy-b" size="medium" isInverted={isInverted}>
+                    <Copy
+                        renderAs="span"
+                        type="copy-b"
+                        size="medium"
+                        isInverted={isInverted}
+                    >
                         {`${key}${field.isRequired ? '*' : ''}`}
                     </Copy>
                 )}
