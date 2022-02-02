@@ -4,7 +4,11 @@ import Copy from 'components/typography/Copy';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
 import { hexToRgba } from 'utils/hexRgbConverter';
-import { getColors as color, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    spacings,
+    getGlobalSettings as global,
+} from 'utils/styles';
 
 const View = styled(Copy)`
     display: block;
@@ -28,6 +32,15 @@ const Select = styled.button<{
 }>`
     border: ${({ hasError, theme }) =>
         hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    border-radius: ${({ isActive, theme }) => {
+        const edgeRadius = global(theme).sections.edgeRadius;
+        const topLeft = edgeRadius;
+        const topRight = edgeRadius;
+        const bottomRight = isActive ? '0px' : edgeRadius;
+        const bottomLeft = isActive ? '0px' : edgeRadius;
+
+        return `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
+    }};
     background: ${({ theme, hasBg }) =>
         hasBg ? color(theme).mono.light : color(theme).light};
     outline: none;
@@ -93,6 +106,15 @@ const Flyout = styled.ul<{ isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
     background: ${({ theme }) => color(theme).light};
     border: 2px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.2)};
+    border-radius: ${({ isVisible, theme }) => {
+        const edgeRadius = global(theme).sections.edgeRadius;
+        const topLeft = isVisible ? '0px' : edgeRadius;
+        const topRight = isVisible ? '0px' : edgeRadius;
+        const bottomRight = edgeRadius;
+        const bottomLeft = edgeRadius;
+
+        return `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
+    }};
     border-top: none;
 
     max-height: 300px;

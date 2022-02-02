@@ -2,7 +2,12 @@ import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { hexToRgba } from 'utils/hexRgbConverter';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    mq,
+    spacings,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import { FormProps } from './Textfield';
 
 const View = styled(Copy)`
@@ -48,6 +53,7 @@ const Area = styled.textarea<{
 
     border: ${({ hasError, theme }) =>
         hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     background-color: ${({ isInverted, hasBack, theme }) =>
         isInverted || !hasBack ? color(theme).light : color(theme).mono.light};
 

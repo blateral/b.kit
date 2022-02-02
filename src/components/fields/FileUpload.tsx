@@ -2,7 +2,11 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 import Copy from 'components/typography/Copy';
 import React, { FC, useEffect, useContext, useState, useRef } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { getColors as color, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    spacings,
+    getGlobalSettings as global,
+} from 'utils/styles';
 import { FormProps } from './Textfield';
 
 const View = styled(Copy)`
@@ -23,6 +27,7 @@ const FieldHead = styled(Copy)`
 const FieldWrapper = styled.div<{ hasError?: boolean; hasBg?: boolean }>`
     border: ${({ hasError, theme }) =>
         hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     background: ${({ theme, hasBg }) =>
         hasBg ? color(theme).mono.light : color(theme).light};
     padding: ${spacings.nudge * 3}px;

@@ -2,7 +2,11 @@ import Copy from 'components/typography/Copy';
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { hexToRgba } from 'utils/hexRgbConverter';
-import { getColors as color, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    spacings,
+    getGlobalSettings as global,
+} from 'utils/styles';
 
 const View = styled(Copy)`
     display: block;
@@ -38,6 +42,7 @@ const Field = styled.input<{
     padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
     border: ${({ hasError, theme }) =>
         hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     background-color: ${({ isInverted, hasBack, theme }) =>
         isInverted || !hasBack ? color(theme).light : color(theme).mono.light};
 
