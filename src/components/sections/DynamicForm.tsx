@@ -776,8 +776,19 @@ const DynamicForm: FC<{
     );
 };
 
-const FieldHead = styled.div`
-    display: flex;
+const FieldSet = styled.fieldset`
+    display: block;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+`;
+
+const FieldHead = styled(Copy)`
+    display: inline-flex;
     flex-direction: row;
     align-items: top;
     justify-content: space-between;
@@ -817,14 +828,12 @@ const generateCheckboxGroup = ({
     const groupData = value as string[];
 
     return (
-        <div key={key}>
-            <FieldHead>
-                {key && (
-                    <Copy type="copy-b" size="medium">
-                        {`${key}${field.isRequired ? '*' : ''}`}
-                    </Copy>
-                )}
-            </FieldHead>
+        <FieldSet key={key}>
+            {key && (
+                <FieldHead renderAs="legend" type="copy-b" size="medium">
+                    {`${key}${field.isRequired ? '*' : ''}`}
+                </FieldHead>
+            )}
             <Fields>
                 {group?.fields?.map((field, ci) => (
                     <Checkbox
@@ -862,7 +871,7 @@ const generateCheckboxGroup = ({
                     {error}
                 </ErrorMessage>
             )}
-        </div>
+        </FieldSet>
     );
 };
 
@@ -881,19 +890,12 @@ const generateRadioGroup = ({
     const groupData = value as string;
 
     return (
-        <div key={key}>
-            <FieldHead>
-                {key && (
-                    <Copy
-                        renderAs="span"
-                        type="copy-b"
-                        size="medium"
-                        isInverted={isInverted}
-                    >
-                        {`${key}${field.isRequired ? '*' : ''}`}
-                    </Copy>
-                )}
-            </FieldHead>
+        <FieldSet key={key}>
+            {key && (
+                <FieldHead renderAs="legend" type="copy-b" size="medium">
+                    {`${key}${field.isRequired ? '*' : ''}`}
+                </FieldHead>
+            )}
             <Fields>
                 {group?.fields?.map((field, fi) => (
                     <RadioButton
@@ -919,7 +921,7 @@ const generateRadioGroup = ({
                     {error}
                 </ErrorMessage>
             )}
-        </div>
+        </FieldSet>
     );
 };
 
