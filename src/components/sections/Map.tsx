@@ -13,8 +13,18 @@ import React, { FC, useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { mq, spacings, getColors as color, withRange } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
-import { JsonLd } from 'react-schemaorg';
-import { LocalBusiness } from 'schema-dts';
+import Phone from 'components/base/icons/Phone';
+import Mail from 'components/base/icons/Mail';
+import Route from 'components/base/icons/Route';
+import Title from 'components/blocks/Title';
+import { generateLocalBusiness } from 'utils/structuredData';
+
+interface Address {
+    street: string;
+    postalCode: string;
+    city?: string;
+    country: string;
+}
 
 const StyledSection = styled(Section)`
     position: relative;
@@ -177,48 +187,141 @@ const ContactListLabel = styled(Copy)`
     }
 `;
 
+const CompanyInfo: FC<{
+    isInverted?: boolean;
+    companyName: string;
+    address?: Address;
+    superTitle?: string;
+}> = ({ isInverted, companyName, address, superTitle }) => {
+    return (
+        <div>
+            <Title
+                superTitle={superTitle}
+                title={companyName}
+                colorMode={isInverted ? 'inverted' : 'default'}
+            />
+            {address && (
+                <div>
+                    <Title
+                        title={address.street}
+                        colorMode={isInverted ? 'inverted' : 'default'}
+                    />
+                    <Title
+                        title={`${address.postalCode} ${address.city}`}
+                        colorMode={isInverted ? 'inverted' : 'default'}
+                    />
+                    <Title
+                        title={address.country}
+                        colorMode={isInverted ? 'inverted' : 'default'}
+                    />
+                </div>
+            )}
+        </div>
+    );
+};
+
 const LocationInfoCard: FC<{
     isInverted?: boolean;
     location: MapLocation;
 }> = ({ isInverted, location }) => {
     return (
         <InfoCardView>
+            {location.meta?.companyName && (
+                <CompanyInfo
+                    superTitle={location.meta?.superTitle}
+                    isInverted={isInverted}
+                    address={location.address}
+                    companyName={location.meta?.companyName}
+                />
+            )}
             {location.meta?.title && (
                 <CardHeader>
                     <IntroBlock
                         colorMode={isInverted ? 'inverted' : 'default'}
                         title={location.meta.title}
                         titleAs={location.meta.titleAs}
-                        superTitle={location.meta?.superTitle}
+                        superTitle={
+                            (!location.meta?.companyName &&
+                                location.meta?.superTitle) ||
+                            ''
+                        }
                         superTitleAs={location.meta?.superTitleAs}
                     />
                 </CardHeader>
             )}
+            {location.contactData && (
+                <ContactList isInverted={isInverted}>
+                    {location.contactData?.telephone && (
+                        <li>
+                            <span>
+                                {location?.contactData?.telephone.icon || (
+                                    <Phone />
+                                )}
+                            </span>
+                            <ContactListLabel
+                                isInverted={isInverted}
+                                type="copy-b"
+                                size="big"
+                            >
+                                <a
+                                    href={`tel:${
+                                        location?.contactData.telephone.link ||
+                                        location?.contactData.telephone.label
+                                    }`}
+                                >
+                                    {location?.contactData.telephone?.label}
+                                </a>
+                            </ContactListLabel>
+                        </li>
+                    )}
+                    {location.contactData.email && (
+                        <li>
+                            <span>
+                                {location?.contactData?.email.icon || <Mail />}
+                            </span>
+                            <ContactListLabel
+                                isInverted={isInverted}
+                                type="copy-b"
+                                size="big"
+                            >
+                                <a
+                                    href={`mailto:${
+                                        location?.contactData?.email.link ||
+                                        location.contactData.email.label
+                                    }`}
+                                >
+                                    {location?.contactData?.email.label}
+                                </a>
+                            </ContactListLabel>
+                        </li>
+                    )}
+                    {location.contactData.route && (
+                        <li>
+                            <span>
+                                {location?.contactData?.route.icon || <Route />}
+                            </span>
+                            <ContactListLabel
+                                isInverted={isInverted}
+                                type="copy-b"
+                                size="big"
+                            >
+                                <a
+                                    href={`mailto:${location?.contactData?.route.link}`}
+                                >
+                                    {location?.contactData?.route.label}
+                                </a>
+                            </ContactListLabel>
+                        </li>
+                    )}
+                </ContactList>
+            )}
             {location.meta?.contact ? (
-                Array.isArray(location.meta?.contact) &&
-                location.meta.contact.length > 0 ? (
-                    <ContactList isInverted={isInverted}>
-                        {location.meta?.contact
-                            ?.filter((c) => c.label)
-                            .map((contact, i) => (
-                                <li key={i}>
-                                    <span>{contact?.icon}</span>
-                                    <ContactListLabel
-                                        type="copy-b"
-                                        size="big"
-                                        isInverted={isInverted}
-                                        innerHTML={contact?.label}
-                                    />
-                                </li>
-                            ))}
-                    </ContactList>
-                ) : (
-                    <Copy
-                        type="copy"
-                        size="medium"
-                        innerHTML={location.meta?.contact as string}
-                    />
-                )
+                <Copy
+                    type="copy"
+                    size="medium"
+                    innerHTML={location.meta?.contact as string}
+                    isInverted={isInverted}
+                />
             ) : (
                 ''
             )}
@@ -349,23 +452,26 @@ export interface MapLocation {
     position: [number, number];
     icon?: LocationIcon;
     meta?: {
-        title?: string;
-        titleAs?: HeadlineTag;
         superTitle?: string;
         superTitleAs?: HeadlineTag;
-        contact?: Array<{ icon?: React.ReactNode; label?: string }> | string;
+
+        titleAs?: HeadlineTag;
+        title?: string; // Rich Text
+        contact?: string; // Rich Text
+
         primaryAction?: (isInverted?: boolean) => React.ReactNode;
         secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-        structuredData?: {
-            address: {
-                street: string;
-                postalCode: string;
-                region?: string;
-                country: string;
-            };
-            telephone?: string;
-            image: string[];
-        };
+
+        companyName?: string;
+        image?: string[];
+    };
+
+    address?: Address;
+
+    contactData?: {
+        telephone?: { link?: string; label?: string; icon?: string };
+        email?: { link?: string; label?: string; icon?: string };
+        route?: { link?: string; label?: string; icon?: string };
     };
 }
 
@@ -428,42 +534,7 @@ const Map: FC<{
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
             bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
         >
-            {locations && (
-                <JsonLd<LocalBusiness>
-                    item={{
-                        '@context': 'https://schema.org',
-                        '@type': 'LocalBusiness',
-                        name: 'LocalBusiness',
-                        geo: locations?.map(({ position }) => {
-                            return {
-                                '@type': 'GeoCoordinates',
-                                name: 'Coordinates',
-                                latitude: position[0],
-                                longitude: position[1],
-                            };
-                        }),
-
-                        address: locations?.map(({ meta, id }) => {
-                            return {
-                                '@type': 'PostalAddress',
-                                streetAddress:
-                                    meta?.structuredData?.address.street,
-                                addressLocality: id,
-                                addressRegion:
-                                    meta?.structuredData?.address.region,
-                                postalCode:
-                                    meta?.structuredData?.address.postalCode,
-                                addressCountry:
-                                    meta?.structuredData?.address.country,
-                            };
-                        }),
-
-                        telephone: locations.map(({ meta }) => {
-                            return `${meta?.structuredData?.telephone}`;
-                        }),
-                    }}
-                />
-            )}
+            {locations && generateLocalBusiness(locations)}
             <Slider.Provider
                 fade={true}
                 swipe={false}

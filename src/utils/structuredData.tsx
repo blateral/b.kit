@@ -4,14 +4,14 @@ import { MapLocation } from 'components/sections/Map';
 import { FAQPage, LocalBusiness } from 'schema-dts';
 
 export const generateLocalBusiness = (locations: MapLocation[]) => {
-    return locations?.map(({ meta, position }, i) => {
+    return locations?.map(({ meta, position, address, contactData }, i) => {
         return (
             <JsonLd<LocalBusiness>
                 key={i}
                 item={{
                     '@context': 'https://schema.org',
                     '@type': 'LocalBusiness',
-                    name: meta?.name,
+                    name: meta?.companyName,
 
                     geo: {
                         '@type': 'GeoCoordinates',
@@ -22,18 +22,18 @@ export const generateLocalBusiness = (locations: MapLocation[]) => {
 
                     address: {
                         '@type': 'PostalAddress',
-                        streetAddress: meta?.address?.street,
-                        addressLocality: meta?.address?.city,
-                        addressRegion: meta?.address?.city,
-                        postalCode: meta?.address?.postalCode,
-                        addressCountry: meta?.address?.country,
+                        streetAddress: address?.street,
+                        addressLocality: address?.city,
+                        addressRegion: address?.city,
+                        postalCode: address?.postalCode,
+                        addressCountry: address?.country,
                     },
 
                     image: meta?.image,
 
-                    telephone: `${meta?.telephone}`,
+                    telephone: `${contactData?.telephone?.label}`,
 
-                    email: `${meta?.email}`,
+                    email: `${contactData?.email?.label}`,
                 }}
             />
         );
