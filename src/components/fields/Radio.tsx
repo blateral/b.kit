@@ -72,6 +72,7 @@ const StyledRadioButton = styled.span<{
 const Label = styled(Copy)`
     padding-top: 2px;
     text-align: left;
+    user-select: none;
 
     & > * {
         margin: 0;
@@ -118,6 +119,7 @@ const RadioButton: React.FC<{
             </RadioContainer>
             {label && (
                 <Label
+                    renderAs="span"
                     size="small"
                     type="copy-b"
                     textColor={

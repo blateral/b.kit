@@ -839,12 +839,14 @@ const generateCheckboxGroup = ({
                     <Checkbox
                         key={ci}
                         isInverted={isInverted}
-                        onClick={() => {
+                        onChange={(ev) => {
+                            const value = ev.currentTarget.value;
+
                             // add key to form data array if not exists. Otherwise remove it
-                            if (field.text) {
-                                const cIndex = groupData.indexOf(field.text);
+                            if (value) {
+                                const cIndex = groupData.indexOf(value);
                                 if (cIndex === -1) {
-                                    groupData.push(field.text);
+                                    groupData.push(value);
                                 } else {
                                     groupData.splice(cIndex, 1);
                                 }
@@ -854,7 +856,6 @@ const generateCheckboxGroup = ({
                                 validateField(key);
                             }
                         }}
-                        onChange={() => ''}
                         isSelected={
                             field.text
                                 ? groupData.indexOf(field.text) !== -1
