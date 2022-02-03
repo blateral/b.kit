@@ -64,3 +64,14 @@ export const WithCustomButtons: Story = () => (
         prevCtrlUrl="/images/Arrow-Left.svg"
     />
 );
+
+export const WithCustomIndicator: Story = () => (
+    <Datepicker
+        icon={{ src: 'http://placehold.it/50' }}
+        label="Label"
+        placeholder="Prompt Text"
+        indicator={({ isOpen }) => <div>{isOpen ? 'close' : 'open'}</div>}
+        nextCtrlUrl="/images/Arrow-Right.svg"
+        prevCtrlUrl="/images/Arrow-Left.svg"
+    />
+);

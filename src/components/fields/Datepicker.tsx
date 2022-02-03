@@ -48,7 +48,8 @@ const PickerView = styled.div`
     .react-datepicker {
         font-family: 'Roboto', sans-serif;
         border: 1px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.2)} !important;
-        border-radius: 0 !important;
+        border-radius: ${({ theme }) =>
+            global(theme).sections.edgeRadius} !important;
         padding: ${spacings.spacer}px;
         width: 100%;
 
@@ -258,6 +259,7 @@ const DatepickerButton = styled.button<{
         hasBg ? color(theme).mono.light : color(theme).light};
     border: ${({ hasError, theme }) =>
         hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     outline: none;
     padding: ${spacings.spacer}px ${spacings.nudge * 3}px;
     width: 100%;
@@ -356,6 +358,10 @@ interface PickerBtnProps {
     hasBg?: boolean;
     isInverted?: boolean;
     dateFormat?: string;
+    indicator?: (props: {
+        isOpen?: boolean;
+        isDisabled?: boolean;
+    }) => React.ReactNode;
 }
 
 const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
@@ -374,6 +380,7 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
             setFocused,
             onClick,
             dateFormat = 'dd.MM.yyyy',
+            indicator,
         },
         ref
     ) => {
@@ -403,7 +410,7 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                     className="myPickerButton"
                 >
                     <DatepickerButtonMain>
-                        {icon && <Icon src={icon.src} alt={icon.alt} />}
+                        {icon && <Icon src={icon.src} alt={icon.alt || ''} />}
 
                         <Copy type="copy">
                             {startDate
@@ -415,11 +422,13 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                                 : altText}
                         </Copy>
                     </DatepickerButtonMain>
-                    {isFocused ? (
-                        <AngleUp iconColor={color(theme).dark} />
-                    ) : (
-                        <AngleDown iconColor={color(theme).dark} />
-                    )}
+                    {indicator && indicator({ isOpen: isFocused })}
+                    {!indicator &&
+                        (isFocused ? (
+                            <AngleUp iconColor={color(theme).dark} />
+                        ) : (
+                            <AngleDown iconColor={color(theme).dark} />
+                        ))}
                 </DatepickerButton>
                 {name && (
                     <>
@@ -556,6 +565,10 @@ const Datepicker: React.FC<{
             e: React.SyntheticEvent<HTMLButtonElement, Event>
         ) => void
     ) => React.ReactNode;
+    indicator?: (props: {
+        isOpen?: boolean;
+        isDisabled?: boolean;
+    }) => React.ReactNode;
     nextCtrlUrl?: React.ReactNode;
     prevCtrlUrl?: React.ReactNode;
 
@@ -581,6 +594,7 @@ const Datepicker: React.FC<{
     onSubmit,
     deleteAction,
     submitAction,
+    indicator,
     nextCtrlUrl,
     prevCtrlUrl,
 }) => {
@@ -719,6 +733,7 @@ const Datepicker: React.FC<{
                         isInverted={isInverted}
                         hasBg={hasBg}
                         dateFormat={dateFormat}
+                        indicator={indicator}
                     />
                 }
                 showPopperArrow
