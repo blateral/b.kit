@@ -776,8 +776,19 @@ const DynamicForm: FC<{
     );
 };
 
-const FieldHead = styled.div`
-    display: flex;
+const FieldSet = styled.fieldset`
+    display: block;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+`;
+
+const FieldHead = styled(Copy)`
+    display: inline-flex;
     flex-direction: row;
     align-items: top;
     justify-content: space-between;
@@ -817,25 +828,25 @@ const generateCheckboxGroup = ({
     const groupData = value as string[];
 
     return (
-        <div key={key}>
-            <FieldHead>
-                {key && (
-                    <Copy type="copy-b" size="medium">
-                        {`${key}${field.isRequired ? '*' : ''}`}
-                    </Copy>
-                )}
-            </FieldHead>
+        <FieldSet key={key}>
+            {key && (
+                <FieldHead renderAs="legend" type="copy-b" size="medium">
+                    {`${key}${field.isRequired ? '*' : ''}`}
+                </FieldHead>
+            )}
             <Fields>
                 {group?.fields?.map((field, ci) => (
                     <Checkbox
                         key={ci}
                         isInverted={isInverted}
-                        onClick={() => {
+                        onChange={(ev) => {
+                            const value = ev.currentTarget.value;
+
                             // add key to form data array if not exists. Otherwise remove it
-                            if (field.text) {
-                                const cIndex = groupData.indexOf(field.text);
+                            if (value) {
+                                const cIndex = groupData.indexOf(value);
                                 if (cIndex === -1) {
-                                    groupData.push(field.text);
+                                    groupData.push(value);
                                 } else {
                                     groupData.splice(cIndex, 1);
                                 }
@@ -845,7 +856,6 @@ const generateCheckboxGroup = ({
                                 validateField(key);
                             }
                         }}
-                        onChange={() => ''}
                         isSelected={
                             field.text
                                 ? groupData.indexOf(field.text) !== -1
@@ -862,7 +872,7 @@ const generateCheckboxGroup = ({
                     {error}
                 </ErrorMessage>
             )}
-        </div>
+        </FieldSet>
     );
 };
 
@@ -881,14 +891,12 @@ const generateRadioGroup = ({
     const groupData = value as string;
 
     return (
-        <div key={key}>
-            <FieldHead>
-                {key && (
-                    <Copy type="copy-b" size="medium" isInverted={isInverted}>
-                        {`${key}${field.isRequired ? '*' : ''}`}
-                    </Copy>
-                )}
-            </FieldHead>
+        <FieldSet key={key}>
+            {key && (
+                <FieldHead renderAs="legend" type="copy-b" size="medium">
+                    {`${key}${field.isRequired ? '*' : ''}`}
+                </FieldHead>
+            )}
             <Fields>
                 {group?.fields?.map((field, fi) => (
                     <RadioButton
@@ -914,7 +922,7 @@ const generateRadioGroup = ({
                     {error}
                 </ErrorMessage>
             )}
-        </div>
+        </FieldSet>
     );
 };
 

@@ -167,17 +167,20 @@ const base = css<{
 `;
 
 const View = styled.div<{
-    type: CopyType;
+    copyType: CopyType;
     size: FontOptionType;
     textColor?: string;
     textGradient?: string;
     columns?: boolean;
 }>`
     ${base}
-    ${({ type, size }) => copyStyle(type, size)}
+    ${({ copyType, size }) => copyStyle(copyType, size)}
 `;
 
+export type CopyTag = 'label' | 'span' | 'div' | 'legend';
+
 const Copy: React.FC<{
+    renderAs?: CopyTag;
     isInverted?: boolean;
     textColor?: string;
     textGradient?: string;
@@ -187,6 +190,7 @@ const Copy: React.FC<{
     innerHTML?: string;
     className?: string;
 }> = ({
+    renderAs,
     isInverted,
     type = 'copy',
     size = 'medium',
@@ -203,7 +207,8 @@ const Copy: React.FC<{
 
     return (
         <View
-            type={type}
+            as={renderAs}
+            copyType={type}
             size={size}
             textColor={
                 textColor ||

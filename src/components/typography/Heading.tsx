@@ -72,9 +72,9 @@ const View = styled.h1<{
     hasShadow?: boolean;
     textColor?: string;
     textGradient?: string;
-    type: HeadingType;
+    headingType: HeadingType;
 }>`
-    ${({ type }) => headingStyle(type)}
+    ${({ headingType }) => headingStyle(headingType)}
 `;
 
 export type HeadlineTag =
@@ -139,7 +139,7 @@ const Heading: React.FC<{
     return (
         <View
             as={renderAs || tag}
-            type={size}
+            headingType={size}
             textColor={
                 textColor ||
                 (isInverted ? fontSettings.colorInverted : fontSettings.color)

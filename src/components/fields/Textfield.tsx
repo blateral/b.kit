@@ -2,14 +2,19 @@ import Copy from 'components/typography/Copy';
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { hexToRgba } from 'utils/hexRgbConverter';
-import { getColors as color, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    spacings,
+    getGlobalSettings as global,
+} from 'utils/styles';
 
-const View = styled.div`
+const View = styled(Copy)`
+    display: block;
     text-align: left;
 `;
 
-const FieldHead = styled.div`
-    display: flex;
+const FieldHead = styled(Copy)`
+    display: inline-flex;
     flex-direction: row;
     align-items: top;
     justify-content: space-between;
@@ -37,6 +42,7 @@ const Field = styled.input<{
     padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
     border: ${({ hasError, theme }) =>
         hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     background-color: ${({ isInverted, hasBack, theme }) =>
         isInverted || !hasBack ? color(theme).light : color(theme).mono.light};
 
@@ -111,36 +117,31 @@ const Textfield: React.FC<
     const theme = useContext(ThemeContext);
 
     return (
-        <View>
-            <FieldHead>
-                {label && (
-                    <Copy
-                        isInverted={isInverted}
-                        textColor={
-                            isDisabled ? color(theme).mono.dark : undefined
-                        }
-                        size="medium"
-                        type="copy-b"
-                    >
-                        {`${label}${isRequired ? ' *' : ''}`}
-                    </Copy>
-                )}
-            </FieldHead>
-            <Copy type="copy">
-                <Field
-                    hasBack={!lightBg}
-                    placeholder={placeholder}
-                    hasError={!!errorMessage}
-                    type={type}
+        <View renderAs="label">
+            {label && (
+                <FieldHead
+                    renderAs="span"
                     isInverted={isInverted}
-                    isDisabled={isDisabled}
-                    name={name}
-                    value={value}
-                    required={isRequired}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                />
-            </Copy>
+                    textColor={isDisabled ? color(theme).mono.dark : undefined}
+                    size="medium"
+                    type="copy-b"
+                >
+                    {`${label}${isRequired ? ' *' : ''}`}
+                </FieldHead>
+            )}
+            <Field
+                hasBack={!lightBg}
+                placeholder={placeholder}
+                hasError={!!errorMessage}
+                type={type}
+                isInverted={isInverted}
+                isDisabled={isDisabled}
+                name={name}
+                value={value}
+                required={isRequired}
+                onChange={onChange}
+                onBlur={onBlur}
+            />
             {infoMessage && (
                 <InfoMessage textColor={color(theme).mono.dark} size="small">
                     {infoMessage}

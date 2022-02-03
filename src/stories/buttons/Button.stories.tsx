@@ -35,6 +35,12 @@ export const Default: Story = () => (
     </Button.View>
 );
 
+export const Small: Story = () => (
+    <Button.View as="button" size="small" onClick={console.log}>
+        <Button.Label>Primary</Button.Label>
+    </Button.View>
+);
+
 export const Link: Story = () => (
     <Button.View as="a" href="#" onClick={console.log}>
         <Button.Label>Primary</Button.Label>
