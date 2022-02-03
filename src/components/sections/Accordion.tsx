@@ -7,8 +7,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color, mq } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { withLibTheme } from 'utils/LibThemeProvider';
-import { JsonLd } from 'react-schemaorg';
-import { FAQPage } from 'schema-dts';
+import { generateFAQ } from 'utils/structuredData';
 
 const AccordionBlock = styled.ul`
     margin: 0;
@@ -120,22 +119,7 @@ const Accordion: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            <JsonLd<FAQPage>
-                item={{
-                    '@context': 'https://schema.org',
-                    '@type': 'FAQPage',
-                    mainEntity: items.map(({ label, text }) => {
-                        return {
-                            '@type': 'Question',
-                            name: label,
-                            acceptedAnswer: {
-                                '@type': 'Answer',
-                                text: text,
-                            },
-                        };
-                    }),
-                }}
-            />
+            {generateFAQ(items)}
             <Wrapper addWhitespace>
                 {items &&
                     items.map(({ label, text, aside, hasColumns }, i) => {

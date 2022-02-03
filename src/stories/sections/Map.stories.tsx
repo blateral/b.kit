@@ -6,9 +6,6 @@ import Map, { MapLocation, MapComponent } from 'components/sections/Map';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 import FlyTo from 'components/base/icons/FlyTo';
-import Phone from 'components/base/icons/Phone';
-import Mail from 'components/base/icons/Mail';
-import Youtube from 'components/base/icons/socials/Youtube';
 import ArrowRight from 'components/base/icons/ArrowRight';
 
 import marker from '../../../public/images/Marker.svg';
@@ -26,23 +23,27 @@ export default {
 const exampleLocations: MapLocation[] = [
     {
         id: 'Sipplingen',
+        address: {
+            street: 'Example Street 1',
+            postalCode: '78354',
+            city: 'Sipplingen',
+            country: 'DE',
+        },
+        contactData: {
+            telephone: { label: '+49 176 1234567' },
+            email: { label: 'example@email.com' },
+        },
         meta: {
-            structuredData: {
-                address: {
-                    street: 'Example Street 1',
-                    postalCode: '78354',
-                    region: 'Baden-Württemberg',
-                    country: 'DE',
-                },
-                image: ['https://placehold.it/40'],
-                telephone: '+49 176 1234567',
-            },
-            title: `b.lateral GmbH & Co. KG </br>
-                Lenzensteig 3 </br>
-                78354 Sipplingen </br>
-                am Bodensee </br>
-                Deutschland`,
-            superTitle: 'Anfahrt und Kontakt',
+            image: ['https://placehold.it/40'],
+
+            companyName: 'b.lateral GmbH & Co. KG',
+            // title: `b.lateral GmbH & Co. KG </br>
+            //     Lenzensteig 3 </br>
+            //     78354 Sipplingen </br>
+            //     am Bodensee </br>
+            //     Deutschland`,
+            // superTitle: 'Anfahrt und Kontakt',
+            title: `Rich Text`,
             primaryAction: (isInverted) => (
                 <Button.View isInverted={isInverted}>
                     <Button.Label>Primär</Button.Label>
@@ -53,14 +54,14 @@ const exampleLocations: MapLocation[] = [
                     <ButtonGhost.Label>Sekundär</ButtonGhost.Label>
                 </ButtonGhost.View>
             ),
-            contact: [
-                { icon: <Phone />, label: '9879534957943' },
-                {
-                    icon: <Mail />,
-                    label: '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
-                },
-                { icon: <Youtube />, label: '9879534957943' },
-            ],
+            // contact: [
+            //     { icon: <Phone />, label: '9879534957943' },
+            //     {
+            //         icon: <Mail />,
+            //         label: '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
+            //     },
+            //     { icon: <Youtube />, label: '9879534957943' },
+            // ],
         },
         position: [47.79678, 9.09737],
         icon: {
@@ -74,18 +75,19 @@ const exampleLocations: MapLocation[] = [
     {
         id: 'Paris',
         position: [48.864716, 2.349014],
+        address: {
+            street: 'Example Street 1',
+            postalCode: '75000',
+            city: 'Paris',
+            country: 'FR',
+        },
+        contactData: {
+            telephone: { label: '+49 176 1234567' },
+        },
         meta: {
-            structuredData: {
-                address: {
-                    street: 'Example Street 1',
-                    postalCode: '75000',
-                    region: 'Paris',
-                    country: 'FR',
-                },
-                image: ['https://placehold.it/40'],
-                telephone: '+49 176 1234567',
-            },
+            image: ['https://placehold.it/40'],
             title: 'Standort Paris',
+            companyName: 'Standort Paris',
             superTitle: 'Standort',
             primaryAction: (isInverted) => (
                 <Button.View isInverted={isInverted}>
@@ -97,14 +99,6 @@ const exampleLocations: MapLocation[] = [
                     <ButtonGhost.Label>Contact</ButtonGhost.Label>
                 </ButtonGhost.View>
             ),
-            // contact: [
-            //     { icon: <Phone />, label: '9879534957943' },
-            //     {
-            //         icon: <Mail />,
-            //         label:
-            //             '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
-            //     },
-            // ],
             contact: `
                 <p class="icon-label icon-label--list">
                     <svg
@@ -160,16 +154,19 @@ const exampleLocations: MapLocation[] = [
                     <ButtonGhost.Label>Kontakt</ButtonGhost.Label>
                 </ButtonGhost.View>
             ),
-            structuredData: {
-                address: {
-                    street: 'Example Street 1',
-                    postalCode: '20095',
-                    region: 'Hamburg',
-                    country: 'DE',
-                },
-                image: ['https://placehold.it/40'],
-                telephone: '+49 176 1234567',
-            },
+
+            image: ['https://placehold.it/40'],
+
+            companyName: 'Sitz Hamburg',
+        },
+        address: {
+            street: 'Example Street 1',
+            postalCode: '20095',
+            city: 'Hamburg',
+            country: 'DE',
+        },
+        contactData: {
+            telephone: { label: '+49 176 1234567' },
         },
         icon: {
             size: [20, 28],
