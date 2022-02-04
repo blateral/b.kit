@@ -11,17 +11,25 @@ const View = styled.div<{
 }>`
     position: relative;
     width: 100%;
-    max-width: ${({ clampWidth }) =>
-        clampWidth === 'large'
-            ? spacings.wrapperLarge
-            : clampWidth === 'small'
-            ? spacings.wrapperSmall
-            : spacings.wrapper}px;
+    max-width: ${({ clampWidth }) => {
+        switch (clampWidth) {
+            case 'large':
+                return spacings.wrapperLarge;
+
+            case 'small':
+                return spacings.wrapperSmall;
+
+            default:
+            case 'normal':
+                return spacings.wrapper;
+        }
+    }}
     margin-left: auto;
     margin-right: auto;
-    padding: 0 ${({ addWhitespace }) => (addWhitespace ? spacings.spacer : 0)}px;
+    padding: 0 ${({ addWhitespace }) =>
+        addWhitespace ? spacings.nudge * 2 : 0}px;
 
-    @media ${mq.semilarge} {
+    /* @media ${mq.semilarge} {
         padding-left: ${({ addWhitespace }) =>
             addWhitespace ? (1 / 28) * 100 : 0}%;
         padding-left: ${({ addWhitespace }) =>
@@ -43,7 +51,7 @@ const View = styled.div<{
             addWhitespace ? (1 / 28) * spacings.wrapper : 0}px;
         padding-right: ${({ addWhitespace }) =>
             addWhitespace ? spacings.spacer : 0}px;
-    }
+    } */
 `;
 
 const Wrapper: React.FC<{

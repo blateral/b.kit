@@ -20,21 +20,21 @@ interface ColProps extends ColPropsSettings {
 }
 
 const gridSettings = {
-    cols: 28,
+    cols: 12,
     gutter: spacings.spacer,
 };
 
 const getWidth = (props: ColProps) => {
-    const mediumSpan = props.medium ? props.medium.span : 1;
-    const semilargeSpan = props.semilarge ? props.semilarge.span : 1;
-    const largeSpan = props.large ? props.large.span : 1;
-    const xlargeSpan = props.xlarge ? props.xlarge.span : 1;
+    const mediumSpan = props?.medium ? props.medium.span : 1;
+    const semilargeSpan = props?.semilarge ? props.semilarge.span : 1;
+    const largeSpan = props?.large ? props.large.span : 1;
+    const xlargeSpan = props?.xlarge ? props.xlarge.span : 1;
 
     return css`
         width: ${(props.span || 1) * 100}%;
 
         ${(props: ColProps) => {
-            return props.medium
+            return props?.medium
                 ? css`
                       @media ${mq.medium} {
                           width: ${(mediumSpan || 1) * 100}%;
@@ -44,7 +44,7 @@ const getWidth = (props: ColProps) => {
         }}
 
         ${(props: ColProps) => {
-            return props.semilarge
+            return props?.semilarge
                 ? css`
                       @media ${mq.semilarge} {
                           width: ${(semilargeSpan || 1) * 100}%;
@@ -54,7 +54,7 @@ const getWidth = (props: ColProps) => {
         }}
 
         ${(props: ColProps) => {
-            return props.large
+            return props?.large
                 ? css`
                       @media ${mq.large} {
                           width: ${(largeSpan || 1) * 100}%;
@@ -64,7 +64,7 @@ const getWidth = (props: ColProps) => {
         }}
 
         ${(props: ColProps) => {
-            return props.xlarge
+            return props?.xlarge
                 ? css`
                       @media ${mq.xlarge} {
                           width: ${(xlargeSpan || 1) * 100}%;
@@ -76,19 +76,21 @@ const getWidth = (props: ColProps) => {
 };
 
 const getLeftRight = (props: ColProps) => {
-    const mediumMove = props.medium ? props.medium.move : 0;
-    const semilargeMove = props.semilarge ? props.semilarge.move : 0;
-    const largeMove = props.large ? props.large.move : 0;
-    const xlargeMove = props.xlarge ? props.xlarge.move : 0;
+    const mediumMove = props?.medium ? props?.medium.move : 0;
+    const semilargeMove = props?.semilarge ? props?.semilarge.move : 0;
+    const largeMove = props?.large ? props?.large.move : 0;
+    const xlargeMove = props?.xlarge ? props?.xlarge.move : 0;
 
     return css`
-        left: ${props.move && props.move > 0 ? props.move * 100 + '%' : 'auto'};
-        right: ${props.move && props.move < 0
-            ? props.move * -100 + '%'
+        left: ${props?.move && props?.move > 0
+            ? props?.move * 100 + '%'
+            : 'auto'};
+        right: ${props?.move && props?.move < 0
+            ? props?.move * -100 + '%'
             : 'auto'};
 
         ${(props: ColProps) => {
-            return props.medium
+            return props?.medium
                 ? css`
                       @media ${mq.medium} {
                           left: ${mediumMove && mediumMove > 0
@@ -103,7 +105,7 @@ const getLeftRight = (props: ColProps) => {
         }}
 
         ${(props: ColProps) => {
-            return props.semilarge
+            return props?.semilarge
                 ? css`
                       @media ${mq.semilarge} {
                           left: ${semilargeMove && semilargeMove > 0
@@ -118,7 +120,7 @@ const getLeftRight = (props: ColProps) => {
         }}
 
         ${(props: ColProps) => {
-            return props.large
+            return props?.large
                 ? css`
                       @media ${mq.large} {
                           left: ${largeMove && largeMove > 0
@@ -133,7 +135,7 @@ const getLeftRight = (props: ColProps) => {
         }}
 
         ${(props: ColProps) => {
-            return props.xlarge
+            return props?.xlarge
                 ? css`
                       @media ${mq.xlarge} {
                           left: ${xlargeMove && xlargeMove > 0
@@ -172,7 +174,7 @@ const StyledCol = styled.div<GridProps & ColProps>`
 `;
 
 const Col: React.FC<ColProps> = (props) => {
-    return <React.Fragment>{props.children}</React.Fragment>;
+    return <React.Fragment>{props?.children}</React.Fragment>;
 };
 
 interface GridProps {
@@ -205,7 +207,9 @@ const Grid: React.FC<GridProps> = ({ gutter, valign, children }) => {
     return (
         <StyledGrid gutter={gutter} valign={valign}>
             {React.Children.map(children, (comp: any) => {
-                return <StyledCol {...comp.props} gutter={gutter} />;
+                return comp ? (
+                    <StyledCol {...comp?.props} gutter={gutter} />
+                ) : undefined;
             })}
         </StyledGrid>
     );

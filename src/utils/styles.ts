@@ -19,8 +19,8 @@ export const mq: { [key in Exclude<MediaQueryType, 'small'>]: string } = {
 };
 
 export const spacings = {
-    nudge: 5,
-    spacer: 20,
+    nudge: 8,
+    spacer: 32,
     wrapperSmall: 1000,
     wrapper: 1440,
     wrapperLarge: 2400,

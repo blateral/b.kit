@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled, { ThemeContext, css } from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Title from 'components/blocks/Title';
@@ -9,49 +9,15 @@ import { spacings, mq, getColors as color } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
 
 const StyledTitle = styled(Title)`
+    &:not(:last-child) {
+        margin-bottom: ${spacings.spacer}px;
+    }
+
     @media ${mq.semilarge} {
         max-width: 50%;
-    }
-`;
-
-const Content = styled.div<{ withAsideText?: boolean }>`
-    :not(:first-child) {
-        padding-top: ${spacings.nudge * 5}px;
-    }
-
-    ${({ withAsideText }) =>
-        withAsideText &&
-        css`
-            @media ${mq.semilarge} {
-                display: flex;
-                flex-direction: row;
-                align-items: flex-start;
-
-                & > * + * {
-                    margin-left: ${spacings.spacer * 3}px;
-                }
-            }
-        `}
-`;
-
-const ContentBlock = styled.div<{ isAside?: boolean; isHalf?: boolean }>`
-    & + & {
-        padding-top: ${({ isAside, isHalf }) =>
-            isAside || isHalf ? spacings.spacer : '0'}px;
-    }
-
-    flex: ${({ isAside, isHalf }) =>
-        isHalf ? '1 0 50%' : isAside ? '1 0 30%' : '1 0 60%'};
-
-    @media ${mq.semilarge} {
-        max-width: ${({ isAside, isHalf }) =>
-            isHalf ? '50%' : isAside ? '100%' : '60%'};
-
-        & + & {
-            padding-top: 0;
-        }
     }
 `;
 
@@ -60,7 +26,9 @@ const ContentText = styled(Copy)`
 `;
 
 const StyledActions = styled(Actions)`
-    padding-top: ${spacings.spacer * 2}px;
+    &:not(:first-child) {
+        margin-top: ${spacings.spacer}px;
+    }
 
     @media ${mq.semilarge} {
         max-width: 50%;
@@ -96,6 +64,7 @@ const Article: React.FC<{
 }) => {
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
+    const hasContent = intro || text || asideText;
 
     return (
         <Section
@@ -117,34 +86,41 @@ const Article: React.FC<{
                     superTitleAs={superTitleAs}
                     colorMode={isInverted ? 'inverted' : 'default'}
                 />
-                <Content withAsideText={asideText ? true : false}>
-                    <ContentBlock isHalf={halfAside}>
-                        {intro && (
-                            <ContentText
-                                type="copy-b"
-                                isInverted={isInverted}
-                                innerHTML={intro}
-                            />
+                {hasContent && (
+                    <Grid.Row>
+                        <Grid.Col
+                            semilarge={{ span: halfAside ? 6 / 12 : 8 / 12 }}
+                        >
+                            {intro && (
+                                <ContentText
+                                    type="copy-b"
+                                    isInverted={isInverted}
+                                    innerHTML={intro}
+                                />
+                            )}
+                            {text && (
+                                <ContentText
+                                    type="copy"
+                                    isInverted={isInverted}
+                                    innerHTML={text}
+                                />
+                            )}
+                        </Grid.Col>
+                        {asideText && (
+                            <Grid.Col
+                                semilarge={{
+                                    span: halfAside ? 6 / 12 : 4 / 12,
+                                }}
+                            >
+                                <ContentText
+                                    type="copy"
+                                    isInverted={isInverted}
+                                    innerHTML={asideText}
+                                />
+                            </Grid.Col>
                         )}
-                        {text && (
-                            <ContentText
-                                type="copy"
-                                isInverted={isInverted}
-                                innerHTML={text}
-                            />
-                        )}
-                    </ContentBlock>
-
-                    {asideText && (
-                        <ContentBlock isAside>
-                            <ContentText
-                                type="copy"
-                                isInverted={isInverted}
-                                innerHTML={asideText}
-                            />
-                        </ContentBlock>
-                    )}
-                </Content>
+                    </Grid.Row>
+                )}
                 {(primaryAction || secondaryAction) && (
                     <StyledActions
                         primary={primaryAction && primaryAction(isInverted)}
