@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import {
     getColors as color,
@@ -8,10 +8,14 @@ import {
     withRange,
 } from 'utils/styles';
 
-const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
+const View = styled.a<{
+    inverted?: boolean;
+    disable?: boolean;
+    size?: 'default' | 'small';
+}>`
     min-height: 3em;
-    height: 3.65em;
-    min-width: 210px;
+    height: ${({ size }) => (size === 'default' ? '3.65em' : '3em')};
+    min-width: ${({ size }) => (size === 'default' ? '210px' : '120px')};
     padding: 0.1em 1.2em;
 
     display: inline-block;
@@ -77,33 +81,35 @@ const View = styled.a<{ inverted?: boolean; disable?: boolean }>`
     }
 
     @media (hover: hover) and (pointer: fine) {
-        &:hover {
-            box-shadow: 0px 8px 16px
-                ${({ inverted }) =>
-                    inverted
-                        ? 'rgba(255, 255, 255, 0.25)'
-                        : 'rgba(0, 0, 0, 0.25)'};
-        }
+        ${({ disable, inverted }) =>
+            !disable &&
+            css`
+                &:hover {
+                    box-shadow: 0px 8px 16px
+                        ${inverted
+                            ? 'rgba(255, 255, 255, 0.25)'
+                            : 'rgba(0, 0, 0, 0.25)'};
+                }
 
-        &:focus {
-            box-shadow: 0px 2px 6px
-                ${({ inverted }) =>
-                    inverted
-                        ? 'rgba(255, 255, 255, 0.25)'
-                        : 'rgba(0, 0, 0, 0.3)'};
-        }
+                &:focus {
+                    box-shadow: 0px 2px 6px
+                        ${inverted
+                            ? 'rgba(255, 255, 255, 0.25)'
+                            : 'rgba(0, 0, 0, 0.3)'};
+                }
 
-        &:active {
-            box-shadow: 0px 2px 6px
-                ${({ inverted }) =>
-                    inverted
-                        ? 'rgba(255, 255, 255, 0.25)'
-                        : 'rgba(0, 0, 0, 0.3)'};
-        }
+                &:active {
+                    box-shadow: 0px 2px 6px
+                        ${inverted
+                            ? 'rgba(255, 255, 255, 0.25)'
+                            : 'rgba(0, 0, 0, 0.3)'};
+                }
+            `}
     }
 `;
 
 interface Props {
+    size?: 'default' | 'small';
     isInverted?: boolean;
     isDisabled?: boolean;
     className?: string;
@@ -123,7 +129,16 @@ export type LinkProps = Props & {
 
 const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
     (
-        { as, isInverted, isDisabled, onClick, className, children, ...rest },
+        {
+            as,
+            size = 'default',
+            isInverted,
+            isDisabled,
+            onClick,
+            className,
+            children,
+            ...rest
+        },
         ref
     ) => {
         if (as === 'button') {
@@ -131,6 +146,7 @@ const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
                 <View
                     ref={ref}
                     as={as as any}
+                    size={size}
                     inverted={isInverted}
                     disable={isDisabled}
                     onClick={onClick}
@@ -145,6 +161,7 @@ const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
                 <View
                     ref={ref}
                     as={as as any}
+                    size={size}
                     href={(rest as LinkProps).href}
                     target={
                         (rest as LinkProps).isExternal ? '_blank' : undefined

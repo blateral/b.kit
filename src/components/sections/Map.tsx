@@ -1,18 +1,35 @@
-import Grid from 'components/base/Grid';
-import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
-import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
+import React, { FC, useContext, useState } from 'react';
+import styled, { ThemeContext } from 'styled-components';
+
+import { mq, spacings, getColors as color, withRange } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
+
 import Section, { mapToBgMode } from 'components/base/Section';
+import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
+
 import Actions from 'components/blocks/Actions';
 import IntroBlock from 'components/blocks/IntroBlock';
 import LeafletMap from 'components/blocks/LeafletMap';
 import Slider, { SliderContext } from 'components/blocks/Slider';
+
 import Copy from 'components/typography/Copy';
 import { HeadlineTag } from 'components/typography/Heading';
-import React, { FC, useContext, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
-import { mq, spacings, getColors as color, withRange } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+
+import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
+import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
+import Phone from 'components/base/icons/Phone';
+import Mail from 'components/base/icons/Mail';
+
+import { generateLocalBusiness } from 'utils/structuredData';
+import Link from 'components/typography/Link';
+
+interface Address {
+    street: string;
+    postalCode: string;
+    city?: string;
+    country: string;
+}
 
 const StyledSection = styled(Section)`
     position: relative;
@@ -175,64 +192,133 @@ const ContactListLabel = styled(Copy)`
     }
 `;
 
+const CompanyInfo: FC<{
+    isInverted?: boolean;
+    companyName: string;
+    address?: Address;
+}> = ({ isInverted, companyName, address }) => {
+    return (
+        <div>
+            <Copy type="copy-b" size="big" isInverted={isInverted}>
+                {companyName}
+            </Copy>
+            {address && (
+                <Copy type="copy-b" size="big" isInverted={isInverted}>
+                    <div>{address.street}</div>
+                    <div>{`${address.postalCode} ${address.city}`}</div>
+                    <div>{address.country}</div>
+                </Copy>
+            )}
+        </div>
+    );
+};
+
 const LocationInfoCard: FC<{
     isInverted?: boolean;
     location: MapLocation;
 }> = ({ isInverted, location }) => {
+    const title = location.title || location.meta?.title;
+    const titleAs = location.titleAs || location.meta?.titleAs;
+    const superTitle = location.superTitle || location.meta?.superTitle;
+    const superTitleAs = location.superTitleAs || location.meta?.superTitleAs;
+    const primaryAction = location.primaryAction
+        ? location.primaryAction({ isInverted })
+        : location.meta?.primaryAction &&
+          location.meta.primaryAction(isInverted);
+    const secondaryAction = location.secondaryAction
+        ? location.secondaryAction({ isInverted })
+        : location.meta?.secondaryAction &&
+          location.meta.secondaryAction(isInverted);
+
     return (
         <InfoCardView>
-            {location.meta?.title && (
-                <CardHeader>
-                    <IntroBlock
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                        title={location.meta.title}
-                        titleAs={location.meta.titleAs}
-                        superTitle={location.meta?.superTitle}
-                        superTitleAs={location.meta?.superTitleAs}
-                    />
-                </CardHeader>
-            )}
-            {location.meta?.contact ? (
-                Array.isArray(location.meta?.contact) &&
-                location.meta.contact.length > 0 ? (
-                    <ContactList isInverted={isInverted}>
-                        {location.meta?.contact
-                            ?.filter((c) => c.label)
-                            .map((contact, i) => (
-                                <li key={i}>
-                                    <span>{contact?.icon}</span>
-                                    <ContactListLabel
-                                        type="copy-b"
-                                        size="big"
-                                        isInverted={isInverted}
-                                        innerHTML={contact?.label}
-                                    />
-                                </li>
-                            ))}
-                    </ContactList>
-                ) : (
-                    <Copy
-                        type="copy"
-                        size="medium"
-                        innerHTML={location.meta?.contact as string}
-                    />
-                )
-            ) : (
-                ''
-            )}
-            {(location?.meta?.primaryAction ||
-                location?.meta?.secondaryAction) && (
-                <StyledActions
-                    primary={
-                        location?.meta?.primaryAction &&
-                        location.meta.primaryAction(isInverted)
-                    }
-                    secondary={
-                        location?.meta?.secondaryAction &&
-                        location.meta.secondaryAction(isInverted)
-                    }
+            <CardHeader>
+                <IntroBlock
+                    colorMode={isInverted ? 'inverted' : 'default'}
+                    title={title}
+                    titleAs={titleAs}
+                    superTitle={superTitle}
+                    superTitleAs={superTitleAs}
+                />
+            </CardHeader>
+            {location.companyName && (
+                <CompanyInfo
+                    companyName={location.companyName || ''}
+                    address={location.address}
+                    isInverted={isInverted}
                 />
             )}
+            {location.contact && (
+                <ContactList isInverted={isInverted}>
+                    {location.contact?.telephone && (
+                        <li>
+                            <span>
+                                {location?.contact?.telephone.icon ? (
+                                    location.contact.telephone.icon({
+                                        isInverted,
+                                    })
+                                ) : (
+                                    <Phone />
+                                )}
+                            </span>
+                            <ContactListLabel
+                                isInverted={isInverted}
+                                type="copy-b"
+                                size="big"
+                            >
+                                <Link
+                                    href={`tel:${
+                                        location?.contact.telephone.link ||
+                                        location?.contact.telephone.label
+                                    }`}
+                                >
+                                    {location?.contact.telephone?.label}
+                                </Link>
+                            </ContactListLabel>
+                        </li>
+                    )}
+                    {location.contact.email && (
+                        <li>
+                            <span>
+                                {location?.contact?.email.icon ? (
+                                    location.contact.email.icon({ isInverted })
+                                ) : (
+                                    <Mail />
+                                )}
+                            </span>
+                            <ContactListLabel
+                                isInverted={isInverted}
+                                type="copy-b"
+                                size="big"
+                            >
+                                <Link
+                                    href={`mailto:${
+                                        location?.contact?.email.link ||
+                                        location.contact.email.label
+                                    }`}
+                                >
+                                    {location?.contact?.email.label}
+                                </Link>
+                            </ContactListLabel>
+                        </li>
+                    )}
+                </ContactList>
+            )}
+            {location.meta?.contact && (
+                <Copy
+                    type="copy"
+                    size="medium"
+                    innerHTML={location.meta?.contact as string}
+                    isInverted={isInverted}
+                />
+            )}
+
+            <Copy isInverted={isInverted} innerHTML={location.description} />
+
+            <StyledActions
+                primary={primaryAction}
+                secondary={secondaryAction}
+            />
         </InfoCardView>
     );
 };
@@ -346,15 +432,41 @@ export interface MapLocation {
     id: string;
     position: [number, number];
     icon?: LocationIcon;
+
+    /** DEPRECATED: Used as fallback */
     meta?: {
-        title?: string;
+        title?: string; // Rich Text
         titleAs?: HeadlineTag;
         superTitle?: string;
         superTitleAs?: HeadlineTag;
-        contact?: Array<{ icon?: React.ReactNode; label?: string }> | string;
+        contact?: string; // Rich Text
         primaryAction?: (isInverted?: boolean) => React.ReactNode;
         secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     };
+
+    title?: string; // Rich Text
+    titleAs?: HeadlineTag;
+    superTitle?: string;
+    superTitleAs?: HeadlineTag;
+    primaryAction?: (props: { isInverted?: boolean }) => React.ReactNode;
+    secondaryAction?: (props: { isInverted?: boolean }) => React.ReactNode;
+
+    companyName?: string;
+    address?: Address;
+    contact?: {
+        telephone?: {
+            link?: string;
+            label?: string;
+            icon?: (props: { isInverted?: boolean }) => React.ReactNode;
+        };
+        email?: {
+            link?: string;
+            label?: string;
+            icon?: (props: { isInverted?: boolean }) => React.ReactNode;
+        };
+    };
+    image?: string[];
+    description?: string;
 }
 
 const Map: FC<{
@@ -416,6 +528,7 @@ const Map: FC<{
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
             bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
         >
+            {locations && generateLocalBusiness(locations)}
             <Slider.Provider
                 fade={true}
                 swipe={false}
@@ -518,8 +631,7 @@ const Map: FC<{
                                                         controlNext({
                                                             isInverted,
                                                             isActive,
-                                                            name:
-                                                                'control_next_head',
+                                                            name: 'control_next_head',
                                                         })
                                                     ) : (
                                                         <ArrowRightGhost />
@@ -535,8 +647,7 @@ const Map: FC<{
                                                         controlPrev({
                                                             isInverted,
                                                             isActive,
-                                                            name:
-                                                                'control_prev_head',
+                                                            name: 'control_prev_head',
                                                         })
                                                     ) : (
                                                         <ArrowLeftGhost />

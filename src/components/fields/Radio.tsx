@@ -1,6 +1,7 @@
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
+import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, spacings } from '../../utils/styles';
 
 const View = styled.label`
@@ -16,6 +17,14 @@ const View = styled.label`
 const RadioContainer = styled.div<{ isDisabled?: boolean }>`
     cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
     pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
+
+    border: 2px solid transparent;
+    border-radius: 50%;
+
+    &:focus-within {
+        border: ${({ theme }) =>
+            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+    }
 `;
 
 const Original = styled.input`
@@ -63,6 +72,7 @@ const StyledRadioButton = styled.span<{
 const Label = styled(Copy)`
     padding-top: 2px;
     text-align: left;
+    user-select: none;
 
     & > * {
         margin: 0;
@@ -109,6 +119,7 @@ const RadioButton: React.FC<{
             </RadioContainer>
             {label && (
                 <Label
+                    renderAs="span"
                     size="small"
                     type="copy-b"
                     textColor={

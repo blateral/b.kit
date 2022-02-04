@@ -35,6 +35,12 @@ export const Ghost: Story = () => (
     </ButtonGhost.View>
 );
 
+export const Small: Story = () => (
+    <ButtonGhost.View as="a" href="#" size="small" onClick={console.log}>
+        <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+    </ButtonGhost.View>
+);
+
 export const GhostWithIcon: Story = () => (
     <ButtonGhost.View as="a" href="#" onClick={console.log}>
         <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
