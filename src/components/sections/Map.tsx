@@ -22,6 +22,7 @@ import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
 
 import { generateLocalBusiness } from 'utils/structuredData';
+import Link from 'components/typography/Link';
 
 interface Address {
     street: string;
@@ -228,6 +229,7 @@ const LocationInfoCard: FC<{
         ? location.secondaryAction({ isInverted })
         : location.meta?.secondaryAction &&
           location.meta.secondaryAction(isInverted);
+
     return (
         <InfoCardView>
             <CardHeader>
@@ -264,14 +266,14 @@ const LocationInfoCard: FC<{
                                 type="copy-b"
                                 size="big"
                             >
-                                <a
+                                <Link
                                     href={`tel:${
                                         location?.contact.telephone.link ||
                                         location?.contact.telephone.label
                                     }`}
                                 >
                                     {location?.contact.telephone?.label}
-                                </a>
+                                </Link>
                             </ContactListLabel>
                         </li>
                     )}
@@ -289,14 +291,14 @@ const LocationInfoCard: FC<{
                                 type="copy-b"
                                 size="big"
                             >
-                                <a
+                                <Link
                                     href={`mailto:${
                                         location?.contact?.email.link ||
                                         location.contact.email.label
                                     }`}
                                 >
                                     {location?.contact?.email.label}
-                                </a>
+                                </Link>
                             </ContactListLabel>
                         </li>
                     )}
@@ -431,7 +433,7 @@ export interface MapLocation {
     position: [number, number];
     icon?: LocationIcon;
 
-    /** DEPRECATED */
+    /** DEPRECATED: Used as fallback */
     meta?: {
         title?: string; // Rich Text
         titleAs?: HeadlineTag;
