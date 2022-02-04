@@ -311,7 +311,7 @@ const LocationInfoCard: FC<{
                 />
             )}
 
-            <Copy isInverted={isInverted}>{location.description}</Copy>
+            <Copy isInverted={isInverted} innerHTML={location.description} />
 
             <StyledActions
                 primary={primaryAction}
