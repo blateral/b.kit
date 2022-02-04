@@ -20,30 +20,17 @@ export default {
     },
 } as Meta;
 
-const exampleLocations: MapLocation[] = [
+const oldLocations: MapLocation[] = [
     {
         id: 'Sipplingen',
-        address: {
-            street: 'Example Street 1',
-            postalCode: '78354',
-            city: 'Sipplingen',
-            country: 'DE',
-        },
-        contactData: {
-            telephone: { label: '+49 176 1234567' },
-            email: { label: 'example@email.com' },
-        },
+        position: [47.79678, 9.09737],
         meta: {
-            image: ['https://placehold.it/40'],
-
-            companyName: 'b.lateral GmbH & Co. KG',
-            // title: `b.lateral GmbH & Co. KG </br>
-            //     Lenzensteig 3 </br>
-            //     78354 Sipplingen </br>
-            //     am Bodensee </br>
-            //     Deutschland`,
-            // superTitle: 'Anfahrt und Kontakt',
-            title: `Rich Text`,
+            title: `b.lateral GmbH & Co. KG </br>
+                Lenzensteig 3 </br>
+                78354 Sipplingen </br>
+                am Bodensee </br>
+                Deutschland`,
+            superTitle: 'Anfahrt und Kontakt',
             primaryAction: (isInverted) => (
                 <Button.View isInverted={isInverted}>
                     <Button.Label>Primär</Button.Label>
@@ -54,16 +41,7 @@ const exampleLocations: MapLocation[] = [
                     <ButtonGhost.Label>Sekundär</ButtonGhost.Label>
                 </ButtonGhost.View>
             ),
-            // contact: [
-            //     { icon: <Phone />, label: '9879534957943' },
-            //     {
-            //         icon: <Mail />,
-            //         label: '<a href="tel:musterman@mustermail.com">musterman@mustermail.com</a>',
-            //     },
-            //     { icon: <Youtube />, label: '9879534957943' },
-            // ],
         },
-        position: [47.79678, 9.09737],
         icon: {
             size: [20, 28],
             anchor: [10, 28],
@@ -75,19 +53,8 @@ const exampleLocations: MapLocation[] = [
     {
         id: 'Paris',
         position: [48.864716, 2.349014],
-        address: {
-            street: 'Example Street 1',
-            postalCode: '75000',
-            city: 'Paris',
-            country: 'FR',
-        },
-        contactData: {
-            telephone: { label: '+49 176 1234567' },
-        },
         meta: {
-            image: ['https://placehold.it/40'],
             title: 'Standort Paris',
-            companyName: 'Standort Paris',
             superTitle: 'Standort',
             primaryAction: (isInverted) => (
                 <Button.View isInverted={isInverted}>
@@ -154,20 +121,119 @@ const exampleLocations: MapLocation[] = [
                     <ButtonGhost.Label>Kontakt</ButtonGhost.Label>
                 </ButtonGhost.View>
             ),
-
-            image: ['https://placehold.it/40'],
-
-            companyName: 'Sitz Hamburg',
         },
+        icon: {
+            size: [20, 28],
+            anchor: [10, 28],
+            sizeActive: [50, 70],
+            anchorActive: [25, 70],
+            url: marker,
+        },
+    },
+];
+
+const newLocations: MapLocation[] = [
+    {
+        id: 'Sipplingen',
+        position: [47.79678, 9.09737],
+
+        image: ['https://placehold.it/40'],
+        companyName: 'b.lateral GmbH & Co. KG',
+        superTitle: 'Anfahrt & Kontakt',
+
+        address: {
+            street: 'Example Street 1',
+            postalCode: '78354',
+            city: 'Sipplingen',
+            country: 'DE',
+        },
+
+        contact: {
+            telephone: { label: '+49 176 1234567' },
+            email: { label: 'example@email.com' },
+        },
+
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+
+        primaryAction: ({ isInverted }) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primär</Button.Label>
+            </Button.View>
+        ),
+        secondaryAction: ({ isInverted }) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Sekundär</ButtonGhost.Label>
+            </ButtonGhost.View>
+        ),
+        icon: {
+            size: [20, 28],
+            anchor: [10, 28],
+            sizeActive: [50, 70],
+            anchorActive: [25, 70],
+            url: marker,
+        },
+    },
+    {
+        id: 'Paris',
+        position: [48.864716, 2.349014],
+
+        companyName: 'Standort Paris',
+        superTitle: 'Anfahrt & Kontakt',
+        image: ['https://placehold.it/40'],
+
+        address: {
+            street: 'Example Street 1',
+            postalCode: '75000',
+            city: 'Paris',
+            country: 'FR',
+        },
+        contact: {
+            telephone: { label: '+49 176 1234567' },
+        },
+
+        icon: {
+            size: [20, 28],
+            anchor: [10, 28],
+            sizeActive: [50, 70],
+            anchorActive: [25, 70],
+            url: marker,
+        },
+    },
+    {
+        id: 'Hamburg',
+        position: [53.551086, 9.993682],
+
+        title: 'Title',
+        companyName: 'Sitz Hamburg',
+        superTitle: 'Anfahrt & Kontakt',
+
         address: {
             street: 'Example Street 1',
             postalCode: '20095',
             city: 'Hamburg',
             country: 'DE',
         },
-        contactData: {
-            telephone: { label: '+49 176 1234567' },
+
+        contact: {
+            telephone: {
+                label: '+49 176 1234567',
+                icon: ({ isInverted }) => (
+                    <ArrowRight iconColor={isInverted ? '#fff' : '#000'} />
+                ),
+            },
         },
+
+        primaryAction: ({ isInverted }) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primär</Button.Label>
+            </Button.View>
+        ),
+        secondaryAction: ({ isInverted }) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Sekundär</ButtonGhost.Label>
+            </ButtonGhost.View>
+        ),
         icon: {
             size: [20, 28],
             anchor: [10, 28],
@@ -180,14 +246,18 @@ const exampleLocations: MapLocation[] = [
 
 export const Default: Story = () => <Map />;
 
+export const Legacy: Story = () => (
+    <Map initialLocation="Sipplingen" locations={oldLocations} />
+);
+
 export const WithLocations: Story = () => (
-    <Map initialLocation="Sipplingen" locations={exampleLocations} />
+    <Map initialLocation="Sipplingen" locations={newLocations} />
 );
 
 export const ShowAllMarkersOnLoad: Story = () => (
     <Map
         initialLocation="Sipplingen"
-        locations={exampleLocations}
+        locations={newLocations}
         allMarkersOnInit
         fitBoundsPadding={[30, 30]}
     />
@@ -233,7 +303,7 @@ export const WithSingleLocation: Story = () => (
 export const WithFlyToControl: Story = () => (
     <Map
         initialLocation="Sipplingen"
-        locations={exampleLocations}
+        locations={newLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
         allMarkersOnInit
@@ -245,7 +315,7 @@ export const Mirrored: Story = () => (
     <Map
         isMirrored
         initialLocation="Sipplingen"
-        locations={exampleLocations}
+        locations={newLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
         allMarkersOnInit
@@ -257,7 +327,7 @@ export const Inverted: Story = () => (
     <Map
         bgMode="inverted"
         initialLocation="Sipplingen"
-        locations={exampleLocations}
+        locations={newLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
         allMarkersOnInit
@@ -268,7 +338,7 @@ export const Inverted: Story = () => (
 export const WithCustomControls: Story = () => (
     <Map
         initialLocation="Sipplingen"
-        locations={exampleLocations}
+        locations={newLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
         allMarkersOnInit
@@ -281,7 +351,7 @@ export const WithCustomControls: Story = () => (
 export const WithCustomDots: Story = () => (
     <Map
         initialLocation="Sipplingen"
-        locations={exampleLocations}
+        locations={newLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
         allMarkersOnInit
@@ -297,7 +367,7 @@ export const WithCustomMapProvider: Story = () => (
         provider="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
         attribution="Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012"
         initialLocation="Sipplingen"
-        locations={exampleLocations}
+        locations={newLocations}
         flyToControl={<FlyTo />}
         flyToZoom={12}
         allMarkersOnInit

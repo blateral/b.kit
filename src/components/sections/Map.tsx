@@ -1,22 +1,26 @@
-import Grid from 'components/base/Grid';
-import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
-import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
+import React, { FC, useContext, useState } from 'react';
+import styled, { ThemeContext } from 'styled-components';
+
+import { mq, spacings, getColors as color, withRange } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
+
 import Section, { mapToBgMode } from 'components/base/Section';
+import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
+
 import Actions from 'components/blocks/Actions';
 import IntroBlock from 'components/blocks/IntroBlock';
 import LeafletMap from 'components/blocks/LeafletMap';
 import Slider, { SliderContext } from 'components/blocks/Slider';
+
 import Copy from 'components/typography/Copy';
 import { HeadlineTag } from 'components/typography/Heading';
-import React, { FC, useContext, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
-import { mq, spacings, getColors as color, withRange } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+
+import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
+import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
-import Route from 'components/base/icons/Route';
-import Title from 'components/blocks/Title';
+
 import { generateLocalBusiness } from 'utils/structuredData';
 
 interface Address {
@@ -191,30 +195,18 @@ const CompanyInfo: FC<{
     isInverted?: boolean;
     companyName: string;
     address?: Address;
-    superTitle?: string;
-}> = ({ isInverted, companyName, address, superTitle }) => {
+}> = ({ isInverted, companyName, address }) => {
     return (
         <div>
-            <Title
-                superTitle={superTitle}
-                title={companyName}
-                colorMode={isInverted ? 'inverted' : 'default'}
-            />
+            <Copy type="copy-b" size="big" isInverted={isInverted}>
+                {companyName}
+            </Copy>
             {address && (
-                <div>
-                    <Title
-                        title={address.street}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                    />
-                    <Title
-                        title={`${address.postalCode} ${address.city}`}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                    />
-                    <Title
-                        title={address.country}
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                    />
-                </div>
+                <Copy type="copy-b" size="big" isInverted={isInverted}>
+                    <div>{address.street}</div>
+                    <div>{`${address.postalCode} ${address.city}`}</div>
+                    <div>{address.country}</div>
+                </Copy>
             )}
         </div>
     );
@@ -224,37 +216,46 @@ const LocationInfoCard: FC<{
     isInverted?: boolean;
     location: MapLocation;
 }> = ({ isInverted, location }) => {
+    const title = location.title || location.meta?.title;
+    const titleAs = location.titleAs || location.meta?.titleAs;
+    const superTitle = location.superTitle || location.meta?.superTitle;
+    const superTitleAs = location.superTitleAs || location.meta?.superTitleAs;
+    const primaryAction = location.primaryAction
+        ? location.primaryAction({ isInverted })
+        : location.meta?.primaryAction &&
+          location.meta.primaryAction(isInverted);
+    const secondaryAction = location.secondaryAction
+        ? location.secondaryAction({ isInverted })
+        : location.meta?.secondaryAction &&
+          location.meta.secondaryAction(isInverted);
     return (
         <InfoCardView>
-            {location.meta?.companyName && (
+            <CardHeader>
+                <IntroBlock
+                    colorMode={isInverted ? 'inverted' : 'default'}
+                    title={title}
+                    titleAs={titleAs}
+                    superTitle={superTitle}
+                    superTitleAs={superTitleAs}
+                />
+            </CardHeader>
+            {location.companyName && (
                 <CompanyInfo
-                    superTitle={location.meta?.superTitle}
-                    isInverted={isInverted}
+                    companyName={location.companyName || ''}
                     address={location.address}
-                    companyName={location.meta?.companyName}
+                    isInverted={isInverted}
                 />
             )}
-            {location.meta?.title && (
-                <CardHeader>
-                    <IntroBlock
-                        colorMode={isInverted ? 'inverted' : 'default'}
-                        title={location.meta.title}
-                        titleAs={location.meta.titleAs}
-                        superTitle={
-                            (!location.meta?.companyName &&
-                                location.meta?.superTitle) ||
-                            ''
-                        }
-                        superTitleAs={location.meta?.superTitleAs}
-                    />
-                </CardHeader>
-            )}
-            {location.contactData && (
+            {location.contact && (
                 <ContactList isInverted={isInverted}>
-                    {location.contactData?.telephone && (
+                    {location.contact?.telephone && (
                         <li>
                             <span>
-                                {location?.contactData?.telephone.icon || (
+                                {location?.contact?.telephone.icon ? (
+                                    location.contact.telephone.icon({
+                                        isInverted,
+                                    })
+                                ) : (
                                     <Phone />
                                 )}
                             </span>
@@ -265,19 +266,23 @@ const LocationInfoCard: FC<{
                             >
                                 <a
                                     href={`tel:${
-                                        location?.contactData.telephone.link ||
-                                        location?.contactData.telephone.label
+                                        location?.contact.telephone.link ||
+                                        location?.contact.telephone.label
                                     }`}
                                 >
-                                    {location?.contactData.telephone?.label}
+                                    {location?.contact.telephone?.label}
                                 </a>
                             </ContactListLabel>
                         </li>
                     )}
-                    {location.contactData.email && (
+                    {location.contact.email && (
                         <li>
                             <span>
-                                {location?.contactData?.email.icon || <Mail />}
+                                {location?.contact?.email.icon ? (
+                                    location.contact.email.icon({ isInverted })
+                                ) : (
+                                    <Mail />
+                                )}
                             </span>
                             <ContactListLabel
                                 isInverted={isInverted}
@@ -286,58 +291,32 @@ const LocationInfoCard: FC<{
                             >
                                 <a
                                     href={`mailto:${
-                                        location?.contactData?.email.link ||
-                                        location.contactData.email.label
+                                        location?.contact?.email.link ||
+                                        location.contact.email.label
                                     }`}
                                 >
-                                    {location?.contactData?.email.label}
-                                </a>
-                            </ContactListLabel>
-                        </li>
-                    )}
-                    {location.contactData.route && (
-                        <li>
-                            <span>
-                                {location?.contactData?.route.icon || <Route />}
-                            </span>
-                            <ContactListLabel
-                                isInverted={isInverted}
-                                type="copy-b"
-                                size="big"
-                            >
-                                <a
-                                    href={`mailto:${location?.contactData?.route.link}`}
-                                >
-                                    {location?.contactData?.route.label}
+                                    {location?.contact?.email.label}
                                 </a>
                             </ContactListLabel>
                         </li>
                     )}
                 </ContactList>
             )}
-            {location.meta?.contact ? (
+            {location.meta?.contact && (
                 <Copy
                     type="copy"
                     size="medium"
                     innerHTML={location.meta?.contact as string}
                     isInverted={isInverted}
                 />
-            ) : (
-                ''
             )}
-            {(location?.meta?.primaryAction ||
-                location?.meta?.secondaryAction) && (
-                <StyledActions
-                    primary={
-                        location?.meta?.primaryAction &&
-                        location.meta.primaryAction(isInverted)
-                    }
-                    secondary={
-                        location?.meta?.secondaryAction &&
-                        location.meta.secondaryAction(isInverted)
-                    }
-                />
-            )}
+
+            <Copy isInverted={isInverted}>{location.description}</Copy>
+
+            <StyledActions
+                primary={primaryAction}
+                secondary={secondaryAction}
+            />
         </InfoCardView>
     );
 };
@@ -451,28 +430,41 @@ export interface MapLocation {
     id: string;
     position: [number, number];
     icon?: LocationIcon;
+
+    /** DEPRECATED */
     meta?: {
+        title?: string; // Rich Text
+        titleAs?: HeadlineTag;
         superTitle?: string;
         superTitleAs?: HeadlineTag;
-
-        titleAs?: HeadlineTag;
-        title?: string; // Rich Text
         contact?: string; // Rich Text
-
         primaryAction?: (isInverted?: boolean) => React.ReactNode;
         secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
-        companyName?: string;
-        image?: string[];
     };
 
+    title?: string; // Rich Text
+    titleAs?: HeadlineTag;
+    superTitle?: string;
+    superTitleAs?: HeadlineTag;
+    primaryAction?: (props: { isInverted?: boolean }) => React.ReactNode;
+    secondaryAction?: (props: { isInverted?: boolean }) => React.ReactNode;
+
+    companyName?: string;
     address?: Address;
-
-    contactData?: {
-        telephone?: { link?: string; label?: string; icon?: string };
-        email?: { link?: string; label?: string; icon?: string };
-        route?: { link?: string; label?: string; icon?: string };
+    contact?: {
+        telephone?: {
+            link?: string;
+            label?: string;
+            icon?: (props: { isInverted?: boolean }) => React.ReactNode;
+        };
+        email?: {
+            link?: string;
+            label?: string;
+            icon?: (props: { isInverted?: boolean }) => React.ReactNode;
+        };
     };
+    image?: string[];
+    description?: string;
 }
 
 const Map: FC<{

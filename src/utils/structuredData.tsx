@@ -4,40 +4,43 @@ import { MapLocation } from 'components/sections/Map';
 import { FAQPage, LocalBusiness } from 'schema-dts';
 
 export const generateLocalBusiness = (locations: MapLocation[]) => {
-    return locations?.map(({ meta, position, address, contactData }, i) => {
-        return (
-            <JsonLd<LocalBusiness>
-                key={i}
-                item={{
-                    '@context': 'https://schema.org',
-                    '@type': 'LocalBusiness',
-                    name: meta?.companyName,
+    return locations?.map(
+        ({ position, address, contact, companyName, image }, i) => {
+            if (!companyName) return '';
+            return (
+                <JsonLd<LocalBusiness>
+                    key={i}
+                    item={{
+                        '@context': 'https://schema.org',
+                        '@type': 'LocalBusiness',
+                        name: companyName,
 
-                    geo: {
-                        '@type': 'GeoCoordinates',
-                        name: 'Coordinates',
-                        latitude: position[0],
-                        longitude: position[1],
-                    },
+                        geo: {
+                            '@type': 'GeoCoordinates',
+                            name: 'Coordinates',
+                            latitude: position[0],
+                            longitude: position[1],
+                        },
 
-                    address: {
-                        '@type': 'PostalAddress',
-                        streetAddress: address?.street,
-                        addressLocality: address?.city,
-                        addressRegion: address?.city,
-                        postalCode: address?.postalCode,
-                        addressCountry: address?.country,
-                    },
+                        address: {
+                            '@type': 'PostalAddress',
+                            streetAddress: address?.street,
+                            addressLocality: address?.city,
+                            addressRegion: address?.city,
+                            postalCode: address?.postalCode,
+                            addressCountry: address?.country,
+                        },
 
-                    image: meta?.image,
+                        image: image || [],
 
-                    telephone: `${contactData?.telephone?.label}`,
+                        telephone: `${contact?.telephone?.label}`,
 
-                    email: `${contactData?.email?.label}`,
-                }}
-            />
-        );
-    });
+                        email: `${contact?.email?.label}`,
+                    }}
+                />
+            );
+        }
+    );
 };
 
 export const generateFAQ = (
