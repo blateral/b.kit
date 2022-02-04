@@ -36,6 +36,7 @@ const StyledActions = styled(Actions)`
 `;
 
 const Article: React.FC<{
+    /** Title text of article */
     title?: string;
     titleAs?: HeadlineTag;
     superTitle?: string;

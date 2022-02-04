@@ -8,10 +8,7 @@ import {
     withRange,
 } from 'utils/styles';
 
-type HeadingType = Exclude<
-    FontType,
-    'copy' | 'copy-i' | 'copy-b' | 'label' | 'callout'
->;
+type HeadingType = Exclude<FontType, 'copy' | 'copy-i' | 'copy-b' | 'callout'>;
 
 const base = css<{
     hyphens?: boolean;

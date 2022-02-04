@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { mq, spacings } from 'utils/styles';
+import { spacings } from 'utils/styles';
 
 export type ClampWidthType = 'small' | 'normal' | 'large';
 
@@ -14,44 +14,20 @@ const View = styled.div<{
     max-width: ${({ clampWidth }) => {
         switch (clampWidth) {
             case 'large':
-                return spacings.wrapperLarge;
+                return `${spacings.wrapperLarge}px`;
 
             case 'small':
-                return spacings.wrapperSmall;
+                return `${spacings.wrapperSmall}px`;
 
             default:
             case 'normal':
-                return spacings.wrapper;
+                return `${spacings.wrapper}px`;
         }
-    }}
+    }};
     margin-left: auto;
     margin-right: auto;
-    padding: 0 ${({ addWhitespace }) =>
-        addWhitespace ? spacings.nudge * 2 : 0}px;
-
-    /* @media ${mq.semilarge} {
-        padding-left: ${({ addWhitespace }) =>
-            addWhitespace ? (1 / 28) * 100 : 0}%;
-        padding-left: ${({ addWhitespace }) =>
-            addWhitespace
-                ? `
-                      max(
-                          ${spacings.spacer}px,
-                          ${(1 / 28) * 100}%
-                      );
-                  `
-                : 0};
-
-        padding-right: ${({ addWhitespace }) =>
-            addWhitespace ? spacings.spacer : 0}px;
-    }
-
-    @media ${mq.xlarge} {
-        padding-left: ${({ addWhitespace }) =>
-            addWhitespace ? (1 / 28) * spacings.wrapper : 0}px;
-        padding-right: ${({ addWhitespace }) =>
-            addWhitespace ? spacings.spacer : 0}px;
-    } */
+    padding: 0
+        ${({ addWhitespace }) => (addWhitespace ? spacings.nudge * 2 : 0)}px;
 `;
 
 const Wrapper: React.FC<{

@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import {
     getColors as color,
     getFonts as font,
+    getGlobalSettings as global,
     spacings,
     withRange,
 } from 'utils/styles';
@@ -48,7 +49,8 @@ const View = styled.a<{
                 ? color(theme).mono.medium
                 : inverted
                 ? color(theme).light
-                : color(theme).dark};
+                : color(theme).primary.dark};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     user-select: none;
     cursor: pointer;
 

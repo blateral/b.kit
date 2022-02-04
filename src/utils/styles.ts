@@ -28,7 +28,7 @@ export const spacings = {
 
 /***** Range Helper *****/
 export const getSizeByRange = (range: [number, number]): string =>
-    `calc(${range[0]}px + (${range[1]} - ${range[0]}) * ((100vw - 300px) / (${spacings.wrapperLarge} - 320)));`;
+    `calc(${range[0]}px + (${range[1]} - ${range[0]}) * ((100vw - 300px) / (${spacings.wrapper} - 320)));`;
 
 export const withRange = (
     range: [number, number],
@@ -86,7 +86,6 @@ export interface Colors {
     mono: ColorOptions;
     primary: ColorOptions;
     secondary: ColorOptions;
-    tertiary: ColorOptions;
     error: string;
 }
 
@@ -126,7 +125,6 @@ export interface Fonts {
     'heading-2': FontProps;
     'heading-3': FontProps;
     'heading-4': FontProps;
-    label: FontOptions;
     callout: FontOptions;
 }
 
@@ -147,19 +145,14 @@ const defaultColors: Colors = {
         dark: '#A5A5A5',
     },
     primary: {
-        light: '#DD8AA3',
-        medium: '#98012E',
-        dark: '#59011B',
+        light: '#FFC5A5',
+        medium: '#FF9B63',
+        dark: '#FF7F37',
     },
     secondary: {
         light: '#5A7384',
         medium: '#35444E',
         dark: '#222A30',
-    },
-    tertiary: {
-        light: '#F2F5FA',
-        medium: '#C9CED7',
-        dark: '#A8ABB4',
     },
     error: '#ff0000',
 };
@@ -268,23 +261,6 @@ const defaultFonts: Fonts = {
         size: [20, 25],
         lineHeight: '1.16',
     },
-    label: {
-        small: {
-            ...copyBase,
-            lineHeight: '1.53',
-            size: [11, 13],
-        },
-        medium: {
-            ...copyBase,
-            lineHeight: '1.43',
-            size: [14, 16],
-        },
-        big: {
-            ...copyBase,
-            lineHeight: '1.18',
-            size: [20, 22],
-        },
-    },
     callout: {
         small: {
             ...headingBase,
@@ -339,11 +315,11 @@ const defaultGlobalSettings: GlobalSettings = {
         seperation: {
             forcePadding: false,
             padding: {
-                default: [spacings.spacer * 2, spacings.spacer * 4],
+                default: [spacings.nudge * 5, spacings.nudge * 10],
                 stackable: [spacings.spacer, spacings.spacer],
             },
             margin: {
-                default: [spacings.spacer * 2, spacings.spacer * 4],
+                default: [spacings.nudge * 5, spacings.nudge * 10],
                 stackable: [spacings.spacer, spacings.spacer],
             },
         },

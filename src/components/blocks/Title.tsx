@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import Heading, { HeadlineTag } from 'components/typography/Heading';
-import { spacings, withRange } from 'utils/styles';
+import { spacings } from 'utils/styles';
 
 const View = styled.div<{ isCentered?: boolean }>`
     display: block;
@@ -10,8 +10,16 @@ const View = styled.div<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => isCentered && '0 auto'};
 
     & > * + * {
-        ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding-top')};
+        margin-top: ${spacings.nudge * 2}px;
     }
+`;
+
+const SuperTitle = styled(Heading)`
+    display: block;
+`;
+
+const MainTitle = styled(Heading)`
+    display: block;
 `;
 
 const Title: FC<{
@@ -34,26 +42,22 @@ const Title: FC<{
     return (
         <View isCentered={isCentered} className={className}>
             {superTitle && (
-                <div>
-                    <Heading
-                        renderAs={superTitleAs || 'h3'}
-                        size="super"
-                        textColor={colorMode === 'onImage' ? '#fff' : undefined}
-                        isInverted={colorMode === 'inverted'}
-                        innerHTML={superTitle}
-                    />
-                </div>
+                <SuperTitle
+                    renderAs={superTitleAs || 'h3'}
+                    size="super"
+                    textColor={colorMode === 'onImage' ? '#fff' : undefined}
+                    isInverted={colorMode === 'inverted'}
+                    innerHTML={superTitle}
+                />
             )}
             {title && (
-                <div>
-                    <Heading
-                        renderAs={titleAs || 'h2'}
-                        size="heading-2"
-                        textColor={colorMode === 'onImage' ? '#fff' : undefined}
-                        isInverted={colorMode === 'inverted'}
-                        innerHTML={title}
-                    />
-                </div>
+                <MainTitle
+                    renderAs={titleAs || 'h2'}
+                    size="heading-2"
+                    textColor={colorMode === 'onImage' ? '#fff' : undefined}
+                    isInverted={colorMode === 'inverted'}
+                    innerHTML={title}
+                />
             )}
         </View>
     );

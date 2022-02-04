@@ -14,13 +14,7 @@ import { headingStyle } from './Heading';
 
 export type CopyType = Exclude<
     FontType,
-    | 'heading-1'
-    | 'heading-2'
-    | 'heading-3'
-    | 'heading-4'
-    | 'callout'
-    | 'super'
-    | 'label'
+    'heading-1' | 'heading-2' | 'heading-3' | 'heading-4' | 'callout' | 'super'
 >;
 
 export const copyStyle = (
