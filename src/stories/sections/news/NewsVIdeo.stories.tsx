@@ -23,7 +23,7 @@ export const Default: Story = () => (
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
-        embedId="z9IxDy1tAf8"
+        embedId="pVE92TNDwUk"
     />
 );
 
@@ -36,7 +36,7 @@ export const WithActions: Story = () => (
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
-        embedId="z9IxDy1tAf8"
+        embedId="pVE92TNDwUk"
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
@@ -60,7 +60,7 @@ export const WithBackground: Story = () => (
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
-        embedId="z9IxDy1tAf8"
+        embedId="pVE92TNDwUk"
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
@@ -83,7 +83,7 @@ export const isInverted: Story = () => (
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
-        embedId="z9IxDy1tAf8"
+        embedId="pVE92TNDwUk"
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
