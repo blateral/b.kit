@@ -15,37 +15,37 @@ export default {
 export const Default: Story = () => (
     <Quicknav
         navItems={[
-            { label: 'Dsygnathie', link: '#0' },
-            { label: 'Dentalveoläre Chirurgie', link: '#0' },
-            { label: 'Implantologie', link: '#0' },
-            { label: 'Ästhetische Chirurgie', link: '#0' },
-            { label: 'Hautchirurgie', link: '#0' },
+            { label: 'Lorem', link: '#0' },
+            { label: 'Ipsum Dolor', link: '#0' },
+            { label: 'Sit Amet', link: '#0' },
+            { label: 'Consetetur sadipscin', link: '#0' },
+            { label: 'At vero eos et accusam ', link: '#0' },
         ]}
     />
 );
 
 export const WithActiveItem: Story = () => (
     <Quicknav
-        activeNavItem="Hautchirurgie"
+        activeNavItem="Sit Amet"
         navItems={[
-            { label: 'Dsygnathie', link: '#0' },
-            { label: 'Dentalveoläre Chirurgie', link: '#0' },
-            { label: 'Implantologie', link: '#0' },
-            { label: 'Ästhetische Chirurgie', link: '#0' },
-            { label: 'Hautchirurgie', link: '#0' },
+            { label: 'Lorem', link: '#0' },
+            { label: 'Ipsum Dolor', link: '#0' },
+            { label: 'Sit Amet', link: '#0' },
+            { label: 'Consetetur sadipscin', link: '#0' },
+            { label: 'At vero eos et accusam ', link: '#0' },
         ]}
     />
 );
 
 export const IsInverted: Story = () => (
     <Quicknav
-        activeNavItem="Hautchirurgie"
+        activeNavItem="Sit Amet"
         navItems={[
-            { label: 'Dsygnathie', link: '#0' },
-            { label: 'Dentalveoläre Chirurgie', link: '#0' },
-            { label: 'Implantologie', link: '#0' },
-            { label: 'Ästhetische Chirurgie', link: '#0' },
-            { label: 'Hautchirurgie', link: '#0' },
+            { label: 'Lorem', link: '#0' },
+            { label: 'Ipsum Dolor', link: '#0' },
+            { label: 'Sit Amet', link: '#0' },
+            { label: 'Consetetur sadipscin', link: '#0' },
+            { label: 'At vero eos et accusam ', link: '#0' },
         ]}
         bgMode="inverted"
     />
