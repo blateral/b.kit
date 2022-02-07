@@ -46,10 +46,10 @@ const View = styled.a<{
     border: solid 1px
         ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).mono.medium
+                ? color(theme).new.mono.medium
                 : inverted
-                ? color(theme).light
-                : color(theme).primary.dark};
+                ? color(theme).new.light
+                : color(theme).new.dark};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     user-select: none;
     cursor: pointer;
@@ -61,10 +61,10 @@ const View = styled.a<{
     background-color: transparent;
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).mono.medium
+            ? color(theme).new.mono.medium
             : inverted
-            ? color(theme).light
-            : color(theme).dark};
+            ? color(theme).new.text.inverted
+            : color(theme).new.text.default};
     text-align: center;
 
     transition: all ease-in-out 0.2s;
@@ -72,10 +72,10 @@ const View = styled.a<{
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).mono.medium
+                ? color(theme).new.mono.medium
                 : inverted
-                ? color(theme).light
-                : color(theme).dark};
+                ? color(theme).new.text.inverted
+                : color(theme).new.text.default};
     }
 
     & > :not(:last-child) {

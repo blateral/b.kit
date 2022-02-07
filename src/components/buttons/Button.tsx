@@ -59,7 +59,7 @@ const View = styled.a<{
             : color(theme).new.primary.default};
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).light
+            ? color(theme).new.light
             : inverted
             ? color(theme).new.text.inverted
             : color(theme).new.text.default};
@@ -70,7 +70,7 @@ const View = styled.a<{
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).light
+                ? color(theme).new.light
                 : inverted
                 ? color(theme).new.text.inverted
                 : color(theme).new.text.default};
