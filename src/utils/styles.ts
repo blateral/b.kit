@@ -157,6 +157,61 @@ const defaultColors: Colors = {
     error: '#ff0000',
 };
 
+/***** New Color Types *****/
+interface NewColorOptions {
+    default: string;
+    inverted: string;
+}
+
+export type NewColorOptionsType = keyof ColorOptions;
+
+export interface NewColors {
+    text: NewColorOptions & {
+        error: string;
+    },
+    bg: {
+        default: string;
+        mono: string;
+        inverted: string;
+    },
+    primary: NewColorOptions,
+    secondary: NewColorOptions,
+    dark: string;
+    light: string;
+    mono: string;
+    error: string;
+
+}
+
+export type NewColorType = keyof NewColors;
+
+const newColors: NewColors = {
+    text: {
+        default: '#333333',
+        inverted: '#FAFAFA',
+        error: '#FF2D2D',
+    },
+    bg: {
+        default: 'transparent',
+        mono: '#F0F0F0',
+        inverted: '#333333',
+    },
+    primary: {
+        default: '#FFE600',
+        inverted: '#DFC800',
+    },
+    secondary: {
+        default: '#DAD0FF',
+        inverted: '#C5BEE0',
+    },
+    dark: '#333333',
+    light: '#FAFAFA',
+    mono: '#C8C8C8',
+    error: '#FF2D2D',
+}
+
+console.log(newColors)
+
 /***** Fonts *****/
 const copyBase: FontProps = {
     family: 'Roboto',
