@@ -17,15 +17,16 @@ const Video: React.FC<{
 }> = ({ bgMode, bgImage, embedId, playIcon }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
     return (
         <Section
             bgColor={
                 isInverted
-                    ? color(theme).dark
-                    : bgMode === 'full'
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? color(theme).new.bg.inverted
+                    : hasBg
+                    ? color(theme).new.bg.mono
+                    : color(theme).new.bg.default
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation

@@ -112,10 +112,10 @@ const Form: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? color(theme).new.bg.inverted
                     : bgMode
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? color(theme).new.bg.mono
+                    : color(theme).new.bg.default
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

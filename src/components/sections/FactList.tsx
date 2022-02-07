@@ -61,10 +61,10 @@ const FactList: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).dark
+                    ? getColors(theme).new.bg.inverted
                     : bgMode === 'full'
-                    ? getColors(theme).mono.light
-                    : 'transparent'
+                    ? getColors(theme).new.bg.mono
+                    : getColors(theme).new.bg.default
             }
             bgMode={mapToBgMode(bgMode)}
         >

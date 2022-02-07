@@ -146,10 +146,10 @@ const IconList: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).dark
-                    : bgMode === 'full'
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? color(theme).new.bg.inverted
+                    : bgMode
+                    ? color(theme).new.bg.mono
+                    : color(theme).new.bg.default
             }
             bgMode={mapToBgMode(bgMode, true)}
             isCentered={isCentered}

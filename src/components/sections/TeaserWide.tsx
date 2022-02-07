@@ -117,10 +117,10 @@ const TeaserWide: FC<{
         <Section
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? color(theme).new.bg.inverted
                     : hasBg
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? color(theme).new.bg.mono
+                    : color(theme).new.bg.default
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

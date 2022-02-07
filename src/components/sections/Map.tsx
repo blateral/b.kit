@@ -525,7 +525,11 @@ const Map: FC<{
 
     return (
         <StyledSection
-            bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
+            bgColor={
+                isInverted
+                    ? color(theme).new.bg.inverted
+                    : color(theme).new.bg.mono
+            }
             bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
         >
             {locations && generateLocalBusiness(locations)}

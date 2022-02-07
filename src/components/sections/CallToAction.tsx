@@ -295,7 +295,11 @@ export const CallToAction: FC<{
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
+            bgColor={
+                isInverted
+                    ? color(theme).new.bg.inverted
+                    : color(theme).new.bg.mono
+            }
             bgMode={bgMode ? mapToBgMode(bgMode, true) : 'full'}
         >
             <Wrapper addWhitespace clampWidth="normal">

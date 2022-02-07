@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 
 import {
     getColors as color,
@@ -265,8 +265,13 @@ const Footer: FC<{
             ? siteLinks?.slice(Math.ceil(siteLinks.length / 2))
             : undefined;
 
+    const theme = React.useContext(ThemeContext);
     return (
-        <Section renderAs="footer" bgMode="full" bgColor="transparent">
+        <Section
+            renderAs="footer"
+            bgMode="full"
+            bgColor={color(theme).new.bg.default}
+        >
             <MainView clampWidth="large" isInverted={isInverted}>
                 <Wrapper addWhitespace>
                     <Content isInverted={isInverted}>

@@ -71,6 +71,36 @@ export const styleTextColor = (fallbackColor?: string, gradient?: string) => {
     }
 };
 
+/***** New Color Types *****/
+interface NewColorOptions {
+    default: string;
+    inverted: string;
+}
+
+export type NewColorOptionsType = keyof NewColorOptions;
+
+export interface NewColors {
+    text: NewColorOptions & {
+        error: string;
+    },
+    bg: {
+        default: string;
+        mono: string;
+        inverted: string;
+    },
+    primary: NewColorOptions,
+    secondary: NewColorOptions,
+    dark: string;
+    light: string;
+    mono: {
+        medium: string,
+    };
+    error: string;
+
+}
+
+export type NewColorType = keyof NewColors;
+
 /***** Color Types *****/
 interface ColorOptions {
     light: string;
@@ -87,6 +117,7 @@ export interface Colors {
     primary: ColorOptions;
     secondary: ColorOptions;
     error: string;
+    new: NewColors;
 }
 
 export type ColorType = keyof Colors;
@@ -135,57 +166,7 @@ export type FontType = keyof Fonts;
  */
 export type FontBase = FontProps;
 
-/***** Colors *****/
-const defaultColors: Colors = {
-    dark: '#000000',
-    light: '#ffffff',
-    mono: {
-        light: '#F0F0F0',
-        medium: '#C8C8C8',
-        dark: '#A5A5A5',
-    },
-    primary: {
-        light: '#FFC5A5',
-        medium: '#FF9B63',
-        dark: '#FF7F37',
-    },
-    secondary: {
-        light: '#5A7384',
-        medium: '#35444E',
-        dark: '#222A30',
-    },
-    error: '#ff0000',
-};
 
-/***** New Color Types *****/
-interface NewColorOptions {
-    default: string;
-    inverted: string;
-}
-
-export type NewColorOptionsType = keyof NewColorOptions;
-
-export interface NewColors {
-    text: NewColorOptions & {
-        error: string;
-    },
-    bg: {
-        default: string;
-        mono: string;
-        inverted: string;
-    },
-    primary: NewColorOptions,
-    secondary: NewColorOptions,
-    dark: string;
-    light: string;
-    mono: {
-        medium: string,
-    };
-    error: string;
-
-}
-
-export type NewColorType = keyof NewColors;
 
 const newColors: NewColors = {
     text: {
@@ -214,7 +195,29 @@ const newColors: NewColors = {
     error: '#FF2D2D',
 }
 
-console.log(newColors)
+/***** Colors *****/
+const defaultColors: Colors = {
+    dark: '#000000',
+    light: '#ffffff',
+    mono: {
+        light: '#F0F0F0',
+        medium: '#C8C8C8',
+        dark: '#A5A5A5',
+    },
+    primary: {
+        light: '#FFC5A5',
+        medium: '#FF9B63',
+        dark: '#FF7F37',
+    },
+    secondary: {
+        light: '#5A7384',
+        medium: '#35444E',
+        dark: '#222A30',
+    },
+    error: '#ff0000',
+    new: newColors,
+};
+
 
 /***** Fonts *****/
 const copyBase: FontProps = {
