@@ -163,7 +163,7 @@ interface NewColorOptions {
     inverted: string;
 }
 
-export type NewColorOptionsType = keyof ColorOptions;
+export type NewColorOptionsType = keyof NewColorOptions;
 
 export interface NewColors {
     text: NewColorOptions & {
@@ -178,7 +178,9 @@ export interface NewColors {
     secondary: NewColorOptions,
     dark: string;
     light: string;
-    mono: string;
+    mono: {
+        medium: string,
+    };
     error: string;
 
 }
@@ -206,7 +208,9 @@ const newColors: NewColors = {
     },
     dark: '#333333',
     light: '#FAFAFA',
-    mono: '#C8C8C8',
+    mono: {
+        medium: '#C8C8C8'
+    },
     error: '#FF2D2D',
 }
 
