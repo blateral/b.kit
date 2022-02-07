@@ -27,9 +27,9 @@ export const Default: Story = () => (
 
 export const WithContent: Story = () => (
     <Poster
-        superTitle="Haus St. Franziskus"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        superTitle="Lorem Ipsum"
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/1023/500?image=409',
             medium: 'https://unsplash.it/1023/500?image=409',
@@ -51,9 +51,9 @@ export const WithContent: Story = () => (
 
 export const WithWrapper: Story = () => (
     <Poster
-        superTitle="Haus St. Franziskus"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        superTitle="Lorem Ipsum"
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/1023/500?image=409',
             medium: 'https://unsplash.it/1023/500?image=409',
