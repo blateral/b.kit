@@ -9,7 +9,7 @@ import PromotionCarousel, {
 import { generateItemList } from 'utils/storyHelpers';
 
 const examplePromotion: PromotionCarouselItem = {
-    title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+    title: 'Lorem ipsum dolor sit amet',
     image: {
         small: 'https://unsplash.it/553/553',
         medium: 'https://unsplash.it/441/441',
@@ -24,7 +24,7 @@ const examplePromotions = generateItemList<PromotionCarouselItem>(
     4,
     (item, i) => ({
         ...item,
-        title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+        title: 'Lorem ipsum dolor sit amet',
         image: {
             small: `${item.image.small}?image=40${i}`,
             medium: `${item.image.medium}?image=40${i}`,
