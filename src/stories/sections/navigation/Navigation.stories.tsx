@@ -120,7 +120,7 @@ const primaryPointer = ({ isInverted }: { isInverted?: boolean }) => (
         onClick={console.log}
         textDecoration="none"
     >
-        <Pointer.Label>Termin Buchen</Pointer.Label>
+        <Pointer.Label>Primary</Pointer.Label>
     </Pointer.View>
 );
 
@@ -132,7 +132,7 @@ const secondaryPointer = ({ isInverted }: { isInverted?: boolean }) => (
         onClick={console.log}
         textDecoration="none"
     >
-        <Pointer.Label>Für Kollegen</Pointer.Label>
+        <Pointer.Label>Secondary</Pointer.Label>
     </Pointer.View>
 );
 
