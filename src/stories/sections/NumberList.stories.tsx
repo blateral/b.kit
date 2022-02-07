@@ -20,22 +20,22 @@ export const Default: Story = () => (
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '1234567',
-                label: 'Tonnen CO2 Reduktion',
+                label: 'Lorem Ipsum',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '544',
-                label: 'Mio. KM Elektrische Range verkauft ',
+                label: 'Dolor Sit Amet',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '197',
-                label: 'R&D projects totaling 7 % of revenue',
+                label: 'Consetetur sadipscing elitr',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '514',
-                label: 'Lorem Ipsum Dolor',
+                label: 'Sed diam nonumy eirmod tempor invidunt ut labore',
             },
         ]}
     />
@@ -48,22 +48,22 @@ export const WithBackground: Story = () => (
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '1234567',
-                label: 'Tonnen CO2 Reduktion',
+                label: 'Lorem Ipsum',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '544',
-                label: 'Mio. KM Elektrische Range verkauft ',
+                label: 'Dolor Sit Amet',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '197',
-                label: 'R&D projects totaling 7 % of revenue',
+                label: 'Consetetur sadipscing elitr',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '514',
-                label: 'Lorem Ipsum Dolor',
+                label: 'Sed diam nonumy eirmod tempor invidunt ut labore',
             },
         ]}
     />
@@ -74,23 +74,23 @@ export const IsInverted: Story = () => (
         items={[
             {
                 icon: { src: 'https://picsum.photos/140' },
-                number: '123897392749',
-                label: 'Tonnen CO2 Reduktion',
+                number: '1234567',
+                label: 'Lorem Ipsum',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '544',
-                label: 'Mio. KM Elektrische Range verkauft ',
+                label: 'Dolor Sit Amet',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '197',
-                label: 'R&D projects totaling 7 % of revenue',
+                label: 'Consetetur sadipscing elitr',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '514',
-                label: 'Lorem Ipsum Dolor',
+                label: 'Sed diam nonumy eirmod tempor invidunt ut labore',
             },
         ]}
         bgMode="inverted"
