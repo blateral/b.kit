@@ -31,19 +31,19 @@ const Helper = styled.div`
 
 export const Ghost: Story = () => (
     <ButtonGhost.View as="a" href="#" onClick={console.log}>
-        <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+        <ButtonGhost.Label>Lorem Ipsum</ButtonGhost.Label>
     </ButtonGhost.View>
 );
 
 export const Small: Story = () => (
     <ButtonGhost.View as="a" href="#" size="small" onClick={console.log}>
-        <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+        <ButtonGhost.Label>Lorem Ipsum</ButtonGhost.Label>
     </ButtonGhost.View>
 );
 
 export const GhostWithIcon: Story = () => (
     <ButtonGhost.View as="a" href="#" onClick={console.log}>
-        <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+        <ButtonGhost.Label>Lorem Ipsum</ButtonGhost.Label>
         <ButtonGhost.Icon>
             <ArrowRight />
         </ButtonGhost.Icon>
@@ -52,7 +52,7 @@ export const GhostWithIcon: Story = () => (
 
 export const GhostDisabled: Story = () => (
     <ButtonGhost.View as="a" href="#" isDisabled onClick={console.log}>
-        <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+        <ButtonGhost.Label>Lorem Ipsum</ButtonGhost.Label>
         <ButtonGhost.Icon>
             <ArrowRight />
         </ButtonGhost.Icon>
@@ -61,7 +61,7 @@ export const GhostDisabled: Story = () => (
 
 export const GhostInverted: Story = () => (
     <ButtonGhost.View as="a" href="#" isInverted onClick={console.log}>
-        <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+        <ButtonGhost.Label>Lorem Ipsum</ButtonGhost.Label>
         <ButtonGhost.Icon>
             <ArrowRight />
         </ButtonGhost.Icon>
@@ -83,7 +83,7 @@ export const GhostInvertedAndDisabled: Story = () => (
         isDisabled
         onClick={console.log}
     >
-        <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+        <ButtonGhost.Label>Lorem Ipsum</ButtonGhost.Label>
         <ButtonGhost.Icon>
             <ArrowRight />
         </ButtonGhost.Icon>

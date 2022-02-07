@@ -77,7 +77,7 @@ const primaryCtaFn = ({
     <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
         {size === 'desktop' && (
             <>
-                <Button.Label>zum Haus St. Ulrich</Button.Label>
+                <Button.Label>Lorem Ipsum</Button.Label>
                 <Button.Icon>
                     <ArrowRight />
                 </Button.Icon>
@@ -105,7 +105,7 @@ const secondaryCtaFn = ({
         onClick={console.log}
     >
         {size === 'desktop' && (
-            <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+            <ButtonGhost.Label>Lorem Ipsum</ButtonGhost.Label>
         )}
         {size === 'mobile' && (
             <ButtonGhost.Icon>

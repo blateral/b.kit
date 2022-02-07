@@ -46,32 +46,32 @@ const exampleNavItems = {
         },
         {
             id: 'navGroup2',
-            name: 'Zimmer',
+            name: 'Gruppe 2',
             items: [
                 {
                     id: 'activea',
-                    label: 'Aktiv Classic',
+                    label: 'Unterpunkt 1',
                     link: { href: '#' },
                     onClick: (id: string, fullId: string) =>
                         console.log(fullId),
                 },
                 {
                     id: 'activeb',
-                    label: 'Aktiv Eco',
+                    label: 'Unterpunkt 2',
                     link: { href: '#' },
                     onClick: (id: string, fullId: string) =>
                         console.log(fullId),
                 },
                 {
                     id: 'activec',
-                    label: 'Aktiv Classic',
+                    label: 'Unterpunkt 3',
                     link: { href: '#' },
                     onClick: (id: string, fullId: string) =>
                         console.log(fullId),
                 },
                 {
                     id: 'actived',
-                    label: 'Aktiv Eco',
+                    label: 'Unterpunkt 4',
                     link: { href: '#' },
                     onClick: (id: string, fullId: string) =>
                         console.log(fullId),
@@ -80,32 +80,32 @@ const exampleNavItems = {
         },
         {
             id: 'navGroup3',
-            name: 'Zimmer2',
+            name: 'Gruppe 3',
             items: [
                 {
                     id: 'activea',
-                    label: 'Aktiv Classic',
+                    label: 'Unterpunkt 1',
                     link: { href: '#' },
                     onClick: (id: string, fullId: string) =>
                         console.log(fullId),
                 },
                 {
                     id: 'activeb',
-                    label: 'Aktiv Eco',
+                    label: 'Unterpunkt 2',
                     link: { href: '#' },
                     onClick: (id: string, fullId: string) =>
                         console.log(fullId),
                 },
                 {
                     id: 'activec',
-                    label: 'Aktiv Classic',
+                    label: 'Unterpunkt 3',
                     link: { href: '#' },
                     onClick: (id: string, fullId: string) =>
                         console.log(fullId),
                 },
                 {
                     id: 'actived',
-                    label: 'Aktiv Eco',
+                    label: 'Unterpunkt 4',
                     link: { href: '#' },
                     onClick: (id: string, fullId: string) =>
                         console.log(fullId),
@@ -184,7 +184,7 @@ const primaryCtaFn = ({
     <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
         {size === 'desktop' && (
             <>
-                <Button.Label>zum Haus St. Ulrich</Button.Label>
+                <Button.Label>Lorem Ipsum</Button.Label>
                 <Button.Icon>
                     <ArrowRight />
                 </Button.Icon>
@@ -212,7 +212,7 @@ const secondaryCtaFn = ({
         onClick={console.log}
     >
         {size === 'desktop' && (
-            <ButtonGhost.Label>zum Haus St. Ulrich</ButtonGhost.Label>
+            <ButtonGhost.Label>Lorem Ipsum</ButtonGhost.Label>
         )}
         {size === 'mobile' && (
             <ButtonGhost.Icon>

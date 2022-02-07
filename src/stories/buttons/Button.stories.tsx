@@ -55,7 +55,7 @@ export const ExternalLink: Story = () => (
 
 export const WithIcon: Story = () => (
     <Button.View as="a" href="#" onClick={console.log}>
-        <Button.Label>zum Haus St. Ulrich</Button.Label>
+        <Button.Label>Lorem Ipsum</Button.Label>
         <Button.Icon>
             <ArrowRight />
         </Button.Icon>
@@ -64,7 +64,7 @@ export const WithIcon: Story = () => (
 
 export const Disabled: Story = () => (
     <Button.View as="a" href="#" isDisabled onClick={console.log}>
-        <Button.Label>zum Haus St. Ulrich</Button.Label>
+        <Button.Label>Lorem Ipsum</Button.Label>
         <Button.Icon>
             <ArrowRight />
         </Button.Icon>
@@ -73,7 +73,7 @@ export const Disabled: Story = () => (
 
 export const Inverted: Story = () => (
     <Button.View as="a" href="#" isInverted onClick={console.log}>
-        <Button.Label>zum Haus St. Ulrich</Button.Label>
+        <Button.Label>Lorem Ipsum</Button.Label>
         <Button.Icon>
             <ArrowRight />
         </Button.Icon>
@@ -89,7 +89,7 @@ Inverted.parameters = {
 
 export const InvertedAndDisabled: Story = () => (
     <Button.View as="a" href="#" isInverted isDisabled onClick={console.log}>
-        <Button.Label>zum Haus St. Ulrich</Button.Label>
+        <Button.Label>Lorem Ipsum</Button.Label>
         <Button.Icon>
             <ArrowRight />
         </Button.Icon>

@@ -25,8 +25,8 @@ const exampleVideos = generateItemList<VideoCardProps>(
     4,
     (item, i) => ({
         ...item,
-        superTitle: 'Haus St. Franziskus',
-        title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+        superTitle: 'Lorem Ipsum',
+        title: 'Lorem ipsum dolor sit amet',
         bgImage: {
             small: `http://unsplash.it/553/311?image=40${i}`,
             medium: `http://unsplash.it/704/396?image=40${i}`,

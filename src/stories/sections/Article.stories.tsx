@@ -235,8 +235,24 @@ export const WithFullBg: Story = () => (
             <br/>
             Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
             `}
-        asideText={`<b>Lorem ipsum dolor sit amet
-                bonum arementert</b><br/><br/>Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte<br/><br/><ol><li>Lorem uidem libero officia quam? Quasi perferendis </li><li>Ipsum uidem libero officia quam? Quasi perferendis </li></ol><br/><br/><ol><li>Lorem</li><li>Ipsum</li></ol>`}
+        asideText={`
+            <b>Lorem ipsum dolor sit amet bonum arementert</b>
+            <br/>
+            <br/>
+            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+            <br/>
+            <br/>
+            <ol>
+            <li>Lorem</li>
+            <li>Ipsum</li>
+            </ol>
+            <br/>
+            <br/>
+            <ol>
+            <li>Lorem</li>
+            <li>Ipsum</li>
+            </ol>
+        `}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
@@ -269,8 +285,24 @@ export const SplittedBackground: Story = () => (
             <br/>
             Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
             `}
-        asideText={`<b>Lorem ipsum dolor sit amet
-                bonum arementert</b><br/><br/>Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte<br/><br/><ol><li>Lorem uidem libero officia quam? Quasi perferendis </li><li>Ipsum uidem libero officia quam? Quasi perferendis </li></ol><br/><br/><ol><li>Lorem</li><li>Ipsum</li></ol>`}
+        asideText={`
+            <b>Lorem ipsum dolor sit amet bonum arementert</b>
+            <br/>
+            <br/>
+            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+            <br/>
+            <br/>
+            <ol>
+            <li>Lorem</li>
+            <li>Ipsum</li>
+            </ol>
+            <br/>
+            <br/>
+            <ol>
+            <li>Lorem</li>
+            <li>Ipsum</li>
+            </ol>
+        `}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
