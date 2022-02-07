@@ -46,7 +46,7 @@ export const SinglePoster: Story = () => (
 
 export const WithTitle: Story = () => (
     <Header
-        title="Risikomanagementprozess"
+        title="Lorem Ipsum Dolor Sit"
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -68,10 +68,9 @@ export const WithTitle: Story = () => (
 
 export const WithIntroText: Story = () => (
     <Header
-        title="Risikomanagementprozess"
+        title="Lorem Ipsum Dolor Sit"
         intro={{
-            text:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
         }}
         images={[
             {
@@ -94,11 +93,10 @@ export const WithIntroText: Story = () => (
 
 export const WithIntroHeading: Story = () => (
     <Header
-        title="Risikomanagementprozess"
+        title="Lorem Ipsum Dolor Sit"
         intro={{
-            title: 'Risikomanagementprozess',
-            text:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            title: 'Lorem Ipsum Dolor Sit',
+            text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
         }}
         images={[
             {
@@ -121,7 +119,7 @@ export const WithIntroHeading: Story = () => (
 
 export const WithActions: Story = () => (
     <Header
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -153,7 +151,7 @@ export const WithActions: Story = () => (
 
 export const WithBadge: Story = () => (
     <Header
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -193,7 +191,7 @@ export const WithBadge: Story = () => (
 
 export const WithBadgeOnMobile: Story = () => (
     <Header
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -235,7 +233,7 @@ export const WithBadgeOnMobile: Story = () => (
 export const SmallerHeaderSize: Story = () => (
     <Header
         size="small"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -269,7 +267,7 @@ export const WithExplicitSizeScale: Story = () => (
     <Header
         size="small"
         height="60vh" // is overriting size prop
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -301,7 +299,7 @@ export const WithExplicitSizeScale: Story = () => (
 
 export const WithKenBurnsEffect: Story = () => (
     <Header
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -348,7 +346,7 @@ export const WithKenBurnsEffect: Story = () => (
 export const WithKenBurnsEffectSmallerSize: Story = () => (
     <Header
         size="small"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -394,7 +392,7 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
 
 export const WithVideo: Story = () => (
     <Header
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         videoUrl="images/videos/alps_stockvideo.mp4"
         images={[
             {
@@ -428,7 +426,7 @@ export const WithVideo: Story = () => (
 export const WithVideoSmallerSize: Story = () => (
     <Header
         size="small"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
         videoUrl="images/videos/alps_stockvideo.mp4"
         images={[
             {
