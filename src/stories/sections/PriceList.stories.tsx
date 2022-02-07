@@ -16,7 +16,7 @@ export const Default: Story = () => (
     <PriceList
         items={[
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -26,7 +26,7 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -36,7 +36,7 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -46,7 +46,7 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -56,7 +56,7 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -66,7 +66,7 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -76,7 +76,7 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -94,7 +94,7 @@ export const HasBackground: Story = () => (
         bgMode="full"
         items={[
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -104,7 +104,7 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -114,7 +114,7 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -124,7 +124,7 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -134,7 +134,7 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -144,7 +144,7 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -154,7 +154,7 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -172,7 +172,7 @@ export const IsInverted: Story = () => (
         bgMode="inverted"
         items={[
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -182,7 +182,7 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -192,7 +192,7 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -202,7 +202,7 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -212,7 +212,7 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -222,7 +222,7 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -232,7 +232,7 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Bruschetta Tomate & Parmesan</b>
+                text: `<b>Lorem Ipsum Dolor Sit</b>
                     <br />
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
