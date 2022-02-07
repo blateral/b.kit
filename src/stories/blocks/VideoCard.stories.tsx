@@ -22,7 +22,7 @@ export const Default: Story = () => (
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
-        embedId="z9IxDy1tAf8"
+        embedId="pVE92TNDwUk"
     />
 );
 
@@ -35,7 +35,7 @@ export const WithCustomPlayIcon: Story = () => (
             xlarge: 'http://unsplash.it/1680/810',
             alt: 'Placeholder Image',
         }}
-        embedId="z9IxDy1tAf8"
+        embedId="pVE92TNDwUk"
         playIcon={<Play iconColor="red" />}
     />
 );

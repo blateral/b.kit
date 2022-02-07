@@ -14,7 +14,7 @@ export default {
 
 export const Default: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
@@ -25,7 +25,7 @@ export const Default: Story = () => (
 
 export const WithText: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
@@ -36,7 +36,7 @@ export const WithText: Story = () => (
 
 export const WithActions: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
@@ -47,7 +47,7 @@ export const WithActions: Story = () => (
 
 export const WithLink: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
@@ -59,7 +59,7 @@ export const WithLink: Story = () => (
 
 export const WithClickHandler: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
