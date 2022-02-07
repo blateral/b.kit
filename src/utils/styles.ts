@@ -228,8 +228,8 @@ const copyBase: FontProps = {
     letterSpacing: '0',
     size: [10, 13],
     textTransform: '',
-    color: defaultColors.dark,
-    colorInverted: defaultColors.light,
+    color: defaultColors.new.text.default,
+    colorInverted: defaultColors.new.text.inverted,
 };
 
 const headingBase: FontProps = {
@@ -239,8 +239,8 @@ const headingBase: FontProps = {
     lineHeight: '1.1',
     letterSpacing: '0',
     size: [38, 40],
-    color: defaultColors.dark,
-    colorInverted: defaultColors.light,
+    color: defaultColors.new.text.default,
+    colorInverted: defaultColors.new.text.inverted,
 };
 
 const defaultFonts: Fonts = {
