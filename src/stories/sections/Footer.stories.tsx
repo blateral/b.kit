@@ -57,12 +57,12 @@ export const WithSiteLinks: Story = () => (
         }}
         contactData={exampleContactData}
         siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor', isActive: true },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
         ]}
     />
 );
@@ -75,18 +75,18 @@ export const WithMoreSiteLinks: Story = () => (
         }}
         contactData={exampleContactData}
         siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen' },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor', isActive: true },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor' },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
         ]}
     />
 );
@@ -99,15 +99,15 @@ export const WithUnevenSiteLinks: Story = () => (
         }}
         contactData={exampleContactData}
         siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor', isActive: true },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor' },
         ]}
     />
 );
@@ -120,15 +120,15 @@ export const WithSocials: Story = () => (
         }}
         contactData={exampleContactData}
         siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor', isActive: true },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor' },
         ]}
         socials={[
             { href: '#', icon: <Facebook /> },
@@ -147,18 +147,18 @@ export const WithNewsletterTitleAndText: Story = () => (
         }}
         contactData={exampleContactData}
         siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen' },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor', isActive: true },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor' },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
         ]}
         socials={[
             { href: '#', icon: <Facebook /> },
@@ -167,7 +167,7 @@ export const WithNewsletterTitleAndText: Story = () => (
             { href: '#', icon: <Twitter /> },
         ]}
         newsTitle="Newsletter"
-        newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
+        newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
     />
 );
 
@@ -179,21 +179,21 @@ export const WithNewsletterForm: Story = () => (
         }}
         contactData={exampleContactData}
         siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen' },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor', isActive: true },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor' },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
         ]}
         newsTitle="Newsletter"
-        newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
+        newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
         newsForm={(isInverted) => (
             <CompactForm
                 isInverted={isInverted}
@@ -222,21 +222,21 @@ export const WithColumnTopSpace: Story = () => (
         columnTopSpace="40px"
         contactData={exampleContactData}
         siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen' },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor', isActive: true },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor' },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
         ]}
         newsTitle="Newsletter"
-        newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
+        newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
         newsForm={(isInverted) => (
             <CompactForm
                 isInverted={isInverted}
@@ -265,21 +265,21 @@ export const WithBottomLinks: Story = () => (
         columnTopSpace="40px"
         contactData={exampleContactData}
         siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen' },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor', isActive: true },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor' },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
         ]}
         newsTitle="Newsletter"
-        newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
+        newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
         newsForm={(isInverted) => (
             <CompactForm
                 isInverted={isInverted}
@@ -313,21 +313,21 @@ export const Inverted: Story = () => (
         columnTopSpace="40px"
         contactData={exampleContactData}
         siteLinks={[
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen', isActive: true },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
-            { href: '#', label: 'Aufgaben/Bereiche' },
-            { href: '#', label: 'Pflege' },
-            { href: '#', label: 'Wohnen' },
-            { href: '#', label: 'Arbeiten & Mitwirken' },
-            { href: '#', label: 'Spenden' },
-            { href: '#', label: 'Stiftung' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor', isActive: true },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
+            { href: '#', label: 'Lorem' },
+            { href: '#', label: 'Ipsum' },
+            { href: '#', label: 'Dolor' },
+            { href: '#', label: 'Sit Amet' },
+            { href: '#', label: 'Consetetur' },
+            { href: '#', label: 'Elitr' },
         ]}
         newsTitle="Newsletter"
-        newsText={`Bleiben Sie immer aktuell, Softwareneuerungen, Informationen aus dem Unternehmen usw. Abbonieren Sie kostenfrei unseren Newsletter, einfach nur <a href="#">E-Mail Adresse</a> hinterlassen und von immer aktuellen Nachrichten profitieren.`}
+        newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
         newsForm={(isInverted) => (
             <CompactForm
                 isInverted={isInverted}
