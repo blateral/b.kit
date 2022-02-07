@@ -53,16 +53,16 @@ const View = styled.a<{
 
     background-color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).mono.medium
+            ? color(theme).new.mono.medium
             : inverted
-            ? color(theme).light
-            : color(theme).primary.dark};
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
     color: ${({ theme, inverted, disable }) =>
         disable
             ? color(theme).light
             : inverted
-            ? color(theme).dark
-            : color(theme).light};
+            ? color(theme).new.text.inverted
+            : color(theme).new.text.default};
     text-align: left;
 
     transition: all ease-in-out 0.2s;
@@ -72,8 +72,8 @@ const View = styled.a<{
             disable
                 ? color(theme).light
                 : inverted
-                ? color(theme).dark
-                : color(theme).light};
+                ? color(theme).new.text.inverted
+                : color(theme).new.text.default};
     }
 
     & > :not(:last-child) {
