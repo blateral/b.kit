@@ -163,7 +163,7 @@ const Accordion: React.FC<{
         >
             {generateFAQ(items)}
             <Wrapper addWhitespace>
-                <Grid.Row>
+                <Grid.Row gutter={0}>
                     <Grid.Col>
                         {items &&
                             items.map(
