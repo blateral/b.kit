@@ -4,7 +4,7 @@ import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { spacings, getColors as color, mq } from 'utils/styles';
+import { spacings, getColors as color } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import { generateFAQ } from 'utils/structuredData';
@@ -61,21 +61,6 @@ const AccordionText = styled.div<{
     margin-top: 2px;
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg ? color(theme).light : color(theme).mono.light};
-
-    & > * + * {
-        margin-top: ${spacings.spacer}px;
-    }
-
-    @media ${mq.medium} {
-        & > * + * {
-            margin-top: 0;
-            margin-left: ${spacings.spacer}px;
-        }
-
-        & > *:last-child {
-            flex: ${({ hasAside }) => hasAside && ' 0 1 50%'};
-        }
-    }
 `;
 
 interface AccordionItems {
