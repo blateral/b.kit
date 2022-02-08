@@ -8,18 +8,19 @@ import { spacings, getColors as color, mq } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import { generateFAQ } from 'utils/structuredData';
+import Grid from 'components/base/Grid';
 
-const AccordionBlock = styled.ul`
+const AccordionContainer = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
 
     & + & {
-        margin-top: ${spacings.nudge * 2}px;
+        margin-top: ${spacings.nudge}px;
     }
 `;
 
-const AccordionItems = styled.li`
+const View = styled.li`
     cursor: pointer;
 `;
 
@@ -32,7 +33,7 @@ const AccordionHead = styled.div<{
     align-items: center;
     justify-content: space-between;
 
-    padding: ${spacings.spacer}px;
+    padding: ${spacings.nudge * 3}px ${spacings.nudge * 2}px;
 
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg ? color(theme).light : color(theme).mono.light};
@@ -54,10 +55,9 @@ const AccordionText = styled.div<{
     hasAside?: boolean;
     hasColumns?: boolean;
 }>`
-    display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
-    flex-direction: column;
+    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
 
-    padding: ${spacings.spacer}px;
+    padding: ${spacings.nudge * 3}px ${spacings.nudge * 2}px;
     margin-top: 2px;
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg ? color(theme).light : color(theme).mono.light};
@@ -67,22 +67,9 @@ const AccordionText = styled.div<{
     }
 
     @media ${mq.medium} {
-        flex-direction: row;
-        padding-bottom: ${({ hasAside }) =>
-            hasAside && spacings.spacer * 2 + 'px'};
-
         & > * + * {
             margin-top: 0;
             margin-left: ${spacings.spacer}px;
-        }
-
-        & > *:first-child {
-            flex: ${({ hasAside, hasColumns }) =>
-                !hasAside && !hasColumns
-                    ? '0 1 75%'
-                    : hasAside
-                    ? '0 1 50%'
-                    : undefined};
         }
 
         & > *:last-child {
@@ -91,13 +78,83 @@ const AccordionText = styled.div<{
     }
 `;
 
+interface AccordionItems {
+    label?: string;
+    text?: string;
+    aside?: string;
+    hasColumns?: boolean;
+}
+
+const AccordionBlock: React.FC<
+    AccordionItems & {
+        isSelected?: boolean;
+        onClick?: () => void;
+        isInverted?: boolean;
+        hasBg?: boolean;
+    }
+> = ({
+    label,
+    text,
+    aside,
+    hasColumns,
+    isSelected,
+    onClick,
+    hasBg,
+    isInverted,
+}) => {
+    const theme = React.useContext(ThemeContext);
+    return (
+        <View onClick={onClick}>
+            <AccordionHead isInverted={isInverted} hasBg={hasBg}>
+                <Copy size="big" type="copy-b">
+                    {label}
+                </Copy>
+                <IconContainer>
+                    {isSelected ? (
+                        <Minus iconColor={color(theme).dark} />
+                    ) : (
+                        <Plus iconColor={color(theme).dark} />
+                    )}
+                </IconContainer>
+            </AccordionHead>
+            <AccordionText
+                isInverted={isInverted}
+                hasBg={hasBg}
+                isVisible={isSelected}
+                hasAside={!!aside}
+                hasColumns={hasColumns}
+            >
+                <Grid.Row>
+                    <Grid.Col
+                        semilarge={
+                            aside
+                                ? { span: 6 / 12 }
+                                : !hasColumns
+                                ? { span: 9 / 12 }
+                                : undefined
+                        }
+                    >
+                        {text && (
+                            <Copy
+                                type="copy"
+                                innerHTML={text}
+                                columns={!aside ? hasColumns : false}
+                            />
+                        )}
+                    </Grid.Col>
+                    {aside && (
+                        <Grid.Col semilarge={{ span: 6 / 12 }}>
+                            <Copy type="copy" innerHTML={aside} />
+                        </Grid.Col>
+                    )}
+                </Grid.Row>
+            </AccordionText>
+        </View>
+    );
+};
+
 const Accordion: React.FC<{
-    items: {
-        label?: string;
-        text?: string;
-        aside?: string;
-        hasColumns?: boolean;
-    }[];
+    items: AccordionItems[];
 
     bgMode?: 'full' | 'inverted';
 }> = ({ items, bgMode }) => {
@@ -121,74 +178,46 @@ const Accordion: React.FC<{
         >
             {generateFAQ(items)}
             <Wrapper addWhitespace>
-                {items &&
-                    items.map(({ label, text, aside, hasColumns }, i) => {
-                        const isSelected = currentItems.indexOf(i) !== -1;
-                        return (
-                            <AccordionBlock key={i}>
-                                <AccordionItems>
-                                    <AccordionHead
-                                        isInverted={isInverted}
-                                        hasBg={hasBg}
-                                        onClick={() => {
-                                            setCurrentItems((prev) => {
-                                                const copy = [...prev];
-                                                const index = copy.indexOf(i);
-                                                if (index === -1) {
-                                                    copy.push(i);
-                                                } else {
-                                                    copy.splice(index, 1);
-                                                }
-                                                return copy;
-                                            });
-                                        }}
-                                    >
-                                        <Copy size="big" type="copy-b">
-                                            {label}
-                                        </Copy>
-                                        <IconContainer>
-                                            {isSelected ? (
-                                                <Minus
-                                                    iconColor={
-                                                        color(theme).dark
-                                                    }
-                                                />
-                                            ) : (
-                                                <Plus
-                                                    iconColor={
-                                                        color(theme).dark
-                                                    }
-                                                />
-                                            )}
-                                        </IconContainer>
-                                    </AccordionHead>
-                                    <AccordionText
-                                        isInverted={isInverted}
-                                        hasBg={hasBg}
-                                        isVisible={isSelected}
-                                        hasAside={!!aside}
-                                        hasColumns={hasColumns}
-                                    >
-                                        {text && (
-                                            <Copy
-                                                type="copy"
-                                                innerHTML={text}
-                                                columns={
-                                                    !aside ? hasColumns : false
-                                                }
+                <Grid.Row>
+                    <Grid.Col>
+                        {items &&
+                            items.map(
+                                ({ label, text, aside, hasColumns }, i) => {
+                                    const isSelected =
+                                        currentItems.indexOf(i) !== -1;
+                                    return (
+                                        <AccordionContainer key={i}>
+                                            <AccordionBlock
+                                                isSelected={isSelected}
+                                                label={label}
+                                                text={text}
+                                                aside={aside}
+                                                hasColumns={hasColumns}
+                                                onClick={() => {
+                                                    setCurrentItems((prev) => {
+                                                        const copy = [...prev];
+                                                        const index =
+                                                            copy.indexOf(i);
+                                                        if (index === -1) {
+                                                            copy.push(i);
+                                                        } else {
+                                                            copy.splice(
+                                                                index,
+                                                                1
+                                                            );
+                                                        }
+                                                        return copy;
+                                                    });
+                                                }}
+                                                isInverted={isInverted}
+                                                hasBg={hasBg}
                                             />
-                                        )}
-                                        {aside && (
-                                            <Copy
-                                                type="copy"
-                                                innerHTML={aside}
-                                            />
-                                        )}
-                                    </AccordionText>
-                                </AccordionItems>
-                            </AccordionBlock>
-                        );
-                    })}
+                                        </AccordionContainer>
+                                    );
+                                }
+                            )}
+                    </Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
