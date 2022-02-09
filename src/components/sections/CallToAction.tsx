@@ -55,7 +55,7 @@ const Avatar = styled.img`
     }
 
     @media ${mq.xlarge} {
-        margin-right: ${spacings.spacer * 1.5}px;
+        /* margin-right: ${spacings.spacer * 1.5}px; */
     }
 `;
 
