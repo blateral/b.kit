@@ -90,7 +90,6 @@ export { default as NumberList } from 'components/sections/NumberList';
 export { default as DynamicForm } from 'components/sections/DynamicForm';
 export { default as SocialWall } from 'components/sections/SocialWall';
 export { default as ParallaxBackground } from 'components/sections/ParallaxBackground';
-export { default as CallToActionDouble } from 'components/sections/CallToActionDouble';
 export { default as PriceList } from 'components/sections/PriceList';
 export { default as SimpleImage } from 'components/sections/SimpleImage';
 export { default as PriceTable } from 'components/sections/PriceTable';
