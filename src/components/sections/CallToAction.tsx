@@ -291,6 +291,11 @@ const StyledActions = styled(Actions)`
     @media ${mq.semilarge} {
         & > * {
             max-width: 300px;
+            margin-left: 0;
+        }
+
+        & > * + * {
+            margin-left: 32px;
         }
     }
 `;
@@ -393,17 +398,25 @@ export const CallToAction: FC<{
                                 {newsFormMain(isInverted)}
                             </NewsletterWrapper>
                         )}
-                        {(primaryAction || secondaryAction) && (
-                            <StyledActions
-                                primary={
-                                    primaryAction && primaryAction(isInverted)
-                                }
-                                secondary={
-                                    secondaryAction &&
-                                    secondaryAction(isInverted)
-                                }
-                            />
-                        )}
+                        <Grid.Row>
+                            <Grid.Col
+                                medium={{ span: 1 }}
+                                semilarge={{ span: 5 / 6, move: 1 / 6 }}
+                            >
+                                {(primaryAction || secondaryAction) && (
+                                    <StyledActions
+                                        primary={
+                                            primaryAction &&
+                                            primaryAction(isInverted)
+                                        }
+                                        secondary={
+                                            secondaryAction &&
+                                            secondaryAction(isInverted)
+                                        }
+                                    />
+                                )}
+                            </Grid.Col>
+                        </Grid.Row>
                     </Grid.Col>
                 </Grid.Row>
 
