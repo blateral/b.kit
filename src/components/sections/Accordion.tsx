@@ -37,16 +37,16 @@ const AccordionHead = styled.div<{
 
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg ? color(theme).light : color(theme).mono.light};
-`;
 
-const IconContainer = styled.div`
-    will-change: transform;
-    transition: all ease-in-out 0.2s;
-
-    ${AccordionHead}:hover & {
-        transform: scale(1.2);
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            transition: background 0.2s ease-in-out;
+            background: ${({ theme }) => color(theme).mono.medium};
+        }
     }
 `;
+
+const IconContainer = styled.div``;
 
 const AccordionText = styled.div<{
     isVisible?: boolean;
