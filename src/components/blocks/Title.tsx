@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Heading, { HeadlineTag } from 'components/typography/Heading';
 import { spacings } from 'utils/styles';
+import Copy from 'components/typography/Copy';
 
 const View = styled.div<{ isCentered?: boolean }>`
     display: block;
@@ -10,11 +11,11 @@ const View = styled.div<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => isCentered && '0 auto'};
 
     & > * + * {
-        margin-top: ${spacings.nudge * 2}px;
+        margin-top: ${spacings.nudge * 3}px;
     }
 `;
 
-const SuperTitle = styled(Heading)`
+const SuperTitle = styled(Copy)`
     display: block;
 `;
 
@@ -33,7 +34,6 @@ const Title: FC<{
 }> = ({
     colorMode = 'default',
     superTitle,
-    superTitleAs,
     title,
     titleAs,
     isCentered = false,
@@ -43,8 +43,8 @@ const Title: FC<{
         <View isCentered={isCentered} className={className}>
             {superTitle && (
                 <SuperTitle
-                    renderAs={superTitleAs || 'h3'}
-                    size="super"
+                    size="medium"
+                    type="copy-b"
                     textColor={colorMode === 'onImage' ? '#fff' : undefined}
                     isInverted={colorMode === 'inverted'}
                     innerHTML={superTitle}
@@ -53,7 +53,7 @@ const Title: FC<{
             {title && (
                 <MainTitle
                     renderAs={titleAs || 'h2'}
-                    size="heading-2"
+                    size="heading-1"
                     textColor={colorMode === 'onImage' ? '#fff' : undefined}
                     isInverted={colorMode === 'inverted'}
                     innerHTML={title}

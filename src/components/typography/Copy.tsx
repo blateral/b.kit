@@ -139,7 +139,7 @@ const base = css<{
         vertical-align: middle;
 
         & > * + * {
-            margin-left: ${spacings.spacer}px;
+            margin-left: ${spacings.nudge * 2}px;
         }
 
         svg {

@@ -28,7 +28,7 @@ const ContentBlock = styled(Copy)<{
         clampText && (19 / 28) * spacings.wrapper + 'px'};
 
     :not(:first-child) {
-        padding-top: ${spacings.nudge * 5}px;
+        padding-top: ${spacings.nudge * 3}px;
     }
 `;
 

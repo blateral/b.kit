@@ -6,7 +6,6 @@ import {
     getFonts as font,
     mq,
     spacings,
-    withRange,
 } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -15,15 +14,18 @@ import { HeadlineTag } from 'components/typography/Heading';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
 
 const ContactView = styled.div`
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
 
     margin: 0 auto;
     width: 100%;
+
+    margin-top: ${spacings.nudge * 7}px;
 
     text-align: left;
     hyphens: auto;
@@ -39,8 +41,18 @@ const Avatar = styled.img`
     width: 196px;
     border: solid 1px transparent;
     border-radius: 50%;
-    padding: ${spacings.nudge}px;
-    margin-right: ${spacings.nudge}px;
+
+    /* CENTERING AVATAR */
+    display: flex;
+    margin: 0 auto;
+
+    /* padding: ${spacings.nudge}px; */
+    /* margin-right: ${spacings.spacer}px; */
+
+    @media ${mq.medium} {
+        display: block;
+        margin-right: 0;
+    }
 
     @media ${mq.xlarge} {
         margin-right: ${spacings.spacer * 1.5}px;
@@ -55,16 +67,18 @@ const Info = styled.div`
     text-align: center;
     width: 100%;
 
-    padding: ${spacings.spacer}px;
+    /* padding: ${spacings.spacer}px; */
 
     & > *:not(:last-child) {
-        margin-bottom: ${spacings.spacer * 1.5}px;
+        margin-bottom: ${spacings.spacer}px;
     }
 
     @media ${mq.medium} {
+        display: block;
         align-content: flex-start;
         text-align: left;
-        width: auto;
+        /* width: auto; */
+        /* padding: 0 ${spacings.spacer}px; */
     }
 `;
 
@@ -89,10 +103,9 @@ const Address = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: ${spacings.nudge}px;
 
     & + & {
-        margin-top: ${spacings.nudge}px;
+        margin-top: ${spacings.nudge * 2}px;
     }
 
     & > *:not(:first-child) {
@@ -105,7 +118,7 @@ const Address = styled.div`
         padding: ${spacings.nudge}px ${spacings.nudge}px ${spacings.nudge}px 0;
 
         & > *:not(:first-child) {
-            margin-left: ${spacings.spacer}px;
+            margin-left: ${spacings.nudge * 2}px;
         }
     }
 `;
@@ -156,46 +169,90 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
     description,
     addresses,
     avatar,
-    className,
+    // className,
 }) => {
     return (
-        <ContactView className={className}>
-            {avatar && <Avatar src={avatar?.src} alt={avatar?.alt} />}
-            <Info>
-                {(name || description) && (
-                    <div>
-                        {name && (
-                            <Copy type="copy-b" isInverted={isInverted}>
-                                {name}
-                            </Copy>
+        // <ContactView className={className}>
+        //     {avatar && <Avatar src={avatar?.src} alt={avatar?.alt} />}
+        //     <Info>
+        //         {(name || description) && (
+        //             <div>
+        //                 {name && (
+        //                     <Copy type="copy-b" isInverted={isInverted}>
+        //                         {name}
+        //                     </Copy>
+        //                 )}
+        //                 {description && (
+        //                     <Description
+        //                         type="copy"
+        //                         isInverted={isInverted}
+        //                         innerHTML={description}
+        //                     />
+        //                 )}
+        //             </div>
+        //         )}
+        //         {addresses && addresses.length > 0 && (
+        //             <div>
+        //                 {addresses?.map((address, i) => (
+        //                     <Address key={i}>
+        //                         <Decorator isInverted={isInverted}>
+        //                             {address.decorator}
+        //                         </Decorator>
+        //                         <AddressLabel
+        //                             type="copy"
+        //                             size="big"
+        //                             isInverted={isInverted}
+        //                             innerHTML={address.label}
+        //                         />
+        //                     </Address>
+        //                 ))}
+        //             </div>
+        //         )}
+        //     </Info>
+        // </ContactView>
+        <ContactView>
+            <Grid.Row>
+                <Grid.Col medium={{ span: 2 / 6 }} semilarge={{ span: 2 / 6 }}>
+                    <Avatar src={avatar?.src} alt={avatar?.alt} />
+                </Grid.Col>
+                <Grid.Col medium={{ span: 4 / 6 }} semilarge={{ span: 4 / 6 }}>
+                    <Info>
+                        {(name || description) && (
+                            <div>
+                                {name && (
+                                    <Copy type="copy-b" isInverted={isInverted}>
+                                        {name}
+                                    </Copy>
+                                )}
+                                {description && (
+                                    <Description
+                                        type="copy"
+                                        isInverted={isInverted}
+                                        innerHTML={description}
+                                    />
+                                )}
+                            </div>
                         )}
-                        {description && (
-                            <Description
-                                type="copy"
-                                isInverted={isInverted}
-                                innerHTML={description}
-                            />
+                        {addresses && addresses.length > 0 && (
+                            <div>
+                                {addresses?.map((address, i) => (
+                                    <Address key={i}>
+                                        <Decorator isInverted={isInverted}>
+                                            {address.decorator}
+                                        </Decorator>
+                                        <AddressLabel
+                                            type="copy"
+                                            size="big"
+                                            isInverted={isInverted}
+                                            innerHTML={address.label}
+                                        />
+                                    </Address>
+                                ))}
+                            </div>
                         )}
-                    </div>
-                )}
-                {addresses && addresses.length > 0 && (
-                    <div>
-                        {addresses?.map((address, i) => (
-                            <Address key={i}>
-                                <Decorator isInverted={isInverted}>
-                                    {address.decorator}
-                                </Decorator>
-                                <AddressLabel
-                                    type="copy-b"
-                                    size="big"
-                                    isInverted={isInverted}
-                                    innerHTML={address.label}
-                                />
-                            </Address>
-                        ))}
-                    </div>
-                )}
-            </Info>
+                    </Info>
+                </Grid.Col>
+            </Grid.Row>
         </ContactView>
     );
 };
@@ -208,27 +265,29 @@ const StyledIntro = styled(IntroBlock)`
     }
 `;
 
-const Content = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: ${(17 / 28) * spacings.wrapper}px;
-    margin: 0 auto;
+// const Content = styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     max-width: ${(17 / 28) * spacings.wrapper}px;
+//     margin: 0 auto;
 
-    & > * + * {
-        ${withRange([spacings.spacer * 1, spacings.spacer * 1.5], 'margin-top')}
-    }
+//     & > * + * {
+//         ${withRange([spacings.spacer * 1, spacings.spacer * 1.5], 'margin-top')}
+//     }
 
-    @media ${mq.large} {
-        align-items: center;
-    }
-`;
+//     @media ${mq.large} {
+//         align-items: center;
+//     }
+// `;
 
 const StyledContactBox = styled(ContactBox)`
-    margin-top: ${spacings.spacer * 2.5}px;
+    margin-top: ${spacings.nudge * 7}px;
 `;
 
 const StyledActions = styled(Actions)`
+    margin-top: ${spacings.nudge * 8}px;
+
     @media ${mq.semilarge} {
         & > * {
             max-width: 300px;
@@ -304,7 +363,51 @@ export const CallToAction: FC<{
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
-                <Content>
+                <Grid.Row gutter={0}>
+                    <Grid.Col
+                        semilarge={{ span: 10 / 12, move: 1 / 12 }}
+                        large={{ span: 8 / 12, move: 2 / 12 }}
+                    >
+                        {title && (
+                            <StyledIntro
+                                isCentered
+                                colorMode={isInverted ? 'inverted' : 'default'}
+                                title={title}
+                                titleAs={titleAs}
+                                superTitle={superTitle}
+                                superTitleAs={superTitleAs}
+                                text={text}
+                            />
+                        )}
+                        {contact && (
+                            <StyledContactBox
+                                isInverted={isInverted}
+                                name={contact.name}
+                                description={contact.description}
+                                addresses={contact.addresses}
+                                avatar={contact.avatar}
+                            />
+                        )}
+                        {newsFormMain && hasNewsletter && (
+                            <NewsletterWrapper>
+                                {newsFormMain(isInverted)}
+                            </NewsletterWrapper>
+                        )}
+                        {(primaryAction || secondaryAction) && (
+                            <StyledActions
+                                primary={
+                                    primaryAction && primaryAction(isInverted)
+                                }
+                                secondary={
+                                    secondaryAction &&
+                                    secondaryAction(isInverted)
+                                }
+                            />
+                        )}
+                    </Grid.Col>
+                </Grid.Row>
+
+                {/* <Content>
                     {title && (
                         <StyledIntro
                             isCentered
@@ -338,7 +441,7 @@ export const CallToAction: FC<{
                             }
                         />
                     )}
-                </Content>
+                </Content> */}
             </Wrapper>
         </Section>
     );
