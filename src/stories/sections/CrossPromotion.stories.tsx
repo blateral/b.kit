@@ -10,7 +10,7 @@ export default {
     component: CrossPromotionComponent,
     parameters: {
         status: {
-            type: 'Preview',
+            type: 'preview',
         },
     },
 } as Meta;
