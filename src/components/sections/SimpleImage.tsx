@@ -27,10 +27,10 @@ const SimpleImage: FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).new.bg.inverted
+                    ? getColors(theme).new.sectionBg.dark
                     : hasBg
-                    ? getColors(theme).new.bg.mono
-                    : getColors(theme).new.bg.default
+                    ? getColors(theme).new.sectionBg.medium
+                    : getColors(theme).new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >

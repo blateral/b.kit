@@ -53,13 +53,13 @@ const View = styled.a<{
 
     background-color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).new.mono.medium
+            ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher mono.medium)
             : inverted
             ? color(theme).new.primary.inverted
             : color(theme).new.primary.default};
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).new.light
+            ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher light)
             : inverted
             ? color(theme).new.text.inverted
             : color(theme).new.text.default};
@@ -70,7 +70,7 @@ const View = styled.a<{
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).new.light
+                ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher light)
                 : inverted
                 ? color(theme).new.text.inverted
                 : color(theme).new.text.default};

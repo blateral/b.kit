@@ -270,7 +270,7 @@ const Footer: FC<{
         <Section
             renderAs="footer"
             bgMode="full"
-            bgColor={color(theme).new.bg.default}
+            bgColor={color(theme).new.sectionBg.light}
         >
             <MainView clampWidth="large" isInverted={isInverted}>
                 <Wrapper addWhitespace>

@@ -23,10 +23,10 @@ const Video: React.FC<{
         <Section
             bgColor={
                 isInverted
-                    ? color(theme).new.bg.inverted
+                    ? color(theme).new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.bg.mono
-                    : color(theme).new.bg.default
+                    ? color(theme).new.sectionBg.medium
+                    : color(theme).new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation

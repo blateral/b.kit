@@ -108,8 +108,8 @@ const Quicknav: React.FC<{
         <StyledSection
             bgColor={
                 isInverted
-                    ? color(theme).new.bg.inverted
-                    : color(theme).new.bg.default
+                    ? color(theme).new.sectionBg.dark
+                    : color(theme).new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation

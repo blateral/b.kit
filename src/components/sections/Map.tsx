@@ -527,8 +527,8 @@ const Map: FC<{
         <StyledSection
             bgColor={
                 isInverted
-                    ? color(theme).new.bg.inverted
-                    : color(theme).new.bg.mono
+                    ? color(theme).new.sectionBg.dark
+                    : color(theme).new.sectionBg.medium
             }
             bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
         >
