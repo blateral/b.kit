@@ -17,11 +17,6 @@ import { withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 
 const ContactView = styled.div`
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; */
-
     margin: 0 auto;
     width: 100%;
 
@@ -30,10 +25,14 @@ const ContactView = styled.div`
     text-align: left;
     hyphens: auto;
     overflow-wrap: break-word;
+`;
 
-    /* @media ${mq.semilarge} {
-        flex-direction: row;
-    } */
+const AvatarContainer = styled.div`
+    text-align: center;
+
+    @media${mq.semilarge} {
+        text-align: left;
+    }
 `;
 
 const Avatar = styled.img`
@@ -162,7 +161,9 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
                     semilarge={{ span: 3 / 10, move: 1 / 10 }}
                     xlarge={{ span: 2 / 8, move: 1 / 8 }}
                 >
-                    <Avatar src={avatar?.src} alt={avatar?.alt} />
+                    <AvatarContainer>
+                        <Avatar src={avatar?.src} alt={avatar?.alt} />
+                    </AvatarContainer>
                 </Grid.Col>
                 <Grid.Col
                     semilarge={{ span: 5 / 10, move: 1 / 10 }}
