@@ -31,9 +31,9 @@ const ContactView = styled.div`
     hyphens: auto;
     overflow-wrap: break-word;
 
-    @media ${mq.medium} {
+    /* @media ${mq.semilarge} {
         flex-direction: row;
-    }
+    } */
 `;
 
 const Avatar = styled.img`
@@ -42,20 +42,8 @@ const Avatar = styled.img`
     border: solid 1px transparent;
     border-radius: 50%;
 
-    /* CENTERING AVATAR */
-    display: flex;
-    margin: 0 auto;
-
-    /* padding: ${spacings.nudge}px; */
-    /* margin-right: ${spacings.spacer}px; */
-
-    @media ${mq.medium} {
+    @media ${mq.semilarge} {
         display: block;
-        margin-right: 0;
-    }
-
-    @media ${mq.xlarge} {
-        /* margin-right: ${spacings.spacer * 1.5}px; */
     }
 `;
 
@@ -67,18 +55,14 @@ const Info = styled.div`
     text-align: center;
     width: 100%;
 
-    /* padding: ${spacings.spacer}px; */
-
     & > *:not(:last-child) {
         margin-bottom: ${spacings.spacer}px;
     }
 
-    @media ${mq.medium} {
+    @media ${mq.semilarge} {
         display: block;
         align-content: flex-start;
         text-align: left;
-        /* width: auto; */
-        /* padding: 0 ${spacings.spacer}px; */
     }
 `;
 
@@ -89,7 +73,7 @@ const Description = styled(Copy)`
         justify-content: center;
     }
 
-    @media ${mq.medium} {
+    @media ${mq.semilarge} {
         text-align: left;
 
         & > * {
@@ -169,53 +153,21 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
     description,
     addresses,
     avatar,
-    // className,
+    className,
 }) => {
     return (
-        // <ContactView className={className}>
-        //     {avatar && <Avatar src={avatar?.src} alt={avatar?.alt} />}
-        //     <Info>
-        //         {(name || description) && (
-        //             <div>
-        //                 {name && (
-        //                     <Copy type="copy-b" isInverted={isInverted}>
-        //                         {name}
-        //                     </Copy>
-        //                 )}
-        //                 {description && (
-        //                     <Description
-        //                         type="copy"
-        //                         isInverted={isInverted}
-        //                         innerHTML={description}
-        //                     />
-        //                 )}
-        //             </div>
-        //         )}
-        //         {addresses && addresses.length > 0 && (
-        //             <div>
-        //                 {addresses?.map((address, i) => (
-        //                     <Address key={i}>
-        //                         <Decorator isInverted={isInverted}>
-        //                             {address.decorator}
-        //                         </Decorator>
-        //                         <AddressLabel
-        //                             type="copy"
-        //                             size="big"
-        //                             isInverted={isInverted}
-        //                             innerHTML={address.label}
-        //                         />
-        //                     </Address>
-        //                 ))}
-        //             </div>
-        //         )}
-        //     </Info>
-        // </ContactView>
-        <ContactView>
+        <ContactView className={className}>
             <Grid.Row>
-                <Grid.Col medium={{ span: 2 / 6 }} semilarge={{ span: 2 / 6 }}>
+                <Grid.Col
+                    semilarge={{ span: 3 / 10, move: 1 / 10 }}
+                    xlarge={{ span: 2 / 8, move: 1 / 8 }}
+                >
                     <Avatar src={avatar?.src} alt={avatar?.alt} />
                 </Grid.Col>
-                <Grid.Col medium={{ span: 4 / 6 }} semilarge={{ span: 4 / 6 }}>
+                <Grid.Col
+                    semilarge={{ span: 5 / 10, move: 1 / 10 }}
+                    xlarge={{ span: 4 / 8, move: 1 / 8 }}
+                >
                     <Info>
                         {(name || description) && (
                             <div>
@@ -265,39 +217,12 @@ const StyledIntro = styled(IntroBlock)`
     }
 `;
 
-// const Content = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     max-width: ${(17 / 28) * spacings.wrapper}px;
-//     margin: 0 auto;
-
-//     & > * + * {
-//         ${withRange([spacings.spacer * 1, spacings.spacer * 1.5], 'margin-top')}
-//     }
-
-//     @media ${mq.large} {
-//         align-items: center;
-//     }
-// `;
-
 const StyledContactBox = styled(ContactBox)`
     margin-top: ${spacings.nudge * 7}px;
 `;
 
 const StyledActions = styled(Actions)`
     margin-top: ${spacings.nudge * 8}px;
-
-    @media ${mq.semilarge} {
-        & > * {
-            max-width: 300px;
-            margin-left: 0;
-        }
-
-        & > * + * {
-            margin-left: 32px;
-        }
-    }
 `;
 
 const NewsletterWrapper = styled.div`
@@ -369,7 +294,7 @@ export const CallToAction: FC<{
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
-                <Grid.Row gutter={0}>
+                <Grid.Row>
                     <Grid.Col
                         semilarge={{ span: 10 / 12, move: 1 / 12 }}
                         large={{ span: 8 / 12, move: 2 / 12 }}
@@ -399,63 +324,19 @@ export const CallToAction: FC<{
                                 {newsFormMain(isInverted)}
                             </NewsletterWrapper>
                         )}
-                        <Grid.Row>
-                            <Grid.Col
-                                medium={{ span: 1 }}
-                                semilarge={{ span: 5 / 6, move: 1 / 6 }}
-                            >
-                                {(primaryAction || secondaryAction) && (
-                                    <StyledActions
-                                        primary={
-                                            primaryAction &&
-                                            primaryAction(isInverted)
-                                        }
-                                        secondary={
-                                            secondaryAction &&
-                                            secondaryAction(isInverted)
-                                        }
-                                    />
-                                )}
-                            </Grid.Col>
-                        </Grid.Row>
+                        {(primaryAction || secondaryAction) && (
+                            <StyledActions
+                                primary={
+                                    primaryAction && primaryAction(isInverted)
+                                }
+                                secondary={
+                                    secondaryAction &&
+                                    secondaryAction(isInverted)
+                                }
+                            />
+                        )}
                     </Grid.Col>
                 </Grid.Row>
-
-                {/* <Content>
-                    {title && (
-                        <StyledIntro
-                            isCentered
-                            colorMode={isInverted ? 'inverted' : 'default'}
-                            title={title}
-                            titleAs={titleAs}
-                            superTitle={superTitle}
-                            superTitleAs={superTitleAs}
-                            text={text}
-                        />
-                    )}
-                    {contact && (
-                        <StyledContactBox
-                            isInverted={isInverted}
-                            name={contact.name}
-                            description={contact.description}
-                            addresses={contact.addresses}
-                            avatar={contact.avatar}
-                        />
-                    )}
-                    {newsFormMain && hasNewsletter && (
-                        <NewsletterWrapper>
-                            {newsFormMain(isInverted)}
-                        </NewsletterWrapper>
-                    )}
-                    {(primaryAction || secondaryAction) && (
-                        <StyledActions
-                            primary={primaryAction && primaryAction(isInverted)}
-                            secondary={
-                                secondaryAction && secondaryAction(isInverted)
-                            }
-                        />
-                    )}
-                </Content> */}
             </Wrapper>
         </Section>
     );
