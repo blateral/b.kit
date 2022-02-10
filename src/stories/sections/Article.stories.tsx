@@ -9,7 +9,7 @@ export default {
     component: ArticleComponent,
     parameters: {
         status: {
-            type: 'releaseCandidate',
+            type: 'preview',
         },
     },
 } as Meta;

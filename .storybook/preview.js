@@ -57,6 +57,13 @@ export const parameters = {
     },
     status: {
         type: 'beta',
+        statuses: {
+            preview: {
+                background: '#FFE600',
+                color: '#333333',
+                description: 'Reworked not stable component',
+            },
+        },
     },
     options: {
         storySort: (previous, next) => {
