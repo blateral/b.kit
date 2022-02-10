@@ -26,13 +26,7 @@ const ContentText = styled(Copy)`
 `;
 
 const StyledActions = styled(Actions)`
-    &:not(:first-child) {
-        margin-top: ${spacings.spacer}px;
-    }
-
-    @media ${mq.semilarge} {
-        max-width: 50%;
-    }
+    margin-top: ${spacings.spacer}px;
 `;
 
 const Article: React.FC<{
@@ -133,12 +127,23 @@ const Article: React.FC<{
                     </Grid.Row>
                 )}
                 {(primaryAction || secondaryAction) && (
-                    <StyledActions
-                        primary={primaryAction && primaryAction(isInverted)}
-                        secondary={
-                            secondaryAction && secondaryAction(isInverted)
-                        }
-                    />
+                    <Grid.Row>
+                        <Grid.Col
+                            semilarge={{ span: 9 / 12 }}
+                            large={{ span: 6 / 12 }}
+                        >
+                            <StyledActions
+                                width="full"
+                                primary={
+                                    primaryAction && primaryAction(isInverted)
+                                }
+                                secondary={
+                                    secondaryAction &&
+                                    secondaryAction(isInverted)
+                                }
+                            />
+                        </Grid.Col>
+                    </Grid.Row>
                 )}
             </Wrapper>
         </Section>

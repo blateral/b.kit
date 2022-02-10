@@ -7,9 +7,16 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 export default {
     title: 'Blocks/Actions',
     component: Actions,
+    decorators: [
+        (Story) => (
+            <div style={{ padding: '20px' }}>
+                <Story />
+            </div>
+        ),
+    ],
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -32,6 +39,22 @@ export const Default: Story = () => (
 export const Mirrored: Story = () => (
     <Actions
         isMirrored
+        primary={
+            <Button.View>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondary={
+            <ButtonGhost.View>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        }
+    />
+);
+
+export const withFullWidth: Story = () => (
+    <Actions
+        width="full"
         primary={
             <Button.View>
                 <Button.Label>Primary</Button.Label>

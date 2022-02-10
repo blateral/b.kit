@@ -222,10 +222,6 @@ const StyledContactBox = styled(ContactBox)`
     margin-top: ${spacings.nudge * 7}px;
 `;
 
-const ActionContainer = styled.div`
-    text-align: center;
-`;
-
 const StyledActions = styled(Actions)`
     margin-top: ${spacings.nudge * 8}px;
 `;
@@ -301,6 +297,7 @@ export const CallToAction: FC<{
                 {badge && <Badge>{badge}</Badge>}
                 <Grid.Row>
                     <Grid.Col
+                        textAlign="center"
                         semilarge={{ span: 10 / 12, move: 1 / 12 }}
                         large={{ span: 8 / 12, move: 2 / 12 }}
                     >
@@ -340,21 +337,22 @@ export const CallToAction: FC<{
                         {(primaryAction || secondaryAction) && (
                             <Grid.Row>
                                 <Grid.Col
+                                    textAlign="center"
                                     semilarge={{ span: 8 / 10, move: 1 / 10 }}
                                     large={{ span: 6 / 8, move: 1 / 8 }}
                                 >
-                                    <ActionContainer>
-                                        <StyledActions
-                                            primary={
-                                                primaryAction &&
-                                                primaryAction(isInverted)
-                                            }
-                                            secondary={
-                                                secondaryAction &&
-                                                secondaryAction(isInverted)
-                                            }
-                                        />
-                                    </ActionContainer>
+                                    <StyledActions
+                                        isCentered
+                                        width="full"
+                                        primary={
+                                            primaryAction &&
+                                            primaryAction(isInverted)
+                                        }
+                                        secondary={
+                                            secondaryAction &&
+                                            secondaryAction(isInverted)
+                                        }
+                                    />
                                 </Grid.Col>
                             </Grid.Row>
                         )}

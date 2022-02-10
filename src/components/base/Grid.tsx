@@ -9,10 +9,12 @@ export interface ColPropsSettings {
     move?: number;
     valign?: VerticalAlign;
     halign?: HorizontalAlign;
+    textAlign?: TextAlign;
 }
 
 type VerticalAlign = 'top' | 'center' | 'bottom';
 type HorizontalAlign = 'left' | 'center' | 'right';
+type TextAlign = 'left' | 'center' | 'right';
 
 interface ColProps extends ColPropsSettings {
     medium?: ColPropsSettings;
@@ -161,6 +163,7 @@ const StyledCol = styled.div<GridProps & ColProps>`
     display: block;
     position: relative;
 
+    text-align: ${({ textAlign }) => textAlign || 'left'};
     align-self: ${({ valign }) => {
         switch (valign) {
             case 'top':
@@ -183,6 +186,7 @@ interface GridProps {
     gutter?: number;
     valign?: VerticalAlign;
     halign?: HorizontalAlign;
+    textAlign?: TextAlign;
 }
 
 const StyledGrid = styled.div<GridProps>`
@@ -192,6 +196,7 @@ const StyledGrid = styled.div<GridProps>`
     flex-direction: row;
     flex-wrap: wrap;
 
+    text-align: ${({ textAlign }) => textAlign || 'left'};
     align-items: ${({ valign }) => {
         switch (valign) {
             case 'top':
