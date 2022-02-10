@@ -1,9 +1,8 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
 import Heading, { HeadlineTag } from 'components/typography/Heading';
-import { spacings } from 'utils/styles';
-import Copy from 'components/typography/Copy';
+import { spacings, getColors as color } from 'utils/styles';
 
 const View = styled.div<{ isCentered?: boolean }>`
     display: block;
@@ -11,11 +10,11 @@ const View = styled.div<{ isCentered?: boolean }>`
     margin: ${({ isCentered }) => isCentered && '0 auto'};
 
     & > * + * {
-        margin-top: ${spacings.nudge * 3}px;
+        margin-top: ${spacings.nudge * 2}px;
     }
 `;
 
-const SuperTitle = styled(Copy)`
+const SuperTitle = styled(Heading)`
     display: block;
 `;
 
@@ -34,18 +33,25 @@ const Title: FC<{
 }> = ({
     colorMode = 'default',
     superTitle,
+    superTitleAs,
     title,
     titleAs,
     isCentered = false,
     className,
 }) => {
+    const theme = useContext(ThemeContext);
+
     return (
         <View isCentered={isCentered} className={className}>
             {superTitle && (
                 <SuperTitle
-                    size="medium"
-                    type="copy-b"
-                    textColor={colorMode === 'onImage' ? '#fff' : undefined}
+                    renderAs={superTitleAs || 'div'}
+                    size="super"
+                    textColor={
+                        colorMode === 'onImage'
+                            ? color(theme).new.text.inverted
+                            : undefined
+                    }
                     isInverted={colorMode === 'inverted'}
                     innerHTML={superTitle}
                 />
@@ -54,7 +60,11 @@ const Title: FC<{
                 <MainTitle
                     renderAs={titleAs || 'h2'}
                     size="heading-1"
-                    textColor={colorMode === 'onImage' ? '#fff' : undefined}
+                    textColor={
+                        colorMode === 'onImage'
+                            ? color(theme).new.text.inverted
+                            : undefined
+                    }
                     isInverted={colorMode === 'inverted'}
                     innerHTML={title}
                 />
