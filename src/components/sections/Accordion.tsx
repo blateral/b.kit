@@ -68,20 +68,30 @@ const AccordionText = styled.div<{
             : color(theme).new.elementBg.medium};
 `;
 
-interface AccordionItems {
+interface AccordionItem {
     label?: string;
     text?: string;
     aside?: string;
 }
 
 const AccordionBlock: React.FC<
-    AccordionItems & {
+    AccordionItem & {
         isSelected?: boolean;
         onClick?: () => void;
         isInverted?: boolean;
         hasBg?: boolean;
+        itemIcon?: (props: { isSelected: boolean }) => React.ReactNode;
     }
-> = ({ label, text, aside, isSelected, onClick, hasBg, isInverted }) => {
+> = ({
+    label,
+    text,
+    aside,
+    isSelected,
+    onClick,
+    hasBg,
+    isInverted,
+    itemIcon,
+}) => {
     const theme = React.useContext(ThemeContext);
     return (
         <View>
@@ -94,7 +104,9 @@ const AccordionBlock: React.FC<
                     {label}
                 </Copy>
                 <IconContainer>
-                    {isSelected ? (
+                    {itemIcon ? (
+                        itemIcon({ isSelected: isSelected || false })
+                    ) : isSelected ? (
                         <Minus iconColor={color(theme).dark} />
                     ) : (
                         <Plus iconColor={color(theme).dark} />
@@ -125,9 +137,15 @@ const AccordionBlock: React.FC<
 };
 
 const Accordion: React.FC<{
-    items: AccordionItems[];
+    /** Array of accordion items */
+    items: AccordionItem[];
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ items, bgMode }) => {
+
+    /** Function to inject custom item state icon */
+    itemIcon?: (props: { isSelected: boolean }) => React.ReactNode;
+}> = ({ items, bgMode, itemIcon }) => {
     const [currentItems, setCurrentItems] = React.useState<number[]>([]);
 
     const theme = React.useContext(ThemeContext);
@@ -176,6 +194,7 @@ const Accordion: React.FC<{
                                             }}
                                             isInverted={isInverted}
                                             hasBg={hasBg}
+                                            itemIcon={itemIcon}
                                         />
                                     </AccordionContainer>
                                 );
