@@ -1,45 +1,16 @@
 import PriceTag, { PriceTagProps } from 'components/blocks/PriceTag';
-import { spacings, mq, getColors } from 'utils/styles';
+import { getColors } from 'utils/styles';
 import React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-
-const PriceFlex = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    margin: -${spacings.spacer * 1.5}px;
-    margin-right: -${spacings.nudge * 3}px;
-    margin-left: -${spacings.nudge * 3}px;
-`;
+import Grid from 'components/base/Grid';
 
 const PriceTagContainer = styled.div`
-    flex: 1 1 100%;
-    padding: ${spacings.spacer * 1.5}px;
-    padding-right: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge * 3}px;
-
     & > * {
         min-height: 400px;
-    }
-
-    @media ${mq.semilarge} {
-        flex: 0 1 50%;
-    }
-
-    @media ${mq.large} {
-        flex: 0 1 33.33%;
-        max-width: 33.33%;
-
-        & > * {
-            max-width: 400px;
-        }
     }
 `;
 
@@ -82,17 +53,23 @@ const PriceTable: React.FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace>
-                <PriceFlex>
+                <Grid.Row halign="center">
                     {items.map((item, i) => (
-                        <PriceTagContainer key={i} ref={cardRefs[i]}>
-                            <PriceTag
-                                {...item}
-                                isInverted={isInverted}
-                                hasBackground={hasBg}
-                            />
-                        </PriceTagContainer>
+                        <Grid.Col
+                            key={i}
+                            semilarge={{ span: 6 / 12 }}
+                            large={{ span: 4 / 12 }}
+                        >
+                            <PriceTagContainer ref={cardRefs[i]}>
+                                <PriceTag
+                                    {...item}
+                                    isInverted={isInverted}
+                                    hasBackground={hasBg}
+                                />
+                            </PriceTagContainer>
+                        </Grid.Col>
                     ))}
-                </PriceFlex>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
