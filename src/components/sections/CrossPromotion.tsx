@@ -5,7 +5,6 @@ import {
     getColors as color,
     getGlobalSettings as global,
     spacings,
-    mq,
 } from 'utils/styles';
 
 import Grid from 'components/base/Grid';
@@ -17,37 +16,12 @@ import PromotionCard, {
 } from 'components/blocks/PromotionCard';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
-const FlexGrid = styled.div`
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-direction: row;
-        margin-left: -${spacings.spacer}px;
-    }
-`;
-
-const FlexGridCol = styled.div`
-    display: flex;
-    flex-direction: column;
-
-    @media ${mq.semilarge} {
-        flex: 1 0 50%;
-        max-width: 50%;
-        padding-left: ${spacings.spacer}px;
-    }
-
-    & + & {
-        margin-top: ${spacings.spacer}px;
-
-        @media ${mq.semilarge} {
-            margin-top: 0;
-        }
-    }
-`;
-
-const PosterContainer = styled.div`
+const PosterContainer = styled.div<{ isMain?: boolean }>`
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+
+    height: ${({ isMain }) => isMain && '100%'};
 
     flex: 1 0 auto;
 
@@ -92,94 +66,83 @@ const CrossPromotion: React.FC<{
                 clampWidth="normal"
                 addWhitespace={global(theme).sections.edgeRadius ? true : false}
             >
-                <Grid.Row>
-                    <Grid.Col>
-                        {aside ? (
-                            isMirrored ? (
-                                <FlexGrid>
-                                    <FlexGridCol>
-                                        {main &&
-                                            main.map((card, i) => (
-                                                <PosterContainer key={i}>
-                                                    <PromotionCard
-                                                        {...card}
-                                                        externalLinkIcon={
-                                                            externalLinkIcon
-                                                        }
-                                                    />
-                                                </PosterContainer>
-                                            ))}
-                                    </FlexGridCol>
-
-                                    <FlexGridCol>
-                                        {aside.map((card, i) => (
-                                            <PosterContainer key={i}>
-                                                <PromotionCard
-                                                    {...card}
-                                                    externalLinkIcon={
-                                                        externalLinkIcon
-                                                    }
-                                                />
-                                            </PosterContainer>
-                                        ))}
-                                    </FlexGridCol>
-                                </FlexGrid>
-                            ) : (
-                                <FlexGrid>
-                                    <FlexGridCol>
-                                        {aside.map((card, i) => (
-                                            <PosterContainer key={i}>
-                                                <PromotionCard
-                                                    {...card}
-                                                    externalLinkIcon={
-                                                        externalLinkIcon
-                                                    }
-                                                />
-                                            </PosterContainer>
-                                        ))}
-                                    </FlexGridCol>
-                                    <FlexGridCol>
-                                        {main &&
-                                            main.map((card, i) => (
-                                                <PosterContainer key={i}>
-                                                    <PromotionCard
-                                                        {...card}
-                                                        externalLinkIcon={
-                                                            externalLinkIcon
-                                                        }
-                                                    />
-                                                </PosterContainer>
-                                            ))}
-                                    </FlexGridCol>
-                                </FlexGrid>
-                            )
-                        ) : (
-                            <Grid.Row>
+                {aside ? (
+                    isMirrored ? (
+                        <Grid.Row>
+                            <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {main &&
                                     main.map((card, i) => (
-                                        <Grid.Col
-                                            semilarge={{
-                                                span:
-                                                    (card.size === 'half'
-                                                        ? 14
-                                                        : 28) / 28,
-                                            }}
-                                            key={i}
-                                        >
-                                            <PosterContainer key={i}>
-                                                <PromotionCard
-                                                    {...card}
-                                                    externalLinkIcon={
-                                                        externalLinkIcon
-                                                    }
-                                                />
-                                            </PosterContainer>
-                                        </Grid.Col>
+                                        <PosterContainer key={i} isMain>
+                                            <PromotionCard
+                                                {...card}
+                                                externalLinkIcon={
+                                                    externalLinkIcon
+                                                }
+                                            />
+                                        </PosterContainer>
                                     ))}
-                            </Grid.Row>
-                        )}
-                    </Grid.Col>
-                </Grid.Row>
+                            </Grid.Col>
+                            <Grid.Col semilarge={{ span: 6 / 12 }}>
+                                {aside.map((card, i) => (
+                                    <PosterContainer key={i}>
+                                        <PromotionCard
+                                            {...card}
+                                            externalLinkIcon={externalLinkIcon}
+                                        />
+                                    </PosterContainer>
+                                ))}
+                            </Grid.Col>
+                        </Grid.Row>
+                    ) : (
+                        <Grid.Row>
+                            <Grid.Col semilarge={{ span: 6 / 12 }}>
+                                {aside.map((card, i) => (
+                                    <PosterContainer key={i}>
+                                        <PromotionCard
+                                            {...card}
+                                            externalLinkIcon={externalLinkIcon}
+                                        />
+                                    </PosterContainer>
+                                ))}
+                            </Grid.Col>
+                            <Grid.Col semilarge={{ span: 6 / 12 }}>
+                                {main &&
+                                    main.map((card, i) => (
+                                        <PosterContainer key={i} isMain>
+                                            <PromotionCard
+                                                {...card}
+                                                externalLinkIcon={
+                                                    externalLinkIcon
+                                                }
+                                            />
+                                        </PosterContainer>
+                                    ))}
+                            </Grid.Col>
+                        </Grid.Row>
+                    )
+                ) : (
+                    main && (
+                        <Grid.Row>
+                            {main.map((card, i) => (
+                                <Grid.Col
+                                    semilarge={{
+                                        span:
+                                            (card.size === 'half' ? 6 : 12) /
+                                            12,
+                                    }}
+                                    key={i}
+                                >
+                                    <PosterContainer key={i}>
+                                        <PromotionCard
+                                            {...card}
+                                            externalLinkIcon={externalLinkIcon}
+                                        />
+                                    </PosterContainer>
+                                </Grid.Col>
+                            ))}
+                        </Grid.Row>
+                    )
+                )}
             </Wrapper>
         </Section>
     );

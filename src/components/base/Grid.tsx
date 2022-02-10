@@ -8,9 +8,11 @@ export interface ColPropsSettings {
     /** Normalisierte Werte zwischen -1 und 1: z.B. -12 von 28 Spalten (-12 / 28) */
     move?: number;
     valign?: VerticalAlign;
+    halign?: HorizontalAlign;
 }
 
 type VerticalAlign = 'top' | 'center' | 'bottom';
+type HorizontalAlign = 'left' | 'center' | 'right';
 
 interface ColProps extends ColPropsSettings {
     medium?: ColPropsSettings;
@@ -180,6 +182,7 @@ const Col: React.FC<ColProps> = (props) => {
 interface GridProps {
     gutter?: number;
     valign?: VerticalAlign;
+    halign?: HorizontalAlign;
 }
 
 const StyledGrid = styled.div<GridProps>`
@@ -201,11 +204,24 @@ const StyledGrid = styled.div<GridProps>`
                 return undefined;
         }
     }};
+
+    justify-content: ${({ halign }) => {
+        switch (halign) {
+            case 'left':
+                return 'flex-start';
+            case 'center':
+                return 'center';
+            case 'right':
+                return 'flex-end';
+            default:
+                return undefined;
+        }
+    }};
 `;
 
-const Grid: React.FC<GridProps> = ({ gutter, valign, children }) => {
+const Grid: React.FC<GridProps> = ({ gutter, valign, children, halign }) => {
     return (
-        <StyledGrid gutter={gutter} valign={valign}>
+        <StyledGrid gutter={gutter} valign={valign} halign={halign}>
             {React.Children.map(children, (comp: any) => {
                 return comp ? (
                     <StyledCol {...comp?.props} gutter={gutter} />
