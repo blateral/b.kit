@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { FC, useContext } from 'react';
 import { DefaultTheme, ThemeContext, ThemeProvider } from 'styled-components';
 
@@ -125,19 +126,22 @@ export const modifyTheme = (
     return newTheme;
 };
 
-export const withLibTheme = <P extends Record<string, unknown>>(
-    Component: React.ComponentType<P>
-    // eslint-disable-next-line react/display-name
-): React.FC<P & { theme?: Theme }> => ({
-    theme,
-    ...props
-}: WithLibThemeProps) => {
-    const ctx = useContext(ThemeContext);
-    const newTheme = modifyTheme(ctx, theme);
+export const withLibTheme =
+    <P extends Record<string, unknown>>(
+        Component: React.ComponentType<P>
+    ): React.FC<
+        P & {
+            /** Component specific theme properties that overrides global theme settings */
+            theme?: Theme;
+        }
+    > =>
+    ({ theme, ...props }: WithLibThemeProps) => {
+        const ctx = useContext(ThemeContext);
+        const newTheme = modifyTheme(ctx, theme);
 
-    return (
-        <ThemeProvider theme={newTheme}>
-            <Component {...(props as P)} />
-        </ThemeProvider>
-    );
-};
+        return (
+            <ThemeProvider theme={newTheme}>
+                <Component {...(props as P)} />
+            </ThemeProvider>
+        );
+    };

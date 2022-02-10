@@ -36,23 +36,33 @@ const StyledActions = styled(Actions)`
 `;
 
 const Article: React.FC<{
-    /** Title text of article */
+    /** Main title text */
     title?: string;
+    /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
+    /** Superior title that stands above main title */
     superTitle?: string;
+    /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
+    /** Bold intro text underneath the title (limited richtext capabilites) */
     intro?: string;
+    /** Main article richtext */
     text?: string;
+    /** Additional article richtext in a second column */
     asideText?: string;
+    /** Controls width of left text column (8/12 or 6/12) */
     halfAside?: boolean;
 
+    /** Section background */
     bgMode?: 'full' | 'splitted' | 'inverted';
 
+    /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
     title,
-    titleAs,
+    titleAs = 'h2',
     superTitle,
     superTitleAs,
     intro,
