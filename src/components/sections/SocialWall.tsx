@@ -1,45 +1,29 @@
 import styled, { ThemeContext } from 'styled-components';
 import Instagram from 'components/base/icons/socials/Instagram';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { getColors as color } from 'utils/styles';
 import * as React from 'react';
 import Heading from 'components/typography/Heading';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import Link, { LinkProps } from 'components/typography/Link';
+import Grid from 'components/base/Grid';
 
 const Content = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-
-    margin: -${spacings.nudge}px;
+    position: relative;
 `;
 
 const ContentBlock = styled(Link)`
-    position: relative;
     text-decoration: none;
     color: inherit;
-
-    padding: ${spacings.nudge}px;
-    flex: 0 1 100%;
-
-    @media ${mq.medium} {
-        flex: 0 1 50%;
-    }
-
-    @media ${mq.large} {
-        flex: 0 1 33.33%;
-    }
 
     &:before {
         content: '';
         position: absolute;
-        top: 5px;
-        bottom: 5px;
-        left: 5px;
-        right: 5px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
         background: ${({ theme }) => color(theme).secondary.light};
 
         opacity: 0;
@@ -123,36 +107,44 @@ const SocialWall: React.FC<{
             addSeperation
         >
             <Wrapper addWhitespace>
-                <Content>
+                <Grid.Row>
                     {items &&
                         items.map((item, i) => {
                             return (
-                                <ContentBlock isExternal {...item.link} key={i}>
-                                    {item.image && (
-                                        <Image
-                                            src={item.image.src}
-                                            alt={item.image.alt}
-                                        />
-                                    )}
-                                    <TextContainer>
-                                        <FollowUs size="super">
-                                            {followUs
-                                                ? followUs
-                                                : 'Follow Us On Instagram'}
-                                        </FollowUs>
-                                        {hashtag && (
-                                            <Heading size="heading-2">
-                                                {`#${hashtag}`}
-                                            </Heading>
-                                        )}
-                                    </TextContainer>
-                                    <InstagramIcon>
-                                        {socialIcon || <Instagram />}
-                                    </InstagramIcon>
-                                </ContentBlock>
+                                <Grid.Col
+                                    key={i}
+                                    medium={{ span: 6 / 12 }}
+                                    large={{ span: 4 / 12 }}
+                                >
+                                    <Content>
+                                        <ContentBlock isExternal {...item.link}>
+                                            {item.image && (
+                                                <Image
+                                                    src={item.image.src}
+                                                    alt={item.image.alt}
+                                                />
+                                            )}
+                                            <TextContainer>
+                                                <FollowUs size="super">
+                                                    {followUs
+                                                        ? followUs
+                                                        : 'Follow Us On Instagram'}
+                                                </FollowUs>
+                                                {hashtag && (
+                                                    <Heading size="heading-2">
+                                                        {`#${hashtag}`}
+                                                    </Heading>
+                                                )}
+                                            </TextContainer>
+                                            <InstagramIcon>
+                                                {socialIcon || <Instagram />}
+                                            </InstagramIcon>
+                                        </ContentBlock>
+                                    </Content>
+                                </Grid.Col>
                             );
                         })}
-                </Content>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
