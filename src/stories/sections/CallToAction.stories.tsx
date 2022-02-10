@@ -14,7 +14,7 @@ export default {
     component: CallToActionComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'releaseCandidate',
         },
     },
 } as Meta;

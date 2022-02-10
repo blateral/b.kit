@@ -77,26 +77,29 @@ interface NewColorOptions {
     inverted: string;
 }
 
+interface BgColorOptions {
+    light: string;
+    medium: string;
+    dark: string;
+}
+
 export type NewColorOptionsType = keyof NewColorOptions;
 
 export interface NewColors {
-    text: NewColorOptions & {
-        error: string;
-    },
-    bg: {
+    text: {
         default: string;
-        mono: string;
         inverted: string;
-    },
-    primary: NewColorOptions,
-    secondary: NewColorOptions,
-    dark: string;
-    light: string;
-    mono: {
-        medium: string,
+        error: string;
+        heading: string;
+        headingInverted: string;
+        copy: string;
+        copyInverted: string;
     };
+    sectionBg: BgColorOptions;
+    elementBg: BgColorOptions;
+    primary: NewColorOptions;
+    secondary: NewColorOptions;
     error: string;
-
 }
 
 export type NewColorType = keyof NewColors;
@@ -166,18 +169,25 @@ export type FontType = keyof Fonts;
  */
 export type FontBase = FontProps;
 
-
-
 const newColors: NewColors = {
     text: {
         default: '#333333',
         inverted: '#FAFAFA',
         error: '#FF2D2D',
+        heading: '#333333',
+        headingInverted: '#B5B5B5',
+        copy: '#333333',
+        copyInverted: '#A6A6A6',
     },
-    bg: {
-        default: 'transparent',
-        mono: '#F0F0F0',
-        inverted: '#333333',
+    sectionBg: {
+        light: 'transparent',
+        medium: '#F0F0F0',
+        dark: '#000000',
+    },
+    elementBg: {
+        light: '#FFFFFF',
+        medium: '#FFCBCB',
+        dark: '#4B1919',
     },
     primary: {
         default: '#FFE600',
@@ -187,13 +197,8 @@ const newColors: NewColors = {
         default: '#DAD0FF',
         inverted: '#C5BEE0',
     },
-    dark: '#333333',
-    light: '#FAFAFA',
-    mono: {
-        medium: '#C8C8C8'
-    },
     error: '#FF2D2D',
-}
+};
 
 /***** Colors *****/
 const defaultColors: Colors = {
@@ -218,7 +223,6 @@ const defaultColors: Colors = {
     new: newColors,
 };
 
-
 /***** Fonts *****/
 const copyBase: FontProps = {
     family: 'Roboto',
@@ -228,8 +232,8 @@ const copyBase: FontProps = {
     letterSpacing: '0',
     size: [10, 13],
     textTransform: '',
-    color: defaultColors.new.text.default,
-    colorInverted: defaultColors.new.text.inverted,
+    color: defaultColors.new.text.copy,
+    colorInverted: defaultColors.new.text.copyInverted,
 };
 
 const headingBase: FontProps = {
@@ -239,8 +243,8 @@ const headingBase: FontProps = {
     lineHeight: '1.1',
     letterSpacing: '0',
     size: [38, 40],
-    color: defaultColors.new.text.default,
-    colorInverted: defaultColors.new.text.inverted,
+    color: defaultColors.new.text.heading,
+    colorInverted: defaultColors.new.text.headingInverted,
 };
 
 const defaultFonts: Fonts = {
@@ -302,8 +306,7 @@ const defaultFonts: Fonts = {
         },
     },
     super: {
-        ...copyBase,
-        weight: '700',
+        ...headingBase,
         lineHeight: '1.43',
         size: [14, 16],
     },

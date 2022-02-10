@@ -361,8 +361,8 @@ export const CallToAction: FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.bg.inverted
-                    : color(theme).new.bg.mono
+                    ? color(theme).new.sectionBg.dark
+                    : color(theme).new.sectionBg.medium
             }
             bgMode={bgMode ? mapToBgMode(bgMode, true) : 'full'}
         >
