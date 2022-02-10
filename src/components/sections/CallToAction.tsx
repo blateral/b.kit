@@ -302,6 +302,7 @@ const StyledActions = styled(Actions)`
 
 const NewsletterWrapper = styled.div`
     width: 100%;
+    margin: 0 auto;
     margin-top: ${spacings.spacer * 2.5}px;
 
     @media ${mq.semilarge} {
