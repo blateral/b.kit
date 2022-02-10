@@ -7,7 +7,7 @@ export default {
     component: AccordionComponent,
     parameters: {
         status: {
-            type: 'releaseCandidate',
+            type: 'Preview',
         },
     },
 } as Meta;

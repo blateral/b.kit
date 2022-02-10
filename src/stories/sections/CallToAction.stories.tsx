@@ -14,7 +14,7 @@ export default {
     component: CallToActionComponent,
     parameters: {
         status: {
-            type: 'releaseCandidate',
+            type: 'Preview',
         },
     },
 } as Meta;

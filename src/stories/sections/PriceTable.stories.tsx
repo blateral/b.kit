@@ -9,7 +9,7 @@ export default {
     component: PriceTableComponent,
     parameters: {
         status: {
-            type: 'releaseCandidate',
+            type: 'Preview',
         },
     },
 } as Meta;
