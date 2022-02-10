@@ -222,6 +222,10 @@ const StyledContactBox = styled(ContactBox)`
     margin-top: ${spacings.nudge * 7}px;
 `;
 
+const ActionContainer = styled.div`
+    text-align: center;
+`;
+
 const StyledActions = styled(Actions)`
     margin-top: ${spacings.nudge * 8}px;
 `;
@@ -325,16 +329,27 @@ export const CallToAction: FC<{
                                 {newsFormMain(isInverted)}
                             </NewsletterWrapper>
                         )}
+
                         {(primaryAction || secondaryAction) && (
-                            <StyledActions
-                                primary={
-                                    primaryAction && primaryAction(isInverted)
-                                }
-                                secondary={
-                                    secondaryAction &&
-                                    secondaryAction(isInverted)
-                                }
-                            />
+                            <Grid.Row>
+                                <Grid.Col
+                                    semilarge={{ span: 8 / 10, move: 1 / 10 }}
+                                    large={{ span: 6 / 8, move: 1 / 8 }}
+                                >
+                                    <ActionContainer>
+                                        <StyledActions
+                                            primary={
+                                                primaryAction &&
+                                                primaryAction(isInverted)
+                                            }
+                                            secondary={
+                                                secondaryAction &&
+                                                secondaryAction(isInverted)
+                                            }
+                                        />
+                                    </ActionContainer>
+                                </Grid.Col>
+                            </Grid.Row>
                         )}
                     </Grid.Col>
                 </Grid.Row>
