@@ -5,6 +5,7 @@ import { withLibTheme } from 'utils/LibThemeProvider';
 import { getColors, spacings } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
+import Grid from 'components/base/Grid';
 
 const FactsContainer = styled.ul`
     padding: 0;
@@ -14,7 +15,7 @@ const FactsContainer = styled.ul`
 `;
 
 const FactsItem = styled.li<{ hasText?: boolean }>`
-    padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
+    padding: ${spacings.nudge * 3}px ${spacings.nudge * 2}px;
 
     background: #fff;
 
@@ -33,14 +34,14 @@ const Icon = styled.img`
     margin-right: ${spacings.spacer}px;
     display: block;
     width: 100%;
-    max-width: ${spacings.spacer * 2}px;
+    max-width: ${spacings.nudge * 5}px;
 `;
 
 const ContentBlock = styled.div`
     max-width: 80%;
 
     & > * + * {
-        margin-top: ${spacings.spacer}px;
+        margin-top: ${spacings.nudge * 2}px;
     }
 `;
 
@@ -69,30 +70,39 @@ const FactList: React.FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                {facts && (
-                    <FactsContainer>
-                        {facts.map(({ label, text, icon }, i) => {
-                            return (
-                                <FactsItem key={i} hasText={!!text}>
-                                    {icon && (
-                                        <Icon src={icon.src} alt={icon.alt} />
-                                    )}
-                                    <ContentBlock>
-                                        {label && (
-                                            <Copy type="copy-b">{label}</Copy>
-                                        )}
-                                        {text && (
-                                            <Copy
-                                                type="copy"
-                                                innerHTML={text}
-                                            />
-                                        )}
-                                    </ContentBlock>
-                                </FactsItem>
-                            );
-                        })}
-                    </FactsContainer>
-                )}
+                <Grid.Row>
+                    <Grid.Col>
+                        {facts && (
+                            <FactsContainer>
+                                {facts.map(({ label, text, icon }, i) => {
+                                    return (
+                                        <FactsItem key={i} hasText={!!text}>
+                                            {icon && (
+                                                <Icon
+                                                    src={icon.src}
+                                                    alt={icon.alt}
+                                                />
+                                            )}
+                                            <ContentBlock>
+                                                {label && (
+                                                    <Copy type="copy-b">
+                                                        {label}
+                                                    </Copy>
+                                                )}
+                                                {text && (
+                                                    <Copy
+                                                        type="copy"
+                                                        innerHTML={text}
+                                                    />
+                                                )}
+                                            </ContentBlock>
+                                        </FactsItem>
+                                    );
+                                })}
+                            </FactsContainer>
+                        )}
+                    </Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
