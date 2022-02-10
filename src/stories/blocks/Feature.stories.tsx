@@ -9,7 +9,7 @@ export default {
     component: Feature,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
