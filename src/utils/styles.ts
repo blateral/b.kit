@@ -186,7 +186,7 @@ const newColors: NewColors = {
     },
     elementBg: {
         light: '#FFFFFF',
-        medium: '#FFCBCB',
+        medium: '#E8E8E8',
         dark: '#4B1919',
     },
     primary: {
