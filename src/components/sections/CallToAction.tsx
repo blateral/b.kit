@@ -43,8 +43,8 @@ const Avatar = styled.img`
     border-radius: 50%;
 
     /* CENTERING AVATAR */
-    display: flex;
-    margin: 0 auto;
+    /* display: flex;
+    margin: 0 auto; */
 
     /* padding: ${spacings.nudge}px; */
     /* margin-right: ${spacings.spacer}px; */
@@ -212,10 +212,10 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
         // </ContactView>
         <ContactView>
             <Grid.Row>
-                <Grid.Col medium={{ span: 2 / 6 }} semilarge={{ span: 2 / 6 }}>
+                <Grid.Col medium={{ span: 2 / 6 }}>
                     <Avatar src={avatar?.src} alt={avatar?.alt} />
                 </Grid.Col>
-                <Grid.Col medium={{ span: 4 / 6 }} semilarge={{ span: 4 / 6 }}>
+                <Grid.Col medium={{ span: 4 / 6 }}>
                     <Info>
                         {(name || description) && (
                             <div>
@@ -291,11 +291,6 @@ const StyledActions = styled(Actions)`
     @media ${mq.semilarge} {
         & > * {
             max-width: 300px;
-            margin-left: 0;
-        }
-
-        & > * + * {
-            margin-left: 32px;
         }
     }
 `;
@@ -369,7 +364,7 @@ export const CallToAction: FC<{
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
-                <Grid.Row gutter={0}>
+                <Grid.Row>
                     <Grid.Col
                         semilarge={{ span: 10 / 12, move: 1 / 12 }}
                         large={{ span: 8 / 12, move: 2 / 12 }}
@@ -399,29 +394,23 @@ export const CallToAction: FC<{
                                 {newsFormMain(isInverted)}
                             </NewsletterWrapper>
                         )}
-                        <Grid.Row>
-                            <Grid.Col
-                                medium={{ span: 1 }}
-                                semilarge={{ span: 5 / 6, move: 1 / 6 }}
-                            >
-                                {(primaryAction || secondaryAction) && (
-                                    <StyledActions
-                                        primary={
-                                            primaryAction &&
-                                            primaryAction(isInverted)
-                                        }
-                                        secondary={
-                                            secondaryAction &&
-                                            secondaryAction(isInverted)
-                                        }
-                                    />
-                                )}
-                            </Grid.Col>
-                        </Grid.Row>
+                        {(primaryAction || secondaryAction) && (
+                            <StyledActions
+                                isCentered
+                                primary={
+                                    primaryAction && primaryAction(isInverted)
+                                }
+                                secondary={
+                                    secondaryAction &&
+                                    secondaryAction(isInverted)
+                                }
+                            />
+                        )}
                     </Grid.Col>
                 </Grid.Row>
+            </Wrapper>
 
-                {/* <Content>
+            {/* <Content>
                     {title && (
                         <StyledIntro
                             isCentered
@@ -456,7 +445,6 @@ export const CallToAction: FC<{
                         />
                     )}
                 </Content> */}
-            </Wrapper>
         </Section>
     );
 };
