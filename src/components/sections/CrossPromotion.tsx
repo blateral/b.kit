@@ -16,12 +16,12 @@ import PromotionCard, {
 } from 'components/blocks/PromotionCard';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
-const PosterContainer = styled.div<{ isAside?: boolean }>`
+const PosterContainer = styled.div<{ isMain?: boolean }>`
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 
-    height: ${({ isAside }) => isAside && '100%'};
+    height: ${({ isMain }) => isMain && '100%'};
 
     flex: 1 0 auto;
 
@@ -72,7 +72,7 @@ const CrossPromotion: React.FC<{
                             <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {main &&
                                     main.map((card, i) => (
-                                        <PosterContainer key={i} isAside>
+                                        <PosterContainer key={i} isMain>
                                             <PromotionCard
                                                 {...card}
                                                 externalLinkIcon={
@@ -108,7 +108,7 @@ const CrossPromotion: React.FC<{
                             <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {main &&
                                     main.map((card, i) => (
-                                        <PosterContainer key={i} isAside>
+                                        <PosterContainer key={i} isMain>
                                             <PromotionCard
                                                 {...card}
                                                 externalLinkIcon={
