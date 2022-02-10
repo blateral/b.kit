@@ -7,6 +7,7 @@ import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import { hexToRgba } from 'utils/hexRgbConverter';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
 
 const TableContainer = styled.div`
     overflow-x: scroll;
@@ -196,17 +197,21 @@ const Table: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper>
-                {tableItems.map((item, i) => {
-                    return (
-                        <TableWrapper key={i}>
-                            <TableBlock
-                                {...item}
-                                isInverted={isInverted}
-                                hasBack={hasBg}
-                            />
-                        </TableWrapper>
-                    );
-                })}
+                <Grid.Row>
+                    <Grid.Col>
+                        {tableItems.map((item, i) => {
+                            return (
+                                <TableWrapper key={i}>
+                                    <TableBlock
+                                        {...item}
+                                        isInverted={isInverted}
+                                        hasBack={hasBg}
+                                    />
+                                </TableWrapper>
+                            );
+                        })}
+                    </Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
