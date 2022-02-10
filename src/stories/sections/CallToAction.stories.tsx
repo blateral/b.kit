@@ -70,6 +70,7 @@ export const WithContactAsRichtext: Story = () => (
                 Ihr:e Ansprechpartner:in
                 <br/>
                 <br/>
+                <br/>
                     <p class="icon-label icon-label--list">
                         <svg
                             width="25"

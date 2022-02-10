@@ -325,9 +325,16 @@ export const CallToAction: FC<{
                             />
                         )}
                         {newsFormMain && hasNewsletter && (
-                            <NewsletterWrapper>
-                                {newsFormMain(isInverted)}
-                            </NewsletterWrapper>
+                            <Grid.Row>
+                                <Grid.Col
+                                    semilarge={{ span: 8 / 10, move: 1 / 10 }}
+                                    large={{ span: 6 / 8, move: 1 / 8 }}
+                                >
+                                    <NewsletterWrapper>
+                                        {newsFormMain(isInverted)}
+                                    </NewsletterWrapper>
+                                </Grid.Col>
+                            </Grid.Row>
                         )}
 
                         {(primaryAction || secondaryAction) && (
