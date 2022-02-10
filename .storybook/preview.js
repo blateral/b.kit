@@ -59,8 +59,8 @@ export const parameters = {
         type: 'beta',
         statuses: {
             preview: {
-                background: '#FFE600',
-                color: '#333333',
+                background: '#FD6838',
+                color: '#fff',
                 description: 'Reworked not stable component',
             },
         },
