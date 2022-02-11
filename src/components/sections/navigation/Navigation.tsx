@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { LibThemeProvider, Theme } from 'utils/LibThemeProvider';
+import { LibThemeProvider, ThemeMods } from 'utils/LibThemeProvider';
 import { FlyoutBackgroundSettings, NavGroup } from './menu/Flyout';
 
 import Menu from './menu/Menu';
@@ -59,7 +59,7 @@ export interface NavProps {
     search?: (isInverted?: boolean) => React.ReactNode;
     openMenuIcon?: (isInverted?: boolean) => React.ReactNode;
     closeMenuIcon?: (isInverted?: boolean) => React.ReactNode;
-    theme?: Theme;
+    theme?: ThemeMods;
 }
 
 const Navigation: FC<NavProps> = ({

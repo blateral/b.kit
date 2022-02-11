@@ -9,7 +9,7 @@ import {
     isUrlInWhitelist,
     updateConsentStatusElements,
 } from 'utils/cookie-consent/mutations';
-import { LibThemeProvider, Theme } from 'utils/LibThemeProvider';
+import { LibThemeProvider, ThemeMods } from 'utils/LibThemeProvider';
 import { getColors as color, mq, spacings } from 'utils/styles';
 
 const Stage = styled.div<{ zIndex?: number; bgOpacity?: number }>`
@@ -86,7 +86,7 @@ export const CookieConsent: FC<
     CookieConfig & {
         className?: string;
         children?: (props: RenderProps) => React.ReactElement;
-        theme?: Theme;
+        theme?: ThemeMods;
     }
 > = ({
     cookieName = 'cookie-consent',

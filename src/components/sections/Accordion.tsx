@@ -6,7 +6,7 @@ import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { spacings, getColors as color } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { generateFAQ } from 'utils/structuredData';
 import Grid from 'components/base/Grid';
 
@@ -92,7 +92,8 @@ const AccordionBlock: React.FC<
     isInverted,
     itemIcon,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
+
     return (
         <View>
             <AccordionHead
@@ -107,9 +108,9 @@ const AccordionBlock: React.FC<
                     {itemIcon ? (
                         itemIcon({ isSelected: isSelected || false })
                     ) : isSelected ? (
-                        <Minus iconColor={color(theme).dark} />
+                        <Minus iconColor={colors.dark} />
                     ) : (
-                        <Plus iconColor={color(theme).dark} />
+                        <Plus iconColor={colors.dark} />
                     )}
                 </IconContainer>
             </AccordionHead>
