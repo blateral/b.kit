@@ -57,35 +57,30 @@ const ImgDescMobile = styled(Copy)`
 `;
 
 const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
-    padding-left: ${spacings.spacer}px;
-    padding-right: ${spacings.spacer}px;
+    padding-right: ${({ isMirrored }) => !isMirrored && spacings.nudge * 2}px;
+    padding-left: ${({ isMirrored }) => isMirrored && spacings.nudge * 2}px;
+
     padding-top: ${spacings.nudge}px;
     padding-bottom: ${spacings.nudge * 2}px;
 
     @media ${mq.medium} {
-        ${withRange([spacings.spacer * 3, spacings.spacer * 4], 'padding-top')}
-
-        padding-right: ${spacings.spacer}px;
-        padding-left: ${spacings.spacer}px;
+        ${withRange([spacings.spacer * 2, spacings.nudge * 10], 'padding-top')}
     }
 
     @media ${mq.semilarge} {
-        ${withRange([spacings.spacer * 3, spacings.spacer * 4], 'padding-top')}
+        padding-bottom: ${spacings.spacer}px;
 
         padding-right: ${({ isMirrored }) =>
-            isMirrored ? spacings.spacer * 1.5 + 'px' : (1 / 28) * 100 + '%'};
-        padding-bottom: ${spacings.nudge * 6}px;
+            !isMirrored ? spacings.spacer + 'px' : (1 / 12) * 100 + '%'};
         padding-left: ${({ isMirrored }) =>
-            !isMirrored ? spacings.spacer * 1.5 + 'px' : (1 / 28) * 100 + '%'};
+            isMirrored ? spacings.spacer + 'px' : (1 / 12) * 100 + '%'};
     }
 
     @media ${mq.xlarge} {
         padding-right: ${({ isMirrored }) =>
-            isMirrored ? spacings.spacer * 1.5 : (1 / 28) * spacings.wrapper}px;
+            !isMirrored ? spacings.spacer : (1 / 12) * spacings.wrapper}px;
         padding-left: ${({ isMirrored }) =>
-            !isMirrored
-                ? spacings.spacer * 1.5
-                : (1 / 28) * spacings.wrapper}px;
+            isMirrored ? spacings.spacer : (1 / 12) * spacings.wrapper}px;
     }
 `;
 
@@ -164,8 +159,8 @@ const Teaser: FC<{
                 <Grid.Row gutter={spacings.spacer}>
                     <Grid.Col
                         semilarge={{
-                            span: 14 / 28,
-                            move: (isMirrored ? 14 : 0) / 28,
+                            span: 6 / 12,
+                            move: (isMirrored ? 6 : 0) / 12,
                         }}
                     >
                         <ImgWrapper isMirrored={isMirrored}>
@@ -181,8 +176,8 @@ const Teaser: FC<{
                     </Grid.Col>
                     <Grid.Col
                         semilarge={{
-                            span: 14 / 28,
-                            move: (isMirrored ? -14 : 0) / 28,
+                            span: 6 / 12,
+                            move: (isMirrored ? -6 : 0) / 12,
                         }}
                     >
                         <InfoWrapper isMirrored={isMirrored}>
@@ -226,13 +221,13 @@ const Teaser: FC<{
                     <Grid.Row gutter={spacings.spacer}>
                         <Grid.Col
                             semilarge={{
-                                span: (bgMode === 'splitted' ? 11.2 : 14) / 28,
+                                span: (bgMode === 'splitted' ? 4.6 : 6) / 12,
                                 move:
                                     (isMirrored
                                         ? bgMode === 'splitted'
-                                            ? 16.8
-                                            : 14
-                                        : 0) / 28,
+                                            ? 8.4
+                                            : 6
+                                        : 0) / 12,
                             }}
                         >
                             {image?.description && (
@@ -245,13 +240,13 @@ const Teaser: FC<{
                         </Grid.Col>
                         <Grid.Col
                             semilarge={{
-                                span: (bgMode === 'splitted' ? 16.8 : 14) / 28,
+                                span: (bgMode === 'splitted' ? 8.4 : 6) / 12,
                                 move:
                                     (isMirrored
                                         ? bgMode === 'splitted'
-                                            ? -11.2
-                                            : -14
-                                        : 0) / 28,
+                                            ? -4.6
+                                            : -6
+                                        : 0) / 12,
                             }}
                         />
                     </Grid.Row>
