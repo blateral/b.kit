@@ -5,7 +5,7 @@ import { hexToRgba } from 'utils/hexRgbConverter';
 import {
     getColors as color,
     spacings,
-    getGlobalSettings as global,
+    getGlobals as global,
 } from 'utils/styles';
 
 const View = styled(Copy)`

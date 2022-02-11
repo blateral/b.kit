@@ -1,11 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import {
-    mq,
-    spacings,
-    withRange,
-    getGlobalSettings as global,
-} from 'utils/styles';
+import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 
 export type BgMode = 'full' | 'larger-left' | 'larger-right' | 'inverted';
 
@@ -44,8 +39,8 @@ const View = styled.section<{
     // section paddings
     ${({ addSeperation, isStackable, bgIdent, theme }) => {
         const padding = global(theme).sections.seperation.padding.default;
-        const paddingStacked = global(theme).sections.seperation.padding
-            .stackable;
+        const paddingStacked =
+            global(theme).sections.seperation.padding.stackable;
         const forcePadding = global(theme).sections.seperation.forcePadding;
 
         if (addSeperation) {
@@ -77,8 +72,8 @@ const View = styled.section<{
     // section margins
     ${({ addSeperation, isStackable, bgIdent, theme }) => {
         const margin = global(theme).sections.seperation.margin.default;
-        const marginStacked = global(theme).sections.seperation.margin
-            .stackable;
+        const marginStacked =
+            global(theme).sections.seperation.margin.stackable;
 
         if (addSeperation) {
             return css`

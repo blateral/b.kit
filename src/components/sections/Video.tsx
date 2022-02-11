@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
-import { getColors as color, getGlobalSettings as global } from 'utils/styles';
+import { getColors as color, getGlobals as global } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import Wrapper from 'components/base/Wrapper';
 import { ImageProps } from 'components/blocks/Image';

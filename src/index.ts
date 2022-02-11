@@ -11,7 +11,7 @@ declare module 'styled-components' {
             base?: FontBase;
             types: Fonts;
         };
-        globalSettings: GlobalSettings;
+        globals: GlobalSettings;
     }
 }
 
@@ -19,8 +19,8 @@ declare module 'styled-components' {
 export {
     getColors,
     getFonts,
-    getBaseTheme,
-    getGlobalSettings,
+    baseTheme as getBaseTheme,
+    getGlobals,
     withRange,
     spacings,
     mq,

@@ -127,23 +127,12 @@ const Article: React.FC<{
                     </Grid.Row>
                 )}
                 {(primaryAction || secondaryAction) && (
-                    <Grid.Row>
-                        <Grid.Col
-                            semilarge={{ span: 9 / 12 }}
-                            large={{ span: 6 / 12 }}
-                        >
-                            <StyledActions
-                                width="full"
-                                primary={
-                                    primaryAction && primaryAction(isInverted)
-                                }
-                                secondary={
-                                    secondaryAction &&
-                                    secondaryAction(isInverted)
-                                }
-                            />
-                        </Grid.Col>
-                    </Grid.Row>
+                    <StyledActions
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
+                    />
                 )}
             </Wrapper>
         </Section>

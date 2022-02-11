@@ -5,7 +5,7 @@ import styled, { ThemeContext } from 'styled-components';
 import {
     getColors as color,
     spacings,
-    getGlobalSettings as global,
+    getGlobals as global,
 } from 'utils/styles';
 import { FormProps } from './Textfield';
 

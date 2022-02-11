@@ -1,12 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import {
-    mq,
-    spacings,
-    withRange,
-    getGlobalSettings as global,
-} from 'utils/styles';
+import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 import Image, { ImageProps } from 'components/blocks/Image';

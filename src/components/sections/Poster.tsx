@@ -4,12 +4,7 @@ import styled, { css } from 'styled-components';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import {
-    mq,
-    spacings,
-    withRange,
-    getGlobalSettings as global,
-} from 'utils/styles';
+import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 import { withLibTheme } from 'utils/LibThemeProvider';

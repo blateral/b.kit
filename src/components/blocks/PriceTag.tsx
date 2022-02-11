@@ -1,4 +1,4 @@
-import { spacings, getColors, getGlobalSettings as global } from 'utils/styles';
+import { spacings, getColors, getGlobals as global } from 'utils/styles';
 import React from 'react';
 import styled from 'styled-components';
 import Copy from 'components/typography/Copy';

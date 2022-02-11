@@ -2,11 +2,7 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { ImageProps } from 'components/blocks/Image';
-import {
-    mq,
-    getColors as color,
-    getGlobalSettings as global,
-} from 'utils/styles';
+import { mq, getColors as color, getGlobals as global } from 'utils/styles';
 import Play from 'components/base/icons/Play';
 
 const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`

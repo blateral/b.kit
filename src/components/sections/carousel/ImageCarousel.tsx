@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, getGlobalSettings as global } from 'utils/styles';
+import { getColors as color, getGlobals as global } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';

@@ -2,7 +2,7 @@
 import React, { FC, useContext } from 'react';
 import { DefaultTheme, ThemeContext, ThemeProvider } from 'styled-components';
 
-import { FontBase, getBaseTheme } from 'utils/styles';
+import { FontBase, baseTheme } from 'utils/styles';
 
 type RecursivePartial<T> = {
     [P in keyof T]?: RecursivePartial<T[P]>;
@@ -107,7 +107,7 @@ export const modifyTheme = (
 ) => {
     // asigning base font to all settings on top of base theme. If base fonts are undefined return base theme
     const combinedBaseTheme = assignFontBase(
-        getBaseTheme(),
+        baseTheme,
         activeTheme?.fonts?.base
     );
 
