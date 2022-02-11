@@ -77,12 +77,6 @@ interface NewColorOptions {
     inverted: string;
 }
 
-interface BgColorOptions {
-    light: string;
-    medium: string;
-    dark: string;
-}
-
 export type NewColorOptionsType = keyof NewColorOptions;
 
 export interface NewColors {
@@ -95,8 +89,19 @@ export interface NewColors {
         copy: string;
         copyInverted: string;
     };
-    sectionBg: BgColorOptions;
-    elementBg: BgColorOptions;
+    sectionBg: {
+        light: string;
+        medium: string;
+        dark: string;
+    };
+    elementBg: {
+        light: string;
+        lightHover: string;
+        medium: string;
+        mediumHover: string;
+        dark: string;
+        darkHover: string;
+    };
     primary: NewColorOptions;
     secondary: NewColorOptions;
     error: string;
@@ -186,8 +191,11 @@ const newColors: NewColors = {
     },
     elementBg: {
         light: '#FFFFFF',
+        lightHover: '#FFDEDE',
         medium: '#E8E8E8',
+        mediumHover: '#E0B5B5',
         dark: '#4B1919',
+        darkHover: '#653434',
     },
     primary: {
         default: '#FFE600',

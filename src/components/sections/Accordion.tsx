@@ -60,15 +60,18 @@ const AccordionHead = styled.summary<{
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
-            background: ${({ theme }) =>
-                color(theme).new.elementBg
-                    .medium}; // #TODO: Hover Farbe definieren
+            background: ${({ theme, isInverted, hasBg }) =>
+                isInverted || hasBg
+                    ? color(theme).new.elementBg.lightHover
+                    : color(theme).new.elementBg.mediumHover};
         }
     }
 
     &:focus {
-        background: ${({ theme }) =>
-            color(theme).new.elementBg.medium}; // #TODO: Hover Farbe definieren
+        background: ${({ theme, isInverted, hasBg }) =>
+            isInverted || hasBg
+                ? color(theme).new.elementBg.lightHover
+                : color(theme).new.elementBg.mediumHover};
     }
 `;
 
