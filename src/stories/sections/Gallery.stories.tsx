@@ -7,7 +7,7 @@ export default {
     component: GalleryComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
