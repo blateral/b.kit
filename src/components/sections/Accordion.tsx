@@ -4,25 +4,24 @@ import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import React from 'react';
 import styled from 'styled-components';
-import { spacings, getColors as color } from 'utils/styles';
+import { spacings, getColors as color, mq } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { generateFAQ } from 'utils/structuredData';
 import Grid from 'components/base/Grid';
 
-const AccordionContainer = styled.ul`
+const AccordionContainer = styled.div`
     margin: 0;
     padding: 0;
-    list-style: none;
 
     & > * + * {
         margin-top: ${spacings.nudge}px;
     }
 `;
 
-const View = styled.li``;
+const View = styled.details``;
 
-const AccordionHead = styled.button<{
+const AccordionHead = styled.summary<{
     isInverted?: boolean;
     hasBg?: boolean;
 }>`
@@ -31,12 +30,13 @@ const AccordionHead = styled.button<{
     align-items: center;
     justify-content: space-between;
 
-    width: 100%;
-    padding: ${spacings.nudge * 3}px ${spacings.nudge * 2}px;
+    padding: ${spacings.nudge * 2}px;
     margin: 0;
     border: none;
     outline: none;
     background: none;
+    user-select: none;
+    list-style: none;
 
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg
@@ -45,6 +45,18 @@ const AccordionHead = styled.button<{
 
     cursor: pointer;
     transition: background 0.2s ease-in-out;
+
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 3}px;
+    }
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    &::marker {
+        display: none;
+    }
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
@@ -61,19 +73,20 @@ const AccordionHead = styled.button<{
 `;
 
 const AccordionText = styled.div<{
-    isVisible?: boolean;
     isInverted?: boolean;
     hasBg?: boolean;
     hasAside?: boolean;
 }>`
-    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
-
-    padding: ${spacings.nudge * 3}px ${spacings.nudge * 2}px;
+    padding: ${spacings.nudge * 2}px;
     margin-top: 2px;
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg
             ? color(theme).new.elementBg.light
             : color(theme).new.elementBg.medium};
+
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 3}px;
+    }
 `;
 
 interface AccordionItem {
@@ -105,13 +118,8 @@ const AccordionBlock: React.FC<
     const { colors } = useLibTheme();
 
     return (
-        <View className={className}>
-            <AccordionHead
-                aria-expanded={isSelected ? 'true' : 'false'}
-                isInverted={isInverted}
-                hasBg={hasBg}
-                onClick={onClick}
-            >
+        <View open={isSelected} onToggle={onClick} className={className}>
+            <AccordionHead isInverted={isInverted} hasBg={hasBg}>
                 <Copy renderAs="span" size="big" type="copy-b">
                     {label}
                 </Copy>
@@ -128,7 +136,6 @@ const AccordionBlock: React.FC<
             <AccordionText
                 isInverted={isInverted}
                 hasBg={hasBg}
-                isVisible={isSelected}
                 hasAside={!!aside}
             >
                 <Grid.Row>
