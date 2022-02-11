@@ -2,12 +2,7 @@ import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import { CalloutTag } from 'components/typography/Callout';
-import {
-    mq,
-    spacings,
-    withRange,
-    getGlobalSettings as global,
-} from 'utils/styles';
+import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';

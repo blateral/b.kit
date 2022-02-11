@@ -12,7 +12,7 @@ import {
     getColors as color,
     mq,
     spacings,
-    getGlobalSettings as global,
+    getGlobals as global,
 } from 'utils/styles';
 import { format, isBefore, isValid } from 'date-fns';
 import de from 'date-fns/locale/de';

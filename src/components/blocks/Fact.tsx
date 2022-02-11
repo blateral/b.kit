@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { spacings, withRange, getGlobalSettings as global } from 'utils/styles';
+import { spacings, withRange, getGlobals as global } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 

@@ -6,7 +6,7 @@ import {
     mq,
     spacings,
     withRange,
-    getGlobalSettings as global,
+    getGlobals as global,
 } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import Image, { ImageProps } from 'components/blocks/Image';

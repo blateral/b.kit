@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 
 import {
     getColors as color,
-    getGlobalSettings as global,
+    getGlobals as global,
     spacings,
 } from 'utils/styles';
 

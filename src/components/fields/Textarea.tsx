@@ -6,7 +6,7 @@ import {
     getColors as color,
     mq,
     spacings,
-    getGlobalSettings as global,
+    getGlobals as global,
 } from 'utils/styles';
 import { FormProps } from './Textfield';
 

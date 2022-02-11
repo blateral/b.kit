@@ -407,33 +407,26 @@ const defaultGlobalSettings: GlobalSettings = {
 };
 
 /***** Theme Helper *****/
-export const getBaseTheme = () => {
-    return {
-        colors: { ...defaultColors },
-        fonts: { types: { ...defaultFonts } },
-        globalSettings: { ...defaultGlobalSettings },
-    } as DefaultTheme;
+export const baseTheme: DefaultTheme = {
+    colors: { ...defaultColors },
+    fonts: { types: { ...defaultFonts } },
+    globals: { ...defaultGlobalSettings },
 };
 
 export const getTheme = (theme?: DefaultTheme) => {
-    return (
-        (theme && theme.colors && theme.fonts && theme.globalSettings) ||
-        getBaseTheme()
-    );
+    return (theme && theme.colors && theme.fonts && theme.globals) || baseTheme;
 };
 
 export const getColors = (theme?: DefaultTheme) => {
-    return theme && theme.colors ? theme.colors : getBaseTheme().colors;
+    return theme && theme.colors ? theme.colors : baseTheme.colors;
 };
 
 export const getFonts = (theme?: DefaultTheme) => {
     return theme && theme.fonts?.types
         ? theme.fonts.types
-        : getBaseTheme().fonts.types;
+        : baseTheme.fonts.types;
 };
 
-export const getGlobalSettings = (theme?: DefaultTheme) => {
-    return theme && theme.globalSettings
-        ? theme.globalSettings
-        : getBaseTheme().globalSettings;
+export const getGlobals = (theme?: DefaultTheme) => {
+    return theme && theme.globals ? theme.globals : baseTheme.globals;
 };

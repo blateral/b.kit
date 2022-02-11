@@ -2,12 +2,7 @@ import React, { FC } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import styled, { css } from 'styled-components';
 
-import {
-    mq,
-    spacings,
-    withRange,
-    getGlobalSettings as global,
-} from 'utils/styles';
+import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Link, { LinkProps } from 'components/typography/Link';
 import Title from 'components/blocks/Title';

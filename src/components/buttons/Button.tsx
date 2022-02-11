@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import {
     getColors as color,
     getFonts as font,
-    getGlobalSettings as global,
+    getGlobals as global,
     spacings,
     withRange,
 } from 'utils/styles';

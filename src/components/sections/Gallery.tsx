@@ -7,7 +7,7 @@ import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import {
     getColors as color,
-    getGlobalSettings as global,
+    getGlobals as global,
     mq,
     spacings,
 } from 'utils/styles';

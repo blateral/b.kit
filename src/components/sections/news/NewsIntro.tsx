@@ -11,7 +11,7 @@ import {
     getColors as color,
     spacings,
     withRange,
-    getGlobalSettings as global,
+    getGlobals as global,
 } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
 import { withLibTheme } from 'utils/LibThemeProvider';

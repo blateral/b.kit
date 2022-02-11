@@ -8,6 +8,13 @@ const customTheme = {
             edgeRadius: '5px',
         },
     },
+    colors: {
+        new: {
+            sectionBg: {
+                medium: 'red',
+            },
+        },
+    },
     fonts: {
         base: {
             family: 'MS Comic Sans',

@@ -1,14 +1,14 @@
 import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
-import { spacings, mq, getColors as color } from 'utils/styles';
+import { spacings, mq } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 
 const StyledTitle = styled(Title)`
@@ -67,7 +67,9 @@ const Article: React.FC<{
     primaryAction,
     secondaryAction,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    // const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
+
     const isInverted = bgMode === 'inverted';
     const hasContent = intro || text || asideText;
 
@@ -76,10 +78,10 @@ const Article: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : bgMode
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >
@@ -127,23 +129,12 @@ const Article: React.FC<{
                     </Grid.Row>
                 )}
                 {(primaryAction || secondaryAction) && (
-                    <Grid.Row>
-                        <Grid.Col
-                            semilarge={{ span: 9 / 12 }}
-                            large={{ span: 6 / 12 }}
-                        >
-                            <StyledActions
-                                width="full"
-                                primary={
-                                    primaryAction && primaryAction(isInverted)
-                                }
-                                secondary={
-                                    secondaryAction &&
-                                    secondaryAction(isInverted)
-                                }
-                            />
-                        </Grid.Col>
-                    </Grid.Row>
+                    <StyledActions
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
+                    />
                 )}
             </Wrapper>
         </Section>

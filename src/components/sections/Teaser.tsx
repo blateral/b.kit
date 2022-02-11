@@ -12,7 +12,7 @@ import {
     spacings,
     withRange,
     getColors as color,
-    getGlobalSettings as global,
+    getGlobals as global,
 } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import { withLibTheme } from 'utils/LibThemeProvider';

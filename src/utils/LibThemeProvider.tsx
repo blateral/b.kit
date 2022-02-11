@@ -2,13 +2,19 @@
 import React, { FC, useContext } from 'react';
 import { DefaultTheme, ThemeContext, ThemeProvider } from 'styled-components';
 
-import { FontBase, getBaseTheme } from 'utils/styles';
+import {
+    FontBase,
+    baseTheme,
+    getColors,
+    getFonts,
+    getGlobals,
+} from 'utils/styles';
 
 type RecursivePartial<T> = {
     [P in keyof T]?: RecursivePartial<T[P]>;
 };
 
-export type Theme = RecursivePartial<DefaultTheme>;
+export type ThemeMods = RecursivePartial<DefaultTheme>;
 
 /**
  * Assigning font base key values to theme. Searches for each font base object key inside target theme object and replacing the values
@@ -51,9 +57,9 @@ const assignFontBase = (
  * @param target Result theme object
  * @param source Theme object that should be assigned to target
  */
-export const assignTo = <T extends Theme | DefaultTheme>(
+export const assignTo = <T extends ThemeMods | DefaultTheme>(
     target: T,
-    source?: Theme
+    source?: ThemeMods
 ) => {
     const output = { ...target };
     if (!source) return output as T;
@@ -84,7 +90,7 @@ export const assignTo = <T extends Theme | DefaultTheme>(
 };
 
 export const LibThemeProvider: FC<{
-    theme?: Theme;
+    theme?: ThemeMods;
 }> = ({ theme, children }) => {
     const ctx = useContext(ThemeContext);
 
@@ -98,16 +104,16 @@ export const LibThemeProvider: FC<{
 };
 
 interface WithLibThemeProps {
-    theme?: Theme;
+    theme?: ThemeMods;
 }
 
 export const modifyTheme = (
     activeTheme?: DefaultTheme,
-    modifications?: Theme
+    modifications?: ThemeMods
 ) => {
     // asigning base font to all settings on top of base theme. If base fonts are undefined return base theme
     const combinedBaseTheme = assignFontBase(
-        getBaseTheme(),
+        baseTheme,
         activeTheme?.fonts?.base
     );
 
@@ -126,13 +132,23 @@ export const modifyTheme = (
     return newTheme;
 };
 
+export const useLibTheme = () => {
+    const theme = useContext(ThemeContext);
+
+    return {
+        colors: getColors(theme),
+        fonts: getFonts(theme),
+        globals: getGlobals(theme),
+    };
+};
+
 export const withLibTheme =
     <P extends Record<string, unknown>>(
         Component: React.ComponentType<P>
     ): React.FC<
         P & {
             /** Component specific theme properties that overrides global theme settings */
-            theme?: Theme;
+            theme?: ThemeMods;
         }
     > =>
     ({ theme, ...props }: WithLibThemeProps) => {
