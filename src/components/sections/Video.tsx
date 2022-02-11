@@ -8,6 +8,7 @@ import Wrapper from 'components/base/Wrapper';
 import { ImageProps } from 'components/blocks/Image';
 
 import VideoCard from 'components/blocks/VideoCard';
+import Grid from 'components/base/Grid';
 
 const Video: React.FC<{
     bgImage: ImageProps;
@@ -34,11 +35,15 @@ const Video: React.FC<{
             <Wrapper
                 addWhitespace={global(theme).sections.edgeRadius ? true : false}
             >
-                <VideoCard
-                    bgImage={bgImage}
-                    embedId={embedId}
-                    playIcon={playIcon}
-                />
+                <Grid.Row>
+                    <Grid.Col>
+                        <VideoCard
+                            bgImage={bgImage}
+                            embedId={embedId}
+                            playIcon={playIcon}
+                        />
+                    </Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
