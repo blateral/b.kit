@@ -42,14 +42,14 @@ const ImgDescDesktop = styled(Copy)`
 
     @media ${mq.semilarge} {
         display: block;
-        padding: ${spacings.spacer}px ${spacings.spacer * 2}px;
+        padding: ${spacings.nudge * 2}px ${spacings.nudge * 5}px;
     }
 `;
 
 const ImgDescMobile = styled(Copy)`
     display: block;
-    padding: ${spacings.spacer}px 0;
-    padding-left: ${spacings.nudge * 2}px;
+    padding: ${spacings.nudge * 2}px 0;
+    padding-left: ${spacings.nudge}px;
 
     @media ${mq.semilarge} {
         display: none;
