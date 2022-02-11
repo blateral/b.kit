@@ -8,6 +8,7 @@ import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
 
 const PosterContainer = styled.div<{
     hasContent?: boolean;
@@ -103,24 +104,31 @@ const Poster: FC<{
     return (
         <Section bgColor="undefined" bgMode="full">
             <Wrapper clampWidth={hasWrapper ? 'normal' : 'large'}>
-                <PosterContainer hasWrapper={hasWrapper} hasContent={!!title}>
-                    <StyledImage {...image} coverSpace />
-                    {title && (
-                        <IntroContainer addWhitespace>
-                            <IntroBlock
-                                colorMode="onImage"
-                                title={title}
-                                titleAs={titleAs}
-                                superTitle={superTitle}
-                                superTitleAs={superTitleAs}
-                                text={text}
-                                secondaryAction={secondaryAction}
-                                primaryAction={primaryAction}
-                                clampText={text !== undefined}
-                            />
-                        </IntroContainer>
-                    )}
-                </PosterContainer>
+                <Grid.Row>
+                    <Grid.Col>
+                        <PosterContainer
+                            hasWrapper={hasWrapper}
+                            hasContent={!!title}
+                        >
+                            <StyledImage {...image} coverSpace />
+                            {title && (
+                                <IntroContainer addWhitespace>
+                                    <IntroBlock
+                                        colorMode="onImage"
+                                        title={title}
+                                        titleAs={titleAs}
+                                        superTitle={superTitle}
+                                        superTitleAs={superTitleAs}
+                                        text={text}
+                                        secondaryAction={secondaryAction}
+                                        primaryAction={primaryAction}
+                                        clampText={text !== undefined}
+                                    />
+                                </IntroContainer>
+                            )}
+                        </PosterContainer>
+                    </Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
