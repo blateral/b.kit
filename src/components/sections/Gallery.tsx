@@ -11,31 +11,32 @@ import {
     mq,
     spacings,
 } from 'utils/styles';
+import Grid from 'components/base/Grid';
 
 const ImgContainer = styled.div`
-    display: flex;
+    /* display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
     width: 100%;
 
     @media ${mq.semilarge} {
-        margin-left: ${spacings.spacer * -1}px;
+        /* margin-left: ${spacings.spacer * -1}px; */
         width: calc(100% + ${spacings.spacer}px);
     }
 `;
 
 const ImgWrapper = styled.div<{ isFull?: boolean }>`
-    flex: 0 100%;
-    padding-top: ${spacings.nudge * 2}px;
+    /* flex: 0 100%; */
+    /* padding-top: ${spacings.nudge * 2}px; */
 
     picture > img {
         width: 100%;
     }
 
     @media ${mq.semilarge} {
-        flex: 0 ${({ isFull }) => (isFull ? 100 : 50)}%;
-        padding-left: ${spacings.spacer}px;
-        padding-top: ${spacings.spacer}px;
+        /* flex: 0 ${({ isFull }) => (isFull ? 100 : 50)}%; */
+        /* padding-left: ${spacings.spacer}px;
+        padding-top: ${spacings.spacer}px; */
 
         /* &:last-child:nth-child(odd) {
             flex: 0 100%;
@@ -90,12 +91,21 @@ const Gallery: FC<{
                 addWhitespace={global(theme).sections.edgeRadius ? true : false}
             >
                 <ImgContainer>
-                    {images &&
-                        images.map((img, i) => (
-                            <ImgWrapper key={i} isFull={img.isFull}>
-                                <StyledImage {...img} />
-                            </ImgWrapper>
-                        ))}
+                    <Grid.Row>
+                        {images &&
+                            images.map((img, i) => (
+                                <Grid.Col
+                                    key={i}
+                                    semilarge={{
+                                        span: img.isFull ? 12 / 12 : 6 / 12,
+                                    }}
+                                >
+                                    <ImgWrapper>
+                                        <StyledImage {...img} />
+                                    </ImgWrapper>
+                                </Grid.Col>
+                            ))}
+                    </Grid.Row>
                 </ImgContainer>
             </Wrapper>
         </Section>

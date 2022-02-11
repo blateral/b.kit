@@ -8,7 +8,7 @@ export default {
     component: VideoComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;

@@ -5,6 +5,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
 
 const ItemList = styled.ul`
     margin: 0;
@@ -17,11 +18,14 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
     flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
+    max-width: 100%;
 
-    ${withRange([spacings.nudge * 2, spacings.spacer], 'padding')};
+    ${withRange([spacings.nudge, spacings.nudge * 2], 'padding')};
 
     background: ${({ theme, hasBg }) =>
-        hasBg ? color(theme).light : color(theme).mono.light};
+        hasBg
+            ? color(theme).new.elementBg.light
+            : color(theme).new.elementBg.medium};
 
     & > * + * {
         margin-left: ${spacings.nudge}px;
@@ -38,8 +42,31 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
     }
 `;
 
+interface PriceItems {
+    text?: string;
+    price?: string;
+}
+
+const PriceBlock: React.FC<
+    PriceItems & { isInverted?: boolean; hasBg?: boolean }
+> = ({ text, price, isInverted, hasBg }) => {
+    return (
+        <ItemBlock hasBg={isInverted || hasBg}>
+            <div>
+                <Copy type="copy" innerHTML={text} />
+            </div>
+
+            {price && (
+                <div>
+                    <Copy type="copy-b">{price}€</Copy>
+                </div>
+            )}
+        </ItemBlock>
+    );
+};
+
 const PriceList: React.FC<{
-    items: { text?: string; price?: string }[];
+    items: PriceItems[];
     bgMode?: 'inverted' | 'full';
 }> = ({ bgMode, items }) => {
     const isInverted = bgMode === 'inverted';
@@ -58,18 +85,22 @@ const PriceList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <ItemList>
-                    {items.map((item, i) => {
-                        return (
-                            <ItemBlock key={i} hasBg={isInverted || hasBg}>
-                                <Copy type="copy" innerHTML={item.text} />
-                                {item.price && (
-                                    <Copy type="copy-b">{item.price}€</Copy>
-                                )}
-                            </ItemBlock>
-                        );
-                    })}
-                </ItemList>
+                <Grid.Row>
+                    <Grid.Col>
+                        <ItemList>
+                            {items.map((item, i) => {
+                                return (
+                                    <PriceBlock
+                                        key={i}
+                                        {...item}
+                                        isInverted={isInverted}
+                                        hasBg={hasBg}
+                                    />
+                                );
+                            })}
+                        </ItemList>
+                    </Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );

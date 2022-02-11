@@ -9,7 +9,7 @@ export default {
     component: TeaserComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
