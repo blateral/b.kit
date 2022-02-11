@@ -343,7 +343,6 @@ export const CallToAction: FC<{
                                 >
                                     <StyledActions
                                         isCentered
-                                        width="full"
                                         primary={
                                             primaryAction &&
                                             primaryAction(isInverted)

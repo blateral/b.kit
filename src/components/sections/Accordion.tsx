@@ -2,8 +2,8 @@ import Plus from 'components/base/icons/Plus';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import { spacings, getColors as color } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
@@ -15,14 +15,14 @@ const AccordionContainer = styled.ul`
     padding: 0;
     list-style: none;
 
-    & + & {
+    & > * + * {
         margin-top: ${spacings.nudge}px;
     }
 `;
 
 const View = styled.li``;
 
-const AccordionHead = styled.div<{
+const AccordionHead = styled.button<{
     isInverted?: boolean;
     hasBg?: boolean;
 }>`
@@ -31,7 +31,12 @@ const AccordionHead = styled.div<{
     align-items: center;
     justify-content: space-between;
 
+    width: 100%;
     padding: ${spacings.nudge * 3}px ${spacings.nudge * 2}px;
+    margin: 0;
+    border: none;
+    outline: none;
+    background: none;
 
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg
@@ -39,18 +44,21 @@ const AccordionHead = styled.div<{
             : color(theme).new.elementBg.medium};
 
     cursor: pointer;
+    transition: background 0.2s ease-in-out;
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
-            transition: background 0.2s ease-in-out;
             background: ${({ theme }) =>
                 color(theme).new.elementBg
                     .medium}; // #TODO: Hover Farbe definieren
         }
     }
-`;
 
-const IconContainer = styled.div``;
+    &:focus {
+        background: ${({ theme }) =>
+            color(theme).new.elementBg.medium}; // #TODO: Hover Farbe definieren
+    }
+`;
 
 const AccordionText = styled.div<{
     isVisible?: boolean;
@@ -81,6 +89,7 @@ const AccordionBlock: React.FC<
         isInverted?: boolean;
         hasBg?: boolean;
         itemIcon?: (props: { isSelected: boolean }) => React.ReactNode;
+        className?: string;
     }
 > = ({
     label,
@@ -91,20 +100,22 @@ const AccordionBlock: React.FC<
     hasBg,
     isInverted,
     itemIcon,
+    className,
 }) => {
     const { colors } = useLibTheme();
 
     return (
-        <View>
+        <View className={className}>
             <AccordionHead
+                aria-expanded={isSelected ? 'true' : 'false'}
                 isInverted={isInverted}
                 hasBg={hasBg}
                 onClick={onClick}
             >
-                <Copy size="big" type="copy-b">
+                <Copy renderAs="span" size="big" type="copy-b">
                     {label}
                 </Copy>
-                <IconContainer>
+                <span>
                     {itemIcon ? (
                         itemIcon({ isSelected: isSelected || false })
                     ) : isSelected ? (
@@ -112,7 +123,7 @@ const AccordionBlock: React.FC<
                     ) : (
                         <Plus iconColor={colors.dark} />
                     )}
-                </IconContainer>
+                </span>
             </AccordionHead>
             <AccordionText
                 isInverted={isInverted}
@@ -149,7 +160,7 @@ const Accordion: React.FC<{
 }> = ({ items, bgMode, itemIcon }) => {
     const [currentItems, setCurrentItems] = React.useState<number[]>([]);
 
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
@@ -158,10 +169,10 @@ const Accordion: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
@@ -169,13 +180,14 @@ const Accordion: React.FC<{
             <Wrapper addWhitespace>
                 <Grid.Row gutter={0}>
                     <Grid.Col>
-                        {items &&
-                            items.map(({ label, text, aside }, i) => {
-                                const isSelected =
-                                    currentItems.indexOf(i) !== -1;
-                                return (
-                                    <AccordionContainer key={i}>
+                        <AccordionContainer aria-label="Accordion Control Group Buttons">
+                            {items &&
+                                items.map(({ label, text, aside }, i) => {
+                                    const isSelected =
+                                        currentItems.indexOf(i) !== -1;
+                                    return (
                                         <AccordionBlock
+                                            key={`${label}_${i}`}
                                             isSelected={isSelected}
                                             label={label}
                                             text={text}
@@ -197,9 +209,9 @@ const Accordion: React.FC<{
                                             hasBg={hasBg}
                                             itemIcon={itemIcon}
                                         />
-                                    </AccordionContainer>
-                                );
-                            })}
+                                    );
+                                })}
+                        </AccordionContainer>
                     </Grid.Col>
                 </Grid.Row>
             </Wrapper>
