@@ -6,6 +6,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import { getColors as color } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
 
 const Intro: React.FC<{
     title: string;
@@ -54,19 +55,23 @@ const Intro: React.FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <IntroBlock
-                    title={title}
-                    titleAs={titleAs}
-                    superTitle={superTitle}
-                    superTitleAs={superTitleAs}
-                    text={text}
-                    colorMode={isInverted ? 'inverted' : 'default'}
-                    secondaryAction={secondaryAction}
-                    primaryAction={primaryAction}
-                    isCentered={isCentered}
-                    clampTitle={clampTitle}
-                    clampText={clampText}
-                />
+                <Grid.Row>
+                    <Grid.Col>
+                        <IntroBlock
+                            title={title}
+                            titleAs={titleAs}
+                            superTitle={superTitle}
+                            superTitleAs={superTitleAs}
+                            text={text}
+                            colorMode={isInverted ? 'inverted' : 'default'}
+                            secondaryAction={secondaryAction}
+                            primaryAction={primaryAction}
+                            isCentered={isCentered}
+                            clampTitle={clampTitle}
+                            clampText={clampText}
+                        />
+                    </Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
