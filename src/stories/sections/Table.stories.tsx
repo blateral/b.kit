@@ -8,7 +8,7 @@ export default {
     components: TableComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preivew',
         },
     },
 } as Meta;
@@ -341,7 +341,7 @@ export const LastColRight: Story = () => (
                 ],
             },
         ]}
-        bgMode="inverted"
+        bgMode="full"
     />
 );
 

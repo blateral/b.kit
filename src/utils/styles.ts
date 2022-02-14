@@ -189,9 +189,9 @@ const newColors: NewColors = {
     elementBg: {
         light: '#FFFFFF',
         lightHover: '#FFDEDE',
-        medium: '#E8E8E8',
+        medium: '#DBDBDB',
         mediumHover: '#E0B5B5',
-        dark: '#4B1919',
+        dark: '#393434',
         darkHover: '#653434',
     },
     primary: {

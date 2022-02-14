@@ -1,13 +1,19 @@
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
-import { getColors as color, withRange, spacings, mq } from 'utils/styles';
+import { getColors as color, withRange, spacings } from 'utils/styles';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import { hexToRgba } from 'utils/hexRgbConverter';
-import { withLibTheme } from 'utils/LibThemeProvider';
-import Grid from 'components/base/Grid';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+
+const View = styled.div``;
+
+const Caption = styled(Copy)`
+    margin-bottom: ${spacings.nudge}px;
+    padding: 0 ${spacings.nudge * 2}px;
+    text-align: left;
+`;
 
 const TableContainer = styled.div`
     overflow-x: scroll;
@@ -18,48 +24,29 @@ const TableContainer = styled.div`
 const TableBody = styled.table`
     width: 100%;
     max-width: 100%;
-    margin-top: ${spacings.nudge * 2}px;
 
     border-collapse: separate;
     border-spacing: 0 ${spacings.nudge}px;
 
     padding: 0 ${spacings.nudge * 2}px;
-
-    @media ${mq.medium} {
-        padding-left: ${spacings.spacer}px;
-        padding-right: ${spacings.spacer}px;
-    }
-
-    @media ${mq.semilarge} {
-        padding-left: ${(1 / 28) * 100}%;
-        padding-left: ${`
-                      max(
-                          ${spacings.spacer}px,
-                          ${(1 / 28) * 100}%
-                      );
-                  `};
-        padding-right: ${spacings.spacer}px;
-    }
-
-    @media ${mq.xlarge} {
-        padding-left: ${(1 / 28) * spacings.wrapper}px;
-        padding-right: ${spacings.spacer}px;
-    }
 `;
 
-const TableHead = styled.th<{
+const TableHead = styled(Copy)<{
     isInverted?: boolean;
-    hasBack?: boolean;
     alignRight?: boolean;
 }>`
     text-align: left;
-    color: ${({ theme }) => color(theme).dark};
-    background-color: ${({ theme, hasBack, isInverted }) =>
-        hasBack && !isInverted ? color(theme).light : color(theme).mono.light};
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.text.inverted
+            : color(theme).new.text.default};
+    background-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.elementBg.dark
+            : color(theme).new.elementBg.medium};
 
-    padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px
-        ${spacings.nudge * 3.5}px ${spacings.spacer * 2}px;
-    min-width: 60px;
+    padding: 0 ${spacings.nudge * 3}px;
+    height: 56px;
     box-sizing: content-box;
 
     :last-child {
@@ -68,23 +55,18 @@ const TableHead = styled.th<{
     }
 `;
 
-const TableData = styled.td<{
-    isInverted?: boolean;
+const TableData = styled(Copy)<{
     hasBack?: boolean;
     alignRight?: boolean;
 }>`
-    padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px
-        ${spacings.nudge * 3.5}px ${spacings.spacer * 2}px;
-    min-width: 60px;
+    padding: 0 ${spacings.nudge * 3}px;
+    height: 56px;
     box-sizing: content-box;
 
-    background-color: ${({ isInverted, hasBack, theme }) =>
-        hexToRgba(
-            hasBack && !isInverted
-                ? color(theme).light
-                : color(theme).mono.light,
-            isInverted ? 0.2 : 0.4
-        )};
+    background-color: ${({ hasBack, theme }) =>
+        hasBack
+            ? color(theme).new.elementBg.light
+            : color(theme).new.elementBg.medium};
 
     :last-child {
         text-align: ${({ alignRight }) => (alignRight ? 'right' : 'left')};
@@ -112,31 +94,32 @@ const TableBlock: React.FC<TableProps> = ({
     lastCol = 'left',
 }) => {
     return (
-        <div>
-            {tableTitle && (
-                <Wrapper addWhitespace>
-                    <Copy type="copy-b" isInverted={isInverted}>
-                        {tableTitle}
-                    </Copy>
-                </Wrapper>
-            )}
+        <View>
             <TableContainer>
                 <TableBody>
+                    {tableTitle && (
+                        <Caption
+                            renderAs="caption"
+                            type="copy-b"
+                            isInverted={isInverted}
+                        >
+                            {tableTitle}
+                        </Caption>
+                    )}
                     {rowTitle && (
                         <thead>
                             <tr>
-                                {rowTitle.map((item, ii) => {
-                                    return (
-                                        <TableHead
-                                            key={ii}
-                                            isInverted={isInverted}
-                                            hasBack={hasBack}
-                                            alignRight={lastCol === 'right'}
-                                        >
-                                            <Copy type="copy-b">{item}</Copy>
-                                        </TableHead>
-                                    );
-                                })}
+                                {rowTitle.map((item, ii) => (
+                                    <TableHead
+                                        key={ii}
+                                        type="copy-b"
+                                        renderAs="th"
+                                        isInverted={!isInverted}
+                                        alignRight={lastCol === 'right'}
+                                    >
+                                        {item}
+                                    </TableHead>
+                                ))}
                             </tr>
                         </thead>
                     )}
@@ -147,13 +130,11 @@ const TableBlock: React.FC<TableProps> = ({
                                     return (
                                         <TableData
                                             key={ii}
-                                            isInverted={isInverted}
+                                            renderAs="td"
                                             hasBack={hasBack}
                                             alignRight={lastCol === 'right'}
                                         >
-                                            <Copy isInverted={isInverted}>
-                                                {itemText}
-                                            </Copy>
+                                            {itemText}
                                         </TableData>
                                     );
                                 })}
@@ -162,7 +143,7 @@ const TableBlock: React.FC<TableProps> = ({
                     </tbody>
                 </TableBody>
             </TableContainer>
-        </div>
+        </View>
     );
 };
 
@@ -180,38 +161,34 @@ const Table: React.FC<{
     tableItems: TableProps[];
     bgMode?: 'full' | 'inverted';
 }> = ({ bgMode, tableItems }) => {
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
-    const hasBg = bgMode === 'full';
+    const hasBg = bgMode === 'full' || isInverted;
 
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper>
-                <Grid.Row>
-                    <Grid.Col>
-                        {tableItems.map((item, i) => {
-                            return (
-                                <TableWrapper key={i}>
-                                    <TableBlock
-                                        {...item}
-                                        isInverted={isInverted}
-                                        hasBack={hasBg}
-                                    />
-                                </TableWrapper>
-                            );
-                        })}
-                    </Grid.Col>
-                </Grid.Row>
+                {tableItems.map((item, i) => {
+                    return (
+                        <TableWrapper key={i}>
+                            <TableBlock
+                                {...item}
+                                isInverted={isInverted}
+                                hasBack={hasBg}
+                            />
+                        </TableWrapper>
+                    );
+                })}
             </Wrapper>
         </Section>
     );
