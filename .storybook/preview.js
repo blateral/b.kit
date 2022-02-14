@@ -1,4 +1,5 @@
 import { LibThemeProvider } from '../src/utils/LibThemeProvider';
+import DebugLines from '../src/components/debug/DebugLines';
 
 const customTheme = {
     globalSettings: {
@@ -89,9 +90,12 @@ export const parameters = {
 
 export const decorators = [
     (Story) => (
-        // <LibThemeProvider theme={customTheme}>
-        //     <Story />
-        // </LibThemeProvider>
-        <Story />
+        <>
+            {/* <LibThemeProvider theme={customTheme}>
+                <Story />
+            </LibThemeProvider> */}
+            <Story />
+            {/* <DebugLines /> */}
+        </>
     ),
 ];

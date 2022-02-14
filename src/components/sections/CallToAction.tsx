@@ -104,7 +104,7 @@ const Address = styled.div`
         margin-left: 0;
     }
 
-    @media ${mq.medium} {
+    @media ${mq.semilarge} {
         justify-content: flex-start;
         flex-direction: row;
         padding: ${spacings.nudge}px ${spacings.nudge}px ${spacings.nudge}px 0;
@@ -256,21 +256,32 @@ const Badge = styled.div`
 `;
 
 export const CallToAction: FC<{
+    /** Main title text */
     title?: string;
+    /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
+    /** Superior title that stands above main title */
     superTitle?: string;
+    /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
+    /** Bold text underneath the title (limited richtext capabilites) */
     text?: string;
+    /** Props for contact area */
     contact?: ContactBoxProps;
+    /** Show Newsletter defined by inject function newsFormMain. Only visible if React node is defined! */
     hasNewsletter?: boolean;
-
+    /** Badge decorator visible only on large screens */
     badge?: React.ReactNode;
 
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-    newsFormMain?: (isInverted?: boolean) => React.ReactNode;
-
+    /** Section background */
     bgMode?: 'full' | 'inverted';
+
+    /** Function to inject custom primary button */
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    /** Function to inject custom secondary button */
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    /** Function to inject newsletter form */
+    newsFormMain?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
     title,
     titleAs = 'h2',

@@ -8,7 +8,7 @@ import { spacings, getColors as color, mq } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { generateFAQ } from 'utils/structuredData';
-import Grid from 'components/base/Grid';
+import Grid, { gridSettings } from 'components/base/Grid';
 
 const AccordionContainer = styled.div`
     margin: 0;
@@ -80,6 +80,8 @@ const AccordionText = styled.div<{
     hasBg?: boolean;
     hasAside?: boolean;
 }>`
+    display: flex;
+    flex-direction: column;
     padding: ${spacings.nudge * 2}px;
     margin-top: 2px;
     background: ${({ isInverted, hasBg, theme }) =>
@@ -87,8 +89,25 @@ const AccordionText = styled.div<{
             ? color(theme).new.elementBg.light
             : color(theme).new.elementBg.medium};
 
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
+    }
+
     @media ${mq.medium} {
         padding: ${spacings.nudge * 3}px;
+    }
+
+    @media ${mq.semilarge} {
+        flex-direction: row;
+
+        & > *:first-child {
+            max-width: 75%;
+        }
+
+        & > * + * {
+            margin-top: 0px;
+            margin-left: ${gridSettings.gutter}px;
+        }
     }
 `;
 
@@ -141,18 +160,8 @@ const AccordionBlock: React.FC<
                 hasBg={hasBg}
                 hasAside={!!aside}
             >
-                <Grid.Row>
-                    <Grid.Col
-                        semilarge={aside ? { span: 6 / 12 } : { span: 9 / 12 }}
-                    >
-                        {text && <Copy type="copy" innerHTML={text} />}
-                    </Grid.Col>
-                    {aside && (
-                        <Grid.Col semilarge={{ span: 6 / 12 }}>
-                            <Copy type="copy" innerHTML={aside} />
-                        </Grid.Col>
-                    )}
-                </Grid.Row>
+                {text && <Copy type="copy" innerHTML={text} />}
+                {aside && <Copy type="copy" innerHTML={aside} />}
             </AccordionText>
         </View>
     );
