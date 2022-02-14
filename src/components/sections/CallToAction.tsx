@@ -14,32 +14,39 @@ import { HeadlineTag } from 'components/typography/Heading';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import { withLibTheme } from 'utils/LibThemeProvider';
-import Grid from 'components/base/Grid';
+import Grid, { gridSettings } from 'components/base/Grid';
 
 const ContactView = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 0 auto;
     width: 100%;
-
-    margin-top: ${spacings.nudge * 7}px;
 
     text-align: left;
     hyphens: auto;
     overflow-wrap: break-word;
-`;
 
-const AvatarContainer = styled.div`
-    text-align: center;
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
 
-    @media${mq.semilarge} {
-        text-align: left;
+    @media ${mq.semilarge} {
+        flex-direction: row;
+
+        & > * + * {
+            margin-top: 0px;
+            margin-left: ${gridSettings.gutter}px;
+        }
     }
 `;
 
 const Avatar = styled.img`
-    height: 196px;
-    width: 196px;
+    display: block;
     border: solid 1px transparent;
     border-radius: 50%;
+    max-width: 180px;
+    max-height: 180px;
 
     @media ${mq.semilarge} {
         display: block;
@@ -156,70 +163,60 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
 }) => {
     return (
         <ContactView className={className}>
-            <Grid.Row>
-                <Grid.Col
-                    semilarge={{ span: 3 / 10, move: 1 / 10 }}
-                    xlarge={{ span: 2 / 8, move: 1 / 8 }}
-                >
-                    <AvatarContainer>
-                        <Avatar src={avatar?.src} alt={avatar?.alt} />
-                    </AvatarContainer>
-                </Grid.Col>
-                <Grid.Col
-                    semilarge={{ span: 5 / 10, move: 1 / 10 }}
-                    xlarge={{ span: 4 / 8, move: 1 / 8 }}
-                >
-                    <Info>
-                        {(name || description) && (
-                            <div>
-                                {name && (
-                                    <Copy type="copy-b" isInverted={isInverted}>
-                                        {name}
-                                    </Copy>
-                                )}
-                                {description && (
-                                    <Description
-                                        type="copy"
-                                        isInverted={isInverted}
-                                        innerHTML={description}
-                                    />
-                                )}
-                            </div>
+            <Avatar src={avatar?.src} alt={avatar?.alt} />
+            <Info>
+                {(name || description) && (
+                    <div>
+                        {name && (
+                            <Copy type="copy-b" isInverted={isInverted}>
+                                {name}
+                            </Copy>
                         )}
-                        {addresses && addresses.length > 0 && (
-                            <div>
-                                {addresses?.map((address, i) => (
-                                    <Address key={i}>
-                                        <Decorator isInverted={isInverted}>
-                                            {address.decorator}
-                                        </Decorator>
-                                        <AddressLabel
-                                            type="copy"
-                                            size="big"
-                                            isInverted={isInverted}
-                                            innerHTML={address.label}
-                                        />
-                                    </Address>
-                                ))}
-                            </div>
+                        {description && (
+                            <Description
+                                type="copy"
+                                isInverted={isInverted}
+                                innerHTML={description}
+                            />
                         )}
-                    </Info>
-                </Grid.Col>
-            </Grid.Row>
+                    </div>
+                )}
+                {addresses && addresses.length > 0 && (
+                    <div>
+                        {addresses?.map((address, i) => (
+                            <Address key={i}>
+                                <Decorator isInverted={isInverted}>
+                                    {address.decorator}
+                                </Decorator>
+                                <AddressLabel
+                                    type="copy"
+                                    size="big"
+                                    isInverted={isInverted}
+                                    innerHTML={address.label}
+                                />
+                            </Address>
+                        ))}
+                    </div>
+                )}
+            </Info>
         </ContactView>
     );
 };
 
-const StyledIntro = styled(IntroBlock)`
-    @media ${mq.semilarge} {
+const StyledIntro = styled(IntroBlock)<{ hasDecorator?: boolean }>`
+    @media ${mq.xlarge} {
         & > *:first-child {
-            min-height: 110px;
+            min-height: ${({ hasDecorator }) => hasDecorator && '110px'};
         }
     }
 `;
 
 const StyledContactBox = styled(ContactBox)`
-    margin-top: ${spacings.nudge * 7}px;
+    margin-top: ${spacings.spacer}px;
+
+    @media ${mq.semilarge} {
+        margin-top: ${spacings.spacer * 1.5}px;
+    }
 `;
 
 const StyledActions = styled(Actions)`
@@ -242,7 +239,7 @@ const Badge = styled.div`
     height: 241px;
     width: 241px;
     margin-left: auto;
-    margin-bottom: -110px;
+    margin-bottom: -135px;
     z-index: 3;
 
     @media ${mq.xlarge} {
@@ -309,9 +306,18 @@ export const CallToAction: FC<{
                                 titleAs={titleAs}
                                 superTitle={superTitle}
                                 superTitleAs={superTitleAs}
+                                hasDecorator={!!badge}
                                 text={text}
                             />
                         )}
+                    </Grid.Col>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Col
+                        semilarge={{ span: 8 / 12, move: 2 / 12 }}
+                        large={{ span: 6 / 12, move: 3 / 12 }}
+                        textAlign="center"
+                    >
                         {contact && (
                             <StyledContactBox
                                 isInverted={isInverted}
@@ -322,38 +328,22 @@ export const CallToAction: FC<{
                             />
                         )}
                         {newsFormMain && hasNewsletter && (
-                            <Grid.Row>
-                                <Grid.Col
-                                    semilarge={{ span: 8 / 10, move: 1 / 10 }}
-                                    large={{ span: 6 / 8, move: 1 / 8 }}
-                                >
-                                    <NewsletterWrapper>
-                                        {newsFormMain(isInverted)}
-                                    </NewsletterWrapper>
-                                </Grid.Col>
-                            </Grid.Row>
+                            <NewsletterWrapper>
+                                {newsFormMain(isInverted)}
+                            </NewsletterWrapper>
                         )}
 
                         {(primaryAction || secondaryAction) && (
-                            <Grid.Row>
-                                <Grid.Col
-                                    textAlign="center"
-                                    semilarge={{ span: 8 / 10, move: 1 / 10 }}
-                                    large={{ span: 6 / 8, move: 1 / 8 }}
-                                >
-                                    <StyledActions
-                                        isCentered
-                                        primary={
-                                            primaryAction &&
-                                            primaryAction(isInverted)
-                                        }
-                                        secondary={
-                                            secondaryAction &&
-                                            secondaryAction(isInverted)
-                                        }
-                                    />
-                                </Grid.Col>
-                            </Grid.Row>
+                            <StyledActions
+                                isCentered
+                                primary={
+                                    primaryAction && primaryAction(isInverted)
+                                }
+                                secondary={
+                                    secondaryAction &&
+                                    secondaryAction(isInverted)
+                                }
+                            />
                         )}
                     </Grid.Col>
                 </Grid.Row>

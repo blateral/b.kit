@@ -100,7 +100,7 @@ export { default as ButtonGhost } from 'components/buttons/ButtonGhost';
 export { default as Pointer } from 'components/buttons/Pointer';
 
 /***** Base *****/
-export { default as Grid } from 'components/base/Grid';
+export { default as Grid, gridSettings } from 'components/base/Grid';
 export { default as Section, mapToBgMode } from 'components/base/Section';
 export { default as Wrapper } from 'components/base/Wrapper';
 

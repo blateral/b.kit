@@ -42,7 +42,7 @@ export const WithContact: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         contact={{
             avatar: {
-                src: 'https://via.placeholder.com/196',
+                src: 'https://via.placeholder.com/180',
                 alt: 'avatar',
             },
             name: 'Max Mustermann',
@@ -62,7 +62,7 @@ export const WithContactAsRichtext: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         contact={{
             avatar: {
-                src: 'https://via.placeholder.com/196',
+                src: 'https://via.placeholder.com/180',
                 alt: 'avatar',
             },
             description: `<b>Max Mustermann</b>
@@ -111,7 +111,7 @@ export const WithActions: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         contact={{
             avatar: {
-                src: 'https://via.placeholder.com/196',
+                src: 'https://via.placeholder.com/180',
                 alt: 'avatar',
             },
             description: `<b>Max Mustermann</b>
@@ -299,13 +299,12 @@ export const WithNewsletterForm: Story = () => (
         hasNewsletter
         newsFormMain={(isInverted) => (
             <CompactForm
-                isInverted={isInverted}
+                mode={isInverted ? 'onDark' : 'onSoft'}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
                 buttonIcon={'Primary'}
                 onSubmit={console.log}
                 onClick={console.log}
                 onBlur={console.log}
-                backgroundStyle="white"
             />
         )}
         badge={
@@ -326,13 +325,12 @@ export const WithNewsletterFormInverted: Story = () => (
         hasNewsletter
         newsFormMain={(isInverted) => (
             <CompactForm
-                isInverted={isInverted}
+                mode={isInverted ? 'onDark' : 'onSoft'}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
                 buttonIcon={'Primary'}
                 onSubmit={console.log}
                 onClick={console.log}
                 onBlur={console.log}
-                backgroundStyle="white"
             />
         )}
         badge={

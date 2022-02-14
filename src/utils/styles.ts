@@ -198,11 +198,11 @@ const newColors: NewColors = {
         darkHover: '#653434',
     },
     primary: {
-        default: '#FFE600',
-        inverted: '#DFC800',
+        default: '#7749F8',
+        inverted: '#EBE5FC',
     },
     secondary: {
-        default: '#DAD0FF',
+        default: '#6C757D',
         inverted: '#C5BEE0',
     },
     error: '#FF2D2D',

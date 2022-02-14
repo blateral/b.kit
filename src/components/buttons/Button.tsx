@@ -60,7 +60,7 @@ const View = styled.a<{
     color: ${({ theme, inverted, disable }) =>
         disable
             ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher light)
-            : inverted
+            : !inverted
             ? color(theme).new.text.inverted
             : color(theme).new.text.default};
     text-align: left;
@@ -71,7 +71,7 @@ const View = styled.a<{
         color: ${({ theme, inverted, disable }) =>
             disable
                 ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher light)
-                : inverted
+                : !inverted
                 ? color(theme).new.text.inverted
                 : color(theme).new.text.default};
     }

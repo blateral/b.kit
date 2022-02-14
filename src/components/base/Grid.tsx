@@ -23,7 +23,7 @@ interface ColProps extends ColPropsSettings {
     xlarge?: ColPropsSettings;
 }
 
-const gridSettings = {
+export const gridSettings = {
     cols: 12,
     gutter: spacings.spacer,
 };

@@ -22,7 +22,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -46,9 +46,9 @@ export const WithButton: Story = () => (
     />
 );
 
-export const Inverted: Story = () => (
+export const OnSoftBackground: Story = () => (
     <CompactForm
-        isInverted
+        mode="onSoft"
         placeholder="Geben Sie Ihre E-Mail Adresse an"
         buttonIcon={'Primary'}
         onSubmit={console.log}
@@ -57,7 +57,25 @@ export const Inverted: Story = () => (
     />
 );
 
-Inverted.parameters = {
+OnSoftBackground.parameters = {
+    backgrounds: {
+        default: 'soft',
+        values: [{ name: 'soft', value: '#F0F0F0' }],
+    },
+};
+
+export const OnDarkBackground: Story = () => (
+    <CompactForm
+        mode="onDark"
+        placeholder="Geben Sie Ihre E-Mail Adresse an"
+        buttonIcon={'Primary'}
+        onSubmit={console.log}
+        onClick={console.log}
+        onBlur={console.log}
+    />
+);
+
+OnDarkBackground.parameters = {
     backgrounds: {
         default: 'inverted',
         values: [{ name: 'inverted', value: 'black' }],
