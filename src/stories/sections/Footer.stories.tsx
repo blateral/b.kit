@@ -196,7 +196,7 @@ export const WithNewsletterForm: Story = () => (
         newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
         newsForm={(isInverted) => (
             <CompactForm
-                isInverted={isInverted}
+                mode={isInverted ? 'onDark' : 'default'}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
                 buttonIcon={'Primary'}
                 onSubmit={console.log}
@@ -239,7 +239,7 @@ export const WithColumnTopSpace: Story = () => (
         newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
         newsForm={(isInverted) => (
             <CompactForm
-                isInverted={isInverted}
+                mode={isInverted ? 'onDark' : 'default'}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
                 buttonIcon={'Primary'}
                 onSubmit={console.log}
@@ -282,7 +282,7 @@ export const WithBottomLinks: Story = () => (
         newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
         newsForm={(isInverted) => (
             <CompactForm
-                isInverted={isInverted}
+                mode={isInverted ? 'onDark' : 'default'}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
                 buttonIcon={'Primary'}
                 onSubmit={console.log}
@@ -330,7 +330,7 @@ export const Inverted: Story = () => (
         newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
         newsForm={(isInverted) => (
             <CompactForm
-                isInverted={isInverted}
+                mode={isInverted ? 'onDark' : 'default'}
                 placeholder="Geben Sie Ihre E-Mail Adresse an"
                 buttonIcon={'Primary'}
                 onSubmit={console.log}

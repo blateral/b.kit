@@ -51,19 +51,3 @@ export const Mirrored: Story = () => (
         }
     />
 );
-
-export const withFullWidth: Story = () => (
-    <Actions
-        width="full"
-        primary={
-            <Button.View>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        }
-        secondary={
-            <ButtonGhost.View>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        }
-    />
-);

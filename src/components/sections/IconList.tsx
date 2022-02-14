@@ -86,7 +86,8 @@ const ActionsWrapper = styled.div<{ isCentered?: boolean }>`
 
 const StyledActions = styled(Actions)`
     @media ${mq.medium} {
-        max-width: 600px;
+        display: block;
+        text-align: center;
     }
 `;
 
@@ -205,7 +206,6 @@ const IconList: React.FC<{
                 {(primaryAction || secondaryAction) && (
                     <ActionsWrapper isCentered={isCentered}>
                         <StyledActions
-                            isCentered={isCentered}
                             primary={primaryAction && primaryAction(isInverted)}
                             secondary={
                                 secondaryAction && secondaryAction(isInverted)

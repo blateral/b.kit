@@ -747,7 +747,6 @@ const DynamicForm: FC<{
                         hasCols={rightColumn && rightColumn.length > 0}
                     >
                         <Actions
-                            isCentered
                             primary={
                                 submitAction ? (
                                     submitAction({

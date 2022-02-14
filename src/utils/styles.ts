@@ -30,13 +30,10 @@ export const spacings = {
 export const getSizeByRange = (range: [number, number]): string =>
     `calc(${range[0]}px + (${range[1]} - ${range[0]}) * ((100vw - 300px) / (${spacings.wrapper} - 320)));`;
 
-export const withRange = (
-    range: [number, number],
-    property: string
-): string => {
+export const withRange = (range: [number, number], property: string) => {
     if (!property) return '';
 
-    return `
+    return css`
         ${property}: ${range[0]}px;
         ${property}: ${getSizeByRange(range)};
 

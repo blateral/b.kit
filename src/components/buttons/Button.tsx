@@ -16,7 +16,7 @@ const View = styled.a<{
 }>`
     min-height: 3em;
     height: ${({ size }) => (size === 'default' ? '3.65em' : '3em')};
-    min-width: ${({ size }) => (size === 'default' ? '210px' : '120px')};
+    min-width: ${({ size }) => (size === 'default' ? '240px' : '120px')};
     padding: 0.1em 1.2em;
 
     display: inline-block;
@@ -34,12 +34,6 @@ const View = styled.a<{
     text-decoration: none;
     line-height: 1;
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
-
-    perspective: 1000;
-    -webkit-font-smoothing: subpixel-antialiased;
-    -webkit-perspective: 1000;
-    -moz-osx-font-smoothing: grayscale;
-    will-change: auto;
 
     outline: none;
     border: 1px solid transparent;

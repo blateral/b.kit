@@ -158,7 +158,6 @@ const Feature: React.FC<
             </ArticleContent>
             {(primaryAction || secondaryAction) && (
                 <StyledActions
-                    isCentered={isCentered}
                     addWhitespace={addWhitespace}
                     primary={primaryAction && primaryAction(isInverted)}
                     secondary={secondaryAction && secondaryAction(isInverted)}

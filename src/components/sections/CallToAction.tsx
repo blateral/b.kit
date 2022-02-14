@@ -45,11 +45,13 @@ const Avatar = styled.img`
     display: block;
     border: solid 1px transparent;
     border-radius: 50%;
-    max-width: 180px;
-    max-height: 180px;
+    width: 180px;
+    height: 180px;
 
     @media ${mq.semilarge} {
         display: block;
+        width: 190px;
+        height: 190px;
     }
 `;
 
@@ -221,6 +223,11 @@ const StyledContactBox = styled(ContactBox)`
 
 const StyledActions = styled(Actions)`
     margin-top: ${spacings.nudge * 8}px;
+
+    @media ${mq.medium} {
+        display: block;
+        text-align: center;
+    }
 `;
 
 const NewsletterWrapper = styled.div`
@@ -332,21 +339,16 @@ export const CallToAction: FC<{
                                 {newsFormMain(isInverted)}
                             </NewsletterWrapper>
                         )}
-
-                        {(primaryAction || secondaryAction) && (
-                            <StyledActions
-                                isCentered
-                                primary={
-                                    primaryAction && primaryAction(isInverted)
-                                }
-                                secondary={
-                                    secondaryAction &&
-                                    secondaryAction(isInverted)
-                                }
-                            />
-                        )}
                     </Grid.Col>
                 </Grid.Row>
+                {(primaryAction || secondaryAction) && (
+                    <StyledActions
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
+                    />
+                )}
             </Wrapper>
         </Section>
     );
