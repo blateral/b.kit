@@ -26,6 +26,7 @@ interface ColProps extends ColPropsSettings {
 export const gridSettings = {
     cols: 12,
     gutter: spacings.spacer,
+    mobileGutter: spacings.nudge * 2,
 };
 
 const getWidth = (props: ColProps) => {
@@ -158,8 +159,8 @@ const getLeftRight = (props: ColProps) => {
 const StyledCol = styled.div<GridProps & ColProps>`
     ${getWidth};
     ${getLeftRight};
-    padding-top: ${({ gutter }) => gutter || 0}px;
-    padding-left: ${({ gutter }) => gutter || 0}px;
+    padding-top: ${({ mobileGutter }) => mobileGutter || 0}px;
+    padding-left: ${({ mobileGutter }) => mobileGutter || 0}px;
     display: block;
     position: relative;
 
@@ -176,6 +177,11 @@ const StyledCol = styled.div<GridProps & ColProps>`
                 return undefined;
         }
     }};
+
+    @media ${mq.medium} {
+        padding-top: ${({ gutter }) => gutter && `${gutter}px`};
+        padding-left: ${({ gutter }) => gutter && `${gutter}px`};
+    }
 `;
 
 const Col: React.FC<ColProps> = (props) => {
@@ -184,14 +190,15 @@ const Col: React.FC<ColProps> = (props) => {
 
 interface GridProps {
     gutter?: number;
+    mobileGutter?: number;
     valign?: VerticalAlign;
     halign?: HorizontalAlign;
     textAlign?: TextAlign;
 }
 
 const StyledGrid = styled.div<GridProps>`
-    margin-top: -${({ gutter }) => gutter || 0}px;
-    margin-left: -${({ gutter }) => gutter || 0}px;
+    margin-top: -${({ mobileGutter }) => mobileGutter || 0}px;
+    margin-left: -${({ mobileGutter }) => mobileGutter || 0}px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -222,14 +229,34 @@ const StyledGrid = styled.div<GridProps>`
                 return undefined;
         }
     }};
+
+    @media ${mq.medium} {
+        margin-top: -${({ gutter }) => gutter && `${gutter}px`};
+        margin-left: -${({ gutter }) => gutter && `${gutter}px`}px;
+    }
 `;
 
-const Grid: React.FC<GridProps> = ({ gutter, valign, children, halign }) => {
+const Grid: React.FC<GridProps> = ({
+    gutter,
+    mobileGutter,
+    valign,
+    children,
+    halign,
+}) => {
     return (
-        <StyledGrid gutter={gutter} valign={valign} halign={halign}>
+        <StyledGrid
+            gutter={gutter}
+            mobileGutter={mobileGutter}
+            valign={valign}
+            halign={halign}
+        >
             {React.Children.map(children, (comp: any) => {
                 return comp ? (
-                    <StyledCol {...comp?.props} gutter={gutter} />
+                    <StyledCol
+                        {...comp?.props}
+                        gutter={gutter}
+                        mobileGutter={mobileGutter}
+                    />
                 ) : undefined;
             })}
         </StyledGrid>
@@ -238,6 +265,7 @@ const Grid: React.FC<GridProps> = ({ gutter, valign, children, halign }) => {
 
 Grid.defaultProps = {
     gutter: gridSettings.gutter,
+    mobileGutter: gridSettings.mobileGutter,
 };
 
 export default {

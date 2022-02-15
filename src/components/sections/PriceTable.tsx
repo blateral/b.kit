@@ -1,17 +1,15 @@
-import PriceTag, { PriceTagProps } from 'components/blocks/PriceTag';
-import { getColors } from 'utils/styles';
 import React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
+
+import PriceTag, { PriceTagProps } from 'components/blocks/PriceTag';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import Grid from 'components/base/Grid';
 
-const PriceTagContainer = styled.div`
-    & > * {
-        min-height: 400px;
-    }
+const StyledPriceTag = styled(PriceTag)`
+    min-height: 400px;
 `;
 
 const PriceTable: React.FC<{
@@ -22,7 +20,7 @@ const PriceTable: React.FC<{
     const hasBg = bgMode === 'full';
     const priceTagCount = items?.length || 0;
 
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: priceTagCount,
@@ -45,10 +43,10 @@ const PriceTable: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? getColors(theme).new.sectionBg.medium
-                    : getColors(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >
@@ -60,13 +58,13 @@ const PriceTable: React.FC<{
                             semilarge={{ span: 6 / 12 }}
                             large={{ span: 4 / 12 }}
                         >
-                            <PriceTagContainer ref={cardRefs[i]}>
-                                <PriceTag
-                                    {...item}
-                                    isInverted={isInverted}
-                                    hasBackground={hasBg}
-                                />
-                            </PriceTagContainer>
+                            <StyledPriceTag
+                                key={i}
+                                ref={cardRefs[i]}
+                                {...item}
+                                isInverted={isInverted}
+                                hasBackground={hasBg}
+                            />
                         </Grid.Col>
                     ))}
                 </Grid.Row>
