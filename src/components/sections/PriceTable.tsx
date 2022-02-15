@@ -14,8 +14,9 @@ const StyledPriceTag = styled(PriceTag)`
 
 const PriceTable: React.FC<{
     items: Array<Omit<PriceTagProps, 'isInverted'>>;
+    isCentered?: boolean;
     bgMode?: 'full' | 'inverted';
-}> = ({ items, bgMode }) => {
+}> = ({ items, isCentered, bgMode }) => {
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
     const priceTagCount = items?.length || 0;
@@ -63,6 +64,7 @@ const PriceTable: React.FC<{
                                 ref={cardRefs[i]}
                                 {...item}
                                 isInverted={isInverted}
+                                isCentered={isCentered}
                                 hasBackground={hasBg}
                             />
                         </Grid.Col>

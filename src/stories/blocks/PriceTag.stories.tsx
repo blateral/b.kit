@@ -9,7 +9,7 @@ export default {
     component: PriceTag,
     parameters: {
         status: {
-            type: 'releaseCandidate',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -32,6 +32,28 @@ const button = (props: { isInverted?: boolean; isHighlighted?: boolean }) => {
 
 export const Default: Story = () => (
     <PriceTag
+        superTitle="Tarif"
+        title="199,-"
+        text={`
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</p>`}
+        action={button}
+    />
+);
+
+export const IsCentered: Story = () => (
+    <PriceTag
+        isCentered
+        superTitle="Tarif"
+        title="199,-"
+        text={`
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</p>`}
+        action={button}
+    />
+);
+
+export const IsHighlighted: Story = () => (
+    <PriceTag
+        isHighlighted
         superTitle="Tarif"
         title="199,-"
         text={`

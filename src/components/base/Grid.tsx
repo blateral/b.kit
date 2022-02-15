@@ -232,7 +232,7 @@ const StyledGrid = styled.div<GridProps>`
 
     @media ${mq.medium} {
         margin-top: -${({ gutter }) => gutter && `${gutter}px`};
-        margin-left: -${({ gutter }) => gutter && `${gutter}px`}px;
+        margin-left: -${({ gutter }) => gutter && `${gutter}px`};
     }
 `;
 

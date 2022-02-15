@@ -1,4 +1,8 @@
-import { spacings, getColors, getGlobals as global } from 'utils/styles';
+import {
+    spacings,
+    getColors as color,
+    getGlobals as global,
+} from 'utils/styles';
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import Copy from 'components/typography/Copy';
@@ -7,6 +11,7 @@ import Callout from 'components/typography/Callout';
 
 const View = styled.div<{
     isInverted?: boolean;
+    isCentered?: boolean;
     hasBg?: boolean;
     isHighlighted?: boolean;
 }>`
@@ -18,17 +23,18 @@ const View = styled.div<{
     background: ${({ theme, hasBg, isInverted, isHighlighted }) =>
         isInverted
             ? isHighlighted
-                ? getColors(theme).light
-                : getColors(theme).mono.light
+                ? color(theme).new.elementBg.light
+                : color(theme).new.elementBg.medium
             : isHighlighted
-            ? getColors(theme).dark
+            ? color(theme).new.elementBg.dark
             : hasBg
-            ? getColors(theme).light
-            : getColors(theme).mono.light};
+            ? color(theme).new.elementBg.light
+            : color(theme).new.elementBg.medium};
 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
 
     & > * + * {
         margin-top: 20px;
@@ -51,6 +57,7 @@ export interface PriceTagProps {
         isHighlighted?: boolean;
     }) => React.ReactNode;
     isInverted?: boolean;
+    isCentered?: boolean;
     hasBackground?: boolean;
     isHighlighted?: boolean;
 }
@@ -66,6 +73,7 @@ const PriceTag = forwardRef<
             text,
             action,
             isInverted,
+            isCentered,
             isHighlighted,
             hasBackground,
             className,
@@ -78,6 +86,7 @@ const PriceTag = forwardRef<
             <View
                 ref={ref}
                 isInverted={isInverted}
+                isCentered={isCentered}
                 isHighlighted={isHighlighted}
                 hasBg={hasBackground}
                 className={className}

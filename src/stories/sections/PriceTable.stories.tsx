@@ -9,7 +9,7 @@ export default {
     component: PriceTableComponent,
     parameters: {
         status: {
-            type: 'Preview',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -32,6 +32,61 @@ const button = (props: { isInverted?: boolean; isHighlighted?: boolean }) => {
 
 export const Default: Story = () => (
     <PriceTableComponent
+        items={[
+            {
+                superTitle: 'Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
+                action: button,
+            },
+            {
+                superTitle: 'Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
+                    <p><strong>Lorem Ipsum Dolor Sit Amet</strong></p>
+                                <ul>
+                    <li>consetetur sadipscing</li>
+                    <li>sed diam nonumy eirmod</li>
+                    <li>invidunt ut labore et</li>
+                    <li>At vero eos et accusam</li>
+                    <li>consetetur sadipscing</li>
+                    <li>sed diam nonumy eirmod</li>
+                    <li>invidunt ut labore et</li>
+                    <li>At vero eos et accusam</li>
+                    <li>sed diam nonumy eirmod</li>
+                </ul>`,
+                action: button,
+            },
+            {
+                superTitle: 'Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
+                action: button,
+                isHighlighted: true,
+            },
+            {
+                superTitle: 'Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
+                action: button,
+            },
+            {
+                superTitle: 'Tarif',
+                title: '<h2>100,-</h2>',
+                text: `
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
+                action: button,
+            },
+        ]}
+    />
+);
+
+export const IsCentered: Story = () => (
+    <PriceTableComponent
+        isCentered
         items={[
             {
                 superTitle: 'Tarif',
