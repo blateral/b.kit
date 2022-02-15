@@ -95,7 +95,7 @@ const TableBlock: React.FC<TableProps> = ({
 }) => {
     return (
         <View>
-            <TableContainer>
+            <TableContainer tabIndex={0}>
                 <TableBody>
                     {tableTitle && (
                         <Caption
@@ -133,9 +133,8 @@ const TableBlock: React.FC<TableProps> = ({
                                             renderAs="td"
                                             hasBack={hasBack}
                                             alignRight={lastCol === 'right'}
-                                        >
-                                            {itemText}
-                                        </TableData>
+                                            innerHTML={itemText}
+                                        />
                                     );
                                 })}
                             </tr>

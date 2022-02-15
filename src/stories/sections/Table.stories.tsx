@@ -18,10 +18,10 @@ export const Default: Story = () => (
         tableItems={[
             {
                 rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
                 ],
                 row: [
                     {
@@ -68,10 +68,10 @@ export const WithTableGroups: Story = () => (
             {
                 tableTitle: 'Gruppe 1',
                 rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
                 ],
                 row: [
                     {
@@ -111,10 +111,10 @@ export const WithTableGroups: Story = () => (
             {
                 tableTitle: 'Gruppe 2',
                 rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
                 ],
                 row: [
                     {
@@ -161,10 +161,10 @@ export const WithBackground: Story = () => (
             {
                 tableTitle: 'Gruppe 1',
                 rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
                 ],
                 row: [
                     {
@@ -204,10 +204,104 @@ export const WithBackground: Story = () => (
             {
                 tableTitle: 'Gruppe 2',
                 rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+        ]}
+        bgMode="full"
+    />
+);
+
+export const WithRichText: Story = () => (
+    <Table
+        tableItems={[
+            {
+                tableTitle: 'Gruppe 1',
+                rowTitle: [
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
+                ],
+                row: [
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet <br/> Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                ],
+            },
+            {
+                tableTitle: 'Gruppe 2',
+                rowTitle: [
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
                 ],
                 row: [
                     {
@@ -256,10 +350,10 @@ export const LastColRight: Story = () => (
                 lastCol: 'right',
                 tableTitle: 'Gruppe 1',
                 rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
                 ],
                 row: [
                     {
@@ -300,10 +394,10 @@ export const LastColRight: Story = () => (
                 lastCol: 'right',
                 tableTitle: 'Gruppe 2',
                 rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
                 ],
                 row: [
                     {
@@ -351,10 +445,10 @@ export const IsInverted: Story = () => (
             {
                 tableTitle: 'Gruppe 1',
                 rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
                 ],
                 row: [
                     {
@@ -394,10 +488,10 @@ export const IsInverted: Story = () => (
             {
                 tableTitle: 'Gruppe 2',
                 rowTitle: [
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
-                    'Table Headline',
+                    'Table Headline A',
+                    'Table Headline B',
+                    'Table Headline C',
+                    'Table Headline D',
                 ],
                 row: [
                     {
