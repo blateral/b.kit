@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
 import { getColors as color, withRange, spacings } from 'utils/styles';
@@ -85,68 +85,81 @@ export interface TableProps {
     lastCol?: 'left' | 'right';
 }
 
-const TableBlock: React.FC<TableProps> = ({
-    row,
-    tableTitle,
-    rowTitle,
-    isInverted = false,
-    hasBack = false,
-    lastCol = 'left',
-}) => {
-    return (
-        <View>
-            <TableContainer tabIndex={0}>
-                <TableBody>
-                    {tableTitle && (
-                        <Caption
-                            renderAs="caption"
-                            type="copy-b"
-                            isInverted={isInverted}
-                        >
-                            {tableTitle}
-                        </Caption>
-                    )}
-                    {rowTitle && (
-                        <thead>
-                            <tr>
-                                {rowTitle.map((item, ii) => (
-                                    <TableHead
-                                        key={ii}
-                                        type="copy-b"
-                                        renderAs="th"
-                                        isInverted={!isInverted}
-                                        alignRight={lastCol === 'right'}
-                                    >
-                                        {item}
-                                    </TableHead>
-                                ))}
-                            </tr>
-                        </thead>
-                    )}
-                    <tbody>
-                        {row.map(({ cols }, i) => (
-                            <tr key={i}>
-                                {cols.map((itemText, ii) => {
-                                    return (
-                                        <TableData
+const TableBlock = forwardRef<HTMLDivElement, TableProps>(
+    (
+        {
+            row,
+            tableTitle,
+            rowTitle,
+            isInverted = false,
+            hasBack = false,
+            lastCol = 'left',
+        },
+        ref
+    ) => {
+        return (
+            <View ref={ref}>
+                <TableContainer tabIndex={0}>
+                    <TableBody>
+                        {tableTitle && (
+                            <Caption
+                                renderAs="caption"
+                                type="copy-b"
+                                isInverted={isInverted}
+                            >
+                                {tableTitle}
+                            </Caption>
+                        )}
+                        {rowTitle && (
+                            <thead>
+                                <tr>
+                                    {rowTitle.map((item, ii) => (
+                                        <TableHead
                                             key={ii}
-                                            renderAs="td"
-                                            hasBack={hasBack}
+                                            type="copy-b"
+                                            renderAs="th"
+                                            isInverted={!isInverted}
                                             alignRight={lastCol === 'right'}
-                                            innerHTML={itemText}
-                                        />
-                                    );
-                                })}
-                            </tr>
-                        ))}
-                    </tbody>
-                </TableBody>
-            </TableContainer>
-        </View>
-    );
-};
+                                        >
+                                            {item}
+                                        </TableHead>
+                                    ))}
+                                </tr>
+                            </thead>
+                        )}
+                        <tbody>
+                            {row.map(({ cols }, i) => (
+                                <tr key={i}>
+                                    {cols.map((itemText, ii) => {
+                                        return (
+                                            <TableData
+                                                key={ii}
+                                                renderAs="td"
+                                                hasBack={hasBack}
+                                                alignRight={lastCol === 'right'}
+                                                innerHTML={itemText}
+                                            />
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </TableBody>
+                </TableContainer>
+            </View>
+        );
+    }
+);
 
-const TableWrapper = styled.div<{ withSeperation?: boolean }>`
+TableBlock.displayName = 'TableBlock';
+
+const SectionWrapper = styled(Wrapper)`
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+`;
+
+const TableWrapper = styled(TableBlock)<{ withSeperation?: boolean }>`
     ${({ withSeperation }) =>
         withSeperation &&
         withRange([spacings.spacer, spacings.spacer * 4], 'padding-top')};
@@ -176,19 +189,18 @@ const Table: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            <Wrapper>
+            <SectionWrapper>
                 {tableItems.map((item, i) => {
                     return (
-                        <TableWrapper key={i}>
-                            <TableBlock
-                                {...item}
-                                isInverted={isInverted}
-                                hasBack={hasBg}
-                            />
-                        </TableWrapper>
+                        <TableWrapper
+                            key={i}
+                            {...item}
+                            isInverted={isInverted}
+                            hasBack={hasBg}
+                        />
                     );
                 })}
-            </Wrapper>
+            </SectionWrapper>
         </Section>
     );
 };
