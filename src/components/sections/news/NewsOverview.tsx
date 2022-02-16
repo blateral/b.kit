@@ -14,6 +14,7 @@ import { useObserverSupport } from 'utils/useObserverSupport';
 import Copy from 'components/typography/Copy';
 import { useScrollTo } from 'utils/useScrollTo';
 import Pointer from 'components/buttons/Pointer';
+import Grid from 'components/base/Grid';
 
 const TagContainer = styled.div`
     margin: -${spacings.nudge}px;
@@ -26,41 +27,6 @@ const TagContainer = styled.div`
 
 const TagWrapper = styled.div`
     padding: ${spacings.nudge}px;
-`;
-
-const List = styled.div`
-    & > * + * {
-        padding-top: ${spacings.spacer * 2}px;
-    }
-
-    & > * + * {
-        padding-top: ${spacings.spacer * 2}px;
-    }
-
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: 'flex-start';
-        align-items: flex-start;
-
-        margin-left: -20px;
-        margin-top: -40px;
-
-        & > * {
-            padding-left: 20px;
-            padding-top: 40px;
-            flex: 1 0 50%;
-            max-width: 50%;
-        }
-    }
-
-    @media ${mq.large} {
-        & > * {
-            flex: 1 0 33.33%;
-            max-width: 33.33%;
-        }
-    }
 `;
 
 const ListFooter = styled.div`
@@ -211,33 +177,38 @@ const NewsOverview: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {tags && (
-                    <TagContainer>
-                        {tags.sort().map((tag, i) => {
-                            return (
-                                <TagWrapper key={'tag_' + i}>
-                                    <Tag
-                                        isInverted={isInverted}
-                                        onClick={() => {
-                                            if (!onTagClick) {
-                                                // if no callback is defined handle filtering on client side inside the component
-                                                setSelectedTag(
-                                                    selectedTag === tag
-                                                        ? undefined
-                                                        : tag
-                                                );
-                                            } else onTagClick(tag, false);
-                                        }}
-                                        isActive={selectedTag === tag}
-                                    >
-                                        {tag}
-                                    </Tag>
-                                </TagWrapper>
-                            );
-                        })}
-                    </TagContainer>
-                )}
-                <List>
+                <Grid.Row>
+                    <Grid.Col>
+                        {tags && (
+                            <TagContainer>
+                                {tags.sort().map((tag, i) => {
+                                    return (
+                                        <TagWrapper key={'tag_' + i}>
+                                            <Tag
+                                                isInverted={isInverted}
+                                                onClick={() => {
+                                                    if (!onTagClick) {
+                                                        // if no callback is defined handle filtering on client side inside the component
+                                                        setSelectedTag(
+                                                            selectedTag === tag
+                                                                ? undefined
+                                                                : tag
+                                                        );
+                                                    } else
+                                                        onTagClick(tag, false);
+                                                }}
+                                                isActive={selectedTag === tag}
+                                            >
+                                                {tag}
+                                            </Tag>
+                                        </TagWrapper>
+                                    );
+                                })}
+                            </TagContainer>
+                        )}
+                    </Grid.Col>
+                </Grid.Row>
+                <Grid.Row>
                     {news &&
                         news
                             .filter((item) =>
@@ -246,29 +217,35 @@ const NewsOverview: React.FC<{
                             .filter((_, i) => i < visibleRows * itemsPerRow)
                             .map((item, i) => {
                                 return (
-                                    <div key={i} ref={cardRefs[i]}>
-                                        <NewsCard
-                                            isInverted={isInverted}
-                                            onTagClick={(name) => {
-                                                // scroll back to top
-                                                setNewPos(0);
-                                                if (!onTagClick) {
-                                                    // if no callback is defined handle filtering on client side inside the component
-                                                    setSelectedTag(
-                                                        selectedTag === name
-                                                            ? undefined
-                                                            : name
-                                                    );
-                                                } else {
-                                                    onTagClick(name, true);
-                                                }
-                                            }}
-                                            {...item}
-                                        />
-                                    </div>
+                                    <Grid.Col
+                                        medium={{ span: 6 / 12 }}
+                                        large={{ span: 4 / 12 }}
+                                        key={i}
+                                    >
+                                        <div ref={cardRefs[i]}>
+                                            <NewsCard
+                                                isInverted={isInverted}
+                                                onTagClick={(name) => {
+                                                    // scroll back to top
+                                                    setNewPos(0);
+                                                    if (!onTagClick) {
+                                                        // if no callback is defined handle filtering on client side inside the component
+                                                        setSelectedTag(
+                                                            selectedTag === name
+                                                                ? undefined
+                                                                : name
+                                                        );
+                                                    } else {
+                                                        onTagClick(name, true);
+                                                    }
+                                                }}
+                                                {...item}
+                                            />
+                                        </div>
+                                    </Grid.Col>
                                 );
                             })}
-                </List>
+                </Grid.Row>
                 <div ref={targetRef} />
                 {!observerSupported && (
                     <ListFooter>
