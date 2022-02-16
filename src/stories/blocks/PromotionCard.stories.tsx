@@ -7,7 +7,7 @@ export default {
     component: PromotionCard,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;

@@ -1,11 +1,7 @@
 import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 
-import {
-    getColors as color,
-    getGlobals as global,
-    spacings,
-} from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 
 import Grid from 'components/base/Grid';
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -14,9 +10,9 @@ import Wrapper from 'components/base/Wrapper';
 import PromotionCard, {
     PromotionCardProps,
 } from 'components/blocks/PromotionCard';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
-const PosterContainer = styled.div<{ isMain?: boolean }>`
+const Card = styled(PromotionCard)<{ isMain?: boolean }>`
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -26,7 +22,13 @@ const PosterContainer = styled.div<{ isMain?: boolean }>`
     flex: 1 0 auto;
 
     & + & {
-        margin-top: ${spacings.spacer}px;
+        margin-top: ${spacings.nudge * 2}px;
+    }
+
+    @media ${mq.medium} {
+        & + & {
+            margin-top: ${spacings.spacer}px;
+        }
     }
 `;
 
@@ -46,7 +48,7 @@ const CrossPromotion: React.FC<{
     isMirrored?: boolean;
     externalLinkIcon?: React.ReactNode;
 }> = ({ main, aside, bgMode, isMirrored, externalLinkIcon }) => {
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
 
@@ -55,41 +57,35 @@ const CrossPromotion: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : bgMode
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
-            <Wrapper
-                clampWidth="normal"
-                addWhitespace={global(theme).sections.edgeRadius ? true : false}
-            >
+            <Wrapper clampWidth="normal" addWhitespace>
                 {aside ? (
                     isMirrored ? (
                         <Grid.Row>
                             <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {main &&
                                     main.map((card, i) => (
-                                        <PosterContainer key={i} isMain>
-                                            <PromotionCard
-                                                {...card}
-                                                externalLinkIcon={
-                                                    externalLinkIcon
-                                                }
-                                            />
-                                        </PosterContainer>
+                                        <Card
+                                            key={i}
+                                            isMain
+                                            {...card}
+                                            externalLinkIcon={externalLinkIcon}
+                                        />
                                     ))}
                             </Grid.Col>
                             <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {aside.map((card, i) => (
-                                    <PosterContainer key={i}>
-                                        <PromotionCard
-                                            {...card}
-                                            externalLinkIcon={externalLinkIcon}
-                                        />
-                                    </PosterContainer>
+                                    <Card
+                                        key={i}
+                                        {...card}
+                                        externalLinkIcon={externalLinkIcon}
+                                    />
                                 ))}
                             </Grid.Col>
                         </Grid.Row>
@@ -97,25 +93,22 @@ const CrossPromotion: React.FC<{
                         <Grid.Row>
                             <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {aside.map((card, i) => (
-                                    <PosterContainer key={i}>
-                                        <PromotionCard
-                                            {...card}
-                                            externalLinkIcon={externalLinkIcon}
-                                        />
-                                    </PosterContainer>
+                                    <Card
+                                        key={i}
+                                        {...card}
+                                        externalLinkIcon={externalLinkIcon}
+                                    />
                                 ))}
                             </Grid.Col>
                             <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {main &&
                                     main.map((card, i) => (
-                                        <PosterContainer key={i} isMain>
-                                            <PromotionCard
-                                                {...card}
-                                                externalLinkIcon={
-                                                    externalLinkIcon
-                                                }
-                                            />
-                                        </PosterContainer>
+                                        <Card
+                                            key={i}
+                                            isMain
+                                            {...card}
+                                            externalLinkIcon={externalLinkIcon}
+                                        />
                                     ))}
                             </Grid.Col>
                         </Grid.Row>
@@ -132,12 +125,11 @@ const CrossPromotion: React.FC<{
                                     }}
                                     key={i}
                                 >
-                                    <PosterContainer key={i}>
-                                        <PromotionCard
-                                            {...card}
-                                            externalLinkIcon={externalLinkIcon}
-                                        />
-                                    </PosterContainer>
+                                    <Card
+                                        key={i}
+                                        {...card}
+                                        externalLinkIcon={externalLinkIcon}
+                                    />
                                 </Grid.Col>
                             ))}
                         </Grid.Row>

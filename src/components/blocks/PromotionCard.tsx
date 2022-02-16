@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { forwardRef } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import styled, { css } from 'styled-components';
 
@@ -8,7 +8,7 @@ import Link, { LinkProps } from 'components/typography/Link';
 import Title from 'components/blocks/Title';
 import External from 'components/base/icons/External';
 
-const View = styled.div<{
+const View = styled(Link)<{
     clickable?: boolean;
 }>`
     display: block;
@@ -16,6 +16,7 @@ const View = styled.div<{
     width: 100%;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     overflow: hidden;
+    outline: none;
 
     &:after {
         content: '';
@@ -38,6 +39,10 @@ const View = styled.div<{
             &:hover {
                 box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
             }
+
+            &:focus {
+                box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+            }
         `}
 `;
 
@@ -45,15 +50,6 @@ const StyledImage = styled(Image)`
     width: 100%;
     height: 100%;
     min-height: 300px;
-`;
-
-const LinkHelper = styled(Link)`
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
 `;
 
 const IntroContainer = styled.div`
@@ -105,22 +101,22 @@ const ExternalIconHolder = styled.span`
 `;
 
 export interface PromotionCardProps {
+    /** Card image settings */
     image: ImageProps;
+    /** Card title */
     title?: string;
+    /** Href path */
     href?: string;
+    /** Advanced href options */
     link?: LinkProps;
-    onClick?: () => void;
+    /** Inject custom icon that indicates an external link */
     externalLinkIcon?: React.ReactNode;
 }
 
-const PromotionCard: FC<PromotionCardProps> = ({
-    image,
-    title,
-    href,
-    link,
-    onClick,
-    externalLinkIcon,
-}) => {
+const PromotionCard = forwardRef<
+    HTMLAnchorElement,
+    PromotionCardProps & { className?: string }
+>(({ image, title, href, link, externalLinkIcon, className }, ref) => {
     // fallback for older versions
     let linkObj = link;
     if (href && !link) {
@@ -137,11 +133,15 @@ const PromotionCard: FC<PromotionCardProps> = ({
     );
 
     return (
-        <View onClick={onClick} clickable={onClick || link ? true : false}>
+        <View
+            ref={ref}
+            clickable={!!href || !!link}
+            {...linkObj}
+            className={className}
+        >
             <StyledImage {...image} coverSpace />
             {title && (
                 <IntroContainer>
-                    <LinkHelper {...linkObj} />
                     <StyledTitle
                         colorMode="onImage"
                         title={
@@ -155,6 +155,8 @@ const PromotionCard: FC<PromotionCardProps> = ({
             )}
         </View>
     );
-};
+});
+
+PromotionCard.displayName = 'PromotionCard';
 
 export default PromotionCard;
