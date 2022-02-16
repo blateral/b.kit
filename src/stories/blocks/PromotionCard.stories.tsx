@@ -65,6 +65,5 @@ export const WithClickHandler: Story = () => (
             medium: 'https://unsplash.it/722/541?image=409',
             large: 'https://unsplash.it/958/718?image=409',
         }}
-        onClick={() => console.log('click')}
     />
 );
