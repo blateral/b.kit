@@ -1,0 +1,60 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import Section from '../../../components/base/Section';
+import { ExampleContent } from './Section.stories.tsx';
+
+<Meta
+    title="Base/Section/Info"
+    parameters={{
+        status: {
+            type: 'preview',
+        },
+    }}
+/>
+
+# Section
+
+The `Section` component is the top level container element of each section. It controls two main core functionalities:
+
+-   [Background logik](#backgrounds)
+-   [Spacings between sections](#section-spacing)
+
+<ArgsTable of={Section} />
+
+<br />
+<br />
+
+## Backgrounds
+
+A section supports three background states controlled by the `bgMode` property:
+
+-   `full` (full width background)
+-   `larger-left` (left oriented not full width background)
+-   `larger-right` (right oriented not full width background)
+-   or no background at all
+
+The background color can be controlled by the property `bgColor`!
+
+<Canvas>
+    <>
+        <Section bgMode="full">
+            <ExampleContent />
+        </Section>
+        <Section bgMode="full">
+            <ExampleContent />
+        </Section>
+        <Section bgMode="full" bgColor="aquamarine">
+            <ExampleContent isInverted />
+        </Section>
+        <Section bgMode="full" bgColor="blueviolet">
+            <ExampleContent isInverted />
+        </Section>
+        <Section bgColor="blueviolet" bgMode="larger-left">
+            <ExampleContent isInverted />
+        </Section>
+        <Section bgColor="aquamarine" bgMode="larger-right">
+            <ExampleContent isInverted />
+        </Section>
+    </>
+</Canvas>
+
+## Section spacing

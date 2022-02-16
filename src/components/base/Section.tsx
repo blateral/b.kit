@@ -30,6 +30,7 @@ const getBackground = (mode: BgMode, bgColor: string) => {
 const View = styled.section<{
     as?: SectionType;
     bgIdent: string;
+    bgColor: string;
     isStackable?: boolean;
     addSeperation?: boolean;
 }>`
@@ -37,11 +38,12 @@ const View = styled.section<{
     overflow: ${({ as }) => (as === 'div' ? 'visible' : 'hidden')};
 
     // section paddings
-    ${({ addSeperation, isStackable, bgIdent, theme }) => {
+    ${({ addSeperation, isStackable, bgIdent, bgColor, theme }) => {
         const padding = global(theme).sections.seperation.padding.default;
         const paddingStacked =
             global(theme).sections.seperation.padding.stackable;
         const forcePadding = global(theme).sections.seperation.forcePadding;
+        const backColor = bgColor ? `__${bgColor}` : '';
 
         if (addSeperation) {
             return css`
@@ -55,8 +57,8 @@ const View = styled.section<{
                     ${withRange(paddingStacked, 'padding-top')};
                 }
 
-                section[data-bg-ident='${bgIdent}']
-                    + &[data-bg-ident='${bgIdent}'] {
+                section[data-bg-ident='${bgIdent}${backColor}']
+                    + &[data-bg-ident='${bgIdent}${backColor}'] {
                     padding-top: ${forcePadding ? undefined : '0 !important'};
 
                     @media ${mq.xxlarge} {
@@ -70,24 +72,25 @@ const View = styled.section<{
     }}
 
     // section margins
-    ${({ addSeperation, isStackable, bgIdent, theme }) => {
+    ${({ addSeperation, isStackable, bgIdent, bgColor, theme }) => {
         const margin = global(theme).sections.seperation.margin.default;
         const marginStacked =
             global(theme).sections.seperation.margin.stackable;
+        const backColor = bgColor ? `__${bgColor}` : '';
 
         if (addSeperation) {
             return css`
                 *:not([data-bg-ident='transparent'])
-                    + &[data-bg-ident='larger-left'] {
+                    + &[data-bg-ident='larger-left${backColor}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
                 *:not([data-bg-ident='transparent'])
-                    + &[data-bg-ident='larger-right'] {
+                    + &[data-bg-ident='larger-right${backColor}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
-                section[data-bg-ident='larger-left']
+                section[data-bg-ident='larger-left${backColor}']
                     + &:not([data-bg-ident='transparent']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
@@ -95,7 +98,7 @@ const View = styled.section<{
                     )};
                 }
 
-                section[data-bg-ident='larger-right']
+                section[data-bg-ident='larger-right${backColor}']
                     + &:not([data-bg-ident='transparent']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
@@ -103,8 +106,8 @@ const View = styled.section<{
                     )};
                 }
 
-                section[data-bg-ident='${bgIdent}']
-                    + &[data-bg-ident='${bgIdent}'] {
+                section[data-bg-ident='${bgIdent}${backColor}']
+                    + &[data-bg-ident='${bgIdent}${backColor}'] {
                     margin-top: 0 !important;
 
                     @media ${mq.xxlarge} {
@@ -167,11 +170,21 @@ const Back = styled.div<{
 export type SectionType = 'header' | 'footer' | 'div';
 
 const Section: React.FC<{
+    /** Render as specific HTML tag type */
     renderAs?: SectionType;
+
+    /** Background color */
     bgColor?: string;
+
+    /** Background mode */
     bgMode?: BgMode;
+
+    /** Enable section seperation spacing */
     addSeperation?: boolean;
+
+    /** Allow stack feature for reduced section spacing to following section */
     isStackable?: boolean;
+
     className?: string;
 }> = ({
     renderAs,
@@ -202,8 +215,11 @@ const Section: React.FC<{
     return (
         <View
             as={renderAs}
-            data-bg-ident={bgColor && bgMode ? bgMode : 'transparent'}
+            data-bg-ident={
+                bgColor && bgMode ? `${bgMode}__${bgColor}` : 'transparent'
+            }
             bgIdent={bgColor && bgMode ? bgMode : 'transparent'}
+            bgColor={bgColor || ''}
             addSeperation={
                 !renderAs || (renderAs && renderAs !== 'div')
                     ? addSeperation
