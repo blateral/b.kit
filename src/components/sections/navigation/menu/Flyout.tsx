@@ -492,7 +492,8 @@ const Flyout: FC<{
                                                 >
                                                     {logo.icon &&
                                                         logo.icon({
-                                                            isInverted: isInverted,
+                                                            isInverted:
+                                                                isInverted,
                                                             name: 'menu_logo',
                                                             size:
                                                                 currentMq !==
@@ -624,8 +625,8 @@ const Nav = styled.nav<{ isInverted?: boolean }>`
 const Group = styled.li`
     flex: 1 1 auto;
     font-family: ${({ theme }) => font(theme).copy.medium.family};
+    font-weight: ${({ theme }) => font(theme).copy.medium.weight};
     ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
-    font-weight: 300;
     line-height: ${({ theme }) => font(theme).copy.medium.lineHeight};
 
     ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-right')};
