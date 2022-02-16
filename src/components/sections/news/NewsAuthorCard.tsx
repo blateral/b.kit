@@ -5,47 +5,28 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
 
-const Seperator = styled.div<{ isInverted?: boolean }>`
+const Seperator = styled.div<{ isInverted?: boolean; isTop?: boolean }>`
     border-bottom: solid 1px
         ${({ isInverted, theme }) =>
             isInverted ? color(theme).light : color(theme).dark};
-`;
 
-const ContentFlex = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-    margin: ${spacings.spacer * 2}px 0;
-
-    @media ${mq.medium} {
-        flex-direction: row;
-        justify-content: flex-start;
-        text-align: left;
-    }
+    margin-top: ${({ isTop }) => !isTop && spacings.nudge * 2}px;
+    margin-bottom: ${({ isTop }) => isTop && spacings.nudge * 2}px;
 `;
 
 const Avatar = styled.img`
     border-radius: 50%; ;
 `;
 
-const Author = styled.div`
-    margin-top: ${spacings.spacer}px;
-
-    @media ${mq.medium} {
-        margin-left: 0;
-        margin-left: ${spacings.spacer}px;
-    }
-`;
+const Author = styled.div``;
 
 const StyledCopy = styled(Copy)`
     text-transform: uppercase;
-    margin-bottom: ${spacings.nudge * 2}px;
+    margin-bottom: ${spacings.nudge}px;
 `;
 
 const NewsAuthorCard: React.FC<{
@@ -75,28 +56,32 @@ const NewsAuthorCard: React.FC<{
             <Wrapper clampWidth="small" addWhitespace>
                 {author && (
                     <>
-                        <Seperator isInverted={isInverted} />
-                        <ContentFlex>
+                        <Seperator isTop isInverted={isInverted} />
+                        <Grid.Row valign="center">
                             {avatar && (
-                                <Avatar src={avatar.src} alt={avatar.alt} />
+                                <Grid.Col medium={{ span: 2.5 / 12 }}>
+                                    <Avatar src={avatar.src} alt={avatar.alt} />
+                                </Grid.Col>
                             )}
-                            <Author>
-                                {author && (
-                                    <StyledCopy
+                            <Grid.Col medium={{ span: 8 / 12 }}>
+                                <Author>
+                                    {author && (
+                                        <StyledCopy
+                                            isInverted={isInverted}
+                                            type="copy-b"
+                                        >
+                                            {label || 'Written By'}
+                                        </StyledCopy>
+                                    )}
+                                    <Heading
                                         isInverted={isInverted}
-                                        type="copy-b"
+                                        size="heading-2"
                                     >
-                                        {label || 'Written By'}
-                                    </StyledCopy>
-                                )}
-                                <Heading
-                                    isInverted={isInverted}
-                                    size="heading-2"
-                                >
-                                    {author}
-                                </Heading>
-                            </Author>
-                        </ContentFlex>
+                                        {author}
+                                    </Heading>
+                                </Author>
+                            </Grid.Col>
+                        </Grid.Row>
                     </>
                 )}
                 <Seperator isInverted={isInverted} />

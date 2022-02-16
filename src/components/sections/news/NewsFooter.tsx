@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import { getColors as color, spacings, withRange } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { useContext, useEffect, useState } from 'react';
@@ -11,30 +11,7 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import Pointer from 'components/buttons/Pointer';
 import { withLibTheme } from 'utils/LibThemeProvider';
-
-const ContentFlex = styled.div`
-    & > * + * {
-        padding-top: ${spacings.spacer * 2}px;
-    }
-
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: 'flex-start';
-        align-items: flex-start;
-
-        margin-left: -20px;
-        margin-top: -40px;
-
-        & > * {
-            padding-left: 20px;
-            padding-top: 40px;
-            flex: 1 0 50%;
-            max-width: 50%;
-        }
-    }
-`;
+import Grid from 'components/base/Grid';
 
 const Actions = styled.div`
     ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
@@ -111,22 +88,24 @@ const NewsFooter: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
-                <ContentFlex>
+                <Grid.Row>
                     {news &&
                         news
                             .filter((_, i) => i < visibleRows * itemsPerRow)
                             .map((item, i) => {
                                 return (
-                                    <div key={i} ref={cardRefs[i]}>
-                                        <NewsCard
-                                            isInverted={isInverted}
-                                            onTagClick={onTagClick}
-                                            {...item}
-                                        />
-                                    </div>
+                                    <Grid.Col medium={{ span: 6 / 12 }} key={i}>
+                                        <div key={i} ref={cardRefs[i]}>
+                                            <NewsCard
+                                                isInverted={isInverted}
+                                                onTagClick={onTagClick}
+                                                {...item}
+                                            />
+                                        </div>
+                                    </Grid.Col>
                                 );
                             })}
-                </ContentFlex>
+                </Grid.Row>
                 {news && news.length > 0 && (
                     <Actions>
                         <Copy isInverted={isInverted}>
