@@ -33,19 +33,27 @@ const Card = styled(PromotionCard)<{ isMain?: boolean }>`
 `;
 
 const CrossPromotion: React.FC<{
+    /** Promotion card settings in main grid column (default: on right side). The size prop controls the width. */
     main?: Array<
         Omit<PromotionCardProps, 'externalLinkIcon'> & {
             size?: 'full' | 'half';
         }
     >;
+
+    /** Promotion card settings in second grid column (default: on left side). The size prop controls the width. */
     aside?: Array<
         Omit<PromotionCardProps, 'externalLinkIcon'> & {
             size?: 'full' | 'half';
         }
     >;
 
+    /** Section background */
     bgMode?: 'full' | 'inverted' | 'splitted';
+
+    /** Switching order of main and aside columns */
     isMirrored?: boolean;
+
+    /** Inject custom icon that indicates an external link */
     externalLinkIcon?: React.ReactNode;
 }> = ({ main, aside, bgMode, isMirrored, externalLinkIcon }) => {
     const { colors } = useLibTheme();
