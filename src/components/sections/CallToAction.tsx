@@ -28,7 +28,7 @@ const ContactView = styled.div`
     overflow-wrap: break-word;
 
     & > * + * {
-        margin-top: ${spacings.nudge * 2}px;
+        margin-top: ${spacings.spacer}px;
     }
 
     @media ${mq.semilarge} {
@@ -215,14 +215,10 @@ const StyledIntro = styled(IntroBlock)<{ hasDecorator?: boolean }>`
 
 const StyledContactBox = styled(ContactBox)`
     margin-top: ${spacings.spacer}px;
-
-    @media ${mq.semilarge} {
-        margin-top: ${spacings.spacer * 1.5}px;
-    }
 `;
 
 const StyledActions = styled(Actions)`
-    margin-top: ${spacings.nudge * 8}px;
+    margin-top: ${spacings.spacer}px;
 
     @media ${mq.medium} {
         display: block;
@@ -233,7 +229,7 @@ const StyledActions = styled(Actions)`
 const NewsletterWrapper = styled.div`
     width: 100%;
     margin: 0 auto;
-    margin-top: ${spacings.spacer * 2.5}px;
+    margin-top: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
         max-width: 400px;

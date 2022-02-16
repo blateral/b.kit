@@ -59,10 +59,7 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
     margin-top: ${spacings.spacer * 0.5}px;
 
     background-color: ${({ theme }) => color(theme).new.primary.default};
-    color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.default
-            : color(theme).new.text.inverted};
+    color: ${({ theme }) => color(theme).new.text.inverted};
 
     outline: none;
     border: none;
