@@ -3,7 +3,6 @@ import styled, { ThemeContext } from 'styled-components';
 
 import {
     getColors as color,
-    mq,
     spacings,
     withRange,
     getGlobals as global,
@@ -13,37 +12,7 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
-
-const Content = styled.div`
-    & > * + * {
-        margin-top: ${spacings.spacer * 2}px;
-    }
-`;
-
-const ImageFlex = styled.div`
-    margin: -${spacings.spacer}px;
-
-    @media ${mq.medium} {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-
-        & > * {
-            flex: 1 0 50%;
-            max-width: 50%;
-        }
-    }
-`;
-
-const Img = styled.div<{ isSingleHalf?: boolean }>`
-    padding: ${spacings.spacer}px;
-    width: 100%;
-
-    @media ${mq.semilarge} {
-        width: ${({ isSingleHalf }) => isSingleHalf && '50%'};
-    }
-`;
+import Grid from 'components/base/Grid';
 
 const StyledImage = styled(Image)`
     overflow: hidden;
@@ -87,36 +56,29 @@ const NewsImages: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="small" addWhitespace>
-                <Content>
-                    {images && (imageStyle === 'half' || images.length >= 2) ? (
-                        <ImageFlex>
+                {images && (imageStyle === 'half' || images.length >= 2) ? (
+                    <Grid.Row>
+                        {images.map((img, i) => {
+                            return (
+                                <Grid.Col medium={{ span: 6 / 12 }} key={i}>
+                                    <div>
+                                        <StyledImage coverSpace {...img} />
+                                    </div>
+                                </Grid.Col>
+                            );
+                        })}
+                    </Grid.Row>
+                ) : (
+                    images && (
+                        <div>
                             {images.map((img, i) => {
                                 return (
-                                    <Img
-                                        key={i}
-                                        isSingleHalf={images.length >= 1}
-                                    >
-                                        <StyledImage coverSpace {...img} />
-                                    </Img>
+                                    <StyledImage coverSpace {...img} key={i} />
                                 );
                             })}
-                        </ImageFlex>
-                    ) : (
-                        images && (
-                            <div>
-                                {images.map((img, i) => {
-                                    return (
-                                        <StyledImage
-                                            coverSpace
-                                            {...img}
-                                            key={i}
-                                        />
-                                    );
-                                })}
-                            </div>
-                        )
-                    )}
-                </Content>
+                        </div>
+                    )
+                )}
 
                 {(primaryAction || secondaryAction) && (
                     <StyledActions
