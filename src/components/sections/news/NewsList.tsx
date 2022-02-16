@@ -12,40 +12,10 @@ import { useContext, useEffect, useState } from 'react';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import Pointer from 'components/buttons/Pointer';
 import { withLibTheme } from 'utils/LibThemeProvider';
-
-const News = styled.div`
-    & > * + * {
-        padding-top: ${spacings.spacer * 2}px;
-    }
-
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: 'flex-start';
-        align-items: flex-start;
-
-        margin-left: -20px;
-        margin-top: -40px;
-
-        & > * {
-            padding-left: 20px;
-            padding-top: 40px;
-            flex: 1 0 50%;
-            max-width: 50%;
-        }
-    }
-
-    @media ${mq.large} {
-        & > * {
-            flex: 1 0 33.33%;
-            max-width: 33.33%;
-        }
-    }
-`;
+import Grid from 'components/base/Grid';
 
 const ListFooter = styled.div`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    ${withRange([spacings.nudge * 2, spacings.nudge * 5], 'margin-top')};
     text-align: center;
 
     @media ${mq.medium} {
@@ -132,22 +102,28 @@ const NewsList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="normal">
-                <News>
+                <Grid.Row>
                     {news &&
                         news
                             .filter((_, i) => i < visibleRows * itemsPerRow)
                             .map((item, i) => {
                                 return (
-                                    <div key={i} ref={cardRefs[i]}>
-                                        <NewsCard
-                                            onTagClick={onTagClick}
-                                            isInverted={isInverted}
-                                            {...item}
-                                        />
-                                    </div>
+                                    <Grid.Col
+                                        key={i}
+                                        medium={{ span: 6 / 12 }}
+                                        large={{ span: 4 / 12 }}
+                                    >
+                                        <div ref={cardRefs[i]}>
+                                            <NewsCard
+                                                onTagClick={onTagClick}
+                                                isInverted={isInverted}
+                                                {...item}
+                                            />
+                                        </div>
+                                    </Grid.Col>
                                 );
                             })}
-                </News>
+                </Grid.Row>
                 <ListFooter>
                     {news && news.length > 0 && (
                         <Copy type="copy" size="medium" isInverted={isInverted}>
