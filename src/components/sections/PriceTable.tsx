@@ -13,8 +13,11 @@ const StyledPriceTag = styled(PriceTag)`
 `;
 
 const PriceTable: React.FC<{
+    /** Array of PriceTag card items */
     items: Array<Omit<PriceTagProps, 'isInverted'>>;
+    /** Center text inside card items */
     isCentered?: boolean;
+    /** Section background */
     bgMode?: 'full' | 'inverted';
 }> = ({ items, isCentered, bgMode }) => {
     const isInverted = bgMode === 'inverted';
