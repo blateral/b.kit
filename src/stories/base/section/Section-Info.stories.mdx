@@ -18,6 +18,8 @@ The `Section` component is the top level container element of each section. It c
 -   [Background logik](#backgrounds)
 -   [Spacings between sections](#section-spacing)
 
+<br />
+
 <ArgsTable of={Section} />
 
 <br />
@@ -34,27 +36,67 @@ A section supports three background states controlled by the `bgMode` property:
 
 The background color can be controlled by the property `bgColor`!
 
+<br />
+<br />
+
+## Section spacing
+
+To seperate each section from others the `Section` component has a spadding and margin logic
+to ensure the best seperation.
+
+<br />
+<br />
+
+### Paddings
+
+Paddings are used to add space inside the component. Controlled by a data attribute `data-bg-ident` each section calculates
+the ideal spacing in relation to the previous one's `bgMode` and `bgColor`. If neighbored sections have the same data attribute
+value only the previous component applies padding to improve the visual composition.
+
+> If two sections semantically belongs to each other it is possible to reduce the padding by using the `isStackable` property.
+
 <Canvas>
     <>
-        <Section bgMode="full">
+        <Section addSeperation bgMode="full">
             <ExampleContent />
         </Section>
-        <Section bgMode="full">
+        <Section addSeperation bgMode="full">
             <ExampleContent />
         </Section>
-        <Section bgMode="full" bgColor="aquamarine">
+        <Section addSeperation bgMode="full" bgColor="aquamarine">
             <ExampleContent isInverted />
         </Section>
-        <Section bgMode="full" bgColor="blueviolet">
-            <ExampleContent isInverted />
+        <Section addSeperation isStackable bgMode="full" bgColor="blueviolet">
+            <ExampleContent isInverted>stackable section</ExampleContent>
         </Section>
-        <Section bgColor="blueviolet" bgMode="larger-left">
-            <ExampleContent isInverted />
-        </Section>
-        <Section bgColor="aquamarine" bgMode="larger-right">
+        <Section addSeperation bgMode="full" bgColor="blueviolet">
             <ExampleContent isInverted />
         </Section>
     </>
 </Canvas>
 
-## Section spacing
+### Margins
+
+Margins are used to add spacing between sections with `bgModes` like `larger-left` and `larger-right`.
+If neighbored sections have not the same combination of one of this background modes and `bgColor` they are
+seperated by a additional margin. This helps to isolate the splitted background block visually.
+
+<Canvas>
+    <>
+        <Section addSeperation>
+            <ExampleContent />
+        </Section>
+        <Section addSeperation bgColor="blueviolet" bgMode="larger-right">
+            <ExampleContent isInverted />
+        </Section>
+        <Section addSeperation bgColor="blueviolet" bgMode="larger-right">
+            <ExampleContent isInverted />
+        </Section>
+        <Section addSeperation bgColor="aquamarine" bgMode="larger-right">
+            <ExampleContent isInverted />
+        </Section>
+        <Section addSeperation bgColor="aquamarine" bgMode="larger-left">
+            <ExampleContent isInverted />
+        </Section>
+    </>
+</Canvas>
