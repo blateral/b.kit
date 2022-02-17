@@ -59,7 +59,7 @@ const Title: FC<{
             {title && (
                 <MainTitle
                     renderAs={titleAs || 'h2'}
-                    size="heading-1"
+                    size="heading-2"
                     textColor={
                         colorMode === 'onImage'
                             ? color(theme).new.text.inverted

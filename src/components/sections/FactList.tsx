@@ -2,7 +2,7 @@ import * as React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
 import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import { spacings, getColors as color } from 'utils/styles';
+import { spacings, getColors as color, mq } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 
@@ -28,13 +28,21 @@ const FactItem = styled.li<{ hasText?: boolean; hasBack?: boolean }>`
     display: flex;
     flex-direction: row;
     align-items: ${({ hasText }) => (hasText ? 'flex-start' : 'center')};
+
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 3}px;
+    }
 `;
 
 const Icon = styled.img`
-    margin-right: ${spacings.spacer}px;
+    margin-right: ${spacings.nudge * 3}px;
     display: block;
     width: 100%;
     max-width: ${spacings.nudge * 5}px;
+
+    @media ${mq.medium} {
+        margin-right: ${spacings.spacer}px;
+    }
 `;
 
 const ContentBlock = styled.div`
