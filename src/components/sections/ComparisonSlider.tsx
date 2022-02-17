@@ -98,24 +98,24 @@ const ForegroundOverlay = styled.div<{ color: string }>`
 `;
 
 const ImageLabel = styled(Copy)<{ bgColor?: string }>`
-    height: ${spacings.spacer * 1.5}px;
-    padding: ${spacings.nudge}px ${spacings.spacer}px ${spacings.nudge * 2}px
-        ${spacings.spacer}px;
+    height: ${spacings.spacer}px;
+    padding: ${spacings.nudge}px ${spacings.nudge * 2}px ${spacings.nudge}px
+        ${spacings.nudge * 2}px;
     background: ${({ bgColor }) => bgColor && bgColor};
 `;
 
 const ForegroundLabel = styled(ImageLabel)`
     position: absolute;
-    bottom: ${spacings.spacer * 1.5}px;
-    left: ${spacings.spacer}px;
+    bottom: ${spacings.spacer}px;
+    left: ${spacings.nudge * 2}px;
     pointer-events: none;
     white-space: nowrap;
 `;
 
 const BackgroundLabel = styled(ImageLabel)`
     position: absolute;
-    bottom: ${spacings.spacer * 1.5}px;
-    right: ${spacings.spacer}px;
+    bottom: ${spacings.spacer}px;
+    right: ${spacings.nudge * 2}px;
     pointer-events: none;
     white-space: nowrap;
 `;

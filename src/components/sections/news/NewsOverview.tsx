@@ -169,9 +169,9 @@ const NewsOverview: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).dark
+                    ? getColors(theme).new.sectionBg.dark
                     : hasBg
-                    ? getColors(theme).mono.light
+                    ? getColors(theme).new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}

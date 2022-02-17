@@ -40,9 +40,9 @@ const NewsVideo: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? color(theme).new.sectionBg.dark
                     : hasBg
-                    ? color(theme).mono.light
+                    ? color(theme).new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
