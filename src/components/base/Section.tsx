@@ -30,6 +30,7 @@ const getBackground = (mode: BgMode, bgColor: string) => {
 const View = styled.section<{
     as?: SectionType;
     bgIdent: string;
+    bgColor: string;
     isStackable?: boolean;
     addSeperation?: boolean;
 }>`
@@ -70,24 +71,26 @@ const View = styled.section<{
     }}
 
     // section margins
-    ${({ addSeperation, isStackable, bgIdent, theme }) => {
+    ${({ addSeperation, isStackable, bgIdent, bgColor, theme }) => {
         const margin = global(theme).sections.seperation.margin.default;
         const marginStacked =
             global(theme).sections.seperation.margin.stackable;
 
+        const bgColorPart = bgColor ? `__${bgColor}` : '';
+
         if (addSeperation) {
             return css`
                 *:not([data-bg-ident='transparent'])
-                    + &[data-bg-ident='larger-left'] {
+                    + &[data-bg-ident='larger-left${bgColorPart}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
                 *:not([data-bg-ident='transparent'])
-                    + &[data-bg-ident='larger-right'] {
+                    + &[data-bg-ident='larger-right${bgColorPart}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
-                section[data-bg-ident='larger-left']
+                section[data-bg-ident='larger-left${bgColorPart}']
                     + &:not([data-bg-ident='transparent']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
@@ -95,7 +98,7 @@ const View = styled.section<{
                     )};
                 }
 
-                section[data-bg-ident='larger-right']
+                section[data-bg-ident='larger-right${bgColorPart}']
                     + &:not([data-bg-ident='transparent']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
@@ -167,11 +170,21 @@ const Back = styled.div<{
 export type SectionType = 'header' | 'footer' | 'div';
 
 const Section: React.FC<{
+    /** Render as specific HTML tag type */
     renderAs?: SectionType;
+
+    /** Background color */
     bgColor?: string;
+
+    /** Background mode */
     bgMode?: BgMode;
+
+    /** Enable section seperation spacing */
     addSeperation?: boolean;
+
+    /** Allow stack feature for reduced section spacing to following section */
     isStackable?: boolean;
+
     className?: string;
 }> = ({
     renderAs,
@@ -199,11 +212,14 @@ const Section: React.FC<{
             bgMode = undefined;
     }
 
+    const ident = bgColor && bgMode ? `${bgMode}__${bgColor}` : 'transparent';
+
     return (
         <View
             as={renderAs}
-            data-bg-ident={bgColor && bgMode ? bgMode : 'transparent'}
-            bgIdent={bgColor && bgMode ? bgMode : 'transparent'}
+            data-bg-ident={ident}
+            bgIdent={ident}
+            bgColor={bgColor || ''}
             addSeperation={
                 !renderAs || (renderAs && renderAs !== 'div')
                     ? addSeperation

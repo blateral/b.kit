@@ -1,9 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { mq, spacings } from 'utils/styles';
-
-import Grid from 'components/base/Grid';
+import Grid, { gridSettings } from 'components/base/Grid';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
@@ -22,13 +20,7 @@ const Card = styled(PromotionCard)<{ isMain?: boolean }>`
     flex: 1 0 auto;
 
     & + & {
-        margin-top: ${spacings.nudge * 2}px;
-    }
-
-    @media ${mq.medium} {
-        & + & {
-            margin-top: ${spacings.spacer}px;
-        }
+        margin-top: ${gridSettings.gutter}px;
     }
 `;
 

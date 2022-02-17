@@ -1,8 +1,8 @@
-import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
-import { getColors as color, mq } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { mq } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Fact, { FactProps } from 'components/blocks/Fact';
@@ -18,14 +18,19 @@ const FactFill = styled.div`
 `;
 
 const FactGrid: FC<{
+    /** Controls amount columns on large screens */
     columns?: 3 | 4 | 6;
 
+    /** Array with fact card data */
     facts?: Array<Omit<FactProps, 'isInverted' | 'isCentered'>>;
 
+    /** Section background */
     bgMode?: 'full' | 'inverted' | 'splitted';
+
+    /** Center text inside fact card items */
     isCentered?: boolean;
 }> = ({ columns = 3, facts, bgMode, isCentered }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const factCount = facts?.length || 0;
 
     const isInverted = bgMode === 'inverted';
@@ -47,10 +52,10 @@ const FactGrid: FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : bgMode
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >
@@ -75,14 +80,13 @@ const FactGrid: FC<{
                                         }
                                         large={{ span: 12 / columns / 12 }}
                                     >
-                                        <div ref={cardRefs[i]}>
-                                            <Fact
-                                                key={i}
-                                                {...fact}
-                                                isCentered={isCentered}
-                                                isInverted={isInverted}
-                                            />
-                                        </div>
+                                        <Fact
+                                            key={i}
+                                            ref={cardRefs[i]}
+                                            {...fact}
+                                            isCentered={isCentered}
+                                            isInverted={isInverted}
+                                        />
                                     </Grid.Col>
                                 );
                             } else {

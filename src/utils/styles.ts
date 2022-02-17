@@ -262,12 +262,12 @@ const defaultFonts: Fonts = {
         medium: {
             ...copyBase,
             lineHeight: '1.43',
-            size: [14, 16],
+            size: [16, 16],
         },
         big: {
             ...copyBase,
             lineHeight: '1.18',
-            size: [20, 22],
+            size: [18, 20],
         },
     },
     'copy-i': {
@@ -339,13 +339,15 @@ const defaultFonts: Fonts = {
         },
         medium: {
             ...headingBase,
+            weight: '300',
             lineHeight: '1.18',
-            size: [50, 55],
+            size: [65, 72],
         },
         big: {
             ...headingBase,
+            weight: '300',
             lineHeight: '1.18',
-            size: [60, 62],
+            size: [85, 92],
         },
     },
 };
