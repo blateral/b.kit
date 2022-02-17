@@ -17,11 +17,11 @@ const NavList = styled.ul`
     margin: 0;
     position: relative;
 
-    margin-left: -${spacings.spacer}px;
-    padding-right: ${spacings.spacer}px;
+    margin-left: -${spacings.nudge * 2}px;
+    padding-right: ${spacings.nudge * 2}px;
 
     @media ${mq.semilarge} {
-        margin-left: -${spacings.nudge * 3}px;
+        margin-left: -${spacings.nudge * 2}px;
     }
 
     overflow-x: scroll;
@@ -43,7 +43,7 @@ const NavItem = styled.li`
 const NavItemContainer = styled.div`
     position: relative;
     display: inline-block;
-    padding: ${spacings.nudge * 3}px;
+    padding: ${spacings.nudge * 2}px;
 `;
 
 const SliderBorder = styled.div<{ isInverted?: boolean }>`

@@ -5,27 +5,20 @@ import Wrapper from 'components/base/Wrapper';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Link from 'components/typography/Link';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
 
 const Socials = styled.div<{ isInverted?: boolean }>`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    margin: -${spacings.nudge}px;
-
     color: ${({ isInverted, theme }) =>
         isInverted ? color(theme).light : color(theme).dark};
 `;
 
 const StyledWrapper = styled(Wrapper)`
-    padding-left: ${spacings.spacer * 2}px;
-    padding-right: ${spacings.spacer * 2}px;
+    padding-left: ${spacings.nudge * 5}px;
+    padding-right: ${spacings.nudge * 5}px;
 `;
 
 const Social = styled(Link)`
     color: inherit;
-    padding: ${spacings.nudge}px;
 
     transition: color 0.2s ease-in-out;
 
@@ -34,6 +27,7 @@ const Social = styled(Link)`
     }
 
     & > * {
+        margin: 0 auto;
         ${withRange([29, 64], 'height')}
         ${withRange([29, 64], 'width')}
     }
@@ -63,12 +57,23 @@ const SocialNav: FC<{
             addSeperation
         >
             <StyledWrapper addWhitespace>
-                <Socials isInverted={isInverted}>
-                    {socials?.map((social, i) => (
-                        <Social key={i} href={social?.href} isExternal>
-                            {social?.icon}
-                        </Social>
-                    ))}
+                <Socials>
+                    <Grid.Row valign="center">
+                        {socials.map((social, i) => {
+                            return (
+                                <Grid.Col
+                                    span={
+                                        socials.length > 4
+                                            ? 3 / 12
+                                            : 12 / socials.length / 12
+                                    }
+                                    key={i}
+                                >
+                                    <Social>{social?.icon}</Social>
+                                </Grid.Col>
+                            );
+                        })}
+                    </Grid.Row>
                 </Socials>
             </StyledWrapper>
         </Section>
