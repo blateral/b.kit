@@ -35,14 +35,14 @@ export const Default: Story = () => (
         items={[
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                     <p><strong>Lorem Ipsum Dolor Sit Amet</strong></p>
                                 <ul>
@@ -60,7 +60,7 @@ export const Default: Story = () => (
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
@@ -68,14 +68,14 @@ export const Default: Story = () => (
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
@@ -90,14 +90,14 @@ export const IsCentered: Story = () => (
         items={[
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                     <p><strong>Lorem Ipsum Dolor Sit Amet</strong></p>
                                 <ul>
@@ -115,7 +115,7 @@ export const IsCentered: Story = () => (
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
@@ -123,14 +123,14 @@ export const IsCentered: Story = () => (
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
@@ -144,28 +144,28 @@ export const HasBackground: Story = () => (
         items={[
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
@@ -173,7 +173,7 @@ export const HasBackground: Story = () => (
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
@@ -188,28 +188,28 @@ export const IsInverted: Story = () => (
         items={[
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,
@@ -217,7 +217,7 @@ export const IsInverted: Story = () => (
             },
             {
                 superTitle: 'Tarif',
-                title: '<h2>100,-</h2>',
+                title: '199,-',
                 text: `
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>`,
                 action: button,

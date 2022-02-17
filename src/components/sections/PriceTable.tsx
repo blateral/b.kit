@@ -9,7 +9,7 @@ import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import Grid from 'components/base/Grid';
 
 const StyledPriceTag = styled(PriceTag)`
-    min-height: 400px;
+    min-height: 500px;
 `;
 
 const PriceTable: React.FC<{

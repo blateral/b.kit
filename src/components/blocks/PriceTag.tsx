@@ -15,7 +15,7 @@ const View = styled.div<{
     hasBg?: boolean;
     isHighlighted?: boolean;
 }>`
-    padding: ${spacings.spacer}px;
+    padding: ${spacings.nudge * 5}px;
 
     border: 1px solid transparent;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
@@ -37,7 +37,7 @@ const View = styled.div<{
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
 
     & > * + * {
-        margin-top: 20px;
+        margin-top: ${spacings.nudge * 3}px;
     }
 `;
 
