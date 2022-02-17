@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { spacings, withRange, getGlobals as global } from 'utils/styles';
+import { spacings, getGlobals as global } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 
@@ -11,7 +11,7 @@ const ImageContainer = styled.div<{ isCentered?: boolean }>`
     display: flex;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
-    padding-bottom: ${spacings.nudge * 3}px;
+    margin-bottom: ${spacings.nudge * 3}px;
     max-width: 100%;
 `;
 
@@ -22,25 +22,19 @@ const StyledImage = styled(Image)`
 
 const Content = styled.div<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => isCentered && 'center'};
-`;
 
-const Title = styled(Copy)`
-    * + & {
-        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'margin-top')}
+    & > * + * {
+        margin-top: ${spacings.nudge * 3}px;
     }
 `;
 
-const ContentBlock = styled(Copy)`
-    * + & {
-        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'margin-top')}
-    }
-`;
+const Title = styled(Copy)``;
+
+const SubTitle = styled(Copy)``;
 
 const Text = styled(Copy)`
-    margin-top: ${spacings.nudge}px;
-
-    ${Title} + & {
-        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'margin-top')}
+    ${SubTitle} + & {
+        margin-top: ${spacings.nudge}px;
     }
 `;
 
@@ -53,65 +47,73 @@ export interface FactProps {
     image?: ImageProps;
 }
 
-const Fact: FC<
+const Fact = forwardRef<
+    HTMLDivElement,
     FactProps & {
         className?: string;
     }
-> = ({
-    isInverted = false,
-    isCentered = false,
-    title,
-    subTitle,
-    text,
-    image,
-    className,
-}) => {
-    return (
-        <View className={className}>
-            {image && (
-                <ImageContainer isCentered={isCentered}>
-                    <StyledImage
-                        small={image.small}
-                        medium={image.medium}
-                        semilarge={image.semilarge}
-                        large={image.large}
-                        xlarge={image.xlarge}
-                        alt={image.alt}
-                        coverSpace={image.coverSpace}
-                    />
-                </ImageContainer>
-            )}
-            <Content isCentered={isCentered}>
-                {title && (
-                    <Title
-                        type="copy-b"
-                        size="big"
-                        isInverted={isInverted}
-                        data-sheet="title"
-                    >
-                        {title}
-                    </Title>
+>(
+    (
+        {
+            isInverted = false,
+            isCentered = false,
+            title,
+            subTitle,
+            text,
+            image,
+            className,
+        },
+        ref
+    ) => {
+        return (
+            <View ref={ref} className={className}>
+                {image && (
+                    <ImageContainer isCentered={isCentered}>
+                        <StyledImage
+                            small={image.small}
+                            medium={image.medium}
+                            semilarge={image.semilarge}
+                            large={image.large}
+                            xlarge={image.xlarge}
+                            alt={image.alt}
+                            coverSpace={image.coverSpace}
+                        />
+                    </ImageContainer>
                 )}
-                {subTitle && (
-                    <ContentBlock
-                        type="copy-b"
-                        isInverted={isInverted}
-                        data-sheet="subtitle"
-                    >
-                        {subTitle}
-                    </ContentBlock>
-                )}
-                {text && (
-                    <Text
-                        type="copy"
-                        isInverted={isInverted}
-                        data-sheet="text"
-                        innerHTML={text}
-                    />
-                )}
-            </Content>
-        </View>
-    );
-};
+                <Content isCentered={isCentered}>
+                    {title && (
+                        <Title
+                            type="copy-b"
+                            size="big"
+                            isInverted={isInverted}
+                            data-sheet="title"
+                        >
+                            {title}
+                        </Title>
+                    )}
+                    {subTitle && (
+                        <SubTitle
+                            type="copy-b"
+                            isInverted={isInverted}
+                            data-sheet="subtitle"
+                        >
+                            {subTitle}
+                        </SubTitle>
+                    )}
+                    {text && (
+                        <Text
+                            type="copy"
+                            isInverted={isInverted}
+                            data-sheet="text"
+                            innerHTML={text}
+                        />
+                    )}
+                </Content>
+            </View>
+        );
+    }
+);
+
+Fact.displayName = 'Fact';
 
 export default Fact;

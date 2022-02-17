@@ -7,7 +7,7 @@ export default {
     component: Fact,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
