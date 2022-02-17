@@ -1,64 +1,77 @@
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import { spacings, mq, withRange } from 'utils/styles';
+import { spacings, mq } from 'utils/styles';
 
 import Title from 'components/blocks/Title';
 import Copy, { CopyType } from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
+import { getGridWidth } from 'components/base/Grid';
 
 const View = styled.div<{ isCentered?: boolean }>`
     width: 100%;
     text-align: ${({ isCentered }) => isCentered && 'center'};
-`;
 
-const StyledTitle = styled(Title)<{ clampTitle?: boolean }>`
-    max-width: ${({ clampTitle }) =>
-        clampTitle && (13 / 28) * spacings.wrapper + 'px'};
-`;
-
-const ContentBlock = styled(Copy)<{
-    clampText?: boolean;
-    isCentered?: boolean;
-}>`
-    display: block;
-    margin: ${({ isCentered }) => isCentered && '0 auto'};
-    max-width: ${({ clampText }) =>
-        clampText && (19 / 28) * spacings.wrapper + 'px'};
-
-    :not(:first-child) {
-        padding-top: ${spacings.nudge * 3}px;
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
     }
 `;
 
-const StyledActions = styled(Actions)`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
-
+const StyledTitle = styled(Title)<{ clamp?: boolean }>`
     @media ${mq.semilarge} {
-        align-items: flex-start;
+        max-width: ${({ clamp }) => clamp && getGridWidth(8)};
+    }
+`;
 
-        & > * {
-            max-width: ${(19 / 28) * spacings.wrapper + 'px'};
-        }
+const ContentBlock = styled(Copy)<{
+    isCentered?: boolean;
+}>`
+    display: block;
+    margin-left: ${({ isCentered }) => isCentered && 'auto'};
+    margin-right: ${({ isCentered }) => isCentered && 'auto'};
+`;
+
+const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
+    @media ${mq.medium} {
+        display: block;
+        text-align: ${({ isCentered }) => isCentered && 'center'};
     }
 `;
 
 const IntroBlock: React.FC<{
+    /** Color presets for text and blocks. onImage has always a white text color */
     colorMode?: 'default' | 'inverted' | 'onImage';
+
+    /** Main title text */
     title?: string;
+
+    /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
+
+    /** Superior title that stands above main title */
     superTitle?: string;
+
+    /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
+
+    /** Bold intro text underneath the title (richtext) */
     text?: string;
+
+    /** Copy type of intro text (limits richtext capabilites on textType == copy-b or copy-i) */
     textType?: CopyType;
 
+    /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
+    /** Center text and actions */
     isCentered?: boolean;
+
+    /** Clamp title to a width of max 8 grid cols. */
     clampTitle?: boolean;
-    clampText?: boolean;
     className?: string;
 }> = ({
     colorMode = 'default',
@@ -71,8 +84,7 @@ const IntroBlock: React.FC<{
     primaryAction,
     secondaryAction,
     isCentered = false,
-    clampTitle = true,
-    clampText = true,
+    clampTitle = false,
     className,
 }) => {
     return (
@@ -85,7 +97,7 @@ const IntroBlock: React.FC<{
                     superTitle={superTitle}
                     superTitleAs={superTitleAs}
                     isCentered={isCentered}
-                    clampTitle={clampTitle}
+                    clamp={clampTitle}
                 />
             )}
             {text && (
@@ -94,7 +106,6 @@ const IntroBlock: React.FC<{
                     textColor={colorMode === 'onImage' ? '#fff' : undefined}
                     isInverted={colorMode === 'inverted'}
                     isCentered={isCentered}
-                    clampText={clampText}
                     innerHTML={text}
                 />
             )}
