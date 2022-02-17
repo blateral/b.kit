@@ -166,7 +166,7 @@ const Timeline: React.FC<{
                     ? color(theme).new.sectionBg.dark
                     : hasBg
                     ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation
