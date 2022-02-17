@@ -38,12 +38,11 @@ const View = styled.section<{
     overflow: ${({ as }) => (as === 'div' ? 'visible' : 'hidden')};
 
     // section paddings
-    ${({ addSeperation, isStackable, bgIdent, bgColor, theme }) => {
+    ${({ addSeperation, isStackable, bgIdent, theme }) => {
         const padding = global(theme).sections.seperation.padding.default;
         const paddingStacked =
             global(theme).sections.seperation.padding.stackable;
         const forcePadding = global(theme).sections.seperation.forcePadding;
-        const backColor = bgColor ? `__${bgColor}` : '';
 
         if (addSeperation) {
             return css`
@@ -57,8 +56,8 @@ const View = styled.section<{
                     ${withRange(paddingStacked, 'padding-top')};
                 }
 
-                section[data-bg-ident='${bgIdent}${backColor}']
-                    + &[data-bg-ident='${bgIdent}${backColor}'] {
+                section[data-bg-ident='${bgIdent}']
+                    + &[data-bg-ident='${bgIdent}'] {
                     padding-top: ${forcePadding ? undefined : '0 !important'};
 
                     @media ${mq.xxlarge} {
@@ -76,21 +75,22 @@ const View = styled.section<{
         const margin = global(theme).sections.seperation.margin.default;
         const marginStacked =
             global(theme).sections.seperation.margin.stackable;
-        const backColor = bgColor ? `__${bgColor}` : '';
+
+        const bgColorPart = bgColor ? `__${bgColor}` : '';
 
         if (addSeperation) {
             return css`
                 *:not([data-bg-ident='transparent'])
-                    + &[data-bg-ident='larger-left${backColor}'] {
+                    + &[data-bg-ident='larger-left${bgColorPart}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
                 *:not([data-bg-ident='transparent'])
-                    + &[data-bg-ident='larger-right${backColor}'] {
+                    + &[data-bg-ident='larger-right${bgColorPart}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
-                section[data-bg-ident='larger-left${backColor}']
+                section[data-bg-ident='larger-left${bgColorPart}']
                     + &:not([data-bg-ident='transparent']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
@@ -98,7 +98,7 @@ const View = styled.section<{
                     )};
                 }
 
-                section[data-bg-ident='larger-right${backColor}']
+                section[data-bg-ident='larger-right${bgColorPart}']
                     + &:not([data-bg-ident='transparent']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
@@ -106,8 +106,8 @@ const View = styled.section<{
                     )};
                 }
 
-                section[data-bg-ident='${bgIdent}${backColor}']
-                    + &[data-bg-ident='${bgIdent}${backColor}'] {
+                section[data-bg-ident='${bgIdent}']
+                    + &[data-bg-ident='${bgIdent}'] {
                     margin-top: 0 !important;
 
                     @media ${mq.xxlarge} {
@@ -212,13 +212,13 @@ const Section: React.FC<{
             bgMode = undefined;
     }
 
+    const ident = bgColor && bgMode ? `${bgMode}__${bgColor}` : 'transparent';
+
     return (
         <View
             as={renderAs}
-            data-bg-ident={
-                bgColor && bgMode ? `${bgMode}__${bgColor}` : 'transparent'
-            }
-            bgIdent={bgColor && bgMode ? bgMode : 'transparent'}
+            data-bg-ident={ident}
+            bgIdent={ident}
             bgColor={bgColor || ''}
             addSeperation={
                 !renderAs || (renderAs && renderAs !== 'div')
