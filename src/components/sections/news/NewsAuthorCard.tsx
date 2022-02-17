@@ -12,7 +12,9 @@ import Grid from 'components/base/Grid';
 const Seperator = styled.div<{ isInverted?: boolean; isTop?: boolean }>`
     border-bottom: solid 1px
         ${({ isInverted, theme }) =>
-            isInverted ? color(theme).light : color(theme).dark};
+            isInverted
+                ? color(theme).new.elementBg.light
+                : color(theme).new.elementBg.dark};
 
     margin-top: ${({ isTop }) => !isTop && spacings.nudge * 2}px;
     margin-bottom: ${({ isTop }) => isTop && spacings.nudge * 2}px;
@@ -46,9 +48,9 @@ const NewsAuthorCard: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? color(theme).new.sectionBg.dark
                     : hasBg
-                    ? color(theme).mono.light
+                    ? color(theme).new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
