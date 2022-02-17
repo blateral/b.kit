@@ -18,11 +18,16 @@ const FactFill = styled.div`
 `;
 
 const FactGrid: FC<{
+    /** Controls amount columns on large screens */
     columns?: 3 | 4 | 6;
 
+    /** Array with fact card data */
     facts?: Array<Omit<FactProps, 'isInverted' | 'isCentered'>>;
 
+    /** Section background */
     bgMode?: 'full' | 'inverted' | 'splitted';
+
+    /** Center text inside fact card items */
     isCentered?: boolean;
 }> = ({ columns = 3, facts, bgMode, isCentered }) => {
     const { colors } = useLibTheme();
