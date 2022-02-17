@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
-import styled, { ThemeContext } from 'styled-components';
-import { withLibTheme } from 'utils/LibThemeProvider';
-import { getColors, spacings } from 'utils/styles';
+import styled from 'styled-components';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { mq, spacings, getColors as color } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import Grid from 'components/base/Grid';
 
 const FactsContainer = styled.ul`
     padding: 0;
@@ -14,12 +13,13 @@ const FactsContainer = styled.ul`
     list-style-type: none;
 `;
 
-const FactsItem = styled.li<{ hasText?: boolean }>`
-    padding: ${spacings.nudge * 3}px ${spacings.nudge * 2}px;
+const FactItem = styled.li<{ hasText?: boolean; hasBack?: boolean }>`
+    padding: ${spacings.nudge * 2}px;
 
-    background: #fff;
-
-    cursor: pointer;
+    background: ${({ theme, hasBack }) =>
+        hasBack
+            ? color(theme).new.elementBg.light
+            : color(theme).new.elementBg.medium};
 
     display: flex;
     flex-direction: row;
@@ -27,6 +27,10 @@ const FactsItem = styled.li<{ hasText?: boolean }>`
 
     & + & {
         margin-top: ${spacings.nudge * 2}px;
+    }
+
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 3}px;
     }
 `;
 
@@ -38,71 +42,70 @@ const Icon = styled.img`
 `;
 
 const ContentBlock = styled.div`
-    max-width: 80%;
-
     & > * + * {
         margin-top: ${spacings.nudge * 2}px;
     }
 `;
 
 const FactList: React.FC<{
-    facts?: {
+    /** Array with fact item data */
+    facts?: Array<{
         label?: string;
         text?: string;
         icon?: { src: string; alt?: string };
-    }[];
+    }>;
 
+    /** Section background */
     bgMode?: 'full' | 'inverted';
 }> = ({ facts, bgMode }) => {
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
+    const hasBack = isInverted || bgMode === 'full';
 
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : bgMode === 'full'
-                    ? getColors(theme).new.sectionBg.medium
-                    : getColors(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <Grid.Row>
-                    <Grid.Col>
-                        {facts && (
-                            <FactsContainer>
-                                {facts.map(({ label, text, icon }, i) => {
-                                    return (
-                                        <FactsItem key={i} hasText={!!text}>
-                                            {icon && (
-                                                <Icon
-                                                    src={icon.src}
-                                                    alt={icon.alt}
-                                                />
-                                            )}
-                                            <ContentBlock>
-                                                {label && (
-                                                    <Copy type="copy-b">
-                                                        {label}
-                                                    </Copy>
-                                                )}
-                                                {text && (
-                                                    <Copy
-                                                        type="copy"
-                                                        innerHTML={text}
-                                                    />
-                                                )}
-                                            </ContentBlock>
-                                        </FactsItem>
-                                    );
-                                })}
-                            </FactsContainer>
-                        )}
-                    </Grid.Col>
-                </Grid.Row>
+                {facts && (
+                    <FactsContainer>
+                        {facts.map(({ label, text, icon }, i) => {
+                            return (
+                                <FactItem
+                                    key={i}
+                                    hasText={!!text}
+                                    hasBack={hasBack}
+                                >
+                                    {icon && (
+                                        <Icon
+                                            src={icon.src}
+                                            alt={icon.alt || ''}
+                                        />
+                                    )}
+                                    <ContentBlock>
+                                        {label && (
+                                            <Copy type="copy-b">{label}</Copy>
+                                        )}
+                                        {text && (
+                                            <Copy
+                                                type="copy"
+                                                innerHTML={text}
+                                            />
+                                        )}
+                                    </ContentBlock>
+                                </FactItem>
+                            );
+                        })}
+                    </FactsContainer>
+                )}
             </Wrapper>
         </Section>
     );

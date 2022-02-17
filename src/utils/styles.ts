@@ -281,7 +281,7 @@ const defaultFonts: Fonts = {
             ...copyBase,
             style: 'italic',
             lineHeight: '1.43',
-            size: [14, 16],
+            size: [16, 16],
         },
         big: {
             ...copyBase,
@@ -301,7 +301,7 @@ const defaultFonts: Fonts = {
             ...copyBase,
             weight: '700',
             lineHeight: '1.43',
-            size: [14, 16],
+            size: [16, 16],
         },
         big: {
             ...copyBase,
