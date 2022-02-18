@@ -5,7 +5,6 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import { withLibTheme } from 'utils/LibThemeProvider';
-import Grid from 'components/base/Grid';
 
 const ItemList = styled.ul`
     margin: 0;
@@ -20,7 +19,7 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
     justify-content: space-between;
     max-width: 100%;
 
-    ${withRange([spacings.nudge, spacings.nudge * 2], 'padding')};
+    ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding')};
 
     background: ${({ theme, hasBg }) =>
         hasBg
@@ -28,7 +27,7 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
             : color(theme).new.elementBg.medium};
 
     & > * + * {
-        margin-left: ${spacings.nudge}px;
+        margin-left: ${spacings.nudge * 2}px;
     }
 
     & + & {
@@ -37,7 +36,7 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
 
     @media ${mq.semilarge} {
         & > * + * {
-            margin-left: ${spacings.spacer}px;
+            margin-left: ${spacings.nudge * 3}px;
         }
     }
 `;
@@ -85,22 +84,18 @@ const PriceList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <Grid.Row>
-                    <Grid.Col>
-                        <ItemList>
-                            {items.map((item, i) => {
-                                return (
-                                    <PriceBlock
-                                        key={i}
-                                        {...item}
-                                        isInverted={isInverted}
-                                        hasBg={hasBg}
-                                    />
-                                );
-                            })}
-                        </ItemList>
-                    </Grid.Col>
-                </Grid.Row>
+                <ItemList>
+                    {items.map((item, i) => {
+                        return (
+                            <PriceBlock
+                                key={i}
+                                {...item}
+                                isInverted={isInverted}
+                                hasBg={hasBg}
+                            />
+                        );
+                    })}
+                </ItemList>
             </Wrapper>
         </Section>
     );
