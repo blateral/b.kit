@@ -134,8 +134,8 @@ const IconList: React.FC<{
     isCentered = false,
     primaryAction,
     secondaryAction,
-    showLessText = 'weniger anzeigen',
-    showMoreText = 'weitere anzeigen',
+    showLessText = 'show less',
+    showMoreText = 'show more',
     enableToggle,
     bgMode,
 }) => {
