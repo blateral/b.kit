@@ -10,7 +10,6 @@ import Tag from 'components/blocks/Tag';
 import {
     getColors as color,
     spacings,
-    withRange,
     getGlobals as global,
 } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
@@ -18,7 +17,7 @@ import { withLibTheme } from 'utils/LibThemeProvider';
 
 const Content = styled.div`
     & > * + * {
-        ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+        margin-top: ${spacings.nudge * 3}px;
     }
 `;
 
@@ -47,11 +46,11 @@ const MetaBlock = styled.div`
     text-overflow: ellipsis;
 
     * + & {
-        margin-left: ${spacings.spacer}px;
+        margin-left: ${spacings.nudge * 3}px;
     }
 
     & > * + * {
-        margin-left: ${spacings.spacer}px;
+        margin-left: ${spacings.nudge * 3}px;
     }
 `;
 
@@ -70,7 +69,7 @@ const ContentBlock = styled(Copy)<{
         clampText && (19 / 28) * spacings.wrapper + 'px'};
 
     :not(:first-child) {
-        padding-top: ${spacings.nudge * 5}px;
+        padding-top: ${spacings.spacer}px;
     }
 `;
 
