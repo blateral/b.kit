@@ -21,7 +21,7 @@ const NavList = styled.ul`
     padding-right: ${spacings.nudge * 2}px;
 
     @media ${mq.semilarge} {
-        margin-left: -${spacings.nudge * 2}px;
+        margin-left: -${spacings.nudge * 3}px;
     }
 
     overflow-x: scroll;
@@ -43,7 +43,7 @@ const NavItem = styled.li`
 const NavItemContainer = styled.div`
     position: relative;
     display: inline-block;
-    padding: ${spacings.nudge * 2}px;
+    padding: ${spacings.nudge * 3}px;
 `;
 
 const SliderBorder = styled.div<{ isInverted?: boolean }>`
@@ -60,7 +60,9 @@ const Slider = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     position: absolute;
     bottom: 0;
     background-color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).light : color(theme).dark};
+        isInverted
+            ? color(theme).new.elementBg.light
+            : color(theme).new.elementBg.dark};
     left: 15px;
     right: 15px;
 `;
