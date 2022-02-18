@@ -15,7 +15,7 @@ const ImageContainer = styled.div<{ isCentered?: boolean }>`
     display: flex;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
-    padding-bottom: ${spacings.nudge * 5}px;
+    padding-bottom: ${spacings.spacer}px;
 `;
 
 const StyledImage = styled(Image)`
@@ -30,7 +30,7 @@ const Content = styled.div<{ addWhitespace?: boolean; isCentered?: boolean }>`
     padding: 0 ${({ addWhitespace }) => addWhitespace && spacings.nudge + 'px'};
 
     & + & {
-        ${withRange([spacings.spacer, spacings.nudge * 5], 'padding-top')}
+        ${withRange([spacings.nudge * 2, spacings.spacer], 'padding-top')}
     }
 `;
 
@@ -44,17 +44,17 @@ const ArticleContent = styled(Content)<{ isCentered?: boolean }>`
 
 const ContentBlock = styled(Copy)`
     & + & {
-        ${withRange([spacings.nudge * 3, spacings.nudge * 2], 'padding-top')}
+        ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding-top')}
     }
 `;
 
 const Desc = styled.div`
-    ${withRange([spacings.nudge * 3, spacings.nudge * 2], 'padding-top')}
+    ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding-top')}
 `;
 
 const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
     padding: 0 ${({ addWhitespace }) => addWhitespace && spacings.nudge + 'px'};
-    ${withRange([spacings.nudge * 2, spacings.nudge * 5], 'padding-top')}
+    ${withRange([spacings.nudge * 2, spacings.spacer], 'padding-top')}
 
     @media ${mq.medium} {
         width: 100%;
