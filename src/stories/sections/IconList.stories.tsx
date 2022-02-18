@@ -6,99 +6,99 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const Items = [
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/180x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/70x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/300x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/150x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/150x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/95x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/350x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/170x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/170x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/50x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/230x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/70x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/100x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/120x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
     },
 ];
@@ -108,7 +108,7 @@ export default {
     component: IconListComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;

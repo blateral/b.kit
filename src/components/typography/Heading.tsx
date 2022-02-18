@@ -1,5 +1,6 @@
 import * as React from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     styleTextColor,
     FontType,
@@ -108,7 +109,7 @@ const Heading: React.FC<{
     children,
     ...rest
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const { fonts } = useLibTheme();
     let tag: HeadlineTag = 'h2';
 
     switch (size) {
@@ -131,7 +132,7 @@ const Heading: React.FC<{
     }
 
     // get font settings from global context
-    const fontSettings = font(theme)?.[size];
+    const fontSettings = fonts?.[size];
 
     return (
         <View

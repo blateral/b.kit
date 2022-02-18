@@ -1,5 +1,6 @@
 import * as React from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     FontOptionType,
     getFonts as font,
@@ -100,8 +101,8 @@ const Callout: React.FC<{
     children,
     ...rest
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const fontSettings = font(theme)?.callout?.[size];
+    const { fonts } = useLibTheme();
+    const fontSettings = fonts?.callout?.[size];
 
     return (
         <View

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     FontType,
     mq,
@@ -190,6 +191,7 @@ const Copy: React.FC<{
     size?: FontOptionType;
     columns?: boolean;
     innerHTML?: string;
+    onClick?: (ev: React.SyntheticEvent<HTMLElement>) => void;
     className?: string;
 }> = ({
     renderAs,
@@ -200,12 +202,13 @@ const Copy: React.FC<{
     textGradient,
     columns = false,
     innerHTML,
+    onClick,
     className,
     children,
     ...rest
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const fontSettings = font(theme)?.[type]?.[size];
+    const { fonts } = useLibTheme();
+    const fontSettings = fonts?.[type]?.[size];
 
     return (
         <View
@@ -228,6 +231,7 @@ const Copy: React.FC<{
             dangerouslySetInnerHTML={
                 innerHTML && !children ? { __html: innerHTML } : undefined
             }
+            onClick={onClick}
             className={className}
             {...rest}
         >
