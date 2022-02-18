@@ -65,7 +65,7 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     justify-content: center;
 
     flex-wrap: wrap;
-    margin-left: -18px;
+    margin-left: -${spacings.nudge * 2}px;
 
     @media ${mq.medium} {
         align-items: ${({ isCentered }) =>
@@ -94,8 +94,8 @@ const StyledActions = styled(Actions)`
 const Item = styled.img<{ isVisible?: boolean; index: number }>`
     display: block;
 
-    padding-left: 18px;
-    padding-top: 18px;
+    padding-left: ${spacings.nudge * 2}px;
+    padding-top: ${spacings.nudge * 2}px;
 
     display: ${({ index, isVisible }) =>
         isVisible || index < 6 ? 'block' : 'none'};
