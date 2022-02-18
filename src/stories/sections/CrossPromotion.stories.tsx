@@ -32,6 +32,24 @@ export const SingleImageFull: Story = () => (
     />
 );
 
+export const WithSuperTitle: Story = () => (
+    <CrossPromotion
+        main={[
+            {
+                size: 'full',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/824?image=409',
+                    xlarge: 'https://unsplash.it/1400/826?image=409',
+                },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+        ]}
+    />
+);
+
 export const TwoHalfCardsRatioA: Story = () => (
     <CrossPromotion
         main={[
@@ -45,6 +63,7 @@ export const TwoHalfCardsRatioA: Story = () => (
                     xlarge: 'https://unsplash.it/690/690?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -56,6 +75,7 @@ export const TwoHalfCardsRatioA: Story = () => (
                     xlarge: 'https://unsplash.it/690/690?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -76,6 +96,7 @@ export const TwoHalfCardsRatioB: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -87,6 +108,7 @@ export const TwoHalfCardsRatioB: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -106,6 +128,7 @@ export const TwoHalfCardsRatioC: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -116,6 +139,7 @@ export const TwoHalfCardsRatioC: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -136,6 +160,7 @@ export const MixedImages: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -148,6 +173,7 @@ export const MixedImages: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -158,6 +184,7 @@ export const MixedImages: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -177,6 +204,7 @@ export const WithFullBackground: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -189,6 +217,7 @@ export const WithFullBackground: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -199,6 +228,7 @@ export const WithFullBackground: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -218,6 +248,7 @@ export const SplittedBackground: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -230,6 +261,7 @@ export const SplittedBackground: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -240,6 +272,7 @@ export const SplittedBackground: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -259,6 +292,7 @@ export const Inverted: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -271,6 +305,7 @@ export const Inverted: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -281,6 +316,7 @@ export const Inverted: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -300,6 +336,7 @@ export const isMirrored: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -312,6 +349,7 @@ export const isMirrored: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -322,6 +360,7 @@ export const isMirrored: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -342,6 +381,7 @@ export const isMirroredAndWithSplittedBackground: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -354,6 +394,7 @@ export const isMirroredAndWithSplittedBackground: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -364,6 +405,7 @@ export const isMirroredAndWithSplittedBackground: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -385,6 +427,7 @@ export const WithLinks: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -401,6 +444,7 @@ export const WithLinks: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 link: {
@@ -415,6 +459,7 @@ export const WithLinks: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -437,6 +482,7 @@ export const CustomLinkIcons: Story = () => (
                     xlarge: 'https://unsplash.it/790/1055?image=411',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -453,6 +499,7 @@ export const CustomLinkIcons: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 link: {
@@ -467,6 +514,7 @@ export const CustomLinkIcons: Story = () => (
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
                 },
                 title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
