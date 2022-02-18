@@ -14,33 +14,16 @@ import {
 import Grid from 'components/base/Grid';
 
 const ImgContainer = styled.div`
-    /* display: flex;
-    flex-direction: row;
-    flex-wrap: wrap; */
     width: 100%;
 
     @media ${mq.semilarge} {
-        /* margin-left: ${spacings.spacer * -1}px; */
-        width: calc(100% + ${spacings.spacer}px);
+        width: calc(100% + ${spacings.nudge * 2}px);
     }
 `;
 
 const ImgWrapper = styled.div<{ isFull?: boolean }>`
-    /* flex: 0 100%; */
-    /* padding-top: ${spacings.nudge * 2}px; */
-
     picture > img {
         width: 100%;
-    }
-
-    @media ${mq.semilarge} {
-        /* flex: 0 ${({ isFull }) => (isFull ? 100 : 50)}%; */
-        /* padding-left: ${spacings.spacer}px;
-        padding-top: ${spacings.spacer}px; */
-
-        /* &:last-child:nth-child(odd) {
-            flex: 0 100%;
-        } */
     }
 `;
 
