@@ -19,14 +19,14 @@ const Content = styled.div<{
     flex-direction: ${({ isMirrored }) =>
         isMirrored ? 'column-reverse' : 'column'};
 
-    margin-top: -${spacings.nudge}px;
-    margin-left: -${spacings.nudge * 2}px;
+    margin-top: -${spacings.nudge * 2}px;
+    margin-left: -${spacings.spacer}px;
 
     & > * {
         flex: 1 1 0px;
         flex: 1;
-        margin-top: ${spacings.nudge}px;
-        margin-left: ${spacings.nudge * 2}px;
+        margin-top: ${spacings.nudge * 2}px;
+        margin-left: ${spacings.spacer}px;
     }
 
     @media ${mq.medium} {
