@@ -60,7 +60,7 @@ const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
         width: 100%;
 
         & > * {
-            max-width: 50%;
+            /* max-width: 50%; */
             min-width: 0 !important;
             flex: 1;
         }
