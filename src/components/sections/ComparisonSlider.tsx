@@ -99,15 +99,15 @@ const ForegroundOverlay = styled.div<{ color: string }>`
 
 const ImageLabel = styled(Copy)<{ bgColor?: string }>`
     height: ${spacings.spacer}px;
-    padding: ${spacings.nudge}px ${spacings.nudge * 2}px ${spacings.nudge}px
-        ${spacings.nudge * 2}px;
+    padding: ${spacings.nudge * 2}px ${spacings.nudge * 3}px
+        ${spacings.nudge * 2}px ${spacings.nudge * 3}px;
     background: ${({ bgColor }) => bgColor && bgColor};
 `;
 
 const ForegroundLabel = styled(ImageLabel)`
     position: absolute;
     bottom: ${spacings.spacer}px;
-    left: ${spacings.nudge * 2}px;
+    left: ${spacings.nudge * 3}px;
     pointer-events: none;
     white-space: nowrap;
 `;
@@ -115,7 +115,7 @@ const ForegroundLabel = styled(ImageLabel)`
 const BackgroundLabel = styled(ImageLabel)`
     position: absolute;
     bottom: ${spacings.spacer}px;
-    right: ${spacings.nudge * 2}px;
+    right: ${spacings.nudge * 3}px;
     pointer-events: none;
     white-space: nowrap;
 `;
@@ -171,9 +171,9 @@ const Control = styled.div`
     align-items: center;
     height: 54px;
     width: 54px;
-    border: solid 2px ${({ theme }) => color(theme).light};
+    border: solid 2px ${({ theme }) => color(theme).new.elementBg.light};
     border-radius: 50%;
-    background-color: ${({ theme }) => color(theme).primary.medium};
+    background-color: ${({ theme }) => color(theme).new.elementBg.medium};
 `;
 
 const ComparisonSlider: FC<{
@@ -327,7 +327,7 @@ const ComparisonSlider: FC<{
                         <BackgroundImg {...backgroundImg} />
                         {backgroundLabel && (
                             <BackgroundLabel
-                                textColor={color(theme).light}
+                                textColor={color(theme).new.text.inverted}
                                 bgColor={labelColor}
                             >
                                 {backgroundLabel}
@@ -342,7 +342,7 @@ const ComparisonSlider: FC<{
                             <ForegroundImg {...foregroundImg} />
                             {foregroundLabel && (
                                 <ForegroundLabel
-                                    textColor={color(theme).light}
+                                    textColor={color(theme).new.text.inverted}
                                     bgColor={labelColor}
                                 >
                                     {foregroundLabel}
@@ -362,7 +362,9 @@ const ComparisonSlider: FC<{
                             ) : (
                                 <Control>
                                     <ArrowLeftRight
-                                        iconColor={color(theme).light}
+                                        iconColor={
+                                            color(theme).new.elementBg.light
+                                        }
                                     />
                                 </Control>
                             )}
