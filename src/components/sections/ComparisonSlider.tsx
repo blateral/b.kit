@@ -17,7 +17,6 @@ const clamp = (num: number, min: number, max: number) => {
 const Images = styled.div`
     position: relative;
     cursor: col-resize;
-
     & > * {
         pointer-events: none;
         user-select: none;
@@ -41,10 +40,8 @@ const ForegroundContainer = styled.div<{
     bottom: 0;
     width: 50%;
     overflow: hidden;
-
     transition: width ${({ hasTransition }) => (hasTransition ? 0.1 : 0)}s
         ease-in-out;
-
     ${({ hasAnim, initalValue }) =>
         hasAnim &&
         css`
@@ -53,7 +50,6 @@ const ForegroundContainer = styled.div<{
             animation-iteration-count: 1;
             animation-play-state: ${hasAnim && 'running'};
             animation-timing-function: ease-in-out;
-
             @keyframes ForegroundAnim {
                 0% {
                     width: ${initalValue
@@ -99,15 +95,15 @@ const ForegroundOverlay = styled.div<{ color: string }>`
 
 const ImageLabel = styled(Copy)<{ bgColor?: string }>`
     height: ${spacings.spacer}px;
-    padding: ${spacings.nudge * 2}px ${spacings.nudge * 3}px
-        ${spacings.nudge * 2}px ${spacings.nudge * 3}px;
+    padding: ${spacings.nudge}px ${spacings.spacer}px ${spacings.spacer}px
+        ${spacings.spacer}px;
     background: ${({ bgColor }) => bgColor && bgColor};
 `;
 
 const ForegroundLabel = styled(ImageLabel)`
     position: absolute;
     bottom: ${spacings.spacer}px;
-    left: ${spacings.nudge * 3}px;
+    left: ${spacings.spacer}px;
     pointer-events: none;
     white-space: nowrap;
 `;
@@ -115,7 +111,7 @@ const ForegroundLabel = styled(ImageLabel)`
 const BackgroundLabel = styled(ImageLabel)`
     position: absolute;
     bottom: ${spacings.spacer}px;
-    right: ${spacings.nudge * 3}px;
+    right: ${spacings.spacer}px;
     pointer-events: none;
     white-space: nowrap;
 `;
@@ -129,10 +125,8 @@ const ControlContainer = styled.div<{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     transition: left ${({ hasTransition }) => (hasTransition ? 0.1 : 0)}s
         ease-in-out;
-
     ${({ hasAnim, initalValue }) =>
         hasAnim &&
         css`
@@ -141,7 +135,6 @@ const ControlContainer = styled.div<{
             animation-iteration-count: 1;
             animation-play-state: ${hasAnim && 'running'};
             animation-timing-function: ease-in-out;
-
             @keyframes ControlAnim {
                 0% {
                     left: ${initalValue
@@ -296,10 +289,10 @@ const ComparisonSlider: FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? color(theme).dark
                     : bgMode
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? color(theme).mono.light
+                    : 'transparent'
             }
             bgMode={mapToBgMode(bgMode)}
         >
