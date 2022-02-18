@@ -63,8 +63,8 @@ const IntroContainer = styled(Wrapper)`
     overflow: auto;
     z-index: 1;
 
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
-    ${withRange([spacings.spacer, spacings.spacer * 4], 'padding-bottom')};
+    ${withRange([spacings.nudge * 3, spacings.spacer], 'padding-top')};
+    ${withRange([spacings.nudge * 3, spacings.spacer], 'padding-bottom')};
 
     display: flex;
     flex-direction: column;
@@ -104,7 +104,7 @@ const Poster: FC<{
     return (
         <Section bgColor="undefined" bgMode="full">
             <Wrapper clampWidth={hasWrapper ? 'normal' : 'large'}>
-                <Grid.Row>
+                <Grid.Row gutter={0}>
                     <Grid.Col>
                         <PosterContainer
                             hasWrapper={hasWrapper}
