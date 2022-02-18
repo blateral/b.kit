@@ -113,23 +113,11 @@ export default {
     },
 } as Meta;
 
-export const Default: Story = () => (
-    <IconList
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        items={Items}
-    />
-);
+export const Default: Story = () => <IconList items={Items} />;
 
-export const WithToggle: Story = () => (
+export const WithToggle: Story = () => <IconList enableToggle items={Items} />;
+
+export const WithActions: Story = () => (
     <IconList
         enableToggle
         primaryAction={(isInverted) => (
