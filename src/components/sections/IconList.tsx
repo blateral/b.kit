@@ -22,11 +22,11 @@ const StyledSection = styled(Section)<{ isCentered?: boolean }>`
 const ListContainer = styled.div`
     text-align: center;
     &:not(:first-child) {
-        ${withRange([spacings.spacer, spacings.spacer * 1.75], 'margin-top')}
+        ${withRange([spacings.nudge * 2, spacings.spacer], 'margin-top')}
     }
 
     &:not(:last-child) {
-        ${withRange([spacings.spacer, spacings.spacer * 1.75], 'margin-bottom')}
+        ${withRange([spacings.nudge * 2, spacings.spacer], 'margin-bottom')}
     }
 `;
 
@@ -34,7 +34,7 @@ const ItemContainer = styled.div<{ isCentered?: boolean }>`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-bottom: ${spacings.spacer * 1.75}px;
+    margin-bottom: ${spacings.spacer}px;
 
     text-align: center;
 
@@ -65,7 +65,7 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     justify-content: center;
 
     flex-wrap: wrap;
-    margin-left: -20px;
+    margin-left: -${spacings.nudge * 2}px;
 
     @media ${mq.medium} {
         align-items: ${({ isCentered }) =>
@@ -94,8 +94,8 @@ const StyledActions = styled(Actions)`
 const Item = styled.img<{ isVisible?: boolean; index: number }>`
     display: block;
 
-    padding-left: 20px;
-    padding-top: 20px;
+    padding-left: ${spacings.nudge * 2}px;
+    padding-top: ${spacings.nudge * 2}px;
 
     display: ${({ index, isVisible }) =>
         isVisible || index < 6 ? 'block' : 'none'};
