@@ -87,7 +87,7 @@ const TimelineBlock = styled.div<{
 const TimelineText = styled.div<{ isSwitched?: boolean }>`
     position: relative;
     padding: ${spacings.nudge * 2}px;
-    padding-bottom: ${spacings.nudge * 5}px;
+    padding-bottom: ${spacings.spacer}px;
 
     @media ${mq.large} {
         max-width: 50%;
@@ -97,12 +97,8 @@ const TimelineText = styled.div<{ isSwitched?: boolean }>`
 
         padding: ${({ isSwitched }) =>
             isSwitched
-                ? `${spacings.nudge * 5}px 0 ${spacings.nudge * 5}px ${
-                      spacings.spacer
-                  }px`
-                : `${spacings.nudge * 5}px ${spacings.spacer}px ${
-                      spacings.nudge * 5
-                  }px 0`};
+                ? `${spacings.spacer}px 0 ${spacings.spacer}px ${spacings.spacer}px`
+                : `${spacings.spacer}px ${spacings.spacer}px ${spacings.spacer}px 0`};
     }
 
     & > * + * {
