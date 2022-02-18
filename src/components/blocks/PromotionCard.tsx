@@ -112,6 +112,7 @@ const ExternalIconHolder = styled.span`
 export interface PromotionCardProps {
     image: ImageProps;
     title?: string;
+    superTitle?: string;
     href?: string;
     link?: LinkProps;
     onClick?: () => void;
@@ -121,6 +122,7 @@ export interface PromotionCardProps {
 const PromotionCard: FC<PromotionCardProps> = ({
     image,
     title,
+    superTitle,
     href,
     link,
     onClick,
@@ -149,11 +151,13 @@ const PromotionCard: FC<PromotionCardProps> = ({
                     <LinkHelper {...linkObj} />
                     <StyledTitle
                         colorMode="onImage"
+                        superTitle={superTitle}
                         title={
                             linkObj?.isExternal
                                 ? title + externalIconString
                                 : title
                         }
+                        titleAs="div"
                         clampTitle
                     />
                 </IntroContainer>
