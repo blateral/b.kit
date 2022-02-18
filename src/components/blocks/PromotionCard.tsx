@@ -7,6 +7,7 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Link, { LinkProps } from 'components/typography/Link';
 import Title from 'components/blocks/Title';
 import External from 'components/base/icons/External';
+import { HeadlineTag } from 'components/typography/Heading';
 
 const View = styled(Link)<{
     clickable?: boolean;
@@ -105,6 +106,12 @@ export interface PromotionCardProps {
     image: ImageProps;
     /** Card title */
     title?: string;
+    /** Card title HTML tag type (h2, h3, h4...) */
+    titleAs?: HeadlineTag;
+    /** Superior card title that stands above main title */
+    superTitle?: string;
+    /** Superior card title HTML tag type (h3, h4 ...) */
+    superTitleAs?: HeadlineTag;
     /** Href path */
     href?: string;
     /** Advanced href options */
@@ -116,46 +123,64 @@ export interface PromotionCardProps {
 const PromotionCard = forwardRef<
     HTMLAnchorElement,
     PromotionCardProps & { className?: string }
->(({ image, title, href, link, externalLinkIcon, className }, ref) => {
-    // fallback for older versions
-    let linkObj = link;
-    if (href && !link) {
-        linkObj = {
-            href: href,
-            isExternal: false,
-        };
+>(
+    (
+        {
+            image,
+            title,
+            titleAs,
+            superTitle,
+            superTitleAs,
+            href,
+            link,
+            externalLinkIcon,
+            className,
+        },
+        ref
+    ) => {
+        // fallback for older versions
+        let linkObj = link;
+        if (href && !link) {
+            linkObj = {
+                href: href,
+                isExternal: false,
+            };
+        }
+
+        const externalIconString = ReactDOMServer.renderToString(
+            <ExternalIconHolder>
+                {externalLinkIcon || <External />}
+            </ExternalIconHolder>
+        );
+
+        return (
+            <View
+                ref={ref}
+                clickable={!!href || !!link}
+                {...linkObj}
+                className={className}
+            >
+                <StyledImage {...image} coverSpace />
+                {title && (
+                    <IntroContainer>
+                        <StyledTitle
+                            colorMode="onImage"
+                            superTitle={superTitle}
+                            superTitleAs={superTitleAs}
+                            title={
+                                linkObj?.isExternal
+                                    ? title + externalIconString
+                                    : title
+                            }
+                            titleAs={titleAs || 'div'}
+                            clampTitle
+                        />
+                    </IntroContainer>
+                )}
+            </View>
+        );
     }
-
-    const externalIconString = ReactDOMServer.renderToString(
-        <ExternalIconHolder>
-            {externalLinkIcon || <External />}
-        </ExternalIconHolder>
-    );
-
-    return (
-        <View
-            ref={ref}
-            clickable={!!href || !!link}
-            {...linkObj}
-            className={className}
-        >
-            <StyledImage {...image} coverSpace />
-            {title && (
-                <IntroContainer>
-                    <StyledTitle
-                        colorMode="onImage"
-                        title={
-                            linkObj?.isExternal
-                                ? title + externalIconString
-                                : title
-                        }
-                        clampTitle
-                    />
-                </IntroContainer>
-            )}
-        </View>
-    );
-});
+);
 
 PromotionCard.displayName = 'PromotionCard';
 
