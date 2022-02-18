@@ -8,6 +8,12 @@ import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
+const TableView = styled.div`
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+`;
+
 const TableContainer = styled.div`
     overflow-x: scroll;
     overflow-y: hidden;
@@ -17,10 +23,9 @@ const TableContainer = styled.div`
 const TableBody = styled.table`
     width: 100%;
     max-width: 100%;
-    margin-top: ${spacings.nudge * 2}px;
 
     border-collapse: separate;
-    border-spacing: 0 ${spacings.nudge}px;
+    border-spacing: 0 ${spacings.nudge / 2}px;
 
     @media ${mq.medium} {
         padding: 0;
@@ -31,34 +36,34 @@ const TableHead = styled.th<{ hasBack?: boolean; isInverted?: boolean }>`
     text-align: left;
     color: ${({ theme }) => color(theme).dark};
     background-color: ${({ theme, hasBack, isInverted }) =>
-        hasBack && !isInverted ? color(theme).light : color(theme).mono.light};
+        hasBack && !isInverted
+            ? color(theme).new.elementBg.light
+            : color(theme).new.elementBg.medium};
 
-    padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px
-        ${spacings.nudge * 3.5}px ${spacings.spacer * 2}px;
+    padding: ${spacings.nudge * 2}px ${spacings.nudge * 3}px;
     min-width: 60px;
     box-sizing: content-box;
 
     :last-child {
-        padding-right: ${spacings.spacer * 2.5}px;
+        padding-right: ${spacings.spacer}px;
     }
 `;
 
 const TableData = styled.td<{ isInverted?: boolean; hasBack?: boolean }>`
-    padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 2}px
-        ${spacings.nudge * 3.5}px ${spacings.spacer * 2}px;
+    padding: ${spacings.nudge * 2}px ${spacings.nudge * 3}px;
     min-width: 60px;
     box-sizing: content-box;
 
     background-color: ${({ isInverted, hasBack, theme }) =>
         hexToRgba(
             hasBack && !isInverted
-                ? color(theme).light
-                : color(theme).mono.light,
+                ? color(theme).new.elementBg.light
+                : color(theme).new.elementBg.medium,
             isInverted ? 0.2 : 0.4
         )};
 
     :last-child {
-        padding-right: ${spacings.spacer * 2.5}px;
+        padding-right: ${spacings.spacer}px;
     }
 `;
 
@@ -80,7 +85,7 @@ const TableBlock: React.FC<TableProps> = ({
     hasBack = false,
 }) => {
     return (
-        <div>
+        <TableView>
             {tableTitle && (
                 <Copy type="copy-b" isInverted={isInverted}>
                     {tableTitle}
@@ -126,22 +131,22 @@ const TableBlock: React.FC<TableProps> = ({
                     </tbody>
                 </TableBody>
             </TableContainer>
-        </div>
+        </TableView>
     );
 };
 
 const TableWrapper = styled.div<{ withSeperation?: boolean }>`
     ${({ withSeperation }) =>
         withSeperation &&
-        withRange([spacings.spacer, spacings.spacer * 4], 'padding-top')};
+        withRange([spacings.nudge * 3, spacings.spacer], 'padding-top')};
 
     & + & {
-        ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+        ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-top')};
     }
 `;
 
 const StyledActions = styled(Actions)`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    margin-top: ${spacings.spacer}px;
 `;
 
 const NewsTable: React.FC<{
