@@ -9,7 +9,7 @@ import { spacings, mq } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import Grid from 'components/base/Grid';
+import Grid, { getGridWidth } from 'components/base/Grid';
 
 const StyledTitle = styled(Title)`
     &:not(:last-child) {
@@ -17,7 +17,7 @@ const StyledTitle = styled(Title)`
     }
 
     @media ${mq.semilarge} {
-        max-width: 50%;
+        max-width: ${getGridWidth(8)};
     }
 `;
 

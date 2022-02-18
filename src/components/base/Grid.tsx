@@ -28,6 +28,19 @@ export const gridSettings = {
     gutter: spacings.spacer,
 };
 
+/** Get width of grid cols incl. gutter (relative to container element)  */
+export const getGridWidth = (cols?: number) => {
+    cols = cols || gridSettings.cols;
+    const gutter = gridSettings.gutter;
+    const gridCols = gridSettings.cols;
+
+    return css`
+        calc(((100% - ${
+            (gridCols - 1) * gutter
+        }px) / ${gridCols}) * ${cols} + ${(cols - 1) * gutter}px)
+    `;
+};
+
 const getWidth = (props: ColProps) => {
     const mediumSpan = props?.medium ? props.medium.span : 1;
     const semilargeSpan = props?.semilarge ? props.semilarge.span : 1;

@@ -14,7 +14,7 @@ import { HeadlineTag } from 'components/typography/Heading';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import { withLibTheme } from 'utils/LibThemeProvider';
-import Grid, { gridSettings } from 'components/base/Grid';
+import Grid, { gridSettings, getGridWidth } from 'components/base/Grid';
 
 const ContactView = styled.div`
     display: flex;
@@ -206,6 +206,16 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
 };
 
 const StyledIntro = styled(IntroBlock)<{ hasDecorator?: boolean }>`
+    @media ${mq.semilarge} {
+        max-width: ${getGridWidth(10)};
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    @media ${mq.large} {
+        max-width: ${getGridWidth(8)};
+    }
+
     @media ${mq.xlarge} {
         & > *:first-child {
             min-height: ${({ hasDecorator }) => hasDecorator && '110px'};
@@ -215,6 +225,16 @@ const StyledIntro = styled(IntroBlock)<{ hasDecorator?: boolean }>`
 
 const StyledContactBox = styled(ContactBox)`
     margin-top: ${spacings.spacer}px;
+
+    @media ${mq.semilarge} {
+        max-width: ${getGridWidth(8)};
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    @media ${mq.large} {
+        max-width: ${getGridWidth(6)};
+    }
 `;
 
 const StyledActions = styled(Actions)`
@@ -306,47 +326,40 @@ export const CallToAction: FC<{
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
-                <Grid.Row>
-                    <Grid.Col
-                        textAlign="center"
-                        semilarge={{ span: 10 / 12, move: 1 / 12 }}
-                        large={{ span: 8 / 12, move: 2 / 12 }}
-                    >
-                        {title && (
-                            <StyledIntro
-                                isCentered
-                                colorMode={isInverted ? 'inverted' : 'default'}
-                                title={title}
-                                titleAs={titleAs}
-                                superTitle={superTitle}
-                                superTitleAs={superTitleAs}
-                                hasDecorator={!!badge}
-                                text={text}
-                            />
-                        )}
-                    </Grid.Col>
-                </Grid.Row>
+                {title && (
+                    <StyledIntro
+                        isCentered
+                        colorMode={isInverted ? 'inverted' : 'default'}
+                        title={title}
+                        titleAs={titleAs}
+                        superTitle={superTitle}
+                        superTitleAs={superTitleAs}
+                        hasDecorator={!!badge}
+                        text={text}
+                    />
+                )}
+
+                {contact && (
+                    <StyledContactBox
+                        isInverted={isInverted}
+                        name={contact.name}
+                        description={contact.description}
+                        addresses={contact.addresses}
+                        avatar={contact.avatar}
+                    />
+                )}
+                {newsFormMain && hasNewsletter && (
+                    <NewsletterWrapper>
+                        {newsFormMain(isInverted)}
+                    </NewsletterWrapper>
+                )}
+
                 <Grid.Row>
                     <Grid.Col
                         semilarge={{ span: 8 / 12, move: 2 / 12 }}
                         large={{ span: 6 / 12, move: 3 / 12 }}
                         textAlign="center"
-                    >
-                        {contact && (
-                            <StyledContactBox
-                                isInverted={isInverted}
-                                name={contact.name}
-                                description={contact.description}
-                                addresses={contact.addresses}
-                                avatar={contact.avatar}
-                            />
-                        )}
-                        {newsFormMain && hasNewsletter && (
-                            <NewsletterWrapper>
-                                {newsFormMain(isInverted)}
-                            </NewsletterWrapper>
-                        )}
-                    </Grid.Col>
+                    ></Grid.Col>
                 </Grid.Row>
                 {(primaryAction || secondaryAction) && (
                     <StyledActions

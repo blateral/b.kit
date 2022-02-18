@@ -122,7 +122,8 @@ const Poster: FC<{
                                         text={text}
                                         secondaryAction={secondaryAction}
                                         primaryAction={primaryAction}
-                                        clampText={text !== undefined}
+                                        // #TODO: Schauen ob der textClamp innerhalb des IntroBlocks notwenig ist
+                                        // clampText={text !== undefined}
                                     />
                                 </IntroContainer>
                             )}

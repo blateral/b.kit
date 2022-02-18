@@ -15,12 +15,15 @@ export default {
 } as Meta;
 
 export const Default: Story = () => (
-    <Intro title="Lorem ipsum dolor sit amet" superTitle="Lorem Ipsum" />
+    <Intro
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elit"
+        superTitle="Lorem Ipsum"
+    />
 );
 
 export const WithText: Story = () => (
     <Intro
-        title="Lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elit"
         superTitle="Lorem Ipsum"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
     />
@@ -28,7 +31,7 @@ export const WithText: Story = () => (
 
 export const WithActions: Story = () => (
     <Intro
-        title="Lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elitt"
         superTitle="Lorem Ipsum"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         primaryAction={(isInverted) => (
@@ -47,7 +50,7 @@ export const WithActions: Story = () => (
 export const Centered: Story = () => (
     <Intro
         isCentered
-        title="Lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elit"
         superTitle="Lorem Ipsum"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         primaryAction={(isInverted) => (
@@ -65,7 +68,7 @@ export const Centered: Story = () => (
 
 export const Inverted: Story = () => (
     <Intro
-        title="Lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elit"
         superTitle="Lorem Ipsum"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         primaryAction={(isInverted) => (
@@ -84,7 +87,7 @@ export const Inverted: Story = () => (
 
 export const hasBackground: Story = () => (
     <Intro
-        title="Lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elit"
         superTitle="Lorem Ipsum"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         primaryAction={(isInverted) => (
@@ -103,7 +106,7 @@ export const hasBackground: Story = () => (
 
 export const hasSplittedBackground: Story = () => (
     <Intro
-        title="Lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elit"
         superTitle="Lorem Ipsum"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         primaryAction={(isInverted) => (
@@ -123,7 +126,8 @@ export const hasSplittedBackground: Story = () => (
 export const Stackable: Story = () => (
     <Intro
         isStackable
-        title="Lorem ipsum dolor sit amet"
+        bgMode="splitted"
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elit"
         superTitle="Lorem Ipsum"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         primaryAction={(isInverted) => (

@@ -30,17 +30,25 @@ export const spacings = {
 export const getSizeByRange = (range: [number, number]): string =>
     `calc(${range[0]}px + (${range[1]} - ${range[0]}) * ((100vw - 300px) / (${spacings.wrapper} - 320)));`;
 
-export const withRange = (range: [number, number], property: string) => {
+export const withRange = (range: [number, number?], property: string) => {
     if (!property) return '';
+    const min = range[0];
+    const max = range[1];
 
-    return css`
-        ${property}: ${range[0]}px;
-        ${property}: ${getSizeByRange(range)};
+    if (max !== undefined) {
+        return css`
+            ${property}: ${min}px;
+            ${property}: ${getSizeByRange(range as [number, number])};
 
-        @media ${mq.xxlarge} {
-            ${property}: ${range[1]}px;
-        }
-    `;
+            @media ${mq.xxlarge} {
+                ${property}: ${max}px;
+            }
+        `;
+    } else {
+        return css`
+            ${property}: ${min}px;
+        `;
+    }
 };
 
 /**
@@ -134,7 +142,7 @@ export interface FontProps {
     style?: string;
     lineHeight?: string;
     letterSpacing?: string;
-    size: [number, number];
+    size: [number, number?];
     textTransform?: string;
     color?: string;
     colorInverted?: string;
@@ -233,9 +241,9 @@ const copyBase: FontProps = {
     family: 'Roboto',
     weight: '400',
     style: 'normal',
-    lineHeight: '1.53',
+    lineHeight: '1.5',
     letterSpacing: '0',
-    size: [10, 13],
+    size: [16],
     textTransform: '',
     color: defaultColors.new.text.copy,
     colorInverted: defaultColors.new.text.copyInverted,
@@ -245,9 +253,9 @@ const headingBase: FontProps = {
     family: 'Roboto',
     weight: '700',
     style: 'normal',
-    lineHeight: '1.1',
+    lineHeight: '1.17',
     letterSpacing: '0',
-    size: [38, 40],
+    size: [56],
     color: defaultColors.new.text.heading,
     colorInverted: defaultColors.new.text.headingInverted,
 };
@@ -256,98 +264,98 @@ const defaultFonts: Fonts = {
     copy: {
         small: {
             ...copyBase,
-            lineHeight: '1.53',
-            size: [11, 13],
+            lineHeight: '1.42',
+            size: [14],
         },
         medium: {
             ...copyBase,
-            lineHeight: '1.43',
-            size: [16, 16],
+            lineHeight: '1.5',
+            size: [16],
         },
         big: {
             ...copyBase,
-            lineHeight: '1.18',
-            size: [18, 20],
+            lineHeight: '1.2',
+            size: [20],
         },
     },
     'copy-i': {
         small: {
             ...copyBase,
             style: 'italic',
-            lineHeight: '1.53',
-            size: [11, 13],
+            lineHeight: '1.42',
+            size: [14],
         },
         medium: {
             ...copyBase,
             style: 'italic',
-            lineHeight: '1.43',
-            size: [16, 16],
+            lineHeight: '1.5',
+            size: [16],
         },
         big: {
             ...copyBase,
             style: 'italic',
-            lineHeight: '1.18',
-            size: [20, 22],
+            lineHeight: '1.2',
+            size: [20],
         },
     },
     'copy-b': {
         small: {
             ...copyBase,
             weight: '700',
-            lineHeight: '1.53',
-            size: [11, 13],
+            lineHeight: '1.42',
+            size: [14],
         },
         medium: {
             ...copyBase,
             weight: '700',
-            lineHeight: '1.43',
-            size: [16, 16],
+            lineHeight: '1.5',
+            size: [16],
         },
         big: {
             ...copyBase,
             weight: '700',
-            lineHeight: '1.18',
-            size: [20, 22],
+            lineHeight: '1.2',
+            size: [20],
         },
     },
     super: {
         ...headingBase,
         lineHeight: '1.43',
-        size: [14, 16],
+        size: [16],
     },
     'heading-1': headingBase,
     'heading-2': {
         ...headingBase,
-        size: [32, 35],
-        lineHeight: '1.14',
+        size: [40],
+        lineHeight: '1.17',
     },
     'heading-3': {
         ...headingBase,
-        size: [27, 30],
-        lineHeight: '1.16',
+        size: [32],
+        lineHeight: '1.17',
     },
     'heading-4': {
         ...headingBase,
-        size: [20, 25],
-        lineHeight: '1.16',
+        size: [24],
+        lineHeight: '1.17',
     },
     callout: {
         small: {
             ...headingBase,
-            lineHeight: '1.14',
+            lineHeight: '1.17',
             size: [33, 35],
         },
         medium: {
             ...headingBase,
             weight: '300',
-            lineHeight: '1.18',
-            size: [65, 72],
+            lineHeight: '1.17',
+            size: [72],
         },
         big: {
             ...headingBase,
             weight: '300',
-            lineHeight: '1.18',
-            size: [85, 92],
+            lineHeight: '1.17',
+            size: [92],
         },
     },
 };
