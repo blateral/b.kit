@@ -9,12 +9,14 @@ import Grid from 'components/base/Grid';
 
 const Socials = styled.div<{ isInverted?: boolean }>`
     color: ${({ isInverted, theme }) =>
-        isInverted ? color(theme).light : color(theme).dark};
+        isInverted
+            ? color(theme).new.elementBg.light
+            : color(theme).new.elementBg.dark};
 `;
 
 const StyledWrapper = styled(Wrapper)`
-    padding-left: ${spacings.nudge * 5}px;
-    padding-right: ${spacings.nudge * 5}px;
+    padding-left: ${spacings.spacer}px;
+    padding-right: ${spacings.spacer}px;
 `;
 
 const Social = styled(Link)`
@@ -23,7 +25,7 @@ const Social = styled(Link)`
     transition: color 0.2s ease-in-out;
 
     &:hover {
-        color: ${({ theme }) => color(theme).mono.dark};
+        color: ${({ theme }) => color(theme).new.elementBg.mediumHover};
     }
 
     & > * {
