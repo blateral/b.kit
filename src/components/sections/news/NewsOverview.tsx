@@ -18,7 +18,7 @@ import Grid from 'components/base/Grid';
 
 const TagContainer = styled.div`
     margin: -${spacings.nudge}px;
-    ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
+    ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-bottom')};
 
     display: flex;
     flex-direction: row;
@@ -30,7 +30,7 @@ const TagWrapper = styled.div`
 `;
 
 const ListFooter = styled.div`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-top')};
     text-align: center;
 
     @media ${mq.medium} {

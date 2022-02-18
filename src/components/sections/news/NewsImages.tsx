@@ -4,7 +4,6 @@ import styled, { ThemeContext } from 'styled-components';
 import {
     getColors as color,
     spacings,
-    withRange,
     getGlobals as global,
 } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
@@ -20,7 +19,7 @@ const StyledImage = styled(Image)`
 `;
 
 const StyledActions = styled(Actions)`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    margin-top: ${spacings.spacer}px;
 `;
 
 const NewsImages: React.FC<{
