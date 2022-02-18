@@ -34,17 +34,19 @@ const TimelineBlock = styled.div<{
         box-sizing: content-box;
         border: 2px solid
             ${({ theme, isInverted }) =>
-                isInverted ? color(theme).light : color(theme).dark};
+                isInverted
+                    ? color(theme).new.elementBg.light
+                    : color(theme).new.elementBg.dark};
         border-radius: 50%;
 
         background: ${({ theme, isActive, isInverted }) =>
             isActive
                 ? isInverted
-                    ? color(theme).light
-                    : color(theme).dark
+                    ? color(theme).new.elementBg.light
+                    : color(theme).new.elementBg.dark
                 : isInverted
-                ? color(theme).dark
-                : color(theme).light};
+                ? color(theme).new.elementBg.dark
+                : color(theme).new.elementBg.light};
 
         position: absolute;
         top: 0;
@@ -70,7 +72,9 @@ const TimelineBlock = styled.div<{
         min-height: 160px;
         height: 100%;
         background: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).light : color(theme).dark};
+            isInverted
+                ? color(theme).new.elementBg.light
+                : color(theme).new.elementBg.dark};
         left: 5px;
 
         @media ${mq.large} {
@@ -82,8 +86,8 @@ const TimelineBlock = styled.div<{
 
 const TimelineText = styled.div<{ isSwitched?: boolean }>`
     position: relative;
-    padding: ${spacings.spacer}px;
-    padding-bottom: ${spacings.spacer * 2}px;
+    padding: ${spacings.nudge * 2}px;
+    padding-bottom: ${spacings.nudge * 5}px;
 
     @media ${mq.large} {
         max-width: 50%;
@@ -93,16 +97,16 @@ const TimelineText = styled.div<{ isSwitched?: boolean }>`
 
         padding: ${({ isSwitched }) =>
             isSwitched
-                ? `${spacings.spacer * 2}px 0 ${spacings.spacer * 2}px ${
-                      spacings.spacer * 1.5
+                ? `${spacings.nudge * 5}px 0 ${spacings.nudge * 5}px ${
+                      spacings.spacer
                   }px`
-                : `${spacings.spacer * 2}px ${spacings.spacer * 1.5}px ${
-                      spacings.spacer * 2
+                : `${spacings.nudge * 5}px ${spacings.spacer}px ${
+                      spacings.nudge * 5
                   }px 0`};
     }
 
     & > * + * {
-        margin-top: ${spacings.nudge * 2}px;
+        margin-top: ${spacings.nudge}px;
     }
 `;
 
@@ -188,9 +192,10 @@ const Timeline: React.FC<{
                                             size="heading-1"
                                             textColor={
                                                 isInverted
-                                                    ? color(theme).light
-                                                    : color(theme).secondary
-                                                          .dark
+                                                    ? color(theme).new.text
+                                                          .inverted
+                                                    : color(theme).new.text
+                                                          .default
                                             }
                                         >
                                             {item.label}
