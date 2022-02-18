@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
+import { mq, spacings, getGlobals as global } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 import Image, { ImageProps } from 'components/blocks/Image';
@@ -35,8 +35,8 @@ const Head = styled(Copy)`
     align-items: center;
     justify-content: space-between;
 
-    margin-top: ${spacings.spacer * 2}px;
-    margin-bottom: ${spacings.spacer * 1.5}px;
+    margin-top: ${spacings.spacer}px;
+    margin-bottom: ${spacings.spacer}px;
 
     & > * + * {
         margin-left: ${spacings.spacer}px;
@@ -58,13 +58,13 @@ const Main = styled.div`
 `;
 
 const StyledActions = styled(Actions)`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')}
+    margin-top: ${spacings.spacer}px;
 
     @media ${mq.medium} {
         width: 100%;
 
         & > * {
-            max-width: 50%;
+            /* max-width: 50%; */
             min-width: 0 !important;
             flex: 1;
         }
