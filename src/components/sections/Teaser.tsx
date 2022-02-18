@@ -42,14 +42,14 @@ const ImgDescDesktop = styled(Copy)`
 
     @media ${mq.semilarge} {
         display: block;
-        padding: ${spacings.nudge * 2}px ${spacings.nudge * 5}px;
+        padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
     }
 `;
 
 const ImgDescMobile = styled(Copy)`
     display: block;
-    padding: ${spacings.nudge * 2}px 0;
-    padding-left: ${spacings.nudge}px;
+    padding: ${spacings.nudge * 3}px 0;
+    padding-left: ${spacings.nudge * 2}px;
 
     @media ${mq.semilarge} {
         display: none;
@@ -57,36 +57,36 @@ const ImgDescMobile = styled(Copy)`
 `;
 
 const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
-    padding-right: ${({ isMirrored }) => !isMirrored && spacings.nudge * 2}px;
-    padding-left: ${({ isMirrored }) => isMirrored && spacings.nudge * 2}px;
+    padding-right: ${({ isMirrored }) => !isMirrored && spacings.nudge * 3}px;
+    padding-left: ${({ isMirrored }) => isMirrored && spacings.nudge * 3}px;
 
-    padding-top: ${spacings.nudge}px;
-    padding-bottom: ${spacings.nudge * 2}px;
+    padding-top: ${spacings.nudge * 2}px;
+    padding-bottom: ${spacings.nudge * 3}px;
 
     @media ${mq.medium} {
-        ${withRange([spacings.spacer * 2, spacings.nudge * 10], 'padding-top')}
+        ${withRange([spacings.nudge * 3, spacings.spacer], 'padding-top')}
     }
 
     @media ${mq.semilarge} {
-        padding-bottom: ${spacings.spacer}px;
+        padding-bottom: ${spacings.nudge * 3}px;
 
         padding-right: ${({ isMirrored }) =>
-            !isMirrored ? spacings.spacer + 'px' : (1 / 12) * 100 + '%'};
+            !isMirrored ? spacings.nudge * 3 + 'px' : spacings.spacer + 'px'};
         padding-left: ${({ isMirrored }) =>
-            isMirrored ? spacings.spacer + 'px' : (1 / 12) * 100 + '%'};
+            isMirrored ? spacings.nudge * 3 + 'px' : spacings.spacer + 'px'};
     }
 
     @media ${mq.xlarge} {
         padding-right: ${({ isMirrored }) =>
-            !isMirrored ? spacings.spacer : (1 / 12) * spacings.wrapper}px;
+            !isMirrored ? spacings.nudge * 3 : (1 / 12) * spacings.wrapper}px;
         padding-left: ${({ isMirrored }) =>
-            isMirrored ? spacings.spacer : (1 / 12) * spacings.wrapper}px;
+            isMirrored ? spacings.nudge * 3 : (1 / 12) * spacings.wrapper}px;
     }
 `;
 
 const ContentBlock = styled(Copy)`
     :not(:first-child) {
-        padding-top: ${spacings.nudge * 5}px;
+        padding-top: ${spacings.spacer}px;
     }
 `;
 
@@ -97,7 +97,7 @@ const SubTextBlock = styled(ContentBlock)`
 `;
 
 const StyledActions = styled(Actions)`
-    padding-top: ${spacings.spacer * 2}px;
+    padding-top: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
         & > * {
