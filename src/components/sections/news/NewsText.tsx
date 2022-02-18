@@ -5,7 +5,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Actions from 'components/blocks/Actions';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
-import { getColors as color, spacings, withRange } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import { useContext } from 'react';
 
@@ -24,7 +24,7 @@ const ContentBlock = styled(Copy)<{
 `;
 
 const StyledActions = styled(Actions)`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    margin-top: ${spacings.spacer}px;
 `;
 
 const NewsText: React.FC<{
