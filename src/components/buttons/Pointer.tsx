@@ -38,7 +38,7 @@ const View = styled.a<{
     -moz-osx-font-smoothing: grayscale;
     will-change: auto;
 
-    outline: none;
+    // outline: none;
     border: none;
     cursor: pointer;
 

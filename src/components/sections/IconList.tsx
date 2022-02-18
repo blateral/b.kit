@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Pointer from 'components/buttons/Pointer';
 
@@ -19,43 +19,19 @@ const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     }
 `;
 
-const ListContainer = styled.div`
-    text-align: center;
-    &:not(:first-child) {
-        ${withRange([spacings.nudge * 2, spacings.spacer], 'margin-top')}
-    }
-
-    &:not(:last-child) {
-        ${withRange([spacings.nudge * 2, spacings.spacer], 'margin-bottom')}
-    }
-`;
-
 const ItemContainer = styled.div<{ isCentered?: boolean }>`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-bottom: ${spacings.spacer}px;
-
     text-align: center;
+
+    &:not(:last-child) {
+        margin-bottom: ${spacings.spacer}px;
+    }
 
     @media ${mq.semilarge} {
         justify-content: ${({ isCentered }) =>
             isCentered ? 'center' : 'flex-start'};
-    }
-`;
-
-const ShowMore = styled.span<{ itemCount?: number }>`
-    display: ${({ itemCount }) =>
-        itemCount && itemCount > 6 ? 'block' : 'none'};
-
-    @media ${mq.semilarge} {
-        display: ${({ itemCount }) =>
-            itemCount && itemCount > 8 ? 'block' : 'none'};
-    }
-
-    @media ${mq.large} {
-        display: ${({ itemCount }) =>
-            itemCount && itemCount > 10 ? 'block' : 'none'};
     }
 `;
 
@@ -65,9 +41,11 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     justify-content: center;
 
     flex-wrap: wrap;
+    margin-top: -${spacings.spacer}px;
     margin-left: -${spacings.nudge * 2}px;
 
     @media ${mq.medium} {
+        margin-left: -${spacings.spacer}px;
         align-items: ${({ isCentered }) =>
             isCentered ? 'center' : 'flex-start'};
         justify-content: ${({ isCentered }) =>
@@ -75,30 +53,18 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     }
 `;
 
-const ActionsWrapper = styled.div<{ isCentered?: boolean }>`
-    position: relative;
-    padding-top: ${spacings.spacer * 2}px;
-
-    @media ${mq.medium} {
-        text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
-    }
-`;
-
-const StyledActions = styled(Actions)`
-    @media ${mq.medium} {
-        display: block;
-        text-align: center;
-    }
-`;
-
 const Item = styled.img<{ isVisible?: boolean; index: number }>`
     display: block;
 
+    padding-top: ${spacings.spacer}px;
     padding-left: ${spacings.nudge * 2}px;
-    padding-top: ${spacings.nudge * 2}px;
 
     display: ${({ index, isVisible }) =>
         isVisible || index < 6 ? 'block' : 'none'};
+
+    @media ${mq.medium} {
+        padding-left: ${spacings.spacer}px;
+    }
 
     @media ${mq.semilarge} {
         display: ${({ index, isVisible }) =>
@@ -111,22 +77,57 @@ const Item = styled.img<{ isVisible?: boolean; index: number }>`
     }
 `;
 
-const ListFooter = styled(Copy)<{ isCentered?: boolean }>`
-    text-align: center;
+const ShowMore = styled(Copy)<{ itemCount?: number; isCentered?: boolean }>`
+    display: ${({ itemCount }) =>
+        itemCount && itemCount > 6 ? 'block' : 'none'};
+
+    background: none;
+    border: none;
+    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+
+    @media ${mq.semilarge} {
+        display: ${({ itemCount }) =>
+            itemCount && itemCount > 8 ? 'block' : 'none'};
+    }
+
+    @media ${mq.large} {
+        display: ${({ itemCount }) =>
+            itemCount && itemCount > 10 ? 'block' : 'none'};
+    }
+`;
+
+const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
+    margin-top: ${spacings.spacer}px;
 
     @media ${mq.medium} {
-        text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+        display: block;
+        text-align: ${({ isCentered }) => isCentered && 'center'};
     }
 `;
 
 const IconList: React.FC<{
-    items: { src: string; alt?: string }[];
+    /** Array with icon items data */
+    items: Array<{ src: string; alt?: string }>;
+
+    /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Custom text for toggle button in folded state */
     showMoreText?: string;
+
+    /** Custom text for toggle button in expanded state */
     showLessText?: string;
+
+    /** Center all icons and texts */
     isCentered?: boolean;
+
+    /** Enable toggle feature */
     enableToggle?: boolean;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
 }> = ({
     items,
@@ -138,80 +139,71 @@ const IconList: React.FC<{
     enableToggle,
     bgMode,
 }) => {
-    const [showMore, setShowMore] = useState(false);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
-    const theme = useContext(ThemeContext);
+    const [showMore, setShowMore] = useState<boolean>(false);
 
     return (
         <StyledSection
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : bgMode
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             isCentered={isCentered}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <ListContainer>
-                    <Copy type="copy" size="medium" isInverted={isInverted}>
-                        <ItemContainer isCentered={isCentered}>
-                            <Items
-                                isVisible={!showMore ? true : showMore === true}
-                                isCentered={isCentered}
-                            >
-                                {items.map(({ src, alt }, i) => {
-                                    return (
-                                        <Item
-                                            isVisible={showMore}
-                                            index={i}
-                                            key={i}
-                                            src={src}
-                                            alt={alt}
-                                        />
-                                    );
-                                })}
-                            </Items>
-                        </ItemContainer>
-                        {enableToggle && (
-                            <ListFooter
-                                type="copy"
-                                size="medium"
-                                isInverted={isInverted}
-                                isCentered={isCentered}
-                            >
-                                <ShowMore
-                                    itemCount={items.length}
-                                    onClick={() => setShowMore((prev) => !prev)}
-                                >
-                                    <Pointer.View
-                                        as="button"
-                                        isInverted={isInverted}
-                                    >
-                                        <Pointer.Label>
-                                            {showMore
-                                                ? showLessText
-                                                : showMoreText}
-                                        </Pointer.Label>
-                                    </Pointer.View>
-                                </ShowMore>
-                            </ListFooter>
-                        )}
-                    </Copy>
-                </ListContainer>
+                <ItemContainer isCentered={isCentered}>
+                    <Items
+                        isVisible={!showMore ? true : showMore === true}
+                        isCentered={isCentered}
+                    >
+                        {items.map(({ src, alt }, i) => {
+                            return (
+                                <Item
+                                    isVisible={showMore}
+                                    index={i}
+                                    key={i}
+                                    src={src}
+                                    alt={alt}
+                                />
+                            );
+                        })}
+                    </Items>
+                </ItemContainer>
+                {enableToggle && (
+                    <ShowMore
+                        type="copy"
+                        size="medium"
+                        isInverted={isInverted}
+                        isCentered={isCentered}
+                        itemCount={items.length}
+                        onClick={() => setShowMore((prev) => !prev)}
+                    >
+                        <Pointer.View
+                            as="button"
+                            isInverted={isInverted}
+                            aria-pressed={showMore}
+                        >
+                            <Pointer.Label>
+                                {showMore ? showLessText : showMoreText}
+                            </Pointer.Label>
+                        </Pointer.View>
+                    </ShowMore>
+                )}
 
                 {(primaryAction || secondaryAction) && (
-                    <ActionsWrapper isCentered={isCentered}>
-                        <StyledActions
-                            primary={primaryAction && primaryAction(isInverted)}
-                            secondary={
-                                secondaryAction && secondaryAction(isInverted)
-                            }
-                        />
-                    </ActionsWrapper>
+                    <StyledActions
+                        isCentered={isCentered}
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
+                    />
                 )}
             </Wrapper>
         </StyledSection>
