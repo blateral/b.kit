@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import styled, { css } from 'styled-components';
 
-import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
+import { spacings, getGlobals as global, mq } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Link, { LinkProps } from 'components/typography/Link';
 import Title from 'components/blocks/Title';
@@ -62,10 +62,7 @@ const IntroContainer = styled.div`
     overflow: auto;
     z-index: 1;
 
-    padding-left: ${spacings.spacer}px;
-    padding-right: ${spacings.spacer}px;
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
-    ${withRange([spacings.spacer, spacings.spacer * 4], 'padding-bottom')};
+    padding: ${spacings.spacer}px ${spacings.nudge * 3}px;
 
     display: flex;
     flex-direction: column;
@@ -79,12 +76,8 @@ const IntroContainer = styled.div`
         flex: 1 0 0px;
     }
 
-    @media ${mq.semilarge} {
-        padding-left: calc(${1 / 28} * 100vw);
-    }
-
-    @media ${mq.xlarge} {
-        padding-left: ${(1 / 28) * spacings.wrapper}px;
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 5}px ${spacings.spacer}px;
     }
 `;
 
