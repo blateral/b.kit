@@ -108,7 +108,7 @@ export default {
     component: IconListComponent,
     parameters: {
         status: {
-            type: 'preview',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;

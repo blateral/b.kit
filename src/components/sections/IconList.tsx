@@ -41,10 +41,11 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     justify-content: center;
 
     flex-wrap: wrap;
-    margin-top: -${spacings.spacer}px;
+    margin-top: -${spacings.nudge * 2}px;
     margin-left: -${spacings.nudge * 2}px;
 
     @media ${mq.medium} {
+        margin-top: -${spacings.spacer}px;
         margin-left: -${spacings.spacer}px;
         align-items: ${({ isCentered }) =>
             isCentered ? 'center' : 'flex-start'};
@@ -56,13 +57,14 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
 const Item = styled.img<{ isVisible?: boolean; index: number }>`
     display: block;
 
-    padding-top: ${spacings.spacer}px;
+    padding-top: ${spacings.nudge * 2}px;
     padding-left: ${spacings.nudge * 2}px;
 
     display: ${({ index, isVisible }) =>
         isVisible || index < 6 ? 'block' : 'none'};
 
     @media ${mq.medium} {
+        padding-top: ${spacings.spacer}px;
         padding-left: ${spacings.spacer}px;
     }
 

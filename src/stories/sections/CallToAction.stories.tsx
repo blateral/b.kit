@@ -14,7 +14,7 @@ export default {
     component: CallToActionComponent,
     parameters: {
         status: {
-            type: 'preview',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;

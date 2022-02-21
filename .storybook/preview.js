@@ -71,6 +71,11 @@ export const parameters = {
                 color: '#fff',
                 description: 'Reworked not stable component',
             },
+            qsReady: {
+                background: '#0CABA8',
+                color: '#fff',
+                description: 'Component is ready for final QS',
+            },
         },
     },
     options: {
