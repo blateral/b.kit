@@ -15,7 +15,7 @@ import { withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 
 const ListFooter = styled.div`
-    ${withRange([spacings.nudge * 2, spacings.nudge * 5], 'margin-top')};
+    ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-top')};
     text-align: center;
 
     @media ${mq.medium} {
