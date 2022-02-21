@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { getColors as color, spacings, withRange } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { useContext, useEffect, useState } from 'react';
@@ -14,7 +14,7 @@ import { withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 
 const Actions = styled.div`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    margin-top: ${spacings.spacer}px;
     text-align: left;
 `;
 

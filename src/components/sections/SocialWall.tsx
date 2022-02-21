@@ -24,7 +24,7 @@ const ContentBlock = styled(Link)`
         bottom: 0;
         left: 0;
         right: 0;
-        background: ${({ theme }) => color(theme).secondary.light};
+        background: ${({ theme }) => color(theme).new.elementBg.light};
 
         opacity: 0;
         pointer-events: none;
@@ -69,13 +69,13 @@ const InstagramIcon = styled.div`
     position: absolute;
     left: 20px;
     bottom: 20px;
-    color: ${({ theme }) => color(theme).light};
+    color: ${({ theme }) => color(theme).new.elementBg.light};
 
     & > * {
         fill: #fff;
 
         ${ContentBlock}:hover & {
-            color: ${({ theme }) => color(theme).dark};
+            color: ${({ theme }) => color(theme).new.elementBg.dark};
         }
     }
 `;
