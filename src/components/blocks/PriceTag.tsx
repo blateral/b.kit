@@ -15,7 +15,7 @@ const View = styled.div<{
     hasBg?: boolean;
     isHighlighted?: boolean;
 }>`
-    padding: ${spacings.nudge * 5}px;
+    padding: ${spacings.spacer}px;
 
     border: 1px solid transparent;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
