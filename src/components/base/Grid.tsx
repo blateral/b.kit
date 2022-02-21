@@ -17,10 +17,10 @@ type HorizontalAlign = 'left' | 'center' | 'right';
 type TextAlign = 'left' | 'center' | 'right';
 
 interface ColProps extends ColPropsSettings {
-    medium?: ColPropsSettings;
-    semilarge?: ColPropsSettings;
-    large?: ColPropsSettings;
-    xlarge?: ColPropsSettings;
+    medium?: Pick<ColPropsSettings, 'span' | 'move'>;
+    semilarge?: Pick<ColPropsSettings, 'span' | 'move'>;
+    large?: Pick<ColPropsSettings, 'span' | 'move'>;
+    xlarge?: Pick<ColPropsSettings, 'span' | 'move'>;
 }
 
 export const gridSettings = {
@@ -168,11 +168,57 @@ const getLeftRight = (props: ColProps) => {
     `;
 };
 
+const getGutter = (mode: 'grid' | 'col') => (props: GridProps) => {
+    const mediumGutter = props?.medium?.gutter;
+    const semilargeGutter = props?.semilarge?.gutter;
+    const largeGutter = props?.large?.gutter;
+    const xlargeGutter = props?.xlarge?.gutter;
+
+    const propertyTop = mode === 'grid' ? 'margin-top: -' : 'padding-top: ';
+    const propertyLeft = mode === 'grid' ? 'margin-left: -' : 'padding-left: ';
+
+    return css`
+        ${propertyTop}${props.gutter || 0}px;
+        ${propertyLeft}${props.gutter || 0}px;
+
+        ${mediumGutter !== undefined &&
+        css`
+            @media ${mq.medium} {
+                ${propertyTop}${mediumGutter}px;
+                ${propertyLeft}${mediumGutter}px;
+            }
+        `}
+
+        ${semilargeGutter !== undefined &&
+        css`
+            @media ${mq.semilarge} {
+                ${propertyTop}${semilargeGutter}px;
+                ${propertyLeft}${semilargeGutter}px;
+            }
+        `}
+        
+        ${largeGutter !== undefined &&
+        css`
+            @media ${mq.large} {
+                ${propertyTop}${largeGutter}px;
+                ${propertyLeft}${largeGutter}px;
+            }
+        `}
+
+        ${xlargeGutter !== undefined &&
+        css`
+            @media ${mq.xlarge} {
+                ${propertyTop}${xlargeGutter}px;
+                ${propertyLeft}${xlargeGutter}px;
+            }
+        `}
+    `;
+};
+
 const StyledCol = styled.div<GridProps & ColProps>`
     ${getWidth};
     ${getLeftRight};
-    padding-top: ${({ gutter }) => gutter || 0}px;
-    padding-left: ${({ gutter }) => gutter || 0}px;
+    ${getGutter('col')}
     display: block;
     position: relative;
 
@@ -195,16 +241,22 @@ const Col: React.FC<ColProps> = (props) => {
     return <React.Fragment>{props?.children}</React.Fragment>;
 };
 
-interface GridProps {
+interface GridPropsSettings {
     gutter?: number;
     valign?: VerticalAlign;
     halign?: HorizontalAlign;
     textAlign?: TextAlign;
 }
 
+interface GridProps extends GridPropsSettings {
+    medium?: Pick<GridPropsSettings, 'gutter'>;
+    semilarge?: Pick<GridPropsSettings, 'gutter'>;
+    large?: Pick<GridPropsSettings, 'gutter'>;
+    xlarge?: Pick<GridPropsSettings, 'gutter'>;
+}
+
 const StyledGrid = styled.div<GridProps>`
-    margin-top: -${({ gutter }) => gutter || 0}px;
-    margin-left: -${({ gutter }) => gutter || 0}px;
+    ${getGutter('grid')}
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -237,12 +289,62 @@ const StyledGrid = styled.div<GridProps>`
     }};
 `;
 
-const Grid: React.FC<GridProps> = ({ gutter, valign, children, halign }) => {
+const mapGutterToCol = (gutter?: number, colSettings?: any) => {
+    if (gutter === undefined) return colSettings;
+    if (colSettings) {
+        return {
+            ...colSettings,
+            gutter,
+        };
+    } else {
+        return {
+            gutter,
+        };
+    }
+};
+
+const Grid: React.FC<GridProps> = ({
+    gutter,
+    valign,
+    children,
+    halign,
+    medium,
+    semilarge,
+    large,
+    xlarge,
+}) => {
     return (
-        <StyledGrid gutter={gutter} valign={valign} halign={halign}>
+        <StyledGrid
+            gutter={gutter}
+            valign={valign}
+            halign={halign}
+            medium={medium}
+            semilarge={semilarge}
+            large={large}
+            xlarge={xlarge}
+        >
             {React.Children.map(children, (comp: any) => {
                 return comp ? (
-                    <StyledCol {...comp?.props} gutter={gutter} />
+                    <StyledCol
+                        {...comp?.props}
+                        gutter={gutter}
+                        medium={mapGutterToCol(
+                            medium?.gutter,
+                            comp?.props?.medium
+                        )}
+                        semilarge={mapGutterToCol(
+                            semilarge?.gutter,
+                            comp?.props?.semilarge
+                        )}
+                        large={mapGutterToCol(
+                            large?.gutter,
+                            comp?.props?.large
+                        )}
+                        xlarge={mapGutterToCol(
+                            xlarge?.gutter,
+                            comp?.props?.xlarge
+                        )}
+                    />
                 ) : undefined;
             })}
         </StyledGrid>
