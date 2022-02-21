@@ -185,9 +185,9 @@ const newColors: NewColors = {
         inverted: '#FAFAFA',
         error: '#FF2D2D',
         heading: '#333333',
-        headingInverted: '#B5B5B5',
+        headingInverted: '#FFFFFF',
         copy: '#333333',
-        copyInverted: '#A6A6A6',
+        copyInverted: '#FFFFFF',
     },
     sectionBg: {
         light: 'transparent',

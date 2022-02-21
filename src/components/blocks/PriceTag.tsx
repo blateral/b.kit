@@ -23,10 +23,10 @@ const View = styled.div<{
     background: ${({ theme, hasBg, isInverted, isHighlighted }) =>
         isInverted
             ? isHighlighted
-                ? color(theme).new.elementBg.light
+                ? color(theme).new.primary.inverted
                 : color(theme).new.elementBg.medium
             : isHighlighted
-            ? color(theme).new.elementBg.dark
+            ? color(theme).new.primary.default
             : hasBg
             ? color(theme).new.elementBg.light
             : color(theme).new.elementBg.medium};
