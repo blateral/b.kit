@@ -50,7 +50,7 @@ const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
         left: 0;
         bottom: 0;
         right: 0;
-        background-color: ${({ theme }) => color(theme).mono.medium};
+        background-color: ${({ theme }) => color(theme).new.elementBg.medium};
         opacity: ${({ bgImage }) => (bgImage ? '0.3' : '0')};
 
         pointer-events: none;
@@ -79,7 +79,7 @@ const VideoControls = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: ${({ theme }) => color(theme).light};
+    color: ${({ theme }) => color(theme).new.elementBg.light};
 
     & > * {
         opacity: 0.8;
