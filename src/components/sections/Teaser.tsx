@@ -37,50 +37,21 @@ const StyledImage = styled(Image)`
     }
 `;
 
-const ImgDescDesktop = styled(Copy)`
-    display: none;
-
-    @media ${mq.semilarge} {
-        display: block;
-        padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
-    }
-`;
-
-const ImgDescMobile = styled(Copy)`
+const ImgDesc = styled(Copy)`
     display: block;
+
     padding: ${spacings.nudge * 3}px 0;
     padding-left: ${spacings.nudge * 2}px;
 
     @media ${mq.semilarge} {
-        display: none;
+        padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
     }
 `;
 
 const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
-    padding-right: ${({ isMirrored }) => !isMirrored && spacings.nudge * 3}px;
-    padding-left: ${({ isMirrored }) => isMirrored && spacings.nudge * 3}px;
-
-    padding-top: ${spacings.nudge * 2}px;
-    padding-bottom: ${spacings.nudge * 3}px;
-
-    @media ${mq.medium} {
-        ${withRange([spacings.nudge * 3, spacings.spacer], 'padding-top')}
-    }
-
     @media ${mq.semilarge} {
+        ${withRange([spacings.nudge * 3, spacings.spacer], 'padding-top')}
         padding-bottom: ${spacings.nudge * 3}px;
-
-        padding-right: ${({ isMirrored }) =>
-            !isMirrored ? spacings.nudge * 3 + 'px' : spacings.spacer + 'px'};
-        padding-left: ${({ isMirrored }) =>
-            isMirrored ? spacings.nudge * 3 + 'px' : spacings.spacer + 'px'};
-    }
-
-    @media ${mq.xlarge} {
-        padding-right: ${({ isMirrored }) =>
-            !isMirrored ? spacings.nudge * 3 : (1 / 12) * spacings.wrapper}px;
-        padding-left: ${({ isMirrored }) =>
-            isMirrored ? spacings.nudge * 3 : (1 / 12) * spacings.wrapper}px;
     }
 `;
 
@@ -101,16 +72,14 @@ const StyledActions = styled(Actions)`
 
     @media ${mq.semilarge} {
         & > * {
-            max-width: 300px;
+            width: 300px;
         }
     }
-`;
 
-const RowHelper = styled.div`
-    display: none;
-
-    @media ${mq.semilarge} {
-        display: block;
+    @media ${mq.xlarge} {
+        & > * {
+            width: auto;
+        }
     }
 `;
 
@@ -155,18 +124,22 @@ const Teaser: FC<{
             }
             bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
-            <Wrapper clampWidth="normal">
+            <Wrapper addWhitespace clampWidth="normal">
                 <Grid.Row gutter={spacings.spacer}>
                     <Grid.Col
                         semilarge={{
                             span: 6 / 12,
                             move: (isMirrored ? 6 : 0) / 12,
                         }}
+                        xlarge={{
+                            span: 7 / 12,
+                            move: (isMirrored ? 5 : 0) / 12,
+                        }}
                     >
                         <ImgWrapper isMirrored={isMirrored}>
-                            {image && <StyledImage coverSpace {...image} />}
+                            {image && <StyledImage {...image} />}
                             {image?.description && (
-                                <ImgDescMobile
+                                <ImgDesc
                                     size="small"
                                     isInverted={isInverted}
                                     innerHTML={image.description}
@@ -174,10 +147,15 @@ const Teaser: FC<{
                             )}
                         </ImgWrapper>
                     </Grid.Col>
+
                     <Grid.Col
                         semilarge={{
                             span: 6 / 12,
                             move: (isMirrored ? -6 : 0) / 12,
+                        }}
+                        xlarge={{
+                            span: 5 / 12,
+                            move: (isMirrored ? -7 : 0) / 12,
                         }}
                     >
                         <InfoWrapper isMirrored={isMirrored}>
@@ -217,40 +195,18 @@ const Teaser: FC<{
                         </InfoWrapper>
                     </Grid.Col>
                 </Grid.Row>
-                <RowHelper>
-                    <Grid.Row gutter={spacings.spacer}>
-                        <Grid.Col
-                            semilarge={{
-                                span: (bgMode === 'splitted' ? 4.6 : 6) / 12,
-                                move:
-                                    (isMirrored
-                                        ? bgMode === 'splitted'
-                                            ? 8.4
-                                            : 6
-                                        : 0) / 12,
-                            }}
-                        >
-                            {image?.description && (
-                                <ImgDescDesktop
-                                    size="small"
-                                    isInverted={isInverted}
-                                    innerHTML={image.description}
-                                />
-                            )}
-                        </Grid.Col>
-                        <Grid.Col
-                            semilarge={{
-                                span: (bgMode === 'splitted' ? 8.4 : 6) / 12,
-                                move:
-                                    (isMirrored
-                                        ? bgMode === 'splitted'
-                                            ? -4.6
-                                            : -6
-                                        : 0) / 12,
-                            }}
-                        />
-                    </Grid.Row>
-                </RowHelper>
+                <Grid.Row>
+                    <Grid.Col
+                        semilarge={{
+                            span: 6 / 12,
+                            move: (isMirrored ? 6 : 0) / 12,
+                        }}
+                        xlarge={{
+                            span: 7 / 12,
+                            move: (isMirrored ? 5 : 0) / 12,
+                        }}
+                    ></Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );
