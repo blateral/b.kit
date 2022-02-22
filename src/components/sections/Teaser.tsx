@@ -195,18 +195,6 @@ const Teaser: FC<{
                         </InfoWrapper>
                     </Grid.Col>
                 </Grid.Row>
-                <Grid.Row>
-                    <Grid.Col
-                        semilarge={{
-                            span: 6 / 12,
-                            move: (isMirrored ? 6 : 0) / 12,
-                        }}
-                        xlarge={{
-                            span: 7 / 12,
-                            move: (isMirrored ? 5 : 0) / 12,
-                        }}
-                    ></Grid.Col>
-                </Grid.Row>
             </Wrapper>
         </Section>
     );
