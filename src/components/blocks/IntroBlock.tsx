@@ -55,7 +55,7 @@ const IntroBlock: React.FC<{
     /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
 
-    /** Bold intro text underneath the title (richtext) */
+    /** Intro text underneath the title (richtext) */
     text?: string;
 
     /** Copy type of intro text (limits richtext capabilites on textType == copy-b or copy-i) */
@@ -80,7 +80,7 @@ const IntroBlock: React.FC<{
     superTitle,
     superTitleAs,
     text,
-    textType = 'copy-b',
+    textType = 'copy',
     primaryAction,
     secondaryAction,
     isCentered = false,

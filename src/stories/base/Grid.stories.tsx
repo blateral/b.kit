@@ -35,7 +35,7 @@ export default {
     component: Grid.Row,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -152,6 +152,29 @@ export const Move: Story = () => (
     </Grid.Row>
 );
 
+export const GutterWithMediaQueries: Story = () => (
+    <Grid.Row gutter={15} semilarge={{ gutter: 32 }}>
+        <Grid.Col span={1 / 2} semilarge={{ span: 1 / 3 }}>
+            <ExampleCol>Content A</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={1 / 2} semilarge={{ span: 1 / 3 }}>
+            <ExampleCol>Content B</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={1 / 2} semilarge={{ span: 1 / 3 }}>
+            <ExampleCol>Content C</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={1 / 2} semilarge={{ span: 1 / 3 }}>
+            <ExampleCol>Content D</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={1 / 2} semilarge={{ span: 1 / 3 }}>
+            <ExampleCol>Content E</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={1 / 2} semilarge={{ span: 1 / 3 }}>
+            <ExampleCol>Content F</ExampleCol>
+        </Grid.Col>
+    </Grid.Row>
+);
+
 export const VerticalAlignA: Story = () => (
     <Grid.Row valign="center">
         <Grid.Col span={7 / 28}>
@@ -176,7 +199,7 @@ export const VerticalAlignB: Story = () => (
         <Grid.Col span={7 / 28} valign="center">
             <ExampleCol>vertical align center</ExampleCol>
         </Grid.Col>
-        <Grid.Col span={7 / 28} valign="top">
+        <Grid.Col span={7 / 28} valign="top" large={{ valign: 'bottom' }}>
             <ExampleCol>vertical align top</ExampleCol>
         </Grid.Col>
         <Grid.Col span={7 / 28} valign="bottom">
@@ -189,3 +212,46 @@ export const VerticalAlignB: Story = () => (
 );
 
 VerticalAlignB.storyName = 'With different col vertical aligns';
+
+export const DifferentTextAligns: Story = () => (
+    <Grid.Row>
+        <Grid.Col textAlign="center" span={1 / 2} semilarge={{ span: 1 / 3 }}>
+            <ExampleCol>Content A</ExampleCol>
+        </Grid.Col>
+        <Grid.Col
+            textAlign="left"
+            span={1 / 2}
+            medium={{ textAlign: 'center' }}
+            semilarge={{ span: 1 / 3 }}
+        >
+            <ExampleCol>Content B</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={1 / 2} semilarge={{ span: 1 / 3 }}>
+            <ExampleCol>Content C</ExampleCol>
+        </Grid.Col>
+        <Grid.Col
+            textAlign="center"
+            span={1 / 2}
+            medium={{ textAlign: 'right' }}
+            semilarge={{ span: 1 / 3 }}
+        >
+            <ExampleCol>Content D</ExampleCol>
+        </Grid.Col>
+        <Grid.Col
+            textAlign="center"
+            span={1 / 2}
+            medium={{ textAlign: 'left' }}
+            semilarge={{ span: 1 / 3 }}
+        >
+            <ExampleCol>Content E</ExampleCol>
+        </Grid.Col>
+        <Grid.Col
+            textAlign="center"
+            span={1 / 2}
+            medium={{ textAlign: 'left' }}
+            semilarge={{ span: 1 / 3 }}
+        >
+            <ExampleCol>Content F</ExampleCol>
+        </Grid.Col>
+    </Grid.Row>
+);
