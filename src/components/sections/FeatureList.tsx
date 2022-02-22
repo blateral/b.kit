@@ -1,8 +1,6 @@
-import * as React from 'react';
-import { ThemeContext } from 'styled-components';
+import React from 'react';
 
-import { getColors as color } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
@@ -10,11 +8,16 @@ import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import Grid from 'components/base/Grid';
 
 const FeatureList: React.FC<{
+    /** Center texts in every feature item */
     isCentered?: boolean;
+
+    /** Array with feature item content */
     features?: FeatureProps[];
+
+    /** Section background */
     bgMode?: 'full' | 'splitted' | 'inverted';
 }> = ({ features, bgMode, isCentered = false }) => {
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
 
@@ -41,37 +44,32 @@ const FeatureList: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : bgMode
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace clampWidth="normal">
                 <Grid.Row>
-                    {features &&
-                        features.map((feature, i) => {
-                            return (
-                                <Grid.Col
-                                    semilarge={{ span: 6 / 12 }}
-                                    large={{
-                                        span: isHalf ? 5 / 12 : 4 / 12,
-                                        move: isHalf ? 1 / 12 : 0,
-                                    }}
-                                    key={i}
-                                >
-                                    <div ref={cardRefs[i]}>
-                                        <Feature
-                                            isCentered={isCentered}
-                                            isInverted={isInverted}
-                                            addWhitespace
-                                            {...feature}
-                                        />
-                                    </div>
-                                </Grid.Col>
-                            );
-                        })}
+                    {features?.map((feature, i) => (
+                        <Grid.Col
+                            semilarge={{ span: 6 / 12 }}
+                            large={{
+                                span: isHalf ? 5 / 12 : 4 / 12,
+                                move: isHalf ? 1 / 12 : 0,
+                            }}
+                            key={i}
+                        >
+                            <Feature
+                                ref={cardRefs[i]}
+                                isCentered={isCentered}
+                                isInverted={isInverted}
+                                {...feature}
+                            />
+                        </Grid.Col>
+                    ))}
                 </Grid.Row>
             </Wrapper>
         </Section>
