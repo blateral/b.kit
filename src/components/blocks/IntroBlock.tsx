@@ -20,7 +20,7 @@ const View = styled.div<{ isCentered?: boolean }>`
 
 const StyledTitle = styled(Title)<{ clamp?: boolean }>`
     @media ${mq.semilarge} {
-        max-width: ${({ clamp }) => clamp && getGridWidth(8)};
+        max-width: ${({ clamp }) => clamp && getGridWidth({ cols: 8 })};
     }
 `;
 
