@@ -180,7 +180,8 @@ export type CopyTag =
     | 'th'
     | 'td'
     | 'li'
-    | 'caption';
+    | 'caption'
+    | 'figcaption';
 
 const Copy: React.FC<{
     renderAs?: CopyTag;

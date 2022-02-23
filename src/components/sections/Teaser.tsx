@@ -12,12 +12,14 @@ import Actions from 'components/blocks/Actions';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import IntroBlock from 'components/blocks/IntroBlock';
 
-const ImgWrapper = styled.div`
+const ImageWrapper = styled.figure`
     display: flex;
     flex-direction: column;
     position: relative;
     height: 100%;
     width: 100%;
+    margin: 0;
+    padding: 0;
 
     & > * + * {
         margin-top: ${spacings.nudge}px;
@@ -125,16 +127,17 @@ const Teaser: FC<{
                             move: (isMirrored ? 5 : 0) / 12,
                         }}
                     >
-                        <ImgWrapper>
+                        <ImageWrapper>
                             {image && <StyledImage {...image} />}
                             {image?.description && (
                                 <ImgDesc
                                     size="small"
+                                    renderAs="figcaption"
                                     isInverted={isInverted}
                                     innerHTML={image.description}
                                 />
                             )}
-                        </ImgWrapper>
+                        </ImageWrapper>
                     </Grid.Col>
 
                     <Grid.Col
