@@ -45,6 +45,7 @@ export { default as useTouch } from 'utils/useTouch';
 export { useImgPreload } from 'utils/useImgPreload';
 export { hexToRgba } from 'utils/hexRgbConverter';
 export { getBgImage } from 'utils/backgroundImage';
+export { clampValue } from 'utils/clamp';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
