@@ -18,7 +18,7 @@ const Intro: React.FC<{
     /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
 
-    /** Bold intro text underneath the title (richtext) */
+    /**  Intro text underneath the title (richtext) */
     text?: string;
 
     /** Function to inject custom primary button */

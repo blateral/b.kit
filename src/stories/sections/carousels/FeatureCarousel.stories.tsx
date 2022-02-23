@@ -24,20 +24,16 @@ const actions = {
 };
 
 const exampleFeature: FeatureProps = {
-    addWhitespace: true,
     image: {
         small: 'https://unsplash.it/502/376',
         medium: 'https://unsplash.it/600/600',
         large: 'https://unsplash.it/314/314',
         xlarge: 'https://unsplash.it/453/453',
     },
-    title:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
+    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
     description: 'Name/ Place/Position/ Telefon/Date',
-    intro:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-    text:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+    intro: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     ...actions,
 };
 

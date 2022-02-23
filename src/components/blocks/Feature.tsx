@@ -1,61 +1,49 @@
-import * as React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
-import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
+import { mq, spacings, getGlobals as global } from 'utils/styles';
 
 import Copy from 'components/typography/Copy';
-import Image, { ImageProps as Props } from 'components/blocks/Image';
+import Image, { ImageProps } from 'components/blocks/Image';
 import Actions from './Actions';
 
-const View = styled.div`
+const View = styled.div<{ isCentered?: boolean }>`
     min-width: 270px;
     padding-bottom: ${spacings.nudge}px;
+    text-align: ${({ isCentered }) => isCentered && 'center'};
+
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
+    }
 `;
 
 const ImageContainer = styled.div<{ isCentered?: boolean }>`
     display: flex;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
-    padding-bottom: ${spacings.spacer}px;
 `;
 
 const StyledImage = styled(Image)`
-    // width: 100%;
-
     overflow: hidden;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 `;
 
-const Content = styled.div<{ addWhitespace?: boolean; isCentered?: boolean }>`
+const ArticleContent = styled.div<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => isCentered && 'center'};
-    padding: 0 ${({ addWhitespace }) => addWhitespace && spacings.nudge + 'px'};
 
-    & + & {
-        ${withRange([spacings.nudge * 2, spacings.spacer], 'padding-top')}
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
     }
-`;
-
-const ArticleContent = styled(Content)<{ isCentered?: boolean }>`
-    text-align: ${({ isCentered }) => isCentered && 'center'};
 
     @media ${mq.medium} {
-        max-width: 95%;
+        & > * {
+            max-width: 95%;
+            margin-right: ${({ isCentered }) => isCentered && 'auto'};
+            margin-left: ${({ isCentered }) => isCentered && 'auto'};
+        }
     }
 `;
 
-const ContentBlock = styled(Copy)`
-    & + & {
-        ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding-top')}
-    }
-`;
-
-const Desc = styled.div`
-    ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding-top')}
-`;
-
-const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
-    padding: 0 ${({ addWhitespace }) => addWhitespace && spacings.nudge + 'px'};
-    ${withRange([spacings.nudge * 2, spacings.spacer], 'padding-top')}
-
+const StyledActions = styled(Actions)`
     @media ${mq.medium} {
         width: 100%;
 
@@ -68,103 +56,122 @@ const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
 `;
 
 export interface FeatureProps {
+    /** Invert color and background for darker themes */
     isInverted?: boolean;
-    isCentered?: boolean;
-    title?: string;
-    description?: string;
-    intro?: string;
-    text?: string;
-    image?: Props;
 
-    addWhitespace?: boolean;
+    /** Center all texts */
+    isCentered?: boolean;
+
+    /** Image on item's top */
+    image?: ImageProps;
+
+    /** Item title text underneath the image */
+    title?: string;
+
+    /** Small item description text (richtext) */
+    description?: string;
+
+    /** Item intro text (partial richtext cause it's always bold) */
+    intro?: string;
+
+    /** Item's main text (richtext) */
+    text?: string;
+
+    /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }
 
-const Feature: React.FC<
+const Feature = forwardRef<
+    HTMLDivElement,
     FeatureProps & {
         className?: string;
     }
-> = ({
-    title,
-    description,
-    intro,
-    text,
-    image,
-    addWhitespace = false,
-    isInverted = false,
-    isCentered = false,
-    primaryAction,
-    secondaryAction,
-    className,
-}) => {
-    return (
-        <View className={className}>
-            {image && (
-                <ImageContainer isCentered={isCentered}>
-                    <StyledImage
-                        small={image.small}
-                        medium={image.medium}
-                        semilarge={image.semilarge}
-                        large={image.large}
-                        xlarge={image.xlarge}
-                        alt={image.alt}
-                        coverSpace={image.coverSpace}
-                    />
-                </ImageContainer>
-            )}
-            <Content addWhitespace={addWhitespace} isCentered={isCentered}>
-                <ContentBlock
-                    type="copy-b"
-                    size="big"
-                    isInverted={isInverted}
-                    data-sheet="title"
-                >
-                    {title}
-                </ContentBlock>
+>(
+    (
+        {
+            title,
+            description,
+            intro,
+            text,
+            image,
+            isInverted = false,
+            isCentered = false,
+            primaryAction,
+            secondaryAction,
+            className,
+        },
+        ref
+    ) => {
+        return (
+            <View ref={ref} isCentered={isCentered} className={className}>
+                {image && (
+                    <ImageContainer isCentered={isCentered}>
+                        <StyledImage
+                            small={image.small}
+                            medium={image.medium}
+                            semilarge={image.semilarge}
+                            large={image.large}
+                            xlarge={image.xlarge}
+                            alt={image.alt}
+                            coverSpace={image.coverSpace}
+                        />
+                    </ImageContainer>
+                )}
+                {title && (
+                    <Copy
+                        type="copy-b"
+                        size="big"
+                        isInverted={isInverted}
+                        data-sheet="title"
+                    >
+                        {title}
+                    </Copy>
+                )}
                 {description && (
-                    <ContentBlock
+                    <Copy
                         size="small"
                         isInverted={isInverted}
                         data-sheet="desc"
-                    >
-                        <Desc
-                            dangerouslySetInnerHTML={{ __html: description }}
-                        />
-                    </ContentBlock>
-                )}
-            </Content>
-            <ArticleContent
-                addWhitespace={addWhitespace}
-                isCentered={isCentered}
-            >
-                {intro && (
-                    <ContentBlock
-                        type="copy-b"
-                        isInverted={isInverted}
-                        innerHTML={intro}
-                        data-sheet="intro"
+                        innerHTML={description}
                     />
                 )}
-                {text && (
-                    <ContentBlock
-                        type="copy"
-                        size="medium"
-                        isInverted={isInverted}
-                        innerHTML={text}
-                        data-sheet="text"
+                {(intro || text) && (
+                    <ArticleContent isCentered={isCentered}>
+                        {intro && (
+                            <Copy
+                                type="copy-b"
+                                isInverted={isInverted}
+                                innerHTML={intro}
+                                data-sheet="intro"
+                            />
+                        )}
+                        {text && (
+                            <Copy
+                                type="copy"
+                                size="medium"
+                                isInverted={isInverted}
+                                innerHTML={text}
+                                data-sheet="text"
+                            />
+                        )}
+                    </ArticleContent>
+                )}
+                {(primaryAction || secondaryAction) && (
+                    <StyledActions
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
                     />
                 )}
-            </ArticleContent>
-            {(primaryAction || secondaryAction) && (
-                <StyledActions
-                    addWhitespace={addWhitespace}
-                    primary={primaryAction && primaryAction(isInverted)}
-                    secondary={secondaryAction && secondaryAction(isInverted)}
-                />
-            )}
-        </View>
-    );
-};
+            </View>
+        );
+    }
+);
+
+Feature.displayName = 'Feature';
 
 export default Feature;

@@ -115,7 +115,6 @@ const FeatureCarousel: FC<
                             <div key={i} ref={cardRefs[i]}>
                                 <Feature
                                     key={i}
-                                    addWhitespace
                                     isInverted={isInverted}
                                     {...feature}
                                 />
