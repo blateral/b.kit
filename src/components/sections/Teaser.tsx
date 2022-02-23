@@ -1,5 +1,5 @@
-import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
 import Grid from 'components/base/Grid';
 import { HeadlineTag } from 'components/typography/Heading';
@@ -7,23 +7,27 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
 import Section, { mapToBgMode } from 'components/base/Section';
-import {
-    mq,
-    spacings,
-    withRange,
-    getColors as color,
-    getGlobals as global,
-} from 'utils/styles';
+import { mq, spacings, getGlobals as global } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import IntroBlock from 'components/blocks/IntroBlock';
 
-const ImgWrapper = styled.div<{ isMirrored?: boolean }>`
+const ImgWrapper = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
     height: 100%;
     width: 100%;
+
+    & > * + * {
+        margin-top: ${spacings.nudge}px;
+    }
+
+    @media ${mq.semilarge} {
+        & > * + * {
+            margin-top: ${spacings.nudge * 2}px;
+        }
+    }
 `;
 
 const StyledImage = styled(Image)`
@@ -40,62 +44,47 @@ const StyledImage = styled(Image)`
 const ImgDesc = styled(Copy)`
     display: block;
 
-    padding: ${spacings.nudge * 3}px 0;
-    padding-left: ${spacings.nudge * 2}px;
-    padding-bottom: 0;
-
     @media ${mq.semilarge} {
-        padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
-    }
-`;
-
-const InfoWrapper = styled.div<{ isMirrored?: boolean }>`
-    @media ${mq.semilarge} {
-        ${withRange([spacings.nudge * 3, spacings.spacer], 'padding-top')}
-        padding-bottom: ${spacings.nudge * 3}px;
-    }
-`;
-
-const ContentBlock = styled(Copy)`
-    :not(:first-child) {
-        padding-top: ${spacings.spacer}px;
-    }
-`;
-
-const SubTextBlock = styled(ContentBlock)`
-    :not(:first-child) {
-        padding-top: ${spacings.nudge * 3}px;
+        padding-left: ${spacings.nudge * 2}px;
+        padding-right: ${spacings.nudge * 2}px;
     }
 `;
 
 const StyledActions = styled(Actions)`
-    padding-top: ${spacings.spacer}px;
-
-    @media ${mq.semilarge} {
-        & > * {
-            width: 300px;
-        }
-    }
-
-    @media ${mq.xlarge} {
-        & > * {
-            width: auto;
-        }
+    &:not(:first-child) {
+        margin-top: ${spacings.spacer}px;
     }
 `;
 
 const Teaser: FC<{
+    /** Switch text and image columns */
     isMirrored?: boolean;
-    bgMode?: 'full' | 'inverted' | 'splitted';
+
+    /** Superior title that stands above main title */
     superTitle?: string;
+
+    /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
+
+    /** Main title text */
     title?: string;
+
+    /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
+
+    /** Images for different screen sizes with optional Image description richtext */
     image?: Omit<ImageProps, 'coverSpace'> & { description?: string };
-    intro?: string;
+
+    /** Main richtext */
     text?: string;
-    subText?: string;
+
+    /** Section background */
+    bgMode?: 'full' | 'inverted' | 'splitted';
+
+    /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
     isMirrored = false,
@@ -105,23 +94,22 @@ const Teaser: FC<{
     title,
     titleAs,
     image,
-    intro,
     text,
-    subText,
     primaryAction,
     secondaryAction,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
+
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : bgMode
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
@@ -137,7 +125,7 @@ const Teaser: FC<{
                             move: (isMirrored ? 5 : 0) / 12,
                         }}
                     >
-                        <ImgWrapper isMirrored={isMirrored}>
+                        <ImgWrapper>
                             {image && <StyledImage {...image} />}
                             {image?.description && (
                                 <ImgDesc
@@ -159,41 +147,25 @@ const Teaser: FC<{
                             move: (isMirrored ? -7 : 0) / 12,
                         }}
                     >
-                        <InfoWrapper isMirrored={isMirrored}>
-                            <IntroBlock
-                                title={title}
-                                titleAs={titleAs}
-                                superTitle={superTitle}
-                                superTitleAs={superTitleAs}
-                                text={intro}
-                                colorMode={isInverted ? 'inverted' : 'default'}
+                        <IntroBlock
+                            title={title}
+                            titleAs={titleAs}
+                            superTitle={superTitle}
+                            superTitleAs={superTitleAs}
+                            text={text}
+                            colorMode={isInverted ? 'inverted' : 'default'}
+                        />
+                        {(primaryAction || secondaryAction) && (
+                            <StyledActions
+                                primary={
+                                    primaryAction && primaryAction(isInverted)
+                                }
+                                secondary={
+                                    secondaryAction &&
+                                    secondaryAction(isInverted)
+                                }
                             />
-                            {text && (
-                                <ContentBlock
-                                    isInverted={isInverted}
-                                    innerHTML={text}
-                                />
-                            )}
-                            {subText && (
-                                <SubTextBlock
-                                    isInverted={isInverted}
-                                    type="copy-i"
-                                    innerHTML={subText}
-                                />
-                            )}
-                            {(primaryAction || secondaryAction) && (
-                                <StyledActions
-                                    primary={
-                                        primaryAction &&
-                                        primaryAction(isInverted)
-                                    }
-                                    secondary={
-                                        secondaryAction &&
-                                        secondaryAction(isInverted)
-                                    }
-                                />
-                            )}
-                        </InfoWrapper>
+                        )}
                     </Grid.Col>
                 </Grid.Row>
             </Wrapper>
