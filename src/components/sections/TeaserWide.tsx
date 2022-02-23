@@ -106,18 +106,35 @@ const StyledActions = styled(Actions)`
 `;
 
 const TeaserWide: FC<{
+    /** Switch text and image columns */
     isMirrored?: boolean;
+
+    /** Superior title that stands above main title */
     superTitle?: string;
+
+    /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
+
+    /** Main title text */
     title?: string;
+
+    /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
-    image?: Omit<ImageProps, 'coverSpace'> & { description?: string };
+
+    /** Images for different screen sizes */
+    image?: Omit<ImageProps, 'coverSpace'>;
+
+    /** Main richtext */
     text?: string;
 
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
+    /** Section background */
     bgMode?: 'full' | 'inverted';
+
+    /** Function to inject custom primary button */
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Function to inject custom secondary button */
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
     isMirrored = false,
     superTitle,
