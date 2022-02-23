@@ -42,6 +42,7 @@ const ImgDesc = styled(Copy)`
 
     padding: ${spacings.nudge * 3}px 0;
     padding-left: ${spacings.nudge * 2}px;
+    padding-bottom: 0;
 
     @media ${mq.semilarge} {
         padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
@@ -125,7 +126,7 @@ const Teaser: FC<{
             bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
             <Wrapper addWhitespace clampWidth="normal">
-                <Grid.Row gutter={spacings.spacer}>
+                <Grid.Row valign="center" gutter={spacings.spacer}>
                     <Grid.Col
                         semilarge={{
                             span: 6 / 12,
