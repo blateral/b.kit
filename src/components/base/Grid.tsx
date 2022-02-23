@@ -29,15 +29,22 @@ export const gridSettings = {
 };
 
 /** Get width of grid cols incl. gutter (relative to container element)  */
-export const getGridWidth = (cols?: number, gutter?: number) => {
-    cols = cols || gridSettings.cols;
-    const gridGutter = gutter !== undefined ? gutter : gridSettings.gutter;
+export const getGridWidth = (props?: {
+    cols?: number;
+    gutter?: number;
+    gridWidth?: string;
+}) => {
+    const columns = props?.cols || gridSettings.cols;
+
+    const width = props?.gridWidth || '100%';
+    const gridGutter =
+        props?.gutter !== undefined ? props.gutter : gridSettings.gutter;
     const gridCols = gridSettings.cols;
 
     return css`
-        calc(((100% - ${
-            (gridCols - 1) * gridGutter
-        }px) / ${gridCols}) * ${cols} + ${(cols - 1) * gridGutter}px)
+        calc(((${width} - ${
+        (gridCols - 1) * gridGutter
+    }px) / ${gridCols}) * ${columns} + ${(columns - 1) * gridGutter}px)
     `;
 };
 

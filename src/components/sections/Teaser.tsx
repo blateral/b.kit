@@ -116,7 +116,7 @@ const Teaser: FC<{
             bgMode={mapToBgMode(bgMode, false, isMirrored)}
         >
             <Wrapper addWhitespace clampWidth="normal">
-                <Grid.Row valign="center" gutter={spacings.spacer}>
+                <Grid.Row valign="center">
                     <Grid.Col
                         semilarge={{
                             span: 6 / 12,

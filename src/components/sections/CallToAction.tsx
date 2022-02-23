@@ -207,13 +207,13 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
 
 const StyledIntro = styled(IntroBlock)<{ hasDecorator?: boolean }>`
     @media ${mq.semilarge} {
-        max-width: ${getGridWidth(10)};
+        max-width: ${getGridWidth({ cols: 10 })};
         margin-right: auto;
         margin-left: auto;
     }
 
     @media ${mq.large} {
-        max-width: ${getGridWidth(8)};
+        max-width: ${getGridWidth({ cols: 8 })};
     }
 
     @media ${mq.xlarge} {
@@ -227,13 +227,13 @@ const StyledContactBox = styled(ContactBox)`
     margin-top: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
-        max-width: ${getGridWidth(8)};
+        max-width: ${getGridWidth({ cols: 8 })};
         margin-right: auto;
         margin-left: auto;
     }
 
     @media ${mq.large} {
-        max-width: ${getGridWidth(6)};
+        max-width: ${getGridWidth({ cols: 6 })};
     }
 `;
 

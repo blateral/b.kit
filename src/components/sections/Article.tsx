@@ -17,7 +17,7 @@ const StyledTitle = styled(Title)`
     }
 
     @media ${mq.semilarge} {
-        max-width: ${getGridWidth(8)};
+        max-width: ${getGridWidth({ cols: 8 })};
     }
 `;
 
