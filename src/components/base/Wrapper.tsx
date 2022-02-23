@@ -5,6 +5,8 @@ import { spacings } from 'utils/styles';
 
 export type ClampWidthType = 'small' | 'normal' | 'large';
 
+export const wrapperWhitespace = spacings.nudge * 2;
+
 const View = styled.div<{
     clampWidth?: ClampWidthType;
     addWhitespace?: boolean;
@@ -27,7 +29,7 @@ const View = styled.div<{
     margin-left: auto;
     margin-right: auto;
     padding: 0
-        ${({ addWhitespace }) => (addWhitespace ? spacings.nudge * 2 : 0)}px;
+        ${({ addWhitespace }) => (addWhitespace ? wrapperWhitespace : 0)}px;
 `;
 
 const Wrapper: React.FC<{

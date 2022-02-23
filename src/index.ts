@@ -107,7 +107,7 @@ export {
     getGridWidth,
 } from 'components/base/Grid';
 export { default as Section, mapToBgMode } from 'components/base/Section';
-export { default as Wrapper } from 'components/base/Wrapper';
+export { default as Wrapper, wrapperWhitespace } from 'components/base/Wrapper';
 
 /***** Typography *****/
 export { default as Heading } from 'components/typography/Heading';

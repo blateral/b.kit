@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import Grid, { getGridWidth } from 'components/base/Grid';
 import { HeadlineTag } from 'components/typography/Heading';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Wrapper from 'components/base/Wrapper';
+import Wrapper, { wrapperWhitespace } from 'components/base/Wrapper';
 import Section, { mapToBgMode } from 'components/base/Section';
 import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
@@ -19,7 +19,7 @@ const getGridColOfContent = () => {
     return css`
         ${getGridWidth({
             cols: 1,
-            gridWidth: `${spacings.wrapper - spacings.spacer}px `,
+            gridWidth: `${spacings.wrapper - wrapperWhitespace * 2}px `,
         })}
     `;
 };
@@ -42,8 +42,8 @@ const WideImage = styled(Image)<{ isMirrored?: boolean }>`
         width: calc(
             ${getGridWidth({
                     cols: 6,
-                    gridWidth: `100% - ${spacings.spacer}px `,
-                })} + ${spacings.nudge * 2}px
+                    gridWidth: `100% - ${wrapperWhitespace * 2}px `,
+                })} + ${wrapperWhitespace}px
         );
         left: ${({ isMirrored }) => (isMirrored ? 'auto' : '0')};
         right: ${({ isMirrored }) => (isMirrored ? '0' : 'auto')};
@@ -55,7 +55,7 @@ const WideImage = styled(Image)<{ isMirrored?: boolean }>`
             and add left or right wrapper padding afterwards. Then add this to 50% of current
             viewport width.
          */
-        width: calc(50% + ${getGridColOfContent()} + ${spacings.nudge * 2}px);
+        width: calc(50% + ${getGridColOfContent()} + ${wrapperWhitespace}px);
     }
 
     @media ${mq.xxxLarge} {
@@ -65,7 +65,7 @@ const WideImage = styled(Image)<{ isMirrored?: boolean }>`
          */
         width: calc(
             ${spacings.wrapperLarge / 2}px + ${getGridColOfContent()} +
-                ${spacings.nudge * 2}px
+                ${wrapperWhitespace}px
         );
 
         left: ${({ isMirrored }) => (isMirrored ? 'auto' : '50%')};
@@ -76,7 +76,7 @@ const WideImage = styled(Image)<{ isMirrored?: boolean }>`
                 transform: translateX(
                     calc(
                         ${isMirrored ? '100% - ' : '-100% + '}
-                            (${getGridColOfContent()} + ${spacings.nudge * 2}px)
+                            (${getGridColOfContent()} + ${wrapperWhitespace}px)
                     )
                 );
             `};
