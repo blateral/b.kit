@@ -342,8 +342,8 @@ const defaultFonts: Fonts = {
     callout: {
         small: {
             ...headingBase,
-            lineHeight: '1.17',
-            size: [33, 35],
+            lineHeight: '1.5',
+            size: [32],
         },
         medium: {
             ...headingBase,
