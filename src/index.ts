@@ -94,6 +94,7 @@ export { default as ParallaxBackground } from 'components/sections/ParallaxBackg
 export { default as PriceList } from 'components/sections/PriceList';
 export { default as SimpleImage } from 'components/sections/SimpleImage';
 export { default as PriceTable } from 'components/sections/PriceTable';
+export { default as Quote, QuoteComponent } from 'components/sections/Quote';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';

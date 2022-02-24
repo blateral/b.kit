@@ -8,35 +8,45 @@ import Callout from 'components/typography/Callout';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Copy from 'components/typography/Copy';
 
-const Text = styled(Callout)`
-    text-align: center;
+const Content = styled.figure`
     margin: 0;
     padding: 0;
+
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
+    }
 
     @media ${mq.medium} {
         max-width: 960px;
         margin: 0 auto;
     }
+`;
+
+const Text = styled(Callout)`
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
 `;
 
 const Source = styled(Copy)`
     text-align: center;
-
-    &:not(:first-child) {
-        margin-top: ${spacings.spacer * 1.5}px;
-    }
-
-    @media ${mq.medium} {
-        max-width: 960px;
-        margin: 0 auto;
-    }
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
 `;
 
 const Quote: FC<{
+    /** Text of the blockquote (richtext) */
     text?: string;
+
+    /** Source of the quote e.g. author (richtext) */
     source?: string;
+
+    /** URL for additional cite informations */
     citeUrl?: string;
 
+    /** Section backgrounds */
     bgMode?: 'full' | 'inverted';
 }> = ({ bgMode, text, source, citeUrl }) => {
     const { colors } = useLibTheme();
@@ -55,18 +65,24 @@ const Quote: FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                {text && (
-                    <Text
-                        size="small"
-                        renderAs="blockquote"
-                        isInverted={isInverted}
-                        innerHTML={text}
-                        {...{ cite: citeUrl }}
-                    />
-                )}
-                {source && (
-                    <Source isInverted={isInverted} innerHTML={source} />
-                )}
+                <Content>
+                    {text && (
+                        <Text
+                            size="small"
+                            renderAs="blockquote"
+                            isInverted={isInverted}
+                            innerHTML={text}
+                            {...{ cite: citeUrl }}
+                        />
+                    )}
+                    {source && (
+                        <Source
+                            isInverted={isInverted}
+                            renderAs="figcaption"
+                            innerHTML={source}
+                        />
+                    )}
+                </Content>
             </Wrapper>
         </Section>
     );
