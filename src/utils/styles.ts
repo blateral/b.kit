@@ -288,8 +288,9 @@ const defaultFonts: Fonts = {
     callout: {
         small: {
             ...headingBase,
-            lineHeight: '1.14',
-            size: [33, 35],
+            lineHeight: '1.5',
+            weight: '300',
+            size: [30, 32],
         },
         medium: {
             ...headingBase,
