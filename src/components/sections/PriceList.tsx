@@ -64,7 +64,10 @@ const PriceBlock: React.FC<PriceItems & { hasBg?: boolean }> = ({
 };
 
 const PriceList: React.FC<{
+    /** Array with price items */
     items: PriceItems[];
+
+    /** Section background */
     bgMode?: 'inverted' | 'full';
 }> = ({ bgMode, items }) => {
     const { colors } = useLibTheme();
