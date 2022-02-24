@@ -1,15 +1,19 @@
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import { getColors as color, mq, spacings } from 'utils/styles';
+import React from 'react';
+import styled from 'styled-components';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const ItemList = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
+
+    & > * + * {
+        margin-top: ${spacings.nudge}px;
+    }
 `;
 
 const ItemBlock = styled.li<{ hasBg?: boolean }>`
@@ -19,7 +23,7 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
     justify-content: space-between;
     max-width: 100%;
 
-    ${withRange([spacings.nudge * 2, spacings.nudge * 3], 'padding')};
+    padding: ${spacings.nudge * 2}px;
 
     background: ${({ theme, hasBg }) =>
         hasBg
@@ -30,8 +34,8 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
         margin-left: ${spacings.nudge * 2}px;
     }
 
-    & + & {
-        margin-top: ${spacings.nudge * 2}px;
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 3}px;
     }
 
     @media ${mq.semilarge} {
@@ -41,25 +45,20 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
     }
 `;
 
-interface PriceItems {
+export interface PriceItems {
     text?: string;
     price?: string;
 }
 
-const PriceBlock: React.FC<
-    PriceItems & { isInverted?: boolean; hasBg?: boolean }
-> = ({ text, price, isInverted, hasBg }) => {
+const PriceBlock: React.FC<PriceItems & { hasBg?: boolean }> = ({
+    text,
+    price,
+    hasBg,
+}) => {
     return (
-        <ItemBlock hasBg={isInverted || hasBg}>
-            <div>
-                <Copy type="copy" innerHTML={text} />
-            </div>
-
-            {price && (
-                <div>
-                    <Copy type="copy-b">{price}€</Copy>
-                </div>
-            )}
+        <ItemBlock hasBg={hasBg}>
+            {text && <Copy type="copy" innerHTML={text} />}
+            {price && <Copy type="copy-b">{price}€</Copy>}
         </ItemBlock>
     );
 };
@@ -68,32 +67,26 @@ const PriceList: React.FC<{
     items: PriceItems[];
     bgMode?: 'inverted' | 'full';
 }> = ({ bgMode, items }) => {
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
-    const hasBg = bgMode === 'full';
-    const theme = React.useContext(ThemeContext);
+    const hasBack = isInverted || bgMode === 'full';
+
     return (
         <Section
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
-                    : hasBg
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.dark
+                    : bgMode === 'full'
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
                 <ItemList>
                     {items.map((item, i) => {
-                        return (
-                            <PriceBlock
-                                key={i}
-                                {...item}
-                                isInverted={isInverted}
-                                hasBg={hasBg}
-                            />
-                        );
+                        return <PriceBlock key={i} {...item} hasBg={hasBack} />;
                     })}
                 </ItemList>
             </Wrapper>
