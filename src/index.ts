@@ -1,4 +1,4 @@
-/***** Version: 1.21.0 *****/
+/***** Version: 1.21.1 *****/
 
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
@@ -95,6 +95,7 @@ export { default as CallToActionDouble } from 'components/sections/CallToActionD
 export { default as PriceList } from 'components/sections/PriceList';
 export { default as SimpleImage } from 'components/sections/SimpleImage';
 export { default as PriceTable } from 'components/sections/PriceTable';
+export { default as Quote } from 'components/sections/Quote';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
