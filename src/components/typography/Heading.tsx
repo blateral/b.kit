@@ -85,7 +85,8 @@ export type HeadlineTag =
     | 'h5'
     | 'h6'
     | 'span'
-    | 'div';
+    | 'div'
+    | 'blockquote';
 
 const Heading: React.FC<{
     renderAs?: HeadlineTag;

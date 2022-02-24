@@ -177,7 +177,7 @@ const View = styled.div<{
     ${({ copyType, size }) => copyStyle(copyType, size)}
 `;
 
-export type CopyTag = 'label' | 'span' | 'div' | 'legend';
+export type CopyTag = 'label' | 'span' | 'div' | 'legend' | 'figcaption';
 
 const Copy: React.FC<{
     renderAs?: CopyTag;

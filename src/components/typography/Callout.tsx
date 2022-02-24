@@ -74,7 +74,8 @@ export type CalloutTag =
     | 'h5'
     | 'h6'
     | 'span'
-    | 'div';
+    | 'div'
+    | 'blockquote';
 
 const Callout: React.FC<{
     isInverted?: boolean;
