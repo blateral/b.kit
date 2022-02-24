@@ -23,11 +23,20 @@ export const WithAuthor: Story = () => (
     />
 );
 
+export const WithCiteUrl: Story = () => (
+    <Quote
+        text="“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor amet incididunt ut labore do eiusmod et dolore magna aliqua.”"
+        source={`<b>– Manuela Huber</b> <br />Marketing`}
+        citeUrl="http://developer.mozilla.org"
+    />
+);
+
 export const WithBackground: Story = () => (
     <Quote
         bgMode="full"
         text="“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor amet incididunt ut labore do eiusmod et dolore magna aliqua.”"
         source={`<b>– Manuela Huber</b> <br />Marketing`}
+        citeUrl="http://developer.mozilla.org"
     />
 );
 
@@ -36,5 +45,6 @@ export const Inverted: Story = () => (
         bgMode="inverted"
         text="“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor amet incididunt ut labore do eiusmod et dolore magna aliqua.”"
         source={`<b>– Manuela Huber</b> <br />Marketing`}
+        citeUrl="http://developer.mozilla.org"
     />
 );
