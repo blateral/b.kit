@@ -343,6 +343,7 @@ const defaultFonts: Fonts = {
         small: {
             ...headingBase,
             lineHeight: '1.5',
+            weight: '300',
             size: [32],
         },
         medium: {
