@@ -42,7 +42,7 @@ export const WithVideo: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         video={{
-            url: 'images/videos/alps_stockvideo.mp4',
+            urls: ['images/videos/alps_stockvideo.mp4'],
         }}
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
@@ -66,9 +66,8 @@ export const WithImageDescription: Story = () => (
             semilarge: 'https://unsplash.it/883/883',
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -91,8 +90,6 @@ export const WithAction: Story = () => (
             semilarge: 'https://unsplash.it/883/883',
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
@@ -127,9 +124,8 @@ export const Mirrored: Story = () => (
             semilarge: 'https://unsplash.it/883/883',
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -163,9 +159,8 @@ export const Inverted: Story = () => (
             semilarge: 'https://unsplash.it/883/883',
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -199,9 +194,8 @@ export const WithBackground: Story = () => (
             semilarge: 'https://unsplash.it/883/883',
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -235,9 +229,8 @@ export const WithSplittedBackground: Story = () => (
             semilarge: 'https://unsplash.it/883/883',
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -272,9 +265,8 @@ export const WithMirroredAndSplittedBackground: Story = () => (
             semilarge: 'https://unsplash.it/883/883',
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -308,9 +300,8 @@ export const WithImageFormatA: Story = () => (
             semilarge: 'https://unsplash.it/791/594',
             large: 'https://unsplash.it/848/637',
             xlarge: 'https://unsplash.it/917/689',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -346,9 +337,8 @@ export const WithImageFormatB: Story = () => (
             semilarge: 'https://unsplash.it/791/594',
             large: 'https://unsplash.it/692/923',
             xlarge: 'https://unsplash.it/724/966',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -384,9 +374,8 @@ export const WithImageFormatC: Story = () => (
             semilarge: 'https://unsplash.it/791/594',
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
-            description:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -417,9 +406,10 @@ export const WithVideoFormatA: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         video={{
-            url: 'images/videos/alps_stockvideo.mp4',
-            aspectRatio: { x: 4, y: 3 },
+            urls: ['images/videos/alps_stockvideo.mp4'],
+            aspectRatio: 4 / 3,
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -450,9 +440,10 @@ export const WithVideoFormatB: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         video={{
-            url: 'images/videos/alps_stockvideo.mp4',
-            aspectRatio: { x: 3, y: 4 },
+            urls: ['images/videos/alps_stockvideo.mp4'],
+            aspectRatio: 3 / 4,
         }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -482,10 +473,18 @@ export const WithVideoFormatC: Story = () => (
         bgMode="splitted"
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
-        video={{
-            url: 'images/videos/alps_stockvideo.mp4',
-            aspectRatio: { x: 1, y: 1 },
+        image={{
+            small: 'https://unsplash.it/619/464',
+            medium: 'https://unsplash.it/977/734',
+            semilarge: 'https://unsplash.it/791/594',
+            large: 'https://unsplash.it/766/766',
+            xlarge: 'https://unsplash.it/824/824',
         }}
+        video={{
+            urls: ['images/videos/alps_stockvideo.mp4'],
+            aspectRatio: 1,
+        }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>

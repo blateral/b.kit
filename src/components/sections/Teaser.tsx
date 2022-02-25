@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import Grid from 'components/base/Grid';
@@ -12,7 +12,7 @@ import Actions from 'components/blocks/Actions';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import IntroBlock from 'components/blocks/IntroBlock';
 
-const ImageWrapper = styled.figure`
+const Figure = styled.figure`
     display: flex;
     flex-direction: column;
     position: relative;
@@ -43,35 +43,20 @@ const StyledImage = styled(Image)`
     }
 `;
 
-const ImgDesc = styled(Copy)`
-    display: block;
-
-    @media ${mq.semilarge} {
-        padding-left: ${spacings.nudge * 2}px;
-        padding-right: ${spacings.nudge * 2}px;
-    }
-`;
-
-const StyledActions = styled(Actions)`
-    &:not(:first-child) {
-        margin-top: ${spacings.spacer}px;
-    }
-`;
-
-const VideoWrapper = styled.div<{ ratio?: { x: number; y: number } }>`
+const VideoContainer = styled.div<{ ratio?: number; isVisible?: boolean }>`
+    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
     position: relative;
     width: 100%;
     height: 100%;
 
     @media ${mq.semilarge} {
-        aspect-ratio: ${({ ratio }) => (ratio ? ratio.x / ratio.y : 16 / 9)};
+        aspect-ratio: ${({ ratio }) => ratio || 1};
         border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
         overflow: hidden;
     }
 `;
 
-const StyledVideo = styled.video<{ isVisible?: boolean }>`
-    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+const StyledVideo = styled.video`
     width: 100%;
     height: 100%;
 
@@ -84,6 +69,21 @@ const StyledVideo = styled.video<{ isVisible?: boolean }>`
         right: 0;
         left: 50%;
         transform: translateX(-50%);
+    }
+`;
+
+const Description = styled(Copy)`
+    display: block;
+
+    @media ${mq.semilarge} {
+        padding-left: ${spacings.nudge * 2}px;
+        padding-right: ${spacings.nudge * 2}px;
+    }
+`;
+
+const StyledActions = styled(Actions)`
+    &:not(:first-child) {
+        margin-top: ${spacings.spacer}px;
     }
 `;
 
@@ -103,8 +103,20 @@ const Teaser: FC<{
     /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
 
-    /** Images for different screen sizes with optional Image description richtext */
-    image?: Omit<ImageProps, 'coverSpace'> & { description?: string };
+    /** Images for different screen sizes */
+    image?: Omit<ImageProps, 'coverSpace'>;
+
+    /**
+     * Use video instead of an image. Until video is loaded images defined in the image prop are used.
+     * Multiple video urls can be used to loaded different file formats
+     */
+    video?: {
+        urls: string[];
+        aspectRatio?: number;
+    };
+
+    /** Image or video description text (richtext) */
+    description?: string;
 
     /** Main richtext */
     text?: string;
@@ -117,10 +129,6 @@ const Teaser: FC<{
 
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-    video?: {
-        url: string;
-        aspectRatio?: { x: number; y: number };
-    };
 }> = ({
     isMirrored = false,
     bgMode,
@@ -129,14 +137,15 @@ const Teaser: FC<{
     title,
     titleAs,
     image,
+    video,
+    description,
     text,
     primaryAction,
     secondaryAction,
-    video,
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
-    const [loaded, setLoaded] = React.useState(false);
+    const [isLoaded, setLoaded] = useState(false);
 
     return (
         <Section
@@ -162,28 +171,39 @@ const Teaser: FC<{
                             move: (isMirrored ? 5 : 0) / 12,
                         }}
                     >
-                        <ImageWrapper>
-                            {image && <StyledImage {...image} />}
-                            {image?.description && (
-                                <ImgDesc
-                                    size="small"
-                                    renderAs="figcaption"
-                                    isInverted={isInverted}
-                                    innerHTML={image.description}
-                                />
-                            )}
-                        </ImageWrapper>
-                        {video && !image && (
-                            <VideoWrapper ratio={video.aspectRatio}>
-                                <StyledVideo
-                                    src={video.url}
-                                    muted
-                                    autoPlay
-                                    loop
-                                    isVisible={loaded}
-                                    onCanPlayThrough={() => setLoaded(true)}
-                                />
-                            </VideoWrapper>
+                        {(image || video) && (
+                            <Figure>
+                                {video?.urls && video.urls.length > 0 && (
+                                    <VideoContainer
+                                        ratio={video.aspectRatio}
+                                        isVisible={isLoaded}
+                                    >
+                                        <StyledVideo
+                                            muted
+                                            autoPlay
+                                            loop
+                                            onCanPlayThrough={() =>
+                                                setLoaded(true)
+                                            }
+                                        >
+                                            {video.urls.map((url, i) => (
+                                                <source src={url} key={i} />
+                                            ))}
+                                        </StyledVideo>
+                                    </VideoContainer>
+                                )}
+                                {image && (!video || !isLoaded) && (
+                                    <StyledImage {...image} />
+                                )}
+                                {description && (
+                                    <Description
+                                        size="small"
+                                        renderAs="figcaption"
+                                        isInverted={isInverted}
+                                        innerHTML={description}
+                                    />
+                                )}
+                            </Figure>
                         )}
                     </Grid.Col>
 
