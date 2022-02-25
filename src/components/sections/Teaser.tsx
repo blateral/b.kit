@@ -173,6 +173,9 @@ const Teaser: FC<{
                     >
                         {(image || video) && (
                             <Figure>
+                                {image && (!video || !isLoaded) && (
+                                    <StyledImage {...image} />
+                                )}
                                 {video?.urls && video.urls.length > 0 && (
                                     <VideoContainer
                                         ratio={video.aspectRatio}
@@ -191,9 +194,6 @@ const Teaser: FC<{
                                             ))}
                                         </StyledVideo>
                                     </VideoContainer>
-                                )}
-                                {image && (!video || !isLoaded) && (
-                                    <StyledImage {...image} />
                                 )}
                                 {description && (
                                     <Description

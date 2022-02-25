@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import Grid, { getGridWidth } from 'components/base/Grid';
@@ -24,13 +24,13 @@ const getGridColOfContent = () => {
     `;
 };
 
-const WideVideoContainer = styled.div<{ isMirrored?: boolean }>`
+const WideVideo = styled.div<{ isMirrored?: boolean; isVisible?: boolean }>`
+    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
     position: relative;
     top: 0;
     left: 0;
     bottom: 0;
     width: 100%;
-    min-height: 400px;
     height: 100%;
 
     @media ${mq.semilarge} {
@@ -83,7 +83,7 @@ const WideVideoContainer = styled.div<{ isMirrored?: boolean }>`
     }
 `;
 
-const VideoWrapper = styled.div`
+const VideoContainer = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
@@ -95,10 +95,11 @@ const VideoWrapper = styled.div`
     }
 `;
 
-const StyledVideo = styled.video<{ isVisible?: boolean }>`
-    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+const StyledVideo = styled.video`
     width: 100%;
     height: 100%;
+    min-height: 400px;
+    object-fit: cover;
 
     @media ${mq.semilarge} {
         width: auto;
@@ -212,6 +213,12 @@ const TeaserWide: FC<{
     /** Images for different screen sizes */
     image?: Omit<ImageProps, 'coverSpace'>;
 
+    /**
+     * Use video instead of an image. Until video is loaded images defined in the image prop are used.
+     * Multiple video urls can be used to loaded different file formats
+     */
+    video?: string[];
+
     /** Main richtext */
     text?: string;
 
@@ -223,8 +230,6 @@ const TeaserWide: FC<{
 
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
-    videoUrl?: string;
 }> = ({
     isMirrored = false,
     superTitle,
@@ -232,18 +237,18 @@ const TeaserWide: FC<{
     title,
     titleAs,
     image,
+    video,
     text,
     primaryAction,
     secondaryAction,
     bgMode,
-    videoUrl,
 }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    const [loaded, setLoaded] = React.useState(false);
+    const [isLoaded, setLoaded] = useState(false);
 
     return (
         <Section
@@ -256,22 +261,24 @@ const TeaserWide: FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            {image && (
+            {image && (!video || !isLoaded) && (
                 <WideImage coverSpace {...image} isMirrored={isMirrored} />
             )}
-            {videoUrl && !image && (
-                <WideVideoContainer>
-                    <VideoWrapper>
+            {video && video.length > 0 && (
+                <WideVideo isVisible={isLoaded}>
+                    <VideoContainer>
                         <StyledVideo
-                            src={videoUrl}
                             muted
                             autoPlay
                             loop
-                            isVisible={loaded}
                             onCanPlayThrough={() => setLoaded(true)}
-                        />
-                    </VideoWrapper>
-                </WideVideoContainer>
+                        >
+                            {video.map((url, i) => (
+                                <source src={url} key={i} />
+                            ))}
+                        </StyledVideo>
+                    </VideoContainer>
+                </WideVideo>
             )}
             <Wrapper clampWidth="normal" addWhitespace>
                 <Grid.Row valign="center">

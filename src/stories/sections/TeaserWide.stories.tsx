@@ -43,7 +43,14 @@ export const WithVideo: Story = () => (
     <TeaserWide
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
-        videoUrl="images/videos/alps_stockvideo.mp4"
+        image={{
+            small: 'https://unsplash.it/619/464',
+            medium: 'https://unsplash.it/977/734',
+            semilarge: 'https://unsplash.it/791/594',
+            large: 'https://unsplash.it/1082/876',
+            xlarge: 'https://unsplash.it/1200/971',
+        }}
+        video={['images/videos/alps_stockvideo.mp4']}
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
