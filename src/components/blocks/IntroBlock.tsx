@@ -67,7 +67,7 @@ const IntroBlock: React.FC<{
     superTitle,
     superTitleAs,
     text,
-    textType = 'copy-b',
+    textType = 'copy',
     primaryAction,
     secondaryAction,
     isCentered = false,
