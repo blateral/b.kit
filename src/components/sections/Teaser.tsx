@@ -64,7 +64,7 @@ const VideoWrapper = styled.div<{ ratio?: { x: number; y: number } }>`
     height: 100%;
 
     @media ${mq.semilarge} {
-        aspect-ratio: ${({ ratio }) => (ratio ? ratio.x / ratio.y : 1 / 1)};
+        aspect-ratio: ${({ ratio }) => (ratio ? ratio.x / ratio.y : 16 / 9)};
         border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
         overflow: hidden;
     }
