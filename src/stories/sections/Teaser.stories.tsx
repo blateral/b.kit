@@ -41,7 +41,9 @@ export const WithVideo: Story = () => (
     <Teaser
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
-        videoUrl="images/videos/alps_stockvideo.mp4"
+        video={{
+            url: 'images/videos/alps_stockvideo.mp4',
+        }}
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -414,8 +416,10 @@ export const WithVideoFormatA: Story = () => (
         bgMode="splitted"
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
-        videoUrl="images/videos/alps_stockvideo.mp4"
-        aspectRatio={{ x: 4, y: 3 }}
+        video={{
+            url: 'images/videos/alps_stockvideo.mp4',
+            aspectRatio: { x: 4, y: 3 },
+        }}
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -445,8 +449,10 @@ export const WithVideoFormatB: Story = () => (
         bgMode="splitted"
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
-        videoUrl="images/videos/alps_stockvideo.mp4"
-        aspectRatio={{ x: 3, y: 4 }}
+        video={{
+            url: 'images/videos/alps_stockvideo.mp4',
+            aspectRatio: { x: 3, y: 4 },
+        }}
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
@@ -476,8 +482,10 @@ export const WithVideoFormatC: Story = () => (
         bgMode="splitted"
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
-        videoUrl="images/videos/alps_stockvideo.mp4"
-        aspectRatio={{ x: 1, y: 1 }}
+        video={{
+            url: 'images/videos/alps_stockvideo.mp4',
+            aspectRatio: { x: 1, y: 1 },
+        }}
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>
