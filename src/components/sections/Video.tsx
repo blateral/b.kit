@@ -1,14 +1,11 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from 'styled-components';
-
+import React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
-import { getColors as color, getGlobals as global } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Wrapper from 'components/base/Wrapper';
 import { ImageProps } from 'components/blocks/Image';
 
 import VideoCard from 'components/blocks/VideoCard';
-import Grid from 'components/base/Grid';
 
 const Video: React.FC<{
     bgImage: ImageProps;
@@ -16,7 +13,7 @@ const Video: React.FC<{
     playIcon?: React.ReactChild;
     bgMode?: 'full' | 'inverted';
 }> = ({ bgMode, bgImage, embedId, playIcon }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
@@ -24,26 +21,20 @@ const Video: React.FC<{
         <Section
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation
         >
-            <Wrapper
-                addWhitespace={global(theme).sections.edgeRadius ? true : false}
-            >
-                <Grid.Row>
-                    <Grid.Col>
-                        <VideoCard
-                            bgImage={bgImage}
-                            embedId={embedId}
-                            playIcon={playIcon}
-                        />
-                    </Grid.Col>
-                </Grid.Row>
+            <Wrapper addWhitespace>
+                <VideoCard
+                    bgImage={bgImage}
+                    embedId={embedId}
+                    playIcon={playIcon}
+                />
             </Wrapper>
         </Section>
     );

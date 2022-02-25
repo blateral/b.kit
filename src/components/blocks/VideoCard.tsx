@@ -80,6 +80,7 @@ const VideoControls = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     color: ${({ theme }) => color(theme).new.elementBg.light};
+    z-index: 1;
 
     & > * {
         opacity: 0.8;
