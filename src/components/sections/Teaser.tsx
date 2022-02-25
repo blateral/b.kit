@@ -117,8 +117,10 @@ const Teaser: FC<{
 
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-    videoUrl?: string;
-    aspectRatio?: { x: number; y: number };
+    video?: {
+        url: string;
+        aspectRatio?: { x: number; y: number };
+    };
 }> = ({
     isMirrored = false,
     bgMode,
@@ -130,8 +132,7 @@ const Teaser: FC<{
     text,
     primaryAction,
     secondaryAction,
-    videoUrl,
-    aspectRatio,
+    video,
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
@@ -172,10 +173,10 @@ const Teaser: FC<{
                                 />
                             )}
                         </ImageWrapper>
-                        {videoUrl && !image && (
-                            <VideoWrapper ratio={aspectRatio}>
+                        {video && !image && (
+                            <VideoWrapper ratio={video.aspectRatio}>
                                 <StyledVideo
-                                    src={videoUrl}
+                                    src={video.url}
                                     muted
                                     autoPlay
                                     loop
