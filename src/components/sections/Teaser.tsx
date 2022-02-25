@@ -62,10 +62,9 @@ const VideoWrapper = styled.div<{ ratio?: { x: number; y: number } }>`
     position: relative;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    aspect-ratio: ${({ ratio }) => (ratio ? ratio.x / ratio.y : 1 / 1)};
 
     @media ${mq.semilarge} {
+        aspect-ratio: ${({ ratio }) => (ratio ? ratio.x / ratio.y : 1 / 1)};
         border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
         overflow: hidden;
     }
@@ -73,14 +72,19 @@ const VideoWrapper = styled.div<{ ratio?: { x: number; y: number } }>`
 
 const StyledVideo = styled.video<{ isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
-
+    width: 100%;
     height: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 50%;
-    transform: translateX(-50%);
+
+    @media ${mq.semilarge} {
+        width: auto;
+
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 `;
 
 const Teaser: FC<{
