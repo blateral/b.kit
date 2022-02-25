@@ -24,6 +24,94 @@ const getGridColOfContent = () => {
     `;
 };
 
+const WideVideoContainer = styled.div<{ isMirrored?: boolean }>`
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 400px;
+    height: 100%;
+
+    @media ${mq.semilarge} {
+        position: absolute;
+        /** 
+            calculate width of 6 grid cols (grid width = viewport width without wrapper paddings)
+            and add left or right wrapper padding afterwards
+         */
+        width: calc(
+            ${getGridWidth({
+                    cols: 6,
+                    gridWidth: `100% - ${wrapperWhitespace * 2}px `,
+                })} + ${wrapperWhitespace}px
+        );
+        left: ${({ isMirrored }) => (isMirrored ? 'auto' : '0')};
+        right: ${({ isMirrored }) => (isMirrored ? '0' : 'auto')};
+    }
+
+    @media ${mq.xlarge} {
+        /** 
+            calculate width of 1 grid cols
+            and add left or right wrapper padding afterwards. Then add this to 50% of current
+            viewport width.
+         */
+        width: calc(50% + ${getGridColOfContent()} + ${wrapperWhitespace}px);
+    }
+
+    @media ${mq.xxxLarge} {
+        /** 
+            calculate width of 1 grid cols
+            and add left or right wrapper padding afterwards. Then add this to 50% of large wrapper width.
+         */
+        width: calc(
+            ${spacings.wrapperLarge / 2}px + ${getGridColOfContent()} +
+                ${wrapperWhitespace}px
+        );
+
+        left: ${({ isMirrored }) => (isMirrored ? 'auto' : '50%')};
+        right: ${({ isMirrored }) => (isMirrored ? '50%' : 'auto')};
+
+        ${({ isMirrored }) =>
+            css`
+                transform: translateX(
+                    calc(
+                        ${isMirrored ? '100% - ' : '-100% + '}
+                            (${getGridColOfContent()} + ${wrapperWhitespace}px)
+                    )
+                );
+            `};
+    }
+`;
+
+const VideoWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    @media ${mq.semilarge} {
+        aspect-ratio: 16 / 9;
+        border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+        overflow: hidden;
+    }
+`;
+
+const StyledVideo = styled.video<{ isVisible?: boolean }>`
+    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+    width: 100%;
+    height: 100%;
+
+    @media ${mq.semilarge} {
+        width: auto;
+
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+`;
+
 const WideImage = styled(Image)<{ isMirrored?: boolean }>`
     position: relative;
     top: 0;
@@ -135,6 +223,8 @@ const TeaserWide: FC<{
 
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    videoUrl?: string;
 }> = ({
     isMirrored = false,
     superTitle,
@@ -146,11 +236,14 @@ const TeaserWide: FC<{
     primaryAction,
     secondaryAction,
     bgMode,
+    videoUrl,
 }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
+    const [loaded, setLoaded] = React.useState(false);
 
     return (
         <Section
@@ -165,6 +258,20 @@ const TeaserWide: FC<{
         >
             {image && (
                 <WideImage coverSpace {...image} isMirrored={isMirrored} />
+            )}
+            {videoUrl && !image && (
+                <WideVideoContainer>
+                    <VideoWrapper>
+                        <StyledVideo
+                            src={videoUrl}
+                            muted
+                            autoPlay
+                            loop
+                            isVisible={loaded}
+                            onCanPlayThrough={() => setLoaded(true)}
+                        />
+                    </VideoWrapper>
+                </WideVideoContainer>
             )}
             <Wrapper clampWidth="normal" addWhitespace>
                 <Grid.Row valign="center">
