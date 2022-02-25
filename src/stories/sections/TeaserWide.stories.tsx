@@ -39,6 +39,23 @@ export const WithContent: Story = () => (
     />
 );
 
+export const WithVideo: Story = () => (
+    <TeaserWide
+        superTitle={'Lorem Ipsum Dolor'}
+        title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
+        videoUrl="images/videos/alps_stockvideo.mp4"
+        text={`
+            <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
+            <br/>
+            <br/>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /><ul><li>Lorem Ipsum</li><li>Lorem Ipsum</li><li>Lorem Ipsum</li></ul>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            <br/>
+            <br/>
+            <i>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</i>
+        `}
+    />
+);
+
 export const WithActions: Story = () => (
     <TeaserWide
         superTitle={'Lorem Ipsum Dolor'}
