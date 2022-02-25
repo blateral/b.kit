@@ -172,7 +172,7 @@ const Teaser: FC<{
                                 />
                             )}
                         </ImageWrapper>
-                        {videoUrl && (
+                        {videoUrl && !image && (
                             <VideoWrapper ratio={aspectRatio}>
                                 <StyledVideo
                                     src={videoUrl}
