@@ -58,6 +58,35 @@ const StyledActions = styled(Actions)`
     }
 `;
 
+const VideoWrapper = styled.div<{ ratio?: { x: number; y: number } }>`
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    @media ${mq.semilarge} {
+        aspect-ratio: ${({ ratio }) => (ratio ? ratio.x / ratio.y : 16 / 9)};
+        border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+        overflow: hidden;
+    }
+`;
+
+const StyledVideo = styled.video<{ isVisible?: boolean }>`
+    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+    width: 100%;
+    height: 100%;
+
+    @media ${mq.semilarge} {
+        width: auto;
+
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+`;
+
 const Teaser: FC<{
     /** Switch text and image columns */
     isMirrored?: boolean;
@@ -88,6 +117,8 @@ const Teaser: FC<{
 
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    videoUrl?: string;
+    aspectRatio?: { x: number; y: number };
 }> = ({
     isMirrored = false,
     bgMode,
@@ -99,9 +130,12 @@ const Teaser: FC<{
     text,
     primaryAction,
     secondaryAction,
+    videoUrl,
+    aspectRatio,
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
+    const [loaded, setLoaded] = React.useState(false);
 
     return (
         <Section
@@ -138,6 +172,18 @@ const Teaser: FC<{
                                 />
                             )}
                         </ImageWrapper>
+                        {videoUrl && !image && (
+                            <VideoWrapper ratio={aspectRatio}>
+                                <StyledVideo
+                                    src={videoUrl}
+                                    muted
+                                    autoPlay
+                                    loop
+                                    isVisible={loaded}
+                                    onCanPlayThrough={() => setLoaded(true)}
+                                />
+                            </VideoWrapper>
+                        )}
                     </Grid.Col>
 
                     <Grid.Col

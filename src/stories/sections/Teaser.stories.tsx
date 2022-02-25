@@ -37,6 +37,23 @@ export const WithContent: Story = () => (
     />
 );
 
+export const WithVideo: Story = () => (
+    <Teaser
+        superTitle={'Lorem Ipsum Dolor'}
+        title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
+        videoUrl="images/videos/alps_stockvideo.mp4"
+        text={`
+            <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
+            <br/>
+            <br/>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /><ul><li>Lorem Ipsum</li><li>Lorem Ipsum</li><li>Lorem Ipsum</li></ul>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            <br/>
+            <br/>
+            <i>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</i>
+        `}
+    />
+);
+
 export const WithImageDescription: Story = () => (
     <Teaser
         superTitle={'Lorem Ipsum Dolor'}
@@ -391,3 +408,96 @@ export const WithImageFormatC: Story = () => (
 );
 
 WithImageFormatC.storyName = 'With 1:1 image';
+
+export const WithVideoFormatA: Story = () => (
+    <Teaser
+        bgMode="splitted"
+        superTitle={'Lorem Ipsum Dolor'}
+        title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
+        videoUrl="images/videos/alps_stockvideo.mp4"
+        aspectRatio={{ x: 4, y: 3 }}
+        text={`
+            <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
+            <br/>
+            <br/>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /><ul><li>Lorem Ipsum</li><li>Lorem Ipsum</li><li>Lorem Ipsum</li></ul>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            <br/>
+            <br/>
+            <i>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</i>
+        `}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+WithVideoFormatA.storyName = 'With 4:3 video';
+
+export const WithVideoFormatB: Story = () => (
+    <Teaser
+        bgMode="splitted"
+        superTitle={'Lorem Ipsum Dolor'}
+        title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
+        videoUrl="images/videos/alps_stockvideo.mp4"
+        aspectRatio={{ x: 3, y: 4 }}
+        text={`
+            <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
+            <br/>
+            <br/>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /><ul><li>Lorem Ipsum</li><li>Lorem Ipsum</li><li>Lorem Ipsum</li></ul>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            <br/>
+            <br/>
+            <i>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</i>
+        `}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+WithVideoFormatB.storyName = 'With 3:4 video';
+
+export const WithVideoFormatC: Story = () => (
+    <Teaser
+        bgMode="splitted"
+        superTitle={'Lorem Ipsum Dolor'}
+        title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
+        videoUrl="images/videos/alps_stockvideo.mp4"
+        aspectRatio={{ x: 1, y: 1 }}
+        text={`
+            <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
+            <br/>
+            <br/>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /><ul><li>Lorem Ipsum</li><li>Lorem Ipsum</li><li>Lorem Ipsum</li></ul>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            <br/>
+            <br/>
+            <i>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</i>
+        `}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+WithVideoFormatC.storyName = 'With 1:1 Video';
