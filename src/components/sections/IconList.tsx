@@ -5,7 +5,7 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import { mq, spacings } from 'utils/styles';
+import { mq, spacings, getGlobals as global } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Pointer from 'components/buttons/Pointer';
 
@@ -54,9 +54,10 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     }
 `;
 
-const Item = styled.img<{ isVisible?: boolean; index: number }>`
-    display: block;
-
+const Item = styled.div<{
+    isVisible?: boolean;
+    index: number;
+}>`
     padding-top: ${spacings.nudge * 2}px;
     padding-left: ${spacings.nudge * 2}px;
 
@@ -77,6 +78,17 @@ const Item = styled.img<{ isVisible?: boolean; index: number }>`
         display: ${({ index, isVisible }) =>
             isVisible || index < 10 ? 'block' : 'none'};
     }
+`;
+
+const Image = styled.img<{ isInverted?: boolean }>`
+    display: block;
+    width: 100%;
+    object-fit: contain;
+
+    background: ${({ theme, isInverted }) =>
+        isInverted
+            ? global(theme).sections.imagePlaceholderBg.inverted
+            : global(theme).sections.imagePlaceholderBg.default};
 `;
 
 const ShowMore = styled(Copy)<{ itemCount?: number; isCentered?: boolean }>`
@@ -109,7 +121,11 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
 
 const IconList: React.FC<{
     /** Array with icon items data */
-    items: Array<{ src: string; alt?: string }>;
+    items: Array<{
+        src: string;
+        alt?: string;
+        size?: { height: number; width: number };
+    }>;
 
     /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -164,15 +180,17 @@ const IconList: React.FC<{
                         isVisible={!showMore ? true : showMore === true}
                         isCentered={isCentered}
                     >
-                        {items.map(({ src, alt }, i) => {
+                        {items.map(({ src, alt, size }, i) => {
                             return (
-                                <Item
-                                    isVisible={showMore}
-                                    index={i}
-                                    key={i}
-                                    src={src}
-                                    alt={alt}
-                                />
+                                <Item isVisible={showMore} index={i} key={i}>
+                                    <Image
+                                        isInverted={isInverted}
+                                        src={src}
+                                        alt={alt}
+                                        height={size?.height}
+                                        width={size?.width}
+                                    />
+                                </Item>
                             );
                         })}
                     </Items>

@@ -8,98 +8,194 @@ const Items = [
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/180x70',
         alt: '',
+        size: {
+            width: 180,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/70x70',
         alt: '',
+        size: {
+            width: 70,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/300x70',
         alt: '',
+        size: {
+            width: 300,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/150x70',
         alt: '',
+        size: {
+            width: 150,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/150x70',
         alt: '',
+        size: {
+            width: 150,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/95x70',
         alt: '',
+        size: {
+            width: 95,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/350x70',
         alt: '',
+        size: {
+            width: 350,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/170x70',
         alt: '',
+        size: {
+            width: 170,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/170x70',
         alt: '',
+        size: {
+            width: 170,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/50x70',
         alt: '',
+        size: {
+            width: 50,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/230x70',
         alt: '',
+        size: {
+            width: 230,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/70x70',
         alt: '',
+        size: {
+            width: 70,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/100x70',
         alt: '',
+        size: {
+            width: 100,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/120x70',
         alt: '',
+        size: {
+            width: 120,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
     {
         src: 'https://via.placeholder.com/200x70',
         alt: '',
+        size: {
+            width: 200,
+            height: 70,
+        },
     },
 ];
 
