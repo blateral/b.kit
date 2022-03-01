@@ -16,8 +16,8 @@ export const Default: Story = () => (
     <PriceList
         items={[
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -26,8 +26,9 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -36,8 +37,9 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -46,8 +48,9 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -56,8 +59,9 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -66,8 +70,9 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -76,8 +81,9 @@ export const Default: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -94,8 +100,9 @@ export const HasBackground: Story = () => (
         bgMode="full"
         items={[
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -104,8 +111,9 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -114,8 +122,9 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -124,8 +133,9 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -134,8 +144,9 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -144,8 +155,9 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -154,8 +166,9 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -172,8 +185,9 @@ export const IsInverted: Story = () => (
         bgMode="inverted"
         items={[
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -182,8 +196,9 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -192,8 +207,9 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -202,8 +218,9 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -212,8 +229,9 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -222,8 +240,9 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -232,8 +251,9 @@ export const IsInverted: Story = () => (
                 price: '19,00',
             },
             {
-                text: `<b>Lorem Ipsum Dolor Sit</b>
-                    <br />
+                title: 'Lorem Ipsum Dolor Sit',
+
+                text: `
                     <div>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
