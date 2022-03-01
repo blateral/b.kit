@@ -211,7 +211,7 @@ const TeaserWide: FC<{
     titleAs?: HeadlineTag;
 
     /** Images for different screen sizes */
-    image?: Omit<ImageProps, 'coverSpace'>;
+    image?: Omit<ImageProps, 'coverSpace' | 'ratios'>;
 
     /**
      * Use video instead of an image. Until video is loaded images defined in the image prop are used.
@@ -262,7 +262,12 @@ const TeaserWide: FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             {image && (!video || !isLoaded) && (
-                <WideImage coverSpace {...image} isMirrored={isMirrored} />
+                <WideImage
+                    coverSpace
+                    {...image}
+                    isMirrored={isMirrored}
+                    ratios={undefined}
+                />
             )}
             {video && video.length > 0 && (
                 <WideVideo isVisible={isLoaded}>

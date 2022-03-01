@@ -43,32 +43,37 @@ const StyledImage = styled(Image)`
     }
 `;
 
-const VideoContainer = styled.div<{ ratio?: number; isVisible?: boolean }>`
+const Video = styled.video<{ ratios?: VideoAspectRatios; isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
-    position: relative;
     width: 100%;
     height: 100%;
 
-    @media ${mq.semilarge} {
-        aspect-ratio: ${({ ratio }) => ratio || 1};
-        border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-        overflow: hidden;
+    aspect-ratio: ${({ ratios }) => ratios?.small || 1};
+    object-fit: cover;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+
+    @media ${mq.medium} {
+        @supports (aspect-ratio: auto) {
+            aspect-ratio: ${({ ratios }) => ratios?.medium};
+        }
     }
-`;
-
-const StyledVideo = styled.video`
-    width: 100%;
-    height: 100%;
 
     @media ${mq.semilarge} {
-        width: auto;
+        @supports (aspect-ratio: auto) {
+            aspect-ratio: ${({ ratios }) => ratios?.semilarge};
+        }
+    }
 
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 50%;
-        transform: translateX(-50%);
+    @media ${mq.large} {
+        @supports (aspect-ratio: auto) {
+            aspect-ratio: ${({ ratios }) => ratios?.large};
+        }
+    }
+
+    @media ${mq.xlarge} {
+        @supports (aspect-ratio: auto) {
+            aspect-ratio: ${({ ratios }) => ratios?.xlarge};
+        }
     }
 `;
 
@@ -86,6 +91,14 @@ const StyledActions = styled(Actions)`
         margin-top: ${spacings.spacer}px;
     }
 `;
+
+interface VideoAspectRatios {
+    small: number;
+    medium?: number;
+    semilarge?: number;
+    large?: number;
+    xlarge?: number;
+}
 
 const Teaser: FC<{
     /** Switch text and image columns */
@@ -112,7 +125,7 @@ const Teaser: FC<{
      */
     video?: {
         urls: string[];
-        aspectRatio?: number;
+        aspectRatios?: VideoAspectRatios;
     };
 
     /** Image or video description text (richtext) */
@@ -174,26 +187,24 @@ const Teaser: FC<{
                         {(image || video) && (
                             <Figure>
                                 {image && (!video || !isLoaded) && (
-                                    <StyledImage {...image} />
+                                    <StyledImage
+                                        {...image}
+                                        isInverted={isInverted}
+                                    />
                                 )}
                                 {video?.urls && video.urls.length > 0 && (
-                                    <VideoContainer
-                                        ratio={video.aspectRatio}
+                                    <Video
+                                        muted
+                                        autoPlay
+                                        loop
+                                        onCanPlayThrough={() => setLoaded(true)}
+                                        ratios={video.aspectRatios}
                                         isVisible={isLoaded}
                                     >
-                                        <StyledVideo
-                                            muted
-                                            autoPlay
-                                            loop
-                                            onCanPlayThrough={() =>
-                                                setLoaded(true)
-                                            }
-                                        >
-                                            {video.urls.map((url, i) => (
-                                                <source src={url} key={i} />
-                                            ))}
-                                        </StyledVideo>
-                                    </VideoContainer>
+                                        {video.urls.map((url, i) => (
+                                            <source src={url} key={i} />
+                                        ))}
+                                    </Video>
                                 )}
                                 {description && (
                                     <Description

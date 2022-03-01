@@ -381,6 +381,11 @@ export interface GlobalSettings {
         edgeRadius: string | null;
         /** Customnize gradient for all text on image background gradients */
         imageTextGradient: string;
+        /** Show placeholder background unitl image has been loaded */
+        imagePlaceholderBg: {
+            default: string;
+            inverted: string;
+        };
         /** Date and Time Formats for all news sections */
         newsDateFormat: string;
         newsTimeFormat: string;
@@ -414,6 +419,10 @@ const defaultGlobalSettings: GlobalSettings = {
                 rgba(0, 0, 0, 0) 100%
             );
         `,
+        imagePlaceholderBg: {
+            default: '#e2e2e2',
+            inverted: '#1e1c1f',
+        },
         newsDateFormat: 'dd/mm/yy',
         newsTimeFormat: 'hh:mm',
         newsLocaleKey: 'de',
