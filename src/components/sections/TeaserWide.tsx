@@ -10,6 +10,7 @@ import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import IntroBlock from 'components/blocks/IntroBlock';
+import VideoBlock, { VideoAspectRatios } from 'components/blocks/VideoBlock';
 
 /**
  * calculate single grid col from relative content wrapper
@@ -24,7 +25,10 @@ const getGridColOfContent = () => {
     `;
 };
 
-const WideVideo = styled.div<{ isMirrored?: boolean; isVisible?: boolean }>`
+const WideVideo = styled(VideoBlock)<{
+    isMirrored?: boolean;
+    isVisible?: boolean;
+}>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
     position: relative;
     top: 0;
@@ -32,6 +36,10 @@ const WideVideo = styled.div<{ isMirrored?: boolean; isVisible?: boolean }>`
     bottom: 0;
     width: 100%;
     height: 100%;
+
+    min-height: 400px;
+    object-fit: cover;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     @media ${mq.semilarge} {
         position: absolute;
@@ -80,36 +88,6 @@ const WideVideo = styled.div<{ isMirrored?: boolean; isVisible?: boolean }>`
                     )
                 );
             `};
-    }
-`;
-
-const VideoContainer = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100%;
-
-    @media ${mq.semilarge} {
-        aspect-ratio: 16 / 9;
-        border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-        overflow: hidden;
-    }
-`;
-
-const StyledVideo = styled.video`
-    width: 100%;
-    height: 100%;
-    min-height: 400px;
-    object-fit: cover;
-
-    @media ${mq.semilarge} {
-        width: auto;
-
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 50%;
-        transform: translateX(-50%);
     }
 `;
 
@@ -211,13 +189,16 @@ const TeaserWide: FC<{
     titleAs?: HeadlineTag;
 
     /** Images for different screen sizes */
-    image?: Omit<ImageProps, 'coverSpace' | 'ratios'>;
+    image?: Omit<ImageProps, 'coverSpace'>;
 
     /**
      * Use video instead of an image. Until video is loaded images defined in the image prop are used.
      * Multiple video urls can be used to loaded different file formats
      */
-    video?: string[];
+    video?: {
+        urls: string[];
+        aspectRatios?: VideoAspectRatios;
+    };
 
     /** Main richtext */
     text?: string;
@@ -266,24 +247,19 @@ const TeaserWide: FC<{
                     coverSpace
                     {...image}
                     isMirrored={isMirrored}
-                    ratios={undefined}
+                    isInverted={isInverted}
                 />
             )}
-            {video && video.length > 0 && (
-                <WideVideo isVisible={isLoaded}>
-                    <VideoContainer>
-                        <StyledVideo
-                            muted
-                            autoPlay
-                            loop
-                            onCanPlayThrough={() => setLoaded(true)}
-                        >
-                            {video.map((url, i) => (
-                                <source src={url} key={i} />
-                            ))}
-                        </StyledVideo>
-                    </VideoContainer>
-                </WideVideo>
+            {video?.urls && video.urls.length > 0 && (
+                <WideVideo
+                    urls={video?.urls}
+                    muted
+                    autoPlay
+                    loop
+                    onCanPlayThrough={() => setLoaded(true)}
+                    isVisible={isLoaded}
+                    ratios={video?.aspectRatios}
+                />
             )}
             <Wrapper clampWidth="normal" addWhitespace>
                 <Grid.Row valign="center">

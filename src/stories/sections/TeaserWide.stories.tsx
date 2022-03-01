@@ -26,6 +26,10 @@ export const WithContent: Story = () => (
             semilarge: 'https://unsplash.it/791/594',
             large: 'https://unsplash.it/1082/876',
             xlarge: 'https://unsplash.it/1200/971',
+            ratios: {
+                small: 4 / 3,
+                semilarge: 1,
+            },
         }}
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
@@ -49,8 +53,16 @@ export const WithVideo: Story = () => (
             semilarge: 'https://unsplash.it/791/594',
             large: 'https://unsplash.it/1082/876',
             xlarge: 'https://unsplash.it/1200/971',
+            ratios: {
+                small: 4 / 3,
+            },
         }}
-        video={['images/videos/alps_stockvideo.mp4']}
+        video={{
+            urls: ['images/videos/alps_stockvideo.mp4'],
+            aspectRatios: {
+                small: 4 / 3,
+            },
+        }}
         text={`
             <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b>
             <br/>

@@ -11,6 +11,7 @@ import { mq, spacings, getGlobals as global } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import IntroBlock from 'components/blocks/IntroBlock';
+import VideoBlock, { VideoAspectRatios } from 'components/blocks/VideoBlock';
 
 const Figure = styled.figure`
     display: flex;
@@ -43,38 +44,13 @@ const StyledImage = styled(Image)`
     }
 `;
 
-const Video = styled.video<{ ratios?: VideoAspectRatios; isVisible?: boolean }>`
+const Video = styled(VideoBlock)<{
+    ratios?: VideoAspectRatios;
+    isVisible?: boolean;
+}>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
     width: 100%;
     height: 100%;
-
-    aspect-ratio: ${({ ratios }) => ratios?.small || 1};
-    object-fit: cover;
-    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-
-    @media ${mq.medium} {
-        @supports (aspect-ratio: auto) {
-            aspect-ratio: ${({ ratios }) => ratios?.medium};
-        }
-    }
-
-    @media ${mq.semilarge} {
-        @supports (aspect-ratio: auto) {
-            aspect-ratio: ${({ ratios }) => ratios?.semilarge};
-        }
-    }
-
-    @media ${mq.large} {
-        @supports (aspect-ratio: auto) {
-            aspect-ratio: ${({ ratios }) => ratios?.large};
-        }
-    }
-
-    @media ${mq.xlarge} {
-        @supports (aspect-ratio: auto) {
-            aspect-ratio: ${({ ratios }) => ratios?.xlarge};
-        }
-    }
 `;
 
 const Description = styled(Copy)`
@@ -91,14 +67,6 @@ const StyledActions = styled(Actions)`
         margin-top: ${spacings.spacer}px;
     }
 `;
-
-interface VideoAspectRatios {
-    small: number;
-    medium?: number;
-    semilarge?: number;
-    large?: number;
-    xlarge?: number;
-}
 
 const Teaser: FC<{
     /** Switch text and image columns */
@@ -194,17 +162,14 @@ const Teaser: FC<{
                                 )}
                                 {video?.urls && video.urls.length > 0 && (
                                     <Video
+                                        urls={video.urls}
                                         muted
                                         autoPlay
                                         loop
                                         onCanPlayThrough={() => setLoaded(true)}
                                         ratios={video.aspectRatios}
                                         isVisible={isLoaded}
-                                    >
-                                        {video.urls.map((url, i) => (
-                                            <source src={url} key={i} />
-                                        ))}
-                                    </Video>
+                                    />
                                 )}
                                 {description && (
                                     <Description
