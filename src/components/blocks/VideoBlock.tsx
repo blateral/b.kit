@@ -2,13 +2,23 @@ import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 import { getGlobals as global, mq } from 'utils/styles';
 
-const AspectContainer = styled.div<{ ratios?: VideoAspectRatios }>`
+const AspectContainer = styled.div<{
+    ratios?: VideoAspectRatios;
+    isInverted?: boolean;
+}>`
     position: relative;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     overflow: hidden;
 
     aspect-ratio: ${({ ratios }) => ratios?.small};
     width: ${({ ratios }) => ratios?.small && '100%'};
+    max-width: 100%;
+
+    background: ${({ theme, isInverted }) =>
+        isInverted
+            ? global(theme).sections.imagePlaceholderBg.inverted
+            : global(theme).sections.imagePlaceholderBg.default};
+    object-position: center;
 
     @supports not (aspect-ratio: auto) {
         height: ${({ ratios }) => ratios?.small && 0};
@@ -70,9 +80,8 @@ const AspectContainer = styled.div<{ ratios?: VideoAspectRatios }>`
         `}
 `;
 
-const Video = styled.video<{ ratios?: VideoAspectRatios }>`
+const Video = styled.video`
     display: block;
-    max-width: 100%;
 `;
 
 export interface VideoAspectRatios {
@@ -86,6 +95,7 @@ export interface VideoAspectRatios {
 export interface VideoProps {
     urls?: string[];
     ratios?: VideoAspectRatios;
+    isInverted?: boolean;
 
     muted?: boolean;
     autoPlay?: boolean;
@@ -97,6 +107,7 @@ export interface VideoProps {
 const VideoBlock: FC<VideoProps & { className?: string }> = ({
     urls,
     ratios,
+    isInverted,
     muted = false,
     autoPlay = false,
     loop = false,
@@ -105,7 +116,11 @@ const VideoBlock: FC<VideoProps & { className?: string }> = ({
     className,
 }) => {
     return (
-        <AspectContainer ratios={ratios} className={className}>
+        <AspectContainer
+            ratios={ratios}
+            isInverted={isInverted}
+            className={className}
+        >
             <Video
                 muted={muted}
                 autoPlay={autoPlay}

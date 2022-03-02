@@ -158,6 +158,7 @@ const Teaser: FC<{
                                     <StyledImage
                                         {...image}
                                         isInverted={isInverted}
+                                        coverSpace
                                     />
                                 )}
                                 {video?.urls && video.urls.length > 0 && (
