@@ -34,7 +34,6 @@ const Img = styled.img<{
 
     @supports (aspect-ratio: auto) {
         aspect-ratio: ${({ ratios }) => ratios?.small};
-        object-fit: ${({ ratios }) => ratios?.small && 'cover'};
     }
 
     background: ${({ theme, isInverted }) =>
@@ -53,28 +52,24 @@ const Img = styled.img<{
     @media ${mq.medium} {
         @supports (aspect-ratio: auto) {
             aspect-ratio: ${({ ratios }) => ratios?.medium};
-            object-fit: ${({ ratios }) => ratios?.medium && 'cover'};
         }
     }
 
     @media ${mq.semilarge} {
         @supports (aspect-ratio: auto) {
             aspect-ratio: ${({ ratios }) => ratios?.semilarge};
-            object-fit: ${({ ratios }) => ratios?.semilarge && 'cover'};
         }
     }
 
     @media ${mq.large} {
         @supports (aspect-ratio: auto) {
             aspect-ratio: ${({ ratios }) => ratios?.large};
-            object-fit: ${({ ratios }) => ratios?.large && 'cover'};
         }
     }
 
     @media ${mq.xlarge} {
         @supports (aspect-ratio: auto) {
             aspect-ratio: ${({ ratios }) => ratios?.xlarge};
-            object-fit: ${({ ratios }) => ratios?.xlarge && 'cover'};
         }
     }
 `;
