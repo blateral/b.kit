@@ -97,8 +97,13 @@ const WideImage = styled(Image)<{ isMirrored?: boolean }>`
     left: 0;
     bottom: 0;
     width: 100%;
-    min-height: 400px;
+
     height: 100%;
+
+    img {
+        min-height: 400px;
+        height: 100%;
+    }
 
     @media ${mq.semilarge} {
         position: absolute;
