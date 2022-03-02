@@ -17,6 +17,7 @@ const ItemList = styled.ul`
 `;
 
 const ItemBlock = styled.li<{ hasBg?: boolean }>`
+    display: flex;
     max-width: 100%;
 
     padding: ${spacings.nudge * 2}px;
@@ -26,27 +27,18 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
             ? color(theme).new.elementBg.light
             : color(theme).new.elementBg.medium};
 
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+
     @media ${mq.medium} {
         padding: ${spacings.nudge * 3}px;
     }
 `;
 
 const ListHead = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: space-between;
-
-    margin-bottom: ${spacings.nudge * 2}px;
-
     & > * + * {
-        margin-left: ${spacings.nudge * 2}px;
-    }
-
-    @media ${mq.semilarge} {
-        & > * + * {
-            margin-left: ${spacings.nudge * 3}px;
-        }
+        margin-top: ${spacings.nudge * 2}px;
     }
 `;
 
@@ -66,9 +58,9 @@ const PriceBlock: React.FC<PriceItems & { hasBg?: boolean }> = ({
         <ItemBlock hasBg={hasBg}>
             <ListHead>
                 {title && <Copy type="copy-b">{title}</Copy>}
-                {price && <Copy type="copy-b">{price}€</Copy>}
+                {text && <Copy type="copy" innerHTML={text} />}
             </ListHead>
-            {text && <Copy type="copy" innerHTML={text} />}
+            {price && <Copy type="copy-b">{price}€</Copy>}
         </ItemBlock>
     );
 };
