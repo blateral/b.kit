@@ -70,6 +70,7 @@ const Fact = forwardRef<
                 {image && (
                     <ImageContainer isCentered={isCentered}>
                         <StyledImage
+                            isInverted={isInverted}
                             small={image.small}
                             medium={image.medium}
                             semilarge={image.semilarge}
@@ -77,6 +78,8 @@ const Fact = forwardRef<
                             xlarge={image.xlarge}
                             alt={image.alt}
                             coverSpace={image.coverSpace}
+                            ratios={image.ratios}
+                            showPlaceholder={image.showPlaceholder}
                         />
                     </ImageContainer>
                 )}
