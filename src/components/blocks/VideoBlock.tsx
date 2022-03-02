@@ -17,6 +17,8 @@ const AspectContainer = styled.div<{ ratios?: VideoAspectRatios }>`
     }
 
     @media ${mq.medium} {
+        aspect-ratio: ${({ ratios }) => ratios?.medium};
+
         @supports not (aspect-ratio: auto) {
             padding-top: ${({ ratios }) =>
                 ratios?.medium && `calc(100% / ${ratios?.medium})`};
@@ -24,6 +26,8 @@ const AspectContainer = styled.div<{ ratios?: VideoAspectRatios }>`
     }
 
     @media ${mq.semilarge} {
+        aspect-ratio: ${({ ratios }) => ratios?.semilarge};
+
         @supports not (aspect-ratio: auto) {
             padding-top: ${({ ratios }) =>
                 ratios?.semilarge && `calc(100% / ${ratios?.semilarge})`};
@@ -31,6 +35,8 @@ const AspectContainer = styled.div<{ ratios?: VideoAspectRatios }>`
     }
 
     @media ${mq.large} {
+        aspect-ratio: ${({ ratios }) => ratios?.large};
+
         @supports not (aspect-ratio: auto) {
             padding-top: ${({ ratios }) =>
                 ratios?.large && `calc(100% / ${ratios?.large})`};
@@ -38,6 +44,8 @@ const AspectContainer = styled.div<{ ratios?: VideoAspectRatios }>`
     }
 
     @media ${mq.xlarge} {
+        aspect-ratio: ${({ ratios }) => ratios?.xlarge};
+
         @supports not (aspect-ratio: auto) {
             padding-top: ${({ ratios }) =>
                 ratios?.xlarge && `calc(100% / ${ratios?.xlarge})`};
