@@ -23,17 +23,18 @@ export interface ImageProps {
     ratios?: ImageAspectRatios;
 }
 
-const AspectContainer = styled.div<{
+const Img = styled.img<{
+    coverSpace?: boolean;
     ratios?: ImageAspectRatios;
     isInverted?: boolean;
-    coverSpace?: boolean;
 }>`
-    position: relative;
-    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-    overflow: hidden;
-
-    aspect-ratio: ${({ ratios }) => ratios?.small};
     max-width: 100%;
+    display: block;
+    align-self: flex-start;
+
+    @supports (aspect-ratio: auto) {
+        aspect-ratio: ${({ ratios }) => ratios?.small};
+    }
 
     background: ${({ theme, isInverted }) =>
         isInverted
@@ -44,73 +45,43 @@ const AspectContainer = styled.div<{
     ${({ coverSpace }) =>
         coverSpace &&
         css`
-            img {
-                width: 100%;
-                object-fit: cover;
-            }
+            width: 100%;
+            object-fit: cover;
         `}
 
-    @supports not (aspect-ratio: auto) {
-        height: ${({ ratios }) => ratios?.small && 0};
-        padding-top: ${({ ratios }) =>
-            ratios?.small && `calc(100% / ${ratios?.small})`};
-    }
-
     @media ${mq.medium} {
-        aspect-ratio: ${({ ratios }) => ratios?.medium};
-
-        @supports not (aspect-ratio: auto) {
-            padding-top: ${({ ratios }) =>
-                ratios?.medium && `calc(100% / ${ratios?.medium})`};
+        @supports (aspect-ratio: auto) {
+            aspect-ratio: ${({ ratios }) => ratios?.medium};
         }
     }
 
     @media ${mq.semilarge} {
-        aspect-ratio: ${({ ratios }) => ratios?.semilarge};
-
-        @supports not (aspect-ratio: auto) {
-            padding-top: ${({ ratios }) =>
-                ratios?.semilarge && `calc(100% / ${ratios?.semilarge})`};
+        @supports (aspect-ratio: auto) {
+            aspect-ratio: ${({ ratios }) => ratios?.semilarge};
         }
     }
 
     @media ${mq.large} {
-        aspect-ratio: ${({ ratios }) => ratios?.large};
-
-        @supports not (aspect-ratio: auto) {
-            padding-top: ${({ ratios }) =>
-                ratios?.large && `calc(100% / ${ratios?.large})`};
+        @supports (aspect-ratio: auto) {
+            aspect-ratio: ${({ ratios }) => ratios?.large};
         }
     }
 
     @media ${mq.xlarge} {
-        aspect-ratio: ${({ ratios }) => ratios?.xlarge};
-
-        @supports not (aspect-ratio: auto) {
-            padding-top: ${({ ratios }) =>
-                ratios?.xlarge && `calc(100% / ${ratios?.xlarge})`};
+        @supports (aspect-ratio: auto) {
+            aspect-ratio: ${({ ratios }) => ratios?.xlarge};
         }
     }
-
-    ${({ ratios }) =>
-        ratios &&
-        css`
-            img {
-                height: 100%;
-                width: 100%;
-
-                @supports (aspect-ratio: auto) {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                }
-            }
-        `}
 `;
 
-const Img = styled.img`
-    display: block;
+const Picture = styled.picture<{ coverSpace?: boolean }>`
+    ${({ coverSpace }) =>
+        coverSpace &&
+        css`
+            display: flex;
+            height: 100%;
+            width: 100%;
+        `}
 `;
 
 const Image: React.FC<
@@ -133,22 +104,21 @@ const Image: React.FC<
     isInverted,
 }) => {
     return (
-        <AspectContainer
-            ratios={ratios}
-            coverSpace={coverSpace}
-            isInverted={isInverted}
-            className={className}
-        >
-            <picture onClick={onClick}>
-                {xlarge && <source srcSet={xlarge} media={mq.xlarge} />}
-                {large && <source srcSet={large} media={mq.large} />}
-                {semilarge && (
-                    <source srcSet={semilarge} media={mq.semilarge} />
-                )}
-                {medium && <source srcSet={medium} media={mq.medium} />}
-                <Img srcSet={small} alt={alt || ''} loading="lazy" />
-            </picture>
-        </AspectContainer>
+        <Picture coverSpace={coverSpace} onClick={onClick}>
+            {xlarge && <source srcSet={xlarge} media={mq.xlarge} />}
+            {large && <source srcSet={large} media={mq.large} />}
+            {semilarge && <source srcSet={semilarge} media={mq.semilarge} />}
+            {medium && <source srcSet={medium} media={mq.medium} />}
+            <Img
+                srcSet={small}
+                alt={alt || ''}
+                coverSpace={coverSpace}
+                loading="lazy"
+                ratios={ratios}
+                isInverted={isInverted}
+                className={className}
+            />
+        </Picture>
     );
 };
 
