@@ -1,42 +1,70 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { getGlobals as global, mq } from 'utils/styles';
 
-const View = styled.video<{ ratios?: VideoAspectRatios }>`
-    display: block;
-    max-width: 100%;
+const AspectContainer = styled.div<{ ratios?: VideoAspectRatios }>`
+    position: relative;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    overflow: hidden;
 
     aspect-ratio: ${({ ratios }) => ratios?.small};
-    object-fit: ${({ ratios }) => ratios?.small && 'cover'};
-    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    width: ${({ ratios }) => ratios?.small && '100%'};
+
+    @supports not (aspect-ratio: auto) {
+        height: ${({ ratios }) => ratios?.small && 0};
+        padding-top: ${({ ratios }) =>
+            ratios?.small && `calc(100% / ${ratios?.small})`};
+    }
 
     @media ${mq.medium} {
-        @supports (aspect-ratio: auto) {
-            aspect-ratio: ${({ ratios }) => ratios?.medium};
-            object-fit: ${({ ratios }) => ratios?.medium && 'cover'};
+        @supports not (aspect-ratio: auto) {
+            padding-top: ${({ ratios }) =>
+                ratios?.medium && `calc(100% / ${ratios?.medium})`};
         }
     }
 
     @media ${mq.semilarge} {
-        @supports (aspect-ratio: auto) {
-            aspect-ratio: ${({ ratios }) => ratios?.semilarge};
-            object-fit: ${({ ratios }) => ratios?.semilarge && 'cover'};
+        @supports not (aspect-ratio: auto) {
+            padding-top: ${({ ratios }) =>
+                ratios?.semilarge && `calc(100% / ${ratios?.semilarge})`};
         }
     }
 
     @media ${mq.large} {
-        @supports (aspect-ratio: auto) {
-            aspect-ratio: ${({ ratios }) => ratios?.large};
-            object-fit: ${({ ratios }) => ratios?.large && 'cover'};
+        @supports not (aspect-ratio: auto) {
+            padding-top: ${({ ratios }) =>
+                ratios?.large && `calc(100% / ${ratios?.large})`};
         }
     }
 
     @media ${mq.xlarge} {
-        @supports (aspect-ratio: auto) {
-            aspect-ratio: ${({ ratios }) => ratios?.xlarge};
-            object-fit: ${({ ratios }) => ratios?.xlarge && 'cover'};
+        @supports not (aspect-ratio: auto) {
+            padding-top: ${({ ratios }) =>
+                ratios?.xlarge && `calc(100% / ${ratios?.xlarge})`};
         }
     }
+
+    ${({ ratios }) =>
+        ratios &&
+        css`
+            video {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+
+                @supports not (aspect-ratio: auto) {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                }
+            }
+        `}
+`;
+
+const Video = styled.video<{ ratios?: VideoAspectRatios }>`
+    display: block;
+    max-width: 100%;
 `;
 
 export interface VideoAspectRatios {
@@ -69,19 +97,19 @@ const VideoBlock: FC<VideoProps & { className?: string }> = ({
     className,
 }) => {
     return (
-        <View
-            muted={muted}
-            autoPlay={autoPlay}
-            loop={loop}
-            controls={controls}
-            ratios={ratios}
-            onCanPlayThrough={onCanPlayThrough}
-            className={className}
-        >
-            {urls?.map((url, i) => (
-                <source src={url} key={i} />
-            ))}
-        </View>
+        <AspectContainer ratios={ratios} className={className}>
+            <Video
+                muted={muted}
+                autoPlay={autoPlay}
+                loop={loop}
+                controls={controls}
+                onCanPlayThrough={onCanPlayThrough}
+            >
+                {urls?.map((url, i) => (
+                    <source src={url} key={i} />
+                ))}
+            </Video>
+        </AspectContainer>
     );
 };
 export default VideoBlock;
