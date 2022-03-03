@@ -69,14 +69,6 @@ const base = css<{
         }
     }
 
-    *:first-child {
-        margin-top: 0;
-    }
-
-    *:last-child {
-        margin-bottom: 0;
-    }
-
     /* :not(li) > ul,
     :not(li) > ol {
         display: inline-block;
@@ -117,29 +109,37 @@ const base = css<{
 
     h2 {
         ${headingStyle('heading-2')}
-        margin-bottom: ${spacings.spacer}px;
-        margin-top: ${spacings.nudge * 5}px;
-    }
-
-    & > h2 {
-        margin-top: 0;
     }
 
     h3 {
         ${headingStyle('heading-3')}
-        margin-bottom: ${spacings.nudge * 3}px;
-        margin-top: ${spacings.nudge * 5}px;
     }
 
     h4 {
         ${headingStyle('heading-4')}
-        margin-bottom: ${spacings.nudge * 3}px;
-        margin-top: ${spacings.nudge * 5}px;
     }
 
     h5 {
         ${headingStyle('super')}
-        margin-bottom: ${spacings.nudge * 2}px;
+    }
+
+    h2,
+    h3,
+    h4,
+    h5 {
+        margin-top: ${spacings.nudge * 3}px;
+        margin-bottom: ${spacings.nudge * 3}px;
+    }
+
+    *:not(h2, h3, h4, h5) + h2,
+    *:not(h2, h3, h4, h5) + h3,
+    *:not(h2, h3, h4, h5) + h4,
+    *:not(h2, h3, h4, h5) + h5 {
+        margin-top: ${spacings.nudge * 5}px;
+    }
+
+    *:is(h3, h4, h5) + h2 {
+        margin-top: -${spacings.nudge * 2}px;
     }
 
     p,
@@ -181,6 +181,14 @@ const base = css<{
 
     .icon-label--list + .icon-label--list {
         margin-top: ${spacings.nudge * 3}px;
+    }
+
+    *:first-child {
+        margin-top: 0;
+    }
+
+    *:last-child {
+        margin-bottom: 0;
     }
 `;
 
