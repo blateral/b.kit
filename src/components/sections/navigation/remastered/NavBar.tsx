@@ -6,12 +6,12 @@ import Copy from 'components/typography/Copy';
 const View = styled.div`
     margin: 0 auto;
     max-width: ${spacings.wrapperLarge}px;
+    background: cyan;
 `;
 
 const Content = styled.div<{ size?: NavBarSize }>`
     display: flex;
-    height: ${({ size }) => (size === 'large' ? '120px' : '80px')};
-    background: cyan;
+    height: ${({ size }) => (size === 'large' ? '120px' : '90px')};
     max-width: ${spacings.wrapper}px;
     padding: ${spacings.nudge * 2}px;
     margin: 0 auto;
@@ -20,8 +20,8 @@ const Content = styled.div<{ size?: NavBarSize }>`
 `;
 
 const Column = styled(Copy)`
-    flex: 1;
     text-align: center;
+    min-width: -webkit-min-content;
 
     &:first-child {
         text-align: left;
@@ -30,6 +30,28 @@ const Column = styled(Copy)`
     &:last-child {
         text-align: right;
     }
+
+    &:not(:first-child):not(:last-child) {
+        margin: 0 ${spacings.nudge * 2}px;
+    }
+`;
+
+const LeftCol = styled(Column)`
+    flex: 1;
+    min-width: -webkit-min-content;
+`;
+
+const CenterCol = styled(Column)``;
+
+const RightCol = styled(Column)`
+    flex: 1;
+    min-width: -webkit-min-content;
+`;
+
+const Logo = styled.img`
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain;
 `;
 
 type NavBarSize = 'large' | 'small';
@@ -41,9 +63,11 @@ const NavBar: FC<{
     return (
         <View className={className}>
             <Content size={size}>
-                <Column>Column Left</Column>
-                <Column>Column Center</Column>
-                <Column>Column Right</Column>
+                <LeftCol>Column Left</LeftCol>
+                <CenterCol>
+                    <Logo src="https://via.placeholder.com/320x80" />
+                </CenterCol>
+                <RightCol>Column Right</RightCol>
             </Content>
         </View>
     );
