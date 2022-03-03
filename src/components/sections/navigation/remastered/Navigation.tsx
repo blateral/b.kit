@@ -11,7 +11,10 @@ const StyledNavBar = styled(NavBar)<{ isOpen?: boolean }>`
     right: 0;
 
     transform: ${({ isOpen }) => !isOpen && 'translate3d(0, -100%, 0)'};
-    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out;
+    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+
+    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out,
+        opacity 0.2s ease-in-out;
 `;
 
 const Navigation: FC = () => {
@@ -25,14 +28,7 @@ const Navigation: FC = () => {
     }, [scrollDirection, isTop]);
 
     return (
-        <StyledNavBar
-            isOpen={isNavBarOpen}
-            size={
-                !isTop && scrollDirection === PageScrollDirection.UP
-                    ? 'small'
-                    : 'large'
-            }
-        />
+        <StyledNavBar isOpen={isNavBarOpen} size={isTop ? 'large' : 'small'} />
     );
 };
 
