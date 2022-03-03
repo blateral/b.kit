@@ -117,14 +117,37 @@ const base = css<{
 
     h2 {
         ${headingStyle('heading-2')}
+        margin-bottom: ${spacings.spacer}px;
+        margin-top: ${spacings.nudge * 5}px;
+    }
+
+    & > h2 {
+        margin-top: 0;
     }
 
     h3 {
         ${headingStyle('heading-3')}
+        margin-bottom: ${spacings.nudge * 3}px;
+        margin-top: ${spacings.nudge * 5}px;
     }
 
     h4 {
         ${headingStyle('heading-4')}
+        margin-bottom: ${spacings.nudge * 3}px;
+        margin-top: ${spacings.nudge * 5}px;
+    }
+
+    h5 {
+        ${headingStyle('super')}
+        margin-bottom: ${spacings.nudge * 2}px;
+    }
+
+    p,
+    blockquote,
+    ol,
+    ul {
+        margin-top: ${spacings.nudge * 3}px;
+        margin-bottom: ${spacings.nudge * 3}px;
     }
 
     // classes for richtext
