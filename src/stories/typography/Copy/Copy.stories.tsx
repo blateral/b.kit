@@ -5,12 +5,15 @@ import Copy from 'components/typography/Copy';
 
 const CopyExample = () => (
     <>
+        <h5>Lorem Ipsum</h5>
+        <h2>Lorem Ipsum Dolor Sit</h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere
             doloremque, temporibus tempore error harum ea nostrum. Molestiae
             tempora odio quo cumque ratione, velit veniam sint deserunt ex
             eveniet magni perspiciatis.
         </p>
+        <h3>Lorem Ipsum Dolor Sit</h3>
         <ul>
             <li>Lorem ipsum dolor sit.</li>
             <li>Sunt sit, hic soluta.</li>
@@ -24,6 +27,8 @@ const CopyExample = () => (
             tempora odio quo cumque ratione, velit veniam sint deserunt ex
             eveniet magni perspiciatis.
         </p>
+        <h4>Lorem Ipsum Dolor Sit</h4>
+        <h2>Lorem Ipsum Dolor Sit</h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere
             doloremque, temporibus tempore error harum ea nostrum. Molestiae
