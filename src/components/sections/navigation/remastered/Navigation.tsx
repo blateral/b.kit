@@ -4,8 +4,8 @@ import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 
 import NavBar from './NavBar';
 
-const StyledNavBar = styled(NavBar)<{ isOpen?: boolean }>`
-    position: fixed;
+const StyledNavBar = styled(NavBar)<{ isOpen?: boolean; canStick?: boolean }>`
+    position: ${({ canStick }) => (canStick ? 'fixed' : 'relative')};
     top: 0;
     left: 0;
     right: 0;
@@ -18,17 +18,24 @@ const StyledNavBar = styled(NavBar)<{ isOpen?: boolean }>`
 `;
 
 const Navigation: FC = () => {
+    const canStick = true;
     const [isNavBarOpen, setNavBarOpen] = useState<boolean>(true);
     const { isTop, scrollDirection } = usePageScroll({
         directionOffset: { up: 40 },
     });
 
     useEffect(() => {
-        setNavBarOpen(isTop || scrollDirection === PageScrollDirection.UP);
-    }, [scrollDirection, isTop]);
+        if (canStick) {
+            setNavBarOpen(isTop || scrollDirection === PageScrollDirection.UP);
+        }
+    }, [scrollDirection, isTop, canStick]);
 
     return (
-        <StyledNavBar isOpen={isNavBarOpen} size={isTop ? 'large' : 'small'} />
+        <StyledNavBar
+            isOpen={isNavBarOpen}
+            canStick={canStick}
+            size={isTop || !canStick ? 'large' : 'small'}
+        />
     );
 };
 
