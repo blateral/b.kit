@@ -86,13 +86,15 @@ const Article: React.FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <StyledTitle
-                    title={title}
-                    titleAs={titleAs}
-                    superTitle={superTitle}
-                    superTitleAs={superTitleAs}
-                    colorMode={isInverted ? 'inverted' : 'default'}
-                />
+                {(title || superTitle) && (
+                    <StyledTitle
+                        title={title}
+                        titleAs={titleAs}
+                        superTitle={superTitle}
+                        superTitleAs={superTitleAs}
+                        colorMode={isInverted ? 'inverted' : 'default'}
+                    />
+                )}
                 {hasContent && (
                     <Grid.Row>
                         <Grid.Col
