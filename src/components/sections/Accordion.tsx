@@ -89,6 +89,10 @@ const AccordionText = styled.div<{
             ? color(theme).new.elementBg.light
             : color(theme).new.elementBg.medium};
 
+    & > * {
+        max-width: 880px;
+    }
+
     & > * + * {
         margin-top: ${spacings.spacer}px;
     }
@@ -99,10 +103,6 @@ const AccordionText = styled.div<{
 
     @media ${mq.semilarge} {
         flex-direction: row;
-
-        & > *:first-child {
-            max-width: 880px;
-        }
 
         & > * + * {
             margin-top: 0px;
