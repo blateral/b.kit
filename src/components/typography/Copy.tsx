@@ -131,6 +131,10 @@ const base = css<{
         margin-bottom: ${spacings.nudge * 3}px;
     }
 
+    h2 {
+        margin-bottom: ${spacings.spacer}px;
+    }
+
     *:not(h2, h3, h4, h5) + h2,
     *:not(h2, h3, h4, h5) + h3,
     *:not(h2, h3, h4, h5) + h4,
