@@ -49,9 +49,17 @@ const CopyExample = () => (
                 Itaque nihil, ducimus laboriosam.
                 <ol>
                     <li>Tempora dignissimos, voluptates impedit.</li>
-                    <li>Tempora dignissimos, voluptates impedit.</li>
+                    <li>
+                        Tempora dignissimos, voluptates impedit.
+                        <ol>
+                            <li>Tempora dignissimos, voluptates impedit.</li>
+                            <li>Tempora dignissimos, voluptates impedit.</li>
+                        </ol>
+                    </li>
                 </ol>
             </li>
+            <li>Accusamus veniam, voluptates tempora!</li>
+            <li>Itaque nihil, ducimus laboriosam.</li>
         </ol>
         <p>
             <a href="#0">Link</a>
