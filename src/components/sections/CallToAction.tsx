@@ -1,7 +1,12 @@
 import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getColors as color, mq, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    getGlobals as global,
+    mq,
+    spacings,
+} from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -36,13 +41,18 @@ const ContactView = styled.div`
     }
 `;
 
-const Avatar = styled.img`
+const Avatar = styled.img<{ isInverted?: boolean }>`
     align-self: center;
     display: block;
     border: solid 1px transparent;
     border-radius: 50%;
     width: 180px;
     height: 180px;
+
+    background: ${({ theme, isInverted }) =>
+        isInverted
+            ? global(theme).sections.imagePlaceholderBg.inverted
+            : global(theme).sections.imagePlaceholderBg.default};
 
     @media ${mq.semilarge} {
         display: block;
@@ -99,7 +109,11 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
 }) => {
     return (
         <ContactView className={className}>
-            <Avatar src={avatar?.src} alt={avatar?.alt} />
+            <Avatar
+                src={avatar?.src}
+                alt={avatar?.alt}
+                isInverted={isInverted}
+            />
             {description && (
                 <Description
                     type="copy"
