@@ -44,6 +44,117 @@ export const Default: Story = () => (
     />
 );
 
+export const WithInnerHTML: Story = () => (
+    <Article
+        text={`
+            <h5>Lorem ipsum dolor sit amet consectetur</h5>
+            <h2>Lorem ipsum dolor sit amet consectetur</h2>
+            <p>
+                <b>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                    tristique et egestas quis ipsum. Egestas purus viverra accumsan
+                    in nisl nisi. Justo laoreet sit amet cursus. Rhoncus est
+                    pellentesque elit ullamcorper dignissim cras. Scelerisque felis
+                    imperdiet proin fermentum leo. Curabitur gravida arcu ac tortor.
+                    Pellentesque elit eget gravida cum sociis natoque penatibus. At
+                    risus viverra adipiscing at. Facilisis mauris sit amet massa
+                    vitae. Fermentum posuere urna nec tincidunt praesent semper.
+                </b>
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                tristique et egestas quis ipsum. Egestas purus viverra accumsan in
+                nisl nisi. Justo laoreet sit amet cursus. Rhoncus est pellentesque
+                elit ullamcorper dignissim cras. Scelerisque felis imperdiet proin
+                fermentum leo. Curabitur gravida arcu ac tortor. Pellentesque elit
+                eget gravida cum sociis natoque penatibus. At risus viverra
+                adipiscing at. Facilisis mauris sit amet massa vitae. Fermentum
+                posuere urna nec tincidunt praesent semper.
+            </p>
+            <h3>Lorem ipsum dolor sit amet consectetur</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                tristique et egestas quis ipsum. Egestas purus viverra accumsan in
+                nisl nisi. Justo laoreet sit amet cursus. Rhoncus est pellentesque
+                elit ullamcorper dignissim cras. Scelerisque felis imperdiet proin
+                fermentum leo. Curabitur gravida arcu ac tortor. Pellentesque elit
+                eget gravida cum sociis natoque penatibus. At risus viverra
+                adipiscing at. Facilisis mauris sit amet massa vitae. Fermentum
+                posuere urna nec tincidunt praesent semper.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                tristique et egestas quis ipsum. Egestas purus viverra accumsan in
+                nisl nisi. Justo laoreet sit amet cursus. Rhoncus est pellentesque
+                elit ullamcorper dignissim cras. Scelerisque felis imperdiet proin
+                fermentum leo. Curabitur gravida arcu ac tortor. Pellentesque elit
+                eget gravida cum sociis natoque penatibus. At risus viverra
+                adipiscing at. Facilisis mauris sit amet massa vitae. Fermentum
+                posuere urna nec tincidunt praesent semper.
+            </p>
+            <ol>
+                <li>Lorem ipsum dolor sit amet consectetur</li>
+                <li>
+                    Lorem ipsum dolor sit amet consectetur
+                    <ol>
+                        <li>
+                            Lorem ipsum dolor sit amet consectetur
+                            <ol>
+                                <li>Lorem ipsum dolor sit amet consectetur</li>
+                                <li>Lorem ipsum dolor sit amet consectetur</li>
+                            </ol>
+                        </li>
+                        <li>Lorem ipsum dolor sit amet consectetur</li>
+                    </ol>
+                </li>
+                <li>Lorem ipsum dolor sit amet consectetur</li>
+            </ol>
+            <h4>Lorem ipsum dolor sit amet consectetur</h4>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                tristique et egestas quis ipsum. Egestas purus viverra accumsan in
+                nisl nisi. Justo laoreet sit amet cursus. Rhoncus est pellentesque
+                elit ullamcorper dignissim cras. Scelerisque felis imperdiet proin
+                fermentum leo. Curabitur gravida arcu ac tortor. Pellentesque elit
+                eget gravida cum sociis natoque penatibus. At risus viverra
+                adipiscing at. Facilisis mauris sit amet massa vitae. Fermentum
+                posuere urna nec tincidunt praesent semper.
+            </p>
+            <ul>
+                <li>Lorem ipsum dolor sit amet consectetur</li>
+                <li>
+                    Lorem ipsum dolor sit amet consectetur
+                    <ul>
+                        <li>Lorem ipsum dolor sit amet consectetur</li>
+                        <li>Lorem ipsum dolor sit amet consectetur</li>
+                    </ul>
+                </li>
+                <li>Lorem ipsum dolor sit amet consectetur</li>
+            </ul>
+            <p>
+                Lorem ipsum dolor sit amet, <a href="#0"> textlink </a> adipiscing
+                elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua. Ut tristique et egestas quis ipsum.
+            </p>    
+        `}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
 export const WithSeperateIntro: Story = () => (
     <Article
         title="Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
