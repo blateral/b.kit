@@ -150,6 +150,11 @@ const base = css<{
         margin-bottom: ${spacings.nudge * 3}px;
     }
 
+    ol,
+    ul {
+        padding-left: 16px;
+    }
+
     // classes for richtext
 
     /** DOM element with icon and/or label */
