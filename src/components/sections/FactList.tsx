@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
 import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
@@ -37,7 +37,6 @@ const FactItem = styled.li<{ hasText?: boolean; hasBack?: boolean }>`
 const Icon = styled.img`
     margin-right: ${spacings.nudge * 3}px;
     display: block;
-    width: 100%;
     max-width: ${spacings.nudge * 5}px;
 
     @media ${mq.medium} {
@@ -51,17 +50,23 @@ const ContentBlock = styled.div`
     }
 `;
 
+const Description = styled(Copy)`
+    max-width: 880px;
+`;
+
 const FactList: React.FC<{
     /** Array with fact item data */
     facts?: Array<{
         label?: string;
         text?: string;
-        icon?: { src: string; alt?: string };
     }>;
+
+    /** Icon for each fact item */
+    icon?: { src: string; alt?: string };
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ facts, bgMode }) => {
+}> = ({ facts, icon, bgMode }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBack = isInverted || bgMode === 'full';
@@ -81,7 +86,7 @@ const FactList: React.FC<{
             <Wrapper clampWidth="normal" addWhitespace>
                 {facts && (
                     <FactsContainer>
-                        {facts.map(({ label, text, icon }, i) => {
+                        {facts.map(({ label, text }, i) => {
                             return (
                                 <FactItem
                                     key={i}
@@ -99,7 +104,7 @@ const FactList: React.FC<{
                                             <Copy type="copy-b">{label}</Copy>
                                         )}
                                         {text && (
-                                            <Copy
+                                            <Description
                                                 type="copy"
                                                 innerHTML={text}
                                             />

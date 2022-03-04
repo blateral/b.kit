@@ -9,7 +9,7 @@ export default {
     component: FactGridComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
 } as Meta;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import FactList, { FactListComponent } from 'components/sections/FactList';
 
@@ -40,36 +40,30 @@ export const Default: Story = () => (
     />
 );
 
-export const WithIcons: Story = () => (
+export const WithIcon: Story = () => (
     <FactList
+        icon={{ src: 'https://via.placeholder.com/24' }}
         facts={[
             {
                 label: 'Consetetur sadipscing elitr',
-                icon: { src: 'http://placehold.it/40' },
             },
             {
                 label: 'Sed diam nonumy eirmod tempor invidunt',
-                icon: { src: 'http://placehold.it/40' },
             },
             {
                 label: 'Ut labore et dolore magna aliquyam erat',
-                icon: { src: 'http://placehold.it/40' },
             },
             {
                 label: 'Sed diam voluptua',
-                icon: { src: 'http://placehold.it/40' },
             },
             {
                 label: 'At vero eos et accusam et justo duo dolores et ea rebum',
-                icon: { src: 'http://placehold.it/40' },
             },
             {
                 label: 'Stet clita kasd gubergren',
-                icon: { src: 'http://placehold.it/40' },
             },
             {
                 label: 'No sea takimata sanctus est',
-                icon: { src: 'http://placehold.it/40' },
             },
         ]}
     />
@@ -77,40 +71,34 @@ export const WithIcons: Story = () => (
 
 export const WithText: Story = () => (
     <FactList
+        icon={{ src: 'https://via.placeholder.com/24' }}
         facts={[
             {
                 label: 'Consetetur sadipscing elitr',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Sed diam nonumy eirmod tempor invidunt',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Ut labore et dolore magna aliquyam erat',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Sed diam voluptua',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'At vero eos et accusam et justo duo dolores et ea rebum',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Stet clita kasd gubergren',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'No sea takimata sanctus est',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
         ]}
@@ -120,40 +108,34 @@ export const WithText: Story = () => (
 export const WithBackground: Story = () => (
     <FactList
         bgMode="full"
+        icon={{ src: 'https://via.placeholder.com/24' }}
         facts={[
             {
                 label: 'Consetetur sadipscing elitr',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Sed diam nonumy eirmod tempor invidunt',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Ut labore et dolore magna aliquyam erat',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Sed diam voluptua',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'At vero eos et accusam et justo duo dolores et ea rebum',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Stet clita kasd gubergren',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'No sea takimata sanctus est',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
         ]}
@@ -163,40 +145,34 @@ export const WithBackground: Story = () => (
 export const Inverted: Story = () => (
     <FactList
         bgMode="inverted"
+        icon={{ src: 'https://via.placeholder.com/24' }}
         facts={[
             {
                 label: 'Consetetur sadipscing elitr',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Sed diam nonumy eirmod tempor invidunt',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Ut labore et dolore magna aliquyam erat',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Sed diam voluptua',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'At vero eos et accusam et justo duo dolores et ea rebum',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'Stet clita kasd gubergren',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
             {
                 label: 'No sea takimata sanctus est',
-                icon: { src: 'http://placehold.it/40' },
                 text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, et eos architecto laboriosam <a href="#0">impedit</a> nihil illum non maxime recusandae, dolores doloribus quos iusto? Deserunt dicta non, assumenda pariatur dolore praesentium dolorem hic reiciendis magni itaque esse architecto, necessitatibus earum enim, at ex? Provident, dolorum dolore amet facilis quisquam unde vero, id sapiente sequi perspiciatis qui possimus! Qui asperiores, numquam quasi distinctio illo aut deleniti sequi explicabo ipsum, expedita assumenda unde voluptatum. Eaque, sed! Dolores, facilis reiciendis. Error minima dolorum soluta.',
             },
         ]}
