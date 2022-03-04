@@ -3,11 +3,11 @@ import styled, { css } from 'styled-components';
 import { mq, getGlobals as global } from 'utils/styles';
 
 export interface ImageAspectRatios {
-    small: number;
-    medium?: number;
-    semilarge?: number;
-    large?: number;
-    xlarge?: number;
+    small: { w: number; h: number };
+    medium?: { w: number; h: number };
+    semilarge?: { w: number; h: number };
+    large?: { w: number; h: number };
+    xlarge?: { w: number; h: number };
 }
 
 export interface ImageProps {
@@ -38,6 +38,23 @@ export interface ImageProps {
     showPlaceholder?: boolean;
 }
 
+const getAspectRatio = (width?: number, height?: number) => {
+    if (!width || !height) return undefined;
+    return width / height;
+};
+
+const isValid = (ratio?: { w?: number; h?: number }) => {
+    return ratio && ratio?.w && ratio?.h ? true : false;
+};
+
+const aspectFallback = (ratio?: { w?: number; h?: number }) => css`
+    @supports not (aspect-ratio: auto) {
+        height: 0;
+        padding-top: ${isValid(ratio) &&
+        `calc(100% / ${getAspectRatio(ratio?.w, ratio?.h)})`};
+    }
+`;
+
 const AspectContainer = styled.div<{
     ratios?: ImageAspectRatios;
     coverSpace?: boolean;
@@ -47,7 +64,12 @@ const AspectContainer = styled.div<{
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     overflow: hidden;
 
-    aspect-ratio: ${({ ratios }) => ratios?.small};
+    aspect-ratio: ${({ ratios }) =>
+        getAspectRatio(ratios?.small?.w, ratios?.small?.h)};
+
+    width: ${({ ratios, coverSpace }) =>
+        !coverSpace && ratios?.small?.w ? `${ratios?.small?.w}px` : ''};
+
     max-width: 100%;
 
     object-position: center;
@@ -66,60 +88,55 @@ const AspectContainer = styled.div<{
             }
         `}
 
-    @supports not (aspect-ratio: auto) {
-        height: ${({ ratios }) => ratios?.small && 0};
-        padding-top: ${({ ratios }) =>
-            ratios?.small && `calc(100% / ${ratios?.small})`};
-    }
+    // fallback if browsers do not support aspect-ratio
+    ${({ ratios, coverSpace }) => coverSpace && aspectFallback(ratios?.small)}
 
     @media ${mq.medium} {
-        aspect-ratio: ${({ ratios }) => ratios?.medium};
+        aspect-ratio: ${({ ratios }) =>
+            getAspectRatio(ratios?.medium?.w, ratios?.medium?.h)};
 
-        @supports not (aspect-ratio: auto) {
-            padding-top: ${({ ratios }) =>
-                ratios?.medium && `calc(100% / ${ratios?.medium})`};
-        }
+        // fallback if browsers do not support aspect-ratio. (Only works with width = 100%)
+        ${({ ratios, coverSpace }) =>
+            coverSpace && aspectFallback(ratios?.medium)}
     }
 
     @media ${mq.semilarge} {
-        aspect-ratio: ${({ ratios }) => ratios?.semilarge};
+        aspect-ratio: ${({ ratios }) =>
+            getAspectRatio(ratios?.semilarge?.w, ratios?.semilarge?.h)};
 
-        @supports not (aspect-ratio: auto) {
-            padding-top: ${({ ratios }) =>
-                ratios?.semilarge && `calc(100% / ${ratios?.semilarge})`};
-        }
+        // fallback if browsers do not support aspect-ratio (Only works with width = 100%)
+        ${({ ratios, coverSpace }) =>
+            coverSpace && aspectFallback(ratios?.semilarge)}
     }
 
     @media ${mq.large} {
-        aspect-ratio: ${({ ratios }) => ratios?.large};
+        aspect-ratio: ${({ ratios }) =>
+            getAspectRatio(ratios?.large?.w, ratios?.large?.h)};
 
-        @supports not (aspect-ratio: auto) {
-            padding-top: ${({ ratios }) =>
-                ratios?.large && `calc(100% / ${ratios?.large})`};
-        }
+        // fallback if browsers do not support aspect-ratio (Only works with width = 100%)
+        ${({ ratios, coverSpace }) =>
+            coverSpace && aspectFallback(ratios?.large)}
     }
 
     @media ${mq.xlarge} {
-        aspect-ratio: ${({ ratios }) => ratios?.xlarge};
+        aspect-ratio: ${({ ratios }) =>
+            getAspectRatio(ratios?.xlarge?.w, ratios?.xlarge?.h)};
 
-        @supports not (aspect-ratio: auto) {
-            padding-top: ${({ ratios }) =>
-                ratios?.xlarge && `calc(100% / ${ratios?.xlarge})`};
-        }
+        // fallback if browsers do not support aspect-ratio (Only works with width = 100%)
+        ${({ ratios, coverSpace }) =>
+            coverSpace && aspectFallback(ratios?.xlarge)}
     }
 
-    ${({ ratios }) =>
+    ${({ ratios, coverSpace }) =>
         ratios &&
         css`
-            width: 100%;
-
             img {
                 height: 100%;
                 width: 100%;
-                object-fit: cover;
+                object-fit: ${coverSpace ? 'cover' : 'contain'};
 
                 @supports not (aspect-ratio: auto) {
-                    position: absolute;
+                    position: ${coverSpace && 'absolute'};
                     top: 0;
                     left: 0;
                     right: 0;
@@ -161,11 +178,9 @@ const Image: React.FC<
     isInverted,
     showPlaceholder = true,
 }) => {
-    const aspectRatios = coverSpace ? ratios : undefined;
-
     return (
         <AspectContainer
-            ratios={aspectRatios}
+            ratios={ratios}
             coverSpace={coverSpace}
             className={className}
         >
@@ -178,7 +193,7 @@ const Image: React.FC<
                 {medium && <source srcSet={medium} media={mq.medium} />}
                 <Img
                     data-img-loaded="false"
-                    showPlaceholder={showPlaceholder && !!aspectRatios}
+                    showPlaceholder={showPlaceholder && !!ratios}
                     isInverted={isInverted}
                     srcSet={small}
                     alt={alt || ''}

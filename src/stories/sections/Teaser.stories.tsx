@@ -25,7 +25,7 @@ export const WithContent: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1,
+                small: { w: 1, h: 1 },
             },
         }}
         text={`
@@ -70,7 +70,7 @@ export const WithImageDescription: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1,
+                small: { w: 1, h: 1 },
             },
         }}
         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -97,7 +97,7 @@ export const WithAction: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1,
+                small: { w: 1, h: 1 },
             },
         }}
         text={`
@@ -134,7 +134,7 @@ export const Mirrored: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1,
+                small: { w: 1, h: 1 },
             },
         }}
         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -172,7 +172,7 @@ export const Inverted: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1,
+                small: { w: 1, h: 1 },
             },
         }}
         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -210,7 +210,7 @@ export const WithBackground: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1,
+                small: { w: 1, h: 1 },
             },
         }}
         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -248,7 +248,7 @@ export const WithSplittedBackground: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1,
+                small: { w: 1, h: 1 },
             },
         }}
         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -287,7 +287,7 @@ export const WithMirroredAndSplittedBackground: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1,
+                small: { w: 1, h: 1 },
             },
         }}
         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -325,7 +325,7 @@ export const WithImageFormatA: Story = () => (
             large: 'https://unsplash.it/766/575',
             xlarge: 'https://unsplash.it/824/618',
             ratios: {
-                small: 4 / 3,
+                small: { w: 4, h: 3 },
             },
         }}
         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -365,7 +365,7 @@ export const WithImageFormatB: Story = () => (
             large: 'https://unsplash.it/766/1021',
             xlarge: 'https://unsplash.it/824/1100',
             ratios: {
-                small: 3 / 4,
+                small: { w: 3, h: 4 },
             },
         }}
         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -405,7 +405,7 @@ export const WithImageFormatC: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1 / 1,
+                small: { w: 1, h: 1 },
             },
         }}
         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -445,7 +445,7 @@ export const WithVideoFormatA: Story = () => (
             large: 'https://unsplash.it/766/575',
             xlarge: 'https://unsplash.it/824/618',
             ratios: {
-                small: 4 / 3,
+                small: { w: 4, h: 3 },
             },
         }}
         video={{
@@ -491,7 +491,7 @@ export const WithVideoFormatB: Story = () => (
             large: 'https://unsplash.it/766/1021',
             xlarge: 'https://unsplash.it/824/1100',
             ratios: {
-                small: 3 / 4,
+                small: { w: 3, h: 4 },
             },
         }}
         video={{
@@ -537,7 +537,7 @@ export const WithVideoFormatC: Story = () => (
             large: 'https://unsplash.it/766/766',
             xlarge: 'https://unsplash.it/824/824',
             ratios: {
-                small: 1 / 1,
+                small: { w: 1, h: 1 },
             },
         }}
         video={{

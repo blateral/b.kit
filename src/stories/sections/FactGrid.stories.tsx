@@ -29,7 +29,7 @@ const exampleFact = {
         large: 'https://unsplash.it/350/263?image=700',
         coverSpace: true,
         ratios: {
-            small: 620 / 465,
+            small: { w: 620, h: 465 },
         },
     },
 } as Omit<FactProps, 'isInverted' | 'isCentered'>;
@@ -45,7 +45,7 @@ export const Default: Story = () => (
                 large: 'https://unsplash.it/350/263?image=70' + i,
                 coverSpace: true,
                 ratios: {
-                    small: 620 / 465,
+                    small: { w: 620, h: 465 },
                 },
             },
         }))}
@@ -72,7 +72,7 @@ export const AsRichText: Story = () => (
                 large: 'https://unsplash.it/350/263?image=70' + i,
                 coverSpace: true,
                 ratios: {
-                    small: 620 / 465,
+                    small: { w: 620, h: 465 },
                 },
             },
         }))}
@@ -91,7 +91,7 @@ export const Centered: Story = () => (
                 large: 'https://unsplash.it/350/263?image=70' + i,
                 coverSpace: true,
                 ratios: {
-                    small: 620 / 465,
+                    small: { w: 620, h: 465 },
                 },
             },
         }))}
@@ -109,7 +109,7 @@ export const WithAlternativeRatio: Story = () => (
                 large: 'https://unsplash.it/350/175?image=70' + i,
                 coverSpace: true,
                 ratios: {
-                    small: 620 / 310,
+                    small: { w: 620, h: 310 },
                 },
             },
         }))}
@@ -141,10 +141,10 @@ export const WithSVGAndAspect: Story = () => (
                 medium: '/images/testIcon.svg',
                 semilarge: '/images/testIcon.svg',
                 large: '/images/testIcon.svg',
-                coverSpace: true,
+                coverSpace: false,
                 showPlaceholder: false,
                 ratios: {
-                    small: 620 / 310,
+                    small: { w: 400, h: 200 },
                 },
             },
         }))}
@@ -163,7 +163,7 @@ export const With4Columns: Story = () => (
                 large: 'https://unsplash.it/350/263?image=70' + i,
                 coverSpace: true,
                 ratios: {
-                    small: 620 / 465,
+                    small: { w: 620, h: 465 },
                 },
             },
         }))}
@@ -196,7 +196,7 @@ export const WithEmptyColumns: Story = () => (
                     large: 'https://unsplash.it/350/263?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: 620 / 465,
+                        small: { w: 620, h: 465 },
                     },
                 },
             },
@@ -215,7 +215,7 @@ export const WithEmptyColumns: Story = () => (
                     large: 'https://unsplash.it/350/263?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: 620 / 465,
+                        small: { w: 620, h: 465 },
                     },
                 },
             },
@@ -234,7 +234,7 @@ export const WithEmptyColumns: Story = () => (
                     large: 'https://unsplash.it/350/263?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: 620 / 465,
+                        small: { w: 620, h: 465 },
                     },
                 },
             },
@@ -253,7 +253,7 @@ export const WithEmptyColumns: Story = () => (
                     large: 'https://unsplash.it/350/263?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: 620 / 465,
+                        small: { w: 620, h: 465 },
                     },
                 },
             },
@@ -272,7 +272,7 @@ export const WithEmptyColumns: Story = () => (
                     large: 'https://unsplash.it/350/263?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: 620 / 465,
+                        small: { w: 620, h: 465 },
                     },
                 },
             },
@@ -291,7 +291,7 @@ export const WithEmptyColumns: Story = () => (
                     large: 'https://unsplash.it/350/263?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: 620 / 465,
+                        small: { w: 620, h: 465 },
                     },
                 },
             },
@@ -310,46 +310,7 @@ export const WithEmptyColumns: Story = () => (
                     large: 'https://unsplash.it/350/263?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: 620 / 465,
-                    },
-                },
-            },
-            {},
-            {
-                title: 'Lorem ipsum dolor sit amet',
-                subTitle: 'Subheadline',
-                text: `Lorem ipsum dolor sit amet consetetur 
-                    sadipscing elitr, sed diam nonumy eirmod 
-                    tempor invidunt ut labore Lorem ipsum dolor sit amet consetetur 
-                    sadipscing elitr, sed diam nonumy eirmod 
-                    tempor invidunt ut labore `,
-                image: {
-                    small: 'https://unsplash.it/620/465?image=700',
-                    medium: 'https://unsplash.it/250/188?image=700',
-                    semilarge: 'https://unsplash.it/310/233?image=700',
-                    large: 'https://unsplash.it/350/263?image=700',
-                    coverSpace: true,
-                    ratios: {
-                        small: 620 / 465,
-                    },
-                },
-            },
-            {
-                title: 'Lorem ipsum dolor sit amet',
-                subTitle: 'Subheadline',
-                text: `Lorem ipsum dolor sit amet consetetur 
-                    sadipscing elitr, sed diam nonumy eirmod 
-                    tempor invidunt ut labore Lorem ipsum dolor sit amet consetetur 
-                    sadipscing elitr, sed diam nonumy eirmod 
-                    tempor invidunt ut labore `,
-                image: {
-                    small: 'https://unsplash.it/620/465?image=700',
-                    medium: 'https://unsplash.it/250/188?image=700',
-                    semilarge: 'https://unsplash.it/310/233?image=700',
-                    large: 'https://unsplash.it/350/263?image=700',
-                    coverSpace: true,
-                    ratios: {
-                        small: 620 / 465,
+                        small: { w: 620, h: 465 },
                     },
                 },
             },
@@ -369,7 +330,46 @@ export const WithEmptyColumns: Story = () => (
                     large: 'https://unsplash.it/350/263?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: 620 / 465,
+                        small: { w: 620, h: 465 },
+                    },
+                },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet',
+                subTitle: 'Subheadline',
+                text: `Lorem ipsum dolor sit amet consetetur 
+                    sadipscing elitr, sed diam nonumy eirmod 
+                    tempor invidunt ut labore Lorem ipsum dolor sit amet consetetur 
+                    sadipscing elitr, sed diam nonumy eirmod 
+                    tempor invidunt ut labore `,
+                image: {
+                    small: 'https://unsplash.it/620/465?image=700',
+                    medium: 'https://unsplash.it/250/188?image=700',
+                    semilarge: 'https://unsplash.it/310/233?image=700',
+                    large: 'https://unsplash.it/350/263?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 620, h: 465 },
+                    },
+                },
+            },
+            {},
+            {
+                title: 'Lorem ipsum dolor sit amet',
+                subTitle: 'Subheadline',
+                text: `Lorem ipsum dolor sit amet consetetur 
+                    sadipscing elitr, sed diam nonumy eirmod 
+                    tempor invidunt ut labore Lorem ipsum dolor sit amet consetetur 
+                    sadipscing elitr, sed diam nonumy eirmod 
+                    tempor invidunt ut labore `,
+                image: {
+                    small: 'https://unsplash.it/620/465?image=700',
+                    medium: 'https://unsplash.it/250/188?image=700',
+                    semilarge: 'https://unsplash.it/310/233?image=700',
+                    large: 'https://unsplash.it/350/263?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 620, h: 465 },
                     },
                 },
             },
@@ -390,7 +390,7 @@ export const WithBackground: Story = () => (
                 large: 'https://unsplash.it/350/263?image=70' + i,
                 coverSpace: true,
                 ratios: {
-                    small: 620 / 465,
+                    small: { w: 620, h: 465 },
                 },
             },
         }))}
@@ -410,7 +410,7 @@ export const WithSplittedBackground: Story = () => (
                 large: 'https://unsplash.it/350/263?image=70' + i,
                 coverSpace: true,
                 ratios: {
-                    small: 620 / 465,
+                    small: { w: 620, h: 465 },
                 },
             },
         }))}
@@ -430,7 +430,7 @@ export const Inverted: Story = () => (
                 large: 'https://unsplash.it/350/263?image=70' + i,
                 coverSpace: true,
                 ratios: {
-                    small: 620 / 465,
+                    small: { w: 620, h: 465 },
                 },
             },
         }))}

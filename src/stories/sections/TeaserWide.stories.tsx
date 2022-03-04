@@ -27,8 +27,8 @@ export const WithContent: Story = () => (
             large: 'https://unsplash.it/1082/876',
             xlarge: 'https://unsplash.it/1200/971',
             ratios: {
-                small: 4 / 3,
-                semilarge: 1,
+                small: { w: 4, h: 3 },
+                semilarge: { w: 1, h: 1 },
             },
         }}
         text={`
@@ -54,7 +54,7 @@ export const WithVideo: Story = () => (
             large: 'https://unsplash.it/1082/876',
             xlarge: 'https://unsplash.it/1200/971',
             ratios: {
-                small: 4 / 3,
+                small: { w: 4, h: 3 },
             },
         }}
         video={{

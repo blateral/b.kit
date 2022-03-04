@@ -28,7 +28,7 @@ export const WithSVG: Story = () => (
         small="/images/testIcon.svg"
         alt="Image"
         ratios={{
-            small: 6 / 3,
+            small: { w: 400, h: 200 },
         }}
     />
 );
@@ -55,7 +55,7 @@ export const WithAspectRatio: Story = () => (
         alt="Image"
         coverSpace
         ratios={{
-            small: 6 / 3,
+            small: { w: 600, h: 300 },
         }}
     />
 );
