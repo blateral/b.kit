@@ -143,7 +143,7 @@ const base = css<{
     }
 
     *:is(h3, h4, h5) + h2 {
-        margin-top: -${spacings.nudge * 2}px;
+        margin-top: -${spacings.nudge * 1.5}px;
     }
 
     p,

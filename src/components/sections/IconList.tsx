@@ -38,19 +38,20 @@ const ItemContainer = styled.div<{ isCentered?: boolean }>`
 const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
     align-items: center;
-    justify-content: center;
+    justify-content: ${({ isCentered }) =>
+        isCentered ? 'center' : 'flex-start'};
 
     flex-wrap: wrap;
     margin-top: -${spacings.nudge * 2}px;
     margin-left: -${spacings.nudge * 2}px;
 
+    & > * + * {
+        flex: 0 1 auto;
+    }
+
     @media ${mq.medium} {
         margin-top: -${spacings.spacer}px;
         margin-left: -${spacings.spacer}px;
-        align-items: ${({ isCentered }) =>
-            isCentered ? 'center' : 'flex-start'};
-        justify-content: ${({ isCentered }) =>
-            isCentered ? 'center' : 'flex-start'};
     }
 `;
 
@@ -82,7 +83,6 @@ const Item = styled.div<{
 
 const Image = styled.img<{ isInverted?: boolean }>`
     display: block;
-    width: 100%;
     object-fit: contain;
 
     background: ${({ theme, isInverted }) =>
@@ -124,7 +124,7 @@ const IconList: React.FC<{
     items: Array<{
         src: string;
         alt?: string;
-        size?: { height: number; width: number };
+        ratio?: { h: number; w: number };
     }>;
 
     /** Function to inject custom primary button */
@@ -159,7 +159,7 @@ const IconList: React.FC<{
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
-    const [showMore, setShowMore] = useState<boolean>(false);
+    const [showMore, setShowMore] = useState<boolean>(!enableToggle);
 
     return (
         <StyledSection
@@ -180,15 +180,15 @@ const IconList: React.FC<{
                         isVisible={!showMore ? true : showMore === true}
                         isCentered={isCentered}
                     >
-                        {items.map(({ src, alt, size }, i) => {
+                        {items.map(({ src, alt, ratio }, i) => {
                             return (
                                 <Item isVisible={showMore} index={i} key={i}>
                                     <Image
                                         isInverted={isInverted}
                                         src={src}
                                         alt={alt}
-                                        height={size?.height}
-                                        width={size?.width}
+                                        height={ratio?.h}
+                                        width={ratio?.w}
                                     />
                                 </Item>
                             );
