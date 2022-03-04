@@ -101,7 +101,7 @@ const AccordionText = styled.div<{
         flex-direction: row;
 
         & > *:first-child {
-            max-width: 75%;
+            max-width: 880px;
         }
 
         & > * + * {
