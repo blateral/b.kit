@@ -6,10 +6,34 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-import Grid from 'components/base/Grid';
+import { gridSettings } from 'components/base/Grid';
+import { mq } from 'utils/styles';
 
-const StyledPriceTag = styled(PriceTag)`
+const Tag = styled(PriceTag)`
     min-height: 500px;
+`;
+
+const Items = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    margin-top: -${gridSettings.gutter}px;
+    margin-left: -${gridSettings.gutter}px;
+
+    & > * {
+        flex: 1 1 25%;
+        min-width: 286px;
+        max-width: 320px;
+        margin-top: ${gridSettings.gutter}px;
+        margin-left: ${gridSettings.gutter}px;
+    }
+
+    @media ${mq.large} {
+        & > * {
+            max-width: 286px;
+        }
+    }
 `;
 
 const PriceTable: React.FC<{
@@ -55,24 +79,18 @@ const PriceTable: React.FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace>
-                <Grid.Row halign="center">
-                    {items.map((item, i) => (
-                        <Grid.Col
+                <Items>
+                    {items?.map((item, i) => (
+                        <Tag
                             key={i}
-                            semilarge={{ span: 6 / 12 }}
-                            large={{ span: 4 / 12 }}
-                        >
-                            <StyledPriceTag
-                                key={i}
-                                ref={cardRefs[i]}
-                                {...item}
-                                isInverted={isInverted}
-                                isCentered={isCentered}
-                                hasBackground={hasBg}
-                            />
-                        </Grid.Col>
+                            ref={cardRefs[i]}
+                            {...item}
+                            isInverted={isInverted}
+                            isCentered={isCentered}
+                            hasBackground={hasBg}
+                        />
                     ))}
-                </Grid.Row>
+                </Items>
             </Wrapper>
         </Section>
     );

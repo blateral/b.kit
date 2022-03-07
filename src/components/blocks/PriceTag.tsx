@@ -118,6 +118,7 @@ const PriceTag = forwardRef<
                     />
                 )}
                 <StyledActions
+                    mode="cover"
                     primary={
                         action &&
                         action({

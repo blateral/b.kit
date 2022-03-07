@@ -36,6 +36,22 @@ export const Default: Story = () => (
     />
 );
 
+export const CoverMode: Story = () => (
+    <Actions
+        mode="cover"
+        primary={
+            <Button.View>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        }
+        secondary={
+            <ButtonGhost.View>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        }
+    />
+);
+
 export const Mirrored: Story = () => (
     <Actions
         isMirrored
