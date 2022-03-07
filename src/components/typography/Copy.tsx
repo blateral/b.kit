@@ -156,7 +156,7 @@ const base = css<{
 
     ol,
     ul {
-        padding-left: 16px;
+        padding-left: 2rem;
     }
 
     ul ul li {
