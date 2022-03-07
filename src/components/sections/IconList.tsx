@@ -35,27 +35,31 @@ const ItemContainer = styled.div<{ isCentered?: boolean }>`
     }
 `;
 
-const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
-    display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+const Items = styled.ul<{ isVisible?: boolean; isCentered?: boolean }>`
+    display: ${({ isVisible }) => (isVisible ? 'flex' : 'block')};
     align-items: center;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
 
     flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
     margin-top: -${spacings.nudge * 2}px;
     margin-left: -${spacings.nudge * 2}px;
 
-    & > * + * {
-        flex: 0 1 auto;
-    }
+    list-style: none;
 
     @media ${mq.medium} {
         margin-top: -${spacings.spacer}px;
         margin-left: -${spacings.spacer}px;
+
+        & > * {
+            flex: 0 1 auto;
+        }
     }
 `;
 
-const Item = styled.div<{
+const Item = styled.li<{
     isVisible?: boolean;
     index: number;
 }>`
@@ -65,9 +69,17 @@ const Item = styled.div<{
     display: ${({ index, isVisible }) =>
         isVisible || index < 6 ? 'block' : 'none'};
 
+    & > img {
+        width: 100%;
+    }
+
     @media ${mq.medium} {
         padding-top: ${spacings.spacer}px;
         padding-left: ${spacings.spacer}px;
+
+        & > img {
+            width: auto;
+        }
     }
 
     @media ${mq.semilarge} {
@@ -85,10 +97,12 @@ const Image = styled.img<{ isInverted?: boolean }>`
     display: block;
     object-fit: contain;
 
-    background: ${({ theme, isInverted }) =>
-        isInverted
-            ? global(theme).sections.imagePlaceholderBg.inverted
-            : global(theme).sections.imagePlaceholderBg.default};
+    &[data-img-loaded='false'] {
+        background: ${({ theme, isInverted }) =>
+            isInverted
+                ? global(theme).sections.imagePlaceholderBg.inverted
+                : global(theme).sections.imagePlaceholderBg.default};
+    }
 `;
 
 const ShowMore = styled(Copy)<{ itemCount?: number; isCentered?: boolean }>`
@@ -121,7 +135,7 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
 
 const IconList: React.FC<{
     /** Array with icon items data */
-    items: Array<{
+    items?: Array<{
         src: string;
         alt?: string;
         ratio?: { h: number; w: number };
@@ -180,19 +194,24 @@ const IconList: React.FC<{
                         isVisible={!showMore ? true : showMore === true}
                         isCentered={isCentered}
                     >
-                        {items.map(({ src, alt, ratio }, i) => {
-                            return (
-                                <Item isVisible={showMore} index={i} key={i}>
-                                    <Image
-                                        isInverted={isInverted}
-                                        src={src}
-                                        alt={alt}
-                                        height={ratio?.h}
-                                        width={ratio?.w}
-                                    />
-                                </Item>
-                            );
-                        })}
+                        {items?.map(({ src, alt, ratio }, i) => (
+                            <Item isVisible={showMore} index={i} key={i}>
+                                <Image
+                                    data-img-loaded={false}
+                                    isInverted={isInverted}
+                                    src={src}
+                                    alt={alt}
+                                    height={ratio?.h}
+                                    width={ratio?.w}
+                                    onLoad={(ev) =>
+                                        ev.currentTarget?.setAttribute(
+                                            'data-img-loaded',
+                                            'true'
+                                        )
+                                    }
+                                />
+                            </Item>
+                        ))}
                     </Items>
                 </ItemContainer>
                 {enableToggle && (
@@ -201,7 +220,7 @@ const IconList: React.FC<{
                         size="medium"
                         isInverted={isInverted}
                         isCentered={isCentered}
-                        itemCount={items.length}
+                        itemCount={items?.length || 0}
                         onClick={() => setShowMore((prev) => !prev)}
                     >
                         <Pointer.View
