@@ -8,6 +8,7 @@ import Copy from 'components/typography/Copy';
 import { mq, spacings, getGlobals as global } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Pointer from 'components/buttons/Pointer';
+import Link, { LinkProps } from 'components/typography/Link';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: 0 auto;
@@ -93,6 +94,10 @@ const Item = styled.li<{
     }
 `;
 
+const ItemLink = styled(Link)`
+    display: block;
+`;
+
 const Image = styled.img<{ isInverted?: boolean }>`
     display: block;
     object-fit: contain;
@@ -133,13 +138,16 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
     }
 `;
 
+export interface IconListItem {
+    src: string;
+    alt?: string;
+    link?: LinkProps;
+    ratio?: { h: number; w: number };
+}
+
 const IconList: React.FC<{
     /** Array with icon items data */
-    items?: Array<{
-        src: string;
-        alt?: string;
-        ratio?: { h: number; w: number };
-    }>;
+    items?: Array<IconListItem>;
 
     /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -194,22 +202,24 @@ const IconList: React.FC<{
                         isVisible={!showMore ? true : showMore === true}
                         isCentered={isCentered}
                     >
-                        {items?.map(({ src, alt, ratio }, i) => (
+                        {items?.map(({ src, link, alt, ratio }, i) => (
                             <Item isVisible={showMore} index={i} key={i}>
-                                <Image
-                                    data-img-loaded={false}
-                                    isInverted={isInverted}
-                                    src={src}
-                                    alt={alt}
-                                    height={ratio?.h}
-                                    width={ratio?.w}
-                                    onLoad={(ev) =>
-                                        ev.currentTarget?.setAttribute(
-                                            'data-img-loaded',
-                                            'true'
-                                        )
-                                    }
-                                />
+                                <ItemLink {...link} aria-label={alt}>
+                                    <Image
+                                        data-img-loaded={false}
+                                        isInverted={isInverted}
+                                        src={src}
+                                        alt={alt}
+                                        height={ratio?.h}
+                                        width={ratio?.w}
+                                        onLoad={(ev) =>
+                                            ev.currentTarget?.setAttribute(
+                                                'data-img-loaded',
+                                                'true'
+                                            )
+                                        }
+                                    />
+                                </ItemLink>
                             </Item>
                         ))}
                     </Items>

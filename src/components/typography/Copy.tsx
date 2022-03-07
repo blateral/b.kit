@@ -156,7 +156,7 @@ const base = css<{
 
     ol,
     ul {
-        padding-left: 2rem;
+        padding-left: ${spacings.nudge * 3}px;
     }
 
     ul ul li {

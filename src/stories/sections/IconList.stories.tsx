@@ -1,112 +1,140 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import IconList, { IconListComponent } from 'components/sections/IconList';
+import IconList, {
+    IconListComponent,
+    IconListItem,
+} from 'components/sections/IconList';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const items = [
     {
         src: 'https://via.placeholder.com/200x100',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/180x80',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/70x90',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/300x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/150x120',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/150x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/95x95',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/200x100',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/200x80',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/350x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/170x40',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/170x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/50x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/230x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/70x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/100x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/120x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
     },
-];
+] as IconListItem[];
 
 const itemsWithAspectRatio = [
     {
         src: 'https://via.placeholder.com/200x100',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 200,
             h: 100,
@@ -114,7 +142,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/180x80',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 180,
             h: 80,
@@ -122,7 +151,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/70x90',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 70,
             h: 90,
@@ -130,7 +160,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/300x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 300,
             h: 70,
@@ -138,7 +169,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/150x120',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 150,
             h: 120,
@@ -146,7 +178,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/150x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 150,
             h: 70,
@@ -154,7 +187,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/95x95',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 95,
             h: 95,
@@ -162,7 +196,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/200x100',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 200,
             h: 100,
@@ -170,7 +205,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/200x80',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 200,
             h: 80,
@@ -178,7 +214,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/350x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 350,
             h: 70,
@@ -186,7 +223,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/170x40',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 170,
             h: 40,
@@ -194,7 +232,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/170x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 170,
             h: 70,
@@ -202,7 +241,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/50x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 50,
             h: 70,
@@ -210,7 +250,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/230x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 230,
             h: 70,
@@ -218,7 +259,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 200,
             h: 70,
@@ -226,7 +268,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/70x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 70,
             h: 70,
@@ -234,7 +277,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/100x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 100,
             h: 70,
@@ -242,7 +286,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/120x80',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 120,
             h: 80,
@@ -250,7 +295,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 200,
             h: 70,
@@ -258,7 +304,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/70x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 70,
             h: 70,
@@ -266,7 +313,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 200,
             h: 70,
@@ -274,7 +322,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/100x200',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 100,
             h: 200,
@@ -282,7 +331,8 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 200,
             h: 70,
@@ -290,20 +340,21 @@ const itemsWithAspectRatio = [
     },
     {
         src: 'https://via.placeholder.com/200x70',
-        alt: '',
+        link: { isExternal: true, href: '#0' },
+        alt: 'Icon',
         ratio: {
             w: 200,
             h: 70,
         },
     },
-];
+] as IconListItem[];
 
 export default {
     title: 'Sections/IconList',
     component: IconListComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
 } as Meta;

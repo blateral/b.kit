@@ -12,7 +12,7 @@ const Link = forwardRef<
         className?: string;
         children?: React.ReactNode;
     }
->(({ isExternal = false, href, children, className }, ref) => {
+>(({ isExternal = false, href, children, className, ...rest }, ref) => {
     return (
         <a
             ref={ref}
@@ -20,6 +20,7 @@ const Link = forwardRef<
             target={isExternal ? '_blank' : undefined}
             rel={isExternal ? 'noopener noreferrer' : undefined}
             className={className}
+            {...rest}
         >
             {children}
         </a>
