@@ -26,7 +26,7 @@ const TableBody = styled.table`
     max-width: 100%;
 
     border-collapse: separate;
-    border-spacing: 0 ${spacings.nudge}px;
+    border-spacing: 0 ${spacings.nudge * 0.5}px;
 
     padding: 0 ${spacings.nudge * 2}px;
 `;
