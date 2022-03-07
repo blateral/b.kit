@@ -397,3 +397,21 @@ export const Inverted: Story = () => (
 export const Centered: Story = () => (
     <IconList enableToggle isCentered items={itemsWithAspectRatio} />
 );
+
+export const WithCustomToggle: Story = () => (
+    <IconList
+        enableToggle
+        items={itemsWithAspectRatio}
+        toggle={({
+            isToggled,
+            showMoreText,
+            showLessText,
+            clickHandler,
+            additionalProps,
+        }) => (
+            <button onClick={clickHandler} {...additionalProps}>
+                {isToggled ? showLessText : showMoreText}
+            </button>
+        )}
+    />
+);

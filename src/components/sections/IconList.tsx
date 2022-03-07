@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import Copy from 'components/typography/Copy';
 import { mq, spacings, getGlobals as global } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Pointer from 'components/buttons/Pointer';
@@ -110,7 +109,7 @@ const Image = styled.img<{ isInverted?: boolean }>`
     }
 `;
 
-const ShowMore = styled(Copy)<{ itemCount?: number; isCentered?: boolean }>`
+const ShowMore = styled.div<{ itemCount?: number; isCentered?: boolean }>`
     display: ${({ itemCount }) =>
         itemCount && itemCount > 6 ? 'block' : 'none'};
 
@@ -155,6 +154,16 @@ const IconList: React.FC<{
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
+    /** Function to inject custom toggle button */
+    toggle?: (props: {
+        isInverted?: boolean;
+        isToggled?: boolean;
+        showLessText?: string;
+        showMoreText?: string;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+        additionalProps?: Record<string, any>;
+    }) => React.ReactNode;
+
     /** Custom text for toggle button in folded state */
     showMoreText?: string;
 
@@ -174,6 +183,7 @@ const IconList: React.FC<{
     isCentered = false,
     primaryAction,
     secondaryAction,
+    toggle,
     showLessText = 'show less',
     showMoreText = 'show more',
     enableToggle,
@@ -182,6 +192,10 @@ const IconList: React.FC<{
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const [showMore, setShowMore] = useState<boolean>(!enableToggle);
+
+    const handleToggleClick = () => {
+        setShowMore((prev) => !prev);
+    };
 
     return (
         <StyledSection
@@ -226,22 +240,30 @@ const IconList: React.FC<{
                 </ItemContainer>
                 {enableToggle && (
                     <ShowMore
-                        type="copy"
-                        size="medium"
-                        isInverted={isInverted}
                         isCentered={isCentered}
                         itemCount={items?.length || 0}
-                        onClick={() => setShowMore((prev) => !prev)}
                     >
-                        <Pointer.View
-                            as="button"
-                            isInverted={isInverted}
-                            aria-pressed={showMore}
-                        >
-                            <Pointer.Label>
-                                {showMore ? showLessText : showMoreText}
-                            </Pointer.Label>
-                        </Pointer.View>
+                        {toggle ? (
+                            toggle({
+                                isInverted,
+                                showLessText,
+                                showMoreText,
+                                isToggled: showMore,
+                                clickHandler: handleToggleClick,
+                                additionalProps: { 'aria-pressed': showMore },
+                            })
+                        ) : (
+                            <Pointer.View
+                                as="button"
+                                isInverted={isInverted}
+                                aria-pressed={showMore}
+                                onClick={() => handleToggleClick()}
+                            >
+                                <Pointer.Label>
+                                    {showMore ? showLessText : showMoreText}
+                                </Pointer.Label>
+                            </Pointer.View>
+                        )}
                     </ShowMore>
                 )}
 
