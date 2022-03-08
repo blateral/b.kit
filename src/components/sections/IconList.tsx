@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { mq, spacings, getGlobals as global } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    getColors as color,
+    getGlobals as global,
+} from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Pointer from 'components/buttons/Pointer';
 import Link, { LinkProps } from 'components/typography/Link';
@@ -93,8 +98,12 @@ const Item = styled.li<{
     }
 `;
 
-const ItemLink = styled(Link)`
+const ItemLink = styled(Link)<{ isInverted?: boolean }>`
     display: block;
+    outline-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
 `;
 
 const Image = styled.img<{ isInverted?: boolean }>`
@@ -218,7 +227,11 @@ const IconList: React.FC<{
                     >
                         {items?.map(({ src, link, alt, ratio }, i) => (
                             <Item isVisible={showMore} index={i} key={i}>
-                                <ItemLink {...link} aria-label={alt}>
+                                <ItemLink
+                                    {...link}
+                                    isInverted={isInverted}
+                                    ariaLabel={alt}
+                                >
                                     <Image
                                         data-img-loaded={false}
                                         isInverted={isInverted}

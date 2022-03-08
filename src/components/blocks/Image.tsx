@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { mq, getGlobals as global } from 'utils/styles';
+import { mq, getColors as color, getGlobals as global } from 'utils/styles';
 
 export interface ImageAspectRatios {
     small: { w: number; h: number };
@@ -147,6 +147,10 @@ const AspectContainer = styled.div<{
 
 const Img = styled.img<{ isInverted?: boolean; showPlaceholder?: boolean }>`
     display: block;
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.text.inverted
+            : color(theme).new.text.default};
 
     &[data-img-loaded='false'] {
         background: ${({ theme, isInverted, showPlaceholder }) =>

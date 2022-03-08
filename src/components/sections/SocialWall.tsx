@@ -1,21 +1,25 @@
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
+import { getColors as color, spacings } from 'utils/styles';
+
 import Instagram from 'components/base/icons/socials/Instagram';
-import { getColors as color } from 'utils/styles';
-import * as React from 'react';
 import Heading from 'components/typography/Heading';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Link, { LinkProps } from 'components/typography/Link';
 import Grid from 'components/base/Grid';
+import Image, { ImageProps } from 'components/blocks/Image';
 
-const Content = styled.div`
+const Card = styled(Link)<{ isInverted?: boolean }>`
     position: relative;
-`;
-
-const ContentBlock = styled(Link)`
+    display: block;
     text-decoration: none;
-    color: inherit;
+    color: '#fff';
+    outline-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
 
     &:before {
         content: '';
@@ -24,11 +28,15 @@ const ContentBlock = styled(Link)`
         bottom: 0;
         left: 0;
         right: 0;
-        background: ${({ theme }) => color(theme).new.elementBg.light};
+        background: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).new.secondary.inverted
+                : color(theme).new.secondary.default};
 
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.1s ease-in-out;
+        z-index: 1;
+        transition: opacity 0.2s ease-in-out;
     }
 
     &:hover {
@@ -39,9 +47,10 @@ const ContentBlock = styled(Link)`
     }
 `;
 
-const Image = styled.img`
+const StyledImage = styled(Image)`
     display: block;
-    width: 100%;
+    height: 100%;
+    z-index: 0;
 `;
 
 const TextContainer = styled.div`
@@ -53,9 +62,14 @@ const TextContainer = styled.div`
 
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.1s ease-in-out;
+    z-index: 2;
+    transition: opacity 0.2s ease-in-out;
 
-    ${ContentBlock}:hover & {
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+
+    ${Card}:hover & {
         opacity: 1;
         pointer-events: all;
     }
@@ -69,28 +83,29 @@ const InstagramIcon = styled.div`
     position: absolute;
     left: 20px;
     bottom: 20px;
-    color: ${({ theme }) => color(theme).new.elementBg.light};
+    color: ${({ theme }) => color(theme).new.text.inverted};
+    z-index: 2;
 
     & > * {
         fill: #fff;
 
-        ${ContentBlock}:hover & {
-            color: ${({ theme }) => color(theme).new.elementBg.dark};
+        ${Card}:hover & {
+            color: ${({ theme }) => color(theme).new.text.inverted};
         }
     }
 `;
 
 const SocialWall: React.FC<{
-    items?: {
+    items?: Array<{
         link?: LinkProps;
-        image?: { src: string; alt?: string };
-    }[];
+        image?: Omit<ImageProps, 'coverSpace' | 'ratio'>;
+    }>;
     followUs?: string;
     hashtag?: string;
     socialIcon?: React.ReactNode;
     bgMode?: 'full' | 'inverted';
 }> = ({ items, hashtag, followUs, socialIcon, bgMode }) => {
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
@@ -98,52 +113,56 @@ const SocialWall: React.FC<{
         <Section
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation
         >
             <Wrapper addWhitespace>
                 <Grid.Row>
-                    {items &&
-                        items.map((item, i) => {
-                            return (
-                                <Grid.Col
-                                    key={i}
-                                    medium={{ span: 6 / 12 }}
-                                    large={{ span: 4 / 12 }}
-                                >
-                                    <Content>
-                                        <ContentBlock isExternal {...item.link}>
-                                            {item.image && (
-                                                <Image
-                                                    src={item.image.src}
-                                                    alt={item.image.alt}
-                                                />
-                                            )}
-                                            <TextContainer>
-                                                <FollowUs size="super">
-                                                    {followUs
-                                                        ? followUs
-                                                        : 'Follow Us On Instagram'}
-                                                </FollowUs>
-                                                {hashtag && (
-                                                    <Heading size="heading-2">
-                                                        {`#${hashtag}`}
-                                                    </Heading>
-                                                )}
-                                            </TextContainer>
-                                            <InstagramIcon>
-                                                {socialIcon || <Instagram />}
-                                            </InstagramIcon>
-                                        </ContentBlock>
-                                    </Content>
-                                </Grid.Col>
-                            );
-                        })}
+                    {items?.map((item, i) => (
+                        <Grid.Col
+                            key={i}
+                            medium={{ span: 6 / 12 }}
+                            large={{ span: 4 / 12 }}
+                        >
+                            <Card
+                                isExternal
+                                {...item.link}
+                                isInverted={isInverted}
+                                ariaLabel={item?.image?.alt}
+                            >
+                                {item.image && (
+                                    <StyledImage
+                                        {...item.image}
+                                        coverSpace
+                                        ratios={{
+                                            small: { w: 1, h: 1 },
+                                        }}
+                                        isInverted={isInverted}
+                                    />
+                                )}
+                                <TextContainer>
+                                    <FollowUs size="super" isInverted>
+                                        {followUs
+                                            ? followUs
+                                            : 'Follow Us On Instagram'}
+                                    </FollowUs>
+                                    {hashtag && (
+                                        <Heading size="heading-2" isInverted>
+                                            {`#${hashtag}`}
+                                        </Heading>
+                                    )}
+                                </TextContainer>
+                                <InstagramIcon>
+                                    {socialIcon || <Instagram />}
+                                </InstagramIcon>
+                            </Card>
+                        </Grid.Col>
+                    ))}
                 </Grid.Row>
             </Wrapper>
         </Section>

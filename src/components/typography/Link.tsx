@@ -9,18 +9,19 @@ export interface LinkProps {
 const Link = forwardRef<
     HTMLAnchorElement,
     LinkProps & {
+        ariaLabel?: string;
         className?: string;
         children?: React.ReactNode;
     }
->(({ isExternal = false, href, children, className, ...rest }, ref) => {
+>(({ isExternal = false, href, ariaLabel, children, className }, ref) => {
     return (
         <a
             ref={ref}
             href={href}
             target={isExternal ? '_blank' : undefined}
             rel={isExternal ? 'noopener noreferrer' : undefined}
+            aria-label={ariaLabel}
             className={className}
-            {...rest}
         >
             {children}
         </a>

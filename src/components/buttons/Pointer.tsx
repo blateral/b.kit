@@ -38,7 +38,10 @@ const View = styled.a<{
     -moz-osx-font-smoothing: grayscale;
     will-change: auto;
 
-    // outline: none;
+    outline-color: ${({ theme, inverted }) =>
+        inverted
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
     border: none;
     cursor: pointer;
 
