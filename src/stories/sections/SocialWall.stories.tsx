@@ -10,7 +10,7 @@ export default {
     component: SocialWallComponent,
     parameters: {
         status: {
-            type: ['preview'],
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
