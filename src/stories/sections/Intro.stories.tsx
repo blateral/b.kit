@@ -9,7 +9,7 @@ export default {
     component: IntroComponent,
     parameters: {
         status: {
-            type: ['preview'],
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
