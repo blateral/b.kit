@@ -79,6 +79,7 @@ const Intro: React.FC<{
                     primaryAction={primaryAction}
                     isCentered={isCentered}
                     clampTitle
+                    clampText
                 />
             </Wrapper>
         </Section>

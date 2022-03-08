@@ -7,7 +7,6 @@ import Title from 'components/blocks/Title';
 import Copy, { CopyType } from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
-import { getGridWidth } from 'components/base/Grid';
 
 const View = styled.div<{ isCentered?: boolean }>`
     width: 100%;
@@ -19,15 +18,15 @@ const View = styled.div<{ isCentered?: boolean }>`
 `;
 
 const StyledTitle = styled(Title)<{ clamp?: boolean }>`
-    @media ${mq.semilarge} {
-        max-width: ${({ clamp }) => clamp && getGridWidth({ cols: 8 })};
-    }
+    max-width: ${({ clamp }) => clamp && '880px'};
 `;
 
 const ContentBlock = styled(Copy)<{
     isCentered?: boolean;
+    clamp?: boolean;
 }>`
     display: block;
+    max-width: ${({ clamp }) => clamp && '880px'};
     margin-left: ${({ isCentered }) => isCentered && 'auto'};
     margin-right: ${({ isCentered }) => isCentered && 'auto'};
 `;
@@ -70,8 +69,10 @@ const IntroBlock: React.FC<{
     /** Center text and actions */
     isCentered?: boolean;
 
-    /** Clamp title to a width of max 8 grid cols. */
+    /** Clamp title to max width of 880px */
     clampTitle?: boolean;
+    /** Clamp text to max width of 880px */
+    clampText?: boolean;
     className?: string;
 }> = ({
     colorMode = 'default',
@@ -85,6 +86,7 @@ const IntroBlock: React.FC<{
     secondaryAction,
     isCentered = false,
     clampTitle = false,
+    clampText = false,
     className,
 }) => {
     return (
@@ -107,6 +109,7 @@ const IntroBlock: React.FC<{
                     isInverted={colorMode === 'inverted'}
                     isCentered={isCentered}
                     innerHTML={text}
+                    clamp={clampText}
                 />
             )}
             {(primaryAction || secondaryAction) && (
