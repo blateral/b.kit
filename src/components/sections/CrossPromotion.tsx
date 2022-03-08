@@ -27,14 +27,14 @@ const Card = styled(PromotionCard)<{ isMain?: boolean }>`
 const CrossPromotion: React.FC<{
     /** Promotion card settings in main grid column (default: on right side). The size prop controls the width. */
     main?: Array<
-        Omit<PromotionCardProps, 'externalLinkIcon'> & {
+        Omit<PromotionCardProps, 'externalLinkIcon' | 'isInverted'> & {
             size?: 'full' | 'half';
         }
     >;
 
     /** Promotion card settings in second grid column (default: on left side). The size prop controls the width. */
     aside?: Array<
-        Omit<PromotionCardProps, 'externalLinkIcon'> & {
+        Omit<PromotionCardProps, 'externalLinkIcon' | 'isInverted'> & {
             size?: 'full' | 'half';
         }
     >;
@@ -76,6 +76,7 @@ const CrossPromotion: React.FC<{
                                             isMain
                                             {...card}
                                             externalLinkIcon={externalLinkIcon}
+                                            isInverted={isInverted}
                                         />
                                     ))}
                             </Grid.Col>
@@ -85,6 +86,7 @@ const CrossPromotion: React.FC<{
                                         key={i}
                                         {...card}
                                         externalLinkIcon={externalLinkIcon}
+                                        isInverted={isInverted}
                                     />
                                 ))}
                             </Grid.Col>
@@ -97,6 +99,7 @@ const CrossPromotion: React.FC<{
                                         key={i}
                                         {...card}
                                         externalLinkIcon={externalLinkIcon}
+                                        isInverted={isInverted}
                                     />
                                 ))}
                             </Grid.Col>
@@ -108,6 +111,7 @@ const CrossPromotion: React.FC<{
                                             isMain
                                             {...card}
                                             externalLinkIcon={externalLinkIcon}
+                                            isInverted={isInverted}
                                         />
                                     ))}
                             </Grid.Col>
@@ -129,6 +133,7 @@ const CrossPromotion: React.FC<{
                                         key={i}
                                         {...card}
                                         externalLinkIcon={externalLinkIcon}
+                                        isInverted={isInverted}
                                     />
                                 </Grid.Col>
                             ))}

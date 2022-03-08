@@ -95,6 +95,8 @@ const ExternalIconHolder = styled.span`
 `;
 
 export interface PromotionCardProps {
+    /** Setup Card for dark backgrounds */
+    isInverted?: boolean;
     /** Card image settings */
     image: ImageProps;
     /** Card title */
@@ -119,6 +121,7 @@ const PromotionCard = forwardRef<
 >(
     (
         {
+            isInverted,
             image,
             title,
             titleAs,
@@ -153,7 +156,7 @@ const PromotionCard = forwardRef<
                 {...linkObj}
                 className={className}
             >
-                <StyledImage {...image} coverSpace />
+                <StyledImage {...image} isInverted={isInverted} coverSpace />
                 {title && (
                     <IntroContainer>
                         <StyledTitle
