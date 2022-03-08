@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 
 import Instagram from 'components/base/icons/socials/Instagram';
 import Heading from 'components/typography/Heading';
@@ -8,8 +8,45 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Link, { LinkProps } from 'components/typography/Link';
-import Grid from 'components/base/Grid';
+import { gridSettings } from 'components/base/Grid';
 import Image, { ImageProps } from 'components/blocks/Image';
+
+const Cards = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    margin-top: -${spacings.spacer}px;
+    margin-left: -${spacings.spacer}px;
+
+    & > * {
+        flex: 1 1 100%;
+        margin-top: ${spacings.spacer}px;
+        margin-left: ${spacings.spacer}px;
+    }
+
+    @media ${mq.medium} {
+        & > * {
+            flex: 1 1 calc(50% - ${gridSettings.gutter}px);
+            max-width: calc(50% - ${gridSettings.gutter}px);
+        }
+    }
+
+    @media ${mq.large} {
+        & > * {
+            flex: 1 1 calc(${(1 / 3) * 100}% - ${gridSettings.gutter}px);
+            max-width: calc(${(1 / 3) * 100}% - ${gridSettings.gutter}px);
+        }
+    }
+`;
+
+const Item = styled.li`
+    display: block;
+    position: relative;
+    padding: 0;
+`;
 
 const Card = styled(Link)<{ isInverted?: boolean }>`
     position: relative;
@@ -57,8 +94,11 @@ const TextContainer = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 100%;
     transform: translate(-50%, -50%);
     text-align: center;
+
+    padding: ${spacings.nudge * 2}px;
 
     opacity: 0;
     pointer-events: none;
@@ -122,13 +162,9 @@ const SocialWall: React.FC<{
             addSeperation
         >
             <Wrapper addWhitespace>
-                <Grid.Row>
+                <Cards>
                     {items?.map((item, i) => (
-                        <Grid.Col
-                            key={i}
-                            medium={{ span: 6 / 12 }}
-                            large={{ span: 4 / 12 }}
-                        >
+                        <Item key={i}>
                             <Card
                                 isExternal
                                 {...item.link}
@@ -161,9 +197,9 @@ const SocialWall: React.FC<{
                                     {socialIcon || <Instagram />}
                                 </InstagramIcon>
                             </Card>
-                        </Grid.Col>
+                        </Item>
                     ))}
-                </Grid.Row>
+                </Cards>
             </Wrapper>
         </Section>
     );
