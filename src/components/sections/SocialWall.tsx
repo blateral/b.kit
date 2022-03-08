@@ -136,15 +136,24 @@ const InstagramIcon = styled.div`
 `;
 
 const SocialWall: React.FC<{
+    /** Array with item settings */
     items?: Array<{
         link?: LinkProps;
         image?: Omit<ImageProps, 'coverSpace' | 'ratio'>;
     }>;
+
+    /** Text for main social media follow call */
     followUs?: string;
-    hashtag?: string;
+
+    /** Text for e.g. social media hashtag */
+    hashTag?: string;
+
+    /** Function to inject custom social icon on bottom left corner */
     socialIcon?: React.ReactNode;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ items, hashtag, followUs, socialIcon, bgMode }) => {
+}> = ({ items, hashTag, followUs, socialIcon, bgMode }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -187,9 +196,9 @@ const SocialWall: React.FC<{
                                             ? followUs
                                             : 'Follow Us On Instagram'}
                                     </FollowUs>
-                                    {hashtag && (
+                                    {hashTag && (
                                         <Heading size="heading-2" isInverted>
-                                            {`#${hashtag}`}
+                                            {hashTag}
                                         </Heading>
                                     )}
                                 </TextContainer>

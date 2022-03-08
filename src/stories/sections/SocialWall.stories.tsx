@@ -97,7 +97,7 @@ export const Default: Story = () => (
                 },
             },
         ]}
-        hashtag="hashtag"
+        hashTag="#hashtag"
         followUs="FOLLOW US ON INSTAGRAM"
     />
 );
@@ -185,7 +185,7 @@ export const WithBackground: Story = () => (
                 },
             },
         ]}
-        hashtag="hashtag"
+        hashTag="#hashtag"
         followUs="FOLLOW US ON INSTAGRAM"
     />
 );
@@ -273,7 +273,7 @@ export const Inverted: Story = () => (
                 },
             },
         ]}
-        hashtag="hashtag"
+        hashTag="#hashtag"
         followUs="FOLLOW US ON INSTAGRAM"
     />
 );
@@ -360,7 +360,7 @@ export const CustomSocialIcon: Story = () => (
                 },
             },
         ]}
-        hashtag="hashtag"
+        hashTag="#hashtag"
         followUs="FOLLOW US ON INSTAGRAM"
         socialIcon={<FlyTo />}
     />
