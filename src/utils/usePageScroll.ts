@@ -97,7 +97,6 @@ const usePageScroll = (settings?: ScrollSettings) => {
     }, [
         directionDownOffset,
         directionUpOffset,
-        leftOffsetFromTop,
         scrollDirection,
         settings,
         settings?.offset,

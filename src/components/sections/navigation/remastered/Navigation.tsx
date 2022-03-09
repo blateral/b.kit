@@ -53,10 +53,13 @@ const Navigation: FC<NavigationProps> = ({
 
     useEffect(() => {
         if (isTop) setIsAnimated(false);
-        else if (scrollDirection === PageScrollDirection.UP) {
+        else if (
+            leftOffsetFromTop &&
+            scrollDirection === PageScrollDirection.UP
+        ) {
             setIsAnimated(true);
         }
-    }, [isTop, scrollDirection]);
+    }, [isTop, leftOffsetFromTop, scrollDirection]);
 
     useEffect(() => {
         if (!isStickable) return;
