@@ -2,17 +2,25 @@ import React, { FC, useEffect, useState } from 'react';
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 
-import NavBar from './NavBar';
+import NavBar, { NavBarSize } from './NavBar';
 
-interface NavigationProps {
-    isNavbarStickable?: boolean;
-    isNavbarCollapsible?: boolean;
+interface NavBarBase {
+    isStickable?: boolean;
 }
 
-const Navigation: FC<NavigationProps> = ({
-    isNavbarStickable,
-    isNavbarCollapsible,
-}) => {
+interface NavBarCollapse {
+    isStickable: true;
+    isCollapsible?: boolean;
+}
+
+export interface NavigationProps {
+    navBar?: NavBarBase | NavBarCollapse;
+}
+
+const Navigation: FC<NavigationProps> = ({ navBar }) => {
+    const isStickable = navBar?.isStickable || false;
+    const isCollapsible = (navBar as NavBarCollapse)?.isCollapsible || false;
+
     const [isSticky, setIsSticky] = useState<boolean>(false);
     const [isAnimated, setIsAnimated] = useState<boolean>(false);
     const [isNavBarOpen, setNavBarOpen] = useState<boolean>(true);
@@ -21,27 +29,23 @@ const Navigation: FC<NavigationProps> = ({
             directionOffset: { up: 40, down: 40 },
             offset: 160,
             onLeftOffset: (dir) => {
-                if (isNavbarStickable) {
+                if (isStickable) {
                     setIsSticky(dir === PageScrollDirection.DOWN);
                 }
             },
         });
+    const navbarSize: NavBarSize =
+        isTop || !leftOffsetFromTop || !isStickable ? 'large' : 'small';
 
     useEffect(() => {
-        if (isNavbarStickable && isNavbarCollapsible) {
+        if (isStickable && isCollapsible) {
             setNavBarOpen(
                 isTop ||
                     isInOffset ||
                     scrollDirection === PageScrollDirection.UP
             );
         }
-    }, [
-        scrollDirection,
-        isTop,
-        isNavbarStickable,
-        isInOffset,
-        isNavbarCollapsible,
-    ]);
+    }, [scrollDirection, isTop, isStickable, isInOffset, isCollapsible]);
 
     useEffect(() => {
         if (isTop) setIsAnimated(false);
@@ -51,24 +55,20 @@ const Navigation: FC<NavigationProps> = ({
     }, [isTop, scrollDirection]);
 
     useEffect(() => {
-        if (!isNavbarStickable) return;
-        if (leftOffsetFromTop || !isNavbarCollapsible) {
+        if (!isStickable) return;
+        if (leftOffsetFromTop || !isCollapsible) {
             setIsSticky(true);
         } else if (isTop) {
             setIsSticky(false);
         }
-    }, [isNavbarCollapsible, isNavbarStickable, isTop, leftOffsetFromTop]);
+    }, [isCollapsible, isStickable, isTop, leftOffsetFromTop]);
 
     return (
         <NavBar
             isOpen={isNavBarOpen}
             isSticky={isSticky}
             isAnimated={isAnimated}
-            size={
-                isTop || !leftOffsetFromTop || !isNavbarStickable
-                    ? 'large'
-                    : 'small'
-            }
+            size={navbarSize}
         />
     );
 };

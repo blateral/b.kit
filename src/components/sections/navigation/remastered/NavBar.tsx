@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { spacings, mq } from 'utils/styles';
+import { spacings, mq, getColors as color } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 
 const View = styled.div<{
@@ -27,11 +27,11 @@ const View = styled.div<{
 `;
 
 const Header = styled.div`
-    background: #7749f8;
+    background: ${({ theme }) => color(theme).new.primary.default};
 `;
 
 const Main = styled.div`
-    background: lightgrey;
+    background: ${({ theme }) => color(theme).new.elementBg.light};
 `;
 
 const ContentTop = styled.div<{ size?: NavBarSize }>`
@@ -96,15 +96,20 @@ const Logo = styled.img`
     object-fit: contain;
 `;
 
-type NavBarSize = 'large' | 'small';
+export type NavBarSize = 'large' | 'small';
 
-const NavBar: FC<{
+export interface NavBarProps {
     size?: NavBarSize;
     isOpen?: boolean;
     isSticky?: boolean;
     isAnimated?: boolean;
-    className?: string;
-}> = ({ size = 'large', isOpen, isSticky, isAnimated, className }) => {
+}
+
+const NavBar: FC<
+    NavBarProps & {
+        className?: string;
+    }
+> = ({ size = 'large', isOpen, isSticky, isAnimated, className }) => {
     return (
         <View
             isOpen={isOpen}

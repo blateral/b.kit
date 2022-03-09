@@ -30,8 +30,10 @@ export default {
 
 export const Default: Story = () => <Navigation />;
 
-export const StickableNavbar: Story = () => <Navigation isNavbarStickable />;
+export const StickableNavbar: Story = () => (
+    <Navigation navBar={{ isStickable: true }} />
+);
 
 export const CollapsibleNavbar: Story = () => (
-    <Navigation isNavbarStickable isNavbarCollapsible />
+    <Navigation navBar={{ isStickable: true, isCollapsible: true }} />
 );
