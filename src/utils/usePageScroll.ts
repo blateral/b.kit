@@ -11,10 +11,16 @@ interface ScrollSettings {
         up?: number;
         down?: number;
     };
+    /** Set top offset area */
+    offset?: number;
+    /** On leave top offset callback */
+    onLeftOffset?: (dir: PageScrollDirection) => void;
 }
 
 const usePageScroll = (settings?: ScrollSettings) => {
     const [isTop, setIsTop] = useState<boolean>(true);
+    const [isInOffset, setIsInOffset] = useState<boolean>(true);
+    const [leftOffsetFromTop, setLeftOffsetFromTop] = useState<boolean>(false);
 
     const lastScrollPos = useRef<number>(0);
     const pxSinceLastSwitch = useRef<number>(0);
@@ -30,9 +36,24 @@ const usePageScroll = (settings?: ScrollSettings) => {
         const handleScroll = () => {
             if (typeof window === 'undefined') return;
             const scrollY = window.pageYOffset;
+            const isTop = scrollY <= 0;
 
             // check if page is scroll on top
-            setIsTop(scrollY <= 0);
+            setIsTop(isTop);
+            setLeftOffsetFromTop(false);
+
+            // check offset
+            if (settings?.offset && scrollY <= settings.offset) {
+                setIsInOffset(true);
+            } else {
+                setIsInOffset((prev) => {
+                    if (prev) {
+                        settings?.onLeftOffset?.(scrollDirection);
+                    }
+                    return false;
+                });
+                setLeftOffsetFromTop(true);
+            }
 
             /**
              * calculate direction changes
@@ -56,7 +77,9 @@ const usePageScroll = (settings?: ScrollSettings) => {
             absAccPx = Math.abs(pxSinceLastSwitch.current);
 
             // set direction states
-            if (diff < 0 && absAccPx >= directionUpOffset) {
+            if (isTop) {
+                setScrollDirection(PageScrollDirection.DOWN);
+            } else if (diff < 0 && absAccPx >= directionUpOffset) {
                 setScrollDirection(PageScrollDirection.UP);
             } else if (diff > 0 && absAccPx >= directionDownOffset) {
                 setScrollDirection(PageScrollDirection.DOWN);
@@ -72,11 +95,19 @@ const usePageScroll = (settings?: ScrollSettings) => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [directionDownOffset, directionUpOffset]);
+    }, [
+        directionDownOffset,
+        directionUpOffset,
+        scrollDirection,
+        settings,
+        settings?.offset,
+    ]);
 
     return {
         isTop,
         scrollDirection,
+        isInOffset,
+        leftOffsetFromTop,
     };
 };
 

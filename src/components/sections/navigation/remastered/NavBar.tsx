@@ -3,9 +3,27 @@ import styled from 'styled-components';
 import { spacings, mq } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 
-const View = styled.div`
+const View = styled.div<{
+    isOpen?: boolean;
+    isSticky?: boolean;
+    isAnimated?: boolean;
+}>`
+    position: ${({ isSticky }) => (isSticky ? 'fixed' : 'absolute')};
+    top: 0;
+    left: 0;
+    right: 0;
+
+    transform: ${({ isOpen }) => !isOpen && 'translate3d(0, -100%, 0)'};
+    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+
     margin: 0 auto;
     max-width: ${spacings.wrapperLarge}px;
+
+    ${({ isAnimated }) => `transition: ${
+        isAnimated ? 'transform 0.3s ease-in-out, ' : ''
+    }height 0.3s ease-in-out,
+                opacity 0.3s ease-in-out;`}
+    will-change: transform;
 `;
 
 const Header = styled.div`
@@ -82,10 +100,18 @@ type NavBarSize = 'large' | 'small';
 
 const NavBar: FC<{
     size?: NavBarSize;
+    isOpen?: boolean;
+    isSticky?: boolean;
+    isAnimated?: boolean;
     className?: string;
-}> = ({ size = 'large', className }) => {
+}> = ({ size = 'large', isOpen, isSticky, isAnimated, className }) => {
     return (
-        <View className={className}>
+        <View
+            isOpen={isOpen}
+            isSticky={isSticky}
+            isAnimated={isAnimated}
+            className={className}
+        >
             <Header>
                 <ContentTop size={size}>
                     <LeftCol size="small" isInverted>
