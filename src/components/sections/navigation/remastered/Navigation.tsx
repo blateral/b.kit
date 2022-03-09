@@ -8,16 +8,20 @@ interface NavBarBase {
     isStickable?: boolean;
 }
 
-interface NavBarCollapse {
+interface NavBarCollapse extends NavBarBase {
     isStickable: true;
     isCollapsible?: boolean;
 }
 
 export interface NavigationProps {
     navBar?: NavBarBase | NavBarCollapse;
+    clampWidth?: 'content' | 'full';
 }
 
-const Navigation: FC<NavigationProps> = ({ navBar }) => {
+const Navigation: FC<NavigationProps> = ({
+    navBar,
+    clampWidth = 'content',
+}) => {
     const isStickable = navBar?.isStickable || false;
     const isCollapsible = (navBar as NavBarCollapse)?.isCollapsible || false;
 
@@ -69,6 +73,7 @@ const Navigation: FC<NavigationProps> = ({ navBar }) => {
             isSticky={isSticky}
             isAnimated={isAnimated}
             size={navbarSize}
+            clampWidth={clampWidth}
         />
     );
 };

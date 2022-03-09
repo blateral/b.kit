@@ -34,11 +34,12 @@ const Main = styled.div`
     background: ${({ theme }) => color(theme).new.elementBg.light};
 `;
 
-const ContentTop = styled.div<{ size?: NavBarSize }>`
+const ContentTop = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
     align-items: center;
     height: 30px;
-    max-width: ${spacings.wrapper}px;
+    max-width: ${({ clamp }) =>
+        clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
     margin: 0 auto;
 
@@ -47,10 +48,11 @@ const ContentTop = styled.div<{ size?: NavBarSize }>`
     }
 `;
 
-const Content = styled.div<{ size?: NavBarSize }>`
+const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
     height: ${({ size }) => (size === 'large' ? '100px' : '80px')};
-    max-width: ${spacings.wrapper}px;
+    max-width: ${({ clamp }) =>
+        clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${spacings.nudge * 2}px;
     margin: 0 auto;
 
@@ -103,13 +105,23 @@ export interface NavBarProps {
     isOpen?: boolean;
     isSticky?: boolean;
     isAnimated?: boolean;
+    clampWidth?: 'content' | 'full';
 }
 
 const NavBar: FC<
     NavBarProps & {
         className?: string;
     }
-> = ({ size = 'large', isOpen, isSticky, isAnimated, className }) => {
+> = ({
+    size = 'large',
+    isOpen,
+    isSticky,
+    isAnimated,
+    clampWidth,
+    className,
+}) => {
+    const clampContent = clampWidth === 'content';
+
     return (
         <View
             isOpen={isOpen}
@@ -118,7 +130,7 @@ const NavBar: FC<
             className={className}
         >
             <Header>
-                <ContentTop size={size}>
+                <ContentTop size={size} clamp={clampContent}>
                     <LeftCol size="small" isInverted>
                         Left
                     </LeftCol>
@@ -128,7 +140,7 @@ const NavBar: FC<
                 </ContentTop>
             </Header>
             <Main>
-                <Content size={size}>
+                <Content size={size} clamp={clampContent}>
                     <LeftCol>Column Left</LeftCol>
                     <CenterCol>
                         <Logo src="https://via.placeholder.com/320x80" />

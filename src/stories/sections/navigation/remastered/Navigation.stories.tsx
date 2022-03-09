@@ -30,6 +30,10 @@ export default {
 
 export const Default: Story = () => <Navigation />;
 
+export const WithoutContentClamp: Story = () => (
+    <Navigation clampWidth="full" />
+);
+
 export const StickableNavbar: Story = () => (
     <Navigation navBar={{ isStickable: true }} />
 );
