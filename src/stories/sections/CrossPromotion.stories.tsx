@@ -15,6 +15,7 @@ export default {
     },
 } as Meta;
 
+// #TODO: Bildgrößen auf Mobile checken
 export const SingleImageFull: Story = () => (
     <CrossPromotion
         main={[
