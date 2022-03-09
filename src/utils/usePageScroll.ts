@@ -40,7 +40,6 @@ const usePageScroll = (settings?: ScrollSettings) => {
 
             // check if page is scroll on top
             setIsTop(isTop);
-            setLeftOffsetFromTop(false);
 
             // check offset
             if (settings?.offset && scrollY <= settings.offset) {
@@ -49,10 +48,10 @@ const usePageScroll = (settings?: ScrollSettings) => {
                 setIsInOffset((prev) => {
                     if (prev) {
                         settings?.onLeftOffset?.(scrollDirection);
+                        setLeftOffsetFromTop(true);
                     }
                     return false;
                 });
-                setLeftOffsetFromTop(true);
             }
 
             /**
@@ -98,10 +97,16 @@ const usePageScroll = (settings?: ScrollSettings) => {
     }, [
         directionDownOffset,
         directionUpOffset,
+        leftOffsetFromTop,
         scrollDirection,
         settings,
         settings?.offset,
     ]);
+
+    useEffect(() => {
+        // reset left offset flag on top
+        if (isTop) setLeftOffsetFromTop(false);
+    }, [isTop]);
 
     return {
         isTop,

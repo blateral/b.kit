@@ -6,9 +6,13 @@ import NavBar from './NavBar';
 
 interface NavigationProps {
     isNavbarStickable?: boolean;
+    isNavbarCollapsible?: boolean;
 }
 
-const Navigation: FC<NavigationProps> = ({ isNavbarStickable }) => {
+const Navigation: FC<NavigationProps> = ({
+    isNavbarStickable,
+    isNavbarCollapsible,
+}) => {
     const [isSticky, setIsSticky] = useState<boolean>(false);
     const [isAnimated, setIsAnimated] = useState<boolean>(false);
     const [isNavBarOpen, setNavBarOpen] = useState<boolean>(true);
@@ -24,14 +28,20 @@ const Navigation: FC<NavigationProps> = ({ isNavbarStickable }) => {
         });
 
     useEffect(() => {
-        if (isNavbarStickable) {
+        if (isNavbarStickable && isNavbarCollapsible) {
             setNavBarOpen(
                 isTop ||
                     isInOffset ||
                     scrollDirection === PageScrollDirection.UP
             );
         }
-    }, [scrollDirection, isTop, isNavbarStickable, isInOffset]);
+    }, [
+        scrollDirection,
+        isTop,
+        isNavbarStickable,
+        isInOffset,
+        isNavbarCollapsible,
+    ]);
 
     useEffect(() => {
         if (isTop) setIsAnimated(false);
@@ -42,19 +52,23 @@ const Navigation: FC<NavigationProps> = ({ isNavbarStickable }) => {
 
     useEffect(() => {
         if (!isNavbarStickable) return;
-        if (leftOffsetFromTop) {
+        if (leftOffsetFromTop || !isNavbarCollapsible) {
             setIsSticky(true);
         } else if (isTop) {
             setIsSticky(false);
         }
-    }, [isNavbarStickable, isTop, leftOffsetFromTop]);
+    }, [isNavbarCollapsible, isNavbarStickable, isTop, leftOffsetFromTop]);
 
     return (
         <NavBar
             isOpen={isNavBarOpen}
             isSticky={isSticky}
             isAnimated={isAnimated}
-            size={isTop || !isNavbarStickable ? 'large' : 'small'}
+            size={
+                isTop || !leftOffsetFromTop || !isNavbarStickable
+                    ? 'large'
+                    : 'small'
+            }
         />
     );
 };
