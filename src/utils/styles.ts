@@ -238,7 +238,7 @@ const defaultColors: Colors = {
 
 /***** Fonts *****/
 const copyBase: FontProps = {
-    family: '"Roboto", Arial, Helvetica, sans-serif',
+    family: '"Roboto", Roboto-fallback, Helvetica, sans-serif',
     weight: '400',
     style: 'normal',
     lineHeight: '1.5',
@@ -250,7 +250,7 @@ const copyBase: FontProps = {
 };
 
 const headingBase: FontProps = {
-    family: '"Roboto", Arial, Helvetica, sans-serif',
+    family: '"Roboto", Roboto-fallback, Helvetica, sans-serif',
     weight: '700',
     style: 'normal',
     lineHeight: '1.17',
