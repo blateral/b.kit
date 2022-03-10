@@ -1,7 +1,7 @@
-<link
+<!-- <link
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
     rel="stylesheet"
-/>
+/> -->
 <link
     rel="stylesheet"
     type="text/css"
@@ -20,6 +20,22 @@
 
 <!-- <link href="styles/datepicker.css" rel="stylesheet" /> -->
 <link href="styles/react-datepicker.css" rel="stylesheet" />
+
+<link rel="preconnect" href="/fonts/roboto" crossorigin />
+
+<!-- We use the full link to the CSS file in the rest of the tags -->
+<link rel="preload" as="style" href="/fonts/roboto/roboto.css" />
+
+<link
+    rel="stylesheet"
+    href="/fonts/roboto/roboto.css"
+    media="print"
+    onload="this.media='all'"
+/>
+
+<noscript>
+    <link rel="stylesheet" href="/fonts/roboto/roboto.css" />
+</noscript>
 <style>
     html {
         font-size: 100%;
