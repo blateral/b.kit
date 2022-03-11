@@ -46,6 +46,7 @@ export { useImgPreload } from 'utils/useImgPreload';
 export { hexToRgba } from 'utils/hexRgbConverter';
 export { getBgImage } from 'utils/backgroundImage';
 export { clampValue } from 'utils/clamp';
+export { importFonts } from 'utils/fontLoading';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
