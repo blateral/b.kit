@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { spacings, mq } from 'utils/styles';
 
@@ -9,6 +9,9 @@ import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
 
 const View = styled.div<{ isCentered?: boolean }>`
+    display: block;
+    margin: 0;
+    padding: 0;
     width: 100%;
     text-align: ${({ isCentered }) => isCentered && 'center'};
 
@@ -24,11 +27,24 @@ const StyledTitle = styled(Title)<{ clamp?: boolean }>`
 const ContentBlock = styled(Copy)<{
     isCentered?: boolean;
     clamp?: boolean;
+    maxLines?: number;
 }>`
     display: block;
     max-width: ${({ clamp }) => clamp && '880px'};
     margin-left: ${({ isCentered }) => isCentered && 'auto'};
     margin-right: ${({ isCentered }) => isCentered && 'auto'};
+
+    ${({ maxLines }) =>
+        maxLines &&
+        maxLines > 0 &&
+        css`
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: ${maxLines}; /* number of lines to show */
+            line-clamp: ${maxLines};
+            -webkit-box-orient: vertical;
+        `}
 `;
 
 const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
@@ -39,6 +55,9 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
 `;
 
 const IntroBlock: React.FC<{
+    /** Define rendered HTML DOM tag of intro container */
+    renderAs?: 'div' | 'figcaption';
+
     /** Color presets for text and blocks. onImage has always a white text color */
     colorMode?: 'default' | 'inverted' | 'onImage';
 
@@ -71,10 +90,19 @@ const IntroBlock: React.FC<{
 
     /** Clamp title to max width of 880px */
     clampTitle?: boolean;
+
+    /** Limit lines of title. Cut of with elipsis */
+    maxTitleLines?: number;
+
     /** Clamp text to max width of 880px */
     clampText?: boolean;
+
+    /** Limit lines of text. Cut of with elipsis */
+    maxTextLines?: number;
+
     className?: string;
 }> = ({
+    renderAs = 'div',
     colorMode = 'default',
     title,
     titleAs,
@@ -86,11 +114,13 @@ const IntroBlock: React.FC<{
     secondaryAction,
     isCentered = false,
     clampTitle = false,
+    maxTitleLines,
     clampText = false,
+    maxTextLines,
     className,
 }) => {
     return (
-        <View isCentered={isCentered} className={className}>
+        <View as={renderAs} isCentered={isCentered} className={className}>
             {(title || superTitle) && (
                 <StyledTitle
                     colorMode={colorMode}
@@ -100,6 +130,7 @@ const IntroBlock: React.FC<{
                     superTitleAs={superTitleAs}
                     isCentered={isCentered}
                     clamp={clampTitle}
+                    maxLines={maxTitleLines}
                 />
             )}
             {text && (
@@ -110,6 +141,7 @@ const IntroBlock: React.FC<{
                     isCentered={isCentered}
                     innerHTML={text}
                     clamp={clampText}
+                    maxLines={maxTextLines}
                 />
             )}
             {(primaryAction || secondaryAction) && (

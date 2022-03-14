@@ -197,7 +197,7 @@ const Image: React.FC<
                 {medium && <source srcSet={medium} media={mq.medium} />}
                 <Img
                     data-img-loaded="false"
-                    showPlaceholder={showPlaceholder && !!ratios}
+                    showPlaceholder={showPlaceholder}
                     isInverted={isInverted}
                     srcSet={small}
                     alt={alt || ''}
