@@ -11,7 +11,7 @@ const Video: React.FC<{
     bgImage: ImageProps;
     embedId: string;
     playIcon?: React.ReactChild;
-    bgMode?: 'full' | 'inverted';
+    bgMode?: 'full' | 'inverted' | 'splitted';
 }> = ({ bgMode, bgImage, embedId, playIcon }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
