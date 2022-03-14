@@ -17,6 +17,41 @@ export const Default: Story = () => (
         items={[
             {
                 title: 'Lorem Ipsum Dolor Sit',
+                price: '19,00 €',
+            },
+            {
+                title: 'Lorem Ipsum Dolor Sit',
+                price: '19,00 €',
+            },
+            {
+                title: 'Lorem Ipsum Dolor Sit',
+                price: '19,00 €',
+            },
+            {
+                title: 'Lorem Ipsum Dolor Sit',
+                price: '19,00 €',
+            },
+            {
+                title: 'Lorem Ipsum Dolor Sit',
+                price: '19,00 €',
+            },
+            {
+                title: 'Lorem Ipsum Dolor Sit',
+                price: '19,00 €',
+            },
+            {
+                title: 'Lorem Ipsum Dolor Sit',
+                price: '19,00 €',
+            },
+        ]}
+    />
+);
+
+export const WithText: Story = () => (
+    <PriceList
+        items={[
+            {
+                title: 'Lorem Ipsum Dolor Sit',
                 text: `
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
