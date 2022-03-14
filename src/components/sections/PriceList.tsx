@@ -1,6 +1,7 @@
-import { getColors as color, mq, spacings } from 'utils/styles';
 import React from 'react';
 import styled from 'styled-components';
+import { getColors as color, mq, spacings } from 'utils/styles';
+
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
@@ -17,9 +18,7 @@ const ItemList = styled.ul`
 `;
 
 const ItemBlock = styled.li<{ hasBg?: boolean }>`
-    display: flex;
     max-width: 100%;
-
     padding: ${spacings.nudge * 2}px;
 
     background: ${({ theme, hasBg }) =>
@@ -28,46 +27,64 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
             : color(theme).new.elementBg.medium};
 
     & > * + * {
-        margin-left: ${spacings.nudge}px;
+        margin-top: ${spacings.nudge * 2}px;
     }
 
-    @media ${mq.medium} {
+    @media ${mq.semilarge} {
         padding: ${spacings.nudge * 3}px;
     }
 `;
 
 const ListHead = styled.div`
+    display: flex;
+    justify-content: space-between;
+
     & > * + * {
-        margin-top: ${spacings.nudge * 2}px;
+        margin-left: ${spacings.nudge * 2}px;
     }
 `;
 
+const Title = styled(Copy)`
+    max-width: 880px;
+`;
+
+const Price = styled(Copy)`
+    white-space: nowrap;
+`;
+
+const Description = styled(Copy)`
+    max-width: 880px;
+`;
+
 export interface PriceItems {
+    /** Title of the price item */
     title?: string;
+    /** Description text of price item (richtext) */
     text?: string;
+    /** The price value (Currency not included) */
     price?: string;
 }
 
-const PriceBlock: React.FC<PriceItems & { hasBg?: boolean }> = ({
+export const PriceBlock: React.FC<PriceItems & { hasBg?: boolean }> = ({
     text,
     price,
-    hasBg,
+    hasBg = false,
     title,
 }) => {
     return (
         <ItemBlock hasBg={hasBg}>
             <ListHead>
-                {title && <Copy type="copy-b">{title}</Copy>}
-                {text && <Copy type="copy" innerHTML={text} />}
+                {title && <Title type="copy-b">{title}</Title>}
+                {price && <Price type="copy-b">{price}</Price>}
             </ListHead>
-            {price && <Copy type="copy-b">{price}€</Copy>}
+            {text && <Description type="copy" innerHTML={text} />}
         </ItemBlock>
     );
 };
 
 const PriceList: React.FC<{
     /** Array with price items */
-    items: PriceItems[];
+    items?: PriceItems[];
 
     /** Section background */
     bgMode?: 'inverted' | 'full';
@@ -90,9 +107,9 @@ const PriceList: React.FC<{
         >
             <Wrapper addWhitespace>
                 <ItemList>
-                    {items.map((item, i) => {
-                        return <PriceBlock key={i} {...item} hasBg={hasBack} />;
-                    })}
+                    {items?.map((item, i) => (
+                        <PriceBlock key={i} {...item} hasBg={hasBack} />
+                    ))}
                 </ItemList>
             </Wrapper>
         </Section>
