@@ -16,9 +16,7 @@ const checkMq = (cmq: MediaQueryType, checkMqs: MediaQueryType[]) => {
 };
 
 export const getMediaQuery = (checkMqs: MediaQueryType[]): MediaQueryType => {
-    if (checkMq('xxxLarge', checkMqs)) {
-        return 'xxxLarge';
-    } else if (checkMq('xxlarge', checkMqs)) {
+    if (checkMq('xxlarge', checkMqs)) {
         return 'xxlarge';
     } else if (checkMq('xlarge', checkMqs)) {
         return 'xlarge';

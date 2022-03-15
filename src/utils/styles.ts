@@ -6,16 +6,14 @@ export type MediaQueryType =
     | 'semilarge'
     | 'large'
     | 'xlarge'
-    | 'xxlarge'
-    | 'xxxLarge';
+    | 'xxlarge';
 
 export const mq: { [key in Exclude<MediaQueryType, 'small'>]: string } = {
     medium: '(min-width: 40em)', // 640 px
     semilarge: '(min-width: 52em)', // 832 px
     large: '(min-width: 64em)', // 1024 px
     xlarge: '(min-width: 90em)', // 1440 px
-    xxlarge: '(min-width: 105em)', // 1680 px
-    xxxLarge: '(min-width: 150em)', // 2400 px
+    xxlarge: '(min-width: 150em)', // 2400 px
 };
 
 export const spacings = {
@@ -40,7 +38,7 @@ export const withRange = (range: [number, number?], property: string) => {
             ${property}: ${min}px;
             ${property}: ${getSizeByRange(range as [number, number])};
 
-            @media ${mq.xxlarge} {
+            @media ${mq.xlarge} {
                 ${property}: ${max}px;
             }
         `;
@@ -362,18 +360,23 @@ const defaultFonts: Fonts = {
 };
 
 /***** Global Settings *****/
+export type NavBarHeights = {
+    small: number;
+    large: number;
+};
+
 export interface GlobalSettings {
     sections: {
         /** Paddings and Margins for seperating each section */
         seperation: {
             forcePadding: boolean;
             padding: {
-                default: [number, number];
-                stackable: [number, number];
+                default: [number, number?];
+                stackable: [number, number?];
             };
             margin: {
-                default: [number, number];
-                stackable: [number, number];
+                default: [number, number?];
+                stackable: [number, number?];
             };
         };
 
@@ -394,6 +397,19 @@ export interface GlobalSettings {
         datepickerLocaleKey: 'de' | 'en';
         datepickerDateFormat: string;
     };
+    navigation: {
+        /** Settings of top navigation bar */
+        navBar: {
+            topNavHeight: {
+                mobile: NavBarHeights;
+                desktop: NavBarHeights;
+            };
+            height: {
+                mobile: NavBarHeights;
+                desktop: NavBarHeights;
+            };
+        };
+    };
 }
 
 const defaultGlobalSettings: GlobalSettings = {
@@ -402,11 +418,11 @@ const defaultGlobalSettings: GlobalSettings = {
             forcePadding: false,
             padding: {
                 default: [spacings.nudge * 5, spacings.nudge * 10],
-                stackable: [spacings.spacer, spacings.spacer],
+                stackable: [spacings.spacer],
             },
             margin: {
                 default: [spacings.nudge * 5, spacings.nudge * 10],
-                stackable: [spacings.spacer, spacings.spacer],
+                stackable: [spacings.spacer],
             },
         },
         edgeRadius: null,
@@ -428,6 +444,30 @@ const defaultGlobalSettings: GlobalSettings = {
         newsLocaleKey: 'de',
         datepickerLocaleKey: 'de',
         datepickerDateFormat: 'dd.MM.yyyy',
+    },
+    navigation: {
+        navBar: {
+            topNavHeight: {
+                mobile: {
+                    small: 30,
+                    large: 30,
+                },
+                desktop: {
+                    small: 40,
+                    large: 40,
+                },
+            },
+            height: {
+                mobile: {
+                    small: 80,
+                    large: 100,
+                },
+                desktop: {
+                    small: 90,
+                    large: 120,
+                },
+            },
+        },
     },
 };
 

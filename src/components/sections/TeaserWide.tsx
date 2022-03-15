@@ -66,7 +66,7 @@ const WideVideo = styled(VideoBlock)<{
         width: calc(50% + ${getGridColOfContent()} + ${wrapperWhitespace}px);
     }
 
-    @media ${mq.xxxLarge} {
+    @media ${mq.xxlarge} {
         /** 
             calculate width of 1 grid cols
             and add left or right wrapper padding afterwards. Then add this to 50% of large wrapper width.
@@ -130,7 +130,7 @@ const WideImage = styled(Image)<{ isMirrored?: boolean }>`
         width: calc(50% + ${getGridColOfContent()} + ${wrapperWhitespace}px);
     }
 
-    @media ${mq.xxxLarge} {
+    @media ${mq.xxlarge} {
         /** 
             calculate width of 1 grid cols
             and add left or right wrapper padding afterwards. Then add this to 50% of large wrapper width.

@@ -1,6 +1,11 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
-import { spacings, mq, getColors as color } from 'utils/styles';
+import styled, { DefaultTheme } from 'styled-components';
+import {
+    spacings,
+    mq,
+    getColors as color,
+    getGlobals as global,
+} from 'utils/styles';
 import Copy from 'components/typography/Copy';
 
 const View = styled.div<{
@@ -34,32 +39,58 @@ const Main = styled.div`
     background: ${({ theme }) => color(theme).new.elementBg.light};
 `;
 
-const ContentTop = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
+const getTopNavHeights = (theme: DefaultTheme, bp: 'mobile' | 'desktop') => {
+    return bp === 'desktop'
+        ? global(theme).navigation.navBar.topNavHeight.desktop
+        : global(theme).navigation.navBar.topNavHeight.mobile;
+};
+
+const TopNav = styled.nav<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
     align-items: center;
-    height: 30px;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
     margin: 0 auto;
 
+    height: ${({ theme, size }) =>
+        size === 'large'
+            ? getTopNavHeights(theme, 'mobile').large
+            : getTopNavHeights(theme, 'mobile').small}px;
+
     @media ${mq.semilarge} {
-        height: 40px;
+        height: ${({ theme, size }) =>
+            size === 'large'
+                ? getTopNavHeights(theme, 'desktop').large
+                : getTopNavHeights(theme, 'desktop').small}px;
     }
 `;
 
+const getMainHeights = (theme: DefaultTheme, bp: 'mobile' | 'desktop') => {
+    return bp === 'desktop'
+        ? global(theme).navigation.navBar.height.desktop
+        : global(theme).navigation.navBar.height.mobile;
+};
+
 const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
-    height: ${({ size }) => (size === 'large' ? '100px' : '80px')};
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${spacings.nudge * 2}px;
     margin: 0 auto;
 
+    height: ${({ theme, size }) =>
+        size === 'large'
+            ? getMainHeights(theme, 'mobile').large
+            : getMainHeights(theme, 'mobile').small}px;
+
     transition: height 0.2s ease-in-out;
 
     @media ${mq.semilarge} {
-        height: ${({ size }) => (size === 'large' ? '120px' : '90px')};
+        height: ${({ theme, size }) =>
+            size === 'large'
+                ? getMainHeights(theme, 'desktop').large
+                : getMainHeights(theme, 'desktop').small}px;
     }
 `;
 
@@ -98,7 +129,7 @@ const Logo = styled.img`
     object-fit: contain;
 `;
 
-export type NavBarSize = 'large' | 'small';
+export type NavBarSize = 'small' | 'large';
 
 export interface NavBarProps {
     size?: NavBarSize;
@@ -130,14 +161,14 @@ const NavBar: FC<
             className={className}
         >
             <Header>
-                <ContentTop size={size} clamp={clampContent}>
+                <TopNav size={size} clamp={clampContent}>
                     <LeftCol size="small" isInverted>
                         Left
                     </LeftCol>
                     <RightCol size="small" isInverted>
                         Right
                     </RightCol>
-                </ContentTop>
+                </TopNav>
             </Header>
             <Main>
                 <Content size={size} clamp={clampContent}>
