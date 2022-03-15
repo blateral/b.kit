@@ -400,6 +400,7 @@ export interface GlobalSettings {
     navigation: {
         /** Settings of top navigation bar */
         navBar: {
+            isTopNavVisible: boolean;
             topNavHeight: {
                 mobile: NavBarHeights;
                 desktop: NavBarHeights;
@@ -447,6 +448,7 @@ const defaultGlobalSettings: GlobalSettings = {
     },
     navigation: {
         navBar: {
+            isTopNavVisible: true,
             topNavHeight: {
                 mobile: {
                     small: 30,

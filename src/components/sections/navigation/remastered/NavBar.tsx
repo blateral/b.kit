@@ -5,8 +5,10 @@ import {
     mq,
     getColors as color,
     getGlobals as global,
+    NavBarHeights,
 } from 'utils/styles';
 import Copy from 'components/typography/Copy';
+import { useLibTheme } from 'utils/LibThemeProvider';
 
 const View = styled.div<{
     isOpen?: boolean;
@@ -129,6 +131,39 @@ const Logo = styled.img`
     object-fit: contain;
 `;
 
+/** Get full height of navigation bar */
+export const getFullHeight = (
+    theme: DefaultTheme,
+    bp: 'mobile' | 'desktop'
+): NavBarHeights => {
+    const hasTopNav = global(theme).navigation.navBar.isTopNavVisible;
+    const topNavHeights = global(theme).navigation.navBar.topNavHeight;
+    const mainHeights = global(theme).navigation.navBar.height;
+
+    return {
+        small:
+            bp === 'desktop'
+                ? (hasTopNav ? topNavHeights.desktop.small : 0) +
+                  mainHeights.desktop.small
+                : (hasTopNav ? topNavHeights.mobile.small : 0) +
+                  mainHeights.mobile.small,
+        large:
+            bp === 'desktop'
+                ? (hasTopNav ? topNavHeights.desktop.large : 0) +
+                  mainHeights.desktop.large
+                : (hasTopNav ? topNavHeights.mobile.large : 0) +
+                  mainHeights.mobile.large,
+    };
+};
+
+const BarSpacer = styled.div`
+    height: ${({ theme }) => getFullHeight(theme, 'mobile').large}px;
+
+    @media ${mq.semilarge} {
+        height: ${({ theme }) => getFullHeight(theme, 'desktop').large}px;
+    }
+`;
+
 export type NavBarSize = 'small' | 'large';
 
 export interface NavBarProps {
@@ -137,6 +172,7 @@ export interface NavBarProps {
     isSticky?: boolean;
     isAnimated?: boolean;
     clampWidth?: 'content' | 'full';
+    reserveBarHeight?: boolean;
 }
 
 const NavBar: FC<
@@ -149,37 +185,44 @@ const NavBar: FC<
     isSticky,
     isAnimated,
     clampWidth,
+    reserveBarHeight,
     className,
 }) => {
+    const { globals } = useLibTheme();
     const clampContent = clampWidth === 'content';
 
     return (
-        <View
-            isOpen={isOpen}
-            isSticky={isSticky}
-            isAnimated={isAnimated}
-            className={className}
-        >
-            <Header>
-                <TopNav size={size} clamp={clampContent}>
-                    <LeftCol size="small" isInverted>
-                        Left
-                    </LeftCol>
-                    <RightCol size="small" isInverted>
-                        Right
-                    </RightCol>
-                </TopNav>
-            </Header>
-            <Main>
-                <Content size={size} clamp={clampContent}>
-                    <LeftCol>Column Left</LeftCol>
-                    <CenterCol>
-                        <Logo src="https://via.placeholder.com/320x80" />
-                    </CenterCol>
-                    <RightCol>Column Right</RightCol>
-                </Content>
-            </Main>
-        </View>
+        <React.Fragment>
+            {reserveBarHeight && <BarSpacer />}
+            <View
+                isOpen={isOpen}
+                isSticky={isSticky}
+                isAnimated={isAnimated}
+                className={className}
+            >
+                {globals.navigation.navBar.isTopNavVisible && (
+                    <Header>
+                        <TopNav size={size} clamp={clampContent}>
+                            <LeftCol size="small" isInverted>
+                                Left
+                            </LeftCol>
+                            <RightCol size="small" isInverted>
+                                Right
+                            </RightCol>
+                        </TopNav>
+                    </Header>
+                )}
+                <Main>
+                    <Content size={size} clamp={clampContent}>
+                        <LeftCol>Column Left</LeftCol>
+                        <CenterCol>
+                            <Logo src="https://via.placeholder.com/320x80" />
+                        </CenterCol>
+                        <RightCol>Column Right</RightCol>
+                    </Content>
+                </Main>
+            </View>
+        </React.Fragment>
     );
 };
 

@@ -6,6 +6,7 @@ import NavBar, { NavBarSize } from './NavBar';
 
 interface NavBarBase {
     isStickable?: boolean;
+    reserveBarHeight?: boolean;
 }
 
 interface NavBarCollapse extends NavBarBase {
@@ -77,6 +78,7 @@ const Navigation: FC<NavigationProps> = ({
             isAnimated={isAnimated}
             size={navbarSize}
             clampWidth={clampWidth}
+            reserveBarHeight={navBar?.reserveBarHeight}
         />
     );
 };

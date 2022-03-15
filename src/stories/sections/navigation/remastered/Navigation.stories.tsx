@@ -41,3 +41,13 @@ export const StickableNavbar: Story = () => (
 export const CollapsibleNavbar: Story = () => (
     <Navigation navBar={{ isStickable: true, isCollapsible: true }} />
 );
+
+export const ReserveBarHeight: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            reserveBarHeight: true,
+        }}
+    />
+);
