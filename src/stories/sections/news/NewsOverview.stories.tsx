@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsOverview, {
     NewsOverviewComponent,
@@ -14,7 +14,7 @@ export default {
     component: NewsOverviewComponent,
     parameters: {
         status: {
-            type: 'preview',
+            type: ['preview'],
         },
     },
 } as Meta;
@@ -52,6 +52,9 @@ const exampleNewsTag1 = generateItemList<NewsCardProps>(
             medium: 'https://unsplash.it/688/516?image=40' + i,
             large: 'https://unsplash.it/591/444?image=40' + i,
             xlarge: 'https://unsplash.it/592/445?image=40' + i,
+            ratios: {
+                small: { w: 4, h: 3 },
+            },
         },
         text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     })
@@ -68,6 +71,9 @@ const exampleNewsTag2 = generateItemList<NewsCardProps>(
             medium: 'https://unsplash.it/688/516?image=50' + i,
             large: 'https://unsplash.it/591/444?image=50' + i,
             xlarge: 'https://unsplash.it/592/445?image=50' + i,
+            ratios: {
+                small: { w: 4, h: 3 },
+            },
         },
     })
 );
@@ -83,6 +89,9 @@ const exampleNewsTag3 = generateItemList<NewsCardProps>(
             medium: 'https://unsplash.it/688/516?image=30' + i,
             large: 'https://unsplash.it/591/444?image=30' + i,
             xlarge: 'https://unsplash.it/592/445?image=30' + i,
+            ratios: {
+                small: { w: 4, h: 3 },
+            },
         },
     })
 );

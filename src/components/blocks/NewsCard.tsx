@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { forwardRef } from 'react';
+import styled from 'styled-components';
 
 import { mq, spacings, getGlobals as global } from 'utils/styles';
 import Copy from 'components/typography/Copy';
@@ -8,14 +8,15 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
 import StatusFormatter from 'utils/statusFormatter';
 import Link, { LinkProps } from 'components/typography/Link';
+import { useLibTheme } from 'utils/LibThemeProvider';
 
 const View = styled.div`
     position: relative;
     text-decoration: none;
-    padding-bottom: ${spacings.spacer}px;
 `;
 
 const ImageLink = styled(Link)`
+    display: block;
     width: 100%;
 `;
 
@@ -85,90 +86,106 @@ export interface NewsCardProps {
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }
 
-const NewsCard: React.FC<
+const NewsCard = forwardRef<
+    HTMLDivElement,
     NewsCardProps & {
         className?: string;
     }
-> = ({
-    tag,
-    onTagClick,
-    publishDate,
-    title,
-    text,
-    image,
-    link,
-    isInverted,
-    primaryAction,
-    secondaryAction,
-    className,
-}) => {
-    const theme = useContext(ThemeContext);
+>(
+    (
+        {
+            tag,
+            onTagClick,
+            publishDate,
+            title,
+            text,
+            image,
+            link,
+            isInverted,
+            primaryAction,
+            secondaryAction,
+            className,
+        },
+        ref
+    ) => {
+        const { globals } = useLibTheme();
 
-    let publishedAt = '';
-    if (publishDate) {
-        const formatter = new StatusFormatter(
-            publishDate.getTime(),
-            '',
-            global(theme).sections.newsDateFormat,
-            global(theme).sections.newsTimeFormat,
-            global(theme).sections.newsLocaleKey
-        );
-        publishedAt = formatter.getFormattedDate();
-    }
+        let publishedAt = '';
+        if (publishDate) {
+            const formatter = new StatusFormatter(
+                publishDate.getTime(),
+                '',
+                globals.sections.newsDateFormat,
+                globals.sections.newsTimeFormat,
+                globals.sections.newsLocaleKey
+            );
+            publishedAt = formatter.getFormattedDate();
+        }
 
-    // settings max text length to 300 chars
-    if (text && text.length > 300) {
-        text = text.slice(0, 301) + '...';
-    }
+        // settings max text length to 300 chars
+        if (text && text.length > 300) {
+            text = text.slice(0, 301) + '...';
+        }
 
-    return (
-        <View className={className}>
-            {image && (
-                <ImageLink {...link}>
-                    <StyledImage coverSpace {...image} />
-                </ImageLink>
-            )}
-            <Head isInverted={isInverted} data-sheet="head">
-                {tag && (
-                    <Tag
-                        isInverted={isInverted}
-                        onClick={onTagClick ? () => onTagClick(tag) : undefined}
-                    >
-                        {tag}
-                    </Tag>
+        return (
+            <View ref={ref} className={className}>
+                {image && (
+                    <ImageLink {...link}>
+                        <StyledImage
+                            {...image}
+                            coverSpace
+                            isInverted={isInverted}
+                        />
+                    </ImageLink>
                 )}
-                {publishedAt && <PublishDate>{publishedAt}</PublishDate>}
-            </Head>
-            <Main>
-                {title && (
-                    <TitleLink {...link}>
+                <Head isInverted={isInverted} data-sheet="head">
+                    {tag && (
+                        <Tag
+                            isInverted={isInverted}
+                            onClick={
+                                onTagClick ? () => onTagClick(tag) : undefined
+                            }
+                        >
+                            {tag}
+                        </Tag>
+                    )}
+                    {publishedAt && <PublishDate>{publishedAt}</PublishDate>}
+                </Head>
+                <Main>
+                    {title && (
+                        <TitleLink {...link}>
+                            <Copy
+                                isInverted={isInverted}
+                                size="big"
+                                type="copy-b"
+                                data-sheet="title"
+                            >
+                                {title}
+                            </Copy>
+                        </TitleLink>
+                    )}
+                    {text && (
                         <Copy
                             isInverted={isInverted}
-                            size="big"
-                            type="copy-b"
-                            data-sheet="title"
-                        >
-                            {title}
-                        </Copy>
-                    </TitleLink>
-                )}
-                {text && (
-                    <Copy
-                        isInverted={isInverted}
-                        type="copy"
-                        innerHTML={text}
-                        data-sheet="text"
+                            type="copy"
+                            innerHTML={text}
+                            data-sheet="text"
+                        />
+                    )}
+                </Main>
+                {(primaryAction || secondaryAction) && (
+                    <StyledActions
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
                     />
                 )}
-            </Main>
-            {(primaryAction || secondaryAction) && (
-                <StyledActions
-                    primary={primaryAction && primaryAction(isInverted)}
-                    secondary={secondaryAction && secondaryAction(isInverted)}
-                />
-            )}
-        </View>
-    );
-};
+            </View>
+        );
+    }
+);
+
+NewsCard.displayName = 'NewsCard';
 
 export default NewsCard;

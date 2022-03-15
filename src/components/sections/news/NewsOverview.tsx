@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
-import { getColors, mq, spacings } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { mq, spacings } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Tag from 'components/blocks/Tag';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
@@ -28,9 +28,11 @@ const TagWrapper = styled.div`
     padding: ${spacings.nudge / 2}px;
 `;
 
-const NewsList = styled.ul`
+const News = styled.ul`
     list-style: none;
-    margin: -${spacings.nudge * 2}px;
+    margin: 0;
+    margin-top: -${spacings.nudge * 6}px;
+    margin-left: -${spacings.spacer}px;
     padding: 0;
 
     display: flex;
@@ -42,15 +44,18 @@ const NewsList = styled.ul`
 `;
 
 const NewsItem = styled.li`
-    padding: ${spacings.nudge * 2}px;
+    padding-top: ${spacings.nudge * 6}px;
+    padding-left: ${spacings.spacer}px;
     flex: 1 0 100%;
 
     @media ${mq.medium} {
         flex: 1 0 50%;
+        max-width: 50%;
     }
 
     @media ${mq.large} {
         flex: 1 0 33.33%;
+        max-width: 33.33%;
     }
 `;
 
@@ -89,7 +94,7 @@ const NewsOverview: React.FC<{
 
     bgMode,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -194,9 +199,9 @@ const NewsOverview: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? getColors(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? getColors(theme).new.sectionBg.medium
+                    ? colors.new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
@@ -204,7 +209,7 @@ const NewsOverview: React.FC<{
             <Wrapper addWhitespace>
                 {tags && (
                     <TagContainer>
-                        {tags.sort().map((tag, i) => {
+                        {tags.map((tag, i) => {
                             return (
                                 <TagWrapper key={'tag_' + i}>
                                     <Tag
@@ -228,40 +233,36 @@ const NewsOverview: React.FC<{
                         })}
                     </TagContainer>
                 )}
-                <NewsList>
-                    {news &&
-                        news
-                            .filter((item) =>
-                                selectedTag ? item.tag === selectedTag : true
-                            )
-                            .filter((_, i) => i < visibleRows * itemsPerRow)
-                            .map((item, i) => {
-                                return (
-                                    <NewsItem key={i}>
-                                        <div ref={cardRefs[i]}>
-                                            <NewsCard
-                                                isInverted={isInverted}
-                                                onTagClick={(name) => {
-                                                    // scroll back to top
-                                                    setNewPos(0);
-                                                    if (!onTagClick) {
-                                                        // if no callback is defined handle filtering on client side inside the component
-                                                        setSelectedTag(
-                                                            selectedTag === name
-                                                                ? undefined
-                                                                : name
-                                                        );
-                                                    } else {
-                                                        onTagClick(name, true);
-                                                    }
-                                                }}
-                                                {...item}
-                                            />
-                                        </div>
-                                    </NewsItem>
-                                );
-                            })}
-                </NewsList>
+                <News>
+                    {news
+                        ?.filter((item) =>
+                            selectedTag ? item.tag === selectedTag : true
+                        )
+                        .filter((_, i) => i < visibleRows * itemsPerRow)
+                        .map((item, i) => (
+                            <NewsItem key={i}>
+                                <NewsCard
+                                    ref={cardRefs[i]}
+                                    isInverted={isInverted}
+                                    onTagClick={(name) => {
+                                        // scroll back to top
+                                        setNewPos(0);
+                                        if (!onTagClick) {
+                                            // if no callback is defined handle filtering on client side inside the component
+                                            setSelectedTag(
+                                                selectedTag === name
+                                                    ? undefined
+                                                    : name
+                                            );
+                                        } else {
+                                            onTagClick(name, true);
+                                        }
+                                    }}
+                                    {...item}
+                                />
+                            </NewsItem>
+                        ))}
+                </News>
                 <div ref={targetRef} />
                 {!observerSupported && (
                     <ListFooter>
