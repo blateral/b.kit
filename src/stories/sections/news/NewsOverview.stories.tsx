@@ -14,7 +14,7 @@ export default {
     component: NewsOverviewComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -35,10 +35,8 @@ const actions = {
 const exampleNewsCard: NewsCardProps = {
     tag: 'Secondary Tag',
     publishDate: new Date('July 22, 2021 03:24:00'),
-    title:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
-    text:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
+    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     link: { href: '#0' },
     ...actions,
 };
@@ -55,8 +53,7 @@ const exampleNewsTag1 = generateItemList<NewsCardProps>(
             large: 'https://unsplash.it/591/444?image=40' + i,
             xlarge: 'https://unsplash.it/592/445?image=40' + i,
         },
-        text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+        text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     })
 );
 
