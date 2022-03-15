@@ -35,11 +35,11 @@ const Head = styled(Copy)`
     align-items: center;
     justify-content: space-between;
 
-    margin-top: ${spacings.spacer}px;
-    margin-bottom: ${spacings.spacer}px;
+    margin-top: ${spacings.nudge * 3}px;
+    margin-bottom: ${spacings.nudge * 3}px;
 
     & > * + * {
-        margin-left: ${spacings.spacer}px;
+        margin-left: ${spacings.nudge * 3}px;
     }
 `;
 
@@ -53,12 +53,12 @@ const Main = styled.div`
     max-width: 95%;
 
     & > * + * {
-        margin-top: ${spacings.spacer}px;
+        margin-top: ${spacings.nudge * 3}px;
     }
 `;
 
 const StyledActions = styled(Actions)`
-    margin-top: ${spacings.spacer}px;
+    margin-top: ${spacings.nudge * 3}px;
 
     @media ${mq.medium} {
         width: 100%;

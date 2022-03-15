@@ -5,7 +5,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
-import { getColors, mq, spacings, withRange } from 'utils/styles';
+import { getColors, mq, spacings } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import Tag from 'components/blocks/Tag';
 import { useMediaQuery } from 'utils/useMediaQuery';
@@ -14,11 +14,10 @@ import { useObserverSupport } from 'utils/useObserverSupport';
 import Copy from 'components/typography/Copy';
 import { useScrollTo } from 'utils/useScrollTo';
 import Pointer from 'components/buttons/Pointer';
-import Grid from 'components/base/Grid';
 
 const TagContainer = styled.div`
-    margin: -${spacings.nudge}px;
-    ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-bottom')};
+    margin: -${spacings.nudge / 2}px;
+    margin-bottom: ${spacings.nudge * 6}px;
 
     display: flex;
     flex-direction: row;
@@ -26,11 +25,37 @@ const TagContainer = styled.div`
 `;
 
 const TagWrapper = styled.div`
-    padding: ${spacings.nudge}px;
+    padding: ${spacings.nudge / 2}px;
+`;
+
+const NewsList = styled.ul`
+    list-style: none;
+    margin: -${spacings.nudge * 2}px;
+    padding: 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    flex-wrap: wrap;
+`;
+
+const NewsItem = styled.li`
+    padding: ${spacings.nudge * 2}px;
+    flex: 1 0 100%;
+
+    @media ${mq.medium} {
+        flex: 1 0 50%;
+    }
+
+    @media ${mq.large} {
+        flex: 1 0 33.33%;
+    }
 `;
 
 const ListFooter = styled.div`
-    ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-top')};
+    margin-top: ${spacings.nudge * 6}px;
     text-align: center;
 
     @media ${mq.medium} {
@@ -177,38 +202,33 @@ const NewsOverview: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <Grid.Row>
-                    <Grid.Col>
-                        {tags && (
-                            <TagContainer>
-                                {tags.sort().map((tag, i) => {
-                                    return (
-                                        <TagWrapper key={'tag_' + i}>
-                                            <Tag
-                                                isInverted={isInverted}
-                                                onClick={() => {
-                                                    if (!onTagClick) {
-                                                        // if no callback is defined handle filtering on client side inside the component
-                                                        setSelectedTag(
-                                                            selectedTag === tag
-                                                                ? undefined
-                                                                : tag
-                                                        );
-                                                    } else
-                                                        onTagClick(tag, false);
-                                                }}
-                                                isActive={selectedTag === tag}
-                                            >
-                                                {tag}
-                                            </Tag>
-                                        </TagWrapper>
-                                    );
-                                })}
-                            </TagContainer>
-                        )}
-                    </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
+                {tags && (
+                    <TagContainer>
+                        {tags.sort().map((tag, i) => {
+                            return (
+                                <TagWrapper key={'tag_' + i}>
+                                    <Tag
+                                        isInverted={isInverted}
+                                        onClick={() => {
+                                            if (!onTagClick) {
+                                                // if no callback is defined handle filtering on client side inside the component
+                                                setSelectedTag(
+                                                    selectedTag === tag
+                                                        ? undefined
+                                                        : tag
+                                                );
+                                            } else onTagClick(tag, false);
+                                        }}
+                                        isActive={selectedTag === tag}
+                                    >
+                                        {tag}
+                                    </Tag>
+                                </TagWrapper>
+                            );
+                        })}
+                    </TagContainer>
+                )}
+                <NewsList>
                     {news &&
                         news
                             .filter((item) =>
@@ -217,11 +237,7 @@ const NewsOverview: React.FC<{
                             .filter((_, i) => i < visibleRows * itemsPerRow)
                             .map((item, i) => {
                                 return (
-                                    <Grid.Col
-                                        medium={{ span: 6 / 12 }}
-                                        large={{ span: 4 / 12 }}
-                                        key={i}
-                                    >
+                                    <NewsItem key={i}>
                                         <div ref={cardRefs[i]}>
                                             <NewsCard
                                                 isInverted={isInverted}
@@ -242,10 +258,10 @@ const NewsOverview: React.FC<{
                                                 {...item}
                                             />
                                         </div>
-                                    </Grid.Col>
+                                    </NewsItem>
                                 );
                             })}
-                </Grid.Row>
+                </NewsList>
                 <div ref={targetRef} />
                 {!observerSupported && (
                     <ListFooter>
