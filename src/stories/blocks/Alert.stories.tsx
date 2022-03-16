@@ -18,3 +18,12 @@ export const WithLink: Story = () => (
         onClick={() => 'click'}
     />
 );
+
+export const WithDescriptionText: Story = () => (
+    <Alert
+        label="Änderungen der Corona-Verordnung"
+        date={new Date()}
+        onClick={() => 'click'}
+        descriptionText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae."
+    />
+);

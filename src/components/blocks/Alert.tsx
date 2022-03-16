@@ -1,7 +1,7 @@
 import AngleRight from 'components/base/icons/AngleRight';
 import Copy from 'components/typography/Copy';
 import React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 import StatusFormatter from '../../utils/statusFormatter';
 import ExclamationMark from '../base/icons/ExclamationMark';
@@ -55,9 +55,15 @@ export interface AlertProps {
     label: string;
     date?: Date;
     onClick?: () => void;
+    descriptionText?: string;
 }
 
-const Alert: React.FC<AlertProps> = ({ label, date, onClick }) => {
+const Alert: React.FC<AlertProps> = ({
+    label,
+    date,
+    onClick,
+    descriptionText,
+}) => {
     let formattedDate = '';
     if (date) {
         const formatter = new StatusFormatter(
@@ -70,7 +76,6 @@ const Alert: React.FC<AlertProps> = ({ label, date, onClick }) => {
         formattedDate = formatter.getFormattedDate();
     }
 
-    const theme = React.useContext(ThemeContext);
     return (
         <View isClickable={!!onClick} onClick={onClick}>
             <AlertIcon>
@@ -92,11 +97,10 @@ const Alert: React.FC<AlertProps> = ({ label, date, onClick }) => {
                         </span>
                     )}
                 </AlertLabel>
-
-                <Copy
-                    textColor={color(theme).new.elementBg.medium}
-                    size="small"
-                >
+                {descriptionText && (
+                    <Copy size="small" innerHTML={descriptionText} />
+                )}
+                <Copy textColor="inherit" size="small">
                     {formattedDate}
                 </Copy>
             </AlertContent>
