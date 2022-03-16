@@ -1,0 +1,29 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { NewsOverviewComponent } from '../../../../components/sections/news/NewsOverview';
+
+<Meta
+    title="Sections/News/NewsOverview/Info"
+    parameters={{
+        status: {
+            type: ['preview', 'qsReady'],
+        },
+    }}
+/>
+
+# NewsOverview
+
+The `NewsOverview` is intended to list all news in ascending order. If supported by the browser an `Intersection Observer`
+is used for infinity scrolling.
+
+<ArgsTable of={NewsOverviewComponent} />
+
+## Tag Filtering
+
+To filter the list of news items you can define multiple `tags` that are displayed above the listing.
+By default the filtering is done inside the section component. Active tags are defined by:
+
+-   the `activeTags` array prop (good for initial server rendered version)
+-   the `newsFilter` query parameter in the URL for forward and backward history navigation in browser. (is overriding `activeTags`)
+
+The `newsFilter` query is also been updated on user's filter interactions (e.g. clicking on a filter tag). To disable this behaviour
+and moving the filtering process out of the component you can use the `onTagClick` callback.
