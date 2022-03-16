@@ -1,19 +1,23 @@
 import AngleRight from 'components/base/icons/AngleRight';
 import Copy from 'components/typography/Copy';
 import React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 import StatusFormatter from '../../utils/statusFormatter';
 import ExclamationMark from '../base/icons/ExclamationMark';
 
-const View = styled.a`
+const View = styled.button<{ isClickable?: boolean }>`
     border: 1px solid ${({ theme }) => color(theme).new.primary.default};
     background: ${({ theme }) => color(theme).new.elementBg.light};
     color: ${({ theme }) => color(theme).new.primary.default};
 
-    text-decoration: none;
-
     padding: ${spacings.nudge * 3}px;
+
+    text-align: left;
+    width: 100%;
+
+    cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
+    pointer-events: ${({ isClickable }) => (isClickable ? 'all' : 'none')};
 
     display: flex;
     flex-direction: row;
@@ -27,41 +31,39 @@ const View = styled.a`
     }
 `;
 
-const AlertIcon = styled.span`
-    display: block;
-
+const AlertIcon = styled.div`
     margin-right: ${spacings.nudge * 3}px;
 `;
 
-const AlertContent = styled.span`
-    display: block;
-
+const AlertContent = styled.div`
     & > * + * {
         margin-top: ${spacings.nudge / 2}px;
     }
 `;
 
-const AlertLabel = styled.div`
-    display: flex;
-    flex-direction: row;
+const AlertLabel = styled.span`
+    display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
-    }
-
-    ${View}:hover & {
-        text-decoration: underline;
     }
 `;
 
 export interface AlertProps {
     label: string;
     date?: Date;
-    link?: string;
+    onClick?: () => void;
+    descriptionText?: string;
 }
 
-const Alert: React.FC<AlertProps> = ({ label, date, link }) => {
+const Alert: React.FC<AlertProps> = ({
+    label,
+    date,
+    onClick,
+    descriptionText,
+}) => {
     let formattedDate = '';
     if (date) {
         const formatter = new StatusFormatter(
@@ -74,23 +76,31 @@ const Alert: React.FC<AlertProps> = ({ label, date, link }) => {
         formattedDate = formatter.getFormattedDate();
     }
 
-    const theme = React.useContext(ThemeContext);
     return (
-        <View href={link}>
+        <View isClickable={!!onClick} onClick={onClick}>
             <AlertIcon>
                 <ExclamationMark />
             </AlertIcon>
             <AlertContent>
                 <AlertLabel>
-                    <Copy textColor="inherit" size="medium" type="copy-b">
+                    <Copy
+                        renderAs="span"
+                        textColor="inherit"
+                        size="medium"
+                        type="copy-b"
+                    >
                         {label}
                     </Copy>
-                    {link && <AngleRight />}
+                    {onClick && (
+                        <span>
+                            <AngleRight />
+                        </span>
+                    )}
                 </AlertLabel>
-                <Copy
-                    textColor={color(theme).new.elementBg.medium}
-                    size="small"
-                >
+                {descriptionText && (
+                    <Copy size="small" innerHTML={descriptionText} />
+                )}
+                <Copy textColor="inherit" size="small">
                     {formattedDate}
                 </Copy>
             </AlertContent>

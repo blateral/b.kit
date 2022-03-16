@@ -13,22 +13,22 @@ export const Default: Story = () => (
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
         ]}
     />
@@ -41,22 +41,22 @@ export const WithBackground: Story = () => (
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
         ]}
     />
@@ -69,22 +69,22 @@ export const IsInverted: Story = () => (
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
             {
                 label: 'Änderungen der Corona-Verordnung',
                 date: new Date(),
-                link: '#0',
+                onClick: () => 'click',
             },
         ]}
     />

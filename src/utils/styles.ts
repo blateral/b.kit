@@ -79,6 +79,7 @@ interface NewColorOptions {
     default: string;
     inverted: string;
     hover: string;
+    invertedHover: string;
 }
 
 export type NewColorOptionsType = keyof NewColorOptions;
@@ -204,12 +205,14 @@ const newColors: NewColors = {
     primary: {
         default: '#7749F8',
         inverted: '#EBE5FC',
-        hover: '#311f66'
+        hover: '#311f66',
+        invertedHover: '',
     },
     secondary: {
         default: '#6C757D',
         inverted: '#C5BEE0',
         hover: '#3b4045',
+        invertedHover: '',
     },
     error: '#FF2D2D',
 };
