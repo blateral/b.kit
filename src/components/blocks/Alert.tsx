@@ -31,20 +31,19 @@ const View = styled.button<{ isClickable?: boolean }>`
     }
 `;
 
-const AlertIcon = styled.span`
+const AlertIcon = styled.div`
     margin-right: ${spacings.nudge * 3}px;
 `;
 
-const AlertContent = styled.span`
-    display: block;
-
+const AlertContent = styled.div`
     & > * + * {
         margin-top: ${spacings.nudge / 2}px;
     }
 `;
 
 const AlertLabel = styled.span`
-    flex-direction: row;
+    display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
 
     & > * + * {
@@ -79,11 +78,21 @@ const Alert: React.FC<AlertProps> = ({ label, date, onClick }) => {
             </AlertIcon>
             <AlertContent>
                 <AlertLabel>
-                    <Copy textColor="inherit" size="medium" type="copy-b">
+                    <Copy
+                        renderAs="span"
+                        textColor="inherit"
+                        size="medium"
+                        type="copy-b"
+                    >
                         {label}
                     </Copy>
-                    {!!onClick && <AngleRight />}
+                    {onClick && (
+                        <span>
+                            <AngleRight />
+                        </span>
+                    )}
                 </AlertLabel>
+
                 <Copy
                     textColor={color(theme).new.elementBg.medium}
                     size="small"
