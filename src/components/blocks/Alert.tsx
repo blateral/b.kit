@@ -8,6 +8,7 @@ import ExclamationMark from '../base/icons/ExclamationMark';
 
 const View = styled.a`
     border: 1px solid ${({ theme }) => color(theme).new.primary.default};
+    background: ${({ theme }) => color(theme).new.elementBg.light};
     color: ${({ theme }) => color(theme).new.primary.default};
 
     text-decoration: none;
