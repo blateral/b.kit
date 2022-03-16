@@ -159,7 +159,7 @@ const NewsCard = forwardRef<
         return (
             <View ref={ref} className={className}>
                 {image && (
-                    <ImageLink {...link}>
+                    <ImageLink {...link} ariaLabel={title}>
                         <StyledImage
                             {...image}
                             coverSpace
@@ -198,7 +198,7 @@ const NewsCard = forwardRef<
                 </Head>
                 <Main>
                     {title && (
-                        <TitleLink {...link}>
+                        <TitleLink {...link} ariaLabel={title}>
                             <Copy
                                 isInverted={isInverted}
                                 size="big"
