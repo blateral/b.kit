@@ -13,6 +13,8 @@ import { useLibTheme } from 'utils/LibThemeProvider';
 const View = styled.div`
     position: relative;
     text-decoration: none;
+    margin: 0;
+    padding: 0;
 `;
 
 const ImageLink = styled(Link)`
@@ -29,7 +31,7 @@ const TitleLink = styled(Link)`
     text-decoration: none;
 `;
 
-const Head = styled(Copy)`
+const Head = styled.div`
     display: flex;
 
     flex-direction: row;
@@ -44,7 +46,7 @@ const Head = styled(Copy)`
     }
 `;
 
-const PublishDate = styled.div`
+const PublishDate = styled(Copy)`
     &:only-child {
         margin-left: auto;
     }
@@ -138,7 +140,7 @@ const NewsCard = forwardRef<
                         />
                     </ImageLink>
                 )}
-                <Head isInverted={isInverted} data-sheet="head">
+                <Head data-sheet="head">
                     {tag && (
                         <Tag
                             isInverted={isInverted}
@@ -149,7 +151,11 @@ const NewsCard = forwardRef<
                             {tag}
                         </Tag>
                     )}
-                    {publishedAt && <PublishDate>{publishedAt}</PublishDate>}
+                    {publishedAt && (
+                        <PublishDate renderAs="p" isInverted={isInverted}>
+                            {publishedAt}
+                        </PublishDate>
+                    )}
                 </Head>
                 <Main>
                     {title && (

@@ -77,18 +77,20 @@ type NewsOverviewMq = 'small' | 'semilarge' | 'large';
 
 const NewsOverview: React.FC<{
     news: NewsCardProps[];
-    activeTag?: string;
     tags?: string[];
-    queryParams?: Record<string, any>;
+    activeTags?: string[];
+    /**
+     * Callback function to handle tag click outside of component e.g. on server side.
+     * If no callback is defined filtering is controlled on client
+     * */
     onTagClick?: (tag: string, insideList?: boolean) => void;
     showMoreText?: string;
 
     bgMode?: 'full' | 'inverted';
 }> = ({
     news,
-    activeTag,
     tags,
-    queryParams,
+    activeTags,
     onTagClick,
     showMoreText,
 
@@ -99,11 +101,11 @@ const NewsOverview: React.FC<{
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    activeTag = queryParams?.selected
-        ? decodeURI(queryParams.selected)
-        : activeTag;
-    const [selectedTag, setSelectedTag] = useState<string | undefined>(
-        activeTag || undefined
+    // activeTag = queryParams?.selected
+    //     ? decodeURI(queryParams.selected)
+    //     : activeTag;
+    const [selectedTags, setSelectedTags] = useState<string[]>(
+        activeTags || []
     );
 
     const mqs: NewsOverviewMq[] = ['small', 'semilarge', 'large'];
@@ -153,16 +155,68 @@ const NewsOverview: React.FC<{
         }
     }, [currentMq, visibleRows]);
 
+    const getFilterParams = () => {
+        const tags: string[] = [];
+
+        if ('URLSearchParams' in window) {
+            const params = new URLSearchParams(window.location.search);
+            const paramTags = params
+                .get('newsFilter')
+                ?.split(',')
+                ?.map((t) => decodeURIComponent(t));
+
+            if (paramTags) tags.push(...paramTags);
+        }
+        return tags;
+    };
+
     useEffect(() => {
-        setSelectedTag(activeTag);
-    }, [activeTag]);
+        const paramTags = getFilterParams();
+
+        if (paramTags.length > 0) {
+            setSelectedTags(paramTags);
+        } else {
+            setSelectedTags(activeTags || []);
+        }
+    }, [activeTags]);
+
+    useEffect(() => {
+        if (!onTagClick && selectedTags && 'URLSearchParams' in window) {
+            const params = new URLSearchParams(window.location.search);
+            params.set(
+                'newsFilter',
+                selectedTags.map((t) => encodeURIComponent(t)).join(',')
+            );
+
+            window.history.replaceState(
+                {},
+                '',
+                `${location.pathname}?${params.toString() + location.hash}`
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedTags]);
 
     useEffect(() => {
         // if new tag is selected reset list rows to three visible item rows
         setVisibleRows(3);
         triggerCalculation();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedTag]);
+    }, [selectedTags]);
+
+    const handleTagClick = (tag: string) => {
+        setSelectedTags((prev) => {
+            const prevCopy = [...prev];
+            const itemIndex = prev.indexOf(tag);
+
+            if (itemIndex === -1) {
+                return [...prevCopy, tag];
+            } else {
+                prevCopy.splice(itemIndex, 1);
+                return prevCopy;
+            }
+        });
+    };
 
     useEffect(() => {
         // cancel if intersection observers are not supported
@@ -194,6 +248,12 @@ const NewsOverview: React.FC<{
         };
     }, [itemsPerRow, newsCount, visibleRows, observerSupported]);
 
+    const sortFilterFn = (a: NewsCardProps, b: NewsCardProps) => {
+        if (a.publishDate && b.publishDate) {
+            return b.publishDate.getTime() - a.publishDate.getTime();
+        } else return 0;
+    };
+
     return (
         <Section
             addSeperation
@@ -216,15 +276,12 @@ const NewsOverview: React.FC<{
                                         isInverted={isInverted}
                                         onClick={() => {
                                             if (!onTagClick) {
-                                                // if no callback is defined handle filtering on client side inside the component
-                                                setSelectedTag(
-                                                    selectedTag === tag
-                                                        ? undefined
-                                                        : tag
-                                                );
+                                                handleTagClick(tag);
                                             } else onTagClick(tag, false);
                                         }}
-                                        isActive={selectedTag === tag}
+                                        isActive={
+                                            selectedTags.indexOf(tag) !== -1
+                                        }
                                     >
                                         {tag}
                                     </Tag>
@@ -236,8 +293,11 @@ const NewsOverview: React.FC<{
                 <News>
                     {news
                         ?.filter((item) =>
-                            selectedTag ? item.tag === selectedTag : true
+                            selectedTags.length > 0 && item.tag
+                                ? selectedTags.indexOf(item.tag) !== -1
+                                : true
                         )
+                        .sort(sortFilterFn)
                         .filter((_, i) => i < visibleRows * itemsPerRow)
                         .map((item, i) => (
                             <NewsItem key={i}>
@@ -249,11 +309,7 @@ const NewsOverview: React.FC<{
                                         setNewPos(0);
                                         if (!onTagClick) {
                                             // if no callback is defined handle filtering on client side inside the component
-                                            setSelectedTag(
-                                                selectedTag === name
-                                                    ? undefined
-                                                    : name
-                                            );
+                                            handleTagClick(name);
                                         } else {
                                             onTagClick(name, true);
                                         }
