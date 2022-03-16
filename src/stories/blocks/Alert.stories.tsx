@@ -15,6 +15,6 @@ export const WithLink: Story = () => (
     <Alert
         label="Änderungen der Corona-Verordnung"
         date={new Date()}
-        link="#0"
+        onClick={() => 'click'}
     />
 );

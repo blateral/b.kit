@@ -6,14 +6,18 @@ import { getColors as color, spacings } from 'utils/styles';
 import StatusFormatter from '../../utils/statusFormatter';
 import ExclamationMark from '../base/icons/ExclamationMark';
 
-const View = styled.a`
+const View = styled.button<{ isClickable?: boolean }>`
     border: 1px solid ${({ theme }) => color(theme).new.primary.default};
     background: ${({ theme }) => color(theme).new.elementBg.light};
     color: ${({ theme }) => color(theme).new.primary.default};
 
-    text-decoration: none;
-
     padding: ${spacings.nudge * 3}px;
+
+    text-align: left;
+    width: 100%;
+
+    cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
+    pointer-events: ${({ isClickable }) => (isClickable ? 'all' : 'none')};
 
     display: flex;
     flex-direction: row;
@@ -28,8 +32,6 @@ const View = styled.a`
 `;
 
 const AlertIcon = styled.span`
-    display: block;
-
     margin-right: ${spacings.nudge * 3}px;
 `;
 
@@ -41,27 +43,22 @@ const AlertContent = styled.span`
     }
 `;
 
-const AlertLabel = styled.div`
-    display: flex;
+const AlertLabel = styled.span`
     flex-direction: row;
     align-items: center;
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
     }
-
-    ${View}:hover & {
-        text-decoration: underline;
-    }
 `;
 
 export interface AlertProps {
     label: string;
     date?: Date;
-    link?: string;
+    onClick?: () => void;
 }
 
-const Alert: React.FC<AlertProps> = ({ label, date, link }) => {
+const Alert: React.FC<AlertProps> = ({ label, date, onClick }) => {
     let formattedDate = '';
     if (date) {
         const formatter = new StatusFormatter(
@@ -76,7 +73,7 @@ const Alert: React.FC<AlertProps> = ({ label, date, link }) => {
 
     const theme = React.useContext(ThemeContext);
     return (
-        <View href={link}>
+        <View isClickable={!!onClick} onClick={onClick}>
             <AlertIcon>
                 <ExclamationMark />
             </AlertIcon>
@@ -85,7 +82,7 @@ const Alert: React.FC<AlertProps> = ({ label, date, link }) => {
                     <Copy textColor="inherit" size="medium" type="copy-b">
                         {label}
                     </Copy>
-                    {link && <AngleRight />}
+                    {!!onClick && <AngleRight />}
                 </AlertLabel>
                 <Copy
                     textColor={color(theme).new.elementBg.medium}
