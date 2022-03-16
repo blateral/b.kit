@@ -12,7 +12,7 @@ export default {
     component: NewsListComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -33,10 +33,8 @@ const actions = {
 const exampleNewsCard: NewsCardProps = {
     tag: 'Secondary Tag',
     publishDate: new Date('July 22, 2021 03:24:00'),
-    title:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
-    text:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
+    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     link: { href: '#0' },
     ...actions,
 };
@@ -67,4 +65,13 @@ export const Inverted: Story = () => (
 
 export const WithHandler: Story = () => (
     <NewsList bgMode="inverted" news={exampleNews} onTagClick={console.log} />
+);
+
+export const WithMoreVisibleItems: Story = () => (
+    <NewsList
+        bgMode="inverted"
+        news={exampleNews}
+        onTagClick={console.log}
+        showItems="6"
+    />
 );

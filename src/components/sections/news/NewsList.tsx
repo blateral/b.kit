@@ -5,48 +5,50 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import Copy from 'components/typography/Copy';
+import { getColors as color, mq, spacings } from 'utils/styles';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-import { useContext, useEffect, useState } from 'react';
-import { useMediaQuery } from 'utils/useMediaQuery';
-import Pointer from 'components/buttons/Pointer';
+import { useContext } from 'react';
 import { withLibTheme } from 'utils/LibThemeProvider';
-import Grid from 'components/base/Grid';
 
-const ListFooter = styled.div`
-    ${withRange([spacings.nudge * 3, spacings.spacer], 'margin-top')};
-    text-align: center;
+const News = styled.ul`
+    list-style: none;
+    margin: 0;
+    margin-top: -${spacings.nudge * 6}px;
+    margin-left: -${spacings.spacer}px;
+    padding: 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    flex-wrap: wrap;
+`;
+
+const NewsItem = styled.li<{ isVisible?: boolean }>`
+    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+    padding-top: ${spacings.nudge * 6}px;
+    padding-left: ${spacings.spacer}px;
+    flex: 1 0 100%;
 
     @media ${mq.medium} {
-        text-align: left;
+        flex: 1 0 50%;
+        max-width: 50%;
+    }
+
+    @media ${mq.large} {
+        flex: 1 0 33.33%;
+        max-width: 33.33%;
     }
 `;
-
-const ShowMore = styled.span<{ itemCount?: number }>`
-    display: ${({ itemCount }) =>
-        itemCount && itemCount > 2 ? 'block' : 'none'};
-`;
-
-type NewsListMq = 'small' | 'semilarge' | 'large';
 
 const NewsList: React.FC<{
     news?: NewsCardProps[];
     onTagClick?: (tag: string) => void;
     bgMode?: 'full' | 'inverted';
-    showMoreText?: string;
-}> = ({
-    news,
-    onTagClick,
-    bgMode,
-
-    showMoreText,
-}) => {
+    showItems?: '3' | '6';
+}> = ({ news, onTagClick, bgMode, showItems = '3' }) => {
     const theme = useContext(ThemeContext);
-    const mqs: NewsListMq[] = ['small', 'semilarge', 'large'];
-    const currentMq = useMediaQuery(mqs) as NewsListMq | undefined;
-    const [itemsPerRow, setItemsPerRow] = useState(3);
-    const [visibleRows, setVisibleRows] = useState(1);
 
     const newsCount = news?.length || 0;
 
@@ -54,7 +56,7 @@ const NewsList: React.FC<{
     const hasBg = bgMode === 'full';
 
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
-        listLength: Math.min(visibleRows * itemsPerRow, newsCount),
+        listLength: Math.min(parseInt(showItems), newsCount),
         identifiers: [
             '[data-sheet="head"]',
             '[data-sheet="title"]',
@@ -62,32 +64,12 @@ const NewsList: React.FC<{
         ],
         responsive: {
             small: 1,
-            medium: 1,
+            medium: 2,
             semilarge: 2,
             large: 3,
             xlarge: 3,
         },
     });
-
-    useEffect(() => {
-        switch (currentMq) {
-            case 'large':
-                setItemsPerRow(3);
-                break;
-
-            case 'semilarge':
-                setItemsPerRow(2);
-                break;
-
-            case 'small':
-                setItemsPerRow(1);
-                if (visibleRows < 3) setVisibleRows(3);
-                break;
-
-            default:
-                setItemsPerRow(1);
-        }
-    }, [currentMq, visibleRows]);
 
     return (
         <Section
@@ -102,57 +84,25 @@ const NewsList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="normal">
-                <Grid.Row>
+                <News>
                     {news &&
-                        news
-                            .filter((_, i) => i < visibleRows * itemsPerRow)
-                            .map((item, i) => {
-                                return (
-                                    <Grid.Col
-                                        key={i}
-                                        medium={{ span: 6 / 12 }}
-                                        large={{ span: 4 / 12 }}
-                                    >
-                                        <div ref={cardRefs[i]}>
-                                            <NewsCard
-                                                onTagClick={onTagClick}
-                                                isInverted={isInverted}
-                                                {...item}
-                                            />
-                                        </div>
-                                    </Grid.Col>
-                                );
-                            })}
-                </Grid.Row>
-                <ListFooter>
-                    {news && news.length > 0 && (
-                        <Copy type="copy" size="medium" isInverted={isInverted}>
-                            <ShowMore
-                                itemCount={news.length}
-                                onClick={(ev) => {
-                                    ev.preventDefault();
-                                    if (
-                                        visibleRows <
-                                        Math.ceil(newsCount / itemsPerRow)
-                                    ) {
-                                        setVisibleRows((prev) => prev + 1);
-                                    }
-                                }}
-                            >
-                                {visibleRows < newsCount / itemsPerRow && (
-                                    <Pointer.View
-                                        as="button"
-                                        isInverted={isInverted}
-                                    >
-                                        <Pointer.Label>
-                                            {showMoreText || 'mehr anzeigen'}
-                                        </Pointer.Label>
-                                    </Pointer.View>
-                                )}
-                            </ShowMore>
-                        </Copy>
-                    )}
-                </ListFooter>
+                        news.map((item, i) => {
+                            return (
+                                <NewsItem
+                                    isVisible={i < parseInt(showItems)}
+                                    key={i}
+                                >
+                                    <div ref={cardRefs[i]}>
+                                        <NewsCard
+                                            onTagClick={onTagClick}
+                                            isInverted={isInverted}
+                                            {...item}
+                                        />
+                                    </div>
+                                </NewsItem>
+                            );
+                        })}
+                </News>
             </Wrapper>
         </Section>
     );

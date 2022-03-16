@@ -78,6 +78,7 @@ export const styleTextColor = (fallbackColor?: string, gradient?: string) => {
 interface NewColorOptions {
     default: string;
     inverted: string;
+    hover: string;
 }
 
 export type NewColorOptionsType = keyof NewColorOptions;
@@ -203,10 +204,12 @@ const newColors: NewColors = {
     primary: {
         default: '#7749F8',
         inverted: '#EBE5FC',
+        hover: '#311f66'
     },
     secondary: {
         default: '#6C757D',
         inverted: '#C5BEE0',
+        hover: '#3b4045',
     },
     error: '#FF2D2D',
 };
