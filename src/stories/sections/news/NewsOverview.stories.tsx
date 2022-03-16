@@ -42,7 +42,7 @@ const exampleNewsCard: NewsCardProps = {
 };
 
 const exampleNewsTag1 = generateItemList<NewsCardProps>(
-    exampleNewsCard,
+    { ...exampleNewsCard, publishDate: new Date('July 15, 2021 03:24:00') },
     10,
     (item, i) => ({
         ...item,
@@ -98,7 +98,6 @@ const exampleNewsTag3 = generateItemList<NewsCardProps>(
 
 export const Default: Story = () => (
     <NewsOverview
-        queryParams={{ selected: 'Tag 7' }}
         tags={[
             'Tag 1',
             'Tag 2',
@@ -123,7 +122,7 @@ export const Default: Story = () => (
 
 export const WithActiveTag: Story = () => (
     <NewsOverview
-        activeTag="Tag 3"
+        activeTags={['Tag 3']}
         tags={[
             'Tag 1',
             'Tag 2',
@@ -148,7 +147,7 @@ export const WithActiveTag: Story = () => (
 
 export const WithTagClickHandler: Story = () => (
     <NewsOverview
-        activeTag="Tag 3"
+        activeTags={['Tag 3']}
         tags={[
             'Tag 1',
             'Tag 2',
@@ -174,7 +173,7 @@ export const WithTagClickHandler: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsOverview
-        activeTag="Tag 3"
+        activeTags={['Tag 3']}
         tags={[
             'Tag 1',
             'Tag 2',
@@ -200,7 +199,7 @@ export const WithBackground: Story = () => (
 
 export const IsInverted: Story = () => (
     <NewsOverview
-        activeTag="Tag 3"
+        activeTags={['Tag 3']}
         tags={[
             'Tag 1',
             'Tag 2',

@@ -232,6 +232,7 @@ export type CopyTag =
     | 'th'
     | 'td'
     | 'li'
+    | 'p'
     | 'caption'
     | 'figcaption';
 
