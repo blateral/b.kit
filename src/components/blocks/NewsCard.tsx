@@ -86,6 +86,12 @@ export interface NewsCardProps {
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    customTag?: (props: {
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+    }) => React.ReactNode;
 }
 
 const NewsCard = forwardRef<
@@ -106,6 +112,7 @@ const NewsCard = forwardRef<
             isInverted,
             primaryAction,
             secondaryAction,
+            customTag,
             className,
         },
         ref
@@ -141,16 +148,28 @@ const NewsCard = forwardRef<
                     </ImageLink>
                 )}
                 <Head data-sheet="head">
-                    {tag && (
-                        <Tag
-                            isInverted={isInverted}
-                            onClick={
-                                onTagClick ? () => onTagClick(tag) : undefined
-                            }
-                        >
-                            {tag}
-                        </Tag>
-                    )}
+                    {tag &&
+                        (customTag ? (
+                            customTag({
+                                name: tag,
+                                isInverted: isInverted,
+                                isActive: false,
+                                clickHandler: () => {
+                                    onTagClick && onTagClick(tag);
+                                },
+                            })
+                        ) : (
+                            <Tag
+                                isInverted={isInverted}
+                                onClick={
+                                    onTagClick
+                                        ? () => onTagClick(tag)
+                                        : undefined
+                                }
+                            >
+                                {tag}
+                            </Tag>
+                        ))}
                     {publishedAt && (
                         <PublishDate renderAs="p" isInverted={isInverted}>
                             {publishedAt}

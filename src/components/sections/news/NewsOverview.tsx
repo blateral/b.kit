@@ -16,16 +16,21 @@ import { useScrollTo } from 'utils/useScrollTo';
 import Pointer from 'components/buttons/Pointer';
 
 const TagContainer = styled.div`
-    margin: -${spacings.nudge / 2}px;
-    margin-bottom: ${spacings.nudge * 6}px;
+    margin-top: -${spacings.nudge}px;
+    margin-left: -${spacings.nudge}px;
 
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    &:not(:only-child) {
+        margin-bottom: ${spacings.nudge * 6}px;
+    }
 `;
 
 const TagWrapper = styled.div`
-    padding: ${spacings.nudge / 2}px;
+    padding-top: ${spacings.nudge}px;
+    padding-left: ${spacings.nudge}px;
 `;
 
 const News = styled.ul`
@@ -76,34 +81,48 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 type NewsOverviewMq = 'small' | 'semilarge' | 'large';
 
 const NewsOverview: React.FC<{
+    /** Array of news item settings */
     news: NewsCardProps[];
+
+    /** Tags for news filtering */
     tags?: string[];
+
+    /** Initial active tags in filter */
     activeTags?: string[];
+
+    /** Text for load more toggle. Only visible if browser doesn't support IntersectionObserver. */
+    showMoreText?: string;
+
+    /** Section background */
+    bgMode?: 'full' | 'inverted';
+
     /**
      * Callback function to handle tag click outside of component e.g. on server side.
      * If no callback is defined filtering is controlled on client
      * */
     onTagClick?: (tag: string, insideList?: boolean) => void;
-    showMoreText?: string;
 
-    bgMode?: 'full' | 'inverted';
+    tag?: (props: {
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+    }) => React.ReactNode;
 }> = ({
     news,
     tags,
     activeTags,
-    onTagClick,
     showMoreText,
-
     bgMode,
+
+    onTagClick,
+    tag: customTag,
 }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    // activeTag = queryParams?.selected
-    //     ? decodeURI(queryParams.selected)
-    //     : activeTag;
     const [selectedTags, setSelectedTags] = useState<string[]>(
         activeTags || []
     );
@@ -269,9 +288,21 @@ const NewsOverview: React.FC<{
             <Wrapper addWhitespace>
                 {tags && (
                     <TagContainer>
-                        {tags.map((tag, i) => {
-                            return (
-                                <TagWrapper key={'tag_' + i}>
+                        {tags.map((tag, i) => (
+                            <TagWrapper key={'tag_' + i}>
+                                {customTag ? (
+                                    customTag({
+                                        name: tag,
+                                        isInverted: isInverted,
+                                        isActive:
+                                            selectedTags.indexOf(tag) !== -1,
+                                        clickHandler: () => {
+                                            if (!onTagClick) {
+                                                handleTagClick(tag);
+                                            } else onTagClick(tag, false);
+                                        },
+                                    })
+                                ) : (
                                     <Tag
                                         isInverted={isInverted}
                                         onClick={() => {
@@ -285,9 +316,9 @@ const NewsOverview: React.FC<{
                                     >
                                         {tag}
                                     </Tag>
-                                </TagWrapper>
-                            );
-                        })}
+                                )}
+                            </TagWrapper>
+                        ))}
                     </TagContainer>
                 )}
                 <News>
@@ -314,6 +345,7 @@ const NewsOverview: React.FC<{
                                             onTagClick(name, true);
                                         }
                                     }}
+                                    customTag={customTag}
                                     {...item}
                                 />
                             </NewsItem>

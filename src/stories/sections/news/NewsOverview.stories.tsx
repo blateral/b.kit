@@ -42,11 +42,12 @@ const exampleNewsCard: NewsCardProps = {
 };
 
 const exampleNewsTag1 = generateItemList<NewsCardProps>(
-    { ...exampleNewsCard, publishDate: new Date('July 15, 2021 03:24:00') },
+    exampleNewsCard,
     10,
     (item, i) => ({
         ...item,
         tag: 'Tag 1',
+        publishDate: new Date(`July ${i + 1}, 2021 03:24:00`),
         image: {
             small: 'https://unsplash.it/599/450?image=40' + i,
             medium: 'https://unsplash.it/688/516?image=40' + i,
@@ -66,6 +67,7 @@ const exampleNewsTag2 = generateItemList<NewsCardProps>(
     (item, i) => ({
         ...item,
         tag: 'Tag 2',
+        publishDate: new Date(`May ${i + 1}, 2021 03:24:00`),
         image: {
             small: 'https://unsplash.it/599/450?image=50' + i,
             medium: 'https://unsplash.it/688/516?image=50' + i,
@@ -84,6 +86,7 @@ const exampleNewsTag3 = generateItemList<NewsCardProps>(
     (item, i) => ({
         ...item,
         tag: 'Tag 3',
+        publishDate: new Date(`November ${i + 1}, 2021 03:24:00`),
         image: {
             small: 'https://unsplash.it/599/450?image=30' + i,
             medium: 'https://unsplash.it/688/516?image=30' + i,
@@ -120,9 +123,9 @@ export const Default: Story = () => (
     />
 );
 
-export const WithActiveTag: Story = () => (
+export const WithActiveTags: Story = () => (
     <NewsOverview
-        activeTags={['Tag 3']}
+        activeTags={['Tag 3', 'Tag 5']}
         tags={[
             'Tag 1',
             'Tag 2',
@@ -220,5 +223,38 @@ export const IsInverted: Story = () => (
         ]}
         news={[...exampleNewsTag1, ...exampleNewsTag2, ...exampleNewsTag3]}
         bgMode="inverted"
+    />
+);
+
+export const WithCustomTag: Story = () => (
+    <NewsOverview
+        activeTags={['Tag 3']}
+        tags={[
+            'Tag 1',
+            'Tag 2',
+            'Tag 3',
+            'Tag 4',
+            'Tag 5',
+            'Tag 6',
+            'Tag 7',
+            'Tag 8',
+            'Tag 9',
+            'Tag 10',
+            'Tag 11',
+            'Tag 12',
+            'Tag 13',
+            'Tag 14',
+            'Tag 15',
+            'Tag 16',
+        ]}
+        news={[...exampleNewsTag1, ...exampleNewsTag2, ...exampleNewsTag3]}
+        tag={({ name, isActive, clickHandler }) => (
+            <button
+                style={{ background: isActive ? 'gray' : 'lightgray' }}
+                onClick={clickHandler}
+            >
+                {name}
+            </button>
+        )}
     />
 );
