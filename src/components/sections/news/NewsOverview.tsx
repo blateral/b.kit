@@ -82,7 +82,7 @@ type NewsOverviewMq = 'small' | 'semilarge' | 'large';
 
 const NewsOverview: React.FC<{
     /** Array of news item settings */
-    news: NewsCardProps[];
+    news?: NewsCardProps[];
 
     /** Tags for news filtering */
     tags?: string[];
@@ -102,7 +102,8 @@ const NewsOverview: React.FC<{
      * */
     onTagClick?: (tag: string, insideList?: boolean) => void;
 
-    tag?: (props: {
+    /** Function to inject custom tag node */
+    customTag?: (props: {
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
@@ -116,7 +117,7 @@ const NewsOverview: React.FC<{
     bgMode,
 
     onTagClick,
-    tag: customTag,
+    customTag,
 }) => {
     const { colors } = useLibTheme();
 
@@ -182,7 +183,8 @@ const NewsOverview: React.FC<{
             const paramTags = params
                 .get('newsFilter')
                 ?.split(',')
-                ?.map((t) => decodeURIComponent(t));
+                ?.map((t) => decodeURIComponent(t))
+                ?.filter((t) => t !== '');
 
             if (paramTags) tags.push(...paramTags);
         }
@@ -200,7 +202,11 @@ const NewsOverview: React.FC<{
     }, [activeTags]);
 
     useEffect(() => {
-        if (!onTagClick && selectedTags && 'URLSearchParams' in window) {
+        if (
+            !onTagClick &&
+            selectedTags.length > 0 &&
+            'URLSearchParams' in window
+        ) {
             const params = new URLSearchParams(window.location.search);
             params.set(
                 'newsFilter',

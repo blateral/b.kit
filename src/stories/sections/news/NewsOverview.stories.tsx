@@ -14,7 +14,7 @@ export default {
     component: NewsOverviewComponent,
     parameters: {
         status: {
-            type: ['preview'],
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
@@ -248,7 +248,7 @@ export const WithCustomTag: Story = () => (
             'Tag 16',
         ]}
         news={[...exampleNewsTag1, ...exampleNewsTag2, ...exampleNewsTag3]}
-        tag={({ name, isActive, clickHandler }) => (
+        customTag={({ name, isActive, clickHandler }) => (
             <button
                 style={{ background: isActive ? 'gray' : 'lightgray' }}
                 onClick={clickHandler}

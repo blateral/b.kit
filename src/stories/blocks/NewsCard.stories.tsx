@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsCard from 'components/blocks/NewsCard';
 import Button from 'components/buttons/Button';
@@ -9,7 +9,7 @@ export default {
     component: NewsCard,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
@@ -31,6 +31,23 @@ export const WithTag: Story = () => (
         onTagClick={console.log}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+    />
+);
+
+export const WithCustomTag: Story = () => (
+    <NewsCard
+        tag="Secondary Tag"
+        onTagClick={console.log}
+        title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+        customTag={({ name, isActive, clickHandler }) => (
+            <button
+                style={{ background: isActive ? 'gray' : 'lightgray' }}
+                onClick={clickHandler}
+            >
+                {name}
+            </button>
+        )}
     />
 );
 

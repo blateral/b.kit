@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { spacings, getColors as color } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 
 const View = styled(Copy)<{
@@ -11,41 +10,56 @@ const View = styled(Copy)<{
 }>`
     display: inline-block;
     border: 1px solid
-        ${({ isInverted, theme }) =>
-            isInverted ? color(theme).light : color(theme).dark};
+        ${({ isInverted }) => (isInverted ? '#dddddd' : '#444444')};
     border-radius: 15px;
 
-    padding: 3px ${spacings.nudge * 2}px;
+    padding: 4px 12px;
+    max-height: 28px;
     user-select: none;
 
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: center;
-    background: ${({ isActive, isInverted, theme }) =>
-        isActive && (isInverted ? color(theme).light : color(theme).dark)};
-    color: ${({ isActive, isInverted, theme }) =>
-        isActive && (isInverted ? color(theme).dark : color(theme).light)};
+
+    background: ${({ isActive, isInverted }) =>
+        isActive && (isInverted ? '#dddddd' : '#444444')};
+
+    color: ${({ isActive, isInverted }) => {
+        if (isActive) {
+            return isInverted ? '#444444' : '#ffff';
+        } else {
+            return isInverted ? '#dddddd' : '#444444';
+        }
+    }};
+
     cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')};
 
     transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
 
-    &:hover {
-        background: ${({ theme, isInverted, onClick }) =>
-            onClick && (isInverted ? color(theme).light : color(theme).dark)};
-        color: ${({ theme, isInverted, onClick }) =>
-            onClick && (isInverted ? color(theme).dark : color(theme).light)};
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            background: ${({ isInverted }) =>
+                isInverted ? '#dddddd' : '#444444'};
+            color: ${({ isInverted }) => (isInverted ? '#444444' : '#ffff')};
+        }
     }
 `;
 
 const Tag: FC<{
+    /** Invert colors to use on dark background */
     isInverted?: boolean;
+
+    /** Highlight tag if active */
     isActive?: boolean;
+
+    /** Click callback */
     onClick?: () => void;
     className?: string;
 }> = ({ isInverted, isActive, onClick, className, children }) => {
     return (
         <View
+            size="small"
             isInverted={isInverted}
             isActive={isActive}
             onClick={onClick}

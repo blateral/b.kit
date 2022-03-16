@@ -7,7 +7,7 @@ export default {
     component: Tag,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview'],
         },
     },
 } as Meta;

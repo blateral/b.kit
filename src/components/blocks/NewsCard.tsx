@@ -75,17 +75,37 @@ const StyledActions = styled(Actions)`
 `;
 
 export interface NewsCardProps {
+    /** Invert text and background for use on dark sections */
     isInverted?: boolean;
+
+    /** News tag name */
     tag?: string;
-    onTagClick?: (name: string) => void;
+
+    /** News publish date */
     publishDate?: Date;
+
+    /** News title */
     title?: string;
+
+    /** News text */
     text?: string;
+
+    /** News image settings */
     image?: Omit<ImageProps, 'coverSpace'>;
+
+    /** News link settings */
     link?: LinkProps;
 
+    /** Callback function if tag in news iten has been clicked */
+    onTagClick?: (name: string) => void;
+
+    /** Function to inject primary action */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Function to inject secondary action */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Function to inject custom tag node */
     customTag?: (props: {
         name: string;
         isInverted?: boolean;
