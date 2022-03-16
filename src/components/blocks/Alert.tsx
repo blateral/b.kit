@@ -54,11 +54,13 @@ const AlertLabel = styled.div`
     }
 `;
 
-const Alert: React.FC<{ label: string; date?: Date; link?: string }> = ({
-    label,
-    date,
-    link,
-}) => {
+export interface AlertProps {
+    label: string;
+    date?: Date;
+    link?: string;
+}
+
+const Alert: React.FC<AlertProps> = ({ label, date, link }) => {
     let formattedDate = '';
     if (date) {
         const formatter = new StatusFormatter(
