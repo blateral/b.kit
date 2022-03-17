@@ -64,7 +64,7 @@ const NavBlock: React.FC<NavBlockProps> = ({ label, text, href }) => {
                     <AngleRight />
                 </MainLabel>
             </Main>
-            <Text>{text}</Text>
+            <Text size="small">{text}</Text>
         </View>
     );
 };
