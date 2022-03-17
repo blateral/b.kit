@@ -1,24 +1,29 @@
 import AngleRight from 'components/base/icons/AngleRight';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Copy from 'components/typography/Copy';
+import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
 
-const View = styled.a<{ hasLink?: boolean }>`
-    color: inherit;
+const View = styled.div``;
+
+const Main = styled(Link)<{ isInverted?: boolean }>`
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
+
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
     text-decoration: none;
 
-    pointer-events: ${({ hasLink }) => (hasLink ? 'all' : 'none')};
-    cursor: pointer;
-`;
-
-const Main = styled.div`
-    color: ${({ theme }) => color(theme).new.primary.default};
-
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    outline-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
@@ -26,8 +31,13 @@ const Main = styled.div`
 
     transition: all ease-in-out 0.2s;
 
-    ${View}:hover & {
-        color: ${({ theme }) => color(theme).new.primary.hover};
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            color: ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).new.primary.invertedHover
+                    : color(theme).new.primary.hover};
+        }
     }
 `;
 
@@ -65,24 +75,41 @@ const DefaultIcon = styled(AngleRight)`
         margin-bottom: -2px;
     }
 `;
+
 export interface NavBlockProps {
+    /** Invert colors for use on dark backgrounds */
+    isInverted?: boolean;
+
+    /** Navigation title */
     title?: string;
+
+    /** Navigation text (richtext) */
     text?: string;
-    href?: string;
+
+    /** Link settings */
+    link?: LinkProps;
+
+    /** Function to inject custom icon node */
     customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+
+    /** Function to inject custom title icon decorator node */
     customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+
+    className?: string;
 }
 
 const NavBlock: React.FC<NavBlockProps> = ({
+    isInverted = false,
     title,
     text,
-    href,
+    link,
     customIcon,
     customTitleIcon,
+    className,
 }) => {
     return (
-        <View href={href} hasLink={!!href}>
-            <Main>
+        <View className={className}>
+            <Main {...link} isInverted={isInverted}>
                 <Icon>{customIcon ? customIcon({}) : <ArrowRightGhost />}</Icon>
                 <MainLabel>
                     {title && (
@@ -101,7 +128,9 @@ const NavBlock: React.FC<NavBlockProps> = ({
                     )}
                 </MainLabel>
             </Main>
-            <Text size="small">{text}</Text>
+            {text && (
+                <Text size="small" isInverted={isInverted} innerHTML={text} />
+            )}
         </View>
     );
 };

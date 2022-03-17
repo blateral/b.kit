@@ -97,6 +97,7 @@ export { default as SimpleImage } from 'components/sections/SimpleImage';
 export { default as PriceTable } from 'components/sections/PriceTable';
 export { default as Quote } from 'components/sections/Quote';
 export { default as AlertList } from 'components/sections/AlertList';
+export { default as NavList } from 'components/sections/NavList';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';

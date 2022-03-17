@@ -124,6 +124,8 @@ export interface AlertProps {
 
     /** Function to inject custom title icon */
     customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+
+    className?: string;
 }
 
 const Alert: React.FC<AlertProps> = ({
@@ -134,6 +136,7 @@ const Alert: React.FC<AlertProps> = ({
     link,
     customIcon,
     customTitleIcon,
+    className,
 }) => {
     let formattedDate = '';
     if (date) {
@@ -148,7 +151,7 @@ const Alert: React.FC<AlertProps> = ({
     }
 
     return (
-        <View isInverted={isInverted}>
+        <View isInverted={isInverted} className={className}>
             <Icon>
                 {customIcon ? customIcon({ isInverted }) : <ExclamationMark />}
             </Icon>
