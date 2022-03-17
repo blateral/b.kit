@@ -1,10 +1,9 @@
 import AngleRight from 'components/base/icons/AngleRight';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Copy from 'components/typography/Copy';
-import Heading from 'components/typography/Heading';
 import React from 'react';
 import styled from 'styled-components';
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 
 const View = styled.a<{ hasLink?: boolean }>`
     color: inherit;
@@ -46,22 +45,60 @@ const Text = styled(Copy)`
     margin-top: ${spacings.nudge * 3}px;
 `;
 
+const Icon = styled.div``;
+
+const Title = styled(Copy)`
+    display: inline-block;
+`;
+
+const TitleIcon = styled.span`
+    display: inline-block;
+    margin-left: ${spacings.nudge * 2}px;
+
+    @media ${mq.medium} {
+        margin-left: ${spacings.nudge * 3}px;
+    }
+`;
+
+const DefaultIcon = styled(AngleRight)`
+    && {
+        margin-bottom: -2px;
+    }
+`;
 export interface NavBlockProps {
-    label?: string;
+    title?: string;
     text?: string;
     href?: string;
+    customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+    customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
 }
 
-const NavBlock: React.FC<NavBlockProps> = ({ label, text, href }) => {
+const NavBlock: React.FC<NavBlockProps> = ({
+    title,
+    text,
+    href,
+    customIcon,
+    customTitleIcon,
+}) => {
     return (
         <View href={href} hasLink={!!href}>
             <Main>
-                <ArrowRightGhost />
+                <Icon>{customIcon ? customIcon({}) : <ArrowRightGhost />}</Icon>
                 <MainLabel>
-                    <Heading textColor="inherit" size="heading-4">
-                        {label}
-                    </Heading>
-                    <AngleRight />
+                    {title && (
+                        <Title textColor="inherit" size="medium" type="copy-b">
+                            {title}
+                            {title && (
+                                <TitleIcon>
+                                    {customTitleIcon ? (
+                                        customTitleIcon({})
+                                    ) : (
+                                        <DefaultIcon />
+                                    )}
+                                </TitleIcon>
+                            )}
+                        </Title>
+                    )}
                 </MainLabel>
             </Main>
             <Text size="small">{text}</Text>
