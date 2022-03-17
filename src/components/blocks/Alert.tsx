@@ -62,7 +62,7 @@ const View = styled.div<{ isInverted?: boolean }>`
     }
 `;
 
-const ViewLink = styled(Link)`
+const ViewLink = styled(Link)<{ isInverted?: boolean }>`
     display: block;
     position: absolute;
     top: 0;
@@ -70,6 +70,10 @@ const ViewLink = styled(Link)`
     bottom: 0;
     left: 0;
     margin: 0;
+    outline-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
 `;
 
 const Icon = styled.div``;
@@ -176,7 +180,11 @@ const Alert: React.FC<AlertProps> = ({
                     </Copy>
                 )}
             </Content>
-            <ViewLink {...link} ariaLabel={link?.href ? title : undefined} />
+            <ViewLink
+                {...link}
+                isInverted={isInverted}
+                ariaLabel={link?.href ? title : undefined}
+            />
         </View>
     );
 };

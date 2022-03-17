@@ -28,6 +28,7 @@ const ListItem = styled.li`
     padding-top: ${spacings.nudge * 2}px;
     padding-left: ${spacings.nudge * 2}px;
     flex: 1 0 100%;
+    max-width: 50%;
 
     @media ${mq.medium} {
         flex: 1 0 50%;
