@@ -80,3 +80,19 @@ export const WithMoreVisibleItems: Story = () => (
         onTagClick={console.log}
     />
 );
+
+export const WithCustomTag: Story = () => (
+    <NewsList
+        bgMode="inverted"
+        news={exampleNews}
+        onTagClick={console.log}
+        customTag={({ name, isActive, clickHandler }) => (
+            <button
+                style={{ background: isActive ? 'gray' : 'lightgray' }}
+                onClick={clickHandler}
+            >
+                {name}
+            </button>
+        )}
+    />
+);
