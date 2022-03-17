@@ -10,8 +10,8 @@ const AngleRight: React.FC<{ iconColor?: string; className?: string }> = ({
     className,
 }) => (
     <SVG
-        width="13"
-        height="18"
+        width="11"
+        height="15"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 13 18"

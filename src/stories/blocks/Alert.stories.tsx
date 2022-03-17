@@ -1,6 +1,8 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Alert from '../../components/blocks/Alert';
+import Magnifier from 'components/base/icons/Magnifier';
+import ArrowRight from 'components/base/icons/ArrowRight';
 
 export default {
     title: 'Blocks / Alert',
@@ -59,3 +61,23 @@ Inverted.parameters = {
         values: [{ name: 'inverted', value: 'black' }],
     },
 };
+
+export const CustomIcon: Story = () => (
+    <Alert
+        title="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+        date={new Date()}
+        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae."
+        link={{ href: '#' }}
+        customIcon={() => <Magnifier />}
+    />
+);
+
+export const CustomTitleIcon: Story = () => (
+    <Alert
+        title="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+        date={new Date()}
+        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae."
+        link={{ href: '#' }}
+        customTitleIcon={() => <ArrowRight />}
+    />
+);

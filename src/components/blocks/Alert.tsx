@@ -3,7 +3,7 @@ import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled from 'styled-components';
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 import StatusFormatter from '../../utils/statusFormatter';
 import ExclamationMark from '../base/icons/ExclamationMark';
 
@@ -23,7 +23,7 @@ const View = styled.div<{ isInverted?: boolean }>`
             ? color(theme).new.primary.inverted
             : color(theme).new.primary.default};
 
-    padding: ${spacings.nudge * 3}px;
+    padding: ${spacings.nudge * 2}px;
 
     text-align: left;
     width: 100%;
@@ -33,10 +33,10 @@ const View = styled.div<{ isInverted?: boolean }>`
     align-items: flex-start;
     cursor: pointer;
 
-    transition: all ease-in-out 0.2s;
+    transition: color ease-in-out 0.2s, border 0.2s ease-in-out;
 
     & > * + * {
-        margin-left: ${spacings.nudge * 3}px;
+        margin-left: ${spacings.nudge * 2}px;
     }
 
     @media (hover: hover) and (pointer: fine) {
@@ -50,6 +50,14 @@ const View = styled.div<{ isInverted?: boolean }>`
                 isInverted
                     ? color(theme).new.primary.invertedHover
                     : color(theme).new.primary.hover};
+        }
+    }
+
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 3}px;
+
+        & > * + * {
+            margin-left: ${spacings.nudge * 3}px;
         }
     }
 `;
@@ -76,14 +84,18 @@ const Title = styled(Copy)`
     display: inline-block;
 `;
 
-const LabelIcon = styled.span`
+const TitleIcon = styled.span`
     display: inline-block;
-    margin-left: ${spacings.nudge * 3}px;
+    margin-left: ${spacings.nudge * 2}px;
+
+    @media ${mq.medium} {
+        margin-left: ${spacings.nudge * 3}px;
+    }
 `;
 
 const DefaultIcon = styled(AngleRight)`
     && {
-        margin-bottom: -3px;
+        margin-bottom: -2px;
     }
 `;
 
@@ -102,6 +114,12 @@ export interface AlertProps {
 
     /** Alert link that covers hole element  */
     link?: LinkProps;
+
+    /** Function to inject custom alert icon */
+    customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+
+    /** Function to inject custom title icon */
+    customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
 }
 
 const Alert: React.FC<AlertProps> = ({
@@ -110,6 +128,8 @@ const Alert: React.FC<AlertProps> = ({
     date,
     description,
     link,
+    customIcon,
+    customTitleIcon,
 }) => {
     let formattedDate = '';
     if (date) {
@@ -126,16 +146,20 @@ const Alert: React.FC<AlertProps> = ({
     return (
         <View isInverted={isInverted}>
             <Icon>
-                <ExclamationMark />
+                {customIcon ? customIcon({ isInverted }) : <ExclamationMark />}
             </Icon>
             <Content>
                 {title && (
                     <Title textColor="inherit" size="medium" type="copy-b">
                         {title}
                         {title && (
-                            <LabelIcon>
-                                <DefaultIcon />
-                            </LabelIcon>
+                            <TitleIcon>
+                                {customTitleIcon ? (
+                                    customTitleIcon({ isInverted })
+                                ) : (
+                                    <DefaultIcon />
+                                )}
+                            </TitleIcon>
                         )}
                     </Title>
                 )}
