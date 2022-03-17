@@ -2,10 +2,10 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsOverview, {
+    NewsItem,
     NewsOverviewComponent,
 } from 'components/sections/news/NewsOverview';
 import { generateItemList } from 'utils/storyHelpers';
-import { NewsCardProps } from 'components/blocks/NewsCard';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
@@ -32,7 +32,7 @@ const actions = {
     ),
 };
 
-const exampleNewsCard: NewsCardProps = {
+const exampleNewsCard: NewsItem = {
     tag: 'Secondary Tag',
     publishDate: new Date('July 22, 2021 03:24:00'),
     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
@@ -41,7 +41,7 @@ const exampleNewsCard: NewsCardProps = {
     ...actions,
 };
 
-const exampleNewsTag1 = generateItemList<NewsCardProps>(
+const exampleNewsTag1 = generateItemList<NewsItem>(
     exampleNewsCard,
     10,
     (item, i) => ({
@@ -61,7 +61,7 @@ const exampleNewsTag1 = generateItemList<NewsCardProps>(
     })
 );
 
-const exampleNewsTag2 = generateItemList<NewsCardProps>(
+const exampleNewsTag2 = generateItemList<NewsItem>(
     exampleNewsCard,
     10,
     (item, i) => ({
@@ -80,7 +80,7 @@ const exampleNewsTag2 = generateItemList<NewsCardProps>(
     })
 );
 
-const exampleNewsTag3 = generateItemList<NewsCardProps>(
+const exampleNewsTag3 = generateItemList<NewsItem>(
     exampleNewsCard,
     10,
     (item, i) => ({

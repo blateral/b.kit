@@ -83,7 +83,7 @@ export const WithBackground: Story = () => (
     />
 );
 
-export const IsInverted: Story = () => (
+export const Inverted: Story = () => (
     <AlertList
         bgMode="inverted"
         items={[

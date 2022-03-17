@@ -1,14 +1,13 @@
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { useMemo } from 'react';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-import { useContext } from 'react';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const News = styled.ul`
     list-style: none;
@@ -25,8 +24,7 @@ const News = styled.ul`
     flex-wrap: wrap;
 `;
 
-const NewsItem = styled.li<{ isVisible?: boolean }>`
-    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+const NewsItem = styled.li`
     padding-top: ${spacings.nudge * 6}px;
     padding-left: ${spacings.spacer}px;
     flex: 1 0 100%;
@@ -42,21 +40,47 @@ const NewsItem = styled.li<{ isVisible?: boolean }>`
     }
 `;
 
-const NewsList: React.FC<{
-    news?: NewsCardProps[];
-    onTagClick?: (tag: string) => void;
-    bgMode?: 'full' | 'inverted';
-    showItems?: '3' | '6';
-}> = ({ news, onTagClick, bgMode, showItems = '3' }) => {
-    const theme = useContext(ThemeContext);
+export type NewsItem = Omit<
+    NewsCardProps,
+    'isInverted' | 'onTagClick' | 'customTag'
+>;
 
-    const newsCount = news?.length || 0;
+const NewsList: React.FC<{
+    /** Show a short version of three or a expanded version of six news items */
+    mode?: 'short' | 'expanded';
+
+    /** Array of news card settings */
+    news?: NewsItem[];
+
+    /** Sections background */
+    bgMode?: 'full' | 'inverted';
+
+    /**
+     * Callback function to handle tag click outside of component
+     * */
+    onTagClick?: (tag: string) => void;
+
+    /** Function to inject custom tag node */
+    customTag?: (props: {
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+    }) => React.ReactNode;
+}> = ({ mode = 'short', news, bgMode, onTagClick, customTag }) => {
+    const { colors } = useLibTheme();
+
+    const items = useMemo<NewsCardProps[]>(() => {
+        if (!news) return [];
+        if (mode === 'expanded') return news.slice(0, 6);
+        else return news.slice(0, 3);
+    }, [news, mode]);
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
-        listLength: Math.min(parseInt(showItems), newsCount),
+        listLength: items.length,
         identifiers: [
             '[data-sheet="head"]',
             '[data-sheet="title"]',
@@ -76,32 +100,26 @@ const NewsList: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
-                    : 'transparent'
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            <Wrapper addWhitespace clampWidth="normal">
+            <Wrapper addWhitespace>
                 <News>
-                    {news &&
-                        news.map((item, i) => {
-                            return (
-                                <NewsItem
-                                    isVisible={i < parseInt(showItems)}
-                                    key={i}
-                                >
-                                    <div ref={cardRefs[i]}>
-                                        <NewsCard
-                                            onTagClick={onTagClick}
-                                            isInverted={isInverted}
-                                            {...item}
-                                        />
-                                    </div>
-                                </NewsItem>
-                            );
-                        })}
+                    {items?.map((item, i) => (
+                        <NewsItem key={i}>
+                            <NewsCard
+                                ref={cardRefs[i]}
+                                {...item}
+                                onTagClick={onTagClick}
+                                isInverted={isInverted}
+                                customTag={customTag}
+                            />
+                        </NewsItem>
+                    ))}
                 </News>
             </Wrapper>
         </Section>

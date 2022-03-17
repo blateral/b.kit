@@ -80,9 +80,14 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 
 type NewsOverviewMq = 'small' | 'semilarge' | 'large';
 
+export type NewsItem = Omit<
+    NewsCardProps,
+    'customTag' | 'isInverted' | 'onTagClick'
+>;
+
 const NewsOverview: React.FC<{
     /** Array of news item settings */
-    news?: NewsCardProps[];
+    news?: NewsItem[];
 
     /** Tags for news filtering */
     tags?: string[];
@@ -97,7 +102,7 @@ const NewsOverview: React.FC<{
     bgMode?: 'full' | 'inverted';
 
     /**
-     * Callback function to handle tag click outside of component e.g. on server side.
+     * Callback function to handle tag click outside of component
      * If no callback is defined filtering is controlled on client
      * */
     onTagClick?: (tag: string, insideList?: boolean) => void;
@@ -340,6 +345,7 @@ const NewsOverview: React.FC<{
                             <NewsItem key={i}>
                                 <NewsCard
                                     ref={cardRefs[i]}
+                                    {...item}
                                     isInverted={isInverted}
                                     onTagClick={(name) => {
                                         // scroll back to top
@@ -352,7 +358,6 @@ const NewsOverview: React.FC<{
                                         }
                                     }}
                                     customTag={customTag}
-                                    {...item}
                                 />
                             </NewsItem>
                         ))}

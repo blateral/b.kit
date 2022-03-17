@@ -1,10 +1,12 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NewsList, { NewsListComponent } from 'components/sections/news/NewsList';
+import NewsList, {
+    NewsItem,
+    NewsListComponent,
+} from 'components/sections/news/NewsList';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import { NewsCardProps } from 'components/blocks/NewsCard';
 import { generateItemList } from 'utils/storyHelpers';
 
 export default {
@@ -12,7 +14,7 @@ export default {
     component: NewsListComponent,
     parameters: {
         status: {
-            type: 'preview',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
@@ -30,7 +32,7 @@ const actions = {
     ),
 };
 
-const exampleNewsCard: NewsCardProps = {
+const exampleNewsCard: NewsItem = {
     tag: 'Secondary Tag',
     publishDate: new Date('July 22, 2021 03:24:00'),
     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
@@ -39,7 +41,7 @@ const exampleNewsCard: NewsCardProps = {
     ...actions,
 };
 
-const exampleNews = generateItemList<NewsCardProps>(
+const exampleNews = generateItemList<NewsItem>(
     exampleNewsCard,
     10,
     (item, i) => ({
@@ -49,6 +51,9 @@ const exampleNews = generateItemList<NewsCardProps>(
             medium: 'https://unsplash.it/688/516?image=40' + i,
             large: 'https://unsplash.it/591/444?image=40' + i,
             xlarge: 'https://unsplash.it/592/445?image=40' + i,
+            ratios: {
+                small: { w: 4, h: 3 },
+            },
         },
     })
 );
@@ -69,9 +74,9 @@ export const WithHandler: Story = () => (
 
 export const WithMoreVisibleItems: Story = () => (
     <NewsList
+        mode="expanded"
         bgMode="inverted"
         news={exampleNews}
         onTagClick={console.log}
-        showItems="6"
     />
 );
