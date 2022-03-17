@@ -11,22 +11,22 @@ export const Default: Story = () => (
     <NavList
         items={[
             {
-                label: 'Änderungen der Corona-Verordnung',
+                label: 'Lorem Ipsum',
                 text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, nostrum perferendis nisi unde, reiciendis eos repellendus asperiores eaque eligendi possimus maiores numquam fugit dignissimos obcaecati recusandae! Expedita, facere modi. Exercitationem?',
                 href: '#0',
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                label: 'Lorem Ipsum',
                 text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, nostrum perferendis nisi unde, reiciendis eos repellendus asperiores eaque eligendi possimus maiores numquam fugit dignissimos obcaecati recusandae! Expedita, facere modi. Exercitationem?',
                 href: '#0',
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                label: 'Lorem Ipsum',
                 text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, nostrum perferendis nisi unde, reiciendis eos repellendus asperiores eaque eligendi possimus maiores numquam fugit dignissimos obcaecati recusandae! Expedita, facere modi. Exercitationem?',
                 href: '#0',
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                label: 'Lorem Ipsum',
                 text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, nostrum perferendis nisi unde, reiciendis eos repellendus asperiores eaque eligendi possimus maiores numquam fugit dignissimos obcaecati recusandae! Expedita, facere modi. Exercitationem?',
                 href: '#0',
             },
@@ -39,25 +39,25 @@ export const WithBackground: Story = () => (
         bgMode="full"
         items={[
             {
-                label: 'Änderungen der Corona-Verordnung',
+                label: 'Lorem Ipsum',
                 text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, nostrum perferendis nisi unde, reiciendis eos repellendus asperiores eaque eligendi possimus maiores numquam fugit dignissimos obcaecati recusandae! Expedita, facere modi. Exercitationem?',
                 href: '#0',
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                label: 'Lorem Ipsum',
                 text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, nostrum perferendis nisi unde, reiciendis eos repellendus asperiores eaque eligendi possimus maiores numquam fugit dignissimos obcaecati recusandae! Expedita, facere modi. Exercitationem?',
                 href: '#0',
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                label: 'Lorem Ipsum',
                 text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, nostrum perferendis nisi unde, reiciendis eos repellendus asperiores eaque eligendi possimus maiores numquam fugit dignissimos obcaecati recusandae! Expedita, facere modi. Exercitationem?',
                 href: '#0',
             },
-            // {
-            //     label: 'Änderungen der Corona-Verordnung',
-            //     text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, nostrum perferendis nisi unde, reiciendis eos repellendus asperiores eaque eligendi possimus maiores numquam fugit dignissimos obcaecati recusandae! Expedita, facere modi. Exercitationem?',
-            //     href: '#0',
-            // },
+            {
+                label: 'Lorem Ipsum',
+                text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, nostrum perferendis nisi unde, reiciendis eos repellendus asperiores eaque eligendi possimus maiores numquam fugit dignissimos obcaecati recusandae! Expedita, facere modi. Exercitationem?',
+                href: '#0',
+            },
         ]}
     />
 );
