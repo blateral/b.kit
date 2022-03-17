@@ -5,10 +5,48 @@ import {
     mq,
     getColors as color,
     getGlobals as global,
-    NavBarHeights,
 } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import { useLibTheme } from 'utils/LibThemeProvider';
+
+const getTopNavHeights = (theme: DefaultTheme, size?: NavBarSize) => {
+    return size === 'large'
+        ? global(theme).navigation.navBar.topNavHeight.large
+        : global(theme).navigation.navBar.topNavHeight.small;
+};
+
+const getMainHeights = (theme: DefaultTheme, size?: NavBarSize) => {
+    return size === 'large'
+        ? global(theme).navigation.navBar.height.large
+        : global(theme).navigation.navBar.height.small;
+};
+
+/**
+ * Get full height of navigation bar.
+ * Array values are like [mobile, desktop]
+ */
+export const getFullHeight = (
+    theme: DefaultTheme,
+    size?: NavBarSize
+): [number, number] => {
+    const hasTopNav = global(theme).navigation.navBar.isTopNavVisible;
+    const topNavHeights = global(theme).navigation.navBar.topNavHeight;
+    const mainHeights = global(theme).navigation.navBar.height;
+
+    const barSize = size === 'large' ? 'large' : 'small';
+
+    // calculate mobile navbar height
+    const mobile =
+        (hasTopNav ? topNavHeights[barSize]?.[0] : 0) +
+        mainHeights[barSize]?.[0];
+
+    // calculate desktop navbar height
+    const desktop =
+        (topNavHeights[barSize]?.[1] || topNavHeights[barSize]?.[0]) +
+        (mainHeights[barSize]?.[1] || mainHeights[barSize]?.[0]);
+
+    return [mobile, desktop];
+};
 
 const View = styled.div<{
     isOpen?: boolean;
@@ -41,38 +79,25 @@ const Main = styled.div`
     background: ${({ theme }) => color(theme).new.elementBg.light};
 `;
 
-const getTopNavHeights = (theme: DefaultTheme, bp: 'mobile' | 'desktop') => {
-    return bp === 'desktop'
-        ? global(theme).navigation.navBar.topNavHeight.desktop
-        : global(theme).navigation.navBar.topNavHeight.mobile;
-};
-
 const TopNav = styled.nav<{ size?: NavBarSize; clamp?: boolean }>`
-    display: flex;
+    display: ${({ theme, size }) =>
+        getTopNavHeights(theme, size)[0] === 0 ? 'none' : 'flex'};
     align-items: center;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
     margin: 0 auto;
 
-    height: ${({ theme, size }) =>
-        size === 'large'
-            ? getTopNavHeights(theme, 'mobile').large
-            : getTopNavHeights(theme, 'mobile').small}px;
+    height: ${({ theme, size }) => getTopNavHeights(theme, size)[0]}px;
 
     @media ${mq.semilarge} {
+        display: ${({ theme, size }) =>
+            getTopNavHeights(theme, size)[1] === 0 ? 'none' : 'flex'};
         height: ${({ theme, size }) =>
-            size === 'large'
-                ? getTopNavHeights(theme, 'desktop').large
-                : getTopNavHeights(theme, 'desktop').small}px;
+            getTopNavHeights(theme, size)[1] ||
+            getTopNavHeights(theme, size)[0]}px;
     }
 `;
-
-const getMainHeights = (theme: DefaultTheme, bp: 'mobile' | 'desktop') => {
-    return bp === 'desktop'
-        ? global(theme).navigation.navBar.height.desktop
-        : global(theme).navigation.navBar.height.mobile;
-};
 
 const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
@@ -81,18 +106,14 @@ const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     padding: ${spacings.nudge * 2}px;
     margin: 0 auto;
 
-    height: ${({ theme, size }) =>
-        size === 'large'
-            ? getMainHeights(theme, 'mobile').large
-            : getMainHeights(theme, 'mobile').small}px;
+    height: ${({ theme, size }) => getMainHeights(theme, size)[0]}px;
 
     transition: height 0.2s ease-in-out;
+    will-change: height;
 
     @media ${mq.semilarge} {
         height: ${({ theme, size }) =>
-            size === 'large'
-                ? getMainHeights(theme, 'desktop').large
-                : getMainHeights(theme, 'desktop').small}px;
+            getMainHeights(theme, size)[1] || getMainHeights(theme, size)[0]}px;
     }
 `;
 
@@ -131,36 +152,11 @@ const Logo = styled.img`
     object-fit: contain;
 `;
 
-/** Get full height of navigation bar */
-export const getFullHeight = (
-    theme: DefaultTheme,
-    bp: 'mobile' | 'desktop'
-): NavBarHeights => {
-    const hasTopNav = global(theme).navigation.navBar.isTopNavVisible;
-    const topNavHeights = global(theme).navigation.navBar.topNavHeight;
-    const mainHeights = global(theme).navigation.navBar.height;
-
-    return {
-        small:
-            bp === 'desktop'
-                ? (hasTopNav ? topNavHeights.desktop.small : 0) +
-                  mainHeights.desktop.small
-                : (hasTopNav ? topNavHeights.mobile.small : 0) +
-                  mainHeights.mobile.small,
-        large:
-            bp === 'desktop'
-                ? (hasTopNav ? topNavHeights.desktop.large : 0) +
-                  mainHeights.desktop.large
-                : (hasTopNav ? topNavHeights.mobile.large : 0) +
-                  mainHeights.mobile.large,
-    };
-};
-
 const BarSpacer = styled.div`
-    height: ${({ theme }) => getFullHeight(theme, 'mobile').large}px;
+    height: ${({ theme }) => getFullHeight(theme, 'large')[0]}px;
 
     @media ${mq.semilarge} {
-        height: ${({ theme }) => getFullHeight(theme, 'desktop').large}px;
+        height: ${({ theme }) => getFullHeight(theme, 'large')[1]}px;
     }
 `;
 

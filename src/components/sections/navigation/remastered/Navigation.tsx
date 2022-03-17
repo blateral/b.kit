@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 
@@ -39,8 +39,10 @@ const Navigation: FC<NavigationProps> = ({
                 }
             },
         });
-    const navbarSize: NavBarSize =
-        isTop || !leftOffsetFromTop || !isStickable ? 'large' : 'small';
+
+    const navbarSize = useMemo<NavBarSize>(() => {
+        return isTop || !leftOffsetFromTop || !isStickable ? 'large' : 'small';
+    }, [isTop, leftOffsetFromTop, isStickable]);
 
     useEffect(() => {
         if (isStickable && isCollapsible) {

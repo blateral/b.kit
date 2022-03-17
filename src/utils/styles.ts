@@ -407,13 +407,22 @@ export interface GlobalSettings {
         /** Settings of top navigation bar */
         navBar: {
             isTopNavVisible: boolean;
+            /**
+             * Heights of top navigation bar.
+             * Array values are like: [mobile, desktop]
+             * Top navbar is hidden if value equal 0
+             */
             topNavHeight: {
-                mobile: NavBarHeights;
-                desktop: NavBarHeights;
+                small: [number, number?];
+                large: [number, number?];
             };
+            /**
+             * Heights of top navigation bar.
+             * Array values are like: [mobile, desktop]
+             */
             height: {
-                mobile: NavBarHeights;
-                desktop: NavBarHeights;
+                small: [number, number?];
+                large: [number, number?];
             };
         };
     };
@@ -456,24 +465,12 @@ const defaultGlobalSettings: GlobalSettings = {
         navBar: {
             isTopNavVisible: true,
             topNavHeight: {
-                mobile: {
-                    small: 30,
-                    large: 30,
-                },
-                desktop: {
-                    small: 40,
-                    large: 40,
-                },
+                small: [30, 40],
+                large: [30, 40],
             },
             height: {
-                mobile: {
-                    small: 80,
-                    large: 100,
-                },
-                desktop: {
-                    small: 90,
-                    large: 120,
-                },
+                small: [80, 90],
+                large: [100, 120],
             },
         },
     },
