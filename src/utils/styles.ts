@@ -206,13 +206,13 @@ const newColors: NewColors = {
         default: '#7749F8',
         inverted: '#EBE5FC',
         hover: '#311f66',
-        invertedHover: '',
+        invertedHover: '#BCB7C9',
     },
     secondary: {
         default: '#6C757D',
         inverted: '#C5BEE0',
         hover: '#3b4045',
-        invertedHover: '',
+        invertedHover: '#BCB7C9',
     },
     error: '#FF2D2D',
 };

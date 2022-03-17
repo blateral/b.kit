@@ -5,25 +5,57 @@ import Alert from '../../components/blocks/Alert';
 export default {
     title: 'Blocks / Alert',
     component: Alert,
+    parameters: {
+        status: {
+            type: ['preview', 'qsReady'],
+        },
+    },
+    decorators: [
+        (Story) => (
+            <div style={{ padding: '20px' }}>
+                <Story />
+            </div>
+        ),
+    ],
 } as Meta;
 
 export const Default: Story = () => (
-    <Alert label="Änderungen der Corona-Verordnung" date={new Date()} />
+    <Alert
+        title="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+        date={new Date()}
+    />
 );
 
 export const WithLink: Story = () => (
     <Alert
-        label="Änderungen der Corona-Verordnung"
+        title="Lorem ipsum dolor sit amet consectetur adipisicing elit."
         date={new Date()}
-        onClick={() => 'click'}
+        link={{ href: '#' }}
     />
 );
 
-export const WithDescriptionText: Story = () => (
+export const WithDescription: Story = () => (
     <Alert
-        label="Änderungen der Corona-Verordnung"
+        title="Lorem ipsum dolor sit amet consectetur adipisicing elit."
         date={new Date()}
-        onClick={() => 'click'}
-        descriptionText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae."
+        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae."
+        link={{ href: '#' }}
     />
 );
+
+export const Inverted: Story = () => (
+    <Alert
+        isInverted
+        title="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+        date={new Date()}
+        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae."
+        link={{ href: '#' }}
+    />
+);
+
+Inverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};
