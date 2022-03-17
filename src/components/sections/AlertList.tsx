@@ -1,13 +1,15 @@
-import Section, { mapToBgMode } from 'components/base/Section';
 import React from 'react';
-import Alert, { AlertProps } from '../blocks/Alert';
-import { useLibTheme } from 'utils/LibThemeProvider';
-import Wrapper from 'components/base/Wrapper';
 import styled from 'styled-components';
+
 import { mq, spacings } from 'utils/styles';
+import Wrapper from 'components/base/Wrapper';
+import Section, { mapToBgMode } from 'components/base/Section';
+import Alert, { AlertProps } from '../blocks/Alert';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const List = styled.ul`
-    margin: -${spacings.nudge * 2}px;
+    margin-top: -${spacings.nudge * 2}px;
+    margin-left: -${spacings.nudge * 2}px;
     padding: 0;
     list-style: none;
 
@@ -15,25 +17,43 @@ const List = styled.ul`
     flex-direction: row;
     align-items: flex-start;
     flex-wrap: wrap;
+
+    @media ${mq.medium} {
+        margin-top: -${spacings.spacer}px;
+        margin-left: -${spacings.spacer}px;
+    }
 `;
 
 const ListItem = styled.li`
-    padding: ${spacings.nudge * 2}px;
+    padding-top: ${spacings.nudge * 2}px;
+    padding-left: ${spacings.nudge * 2}px;
     flex: 1 0 100%;
 
     @media ${mq.medium} {
         flex: 1 0 50%;
+        padding-top: ${spacings.spacer}px;
+        padding-left: ${spacings.spacer}px;
     }
 `;
 
 const AlertList: React.FC<{
-    items: AlertProps[];
+    /** Array of alert items */
+    items?: Pick<AlertProps, 'title' | 'date' | 'description' | 'link'>[];
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ items, bgMode }) => {
+
+    /** Function to inject custom alert icon */
+    customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+
+    /** Function to inject custom title decorator icon */
+    customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+}> = ({ items, bgMode, customIcon, customTitleIcon }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
     return (
         <Section
             addSeperation
@@ -48,17 +68,21 @@ const AlertList: React.FC<{
         >
             <Wrapper addWhitespace>
                 <List>
-                    {items.map((item, i) => {
-                        return (
-                            <ListItem key={i}>
-                                <Alert {...item} />
-                            </ListItem>
-                        );
-                    })}
+                    {items?.map((item, i) => (
+                        <ListItem key={i}>
+                            <Alert
+                                {...item}
+                                isInverted={isInverted}
+                                customIcon={customIcon}
+                                customTitleIcon={customTitleIcon}
+                            />
+                        </ListItem>
+                    ))}
                 </List>
             </Wrapper>
         </Section>
     );
 };
 
-export default AlertList;
+export const AlertListComponent = AlertList;
+export default withLibTheme(AlertList);

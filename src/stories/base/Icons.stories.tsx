@@ -5,6 +5,7 @@ import ArrowRight from 'components/base/icons/ArrowRight';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
+import AngleRight from 'components/base/icons/AngleRight';
 import Cross from 'components/base/icons/Cross';
 import CrossSmall from 'components/base/icons/CrossSmall';
 import Magnifier from 'components/base/icons/Magnifier';
@@ -23,6 +24,7 @@ import Twitter from 'components/base/icons/socials/Twitter';
 import Xing from 'components/base/icons/socials/Xing';
 import Youtube from 'components/base/icons/socials/Youtube';
 import External from 'components/base/icons/External';
+import ExclamationMark from 'components/base/icons/ExclamationMark';
 
 export default {
     title: 'Base/Icons',
@@ -31,6 +33,7 @@ export default {
         ArrowRightGhost,
         ArrowLeftGhost,
         ArrowLeftRight,
+        AngleRight,
         Cross,
         CrossSmall,
         Magnifier,
@@ -48,6 +51,7 @@ export default {
         FlyTo,
         Route,
         External,
+        ExclamationMark,
     },
     decorators: [
         (Story) => (
@@ -74,6 +78,9 @@ IconArrowLeftGhost.storyName = 'Arrow left ghost';
 
 export const IconArrowLeftRight: Story = () => <ArrowLeftRight />;
 IconArrowLeftRight.storyName = 'Arrow left right';
+
+export const IconAngleRight: Story = () => <AngleRight />;
+IconAngleRight.storyName = 'Angle right';
 
 export const IconCross: Story = () => <Cross />;
 IconCross.storyName = 'Cross';
@@ -128,3 +135,6 @@ IconXing.storyName = 'Xing logo';
 
 export const IconYoutube: Story = () => <Youtube />;
 IconYoutube.storyName = 'Youtube logo';
+
+export const IconExclamationMark: Story = () => <ExclamationMark />;
+IconExclamationMark.storyName = 'ExclamationMark';

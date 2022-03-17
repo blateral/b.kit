@@ -1,34 +1,47 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import AlertList from '../../components/sections/AlertList';
+import AlertList, { AlertListComponent } from 'components/sections/AlertList';
 
 export default {
     title: 'Sections / AlertList',
-    component: AlertList,
+    component: AlertListComponent,
+    parameters: {
+        status: {
+            type: ['preview', 'qsReady'],
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (
     <AlertList
         items={[
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
         ]}
     />
@@ -39,24 +52,32 @@ export const WithBackground: Story = () => (
         bgMode="full"
         items={[
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
         ]}
     />
@@ -67,24 +88,32 @@ export const IsInverted: Story = () => (
         bgMode="inverted"
         items={[
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
             {
-                label: 'Änderungen der Corona-Verordnung',
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
-                onClick: () => 'click',
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
             },
         ]}
     />
