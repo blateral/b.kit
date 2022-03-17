@@ -1,13 +1,13 @@
 import Section, { mapToBgMode } from 'components/base/Section';
-import React from 'react';
-import Alert, { AlertProps } from '../blocks/Alert';
-import { useLibTheme } from 'utils/LibThemeProvider';
 import Wrapper from 'components/base/Wrapper';
+import NavBlock, { NavBlockProps } from 'components/blocks/NavBlock';
+import React from 'react';
 import styled from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import { mq, spacings } from 'utils/styles';
 
 const List = styled.ul`
-    margin: -${spacings.spacer}px;
+    margin: -${spacings.spacer * 2}px -${spacings.spacer}px;
     padding: 0;
     list-style: none;
 
@@ -18,31 +18,30 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-    padding: ${spacings.spacer}px;
+    padding: ${spacings.spacer * 2}px ${spacings.spacer}px;
     flex: 1 0 100%;
 
     @media ${mq.medium} {
         flex: 0 0 50%;
     }
+
+    @media ${mq.large} {
+        flex: 0 0 33.33%;
+    }
 `;
 
-const AlertList: React.FC<{
-    items: AlertProps[];
-    bgMode?: 'full' | 'inverted';
+const NavList: React.FC<{
+    items: NavBlockProps[];
+    bgMode?: 'full';
 }> = ({ items, bgMode }) => {
     const { colors } = useLibTheme();
 
-    const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
     return (
         <Section
             addSeperation
             bgColor={
-                isInverted
-                    ? colors.new.sectionBg.dark
-                    : hasBg
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                hasBg ? colors.new.sectionBg.medium : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
@@ -51,7 +50,7 @@ const AlertList: React.FC<{
                     {items.map((item, i) => {
                         return (
                             <ListItem key={i}>
-                                <Alert {...item} />
+                                <NavBlock {...item} />
                             </ListItem>
                         );
                     })}
@@ -61,4 +60,4 @@ const AlertList: React.FC<{
     );
 };
 
-export default AlertList;
+export default NavList;
