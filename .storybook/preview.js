@@ -2,7 +2,7 @@ import { LibThemeProvider } from '../src/utils/LibThemeProvider';
 import DebugLines from '../src/components/debug/DebugLines';
 
 const customTheme = {
-    globalSettings: {
+    globals: {
         sections: {
             newsLocaleKey: 'de',
             newsDateFormat: 'dd.mm.YYYY',

@@ -3,7 +3,12 @@ import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled from 'styled-components';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    getGlobals as global,
+    mq,
+    spacings,
+} from 'utils/styles';
 import StatusFormatter from '../../utils/statusFormatter';
 import ExclamationMark from '../base/icons/ExclamationMark';
 
@@ -14,6 +19,8 @@ const View = styled.div<{ isInverted?: boolean }>`
             isInverted
                 ? color(theme).new.primary.inverted
                 : color(theme).new.primary.default};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+
     background: ${({ theme, isInverted }) =>
         isInverted
             ? color(theme).new.elementBg.dark
