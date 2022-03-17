@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { mq, spacings } from 'utils/styles';
 
 const List = styled.ul`
-    margin: -${spacings.spacer}px;
+    margin: -${spacings.nudge * 2}px;
     padding: 0;
     list-style: none;
 
@@ -18,7 +18,7 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-    padding: ${spacings.spacer}px;
+    padding: ${spacings.nudge * 2}px;
     flex: 1 0 100%;
 
     @media ${mq.medium} {
