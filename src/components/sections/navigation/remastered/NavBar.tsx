@@ -9,16 +9,30 @@ import {
 import Copy from 'components/typography/Copy';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
-const getTopNavHeights = (theme: DefaultTheme, size?: NavBarSize) => {
-    return size === 'large'
-        ? global(theme).navigation.navBar.topNavHeight.large
-        : global(theme).navigation.navBar.topNavHeight.small;
+const getTopNavHeights = (
+    theme: DefaultTheme,
+    size?: NavBarSize
+): [number, number] => {
+    const heights =
+        size === 'large'
+            ? global(theme).navigation.navBar.topNavHeight.large
+            : global(theme).navigation.navBar.topNavHeight.small;
+
+    // if second value is not defined use first array index value for both
+    return [heights[0], heights?.[1] === undefined ? heights[0] : heights[1]];
 };
 
-const getMainHeights = (theme: DefaultTheme, size?: NavBarSize) => {
-    return size === 'large'
-        ? global(theme).navigation.navBar.height.large
-        : global(theme).navigation.navBar.height.small;
+const getMainHeights = (
+    theme: DefaultTheme,
+    size?: NavBarSize
+): [number, number] => {
+    const heights =
+        size === 'large'
+            ? global(theme).navigation.navBar.height.large
+            : global(theme).navigation.navBar.height.small;
+
+    // if second value is not defined use first array index value for both
+    return [heights[0], heights?.[1] === undefined ? heights[0] : heights[1]];
 };
 
 /**
@@ -30,20 +44,14 @@ export const getFullHeight = (
     size?: NavBarSize
 ): [number, number] => {
     const hasTopNav = global(theme).navigation.navBar.isTopNavVisible;
-    const topNavHeights = global(theme).navigation.navBar.topNavHeight;
-    const mainHeights = global(theme).navigation.navBar.height;
-
-    const barSize = size === 'large' ? 'large' : 'small';
+    const topNavHeights = getTopNavHeights(theme, size);
+    const mainHeights = getMainHeights(theme, size);
 
     // calculate mobile navbar height
-    const mobile =
-        (hasTopNav ? topNavHeights[barSize]?.[0] : 0) +
-        mainHeights[barSize]?.[0];
+    const mobile = (hasTopNav ? topNavHeights[0] : 0) + mainHeights[0];
 
     // calculate desktop navbar height
-    const desktop =
-        (topNavHeights[barSize]?.[1] || topNavHeights[barSize]?.[0]) +
-        (mainHeights[barSize]?.[1] || mainHeights[barSize]?.[0]);
+    const desktop = topNavHeights[1] + mainHeights[1];
 
     return [mobile, desktop];
 };
@@ -94,9 +102,8 @@ const TopNav = styled.nav<{ size?: NavBarSize; clamp?: boolean }>`
     @media ${mq.semilarge} {
         display: ${({ theme, size }) =>
             getTopNavHeights(theme, size)[1] === 0 ? 'none' : 'flex'};
-        height: ${({ theme, size }) =>
-            getTopNavHeights(theme, size)[1] ||
-            getTopNavHeights(theme, size)[0]}px;
+
+        height: ${({ theme, size }) => getTopNavHeights(theme, size)[1]}px;
     }
 `;
 
