@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "2.0.0-beta.2",
+    "version": "2.0.0-beta.2.1",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
@@ -19,6 +19,7 @@
         "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
         "deploy": "yarn tc && yarn build && yarn publish",
         "deploy-patch": "yarn tc && yarn build && yarn publish --tag patch",
+        "deploy-beta": "yarn tc && yarn build && yarn publish --tag beta",
         "prepare": "npx husky install && npx yalc --version"
     },
     "repository": {
