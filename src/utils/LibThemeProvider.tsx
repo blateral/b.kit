@@ -139,6 +139,7 @@ export const useLibTheme = () => {
         colors: getColors(theme),
         fonts: getFonts(theme),
         globals: getGlobals(theme),
+        theme: theme,
     };
 };
 

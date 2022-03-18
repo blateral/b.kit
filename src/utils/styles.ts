@@ -406,7 +406,6 @@ export interface GlobalSettings {
     navigation: {
         /** Settings of top navigation bar */
         navBar: {
-            isTopNavVisible: boolean;
             /**
              * Heights of top navigation bar.
              * Array values are like: [mobile, desktop]
@@ -463,9 +462,8 @@ const defaultGlobalSettings: GlobalSettings = {
     },
     navigation: {
         navBar: {
-            isTopNavVisible: true,
             topNavHeight: {
-                small: [30, 40],
+                small: [0, 40],
                 large: [30, 40],
             },
             height: {

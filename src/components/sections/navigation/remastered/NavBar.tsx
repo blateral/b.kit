@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 import {
     spacings,
@@ -7,6 +7,7 @@ import {
     getGlobals as global,
 } from 'utils/styles';
 import Copy from 'components/typography/Copy';
+import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
 const getTopNavHeights = (
@@ -19,7 +20,22 @@ const getTopNavHeights = (
             : global(theme).navigation.navBar.topNavHeight.small;
 
     // if second value is not defined use first array index value for both
-    return [heights[0], heights?.[1] === undefined ? heights[0] : heights[1]];
+    return [
+        clampValue(heights[0], 0),
+        clampValue(heights?.[1] === undefined ? heights[0] : heights[1], 0),
+    ];
+};
+
+export const hasTopNav = (theme: DefaultTheme) => {
+    const largeHeights = getTopNavHeights(theme, 'large');
+    const smallHeights = getTopNavHeights(theme, 'small');
+
+    return (
+        largeHeights[0] > 0 ||
+        largeHeights[1] > 0 ||
+        smallHeights[0] > 0 ||
+        smallHeights[1] > 0
+    );
 };
 
 const getMainHeights = (
@@ -32,7 +48,10 @@ const getMainHeights = (
             : global(theme).navigation.navBar.height.small;
 
     // if second value is not defined use first array index value for both
-    return [heights[0], heights?.[1] === undefined ? heights[0] : heights[1]];
+    return [
+        clampValue(heights[0], 0),
+        clampValue(heights?.[1] === undefined ? heights[0] : heights[1], 0),
+    ];
 };
 
 /**
@@ -43,12 +62,11 @@ export const getFullHeight = (
     theme: DefaultTheme,
     size?: NavBarSize
 ): [number, number] => {
-    const hasTopNav = global(theme).navigation.navBar.isTopNavVisible;
     const topNavHeights = getTopNavHeights(theme, size);
     const mainHeights = getMainHeights(theme, size);
 
     // calculate mobile navbar height
-    const mobile = (hasTopNav ? topNavHeights[0] : 0) + mainHeights[0];
+    const mobile = topNavHeights[0] + mainHeights[0];
 
     // calculate desktop navbar height
     const desktop = topNavHeights[1] + mainHeights[1];
@@ -66,7 +84,7 @@ const View = styled.div<{
     left: 0;
     right: 0;
 
-    transform: ${({ isOpen }) => !isOpen && 'translate3d(0, -100%, 0)'};
+    transform: ${({ isOpen }) => !isOpen && 'translate3d(0, -101%, 0)'};
     opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
 
     margin: 0 auto;
@@ -79,31 +97,51 @@ const View = styled.div<{
     will-change: transform;
 `;
 
-const Header = styled.div`
+const Header = styled.div<{ size?: NavBarSize }>`
+    opacity: ${({ theme, size }) =>
+        getTopNavHeights(theme, size)[0] > 0 ? 1 : 0};
+    pointer-events: ${({ theme, size }) =>
+        getTopNavHeights(theme, size)[0] > 0 ? 'all' : 'none'};
+    overflow: ${({ theme, size }) =>
+        getTopNavHeights(theme, size)[0] <= 0 && 'hidden'};
+
     background: ${({ theme }) => color(theme).new.primary.default};
+
+    @media ${mq.semilarge} {
+        opacity: ${({ theme, size }) =>
+            getTopNavHeights(theme, size)[1] > 0 ? 1 : 0};
+        pointer-events: ${({ theme, size }) =>
+            getTopNavHeights(theme, size)[1] > 0 ? 'all' : 'none'};
+        overflow: ${({ theme, size }) =>
+            getTopNavHeights(theme, size)[1] <= 0 && 'hidden'};
+    }
 `;
 
 const Main = styled.div`
     background: ${({ theme }) => color(theme).new.elementBg.light};
 `;
 
-// #TODO: Top navbar animiert auftauchen und einfahren lassen
-const TopNav = styled.nav<{ size?: NavBarSize; clamp?: boolean }>`
-    display: ${({ theme, size }) =>
-        getTopNavHeights(theme, size)[0] === 0 ? 'none' : 'flex'};
+const TopNav = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
+    display: flex;
     align-items: center;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
-    padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
+    padding: ${({ size, theme }) =>
+        getTopNavHeights(theme, size)[0] > 0 &&
+        `${spacings.nudge}px ${spacings.nudge * 2}px`};
     margin: 0 auto;
 
     height: ${({ theme, size }) => getTopNavHeights(theme, size)[0]}px;
 
-    @media ${mq.semilarge} {
-        display: ${({ theme, size }) =>
-            getTopNavHeights(theme, size)[1] === 0 ? 'none' : 'flex'};
+    transition: height 0.2s ease-in-out, padding-top 0.2s ease-in-out,
+        padding-bottom 0.2s ease-in-out;
+    will-change: height;
 
+    @media ${mq.semilarge} {
         height: ${({ theme, size }) => getTopNavHeights(theme, size)[1]}px;
+        padding: ${({ size, theme }) =>
+            getTopNavHeights(theme, size)[1] > 0 &&
+            `${spacings.nudge}px ${spacings.nudge * 2}px`};
     }
 `;
 
@@ -170,6 +208,12 @@ const BarSpacer = styled.div`
 
 export type NavBarSize = 'small' | 'large';
 
+export interface TopNavProps {
+    size: NavBarSize;
+    isOpen?: boolean;
+    isSticky?: boolean;
+}
+
 export interface NavBarProps {
     size?: NavBarSize;
     isOpen?: boolean;
@@ -177,6 +221,8 @@ export interface NavBarProps {
     isAnimated?: boolean;
     clampWidth?: 'content' | 'full';
     reserveBarHeight?: boolean;
+
+    topNav?: (props: TopNavProps) => React.ReactNode;
 }
 
 const NavBar: FC<
@@ -185,15 +231,18 @@ const NavBar: FC<
     }
 > = ({
     size = 'large',
-    isOpen,
-    isSticky,
-    isAnimated,
-    clampWidth,
-    reserveBarHeight,
+    isOpen = false,
+    isSticky = false,
+    isAnimated = false,
+    clampWidth = false,
+    reserveBarHeight = false,
+    topNav,
     className,
 }) => {
-    const { globals } = useLibTheme();
+    const { theme } = useLibTheme();
     const clampContent = clampWidth === 'content';
+
+    const hasHeader = useMemo(() => hasTopNav(theme), [theme]);
 
     return (
         <React.Fragment>
@@ -204,15 +253,16 @@ const NavBar: FC<
                 isAnimated={isAnimated}
                 className={className}
             >
-                {globals.navigation.navBar.isTopNavVisible && (
-                    <Header>
+                {hasHeader && (
+                    <Header size={size}>
                         <TopNav size={size} clamp={clampContent}>
-                            <LeftCol size="small" isInverted>
-                                Left
-                            </LeftCol>
-                            <RightCol size="small" isInverted>
-                                Right
-                            </RightCol>
+                            {topNav ? (
+                                topNav({ size, isOpen, isSticky })
+                            ) : (
+                                <CenterCol size="small" isInverted>
+                                    Top Nav
+                                </CenterCol>
+                            )}
                         </TopNav>
                     </Header>
                 )}

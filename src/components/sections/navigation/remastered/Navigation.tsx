@@ -1,12 +1,15 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
+import { LibThemeProvider, ThemeMods } from 'utils/LibThemeProvider';
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 
-import NavBar, { NavBarSize } from './NavBar';
+import NavBar, { NavBarSize, TopNavProps } from './NavBar';
 
 interface NavBarBase {
     isStickable?: boolean;
     reserveBarHeight?: boolean;
+    topNav?: (props: TopNavProps) => React.ReactNode;
+    theme?: ThemeMods;
 }
 
 interface NavBarCollapse extends NavBarBase {
@@ -41,8 +44,8 @@ const Navigation: FC<NavigationProps> = ({
         });
 
     const navbarSize = useMemo<NavBarSize>(() => {
-        return isTop || !leftOffsetFromTop || !isStickable ? 'large' : 'small';
-    }, [isTop, leftOffsetFromTop, isStickable]);
+        return isTop || isInOffset || !isStickable ? 'large' : 'small';
+    }, [isTop, isInOffset, isStickable]);
 
     useEffect(() => {
         if (isStickable && isCollapsible) {
@@ -74,14 +77,17 @@ const Navigation: FC<NavigationProps> = ({
     }, [isCollapsible, isStickable, isTop, leftOffsetFromTop]);
 
     return (
-        <NavBar
-            isOpen={isNavBarOpen}
-            isSticky={isSticky}
-            isAnimated={isAnimated}
-            size={navbarSize}
-            clampWidth={clampWidth}
-            reserveBarHeight={navBar?.reserveBarHeight}
-        />
+        <LibThemeProvider theme={navBar?.theme}>
+            <NavBar
+                isOpen={isNavBarOpen}
+                isSticky={isSticky}
+                isAnimated={isAnimated}
+                size={navbarSize}
+                clampWidth={clampWidth}
+                reserveBarHeight={navBar?.reserveBarHeight}
+                topNav={navBar?.topNav}
+            />
+        </LibThemeProvider>
     );
 };
 

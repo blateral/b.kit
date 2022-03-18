@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Navigation from 'components/sections/navigation/remastered/Navigation';
@@ -48,6 +49,19 @@ export const ReserveBarHeight: Story = () => (
             isStickable: true,
             isCollapsible: true,
             reserveBarHeight: true,
+        }}
+    />
+);
+
+export const CustomTopNavContent: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            reserveBarHeight: true,
+            topNav: ({ size }) => (
+                <button style={{ margin: '0 auto' }}>NavBar is: {size}</button>
+            ),
         }}
     />
 );
