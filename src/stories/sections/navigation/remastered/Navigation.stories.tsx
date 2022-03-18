@@ -26,12 +26,16 @@ export default {
         status: {
             type: 'preview',
         },
-        viewMode: 'story',
-        previewTabs: {
-            'storybook/docs/panel': {
-                hidden: true,
-            },
+        docs: {
+            inlineStories: false,
+            iframeHeight: 600,
         },
+        // viewMode: 'story',
+        // previewTabs: {
+        //     'storybook/docs/panel': {
+        //         hidden: true,
+        //     },
+        // },
     },
 } as Meta;
 
