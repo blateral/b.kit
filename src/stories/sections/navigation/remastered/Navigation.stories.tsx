@@ -49,25 +49,36 @@ export const CollapsibleNavbar: Story = () => (
     <Navigation navBar={{ isStickable: true, isCollapsible: true }} />
 );
 
-export const ReserveBarHeight: Story = () => (
-    <Navigation
-        navBar={{
-            isStickable: true,
-            isCollapsible: true,
-            reserveBarHeight: true,
-        }}
-    />
-);
-
 export const CustomTopNavContent: Story = () => (
     <Navigation
         navBar={{
             isStickable: true,
             isCollapsible: true,
-            reserveBarHeight: true,
             topNav: ({ size }) => (
                 <button style={{ margin: '0 auto' }}>NavBar is: {size}</button>
             ),
+        }}
+    />
+);
+
+export const BarOverPageContent: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            pageFlow: 'overContent',
+        }}
+    />
+);
+
+export const WithCustomBgGradient: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            pageFlow: 'overContent',
+            bgGradient:
+                'linear-gradient(180deg,rgba(255,0,0,0.3) 0%, rgba(255,0,0,0.2) 40%, rgba(255,0,0,0) 100%)',
         }}
     />
 );

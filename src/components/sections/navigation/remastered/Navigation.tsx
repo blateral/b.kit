@@ -7,18 +7,15 @@ import NavBar, { NavBarSize, TopNavProps } from './NavBar';
 
 export interface NavBarBase {
     isStickable?: boolean;
-    reserveBarHeight?: boolean;
+    isCollapsible?: boolean;
+    pageFlow?: 'overContent' | 'beforeContent';
+    bgGradient?: string;
     topNav?: (props: TopNavProps) => React.ReactNode;
     theme?: ThemeMods;
 }
 
-export interface NavBarCollapse extends NavBarBase {
-    isStickable: true;
-    isCollapsible?: boolean;
-}
-
 export interface NavigationProps {
-    navBar?: NavBarBase | NavBarCollapse;
+    navBar?: NavBarBase;
     clampWidth?: 'content' | 'full';
 }
 
@@ -27,7 +24,7 @@ const Navigation: FC<NavigationProps> = ({
     clampWidth = 'content',
 }) => {
     const isStickable = navBar?.isStickable || false;
-    const isCollapsible = (navBar as NavBarCollapse)?.isCollapsible || false;
+    const isCollapsible = navBar?.isCollapsible || false;
 
     const [isSticky, setIsSticky] = useState<boolean>(false);
     const [isAnimated, setIsAnimated] = useState<boolean>(false);
@@ -84,8 +81,9 @@ const Navigation: FC<NavigationProps> = ({
                 isAnimated={isAnimated}
                 size={navbarSize}
                 clampWidth={clampWidth}
-                reserveBarHeight={navBar?.reserveBarHeight}
+                pageFlow={navBar?.pageFlow}
                 topNav={navBar?.topNav}
+                bgGradient={navBar?.bgGradient}
             />
         </LibThemeProvider>
     );

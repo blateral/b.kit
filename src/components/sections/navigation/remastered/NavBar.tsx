@@ -117,8 +117,9 @@ const Header = styled.div<{ size?: NavBarSize }>`
     }
 `;
 
-const Main = styled.div`
-    background: ${({ theme }) => color(theme).new.elementBg.light};
+const Main = styled.div<{ isOverContent?: boolean; gradient?: string }>`
+    background: ${({ theme, isOverContent, gradient }) =>
+        isOverContent ? gradient : color(theme).new.elementBg.light};
 `;
 
 const TopNav = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
@@ -220,7 +221,8 @@ export interface NavBarProps {
     isSticky?: boolean;
     isAnimated?: boolean;
     clampWidth?: 'content' | 'full';
-    reserveBarHeight?: boolean;
+    pageFlow?: 'overContent' | 'beforeContent';
+    bgGradient?: string;
 
     topNav?: (props: TopNavProps) => React.ReactNode;
 }
@@ -235,7 +237,8 @@ const NavBar: FC<
     isSticky = false,
     isAnimated = false,
     clampWidth = false,
-    reserveBarHeight = false,
+    pageFlow = 'beforeContent',
+    bgGradient,
     topNav,
     className,
 }) => {
@@ -243,10 +246,15 @@ const NavBar: FC<
     const clampContent = clampWidth === 'content';
 
     const hasHeader = useMemo(() => hasTopNav(theme), [theme]);
+    const isOverContent = pageFlow === 'overContent';
+
+    const backgroundGradient =
+        bgGradient ||
+        'linear-gradient(180deg,rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 100%)';
 
     return (
         <React.Fragment>
-            {reserveBarHeight && <BarSpacer />}
+            {pageFlow === 'beforeContent' && <BarSpacer />}
             <View
                 isOpen={isOpen}
                 isSticky={isSticky}
@@ -266,13 +274,20 @@ const NavBar: FC<
                         </TopNav>
                     </Header>
                 )}
-                <Main>
+                <Main
+                    isOverContent={isOverContent}
+                    gradient={backgroundGradient}
+                >
                     <Content size={size} clamp={clampContent}>
-                        <LeftCol>Column Left</LeftCol>
-                        <CenterCol>
+                        <LeftCol isInverted={isOverContent}>
+                            Column Left
+                        </LeftCol>
+                        <CenterCol isInverted={isOverContent}>
                             <Logo src="https://via.placeholder.com/320x80" />
                         </CenterCol>
-                        <RightCol>Column Right</RightCol>
+                        <RightCol isInverted={isOverContent}>
+                            Column Right
+                        </RightCol>
                     </Content>
                 </Main>
             </View>
