@@ -4,7 +4,7 @@ import { Meta, Story } from '@storybook/react';
 import Navigation from 'components/sections/navigation/remastered/Navigation';
 
 export default {
-    title: 'Sections/Navigation/Remastered',
+    title: 'Sections/Navigation v2',
     component: Navigation,
     decorators: [
         (Story) => (
@@ -25,6 +25,12 @@ export default {
     parameters: {
         status: {
             type: 'preview',
+        },
+        viewMode: 'story',
+        previewTabs: {
+            'storybook/docs/panel': {
+                hidden: true,
+            },
         },
     },
 } as Meta;

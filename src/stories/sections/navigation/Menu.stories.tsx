@@ -231,7 +231,7 @@ export default {
             values: [{ name: 'inverted', value: 'white', color: 'black' }],
         },
         status: {
-            type: 'stable',
+            type: 'deprecated',
         },
     },
     decorators: [

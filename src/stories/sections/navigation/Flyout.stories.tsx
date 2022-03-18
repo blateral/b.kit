@@ -37,7 +37,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'stable',
+            type: 'deprecated',
         },
     },
 } as Meta;
