@@ -79,6 +79,7 @@ const Main = styled.div`
     background: ${({ theme }) => color(theme).new.elementBg.light};
 `;
 
+// #TODO: Top navbar animiert auftauchen und einfahren lassen
 const TopNav = styled.nav<{ size?: NavBarSize; clamp?: boolean }>`
     display: ${({ theme, size }) =>
         getTopNavHeights(theme, size)[0] === 0 ? 'none' : 'flex'};

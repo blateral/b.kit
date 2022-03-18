@@ -263,6 +263,8 @@ const TeaserWide: FC<{
                     loop
                     onCanPlayThrough={() => setLoaded(true)}
                     isVisible={isLoaded}
+                    isInverted={isInverted}
+                    isMirrored={isMirrored}
                     ratios={video?.aspectRatios}
                 />
             )}
