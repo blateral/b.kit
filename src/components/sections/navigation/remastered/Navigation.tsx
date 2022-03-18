@@ -5,14 +5,14 @@ import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 
 import NavBar, { NavBarSize, TopNavProps } from './NavBar';
 
-interface NavBarBase {
+export interface NavBarBase {
     isStickable?: boolean;
     reserveBarHeight?: boolean;
     topNav?: (props: TopNavProps) => React.ReactNode;
     theme?: ThemeMods;
 }
 
-interface NavBarCollapse extends NavBarBase {
+export interface NavBarCollapse extends NavBarBase {
     isStickable: true;
     isCollapsible?: boolean;
 }

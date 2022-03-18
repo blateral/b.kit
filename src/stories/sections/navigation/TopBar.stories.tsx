@@ -83,7 +83,7 @@ const secondaryCtaFn = ({
 );
 
 export default {
-    title: 'Sections/Navigation v2/TopBar',
+    title: 'Sections/Navigation/TopBar',
     component: TopBar,
     parameters: {
         backgrounds: {
