@@ -479,7 +479,7 @@ const defaultGlobalSettings: GlobalSettings = {
                 large: [100, 120],
             },
             bottomHeight: {
-                small: [40, 40],
+                small: [0, 40],
                 large: [30, 40],
             },
         },

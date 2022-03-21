@@ -53,12 +53,24 @@ export const CollapsibleNavbar: Story = () => (
     <Navigation navBar={{ isStickable: true, isCollapsible: true }} />
 );
 
-export const CustomTopNavContent: Story = () => (
+export const CustomTopBarContent: Story = () => (
     <Navigation
         navBar={{
             isStickable: true,
             isCollapsible: true,
-            topNav: ({ size }) => (
+            topBar: ({ size }) => (
+                <button style={{ margin: '0 auto' }}>NavBar is: {size}</button>
+            ),
+        }}
+    />
+);
+
+export const CustomBottomBarContent: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            bottomBar: ({ size }) => (
                 <button style={{ margin: '0 auto' }}>NavBar is: {size}</button>
             ),
         }}

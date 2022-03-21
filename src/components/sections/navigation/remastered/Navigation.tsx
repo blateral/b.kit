@@ -7,7 +7,12 @@ import {
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 
-import NavBar, { getFullHeight, NavBarSize, TopNavProps } from './NavBar';
+import NavBar, {
+    BottomSettings,
+    getFullHeight,
+    NavBarSize,
+    TopSettings,
+} from './NavBar';
 
 export interface NavBarSettings {
     isStickable?: boolean;
@@ -16,7 +21,8 @@ export interface NavBarSettings {
 
     /** Custom background value for NavBar with pageFlow === overContent and large size  */
     customBg?: string;
-    topNav?: (props: TopNavProps) => React.ReactNode;
+    topBar?: (props: TopSettings) => React.ReactNode;
+    bottomBar?: (props: BottomSettings) => React.ReactNode;
     theme?: ThemeMods;
 }
 
@@ -39,6 +45,7 @@ const Navigation: FC<NavigationProps> = ({
     const { isTop, scrollDirection, isInOffset, leftOffsetFromTop } =
         usePageScroll({
             directionOffset: { up: 40, down: 40 },
+            // #TODO: Offset für mobile und desktop dynamic setzen
             offset: getFullHeight(theme, 'large')[1],
             onLeftOffset: (dir) => {
                 if (isStickable) {
@@ -89,7 +96,8 @@ const Navigation: FC<NavigationProps> = ({
                 size={navbarSize}
                 clampWidth={clampWidth}
                 pageFlow={navBar?.pageFlow}
-                topNav={navBar?.topNav}
+                topBar={navBar?.topBar}
+                bottomBar={navBar?.bottomBar}
                 customBg={navBar?.customBg}
             />
         </LibThemeProvider>

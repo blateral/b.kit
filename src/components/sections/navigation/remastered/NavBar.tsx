@@ -178,6 +178,11 @@ const Footer = styled.div<{ size?: NavBarSize }>`
         getBottomHeights(theme, size)[0] <= 0 && 'hidden'};
 
     background: ${({ theme }) => color(theme).new.elementBg.light};
+    opacity: ${({ theme, size }) =>
+        getBottomHeights(theme, size)[0] > 0 ? 1 : 0};
+
+    transition: opacity 0.2s ease-in-out;
+    will-change: opacity;
 
     @media ${mq.semilarge} {
         opacity: ${({ theme, size }) =>
@@ -186,12 +191,13 @@ const Footer = styled.div<{ size?: NavBarSize }>`
             getBottomHeights(theme, size)[1] > 0 ? 'all' : 'none'};
         overflow: ${({ theme, size }) =>
             getBottomHeights(theme, size)[1] <= 0 && 'hidden'};
+
+        opacity: ${({ theme, size }) =>
+            getBottomHeights(theme, size)[1] > 0 ? 1 : 0};
     }
 `;
 
-const TopNav = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
-    display: flex;
-    align-items: center;
+const TopContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${({ size, theme }) =>
@@ -231,9 +237,7 @@ const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     }
 `;
 
-const BreadCrumps = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
-    display: flex;
-    align-items: center;
+const BottomContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
@@ -292,7 +296,13 @@ const BarSpacer = styled.div`
 
 export type NavBarSize = 'small' | 'large';
 
-export interface TopNavProps {
+export interface TopSettings {
+    size: NavBarSize;
+    isOpen?: boolean;
+    isSticky?: boolean;
+}
+
+export interface BottomSettings {
     size: NavBarSize;
     isOpen?: boolean;
     isSticky?: boolean;
@@ -309,7 +319,8 @@ export interface NavBarProps {
     /** Custom background value for NavBar with pageFlow === overContent and large size  */
     customBg?: string;
 
-    topNav?: (props: TopNavProps) => React.ReactNode;
+    topBar?: (props: TopSettings) => React.ReactNode;
+    bottomBar?: (props: BottomSettings) => React.ReactNode;
 }
 
 const NavBar: FC<
@@ -324,7 +335,8 @@ const NavBar: FC<
     clampWidth = false,
     pageFlow = 'beforeContent',
     customBg,
-    topNav,
+    topBar,
+    bottomBar,
     className,
 }) => {
     const { theme } = useLibTheme();
@@ -349,15 +361,15 @@ const NavBar: FC<
             >
                 {hasHeader && (
                     <Header size={size}>
-                        <TopNav size={size} clamp={clampContent}>
-                            {topNav ? (
-                                topNav({ size, isOpen, isSticky })
+                        <TopContent size={size} clamp={clampContent}>
+                            {topBar ? (
+                                topBar({ size, isOpen, isSticky })
                             ) : (
                                 <CenterCol size="small" isInverted>
                                     Top Nav
                                 </CenterCol>
                             )}
-                        </TopNav>
+                        </TopContent>
                     </Header>
                 )}
                 <Main
@@ -378,9 +390,11 @@ const NavBar: FC<
                 </Main>
                 {hasFooter && (
                     <Footer size={size}>
-                        <BreadCrumps size={size} clamp={clampContent}>
-                            Breadcrumps
-                        </BreadCrumps>
+                        <BottomContent size={size} clamp={clampContent}>
+                            {bottomBar
+                                ? bottomBar({ size, isOpen, isSticky })
+                                : 'bottom bar'}
+                        </BottomContent>
                     </Footer>
                 )}
             </View>
