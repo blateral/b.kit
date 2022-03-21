@@ -10,14 +10,14 @@ import Copy from 'components/typography/Copy';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
-const getTopNavHeights = (
+const getTopHeights = (
     theme: DefaultTheme,
     size?: NavBarSize
 ): [number, number] => {
     const heights =
         size === 'large'
-            ? global(theme).navigation.navBar.topNavHeight.large
-            : global(theme).navigation.navBar.topNavHeight.small;
+            ? global(theme).navigation.navBar.topHeight.large
+            : global(theme).navigation.navBar.topHeight.small;
 
     // if second value is not defined use first array index value for both
     return [
@@ -26,9 +26,9 @@ const getTopNavHeights = (
     ];
 };
 
-export const hasTopNav = (theme: DefaultTheme) => {
-    const largeHeights = getTopNavHeights(theme, 'large');
-    const smallHeights = getTopNavHeights(theme, 'small');
+const hasTopBar = (theme: DefaultTheme) => {
+    const largeHeights = getTopHeights(theme, 'large');
+    const smallHeights = getTopHeights(theme, 'small');
 
     return (
         largeHeights[0] > 0 ||
@@ -44,8 +44,8 @@ const getMainHeights = (
 ): [number, number] => {
     const heights =
         size === 'large'
-            ? global(theme).navigation.navBar.height.large
-            : global(theme).navigation.navBar.height.small;
+            ? global(theme).navigation.navBar.mainHeight.large
+            : global(theme).navigation.navBar.mainHeight.small;
 
     // if second value is not defined use first array index value for both
     return [
@@ -54,22 +54,63 @@ const getMainHeights = (
     ];
 };
 
-/**
- * Get full height of navigation bar.
- * Array values are like [mobile, desktop]
- */
-export const getFullHeight = (
+const getBottomHeights = (
     theme: DefaultTheme,
     size?: NavBarSize
 ): [number, number] => {
-    const topNavHeights = getTopNavHeights(theme, size);
-    const mainHeights = getMainHeights(theme, size);
+    const heights =
+        size === 'large'
+            ? global(theme).navigation.navBar.bottomHeight.large
+            : global(theme).navigation.navBar.bottomHeight.small;
+
+    // if second value is not defined use first array index value for both
+    return [
+        clampValue(heights[0], 0),
+        clampValue(heights?.[1] === undefined ? heights[0] : heights[1], 0),
+    ];
+};
+
+const hasBottomBar = (theme: DefaultTheme) => {
+    const largeHeights = getBottomHeights(theme, 'large');
+    const smallHeights = getBottomHeights(theme, 'small');
+
+    return (
+        largeHeights[0] > 0 ||
+        largeHeights[1] > 0 ||
+        smallHeights[0] > 0 ||
+        smallHeights[1] > 0
+    );
+};
+
+type IncludeType = 'top' | 'main' | 'bottom';
+
+/**
+ * Get full height of navigation bar
+ * @param theme Theme object
+ * @param size Navigation bar size
+ * @param exclude Exclude parts of the navbar for height calculation
+ * @returns [mobile, desktop]
+ */
+export const getFullHeight = (
+    theme: DefaultTheme,
+    size?: NavBarSize,
+    exclude?: IncludeType[]
+): [number, number] => {
+    const includeTop = exclude ? exclude.indexOf('top') === -1 : true;
+    const includeMain = exclude ? exclude.indexOf('main') === -1 : true;
+    const includeBottom = exclude ? exclude.indexOf('bottom') === -1 : true;
+
+    const topHeights = includeTop ? getTopHeights(theme, size) : [0, 0];
+    const mainHeights = includeMain ? getMainHeights(theme, size) : [0, 0];
+    const bottomHeights = includeBottom
+        ? getBottomHeights(theme, size)
+        : [0, 0];
 
     // calculate mobile navbar height
-    const mobile = topNavHeights[0] + mainHeights[0];
+    const mobile = topHeights[0] + mainHeights[0] + bottomHeights[0];
 
     // calculate desktop navbar height
-    const desktop = topNavHeights[1] + mainHeights[1];
+    const desktop = topHeights[1] + mainHeights[1] + bottomHeights[1];
 
     return [mobile, desktop];
 };
@@ -99,21 +140,21 @@ const View = styled.div<{
 
 const Header = styled.div<{ size?: NavBarSize }>`
     opacity: ${({ theme, size }) =>
-        getTopNavHeights(theme, size)[0] > 0 ? 1 : 0};
+        getTopHeights(theme, size)[0] > 0 ? 1 : 0};
     pointer-events: ${({ theme, size }) =>
-        getTopNavHeights(theme, size)[0] > 0 ? 'all' : 'none'};
+        getTopHeights(theme, size)[0] > 0 ? 'all' : 'none'};
     overflow: ${({ theme, size }) =>
-        getTopNavHeights(theme, size)[0] <= 0 && 'hidden'};
+        getTopHeights(theme, size)[0] <= 0 && 'hidden'};
 
     background: ${({ theme }) => color(theme).new.primary.default};
 
     @media ${mq.semilarge} {
         opacity: ${({ theme, size }) =>
-            getTopNavHeights(theme, size)[1] > 0 ? 1 : 0};
+            getTopHeights(theme, size)[1] > 0 ? 1 : 0};
         pointer-events: ${({ theme, size }) =>
-            getTopNavHeights(theme, size)[1] > 0 ? 'all' : 'none'};
+            getTopHeights(theme, size)[1] > 0 ? 'all' : 'none'};
         overflow: ${({ theme, size }) =>
-            getTopNavHeights(theme, size)[1] <= 0 && 'hidden'};
+            getTopHeights(theme, size)[1] <= 0 && 'hidden'};
     }
 `;
 
@@ -123,8 +164,29 @@ const Main = styled.div<{ isOverContent?: boolean; gradient?: string }>`
             ? gradient
             : color(theme).new.elementBg.light};
 
+    transform: translateZ(0);
     transition: background 0.15s ease-in-out;
     will-change: background;
+`;
+
+const Footer = styled.div<{ size?: NavBarSize }>`
+    opacity: ${({ theme, size }) =>
+        getBottomHeights(theme, size)[0] > 0 ? 1 : 0};
+    pointer-events: ${({ theme, size }) =>
+        getBottomHeights(theme, size)[0] > 0 ? 'all' : 'none'};
+    overflow: ${({ theme, size }) =>
+        getBottomHeights(theme, size)[0] <= 0 && 'hidden'};
+
+    background: ${({ theme }) => color(theme).new.elementBg.light};
+
+    @media ${mq.semilarge} {
+        opacity: ${({ theme, size }) =>
+            getBottomHeights(theme, size)[1] > 0 ? 1 : 0};
+        pointer-events: ${({ theme, size }) =>
+            getBottomHeights(theme, size)[1] > 0 ? 'all' : 'none'};
+        overflow: ${({ theme, size }) =>
+            getBottomHeights(theme, size)[1] <= 0 && 'hidden'};
+    }
 `;
 
 const TopNav = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
@@ -133,20 +195,20 @@ const TopNav = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${({ size, theme }) =>
-        getTopNavHeights(theme, size)[0] > 0 &&
+        getTopHeights(theme, size)[0] > 0 &&
         `${spacings.nudge}px ${spacings.nudge * 2}px`};
     margin: 0 auto;
 
-    height: ${({ theme, size }) => getTopNavHeights(theme, size)[0]}px;
+    height: ${({ theme, size }) => getTopHeights(theme, size)[0]}px;
 
     transition: height 0.2s ease-in-out, padding-top 0.2s ease-in-out,
         padding-bottom 0.2s ease-in-out;
     will-change: height;
 
     @media ${mq.semilarge} {
-        height: ${({ theme, size }) => getTopNavHeights(theme, size)[1]}px;
+        height: ${({ theme, size }) => getTopHeights(theme, size)[1]}px;
         padding: ${({ size, theme }) =>
-            getTopNavHeights(theme, size)[1] > 0 &&
+            getTopHeights(theme, size)[1] > 0 &&
             `${spacings.nudge}px ${spacings.nudge * 2}px`};
     }
 `;
@@ -166,6 +228,22 @@ const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     @media ${mq.semilarge} {
         height: ${({ theme, size }) =>
             getMainHeights(theme, size)[1] || getMainHeights(theme, size)[0]}px;
+    }
+`;
+
+const BreadCrumps = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
+    display: flex;
+    align-items: center;
+    max-width: ${({ clamp }) =>
+        clamp ? spacings.wrapper : spacings.wrapperLarge}px;
+    padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
+    margin: 0 auto;
+
+    height: ${({ theme, size }) => getBottomHeights(theme, size)[0]}px;
+
+    @media ${mq.semilarge} {
+        height: ${({ theme, size }) => getBottomHeights(theme, size)[1]}px;
+        padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
     }
 `;
 
@@ -252,7 +330,8 @@ const NavBar: FC<
     const { theme } = useLibTheme();
     const clampContent = clampWidth === 'content';
 
-    const hasHeader = useMemo(() => hasTopNav(theme), [theme]);
+    const hasHeader = useMemo(() => hasTopBar(theme), [theme]);
+    const hasFooter = useMemo(() => hasBottomBar(theme), [theme]);
     const isOverContent = pageFlow === 'overContent';
 
     const backgroundGradient =
@@ -297,6 +376,13 @@ const NavBar: FC<
                         </RightCol>
                     </Content>
                 </Main>
+                {hasFooter && (
+                    <Footer size={size}>
+                        <BreadCrumps size={size} clamp={clampContent}>
+                            Breadcrumps
+                        </BreadCrumps>
+                    </Footer>
+                )}
             </View>
         </React.Fragment>
     );

@@ -1,9 +1,13 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { LibThemeProvider, ThemeMods } from 'utils/LibThemeProvider';
+import {
+    LibThemeProvider,
+    ThemeMods,
+    useLibTheme,
+} from 'utils/LibThemeProvider';
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 
-import NavBar, { NavBarSize, TopNavProps } from './NavBar';
+import NavBar, { getFullHeight, NavBarSize, TopNavProps } from './NavBar';
 
 export interface NavBarSettings {
     isStickable?: boolean;
@@ -28,13 +32,14 @@ const Navigation: FC<NavigationProps> = ({
     const isStickable = navBar?.isStickable || false;
     const isCollapsible = navBar?.isCollapsible || false;
 
+    const { theme } = useLibTheme();
     const [isSticky, setIsSticky] = useState<boolean>(false);
     const [isAnimated, setIsAnimated] = useState<boolean>(false);
     const [isNavBarOpen, setNavBarOpen] = useState<boolean>(true);
     const { isTop, scrollDirection, isInOffset, leftOffsetFromTop } =
         usePageScroll({
             directionOffset: { up: 40, down: 40 },
-            offset: 160,
+            offset: getFullHeight(theme, 'large')[1],
             onLeftOffset: (dir) => {
                 if (isStickable) {
                     setIsSticky(dir === PageScrollDirection.DOWN);

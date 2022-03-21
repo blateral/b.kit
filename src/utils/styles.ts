@@ -407,19 +407,27 @@ export interface GlobalSettings {
         /** Settings of top navigation bar */
         navBar: {
             /**
-             * Heights of top navigation bar.
+             * Heights of top bar.
              * Array values are like: [mobile, desktop]
              * Top navbar is hidden if value equal 0
              */
-            topNavHeight: {
+            topHeight: {
                 small: [number, number?];
                 large: [number, number?];
             };
             /**
-             * Heights of top navigation bar.
+             * Heights of main bar.
              * Array values are like: [mobile, desktop]
              */
-            height: {
+            mainHeight: {
+                small: [number, number?];
+                large: [number, number?];
+            };
+            /**
+             * Heights of bottom bar.
+             * Array values are like: [mobile, desktop]
+             */
+            bottomHeight: {
                 small: [number, number?];
                 large: [number, number?];
             };
@@ -462,13 +470,17 @@ const defaultGlobalSettings: GlobalSettings = {
     },
     navigation: {
         navBar: {
-            topNavHeight: {
+            topHeight: {
                 small: [0, 40],
                 large: [30, 40],
             },
-            height: {
+            mainHeight: {
                 small: [80, 90],
                 large: [100, 120],
+            },
+            bottomHeight: {
+                small: [40, 40],
+                large: [30, 40],
             },
         },
     },
