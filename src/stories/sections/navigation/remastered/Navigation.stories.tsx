@@ -81,7 +81,7 @@ export const WithCustomBgGradient: Story = () => (
             isStickable: true,
             isCollapsible: true,
             pageFlow: 'overContent',
-            bgGradient:
+            customBg:
                 'linear-gradient(180deg,rgba(255,0,0,0.3) 0%, rgba(255,0,0,0.2) 40%, rgba(255,0,0,0) 100%)',
         }}
     />

@@ -5,17 +5,19 @@ import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 
 import NavBar, { NavBarSize, TopNavProps } from './NavBar';
 
-export interface NavBarBase {
+export interface NavBarSettings {
     isStickable?: boolean;
     isCollapsible?: boolean;
     pageFlow?: 'overContent' | 'beforeContent';
-    bgGradient?: string;
+
+    /** Custom background value for NavBar with pageFlow === overContent and large size  */
+    customBg?: string;
     topNav?: (props: TopNavProps) => React.ReactNode;
     theme?: ThemeMods;
 }
 
 export interface NavigationProps {
-    navBar?: NavBarBase;
+    navBar?: NavBarSettings;
     clampWidth?: 'content' | 'full';
 }
 
@@ -83,7 +85,7 @@ const Navigation: FC<NavigationProps> = ({
                 clampWidth={clampWidth}
                 pageFlow={navBar?.pageFlow}
                 topNav={navBar?.topNav}
-                bgGradient={navBar?.bgGradient}
+                customBg={navBar?.customBg}
             />
         </LibThemeProvider>
     );

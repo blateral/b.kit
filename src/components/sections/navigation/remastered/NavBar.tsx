@@ -119,7 +119,12 @@ const Header = styled.div<{ size?: NavBarSize }>`
 
 const Main = styled.div<{ isOverContent?: boolean; gradient?: string }>`
     background: ${({ theme, isOverContent, gradient }) =>
-        isOverContent ? gradient : color(theme).new.elementBg.light};
+        isOverContent && gradient
+            ? gradient
+            : color(theme).new.elementBg.light};
+
+    transition: background 0.15s ease-in-out;
+    will-change: background;
 `;
 
 const TopNav = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
@@ -222,7 +227,9 @@ export interface NavBarProps {
     isAnimated?: boolean;
     clampWidth?: 'content' | 'full';
     pageFlow?: 'overContent' | 'beforeContent';
-    bgGradient?: string;
+
+    /** Custom background value for NavBar with pageFlow === overContent and large size  */
+    customBg?: string;
 
     topNav?: (props: TopNavProps) => React.ReactNode;
 }
@@ -238,7 +245,7 @@ const NavBar: FC<
     isAnimated = false,
     clampWidth = false,
     pageFlow = 'beforeContent',
-    bgGradient,
+    customBg,
     topNav,
     className,
 }) => {
@@ -249,7 +256,7 @@ const NavBar: FC<
     const isOverContent = pageFlow === 'overContent';
 
     const backgroundGradient =
-        bgGradient ||
+        customBg ||
         'linear-gradient(180deg,rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 100%)';
 
     return (
@@ -276,7 +283,7 @@ const NavBar: FC<
                 )}
                 <Main
                     isOverContent={isOverContent}
-                    gradient={backgroundGradient}
+                    gradient={size === 'large' ? backgroundGradient : undefined}
                 >
                     <Content size={size} clamp={clampContent}>
                         <LeftCol isInverted={isOverContent}>
