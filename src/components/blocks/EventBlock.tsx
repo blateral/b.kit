@@ -5,9 +5,13 @@ import Copy from 'components/typography/Copy';
 import { format } from 'date-fns';
 import de from 'date-fns/locale/de';
 import styled, { ThemeContext } from 'styled-components';
-import { getColors, spacings } from 'utils/styles';
+import { getColors, mq, spacings } from 'utils/styles';
+import AngleRight from 'components/base/icons/AngleRight';
 
-const View = styled.div``;
+const View = styled.a`
+    text-decoration: none;
+    color: inherit;
+`;
 
 const TagContainer = styled.div`
     margin-top: -${spacings.nudge}px;
@@ -33,26 +37,62 @@ const TagWrapper = styled.div`
     padding-left: ${spacings.nudge}px;
 `;
 
+const Title = styled(Heading)<{ isClickable?: boolean }>`
+    display: inline-block;
+
+    pointer-events: ${({ isClickable }) => (isClickable ? 'all' : 'none')};
+    cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
+
+    transtion: all 0.2s ease-in-out;
+
+    ${View}:hover & {
+        color: ${({ theme }) => getColors(theme).new.primary.hover};
+    }
+`;
+
+const TitleIcon = styled.span`
+    display: inline-block;
+    margin-left: ${spacings.nudge * 2}px;
+
+    @media ${mq.medium} {
+        margin-left: ${spacings.nudge * 3}px;
+    }
+`;
+
+const DefaultIcon = styled(AngleRight)``;
+
 const Text = styled(Copy)`
     margin-top: ${spacings.spacer}px;
 `;
 
-const EventBlock: React.FC<{
+export interface EventProps {
     customTag?: (props: {
         name: string;
         isInverted?: boolean;
-        isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
     tags?: string[];
     activeTags?: string[];
     title?: string;
     date?: Date;
     text?: string;
-}> = ({ customTag, title, date, text, tags }) => {
+    isInverted?: boolean;
+    link?: string;
+    customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+}
+
+const EventBlock: React.FC<EventProps> = ({
+    customTag,
+    title,
+    date,
+    text,
+    tags,
+    isInverted,
+    link,
+    customTitleIcon,
+}) => {
     const theme = React.useContext(ThemeContext);
     return (
-        <View>
+        <View href={link}>
             {tags && (
                 <TagContainer>
                     {tags.map((tag, i) => (
@@ -62,7 +102,7 @@ const EventBlock: React.FC<{
                                     name: tag,
                                 })
                             ) : (
-                                <Tag>{tag}</Tag>
+                                <Tag isInverted={isInverted}>{tag}</Tag>
                             )}
                         </TagWrapper>
                     ))}
@@ -70,19 +110,33 @@ const EventBlock: React.FC<{
             )}
             <Content>
                 {date && (
-                    <Copy size="medium" type="copy">
+                    <Copy isInverted={isInverted} size="medium" type="copy">
                         {format(date, 'EE dd.MM.yyyy', { locale: de })}
                     </Copy>
                 )}
-                <Heading
-                    textColor={getColors(theme).new.primary.default}
-                    size="heading-4"
-                >
-                    {title}
-                </Heading>
+                {title && (
+                    <Title
+                        isInverted={isInverted}
+                        textColor={getColors(theme).new.primary.default}
+                        size="heading-4"
+                        isClickable={!!link}
+                    >
+                        {title}
+                        {title && (
+                            <TitleIcon>
+                                {customTitleIcon ? (
+                                    customTitleIcon({ isInverted })
+                                ) : (
+                                    <DefaultIcon />
+                                )}
+                            </TitleIcon>
+                        )}
+                    </Title>
+                )}
             </Content>
             {text && (
                 <Text
+                    isInverted={isInverted}
                     textColor={getColors(theme).new.elementBg.medium}
                     innerHTML={text}
                 />
