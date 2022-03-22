@@ -4,6 +4,7 @@ import {
     ThemeMods,
     useLibTheme,
 } from 'utils/LibThemeProvider';
+import { useMediaQueries } from 'utils/useMediaQuery';
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 
@@ -38,6 +39,8 @@ const Navigation: FC<NavigationProps> = ({
     const isStickable = navBar?.isStickable || false;
     const isCollapsible = navBar?.isCollapsible || false;
 
+    const mediaQueries = useMediaQueries();
+
     const { theme } = useLibTheme();
     const [isSticky, setIsSticky] = useState<boolean>(false);
     const [isAnimated, setIsAnimated] = useState<boolean>(false);
@@ -45,8 +48,9 @@ const Navigation: FC<NavigationProps> = ({
     const { isTop, scrollDirection, isInOffset, leftOffsetFromTop } =
         usePageScroll({
             directionOffset: { up: 40, down: 40 },
-            // #TODO: Offset für mobile und desktop dynamic setzen
-            offset: getFullHeight(theme, 'large')[1],
+            offset: getFullHeight(theme, 'large')[
+                mediaQueries.semilarge ? 1 : 0
+            ],
             onLeftOffset: (dir) => {
                 if (isStickable) {
                     setIsSticky(dir === PageScrollDirection.DOWN);
