@@ -4,7 +4,7 @@ import Copy from 'components/typography/Copy';
 import React from 'react';
 import styled from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
-import { getColors, spacings } from 'utils/styles';
+import { getColors, spacings, withRange } from 'utils/styles';
 
 const List = styled.ul`
     margin: 0;
@@ -13,7 +13,8 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-    padding: ${spacings.nudge}px 0;
+    ${withRange([spacings.nudge, spacings.nudge * 2], 'padding-top')};
+    ${withRange([spacings.nudge, spacings.nudge * 2], 'padding-bottom')};
 
     border-top: 1px solid
         ${({ theme }) => getColors(theme).new.elementBg.medium};
