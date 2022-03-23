@@ -127,9 +127,7 @@ const TitleIcon = styled.span`
     @media ${mq.medium} {
         margin-left: ${spacings.nudge * 3}px;
     }
-`;
 
-const DefaultIcon = styled(AngleRight)`
     && {
         margin-bottom: 4px;
     }
@@ -223,7 +221,7 @@ const PromotionCard = forwardRef<
                                     {customTitleIcon ? (
                                         customTitleIcon({ isInverted })
                                     ) : (
-                                        <DefaultIcon />
+                                        <AngleRight />
                                     )}
                                 </TitleIcon>
                             )}
