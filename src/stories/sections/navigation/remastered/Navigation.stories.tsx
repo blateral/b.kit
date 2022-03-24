@@ -98,3 +98,23 @@ export const WithCustomBgGradient: Story = () => (
         }}
     />
 );
+
+export const WithMenu: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            pageFlow: 'overContent',
+            mainBar: ({ openMenu }) => (
+                <button onClick={openMenu}>Open Menu</button>
+            ),
+        }}
+        menu={{
+            navItems: [],
+            variation: {
+                type: 'flyout',
+                orientation: 'left',
+            },
+        }}
+    />
+);

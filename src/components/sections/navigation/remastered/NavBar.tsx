@@ -169,7 +169,7 @@ const Main = styled.div<{ isOverContent?: boolean; gradient?: string }>`
     will-change: background;
 `;
 
-const Footer = styled.div<{ size?: NavBarSize }>`
+const Footer = styled.div<{ size?: NavBarSize; isOverContent?: boolean }>`
     opacity: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] > 0 ? 1 : 0};
     pointer-events: ${({ theme, size }) =>
@@ -177,7 +177,10 @@ const Footer = styled.div<{ size?: NavBarSize }>`
     overflow: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] <= 0 && 'hidden'};
 
-    background: ${({ theme }) => color(theme).new.elementBg.light};
+    background: ${({ theme, isOverContent, size }) =>
+        isOverContent && size === 'large'
+            ? 'transparent'
+            : color(theme).new.elementBg.light};
     opacity: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] > 0 ? 1 : 0};
 
@@ -198,6 +201,7 @@ const Footer = styled.div<{ size?: NavBarSize }>`
 `;
 
 const TopContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
+    position: relative;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${({ size, theme }) =>
@@ -221,6 +225,7 @@ const TopContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
 
 const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
+    position: relative;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${spacings.nudge * 2}px;
@@ -238,6 +243,7 @@ const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
 `;
 
 const BottomContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
+    position: relative;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
@@ -300,13 +306,24 @@ export interface TopSettings {
     size: NavBarSize;
     isOpen?: boolean;
     isSticky?: boolean;
+    pageFlow?: PageFlow;
+}
+
+export interface MainSettings {
+    size: NavBarSize;
+    isOpen?: boolean;
+    isSticky?: boolean;
+    pageFlow?: PageFlow;
 }
 
 export interface BottomSettings {
     size: NavBarSize;
     isOpen?: boolean;
     isSticky?: boolean;
+    pageFlow?: PageFlow;
 }
+
+export type PageFlow = 'overContent' | 'beforeContent';
 
 export interface NavBarProps {
     size?: NavBarSize;
@@ -314,12 +331,13 @@ export interface NavBarProps {
     isSticky?: boolean;
     isAnimated?: boolean;
     clampWidth?: 'content' | 'full';
-    pageFlow?: 'overContent' | 'beforeContent';
+    pageFlow?: PageFlow;
 
     /** Custom background value for NavBar with pageFlow === overContent and large size  */
     customBg?: string;
 
     topBar?: (props: TopSettings) => React.ReactNode;
+    mainBar?: (props: MainSettings) => React.ReactNode;
     bottomBar?: (props: BottomSettings) => React.ReactNode;
 }
 
@@ -336,6 +354,7 @@ const NavBar: FC<
     pageFlow = 'beforeContent',
     customBg,
     topBar,
+    mainBar,
     bottomBar,
     className,
 }) => {
@@ -363,7 +382,7 @@ const NavBar: FC<
                     <Header size={size}>
                         <TopContent size={size} clamp={clampContent}>
                             {topBar ? (
-                                topBar({ size, isOpen, isSticky })
+                                topBar({ size, isOpen, isSticky, pageFlow })
                             ) : (
                                 <CenterCol size="small" isInverted>
                                     Top Nav
@@ -377,22 +396,33 @@ const NavBar: FC<
                     gradient={size === 'large' ? backgroundGradient : undefined}
                 >
                     <Content size={size} clamp={clampContent}>
-                        <LeftCol isInverted={isOverContent}>
-                            Column Left
-                        </LeftCol>
-                        <CenterCol isInverted={isOverContent}>
-                            <Logo src="https://via.placeholder.com/320x80" />
-                        </CenterCol>
-                        <RightCol isInverted={isOverContent}>
-                            Column Right
-                        </RightCol>
+                        {mainBar ? (
+                            mainBar({ size, isOpen, isSticky, pageFlow })
+                        ) : (
+                            <React.Fragment>
+                                <LeftCol isInverted={isOverContent}>
+                                    Column Left
+                                </LeftCol>
+                                <CenterCol isInverted={isOverContent}>
+                                    <Logo src="https://via.placeholder.com/320x80" />
+                                </CenterCol>
+                                <RightCol isInverted={isOverContent}>
+                                    Column Right
+                                </RightCol>
+                            </React.Fragment>
+                        )}
                     </Content>
                 </Main>
                 {hasFooter && (
-                    <Footer size={size}>
+                    <Footer size={size} isOverContent={isOverContent}>
                         <BottomContent size={size} clamp={clampContent}>
                             {bottomBar
-                                ? bottomBar({ size, isOpen, isSticky })
+                                ? bottomBar({
+                                      size,
+                                      isOpen,
+                                      isSticky,
+                                      pageFlow,
+                                  })
                                 : 'bottom bar'}
                         </BottomContent>
                     </Footer>

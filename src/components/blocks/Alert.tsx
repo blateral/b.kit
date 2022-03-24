@@ -1,5 +1,6 @@
+import AngleRight from 'components/base/icons/AngleRight';
 import Copy from 'components/typography/Copy';
-import { LinkProps } from 'components/typography/Link';
+import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled from 'styled-components';
 import {
@@ -10,7 +11,6 @@ import {
 } from 'utils/styles';
 import StatusFormatter from '../../utils/statusFormatter';
 import ExclamationMark from '../base/icons/ExclamationMark';
-import InlineLink from './InlineLink';
 
 const View = styled.div<{ isInverted?: boolean }>`
     position: relative;
@@ -69,11 +69,44 @@ const View = styled.div<{ isInverted?: boolean }>`
     }
 `;
 
+const ViewLink = styled(Link)<{ isInverted?: boolean }>`
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    outline-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
+`;
+
 const Icon = styled.div``;
 
 const Content = styled.div`
     & > * + * {
         margin-top: ${spacings.nudge / 2}px;
+    }
+`;
+
+const Title = styled(Copy)`
+    display: inline-block;
+`;
+
+const TitleIcon = styled.span`
+    display: inline-block;
+    margin-left: ${spacings.nudge * 2}px;
+
+    @media ${mq.medium} {
+        margin-left: ${spacings.nudge * 3}px;
+    }
+`;
+
+const DefaultIcon = styled(AngleRight)`
+    && {
+        margin-bottom: -2px;
     }
 `;
 
@@ -98,11 +131,9 @@ export interface AlertProps {
 
     /** Function to inject custom title icon */
     customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-
-    className?: string;
 }
 
-const Alert: React.FC<AlertProps> = ({
+const Alert: React.FC<AlertProps & { className?: string }> = ({
     isInverted,
     title,
     date,
@@ -130,12 +161,20 @@ const Alert: React.FC<AlertProps> = ({
                 {customIcon ? customIcon({ isInverted }) : <ExclamationMark />}
             </Icon>
             <Content>
-                <InlineLink
-                    link={link}
-                    isInverted={isInverted}
-                    title={title}
-                    customTitleIcon={customTitleIcon}
-                />
+                {title && (
+                    <Title textColor="inherit" size="medium" type="copy-b">
+                        {title}
+                        {title && (
+                            <TitleIcon>
+                                {customTitleIcon ? (
+                                    customTitleIcon({ isInverted })
+                                ) : (
+                                    <DefaultIcon />
+                                )}
+                            </TitleIcon>
+                        )}
+                    </Title>
+                )}
                 {description && (
                     <Copy
                         isInverted={isInverted}
@@ -149,6 +188,11 @@ const Alert: React.FC<AlertProps> = ({
                     </Copy>
                 )}
             </Content>
+            <ViewLink
+                {...link}
+                isInverted={isInverted}
+                ariaLabel={link?.href ? title : undefined}
+            />
         </View>
     );
 };
