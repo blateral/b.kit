@@ -1,13 +1,13 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import IndexList from 'components/sections/IndexList';
+import IndexList, { IndexListComponent } from 'components/sections/IndexList';
 
 export default {
     title: 'Sections / IndexList',
-    component: IndexList,
+    component: IndexListComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['preview'],
         },
     },
 } as Meta;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { copyStyle } from 'components/typography/Copy';
-import { useLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from 'utils/styles';
 import Link, { LinkProps } from 'components/typography/Link';
 
@@ -12,6 +12,8 @@ const List = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
+
+    max-width: 880px;
 `;
 
 const ListItem = styled.li`
@@ -98,4 +100,5 @@ const IndexList: React.FC<{
     );
 };
 
-export default IndexList;
+export const IndexListComponent = IndexList;
+export default withLibTheme(IndexList);
