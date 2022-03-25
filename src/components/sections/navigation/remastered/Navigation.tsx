@@ -7,13 +7,21 @@ import {
 import { useMediaQueries } from 'utils/useMediaQuery';
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
+import Menu, { MenuVariationProps, NavItem } from './menu/Menu';
 
 import NavBar, {
     BottomSettings,
     getFullHeight,
+    MainSettings,
     NavBarSize,
     TopSettings,
 } from './NavBar';
+
+export interface NavBarMainSettings extends MainSettings {
+    isMenuOpen?: boolean;
+    openMenu?: () => void;
+    closeMenu?: () => void;
+}
 
 export interface NavBarSettings {
     isStickable?: boolean;
@@ -23,18 +31,28 @@ export interface NavBarSettings {
     /** Custom background value for NavBar with pageFlow === overContent and large size  */
     customBg?: string;
     topBar?: (props: TopSettings) => React.ReactNode;
+    mainBar?: (props: NavBarMainSettings) => React.ReactNode;
     bottomBar?: (props: BottomSettings) => React.ReactNode;
+    theme?: ThemeMods;
+}
+
+export interface MenuSettings {
+    navItems?: Array<NavItem>;
+    variation: MenuVariationProps;
+
     theme?: ThemeMods;
 }
 
 export interface NavigationProps {
     navBar?: NavBarSettings;
+    menu?: MenuSettings;
     clampWidth?: 'content' | 'full';
 }
 
 const Navigation: FC<NavigationProps> = ({
-    navBar,
     clampWidth = 'content',
+    navBar,
+    menu,
 }) => {
     const isStickable = navBar?.isStickable || false;
     const isCollapsible = navBar?.isCollapsible || false;
@@ -42,8 +60,10 @@ const Navigation: FC<NavigationProps> = ({
     const mediaQueries = useMediaQueries();
 
     const { theme } = useLibTheme();
-    const [isSticky, setIsSticky] = useState<boolean>(false);
-    const [isAnimated, setIsAnimated] = useState<boolean>(false);
+
+    /** Navigation bar states */
+    const [isNavBarSticky, setIsNavBarSticky] = useState<boolean>(false);
+    const [isNavBarAnimated, setIsNavBarAnimated] = useState<boolean>(false);
     const [isNavBarOpen, setNavBarOpen] = useState<boolean>(true);
     const { isTop, scrollDirection, isInOffset, leftOffsetFromTop } =
         usePageScroll({
@@ -53,7 +73,7 @@ const Navigation: FC<NavigationProps> = ({
             ],
             onLeftOffset: (dir) => {
                 if (isStickable) {
-                    setIsSticky(dir === PageScrollDirection.DOWN);
+                    setIsNavBarSticky(dir === PageScrollDirection.DOWN);
                 }
             },
         });
@@ -73,38 +93,65 @@ const Navigation: FC<NavigationProps> = ({
     }, [scrollDirection, isTop, isStickable, isInOffset, isCollapsible]);
 
     useEffect(() => {
-        if (isTop) setIsAnimated(false);
+        if (isTop) setIsNavBarAnimated(false);
         else if (
             leftOffsetFromTop &&
             scrollDirection === PageScrollDirection.UP
         ) {
-            setIsAnimated(true);
+            setIsNavBarAnimated(true);
         }
     }, [isTop, leftOffsetFromTop, scrollDirection]);
 
     useEffect(() => {
         if (!isStickable) return;
         if (leftOffsetFromTop || !isCollapsible) {
-            setIsSticky(true);
+            setIsNavBarSticky(true);
         } else if (isTop) {
-            setIsSticky(false);
+            setIsNavBarSticky(false);
         }
     }, [isCollapsible, isStickable, isTop, leftOffsetFromTop]);
 
+    /** Menu states */
+    // #TODO: Main bar definieren mit callback handler zum Menü öffnen
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+    const openMenu = () => {
+        setIsMenuOpen(true);
+    };
+
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+    };
+
     return (
-        <LibThemeProvider theme={navBar?.theme}>
-            <NavBar
-                isOpen={isNavBarOpen}
-                isSticky={isSticky}
-                isAnimated={isAnimated}
-                size={navbarSize}
-                clampWidth={clampWidth}
-                pageFlow={navBar?.pageFlow}
-                topBar={navBar?.topBar}
-                bottomBar={navBar?.bottomBar}
-                customBg={navBar?.customBg}
-            />
-        </LibThemeProvider>
+        <React.Fragment>
+            <LibThemeProvider theme={navBar?.theme}>
+                <NavBar
+                    isOpen={isNavBarOpen}
+                    isSticky={isNavBarSticky}
+                    isAnimated={isNavBarAnimated}
+                    size={navbarSize}
+                    clampWidth={clampWidth}
+                    pageFlow={navBar?.pageFlow}
+                    topBar={navBar?.topBar}
+                    mainBar={(props) =>
+                        navBar?.mainBar
+                            ? navBar.mainBar({
+                                  ...props,
+                                  isMenuOpen,
+                                  openMenu,
+                                  closeMenu,
+                              })
+                            : undefined
+                    }
+                    bottomBar={navBar?.bottomBar}
+                    customBg={navBar?.customBg}
+                />
+            </LibThemeProvider>
+            <LibThemeProvider theme={menu?.theme}>
+                <Menu isOpen={isMenuOpen} navItems={menu?.navItems} />
+            </LibThemeProvider>
+        </React.Fragment>
     );
 };
 
