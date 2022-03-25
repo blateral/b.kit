@@ -2,19 +2,12 @@ import React, { forwardRef } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import styled, { css } from 'styled-components';
 
-import {
-    spacings,
-    getGlobals as global,
-    mq,
-    withRange,
-    getColors,
-} from 'utils/styles';
+import { spacings, getGlobals as global, mq } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Link, { LinkProps } from 'components/typography/Link';
 import Title from 'components/blocks/Title';
 import External from 'components/base/icons/External';
 import { HeadlineTag } from 'components/typography/Heading';
-import AngleRight from 'components/base/icons/AngleRight';
 
 const View = styled(Link)<{
     clickable?: boolean;
@@ -89,7 +82,6 @@ const IntroContainer = styled.div`
 `;
 
 const StyledTitle = styled(Title)<{ clampTitle?: boolean }>`
-    display: inline-block;
     max-width: ${({ clampTitle }) =>
         clampTitle && (13 / 28) * spacings.wrapper + 'px'};
 `;
@@ -99,37 +91,6 @@ const ExternalIconHolder = styled.span`
 
     & > * {
         display: inline-block;
-    }
-`;
-
-const Icon = styled.div`
-    ${withRange([60, 150], 'height')};
-    ${withRange([60, 150], 'width')};
-
-    position: absolute;
-    top: ${spacings.nudge * 3}px;
-    left: ${spacings.nudge * 3}px;
-
-    & > * {
-        ${withRange([60, 150], 'height')};
-        ${withRange([60, 150], 'width')};
-    }
-
-    color: ${({ theme }) => getColors(theme).new.text.inverted};
-`;
-
-const TitleIcon = styled.span`
-    display: inline-block;
-    margin-left: ${spacings.nudge * 2}px;
-
-    color: ${({ theme }) => getColors(theme).new.text.inverted};
-
-    @media ${mq.medium} {
-        margin-left: ${spacings.nudge * 3}px;
-    }
-
-    && {
-        margin-bottom: 4px;
     }
 `;
 
@@ -152,8 +113,6 @@ export interface PromotionCardProps {
     link?: LinkProps;
     /** Inject custom icon that indicates an external link */
     externalLinkIcon?: React.ReactNode;
-    icon?: (props: { isInverted?: boolean }) => React.ReactNode;
-    customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
 }
 
 const PromotionCard = forwardRef<
@@ -172,8 +131,6 @@ const PromotionCard = forwardRef<
             link,
             externalLinkIcon,
             className,
-            icon,
-            customTitleIcon,
         },
         ref
     ) => {
@@ -200,32 +157,20 @@ const PromotionCard = forwardRef<
                 className={className}
             >
                 <StyledImage {...image} isInverted={isInverted} coverSpace />
-                {icon && <Icon>{icon({ isInverted })}</Icon>}
                 {title && (
                     <IntroContainer>
-                        <span>
-                            <StyledTitle
-                                colorMode="onImage"
-                                superTitle={superTitle}
-                                superTitleAs={superTitleAs}
-                                title={
-                                    linkObj?.isExternal
-                                        ? title + externalIconString
-                                        : title
-                                }
-                                titleAs={titleAs || 'div'}
-                                clampTitle
-                            />
-                            {title && (
-                                <TitleIcon>
-                                    {customTitleIcon ? (
-                                        customTitleIcon({ isInverted })
-                                    ) : (
-                                        <AngleRight />
-                                    )}
-                                </TitleIcon>
-                            )}
-                        </span>
+                        <StyledTitle
+                            colorMode="onImage"
+                            superTitle={superTitle}
+                            superTitleAs={superTitleAs}
+                            title={
+                                linkObj?.isExternal
+                                    ? title + externalIconString
+                                    : title
+                            }
+                            titleAs={titleAs || 'div'}
+                            clampTitle
+                        />
                     </IntroContainer>
                 )}
             </View>
