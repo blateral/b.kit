@@ -35,7 +35,7 @@ const FactGrid: FC<{
 
     const isInverted = bgMode === 'inverted';
 
-    const { sheetRefs: cardRefs } = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
         listLength: factCount,
         identifiers: ['[data-sheet="title"]', '[data-sheet="subtitle"]'],
         responsive: {

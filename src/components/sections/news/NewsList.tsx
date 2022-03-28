@@ -79,7 +79,7 @@ const NewsList: React.FC<{
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    const { sheetRefs: cardRefs } = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
         listLength: items.length,
         identifiers: [
             '[data-sheet="head"]',

@@ -49,7 +49,7 @@ const FeatureCarousel: FC<
     const theme = React.useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
-    const { sheetRefs: cardRefs } = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
         listLength: featureCount,
         identifiers: [
             '[data-sheet="title"]',

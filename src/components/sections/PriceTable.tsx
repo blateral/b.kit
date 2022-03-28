@@ -50,7 +50,7 @@ const PriceTable: React.FC<{
 
     const { colors } = useLibTheme();
 
-    const { sheetRefs: cardRefs } = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
         listLength: priceTagCount,
         identifiers: [
             '[data-sheet="superTitle"]',

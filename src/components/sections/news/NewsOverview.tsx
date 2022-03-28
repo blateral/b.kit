@@ -144,21 +144,22 @@ const NewsOverview: React.FC<{
     const newsCount = news?.length || 0;
 
     const setNewPos = useScrollTo(800);
-    const { sheetRefs: cardRefs, triggerCalculation } = useEqualSheetHeight({
-        listLength: Math.min(visibleRows * itemsPerRow, newsCount),
-        identifiers: [
-            '[data-sheet="head"]',
-            '[data-sheet="title"]',
-            '[data-sheet="text"]',
-        ],
-        responsive: {
-            small: 1,
-            medium: 1,
-            semilarge: 2,
-            large: 3,
-            xlarge: 3,
-        },
-    });
+    const { sheetRefs: cardRefs, triggerCalculation } =
+        useEqualSheetHeight<HTMLDivElement>({
+            listLength: Math.min(visibleRows * itemsPerRow, newsCount),
+            identifiers: [
+                '[data-sheet="head"]',
+                '[data-sheet="title"]',
+                '[data-sheet="text"]',
+            ],
+            responsive: {
+                small: 1,
+                medium: 1,
+                semilarge: 2,
+                large: 3,
+                xlarge: 3,
+            },
+        });
 
     useEffect(() => {
         switch (currentMq) {
