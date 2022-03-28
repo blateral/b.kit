@@ -7,6 +7,8 @@ import { copyStyle } from 'components/typography/Copy';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from 'utils/styles';
 import Link, { LinkProps } from 'components/typography/Link';
+import ArrowDown from 'components/base/icons/ArrowDown';
+import { useScrollIntoView } from 'utils/useScrollIntoView';
 
 const List = styled.ul<{ hasBg?: boolean; isInverted?: boolean }>`
     margin: 0;
@@ -43,11 +45,26 @@ const List = styled.ul<{ hasBg?: boolean; isInverted?: boolean }>`
 const ListItem = styled.li``;
 
 const IndexLink = styled(Link)<{ isInverted?: boolean }>`
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
     text-decoration: underline;
     padding: ${spacings.nudge}px 0;
 
     ${copyStyle('copy', 'big')}
+`;
+
+const LinkLabel = styled.span`
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+const IconWrapper = styled.span`
+    display: inline-block;
+
+    margin-left: ${spacings.nudge * 2}px;
 `;
 
 export interface IndexItem {
@@ -61,11 +78,26 @@ const IndexList: React.FC<{
 
     /** Section background */
     bgMode?: 'inverted' | 'full';
-}> = ({ items, bgMode }) => {
+
+    /** Function to inject custom icon decorator */
+    customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+}> = ({ items, bgMode, customIcon }) => {
     const { colors } = useLibTheme();
+    const { setActiveElement } = useScrollIntoView(500);
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
+    const handleLinkClick = (ev: React.SyntheticEvent<HTMLAnchorElement>) => {
+        if (!ev?.currentTarget) return;
+
+        ev.preventDefault();
+        const href = ev.currentTarget.getAttribute('href') as string;
+
+        if (!href) return;
+        const target = document.querySelector(href);
+        if (target) setActiveElement(target as HTMLElement);
+    };
 
     return (
         <Section
@@ -83,8 +115,19 @@ const IndexList: React.FC<{
                 <List hasBg={hasBg} isInverted={isInverted}>
                     {items?.map((item, i) => (
                         <ListItem key={i}>
-                            <IndexLink {...item.link} isInverted={isInverted}>
-                                {item.label}
+                            <IndexLink
+                                {...item.link}
+                                isInverted={isInverted}
+                                onClick={handleLinkClick}
+                            >
+                                <LinkLabel>{item.label}</LinkLabel>
+                                <IconWrapper>
+                                    {customIcon ? (
+                                        customIcon({ isInverted })
+                                    ) : (
+                                        <ArrowDown />
+                                    )}
+                                </IconWrapper>
                             </IndexLink>
                         </ListItem>
                     ))}

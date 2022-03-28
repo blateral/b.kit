@@ -6,6 +6,7 @@ import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
 import AngleRight from 'components/base/icons/AngleRight';
+import ArrowDown from 'components/base/icons/ArrowDown';
 import Cross from 'components/base/icons/Cross';
 import CrossSmall from 'components/base/icons/CrossSmall';
 import Magnifier from 'components/base/icons/Magnifier';
@@ -34,6 +35,7 @@ export default {
         ArrowLeftGhost,
         ArrowLeftRight,
         AngleRight,
+        ArrowDown,
         Cross,
         CrossSmall,
         Magnifier,
@@ -81,6 +83,9 @@ IconArrowLeftRight.storyName = 'Arrow left right';
 
 export const IconAngleRight: Story = () => <AngleRight />;
 IconAngleRight.storyName = 'Angle right';
+
+export const IconArrowDown: Story = () => <ArrowDown />;
+IconArrowDown.storyName = 'Arrow down';
 
 export const IconCross: Story = () => <Cross />;
 IconCross.storyName = 'Cross';
