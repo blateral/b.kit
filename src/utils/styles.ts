@@ -204,9 +204,9 @@ const newColors: NewColors = {
     },
     primary: {
         default: '#7749F8',
-        inverted: '#EBE5FC',
-        hover: '#311f66',
-        invertedHover: '#BCB7C9',
+        inverted: '#A88AFB',
+        hover: '#42278F',
+        invertedHover: '#D2C1FF',
     },
     secondary: {
         default: '#6C757D',

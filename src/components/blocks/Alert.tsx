@@ -1,4 +1,3 @@
-import AngleRight from 'components/base/icons/AngleRight';
 import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
@@ -6,7 +5,6 @@ import styled from 'styled-components';
 import {
     getColors as color,
     getGlobals as global,
-    mq,
     spacings,
 } from 'utils/styles';
 import StatusFormatter from '../../utils/statusFormatter';
@@ -14,23 +12,19 @@ import ExclamationMark from '../base/icons/ExclamationMark';
 
 const View = styled.div<{ isInverted?: boolean }>`
     position: relative;
-    border: 1px solid
+    border: 2px solid
         ${({ theme, isInverted }) =>
             isInverted
                 ? color(theme).new.primary.inverted
                 : color(theme).new.primary.default};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
-    background: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.elementBg.dark
-            : color(theme).new.elementBg.light};
     color: ${({ theme, isInverted }) =>
         isInverted
             ? color(theme).new.primary.inverted
             : color(theme).new.primary.default};
 
-    padding: ${spacings.nudge * 2}px;
+    padding: ${spacings.nudge * 3}px;
 
     text-align: left;
     width: 100%;
@@ -43,12 +37,12 @@ const View = styled.div<{ isInverted?: boolean }>`
     transition: color ease-in-out 0.2s, border 0.2s ease-in-out;
 
     & > * + * {
-        margin-left: ${spacings.nudge * 2}px;
+        margin-left: ${spacings.nudge * 3}px;
     }
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
-            border: 1px solid
+            border: 2px solid
                 ${({ theme, isInverted }) =>
                     isInverted
                         ? color(theme).new.primary.invertedHover
@@ -57,14 +51,6 @@ const View = styled.div<{ isInverted?: boolean }>`
                 isInverted
                     ? color(theme).new.primary.invertedHover
                     : color(theme).new.primary.hover};
-        }
-    }
-
-    @media ${mq.medium} {
-        padding: ${spacings.nudge * 3}px;
-
-        & > * + * {
-            margin-left: ${spacings.nudge * 3}px;
         }
     }
 `;
@@ -87,27 +73,12 @@ const Icon = styled.div``;
 
 const Content = styled.div`
     & > * + * {
-        margin-top: ${spacings.nudge / 2}px;
+        margin-top: ${spacings.nudge}px;
     }
 `;
 
 const Title = styled(Copy)`
     display: inline-block;
-`;
-
-const TitleIcon = styled.span`
-    display: inline-block;
-    margin-left: ${spacings.nudge * 2}px;
-
-    @media ${mq.medium} {
-        margin-left: ${spacings.nudge * 3}px;
-    }
-`;
-
-const DefaultIcon = styled(AngleRight)`
-    && {
-        margin-bottom: -2px;
-    }
 `;
 
 export interface AlertProps {
@@ -128,9 +99,6 @@ export interface AlertProps {
 
     /** Function to inject custom alert icon */
     customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-
-    /** Function to inject custom title icon */
-    customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
 }
 
 const Alert: React.FC<AlertProps & { className?: string }> = ({
@@ -140,7 +108,6 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
     description,
     link,
     customIcon,
-    customTitleIcon,
     className,
 }) => {
     let formattedDate = '';
@@ -156,7 +123,7 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
     }
 
     return (
-        <View isInverted={isInverted} className={className}>
+        <View isInverted={isInverted} data-sheet="alert" className={className}>
             <Icon>
                 {customIcon ? customIcon({ isInverted }) : <ExclamationMark />}
             </Icon>
@@ -164,15 +131,6 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
                 {title && (
                     <Title textColor="inherit" size="medium" type="copy-b">
                         {title}
-                        {title && (
-                            <TitleIcon>
-                                {customTitleIcon ? (
-                                    customTitleIcon({ isInverted })
-                                ) : (
-                                    <DefaultIcon />
-                                )}
-                            </TitleIcon>
-                        )}
                     </Title>
                 )}
                 {description && (
@@ -183,7 +141,7 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
                     />
                 )}
                 {date && (
-                    <Copy textColor="inherit" size="small">
+                    <Copy size="small" isInverted={isInverted}>
                         {formattedDate}
                     </Copy>
                 )}

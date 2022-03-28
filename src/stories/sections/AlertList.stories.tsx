@@ -26,6 +26,13 @@ export const Default: Story = () => (
                 title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
                 description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
+                link: { href: '#' },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                date: new Date(),
+                description:
                     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
                 link: { href: '#' },
             },
@@ -34,6 +41,41 @@ export const Default: Story = () => (
                 date: new Date(),
                 description:
                     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
+            },
+        ]}
+    />
+);
+
+export const MoreItems: Story = () => (
+    <AlertList
+        items={[
+            {
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                date: new Date(),
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                date: new Date(),
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
+                link: { href: '#' },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                date: new Date(),
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem',
+                link: { href: '#' },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                date: new Date(),
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit',
                 link: { href: '#' },
             },
             {
@@ -62,14 +104,21 @@ export const WithBackground: Story = () => (
                 title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
                 description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
                 link: { href: '#' },
             },
             {
                 title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
                 description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem',
+                link: { href: '#' },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                date: new Date(),
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit',
                 link: { href: '#' },
             },
             {
@@ -98,14 +147,21 @@ export const Inverted: Story = () => (
                 title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
                 description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
                 link: { href: '#' },
             },
             {
                 title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
                 description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem',
+                link: { href: '#' },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                date: new Date(),
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit',
                 link: { href: '#' },
             },
             {

@@ -22,7 +22,7 @@ type Mq = keyof ItemsPerRow;
 // useEqualSheetHeight
 // ********************
 
-export const useEqualSheetHeight = (props: {
+export const useEqualSheetHeight = <T extends HTMLElement>(props: {
     listLength: number;
     identifiers: string[];
     responsive?: ItemsPerRow;
@@ -41,9 +41,7 @@ export const useEqualSheetHeight = (props: {
         ? defaultResponsive[currentMq]
         : defaultResponsive.small;
 
-    const [sheetRefs, setSheetRefs] = useState<
-        MutableRefObject<HTMLDivElement>[]
-    >([]);
+    const [sheetRefs, setSheetRefs] = useState<MutableRefObject<T>[]>([]);
 
     const fontsLoaded = useFontsLoaded();
 
@@ -51,7 +49,7 @@ export const useEqualSheetHeight = (props: {
         (
             heights: (number | null)[],
             selector: string,
-            refs: MutableRefObject<HTMLDivElement>[]
+            refs: MutableRefObject<T>[]
         ) => {
             const makeRows = (
                 result: Array<number>[],
@@ -94,7 +92,7 @@ export const useEqualSheetHeight = (props: {
     );
 
     useEffect(() => {
-        const resize = (refs: MutableRefObject<HTMLDivElement>[]) => () => {
+        const resize = (refs: MutableRefObject<T>[]) => () => {
             const identifierSizes = new Map<string, Array<number | null>>();
 
             // create identifier map
