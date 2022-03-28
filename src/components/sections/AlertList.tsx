@@ -63,7 +63,7 @@ const AlertList: React.FC<{
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
     const alertCount = items?.length || 0;
-    const itemsPerRow = alertCount % 3 === 1 ? 2 : 3;
+    const itemsPerRow = alertCount % 3 === 1 || alertCount === 2 ? 2 : 3;
 
     const { sheetRefs: alertRefs } = useEqualSheetHeight<HTMLLIElement>({
         listLength: alertCount,

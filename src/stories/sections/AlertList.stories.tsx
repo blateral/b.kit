@@ -29,6 +29,27 @@ export const Default: Story = () => (
                     'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
                 link: { href: '#' },
             },
+        ]}
+    />
+);
+
+export const AmountVariationA: Story = () => (
+    <AlertList
+        items={[
+            {
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                date: new Date(),
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae.',
+                link: { href: '#' },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                date: new Date(),
+                description:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
+                link: { href: '#' },
+            },
             {
                 title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 date: new Date(),
@@ -47,7 +68,7 @@ export const Default: Story = () => (
     />
 );
 
-export const MoreItems: Story = () => (
+export const AmountVariationB: Story = () => (
     <AlertList
         items={[
             {
