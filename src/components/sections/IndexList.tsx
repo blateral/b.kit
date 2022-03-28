@@ -8,16 +8,14 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from 'utils/styles';
 import Link, { LinkProps } from 'components/typography/Link';
 
-const List = styled.ul`
+const List = styled.ul<{ hasBg?: boolean; isInverted?: boolean }>`
     margin: 0;
     padding: 0;
     list-style: none;
 
     max-width: 880px;
-`;
 
-const ListItem = styled.li<{ hasBg?: boolean; isInverted?: boolean }>`
-    & + & {
+    & > li + li {
         border-top: 1px solid
             ${({ theme, hasBg, isInverted }) =>
                 hasBg && !isInverted
@@ -25,7 +23,7 @@ const ListItem = styled.li<{ hasBg?: boolean; isInverted?: boolean }>`
                     : color(theme).new.elementBg.medium};
     }
 
-    &:first-child {
+    & > li:first-child {
         border-top: 1px solid
             ${({ theme, hasBg, isInverted }) =>
                 hasBg && !isInverted
@@ -33,7 +31,7 @@ const ListItem = styled.li<{ hasBg?: boolean; isInverted?: boolean }>`
                     : color(theme).new.elementBg.medium};
     }
 
-    &:last-child {
+    & > li:last-child {
         border-bottom: 1px solid
             ${({ theme, hasBg, isInverted }) =>
                 hasBg && !isInverted
@@ -41,6 +39,8 @@ const ListItem = styled.li<{ hasBg?: boolean; isInverted?: boolean }>`
                     : color(theme).new.elementBg.medium};
     }
 `;
+
+const ListItem = styled.li``;
 
 const IndexLink = styled(Link)<{ isInverted?: boolean }>`
     display: inline-block;
@@ -80,9 +80,9 @@ const IndexList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List>
+                <List hasBg={hasBg} isInverted={isInverted}>
                     {items?.map((item, i) => (
-                        <ListItem key={i} hasBg={hasBg} isInverted={isInverted}>
+                        <ListItem key={i}>
                             <IndexLink {...item.link} isInverted={isInverted}>
                                 {item.label}
                             </IndexLink>
