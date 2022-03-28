@@ -16,44 +16,38 @@ const List = styled.ul`
     max-width: 880px;
 `;
 
-const ListItem = styled.li`
+const ListItem = styled.li<{ hasBg?: boolean; isInverted?: boolean }>`
     & + & {
         border-top: 1px solid
-            ${({ theme }) => color(theme).new.elementBg.medium};
+            ${({ theme, hasBg, isInverted }) =>
+                hasBg && !isInverted
+                    ? color(theme).new.elementBg.light
+                    : color(theme).new.elementBg.medium};
     }
 
     &:first-child {
         border-top: 1px solid
-            ${({ theme }) => color(theme).new.elementBg.medium};
+            ${({ theme, hasBg, isInverted }) =>
+                hasBg && !isInverted
+                    ? color(theme).new.elementBg.light
+                    : color(theme).new.elementBg.medium};
     }
 
     &:last-child {
         border-bottom: 1px solid
-            ${({ theme }) => color(theme).new.elementBg.medium};
+            ${({ theme, hasBg, isInverted }) =>
+                hasBg && !isInverted
+                    ? color(theme).new.elementBg.light
+                    : color(theme).new.elementBg.medium};
     }
 `;
 
 const IndexLink = styled(Link)<{ isInverted?: boolean }>`
     display: inline-block;
     text-decoration: underline;
-    padding: ${spacings.nudge * 2}px 0;
+    padding: ${spacings.nudge}px 0;
 
-    ${copyStyle('copy', 'medium')}
-    color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
-
-    transition: color 0.2s ease-in-out;
-
-    @media (hover: hover) and (pointer: fine) {
-        &:hover {
-            color: ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).new.primary.invertedHover
-                    : color(theme).new.primary.hover};
-        }
-    }
+    ${copyStyle('copy', 'big')}
 `;
 
 export interface IndexItem {
@@ -88,7 +82,7 @@ const IndexList: React.FC<{
             <Wrapper addWhitespace>
                 <List>
                     {items?.map((item, i) => (
-                        <ListItem key={i}>
+                        <ListItem key={i} hasBg={hasBg} isInverted={isInverted}>
                             <IndexLink {...item.link} isInverted={isInverted}>
                                 {item.label}
                             </IndexLink>

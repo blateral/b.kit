@@ -170,6 +170,14 @@ export interface Fonts {
     'heading-3': FontProps;
     'heading-4': FontProps;
     callout: FontOptions;
+    link: {
+        color: string;
+        colorInverted: string;
+        colorHover: string;
+        colorHoverInverted: string;
+        textTransform?: string;
+        textDecoration?: string;
+    };
 }
 
 export type FontType = keyof Fonts;
@@ -362,6 +370,12 @@ const defaultFonts: Fonts = {
             lineHeight: '1.17',
             size: [92],
         },
+    },
+    link: {
+        color: '#2441DA',
+        colorHover: '#122278',
+        colorInverted: '#fff',
+        colorHoverInverted: '#C8C8C8',
     },
 };
 

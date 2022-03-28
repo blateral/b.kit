@@ -35,6 +35,7 @@ const base = css<{
     textColor?: string;
     textGradient?: string;
     columns?: boolean;
+    isInverted?: boolean;
 }>`
     h1,
     h2,
@@ -60,31 +61,25 @@ const base = css<{
         hyphens: none;
     } */
 
-    a:not([class]) {
-        color: currentColor;
-        transition: color 0.25s;
+    a {
+        color: ${({ theme, isInverted }) =>
+            isInverted
+                ? font(theme).link.colorInverted
+                : font(theme).link.color};
+        text-transform: ${({ theme }) => font(theme).link.textTransform};
+        text-decoration: ${({ theme }) => font(theme).link.textDecoration};
 
-        &:hover {
-            opacity: 0.75;
+        transition: color 0.2s ease-in-out;
+
+        @media (hover: hover) and (pointer: fine) {
+            &:hover {
+                color: ${({ theme, isInverted }) =>
+                    isInverted
+                        ? font(theme).link.colorHoverInverted
+                        : font(theme).link.colorHover};
+            }
         }
     }
-
-    /* :not(li) > ul,
-    :not(li) > ol {
-        display: inline-block;
-        padding-left: 0;
-    }
-
-    li > ul,
-    li > ol {
-        padding-left: 0;
-    } */
-
-    /* ul,
-    ol li {
-        list-style-position: outside;
-        margin-left: 1.1em;
-    } */
 
     & > p {
         margin-right: 0;
@@ -218,6 +213,7 @@ const View = styled.div<{
     size: FontOptionType;
     textColor?: string;
     textGradient?: string;
+    isInverted?: boolean;
     columns?: boolean;
 }>`
     ${base}
@@ -281,6 +277,7 @@ const Copy: React.FC<{
                         : fontSettings.colorGradient
                     : undefined)
             }
+            isInverted={isInverted}
             columns={columns}
             dangerouslySetInnerHTML={
                 innerHTML && !children ? { __html: innerHTML } : undefined
