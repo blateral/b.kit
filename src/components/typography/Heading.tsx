@@ -7,6 +7,7 @@ import {
     getFonts as font,
     mq,
     withRange,
+    FontProps,
 } from 'utils/styles';
 
 type HeadingType = Exclude<FontType, 'copy' | 'copy-i' | 'copy-b' | 'callout'>;
@@ -56,13 +57,16 @@ const base = css<{
 
 export const headingStyle = (type: HeadingType) => css`
     ${base};
-    font-family: ${({ theme }) => font(theme)[type].family};
-    font-weight: ${({ theme }) => font(theme)[type].weight};
-    font-style: ${({ theme }) => font(theme)[type].style};
-    ${({ theme }) => withRange(font(theme)[type].size, 'font-size')}
-    line-height: ${({ theme }) => font(theme)[type].lineHeight};
-    letter-spacing: ${({ theme }) => font(theme)[type].letterSpacing};
-    text-transform: ${({ theme }) => font(theme)[type].textTransform};
+    font-family: ${({ theme }) => (font(theme)[type] as FontProps).family};
+    font-weight: ${({ theme }) => (font(theme)[type] as FontProps).weight};
+    font-style: ${({ theme }) => (font(theme)[type] as FontProps).style};
+    ${({ theme }) =>
+        withRange((font(theme)[type] as FontProps).size, 'font-size')}
+    line-height: ${({ theme }) => (font(theme)[type] as FontProps).lineHeight};
+    letter-spacing: ${({ theme }) =>
+        (font(theme)[type] as FontProps).letterSpacing};
+    text-transform: ${({ theme }) =>
+        (font(theme)[type] as FontProps).textTransform};
 `;
 
 const View = styled.h1<{
@@ -133,7 +137,7 @@ const Heading: React.FC<{
     }
 
     // get font settings from global context
-    const fontSettings = fonts?.[size];
+    const fontSettings = fonts?.[size] as FontProps;
 
     return (
         <View
