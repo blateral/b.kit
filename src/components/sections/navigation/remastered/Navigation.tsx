@@ -15,6 +15,7 @@ export interface NavBarStates extends BarStates {
     isMenuOpen?: boolean;
     openMenu?: () => void;
     closeMenu?: () => void;
+    navItems?: Array<NavItem>;
 }
 
 export interface NavBarSettings {
@@ -128,6 +129,7 @@ const Navigation: FC<NavigationProps> = ({
                   isMenuOpen,
                   openMenu,
                   closeMenu,
+                  navItems: menu?.navItems,
               });
           }
         : undefined;
@@ -140,6 +142,7 @@ const Navigation: FC<NavigationProps> = ({
                   isMenuOpen,
                   openMenu,
                   closeMenu,
+                  navItems: menu?.navItems,
               });
           }
         : undefined;
@@ -152,6 +155,7 @@ const Navigation: FC<NavigationProps> = ({
                   isMenuOpen,
                   openMenu,
                   closeMenu,
+                  navItems: menu?.navItems,
               });
           }
         : undefined;

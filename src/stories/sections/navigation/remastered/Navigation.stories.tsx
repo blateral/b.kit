@@ -3,6 +3,7 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Navigation from 'components/sections/navigation/remastered/Navigation';
 import MainBarGrid from 'components/sections/navigation/remastered/menu/skeletons/MainBarGrid';
+import MenuBurger from 'components/base/icons/MenuBurger';
 
 export default {
     title: 'Sections/Navigation v2',
@@ -137,7 +138,7 @@ export const WithExampleContent: Story = () => (
             isStickable: true,
             isCollapsible: true,
             pageFlow: 'overContent',
-            mainBar: ({ size, pageFlow, openMenu }) => {
+            mainBar: ({ size, pageFlow, openMenu, isMenuOpen }) => {
                 const isInverted =
                     size === 'large' && pageFlow === 'overContent';
 
@@ -148,13 +149,22 @@ export const WithExampleContent: Story = () => (
                             vAlign="center"
                             isInverted={isInverted}
                         >
-                            <button onClick={openMenu}>Open Menu</button>
+                            <MainBarGrid.Toggle
+                                isInverted={isInverted}
+                                isExpanded={isMenuOpen}
+                                onClick={openMenu}
+                            >
+                                <MenuBurger />
+                            </MainBarGrid.Toggle>
                         </MainBarGrid.Col>
                         <MainBarGrid.Col isInverted={isInverted}>
                             <MainBarGrid.Logo src="https://via.placeholder.com/320x80" />
                         </MainBarGrid.Col>
                     </React.Fragment>
                 );
+            },
+            bottomBar: ({ navItems }) => {
+                return navItems?.length;
             },
         }}
         menu={{
