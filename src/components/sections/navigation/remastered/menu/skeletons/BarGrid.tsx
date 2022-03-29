@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Copy from 'components/typography/Copy';
 import { spacings, getColors as color } from 'utils/styles';
 import { FC } from 'react';
 
-const Column = styled(Copy)<{
+const Column = styled.div<{
+    isInverted?: boolean;
     takeSpace?: boolean;
     vAlign?: 'top' | 'center' | 'bottom';
 }>`
-    text-align: center;
+    flex: ${({ takeSpace }) => (takeSpace ? 1 : undefined)};
+
+    padding: ${spacings.nudge}px 0;
     min-width: -webkit-min-content;
     align-self: ${({ vAlign }) => {
         switch (vAlign) {
@@ -27,7 +29,11 @@ const Column = styled(Copy)<{
         }
     }};
 
-    flex: ${({ takeSpace }) => (takeSpace ? 1 : undefined)};
+    text-align: center;
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.text.inverted
+            : color(theme).new.text.inverted};
 
     &:first-child {
         text-align: left;

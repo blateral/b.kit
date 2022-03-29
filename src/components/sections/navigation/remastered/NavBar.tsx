@@ -3,7 +3,7 @@ import styled, { DefaultTheme } from 'styled-components';
 import { spacings, mq, getGlobals as global } from 'utils/styles';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
-import MainBarGrid from './menu/skeletons/MainBarGrid';
+import BarGrid from './menu/skeletons/BarGrid';
 
 const getTopHeights = (
     theme: DefaultTheme,
@@ -157,10 +157,9 @@ const Header = styled.div<{ size?: NavBarSize; background?: string }>`
     overflow: ${({ theme, size }) =>
         getTopHeights(theme, size)[0] <= 0 && 'hidden'};
 
-    background: ${({ background }) => background};
+    background-color: ${({ background }) => background};
 
-    transition: background 0.2s ease-in-out;
-    will-change: background;
+    transition: background-color 0.2s ease-in-out;
 
     @media ${mq.semilarge} {
         opacity: ${({ theme, size }) =>
@@ -173,11 +172,10 @@ const Header = styled.div<{ size?: NavBarSize; background?: string }>`
 `;
 
 const Main = styled.div<{ background?: string }>`
-    background: ${({ background }) => background};
+    background-color: ${({ background }) => background};
 
     transform: translateZ(0);
-    transition: background 0.2s ease-in-out;
-    will-change: background;
+    transition: background-color 0.2s ease-in-out;
 `;
 
 const Footer = styled.div<{ size?: NavBarSize; background?: string }>`
@@ -188,11 +186,11 @@ const Footer = styled.div<{ size?: NavBarSize; background?: string }>`
     overflow: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] <= 0 && 'hidden'};
 
-    background: ${({ background }) => background};
+    background-color: ${({ background }) => background};
     opacity: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] > 0 ? 1 : 0};
 
-    transition: opacity 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 
     @media ${mq.semilarge} {
         opacity: ${({ theme, size }) =>
@@ -208,12 +206,14 @@ const Footer = styled.div<{ size?: NavBarSize; background?: string }>`
 `;
 
 const TopContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     position: relative;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
     padding: ${({ size, theme }) =>
-        getTopHeights(theme, size)[0] > 0 &&
-        `${spacings.nudge}px ${spacings.nudge * 2}px`};
+        getTopHeights(theme, size)[0] > 0 && `0 ${spacings.nudge * 2}px`};
     margin: 0 auto;
 
     height: ${({ theme, size }) => getTopHeights(theme, size)[0]}px;
@@ -225,17 +225,17 @@ const TopContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     @media ${mq.semilarge} {
         height: ${({ theme, size }) => getTopHeights(theme, size)[1]}px;
         padding: ${({ size, theme }) =>
-            getTopHeights(theme, size)[1] > 0 &&
-            `${spacings.nudge}px ${spacings.nudge * 2}px`};
+            getTopHeights(theme, size)[1] > 0 && `0 ${spacings.nudge * 2}px`};
     }
 `;
 
 const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
+    align-items: center;
     position: relative;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
-    padding: ${spacings.nudge * 2}px;
+    padding: 0 ${spacings.nudge * 2}px;
     margin: 0 auto;
 
     height: ${({ theme, size }) => getMainHeights(theme, size)[0]}px;
@@ -250,17 +250,20 @@ const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
 `;
 
 const BottomContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     position: relative;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
-    padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
+    padding: 0 ${spacings.nudge * 2}px;
     margin: 0 auto;
 
     height: ${({ theme, size }) => getBottomHeights(theme, size)[0]}px;
 
     @media ${mq.semilarge} {
         height: ${({ theme, size }) => getBottomHeights(theme, size)[1]}px;
-        padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
+        padding: 0 ${spacings.nudge * 2}px;
     }
 `;
 
@@ -363,9 +366,7 @@ const NavBar: FC<
                             {topBar ? (
                                 topBar({ size, isOpen, isSticky, pageFlow })
                             ) : (
-                                <MainBarGrid.Col size="small" isInverted>
-                                    Top Nav
-                                </MainBarGrid.Col>
+                                <BarGrid.Col isInverted>Top Nav</BarGrid.Col>
                             )}
                         </TopContent>
                     </Header>
@@ -376,29 +377,29 @@ const NavBar: FC<
                             mainBar({ size, isOpen, isSticky, pageFlow })
                         ) : (
                             <React.Fragment>
-                                <MainBarGrid.Col
+                                <BarGrid.Col
                                     takeSpace
                                     isInverted={
                                         size === 'large' && isOverContent
                                     }
                                 >
                                     Left
-                                </MainBarGrid.Col>
-                                <MainBarGrid.Col
+                                </BarGrid.Col>
+                                <BarGrid.Col
                                     isInverted={
                                         size === 'large' && isOverContent
                                     }
                                 >
                                     Center
-                                </MainBarGrid.Col>
-                                <MainBarGrid.Col
+                                </BarGrid.Col>
+                                <BarGrid.Col
                                     takeSpace
                                     isInverted={
                                         size === 'large' && isOverContent
                                     }
                                 >
                                     Right
-                                </MainBarGrid.Col>
+                                </BarGrid.Col>
                             </React.Fragment>
                         )}
                     </Content>

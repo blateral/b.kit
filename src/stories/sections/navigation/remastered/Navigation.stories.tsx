@@ -2,8 +2,9 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Navigation from 'components/sections/navigation/remastered/Navigation';
-import MainBarGrid from 'components/sections/navigation/remastered/menu/skeletons/MainBarGrid';
+import BarGrid from 'components/sections/navigation/remastered/menu/skeletons/BarGrid';
 import MenuBurger from 'components/base/icons/MenuBurger';
+import LanguageSwitcher from 'components/blocks/LanguageSwitcher';
 
 export default {
     title: 'Sections/Navigation v2',
@@ -138,28 +139,43 @@ export const WithExampleContent: Story = () => (
             isStickable: true,
             isCollapsible: true,
             pageFlow: 'overContent',
+            topBar: ({ size, pageFlow }) => {
+                const isInverted =
+                    size === 'large' && pageFlow === 'overContent';
+                return (
+                    <BarGrid.Col>
+                        <LanguageSwitcher
+                            isInverted={isInverted}
+                            langs={[
+                                { label: 'DE', link: { href: '/de' } },
+                                { label: 'EN', link: { href: '/en' } },
+                            ]}
+                        />
+                    </BarGrid.Col>
+                );
+            },
             mainBar: ({ size, pageFlow, openMenu, isMenuOpen }) => {
                 const isInverted =
                     size === 'large' && pageFlow === 'overContent';
 
                 return (
                     <React.Fragment>
-                        <MainBarGrid.Col
+                        <BarGrid.Col
                             takeSpace
                             vAlign="center"
                             isInverted={isInverted}
                         >
-                            <MainBarGrid.Toggle
+                            <BarGrid.Toggle
                                 isInverted={isInverted}
                                 isExpanded={isMenuOpen}
                                 onClick={openMenu}
                             >
                                 <MenuBurger />
-                            </MainBarGrid.Toggle>
-                        </MainBarGrid.Col>
-                        <MainBarGrid.Col isInverted={isInverted}>
-                            <MainBarGrid.Logo src="https://via.placeholder.com/320x80" />
-                        </MainBarGrid.Col>
+                            </BarGrid.Toggle>
+                        </BarGrid.Col>
+                        <BarGrid.Col isInverted={isInverted}>
+                            <BarGrid.Logo src="https://via.placeholder.com/320x80" />
+                        </BarGrid.Col>
                     </React.Fragment>
                 );
             },
