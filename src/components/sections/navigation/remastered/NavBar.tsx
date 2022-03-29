@@ -1,14 +1,9 @@
 import React, { FC, useMemo } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
-import {
-    spacings,
-    mq,
-    getColors as color,
-    getGlobals as global,
-} from 'utils/styles';
-import Copy from 'components/typography/Copy';
+import { spacings, mq, getGlobals as global } from 'utils/styles';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
+import MainBarGrid from './menu/skeletons/MainBarGrid';
 
 const getTopHeights = (
     theme: DefaultTheme,
@@ -119,6 +114,7 @@ const View = styled.div<{
     isOpen?: boolean;
     isSticky?: boolean;
     isAnimated?: boolean;
+    bgGradient?: string;
 }>`
     position: ${({ isSticky }) => (isSticky ? 'fixed' : 'absolute')};
     top: 0;
@@ -136,9 +132,24 @@ const View = styled.div<{
     }height 0.3s ease-in-out,
                 opacity 0.3s ease-in-out;`}
     will-change: transform;
+
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: ${({ bgGradient }) => bgGradient || ''};
+        opacity: ${({ bgGradient }) => (bgGradient ? 1 : 0)};
+        z-index: -1;
+
+        transition: opacity 0.2s ease-in-out;
+    }
 `;
 
-const Header = styled.div<{ size?: NavBarSize }>`
+const Header = styled.div<{ size?: NavBarSize; background?: string }>`
     opacity: ${({ theme, size }) =>
         getTopHeights(theme, size)[0] > 0 ? 1 : 0};
     pointer-events: ${({ theme, size }) =>
@@ -146,7 +157,10 @@ const Header = styled.div<{ size?: NavBarSize }>`
     overflow: ${({ theme, size }) =>
         getTopHeights(theme, size)[0] <= 0 && 'hidden'};
 
-    background: ${({ theme }) => color(theme).new.primary.default};
+    background: ${({ background }) => background};
+
+    transition: background 0.2s ease-in-out;
+    will-change: background;
 
     @media ${mq.semilarge} {
         opacity: ${({ theme, size }) =>
@@ -158,18 +172,15 @@ const Header = styled.div<{ size?: NavBarSize }>`
     }
 `;
 
-const Main = styled.div<{ isOverContent?: boolean; gradient?: string }>`
-    background: ${({ theme, isOverContent, gradient }) =>
-        isOverContent && gradient
-            ? gradient
-            : color(theme).new.elementBg.light};
+const Main = styled.div<{ background?: string }>`
+    background: ${({ background }) => background};
 
     transform: translateZ(0);
-    transition: background 0.15s ease-in-out;
+    transition: background 0.2s ease-in-out;
     will-change: background;
 `;
 
-const Footer = styled.div<{ size?: NavBarSize; isOverContent?: boolean }>`
+const Footer = styled.div<{ size?: NavBarSize; background?: string }>`
     opacity: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] > 0 ? 1 : 0};
     pointer-events: ${({ theme, size }) =>
@@ -177,15 +188,11 @@ const Footer = styled.div<{ size?: NavBarSize; isOverContent?: boolean }>`
     overflow: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] <= 0 && 'hidden'};
 
-    background: ${({ theme, isOverContent, size }) =>
-        isOverContent && size === 'large'
-            ? 'transparent'
-            : color(theme).new.elementBg.light};
+    background: ${({ background }) => background};
     opacity: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] > 0 ? 1 : 0};
 
     transition: opacity 0.2s ease-in-out;
-    will-change: opacity;
 
     @media ${mq.semilarge} {
         opacity: ${({ theme, size }) =>
@@ -257,41 +264,6 @@ const BottomContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     }
 `;
 
-const Column = styled(Copy)`
-    text-align: center;
-    min-width: -webkit-min-content;
-
-    &:first-child {
-        text-align: left;
-    }
-
-    &:last-child {
-        text-align: right;
-    }
-
-    &:not(:first-child):not(:last-child) {
-        margin: 0 ${spacings.nudge * 2}px;
-    }
-`;
-
-const LeftCol = styled(Column)`
-    flex: 1;
-    min-width: -webkit-min-content;
-`;
-
-const CenterCol = styled(Column)``;
-
-const RightCol = styled(Column)`
-    flex: 1;
-    min-width: -webkit-min-content;
-`;
-
-const Logo = styled.img`
-    max-width: 100%;
-    height: 100%;
-    object-fit: contain;
-`;
-
 const BarSpacer = styled.div`
     height: ${({ theme }) => getFullHeight(theme, 'large')[0]}px;
 
@@ -302,21 +274,7 @@ const BarSpacer = styled.div`
 
 export type NavBarSize = 'small' | 'large';
 
-export interface TopSettings {
-    size: NavBarSize;
-    isOpen?: boolean;
-    isSticky?: boolean;
-    pageFlow?: PageFlow;
-}
-
-export interface MainSettings {
-    size: NavBarSize;
-    isOpen?: boolean;
-    isSticky?: boolean;
-    pageFlow?: PageFlow;
-}
-
-export interface BottomSettings {
+export interface BarStates {
     size: NavBarSize;
     isOpen?: boolean;
     isSticky?: boolean;
@@ -333,12 +291,15 @@ export interface NavBarProps {
     clampWidth?: 'content' | 'full';
     pageFlow?: PageFlow;
 
+    topBg?: string;
+    mainBg?: string;
+    bottomBg?: string;
     /** Custom background value for NavBar with pageFlow === overContent and large size  */
-    customBg?: string;
+    onContentBg?: string;
 
-    topBar?: (props: TopSettings) => React.ReactNode;
-    mainBar?: (props: MainSettings) => React.ReactNode;
-    bottomBar?: (props: BottomSettings) => React.ReactNode;
+    topBar?: (props: BarStates) => React.ReactNode;
+    mainBar?: (props: BarStates) => React.ReactNode;
+    bottomBar?: (props: BarStates) => React.ReactNode;
 }
 
 const NavBar: FC<
@@ -352,21 +313,31 @@ const NavBar: FC<
     isAnimated = false,
     clampWidth = false,
     pageFlow = 'beforeContent',
-    customBg,
+    topBg,
+    mainBg,
+    bottomBg,
+    onContentBg,
     topBar,
     mainBar,
     bottomBar,
     className,
 }) => {
-    const { theme } = useLibTheme();
+    const { theme, colors } = useLibTheme();
     const clampContent = clampWidth === 'content';
+    const isOverContent = pageFlow === 'overContent';
 
     const hasHeader = useMemo(() => hasTopBar(theme), [theme]);
     const hasFooter = useMemo(() => hasBottomBar(theme), [theme]);
-    const isOverContent = pageFlow === 'overContent';
+    const showBg = useMemo(
+        () => size === 'small' || (size === 'large' && !isOverContent),
+        [isOverContent, size]
+    );
 
-    const backgroundGradient =
-        customBg ||
+    const topBackground = topBg || colors.new.elementBg.light;
+    const mainBackground = mainBg || colors.new.elementBg.light;
+    const bottomBackground = bottomBg || colors.new.elementBg.light;
+    const onContentBackground =
+        onContentBg ||
         'linear-gradient(180deg,rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 100%)';
 
     return (
@@ -376,45 +347,67 @@ const NavBar: FC<
                 isOpen={isOpen}
                 isSticky={isSticky}
                 isAnimated={isAnimated}
+                bgGradient={
+                    size === 'large' && isOverContent
+                        ? onContentBackground
+                        : undefined
+                }
                 className={className}
             >
                 {hasHeader && (
-                    <Header size={size}>
+                    <Header
+                        size={size}
+                        background={showBg ? topBackground : undefined}
+                    >
                         <TopContent size={size} clamp={clampContent}>
                             {topBar ? (
                                 topBar({ size, isOpen, isSticky, pageFlow })
                             ) : (
-                                <CenterCol size="small" isInverted>
+                                <MainBarGrid.Col size="small" isInverted>
                                     Top Nav
-                                </CenterCol>
+                                </MainBarGrid.Col>
                             )}
                         </TopContent>
                     </Header>
                 )}
-                <Main
-                    isOverContent={isOverContent}
-                    gradient={size === 'large' ? backgroundGradient : undefined}
-                >
+                <Main background={showBg ? mainBackground : undefined}>
                     <Content size={size} clamp={clampContent}>
                         {mainBar ? (
                             mainBar({ size, isOpen, isSticky, pageFlow })
                         ) : (
                             <React.Fragment>
-                                <LeftCol isInverted={isOverContent}>
-                                    Column Left
-                                </LeftCol>
-                                <CenterCol isInverted={isOverContent}>
-                                    <Logo src="https://via.placeholder.com/320x80" />
-                                </CenterCol>
-                                <RightCol isInverted={isOverContent}>
-                                    Column Right
-                                </RightCol>
+                                <MainBarGrid.Col
+                                    takeSpace
+                                    isInverted={
+                                        size === 'large' && isOverContent
+                                    }
+                                >
+                                    Left
+                                </MainBarGrid.Col>
+                                <MainBarGrid.Col
+                                    isInverted={
+                                        size === 'large' && isOverContent
+                                    }
+                                >
+                                    Center
+                                </MainBarGrid.Col>
+                                <MainBarGrid.Col
+                                    takeSpace
+                                    isInverted={
+                                        size === 'large' && isOverContent
+                                    }
+                                >
+                                    Right
+                                </MainBarGrid.Col>
                             </React.Fragment>
                         )}
                     </Content>
                 </Main>
                 {hasFooter && (
-                    <Footer size={size} isOverContent={isOverContent}>
+                    <Footer
+                        size={size}
+                        background={showBg ? bottomBackground : undefined}
+                    >
                         <BottomContent size={size} clamp={clampContent}>
                             {bottomBar
                                 ? bottomBar({

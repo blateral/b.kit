@@ -32,20 +32,20 @@ export interface MenuBaseProps {
     navItems?: Array<NavItem>;
 }
 
-export type MenuVariationProps = FlyoutMenuProps | LargeMenuProps;
+export type MenuTypeProps = FlyoutMenuProps | LargeMenuProps;
 
-const Menu: FC<MenuBaseProps & { variationMods?: MenuVariationProps }> = ({
+const Menu: FC<MenuBaseProps & { typeMods?: MenuTypeProps }> = ({
     isOpen,
     navItems,
-    variationMods,
+    typeMods,
 }) => {
-    switch (variationMods?.type) {
+    switch (typeMods?.type) {
         case 'large': {
             return (
                 <MenuLarge
                     isOpen={isOpen}
                     navItems={navItems}
-                    {...(variationMods as LargeMenuProps)}
+                    {...(typeMods as LargeMenuProps)}
                 />
             );
         }
@@ -56,7 +56,7 @@ const Menu: FC<MenuBaseProps & { variationMods?: MenuVariationProps }> = ({
                 <MenuFlyout
                     isOpen={isOpen}
                     navItems={navItems}
-                    {...(variationMods as FlyoutMenuProps)}
+                    {...(typeMods as FlyoutMenuProps)}
                 />
             );
         }

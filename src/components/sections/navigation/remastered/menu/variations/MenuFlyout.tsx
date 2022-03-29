@@ -11,22 +11,23 @@ const View = styled.div<{ isOpen?: boolean }>`
     background: white;
 
     transform: translate(${({ isOpen }) => (isOpen ? '0px' : '-100%')}, 0px);
+    pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+
+    transition: transform 0.4s ease-in-out;
+    will-change: transform:
 `;
 
 export interface FlyoutMenuProps {
     type: 'flyout';
-    orientation?: 'left' | 'right';
 }
 
 const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     isOpen,
     navItems,
-    orientation = 'left',
 }) => {
     return (
         <View isOpen={isOpen}>
-            isOpen: {isOpen} Menu Flyout {orientation} Items:{' '}
-            {navItems?.length || ''}
+            isOpen: {isOpen} Menu Flyout Items: {navItems?.length || ''}
         </View>
     );
 };

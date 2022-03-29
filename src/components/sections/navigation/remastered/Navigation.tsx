@@ -7,17 +7,11 @@ import {
 import { useMediaQueries } from 'utils/useMediaQuery';
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
-import Menu, { MenuVariationProps, NavItem } from './menu/Menu';
+import Menu, { MenuTypeProps, NavItem } from './menu/Menu';
 
-import NavBar, {
-    BottomSettings,
-    getFullHeight,
-    MainSettings,
-    NavBarSize,
-    TopSettings,
-} from './NavBar';
+import NavBar, { getFullHeight, NavBarSize, BarStates } from './NavBar';
 
-export interface NavBarMainSettings extends MainSettings {
+export interface NavBarStates extends BarStates {
     isMenuOpen?: boolean;
     openMenu?: () => void;
     closeMenu?: () => void;
@@ -28,17 +22,21 @@ export interface NavBarSettings {
     isCollapsible?: boolean;
     pageFlow?: 'overContent' | 'beforeContent';
 
+    topBg?: string;
+    mainBg?: string;
+    bottomBg?: string;
     /** Custom background value for NavBar with pageFlow === overContent and large size  */
-    customBg?: string;
-    topBar?: (props: TopSettings) => React.ReactNode;
-    mainBar?: (props: NavBarMainSettings) => React.ReactNode;
-    bottomBar?: (props: BottomSettings) => React.ReactNode;
+    onContentBg?: string;
+
+    topBar?: (props: NavBarStates) => React.ReactNode;
+    mainBar?: (props: NavBarStates) => React.ReactNode;
+    bottomBar?: (props: NavBarStates) => React.ReactNode;
     theme?: ThemeMods;
 }
 
 export interface MenuSettings {
     navItems?: Array<NavItem>;
-    variation: MenuVariationProps;
+    typeSettings: MenuTypeProps;
 
     theme?: ThemeMods;
 }
@@ -112,7 +110,6 @@ const Navigation: FC<NavigationProps> = ({
     }, [isCollapsible, isStickable, isTop, leftOffsetFromTop]);
 
     /** Menu states */
-    // #TODO: Main bar definieren mit callback handler zum Menü öffnen
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
     const openMenu = () => {
@@ -122,6 +119,42 @@ const Navigation: FC<NavigationProps> = ({
     const closeMenu = () => {
         setIsMenuOpen(false);
     };
+
+    const topBar = navBar?.topBar
+        ? (props: BarStates) => {
+              if (!navBar?.topBar) return '';
+              return navBar.topBar({
+                  ...props,
+                  isMenuOpen,
+                  openMenu,
+                  closeMenu,
+              });
+          }
+        : undefined;
+
+    const mainBar = navBar?.mainBar
+        ? (props: BarStates) => {
+              if (!navBar?.mainBar) return '';
+              return navBar.mainBar({
+                  ...props,
+                  isMenuOpen,
+                  openMenu,
+                  closeMenu,
+              });
+          }
+        : undefined;
+
+    const bottomBar = navBar?.bottomBar
+        ? (props: BarStates) => {
+              if (!navBar?.bottomBar) return '';
+              return navBar.bottomBar({
+                  ...props,
+                  isMenuOpen,
+                  openMenu,
+                  closeMenu,
+              });
+          }
+        : undefined;
 
     return (
         <React.Fragment>
@@ -133,19 +166,13 @@ const Navigation: FC<NavigationProps> = ({
                     size={navbarSize}
                     clampWidth={clampWidth}
                     pageFlow={navBar?.pageFlow}
-                    topBar={navBar?.topBar}
-                    mainBar={(props) =>
-                        navBar?.mainBar
-                            ? navBar.mainBar({
-                                  ...props,
-                                  isMenuOpen,
-                                  openMenu,
-                                  closeMenu,
-                              })
-                            : undefined
-                    }
-                    bottomBar={navBar?.bottomBar}
-                    customBg={navBar?.customBg}
+                    topBar={topBar}
+                    mainBar={mainBar}
+                    bottomBar={bottomBar}
+                    topBg={navBar?.topBg}
+                    mainBg={navBar?.mainBg}
+                    bottomBg={navBar?.bottomBg}
+                    onContentBg={navBar?.onContentBg}
                 />
             </LibThemeProvider>
             <LibThemeProvider theme={menu?.theme}>

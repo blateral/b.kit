@@ -2,6 +2,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Navigation from 'components/sections/navigation/remastered/Navigation';
+import MainBarGrid from 'components/sections/navigation/remastered/menu/skeletons/MainBarGrid';
 
 export default {
     title: 'Sections/Navigation v2',
@@ -53,6 +54,18 @@ export const CollapsibleNavbar: Story = () => (
     <Navigation navBar={{ isStickable: true, isCollapsible: true }} />
 );
 
+export const WithCustomBackgrounds: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            topBg: 'green',
+            mainBg: 'yellow',
+            bottomBg: 'blue',
+        }}
+    />
+);
+
 export const CustomTopBarContent: Story = () => (
     <Navigation
         navBar={{
@@ -93,7 +106,7 @@ export const WithCustomBgGradient: Story = () => (
             isStickable: true,
             isCollapsible: true,
             pageFlow: 'overContent',
-            customBg:
+            onContentBg:
                 'linear-gradient(180deg,rgba(255,0,0,0.3) 0%, rgba(255,0,0,0.2) 40%, rgba(255,0,0,0) 100%)',
         }}
     />
@@ -111,9 +124,43 @@ export const WithMenu: Story = () => (
         }}
         menu={{
             navItems: [],
-            variation: {
+            typeSettings: {
                 type: 'flyout',
-                orientation: 'left',
+            },
+        }}
+    />
+);
+
+export const WithExampleContent: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            pageFlow: 'overContent',
+            mainBar: ({ size, pageFlow, openMenu }) => {
+                const isInverted =
+                    size === 'large' && pageFlow === 'overContent';
+
+                return (
+                    <React.Fragment>
+                        <MainBarGrid.Col
+                            takeSpace
+                            vAlign="center"
+                            isInverted={isInverted}
+                        >
+                            <button onClick={openMenu}>Open Menu</button>
+                        </MainBarGrid.Col>
+                        <MainBarGrid.Col isInverted={isInverted}>
+                            <MainBarGrid.Logo src="https://via.placeholder.com/320x80" />
+                        </MainBarGrid.Col>
+                    </React.Fragment>
+                );
+            },
+        }}
+        menu={{
+            navItems: [],
+            typeSettings: {
+                type: 'flyout',
             },
         }}
     />
