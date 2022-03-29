@@ -9,8 +9,6 @@ const View = styled.div<{ isInverted?: boolean }>`
     display: inline-flex;
     align-items: center;
 
-    margin: 0 -${spacings.nudge}px;
-
     & > * + * {
         &:before {
             content: '';
@@ -36,6 +34,7 @@ const LanguageLink = styled(Link)<{ isInverted?: boolean; isActive?: boolean }>`
     padding: 0 ${spacings.nudge}px;
 
     ${copyStyle('copy', 'medium')}
+    font-weight: ${({ isActive }) => isActive && '700'};
 
     color: ${({ isInverted, theme }) =>
         isInverted

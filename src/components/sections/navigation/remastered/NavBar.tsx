@@ -3,7 +3,7 @@ import styled, { DefaultTheme } from 'styled-components';
 import { spacings, mq, getGlobals as global } from 'utils/styles';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
-import BarGrid from './menu/skeletons/BarGrid';
+import BarGrid from './skeletons/BarGrid';
 
 const getTopHeights = (
     theme: DefaultTheme,
@@ -207,7 +207,6 @@ const Footer = styled.div<{ size?: NavBarSize; background?: string }>`
 
 const TopContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
-    align-items: center;
     justify-content: flex-end;
     position: relative;
     max-width: ${({ clamp }) =>
@@ -231,7 +230,6 @@ const TopContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
 
 const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
-    align-items: center;
     position: relative;
     max-width: ${({ clamp }) =>
         clamp ? spacings.wrapper : spacings.wrapperLarge}px;
@@ -251,7 +249,6 @@ const Content = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
 
 const BottomContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     display: flex;
-    align-items: center;
     justify-content: flex-start;
     position: relative;
     max-width: ${({ clamp }) =>

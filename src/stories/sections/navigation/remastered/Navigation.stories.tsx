@@ -2,9 +2,9 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Navigation from 'components/sections/navigation/remastered/Navigation';
-import BarGrid from 'components/sections/navigation/remastered/menu/skeletons/BarGrid';
+import BarGrid from 'components/sections/navigation/remastered/skeletons/BarGrid';
 import MenuBurger from 'components/base/icons/MenuBurger';
-import LanguageSwitcher from 'components/blocks/LanguageSwitcher';
+import NavBarTopPartial from 'components/sections/navigation/remastered/partials/NavBarTopPartial';
 
 export default {
     title: 'Sections/Navigation v2',
@@ -143,15 +143,29 @@ export const WithExampleContent: Story = () => (
                 const isInverted =
                     size === 'large' && pageFlow === 'overContent';
                 return (
-                    <BarGrid.Col>
-                        <LanguageSwitcher
-                            isInverted={isInverted}
-                            langs={[
-                                { label: 'DE', link: { href: '/de' } },
-                                { label: 'EN', link: { href: '/en' } },
-                            ]}
-                        />
-                    </BarGrid.Col>
+                    <NavBarTopPartial
+                        isInverted={isInverted}
+                        navLinks={[
+                            { label: 'Contact', link: { href: '#0' } },
+                            {
+                                label: 'Opening Hours',
+                                link: { href: '#1' },
+                            },
+                            {
+                                label: 'About',
+                                link: { href: '#2' },
+                                isActive: true,
+                            },
+                        ]}
+                        languages={[
+                            {
+                                label: 'DE',
+                                link: { href: '/de' },
+                                isActive: true,
+                            },
+                            { label: 'EN', link: { href: '/en' } },
+                        ]}
+                    />
                 );
             },
             mainBar: ({ size, pageFlow, openMenu, isMenuOpen }) => {
