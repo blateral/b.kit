@@ -30,22 +30,26 @@ export interface MenuStates {
 
 export interface MenuBaseProps {
     isOpen?: boolean;
+    clampWidth?: 'content' | 'full';
     indexPage?: Array<NavGroup>;
     mainNavigation?: Array<NavGroup>;
     subNavigation?: Array<NavItem>;
     header?: (props: MenuStates) => React.ReactNode;
     footer?: (props: MenuStates) => React.ReactNode;
+    onClose?: () => void;
 }
 
 export type MenuTypeProps = FlyoutMenuProps | LargeMenuProps;
 
 const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
     isOpen,
+    clampWidth,
     indexPage,
     mainNavigation,
     subNavigation,
     header,
     footer,
+    onClose,
     typeSettings,
 }) => {
     switch (typeSettings?.type) {
@@ -53,11 +57,13 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
             return (
                 <MenuLarge
                     isOpen={isOpen}
+                    clampWidth={clampWidth}
                     indexPage={indexPage}
                     mainNavigation={mainNavigation}
                     subNavigation={subNavigation}
                     header={header}
                     footer={footer}
+                    onClose={onClose}
                     {...(typeSettings as LargeMenuProps)}
                 />
             );
@@ -68,11 +74,13 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
             return (
                 <MenuFlyout
                     isOpen={isOpen}
+                    clampWidth={clampWidth}
                     indexPage={indexPage}
                     mainNavigation={mainNavigation}
                     subNavigation={subNavigation}
                     header={header}
                     footer={footer}
+                    onClose={onClose}
                     {...(typeSettings as FlyoutMenuProps)}
                 />
             );

@@ -138,6 +138,10 @@ const Navigation: FC<NavigationProps> = ({
         setIsMenuOpen(false);
     };
 
+    useEffect(() => {
+        document.body.style.overflow = isMenuOpen ? 'hidden' : 'visible';
+    }, [isMenuOpen]);
+
     const topBar = navBar?.topBar
         ? (props: BarStates) => {
               if (!navBar?.topBar) return '';
@@ -230,11 +234,13 @@ const Navigation: FC<NavigationProps> = ({
             <LibThemeProvider theme={menu?.theme}>
                 <Menu
                     isOpen={isMenuOpen}
+                    clampWidth={clampWidth}
                     indexPage={menu?.indexPage}
                     mainNavigation={menu?.mainNavigation}
                     subNavigation={menu?.subNavigation}
                     header={menuHeader}
                     footer={menuFooter}
+                    onClose={closeMenu}
                 />
             </LibThemeProvider>
         </React.Fragment>
