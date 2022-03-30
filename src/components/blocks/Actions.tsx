@@ -40,7 +40,7 @@ const Content = styled.div<{
     }
 `;
 
-const TertiaryWrapper = styled.span`
+const TertiaryWrapper = styled.div`
     align-self: flex-start;
 
     @media ${mq.medium} {
