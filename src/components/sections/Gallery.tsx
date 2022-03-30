@@ -35,10 +35,13 @@ const StyledImage = styled(Image)`
 type ImageType = ImageProps & { isFull?: boolean };
 
 const Gallery: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     bgMode?: 'full' | 'splitted' | 'inverted';
     images?: Array<ImageType>;
     className?: string;
-}> = ({ bgMode, images, className }) => {
+}> = ({ anchorId, bgMode, images, className }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
 
@@ -60,6 +63,7 @@ const Gallery: FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).new.sectionBg.dark

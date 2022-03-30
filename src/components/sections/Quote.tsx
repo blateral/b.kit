@@ -37,6 +37,9 @@ const Source = styled(Copy)`
 `;
 
 const Quote: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Text of the blockquote (richtext) */
     text?: string;
 
@@ -48,13 +51,14 @@ const Quote: FC<{
 
     /** Section backgrounds */
     bgMode?: 'full' | 'inverted';
-}> = ({ bgMode, text, source, citeUrl }) => {
+}> = ({ anchorId, bgMode, text, source, citeUrl }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

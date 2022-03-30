@@ -29,7 +29,7 @@ interface HeaderImageProps {
     };
 }
 
-const View = styled.header`
+const View = styled.div`
     position: relative;
 `;
 

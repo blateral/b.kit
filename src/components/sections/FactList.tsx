@@ -55,6 +55,9 @@ const Description = styled(Copy)`
 `;
 
 const FactList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array with fact item data */
     facts?: Array<{
         label?: string;
@@ -66,7 +69,7 @@ const FactList: React.FC<{
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ facts, icon, bgMode }) => {
+}> = ({ anchorId, facts, icon, bgMode }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBack = isInverted || bgMode === 'full';
@@ -74,6 +77,7 @@ const FactList: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

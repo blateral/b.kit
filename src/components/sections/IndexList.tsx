@@ -73,6 +73,9 @@ export interface IndexItem {
 }
 
 const IndexList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array of index item settings */
     items?: IndexItem[];
 
@@ -81,7 +84,7 @@ const IndexList: React.FC<{
 
     /** Function to inject custom icon decorator */
     customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-}> = ({ items, bgMode, customIcon }) => {
+}> = ({ anchorId, items, bgMode, customIcon }) => {
     const { colors } = useLibTheme();
     const { setActiveElement } = useScrollIntoView(500);
 
@@ -95,13 +98,15 @@ const IndexList: React.FC<{
         const href = ev.currentTarget.getAttribute('href') as string;
 
         if (!href) return;
-        const target = document.querySelector(href);
+
+        const target = document.getElementById(href.split('#')?.[1] || href);
         if (target) setActiveElement(target as HTMLElement);
     };
 
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

@@ -25,6 +25,9 @@ const Card = styled(PromotionCard)<{ isMain?: boolean }>`
 `;
 
 const CrossPromotion: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Promotion card settings in main grid column (default: on right side). The size prop controls the width. */
     main?: Array<
         Omit<PromotionCardProps, 'externalLinkIcon' | 'isInverted'> & {
@@ -47,7 +50,7 @@ const CrossPromotion: React.FC<{
 
     /** Inject custom icon that indicates an external link */
     externalLinkIcon?: React.ReactNode;
-}> = ({ main, aside, bgMode, isMirrored, externalLinkIcon }) => {
+}> = ({ anchorId, main, aside, bgMode, isMirrored, externalLinkIcon }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -55,6 +58,7 @@ const CrossPromotion: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

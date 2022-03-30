@@ -170,6 +170,9 @@ const Control = styled.div`
 `;
 
 const ComparisonSlider: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     bgMode?: 'full' | 'inverted' | 'splitted';
     initialValue?: number;
     foregroundImg?: ImageProps;
@@ -181,6 +184,7 @@ const ComparisonSlider: FC<{
     dragControl?: React.ReactNode;
     enableControlAnim?: boolean;
 }> = ({
+    anchorId,
     bgMode,
     initialValue,
     foregroundImg,
@@ -287,6 +291,7 @@ const ComparisonSlider: FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).dark

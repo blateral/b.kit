@@ -170,6 +170,9 @@ const Back = styled.div<{
 export type SectionType = 'header' | 'footer' | 'div';
 
 const Section: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Render as specific HTML tag type */
     renderAs?: SectionType;
 
@@ -187,6 +190,7 @@ const Section: React.FC<{
 
     className?: string;
 }> = ({
+    anchorId,
     renderAs,
     bgColor,
     bgMode,
@@ -216,6 +220,7 @@ const Section: React.FC<{
 
     return (
         <View
+            id={anchorId}
             as={renderAs}
             data-bg-ident={ident}
             bgIdent={ident}

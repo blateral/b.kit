@@ -168,6 +168,9 @@ const AccordionBlock: React.FC<
 };
 
 const Accordion: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array of accordion items */
     items: AccordionItem[];
 
@@ -176,7 +179,7 @@ const Accordion: React.FC<{
 
     /** Function to inject custom item state icon */
     itemIcon?: (props: { isSelected: boolean }) => React.ReactNode;
-}> = ({ items, bgMode, itemIcon }) => {
+}> = ({ anchorId, items, bgMode, itemIcon }) => {
     const [currentItems, setCurrentItems] = React.useState<number[]>([]);
 
     const { colors } = useLibTheme();
@@ -186,6 +189,7 @@ const Accordion: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

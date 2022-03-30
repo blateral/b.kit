@@ -36,18 +36,22 @@ const Social = styled(Link)`
 `;
 
 const SocialNav: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     socials: Array<{
         href: string;
         icon: React.ReactNode;
     }>;
     bgMode?: 'full' | 'inverted';
-}> = ({ socials, bgMode }) => {
+}> = ({ anchorId, socials, bgMode }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
     return (
         <Section
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).new.sectionBg.dark

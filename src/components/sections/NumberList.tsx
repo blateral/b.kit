@@ -139,6 +139,9 @@ const ContentContainer = styled.div`
 `;
 
 export interface NumberListProps {
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     items?: {
         icon?: { src: string; alt?: string };
         number?: string;
@@ -147,7 +150,7 @@ export interface NumberListProps {
     bgMode?: 'full' | 'inverted';
 }
 
-const NumberList: React.FC<NumberListProps> = ({ items, bgMode }) => {
+const NumberList: React.FC<NumberListProps> = ({ anchorId, items, bgMode }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -155,6 +158,7 @@ const NumberList: React.FC<NumberListProps> = ({ items, bgMode }) => {
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).new.sectionBg.dark

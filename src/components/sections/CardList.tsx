@@ -248,16 +248,20 @@ const CardItem = styled.li<{ isEqual?: boolean }>`
 `;
 
 const CardList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array with card item settings */
     items?: Omit<CardProps, 'mode'>[];
     bgMode?: 'full' | 'inverted';
 
     /** aspect ratio mode */
-}> = ({ items, bgMode }) => {
+}> = ({ anchorId, items, bgMode }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     return (
         <Section
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

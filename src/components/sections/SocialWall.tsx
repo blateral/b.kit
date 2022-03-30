@@ -136,6 +136,9 @@ const InstagramIcon = styled.div`
 `;
 
 const SocialWall: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array with item settings */
     items?: Array<{
         link?: LinkProps;
@@ -153,13 +156,14 @@ const SocialWall: React.FC<{
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ items, hashTag, followUs, socialIcon, bgMode }) => {
+}> = ({ anchorId, items, hashTag, followUs, socialIcon, bgMode }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
     return (
         <Section
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

@@ -47,6 +47,9 @@ export type NavItem = Omit<
 >;
 
 const NavList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array of navigation item settings */
     items?: NavItem[];
 
@@ -58,7 +61,7 @@ const NavList: React.FC<{
 
     /** Function to inject custom title decorator icon */
     customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-}> = ({ items, bgMode, customIcon, customTitleIcon }) => {
+}> = ({ anchorId, items, bgMode, customIcon, customTitleIcon }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -67,6 +70,7 @@ const NavList: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

@@ -470,6 +470,9 @@ export interface MapLocation {
 }
 
 const Map: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     bgMode?: 'full' | 'inverted';
     isMirrored?: boolean;
     provider?: string;
@@ -500,6 +503,7 @@ const Map: FC<{
         index?: number;
     }) => React.ReactNode;
 }> = ({
+    anchorId,
     bgMode,
     isMirrored = false,
     provider,
@@ -525,6 +529,7 @@ const Map: FC<{
 
     return (
         <StyledSection
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).new.sectionBg.dark
