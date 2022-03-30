@@ -23,6 +23,7 @@ export interface FlyoutMenuProps {
 
 const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     isOpen,
+    indexPage,
     mainNavigation,
     subNavigation,
     header,
@@ -30,9 +31,13 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
 }) => {
     return (
         <View isOpen={isOpen}>
-            {header ? header({ isOpen, mainNavigation, subNavigation }) : ''}
+            {header
+                ? header({ isOpen, mainNavigation, subNavigation, indexPage })
+                : ''}
             isOpen: {isOpen} Menu Flyout Items: {mainNavigation?.length || ''}
-            {footer ? footer({ isOpen, mainNavigation, subNavigation }) : ''}
+            {footer
+                ? footer({ isOpen, mainNavigation, subNavigation, indexPage })
+                : ''}
         </View>
     );
 };

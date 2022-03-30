@@ -28,6 +28,7 @@ export interface NavMenuStates extends MenuStates {
     isMenuOpen?: boolean;
     openMenu?: () => void;
     closeMenu?: () => void;
+    navBarSize?: NavBarSize;
 }
 
 export interface NavBarSettings {
@@ -48,6 +49,7 @@ export interface NavBarSettings {
 }
 
 export interface MenuSettings {
+    indexPage?: Array<NavGroup>;
     mainNavigation?: Array<NavGroup>;
     subNavigation?: Array<NavItem>;
     header?: (props: NavMenuStates) => React.ReactNode;
@@ -187,6 +189,7 @@ const Navigation: FC<NavigationProps> = ({
                   closeMenu,
                   mainNavigation: menu?.mainNavigation,
                   subNavigation: menu?.subNavigation,
+                  navBarSize: navbarSize,
               });
           }
         : undefined;
@@ -200,6 +203,7 @@ const Navigation: FC<NavigationProps> = ({
                   closeMenu,
                   mainNavigation: menu?.mainNavigation,
                   subNavigation: menu?.subNavigation,
+                  navBarSize: navbarSize,
               });
           }
         : undefined;
@@ -226,6 +230,7 @@ const Navigation: FC<NavigationProps> = ({
             <LibThemeProvider theme={menu?.theme}>
                 <Menu
                     isOpen={isMenuOpen}
+                    indexPage={menu?.indexPage}
                     mainNavigation={menu?.mainNavigation}
                     subNavigation={menu?.subNavigation}
                     header={menuHeader}
