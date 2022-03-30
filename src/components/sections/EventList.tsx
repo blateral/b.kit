@@ -1,18 +1,27 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import EventBlock, { EventProps } from 'components/blocks/EventBlock';
-import styled from 'styled-components';
-import { getColors, spacings } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
-const List = styled.div`
+const List = styled.ul<{ hasBg?: boolean }>`
     list-style: none;
     margin: 0;
     padding: 0;
+
+    & > * + * {
+        border-top: 1px solid
+            ${({ theme, hasBg }) =>
+                hasBg
+                    ? color(theme).new.elementBg.light
+                    : color(theme).new.elementBg.medium};
+    }
 `;
 
-const ListItem = styled.div`
+const ListItem = styled.li`
     padding-top: ${spacings.nudge * 5}px;
     padding-bottom: ${spacings.nudge * 5}px;
 
@@ -23,21 +32,35 @@ const ListItem = styled.div`
     &:last-child {
         padding-bottom: 0;
     }
-
-    & + & {
-        border-top: 1px solid
-            ${({ theme }) => getColors(theme).new.sectionBg.medium};
-    }
 `;
 
 const EventList: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
-    events?: EventProps[];
+
+    /** Array of event item settings */
+    events?: Omit<EventProps, 'customTag' | 'isInverted' | 'onTagClick'>[];
+
+    /** Section background */
     bgMode?: 'inverted' | 'full';
-}> = ({ anchorId, events, bgMode }) => {
-    const isInverted = bgMode === 'inverted';
+
+    /**
+     * Callback function to handle tag click outside of component
+     * */
+    onTagClick?: (tag: string) => void;
+
+    /** Function to inject custom tag node */
+    customTag?: (props: {
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+    }) => React.ReactNode;
+}> = ({ anchorId, events, bgMode, customTag, onTagClick }) => {
     const { colors } = useLibTheme();
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
+
     return (
         <Section
             addSeperation
@@ -49,21 +72,20 @@ const EventList: React.FC<{
                     ? colors.new.sectionBg.medium
                     : colors.new.sectionBg.light
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List>
-                    {events &&
-                        events.map((event, i) => {
-                            return (
-                                <ListItem key={i}>
-                                    <EventBlock
-                                        isInverted={isInverted}
-                                        {...event}
-                                    />
-                                </ListItem>
-                            );
-                        })}
+                <List hasBg={hasBg}>
+                    {events?.map((event, i) => (
+                        <ListItem key={i}>
+                            <EventBlock
+                                {...event}
+                                isInverted={isInverted}
+                                customTag={customTag}
+                                onTagClick={onTagClick}
+                            />
+                        </ListItem>
+                    ))}
                 </List>
             </Wrapper>
         </Section>

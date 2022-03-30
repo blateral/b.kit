@@ -226,7 +226,7 @@ const weekDays: WeekDays = {
             'Samstag',
             'Sonntag',
         ],
-        short: ['Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'],
+        short: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
     },
     en: {
         long: [
@@ -238,7 +238,7 @@ const weekDays: WeekDays = {
             'Saturday',
             'Sunday',
         ],
-        short: ['Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.'],
+        short: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     },
 };
 

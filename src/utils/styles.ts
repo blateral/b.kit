@@ -402,17 +402,26 @@ export interface GlobalSettings {
 
         /** Radius of image and card edges */
         edgeRadius: string | null;
+
         /** Customnize gradient for all text on image background gradients */
         imageTextGradient: string;
+
         /** Show placeholder background unitl image has been loaded */
         imagePlaceholderBg: {
             default: string;
             inverted: string;
         };
+
         /** Date and Time Formats for all news sections */
         newsDateFormat: string;
         newsTimeFormat: string;
         newsLocaleKey: 'de' | 'en';
+
+        /** Date and Time Formats for all event sections */
+        eventDateFormat: string;
+        eventTimeFormat: string;
+        eventLocaleKey: 'de' | 'en';
+
         /** Date and Time Formats for Datepickers */
         datepickerLocaleKey: 'de' | 'en';
         datepickerDateFormat: string;
@@ -478,7 +487,10 @@ const defaultGlobalSettings: GlobalSettings = {
         },
         newsDateFormat: 'dd/mm/yy',
         newsTimeFormat: 'hh:mm',
-        newsLocaleKey: 'de',
+        newsLocaleKey: 'en',
+        eventDateFormat: 'ddd, dd/mm/yy',
+        eventTimeFormat: 'hh:mm',
+        eventLocaleKey: 'en',
         datepickerLocaleKey: 'de',
         datepickerDateFormat: 'dd.MM.yyyy',
     },

@@ -1,10 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import Tag from './Tag';
 import Copy from 'components/typography/Copy';
-import { format } from 'date-fns';
-import de from 'date-fns/locale/de';
-import styled from 'styled-components';
 import { spacings } from 'utils/styles';
+import StatusFormatter from 'utils/statusFormatter';
+import { useLibTheme } from 'utils/LibThemeProvider';
 
 const View = styled.div`
     text-decoration: none;
@@ -37,31 +38,28 @@ const TagWrapper = styled.div`
 
 const Title = styled(Copy)``;
 
-// const TitleIcon = styled.span`
-//     display: inline-block;
-//     margin-left: ${spacings.nudge * 2}px;
-
-//     @media ${mq.medium} {
-//         margin-left: ${spacings.nudge * 3}px;
-//     }
-// `;
-
-// const DefaultIcon = styled(AngleRight)``;
-
 const Text = styled(Copy)``;
 
+// #TODO: Dokumentieren
 export interface EventProps {
-    customTag?: (props: {
-        name: string;
-        isInverted?: boolean;
-    }) => React.ReactNode;
     tags?: string[];
     activeTags?: string[];
     title?: string;
     date?: Date;
     text?: string;
     isInverted?: boolean;
-    tertiaryAction?: (isInverted?: boolean) => React.ReactNode;
+    action?: (props: { isInverted?: boolean }) => React.ReactNode;
+
+    /** Function to inject custom tag node */
+    customTag?: (props: {
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+    }) => React.ReactNode;
+
+    /** Callback function if tag in news iten has been clicked */
+    onTagClick?: (name: string) => void;
 }
 
 const EventBlock: React.FC<EventProps> = ({
@@ -71,8 +69,23 @@ const EventBlock: React.FC<EventProps> = ({
     text,
     tags,
     isInverted,
-    tertiaryAction,
+    onTagClick,
+    action,
 }) => {
+    const { globals } = useLibTheme();
+
+    let publishedAt = '';
+    if (date) {
+        const formatter = new StatusFormatter(
+            date.getTime(),
+            '',
+            globals.sections.eventDateFormat,
+            globals.sections.eventTimeFormat,
+            globals.sections.eventLocaleKey
+        );
+        publishedAt = formatter.getFormattedDate();
+    }
+
     return (
         <View>
             {tags && (
@@ -82,9 +95,23 @@ const EventBlock: React.FC<EventProps> = ({
                             {customTag ? (
                                 customTag({
                                     name: tag,
+                                    isInverted: isInverted,
+                                    isActive: false,
+                                    clickHandler: () => {
+                                        onTagClick && onTagClick(tag);
+                                    },
                                 })
                             ) : (
-                                <Tag isInverted={isInverted}>{tag}</Tag>
+                                <Tag
+                                    isInverted={isInverted}
+                                    onClick={
+                                        onTagClick
+                                            ? () => onTagClick(tag)
+                                            : undefined
+                                    }
+                                >
+                                    {tag}
+                                </Tag>
                             )}
                         </TagWrapper>
                     ))}
@@ -93,7 +120,7 @@ const EventBlock: React.FC<EventProps> = ({
             <Content>
                 {date && (
                     <Copy isInverted={isInverted} size="medium" type="copy">
-                        {format(date, 'EE dd.MM.yyyy', { locale: de })}
+                        {publishedAt}
                     </Copy>
                 )}
                 {title && (
@@ -105,7 +132,7 @@ const EventBlock: React.FC<EventProps> = ({
             {text && (
                 <Text size="small" isInverted={isInverted} innerHTML={text} />
             )}
-            {tertiaryAction && <div> {tertiaryAction(isInverted)} </div>}
+            {action && <div> {action({ isInverted })} </div>}
         </View>
     );
 };
