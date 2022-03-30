@@ -83,12 +83,15 @@ export const PriceBlock: React.FC<PriceItems & { hasBg?: boolean }> = ({
 };
 
 const PriceList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array with price items */
     items?: PriceItems[];
 
     /** Section background */
     bgMode?: 'inverted' | 'full';
-}> = ({ bgMode, items }) => {
+}> = ({ anchorId, bgMode, items }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBack = isInverted || bgMode === 'full';
@@ -96,6 +99,7 @@ const PriceList: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

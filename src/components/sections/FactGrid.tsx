@@ -18,6 +18,9 @@ const FactFill = styled.div`
 `;
 
 const FactGrid: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Controls amount columns on large screens */
     columns?: 3 | 4 | 6;
 
@@ -29,7 +32,7 @@ const FactGrid: FC<{
 
     /** Center text inside fact card items */
     isCentered?: boolean;
-}> = ({ columns = 3, facts, bgMode, isCentered }) => {
+}> = ({ anchorId, columns = 3, facts, bgMode, isCentered }) => {
     const { colors } = useLibTheme();
     const factCount = facts?.length || 0;
 
@@ -50,6 +53,7 @@ const FactGrid: FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

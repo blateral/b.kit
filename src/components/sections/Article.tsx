@@ -30,6 +30,8 @@ const StyledActions = styled(Actions)`
 `;
 
 const Article: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
     /** Main title text */
     title?: string;
     /** Main title HTML tag type (h2, h3, h4...) */
@@ -55,6 +57,7 @@ const Article: React.FC<{
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
+    anchorId,
     title,
     titleAs = 'h2',
     superTitle,
@@ -76,6 +79,7 @@ const Article: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

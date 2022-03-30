@@ -8,16 +8,20 @@ import { ImageProps } from 'components/blocks/Image';
 import VideoCard from 'components/blocks/VideoCard';
 
 const Video: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     bgImage: ImageProps;
     embedId: string;
     playIcon?: React.ReactChild;
     bgMode?: 'full' | 'inverted' | 'splitted';
-}> = ({ bgMode, bgImage, embedId, playIcon }) => {
+}> = ({ anchorId, bgMode, bgImage, embedId, playIcon }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
     return (
         <Section
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

@@ -178,6 +178,9 @@ const StyledActions = styled(Actions)`
 `;
 
 const TeaserWide: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Switch text and image columns */
     isMirrored?: boolean;
 
@@ -217,6 +220,7 @@ const TeaserWide: FC<{
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
+    anchorId,
     isMirrored = false,
     superTitle,
     superTitleAs,
@@ -238,6 +242,7 @@ const TeaserWide: FC<{
 
     return (
         <Section
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

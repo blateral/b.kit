@@ -170,9 +170,12 @@ const TableWrapper = styled(TableBlock)<{ withSeperation?: boolean }>`
 `;
 
 const Table: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     tableItems: TableProps[];
     bgMode?: 'full' | 'inverted';
-}> = ({ bgMode, tableItems }) => {
+}> = ({ anchorId, bgMode, tableItems }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full' || isInverted;
@@ -180,6 +183,7 @@ const Table: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

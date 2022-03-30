@@ -186,6 +186,8 @@ const Badge = styled.div`
 `;
 
 export const CallToAction: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
     /** Main title text */
     title?: string;
     /** Main title HTML tag type (h2, h3, h4...) */
@@ -213,6 +215,7 @@ export const CallToAction: FC<{
     /** Function to inject newsletter form */
     newsFormMain?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
+    anchorId,
     title,
     titleAs = 'h2',
     superTitle,
@@ -231,6 +234,7 @@ export const CallToAction: FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).new.sectionBg.dark

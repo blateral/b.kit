@@ -221,6 +221,8 @@ export interface FieldGenerationProps<T extends FieldTypes> {
 }
 
 const DynamicForm: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
     fields?: FormStructure;
     onSubmit?: (values: FormData) => Promise<void>;
     submitAction?: (props: {
@@ -243,6 +245,7 @@ const DynamicForm: FC<{
         upload?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
     };
 }> = ({
+    anchorId,
     fields,
     onSubmit,
     submitAction,
@@ -566,6 +569,7 @@ const DynamicForm: FC<{
     return (
         <StyledSection
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).new.sectionBg.dark

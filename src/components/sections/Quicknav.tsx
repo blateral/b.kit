@@ -68,12 +68,15 @@ const Slider = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
 `;
 
 const Quicknav: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     navItems: { label: string; link?: string }[];
     activeNavItem?: string;
     onNavClick?: (index: number, label: string) => void;
     className?: string;
     bgMode?: 'inverted';
-}> = ({ navItems, activeNavItem, onNavClick, className, bgMode }) => {
+}> = ({ anchorId, navItems, activeNavItem, onNavClick, className, bgMode }) => {
     const [isActiveItem, setIsActiveItem] = React.useState<number>(
         activeNavItem
             ? navItems?.findIndex(
@@ -108,6 +111,7 @@ const Quicknav: React.FC<{
 
     return (
         <StyledSection
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).new.sectionBg.dark

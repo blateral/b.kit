@@ -154,6 +154,9 @@ export interface IconListItem {
 }
 
 const IconList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array with icon items data */
     items?: Array<IconListItem>;
 
@@ -188,6 +191,7 @@ const IconList: React.FC<{
     /** Section background */
     bgMode?: 'full' | 'inverted';
 }> = ({
+    anchorId,
     items,
     isCentered = false,
     primaryAction,
@@ -209,6 +213,7 @@ const IconList: React.FC<{
     return (
         <StyledSection
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

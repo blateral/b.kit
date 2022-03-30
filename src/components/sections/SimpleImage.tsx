@@ -14,10 +14,13 @@ const StyledImage = styled(Image)<{ hAlign?: 'left' | 'center' | 'right' }>`
 `;
 
 const SimpleImage: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     image?: ImageProps;
     hAlign?: 'left' | 'center' | 'right';
     bgMode?: 'full' | 'inverted';
-}> = ({ image, hAlign = 'left', bgMode }) => {
+}> = ({ anchorId, image, hAlign = 'left', bgMode }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -25,6 +28,7 @@ const SimpleImage: FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? getColors(theme).new.sectionBg.dark

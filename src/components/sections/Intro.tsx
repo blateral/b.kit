@@ -6,6 +6,9 @@ import { HeadlineTag } from 'components/typography/Heading';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const Intro: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Main title text */
     title: string;
 
@@ -40,6 +43,7 @@ const Intro: React.FC<{
     bgMode?: 'inverted' | 'full' | 'splitted';
     className?: string;
 }> = ({
+    anchorId,
     title,
     titleAs,
     superTitle,
@@ -57,6 +61,7 @@ const Intro: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             isStackable={isStackable}
             bgColor={
                 isInverted

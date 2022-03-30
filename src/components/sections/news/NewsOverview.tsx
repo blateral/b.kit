@@ -86,6 +86,9 @@ export type NewsItem = Omit<
 >;
 
 const NewsOverview: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array of news item settings */
     news?: NewsItem[];
 
@@ -115,6 +118,7 @@ const NewsOverview: React.FC<{
         clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
 }> = ({
+    anchorId,
     news,
     tags,
     activeTags,
@@ -288,6 +292,7 @@ const NewsOverview: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

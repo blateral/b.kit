@@ -46,6 +46,9 @@ export type NewsItem = Omit<
 >;
 
 const NewsList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Show a short version of three or a expanded version of six news items */
     mode?: 'short' | 'expanded';
 
@@ -67,7 +70,7 @@ const NewsList: React.FC<{
         isActive?: boolean;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
-}> = ({ mode = 'short', news, bgMode, onTagClick, customTag }) => {
+}> = ({ anchorId, mode = 'short', news, bgMode, onTagClick, customTag }) => {
     const { colors } = useLibTheme();
 
     const items = useMemo<NewsCardProps[]>(() => {
@@ -98,6 +101,7 @@ const NewsList: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

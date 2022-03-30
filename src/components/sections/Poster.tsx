@@ -53,6 +53,9 @@ const Intro = styled(IntroBlock)`
 `;
 
 const Poster: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Clamp width of poster image to content wrapper or large wrapper */
     width?: 'full' | 'content';
 
@@ -80,6 +83,7 @@ const Poster: FC<{
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
+    anchorId,
     width = 'content',
     title,
     titleAs,
@@ -91,7 +95,7 @@ const Poster: FC<{
     image,
 }) => {
     return (
-        <Section bgColor="image" bgMode="full">
+        <Section anchorId={anchorId} bgColor="image" bgMode="full">
             <Wrapper clampWidth={width === 'content' ? 'normal' : 'large'}>
                 <Container hasContent={!!title || !!text}>
                     <StyledImage {...image} coverSpace ratios={undefined} />

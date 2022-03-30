@@ -107,9 +107,12 @@ const TimelineText = styled.div<{ isSwitched?: boolean }>`
 `;
 
 const Timeline: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     items?: { label?: string; title?: string; text?: string }[];
     bgMode?: 'full' | 'inverted';
-}> = ({ bgMode, items }) => {
+}> = ({ anchorId, bgMode, items }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -161,6 +164,7 @@ const Timeline: React.FC<{
 
     return (
         <Section
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).new.sectionBg.dark

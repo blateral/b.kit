@@ -49,6 +49,9 @@ const ListItem = styled.li<{ itemsPerRow: number }>`
 `;
 
 const AlertList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array of alert items */
     items?: Pick<AlertProps, 'title' | 'date' | 'description' | 'link'>[];
 
@@ -57,7 +60,7 @@ const AlertList: React.FC<{
 
     /** Function to inject custom alert icon */
     customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-}> = ({ items, bgMode, customIcon }) => {
+}> = ({ anchorId, items, bgMode, customIcon }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -80,6 +83,7 @@ const AlertList: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

@@ -37,13 +37,15 @@ const Items = styled.div`
 `;
 
 const PriceTable: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
     /** Array of PriceTag card items */
     items: Array<Omit<PriceTagProps, 'isInverted'>>;
     /** Center text inside card items */
     isCentered?: boolean;
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ items, isCentered, bgMode }) => {
+}> = ({ anchorId, items, isCentered, bgMode }) => {
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
     const priceTagCount = items?.length || 0;
@@ -69,6 +71,7 @@ const PriceTable: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

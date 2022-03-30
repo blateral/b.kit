@@ -8,6 +8,9 @@ import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import Grid from 'components/base/Grid';
 
 const FeatureList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Center texts in every feature item */
     isCentered?: boolean;
 
@@ -16,7 +19,7 @@ const FeatureList: React.FC<{
 
     /** Section background */
     bgMode?: 'full' | 'splitted' | 'inverted';
-}> = ({ features, bgMode, isCentered = false }) => {
+}> = ({ anchorId, features, bgMode, isCentered = false }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
@@ -42,6 +45,7 @@ const FeatureList: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

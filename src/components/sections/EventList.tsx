@@ -31,14 +31,17 @@ const ListItem = styled.div`
 `;
 
 const EventList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
     events?: EventProps[];
     bgMode?: 'inverted' | 'full';
-}> = ({ events, bgMode }) => {
+}> = ({ anchorId, events, bgMode }) => {
     const isInverted = bgMode === 'inverted';
     const { colors } = useLibTheme();
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark
