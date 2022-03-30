@@ -1,4 +1,3 @@
-import AngleRight from 'components/base/icons/AngleRight';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
@@ -9,29 +8,33 @@ import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { spacings, getColors as color, mq, getGlobals } from 'utils/styles';
 
-const View = styled.div`
+const View = styled.div<{ isInverted?: boolean }>`
     position: relative;
+    padding-top: 30%;
 
     color: ${({ theme }) => color(theme).new.text.copyInverted};
-
     cursor: pointer;
 
-    transition: all ease-in-out 0.2s;
+    @media ${mq.medium} {
+        padding-top: 85%;
+    }
 `;
 
 const SolidView = styled(View)`
-    /* padding-top: ${(3 / 4) * 100}%; */
-    background: ${({ theme }) => color(theme).new.primary.default};
+    background-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
 
-    padding-top: 25%;
-
-    @media ${mq.medium} {
-        padding-top: 100%;
-    }
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
-            background: ${({ theme }) => color(theme).new.primary.hover};
+            box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+            background-color: ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).new.primary.invertedHover
+                    : color(theme).new.primary.hover};
         }
     }
 `;
@@ -40,16 +43,25 @@ const ImageView = styled(View)`
     transition: box-shadow 0.2s ease-in-out;
     cursor: pointer;
 
-    padding-top: 25%;
+    transition: box-shadow 0.2s ease-in-out;
 
     @media (hover: hover) and (pointer: fine) {
+        img {
+            -webkit-backface-visibility: hidden;
+            -ms-transform: translateZ(0); /* IE 9 */
+            -webkit-transform: translateZ(0); /* Chrome, Safari, Opera */
+            transform: translateZ(0);
+            transform-origin: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
         &:hover {
             box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
-        }
-    }
 
-    &:focus {
-        box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+            img {
+                transform: scale(1.03);
+            }
+        }
     }
 
     &:after {
@@ -134,22 +146,15 @@ const Footer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    & > * + * {
+        margin-left: ${spacings.nudge * 2}px;
+    }
 `;
 
 const SubLabel = styled(Copy)`
     text-transform: lowercase;
     display: inline-block;
-`;
-
-const DecoratorIcon = styled(AngleRight)`
-    margin-left: ${spacings.nudge * 2}px;
-
-    width: 13px;
-    height: 18px;
-
-    @media ${mq.medium} {
-        margin-left: ${spacings.nudge * 3}px;
-    }
 `;
 
 const Icon = styled.img`
@@ -169,23 +174,35 @@ const CardLink = styled(Link)`
 `;
 
 export interface CardProps {
+    isInverted?: boolean;
     title?: string;
     subLabel?: string;
     image?: ImageProps;
     link?: LinkProps;
     icon?: { src: string; alt?: string };
+    decorator?: (props: { isInverted?: boolean }) => React.ReactNode;
 }
 
 const Card: React.FC<
-    Omit<CardProps, 'coverSpace'> & {
+    Omit<CardProps, 'coverSpace' | 'ratios'> & {
         className?: string;
     }
-> = ({ icon, title, subLabel, image, link }) => {
+> = ({ isInverted, icon, title, subLabel, image, link, decorator }) => {
     const CardView = image ? ImageView : SolidView;
 
     return (
-        <CardView>
-            {image && <StyledImage {...image} coverSpace />}
+        <CardView isInverted={isInverted}>
+            {image && (
+                <StyledImage
+                    {...image}
+                    coverSpace
+                    isInverted={isInverted}
+                    ratios={{
+                        small: { w: 352, h: 108 },
+                        medium: { w: 286, h: 244 },
+                    }}
+                />
+            )}
             <Content hasIcon={!!icon}>
                 {icon && <Icon src={icon?.src} alt={icon?.alt || ''} />}
                 <TextContainer textColor="inherit">
@@ -203,7 +220,7 @@ const Card: React.FC<
                             >
                                 {subLabel}
                             </SubLabel>
-                            <DecoratorIcon />
+                            {decorator ? decorator({ isInverted }) : undefined}
                         </Footer>
                     )}
                 </TextContainer>
@@ -215,8 +232,8 @@ const Card: React.FC<
 
 const List = styled.ul`
     padding: 0;
-    margin-top: -${spacings.spacer}px;
-    margin-left: -${spacings.spacer}px;
+    margin-top: -${spacings.nudge * 2}px;
+    margin-left: -${spacings.nudge * 2}px;
     list-style: none;
 
     display: flex;
@@ -224,17 +241,24 @@ const List = styled.ul`
     align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
+
+    @media ${mq.medium} {
+        margin-top: -${spacings.spacer}px;
+        margin-left: -${spacings.spacer}px;
+    }
 `;
 
 const CardItem = styled.li<{ isEqual?: boolean }>`
-    padding-top: ${spacings.spacer}px;
-    padding-left: ${spacings.spacer}px;
+    padding-top: ${spacings.nudge * 2}px;
+    padding-left: ${spacings.nudge * 2}px;
 
     width: 100%;
 
     @media ${mq.medium} {
         flex: 0 0 50%;
         max-width: 370px;
+        padding-top: ${spacings.spacer}px;
+        padding-left: ${spacings.spacer}px;
     }
 
     @media ${mq.semilarge} {
@@ -251,13 +275,17 @@ const CardList: React.FC<{
     anchorId?: string;
 
     /** Array with card item settings */
-    items?: Omit<CardProps, 'mode'>[];
+    items?: Omit<CardProps, 'decorator' | 'isInverted'>[];
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
 
-    /** aspect ratio mode */
-}> = ({ anchorId, items, bgMode }) => {
+    /** Function to inject custom decoration icon */
+    decorator?: (props: { isInverted?: boolean }) => React.ReactNode;
+}> = ({ anchorId, items, bgMode, decorator }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
+
     return (
         <Section
             anchorId={anchorId}
@@ -268,14 +296,18 @@ const CardList: React.FC<{
                     ? colors.new.sectionBg.medium
                     : colors.new.sectionBg.light
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
             addSeperation
         >
             <Wrapper addWhitespace>
                 <List>
                     {items?.map((item, i) => (
                         <CardItem key={i} isEqual={items.length % 2 === 0}>
-                            <Card {...item} />
+                            <Card
+                                {...item}
+                                isInverted={isInverted}
+                                decorator={decorator}
+                            />
                         </CardItem>
                     ))}
                 </List>

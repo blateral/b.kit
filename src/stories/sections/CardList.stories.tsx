@@ -2,6 +2,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import CardList, { CardListComponent } from 'components/sections/CardList';
+import AngleRight from 'components/base/icons/AngleRight';
 
 export default {
     title: 'Sections / CardList',
@@ -274,6 +275,82 @@ export const WithBackground: Story = () => (
 export const IsInverted: Story = () => (
     <CardList
         bgMode="inverted"
+        items={[
+            {
+                title: 'Musikschule',
+                subLabel: 'überlingen',
+                icon: {
+                    src: 'https://via.placeholder.com/60',
+                    alt: 'card_icon',
+                },
+                link: { href: '#0' },
+            },
+            {
+                title: 'Stadtbücherei',
+                subLabel: 'überlingen',
+                icon: {
+                    src: 'https://via.placeholder.com/60',
+                    alt: 'card_icon',
+                },
+                image: {
+                    small: 'https://unsplash.it/619/619',
+                    medium: 'https://unsplash.it/791/791',
+                    semilarge: 'https://unsplash.it/883/883',
+                    large: 'https://unsplash.it/766/766',
+                    xlarge: 'https://unsplash.it/824/824',
+                },
+                link: { href: '#0' },
+            },
+            {
+                title: 'Museum',
+                icon: {
+                    src: 'https://via.placeholder.com/60',
+                    alt: 'card_icon',
+                },
+                subLabel: 'überlingen',
+                link: { href: '#0' },
+            },
+            {
+                title: 'Feuerwehr',
+                icon: {
+                    src: 'https://via.placeholder.com/60',
+                    alt: 'card_icon',
+                },
+                subLabel: 'überlingen',
+                link: { href: '#0' },
+            },
+            {
+                title: 'Soziale Einrichtungen',
+                icon: {
+                    src: 'https://via.placeholder.com/60',
+                    alt: 'card_icon',
+                },
+                subLabel: 'überlingen',
+                image: {
+                    small: 'https://unsplash.it/619/619',
+                    medium: 'https://unsplash.it/791/791',
+                    semilarge: 'https://unsplash.it/883/883',
+                    large: 'https://unsplash.it/766/766',
+                    xlarge: 'https://unsplash.it/824/824',
+                },
+                link: { href: '#0' },
+            },
+            {
+                title: 'Krankenhaus',
+                icon: {
+                    src: 'https://via.placeholder.com/60',
+                    alt: 'card_icon',
+                },
+                subLabel: 'überlingen',
+                link: { href: '#0' },
+            },
+        ]}
+    />
+);
+
+export const WithDecorator: Story = () => (
+    <CardList
+        decorator={() => <AngleRight />}
         items={[
             {
                 title: 'Musikschule',
