@@ -1,12 +1,12 @@
 import AngleRight from 'components/base/icons/AngleRight';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled from 'styled-components';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { spacings, getColors as color, mq, getGlobals } from 'utils/styles';
 
 const View = styled.div`
@@ -249,11 +249,24 @@ const CardItem = styled.li<{ isEqual?: boolean }>`
 const CardList: React.FC<{
     /** Array with card item settings */
     items?: Omit<CardProps, 'mode'>[];
+    bgMode?: 'full' | 'inverted';
 
     /** aspect ratio mode */
-}> = ({ items }) => {
+}> = ({ items, bgMode }) => {
+    const { colors } = useLibTheme();
+    const isInverted = bgMode === 'inverted';
     return (
-        <Section addSeperation>
+        <Section
+            bgColor={
+                isInverted
+                    ? colors.new.sectionBg.dark
+                    : bgMode
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
+            }
+            bgMode={mapToBgMode(bgMode)}
+            addSeperation
+        >
             <Wrapper addWhitespace>
                 <List>
                     {items?.map((item, i) => (
