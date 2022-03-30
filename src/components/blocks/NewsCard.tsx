@@ -100,13 +100,10 @@ export interface NewsCardProps {
     onTagClick?: (name: string) => void;
 
     /** Function to inject primary action */
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    action?: (isInverted?: boolean) => React.ReactNode;
 
-    /** Function to inject secondary action */
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
-    /** Function to inject tertiary action */
-    tertiaryAction?: (isInverted?: boolean) => React.ReactNode;
+    /** Function to inject pointer action */
+    pointerAction?: (isInverted?: boolean) => React.ReactNode;
 
     /** Function to inject custom tag node */
     customTag?: (props: {
@@ -133,9 +130,8 @@ const NewsCard = forwardRef<
             image,
             link,
             isInverted,
-            primaryAction,
-            secondaryAction,
-            tertiaryAction,
+            action,
+            pointerAction,
             customTag,
             className,
         },
@@ -222,13 +218,10 @@ const NewsCard = forwardRef<
                         />
                     )}
                 </Main>
-                {(primaryAction || secondaryAction || tertiaryAction) && (
+                {(action || pointerAction) && (
                     <StyledActions
-                        primary={primaryAction && primaryAction(isInverted)}
-                        secondary={
-                            secondaryAction && secondaryAction(isInverted)
-                        }
-                        tertiary={tertiaryAction && tertiaryAction(isInverted)}
+                        primary={action && action(isInverted)}
+                        secondary={pointerAction && pointerAction(isInverted)}
                     />
                 )}
             </View>
