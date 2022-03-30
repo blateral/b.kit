@@ -13,12 +13,20 @@ const List = styled.div`
 `;
 
 const ListItem = styled.div`
-    padding-top: ${spacings.nudge * 3}px;
-    padding-bottom: ${spacings.nudge * 3}px;
+    padding-top: ${spacings.nudge * 5}px;
+    padding-bottom: ${spacings.nudge * 5}px;
+
+    &:first-child {
+        padding-top: 0;
+    }
+
+    &:last-child {
+        padding-bottom: 0;
+    }
 
     & + & {
         border-top: 1px solid
-            ${({ theme }) => getColors(theme).new.elementBg.medium};
+            ${({ theme }) => getColors(theme).new.sectionBg.medium};
     }
 `;
 
