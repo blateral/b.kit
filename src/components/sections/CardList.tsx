@@ -158,6 +158,7 @@ const Icon = styled.img`
 `;
 
 const CardLink = styled(Link)`
+    z-index: 1;
     display: block;
     position: absolute;
     top: 0;
