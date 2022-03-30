@@ -6,7 +6,6 @@ import NewsList, {
     NewsListComponent,
 } from 'components/sections/news/NewsList';
 import Button from 'components/buttons/Button';
-import ButtonGhost from 'components/buttons/ButtonGhost';
 import { generateItemList } from 'utils/storyHelpers';
 import Pointer from 'components/buttons/Pointer';
 import AngleRight from 'components/base/icons/AngleRight';
@@ -22,17 +21,12 @@ export default {
 } as Meta;
 
 const actions = {
-    primaryAction: (isInverted?: boolean) => (
+    action: (isInverted?: boolean) => (
         <Button.View isInverted={isInverted}>
             <Button.Label>Primary</Button.Label>
         </Button.View>
     ),
-    secondaryAction: (isInverted?: boolean) => (
-        <ButtonGhost.View isInverted={isInverted}>
-            <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-        </ButtonGhost.View>
-    ),
-    tertiaryAction: (isInverted?: boolean) => (
+    pointerAction: (isInverted?: boolean) => (
         <Pointer.View textDecoration="none" isInverted={isInverted}>
             <Pointer.Label>Tertiary</Pointer.Label>
             <Pointer.Icon>
