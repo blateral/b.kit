@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import EventList from 'components/sections/EventList';
