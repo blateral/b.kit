@@ -213,7 +213,7 @@ const Navigation: FC<NavigationProps> = ({
         : undefined;
 
     return (
-        <React.Fragment>
+        <header>
             <LibThemeProvider theme={navBar?.theme}>
                 <NavBar
                     isOpen={isNavBarOpen}
@@ -243,7 +243,7 @@ const Navigation: FC<NavigationProps> = ({
                     onClose={closeMenu}
                 />
             </LibThemeProvider>
-        </React.Fragment>
+        </header>
     );
 };
 

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { spacings } from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 import { MenuBaseProps } from '../Menu';
 
 const Backdrop = styled.div<{ isOpen?: boolean }>`
@@ -38,11 +38,15 @@ const Stage = styled.div<{ isOpen?: boolean; clampWidth?: 'content' | 'full' }>`
 
 const Flyout = styled.div<{ isOpen?: boolean }>`
     position: relative;
-    width: 390px;
+    width: 100%;
     height: 100%;
     background: white;
 
     pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+
+    @media ${mq.medium} {
+        width: 390px;
+    }
 
     &:before {
         content: '';
