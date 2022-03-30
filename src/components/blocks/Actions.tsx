@@ -51,13 +51,23 @@ const Actions: FC<{
     primary?: React.ReactNode;
     /** React node of secondary action */
     secondary?: React.ReactNode;
+    /** React node of tertiary action */
+    tertiary?: React.ReactNode;
     className?: string;
-}> = ({ mode = 'wrap', isMirrored = false, primary, secondary, className }) => {
+}> = ({
+    mode = 'wrap',
+    isMirrored = false,
+    primary,
+    secondary,
+    tertiary,
+    className,
+}) => {
     return (
         <View isCovered={mode === 'cover'} className={className}>
             <Content isCovered={mode === 'cover'} isMirrored={isMirrored}>
                 {primary && primary}
                 {secondary && secondary}
+                {tertiary && tertiary}
             </Content>
         </View>
     );

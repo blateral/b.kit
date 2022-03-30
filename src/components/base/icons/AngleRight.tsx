@@ -10,15 +10,17 @@ const AngleRight: React.FC<{ iconColor?: string; className?: string }> = ({
     className,
 }) => (
     <SVG
-        viewBox="0 0 13 18"
-        width="11"
-        height="15"
+        width="8"
+        height="11"
+        viewBox="0 0 8 11"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
         className={className}
+        xmlns="http://www.w3.org/2000/svg"
     >
         <path
-            d="M3.601 0 0 3.601l5.392 5.392L0 14.386l3.601 3.6 8.994-8.993L3.6 0Z"
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M7.104 5.553 1.801.25.74 1.31l4.242 4.243L.74 9.796l1.06 1.06 5.304-5.303Z"
             fill={iconColor}
         />
     </SVG>
