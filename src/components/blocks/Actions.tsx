@@ -40,6 +40,14 @@ const Content = styled.div<{
     }
 `;
 
+const TertiaryWrapper = styled.span`
+    align-self: flex-start;
+
+    @media ${mq.medium} {
+        align-self: center;
+    }
+`;
+
 export type ActionMode = 'wrap' | 'cover';
 
 const Actions: FC<{
@@ -67,7 +75,7 @@ const Actions: FC<{
             <Content isCovered={mode === 'cover'} isMirrored={isMirrored}>
                 {primary && primary}
                 {secondary && secondary}
-                {tertiary && tertiary}
+                {tertiary && <TertiaryWrapper>{tertiary}</TertiaryWrapper>}
             </Content>
         </View>
     );
