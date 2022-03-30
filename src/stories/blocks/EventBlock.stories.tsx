@@ -24,7 +24,7 @@ export const WithTertiaryAction: Story = () => (
         title="Sitzung des Gemeinderates"
         text="17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5"
         tags={['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5']}
-        tertiaryAction={(isInverted) => (
+        action={({ isInverted }) => (
             <Pointer.View
                 href="#0"
                 textDecoration="none"
