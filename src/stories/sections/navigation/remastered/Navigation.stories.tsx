@@ -130,7 +130,7 @@ export const WithMenu: Story = () => (
             ),
         }}
         menu={{
-            navItems: [],
+            mainNavigation: [],
             typeSettings: {
                 type: 'flyout',
             },
@@ -202,15 +202,18 @@ export const WithExampleContent: Story = () => (
                     primaryAction={primaryCtaFn}
                 />
             ),
-            bottomBar: ({ navItems }) => {
-                return navItems?.length;
+            bottomBar: ({ mainNavigation }) => {
+                return mainNavigation?.length;
             },
         }}
         menu={{
-            navItems: [],
+            mainNavigation: [],
             typeSettings: {
                 type: 'flyout',
             },
+            header: ({ closeMenu }) => (
+                <button onClick={closeMenu}>close</button>
+            ),
         }}
     />
 );

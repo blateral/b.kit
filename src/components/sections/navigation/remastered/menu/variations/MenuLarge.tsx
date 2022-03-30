@@ -10,12 +10,13 @@ export interface LargeMenuProps {
 }
 
 const MenuLarge: FC<MenuBaseProps & LargeMenuProps> = ({
-    navItems,
+    mainNavigation,
     columns = 3,
 }) => {
     return (
         <View>
-            Menu Large: With {columns} columns. Items: {navItems?.length || ''}
+            Menu Large: With {columns} columns. Items:{' '}
+            {mainNavigation?.length || ''}
         </View>
     );
 };

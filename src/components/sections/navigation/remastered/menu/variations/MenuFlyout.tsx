@@ -14,7 +14,7 @@ const View = styled.div<{ isOpen?: boolean }>`
     pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
 
     transition: transform 0.4s ease-in-out;
-    will-change: transform:
+    will-change: transform;
 `;
 
 export interface FlyoutMenuProps {
@@ -23,11 +23,16 @@ export interface FlyoutMenuProps {
 
 const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     isOpen,
-    navItems,
+    mainNavigation,
+    subNavigation,
+    header,
+    footer,
 }) => {
     return (
         <View isOpen={isOpen}>
-            isOpen: {isOpen} Menu Flyout Items: {navItems?.length || ''}
+            {header ? header({ isOpen, mainNavigation, subNavigation }) : ''}
+            isOpen: {isOpen} Menu Flyout Items: {mainNavigation?.length || ''}
+            {footer ? footer({ isOpen, mainNavigation, subNavigation }) : ''}
         </View>
     );
 };

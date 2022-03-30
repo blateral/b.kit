@@ -7,45 +7,54 @@ import MenuFlyout, { FlyoutMenuProps } from './variations/MenuFlyout';
 import MenuLarge, { LargeMenuProps } from './variations/MenuLarge';
 
 /** Navigation item types */
-interface NavItemBase {
-    name?: string;
-    link?: LinkProps;
-    isActive?: boolean;
+
+export interface NavItem {
+    label: string;
+    link: LinkProps;
+    isCurrent?: boolean;
 }
 
-export interface NavItem extends NavItemBase {
+export interface NavGroup extends NavItem {
     isFeatured?: boolean;
     icon?: React.ReactNode;
-}
-
-export type SubNavItem = NavItemBase;
-
-export interface NavGroup extends NavItemBase {
-    isFeatured?: boolean;
-    icon?: React.ReactNode;
-    subItems?: SubNavItem[];
+    subItems?: NavItem[];
 }
 
 /** Menu base type */
+export interface MenuStates {
+    isOpen?: boolean;
+    mainNavigation?: Array<NavGroup>;
+    subNavigation?: Array<NavItem>;
+}
+
 export interface MenuBaseProps {
     isOpen?: boolean;
-    navItems?: Array<NavItem>;
+    mainNavigation?: Array<NavGroup>;
+    subNavigation?: Array<NavItem>;
+    header?: (props: MenuStates) => React.ReactNode;
+    footer?: (props: MenuStates) => React.ReactNode;
 }
 
 export type MenuTypeProps = FlyoutMenuProps | LargeMenuProps;
 
-const Menu: FC<MenuBaseProps & { typeMods?: MenuTypeProps }> = ({
+const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
     isOpen,
-    navItems,
-    typeMods,
+    mainNavigation,
+    subNavigation,
+    header,
+    footer,
+    typeSettings,
 }) => {
-    switch (typeMods?.type) {
+    switch (typeSettings?.type) {
         case 'large': {
             return (
                 <MenuLarge
                     isOpen={isOpen}
-                    navItems={navItems}
-                    {...(typeMods as LargeMenuProps)}
+                    mainNavigation={mainNavigation}
+                    subNavigation={subNavigation}
+                    header={header}
+                    footer={footer}
+                    {...(typeSettings as LargeMenuProps)}
                 />
             );
         }
@@ -55,8 +64,11 @@ const Menu: FC<MenuBaseProps & { typeMods?: MenuTypeProps }> = ({
             return (
                 <MenuFlyout
                     isOpen={isOpen}
-                    navItems={navItems}
-                    {...(typeMods as FlyoutMenuProps)}
+                    mainNavigation={mainNavigation}
+                    subNavigation={subNavigation}
+                    header={header}
+                    footer={footer}
+                    {...(typeSettings as FlyoutMenuProps)}
                 />
             );
         }

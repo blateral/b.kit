@@ -7,7 +7,12 @@ import {
 import { useMediaQueries } from 'utils/useMediaQuery';
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
-import Menu, { MenuTypeProps, NavItem } from './menu/Menu';
+import Menu, {
+    MenuStates,
+    MenuTypeProps,
+    NavGroup,
+    NavItem,
+} from './menu/Menu';
 
 import NavBar, { getFullHeight, NavBarSize, BarStates } from './NavBar';
 
@@ -15,7 +20,14 @@ export interface NavBarStates extends BarStates {
     isMenuOpen?: boolean;
     openMenu?: () => void;
     closeMenu?: () => void;
-    navItems?: Array<NavItem>;
+    mainNavigation?: Array<NavGroup>;
+    subNavigation?: Array<NavItem>;
+}
+
+export interface NavMenuStates extends MenuStates {
+    isMenuOpen?: boolean;
+    openMenu?: () => void;
+    closeMenu?: () => void;
 }
 
 export interface NavBarSettings {
@@ -36,7 +48,10 @@ export interface NavBarSettings {
 }
 
 export interface MenuSettings {
-    navItems?: Array<NavItem>;
+    mainNavigation?: Array<NavGroup>;
+    subNavigation?: Array<NavItem>;
+    header?: (props: NavMenuStates) => React.ReactNode;
+    footer?: (props: NavMenuStates) => React.ReactNode;
     typeSettings: MenuTypeProps;
 
     theme?: ThemeMods;
@@ -129,7 +144,8 @@ const Navigation: FC<NavigationProps> = ({
                   isMenuOpen,
                   openMenu,
                   closeMenu,
-                  navItems: menu?.navItems,
+                  mainNavigation: menu?.mainNavigation,
+                  subNavigation: menu?.subNavigation,
               });
           }
         : undefined;
@@ -142,7 +158,8 @@ const Navigation: FC<NavigationProps> = ({
                   isMenuOpen,
                   openMenu,
                   closeMenu,
-                  navItems: menu?.navItems,
+                  mainNavigation: menu?.mainNavigation,
+                  subNavigation: menu?.subNavigation,
               });
           }
         : undefined;
@@ -155,7 +172,34 @@ const Navigation: FC<NavigationProps> = ({
                   isMenuOpen,
                   openMenu,
                   closeMenu,
-                  navItems: menu?.navItems,
+                  mainNavigation: menu?.mainNavigation,
+                  subNavigation: menu?.subNavigation,
+              });
+          }
+        : undefined;
+
+    const menuHeader = menu?.header
+        ? (props: MenuStates) => {
+              if (!menu?.header) return '';
+              return menu?.header({
+                  ...props,
+                  openMenu,
+                  closeMenu,
+                  mainNavigation: menu?.mainNavigation,
+                  subNavigation: menu?.subNavigation,
+              });
+          }
+        : undefined;
+
+    const menuFooter = menu?.footer
+        ? (props: MenuStates) => {
+              if (!menu?.footer) return '';
+              return menu?.footer({
+                  ...props,
+                  openMenu,
+                  closeMenu,
+                  mainNavigation: menu?.mainNavigation,
+                  subNavigation: menu?.subNavigation,
               });
           }
         : undefined;
@@ -180,7 +224,13 @@ const Navigation: FC<NavigationProps> = ({
                 />
             </LibThemeProvider>
             <LibThemeProvider theme={menu?.theme}>
-                <Menu isOpen={isMenuOpen} navItems={menu?.navItems} />
+                <Menu
+                    isOpen={isMenuOpen}
+                    mainNavigation={menu?.mainNavigation}
+                    subNavigation={menu?.subNavigation}
+                    header={menuHeader}
+                    footer={menuFooter}
+                />
             </LibThemeProvider>
         </React.Fragment>
     );
