@@ -166,9 +166,10 @@ export interface NavBarNavigationItem {
 const NavList: FC<{
     isInverted?: boolean;
     navLinks?: NavBarNavigationItem[];
-}> = ({ isInverted, navLinks }) => {
+    className?: string;
+}> = ({ isInverted, navLinks, className }) => {
     return (
-        <NavListView isInverted={isInverted}>
+        <NavListView isInverted={isInverted} className={className}>
             {navLinks?.map((item, i) => (
                 <NavLink
                     key={i}

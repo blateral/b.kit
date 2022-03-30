@@ -1,10 +1,15 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Navigation from 'components/sections/navigation/remastered/Navigation';
-import BarGrid from 'components/sections/navigation/remastered/skeletons/BarGrid';
-import MenuBurger from 'components/base/icons/MenuBurger';
-import NavBarTopPartial from 'components/sections/navigation/remastered/partials/NavBarTopPartial';
+import Navigation, {
+    NavBarStates,
+} from 'components/sections/navigation/remastered/Navigation';
+import NavBarTop from 'components/sections/navigation/remastered/partials/NavBarTop';
+import NavBarMain from 'components/sections/navigation/remastered/partials/NavBarMain';
+import Button from 'components/buttons/Button';
+import Star from 'components/base/icons/Star';
+// import ButtonGhost from 'components/buttons/ButtonGhost';
+// import StarGhost from 'components/base/icons/StarGhost';
 
 export default {
     title: 'Sections/Navigation v2',
@@ -133,66 +138,70 @@ export const WithMenu: Story = () => (
     />
 );
 
+// #TODO
+const primaryCtaFn = ({
+    isInverted,
+}: { isInverted?: boolean } & NavBarStates) => (
+    <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
+        <Button.Icon>
+            <Star />
+        </Button.Icon>
+    </Button.View>
+);
+
+// const secondaryCtaFn = ({
+//     isInverted,
+// }: { isInverted?: boolean } & NavBarStates) => (
+//     <ButtonGhost.View
+//         as="a"
+//         href="#"
+//         isInverted={isInverted}
+//         onClick={console.log}
+//     >
+//         <ButtonGhost.Icon>
+//             <StarGhost />
+//         </ButtonGhost.Icon>
+//     </ButtonGhost.View>
+// );
+
 export const WithExampleContent: Story = () => (
     <Navigation
         navBar={{
             isStickable: true,
             isCollapsible: true,
             pageFlow: 'overContent',
-            topBar: ({ size, pageFlow }) => {
-                const isInverted =
-                    size === 'large' && pageFlow === 'overContent';
-                return (
-                    <NavBarTopPartial
-                        isInverted={isInverted}
-                        navLinks={[
-                            { label: 'Contact', link: { href: '#0' } },
-                            {
-                                label: 'Opening Hours',
-                                link: { href: '#1' },
-                            },
-                            {
-                                label: 'About',
-                                link: { href: '#2' },
-                                isActive: true,
-                            },
-                        ]}
-                        languages={[
-                            {
-                                label: 'DE',
-                                link: { href: '/de' },
-                                isActive: true,
-                            },
-                            { label: 'EN', link: { href: '/en' } },
-                        ]}
-                    />
-                );
-            },
-            mainBar: ({ size, pageFlow, openMenu, isMenuOpen }) => {
-                const isInverted =
-                    size === 'large' && pageFlow === 'overContent';
-
-                return (
-                    <React.Fragment>
-                        <BarGrid.Col
-                            takeSpace
-                            vAlign="center"
-                            isInverted={isInverted}
-                        >
-                            <BarGrid.Toggle
-                                isInverted={isInverted}
-                                isExpanded={isMenuOpen}
-                                onClick={openMenu}
-                            >
-                                <MenuBurger />
-                            </BarGrid.Toggle>
-                        </BarGrid.Col>
-                        <BarGrid.Col isInverted={isInverted}>
-                            <BarGrid.Logo src="https://via.placeholder.com/320x80" />
-                        </BarGrid.Col>
-                    </React.Fragment>
-                );
-            },
+            topBar: (navStates) => (
+                <NavBarTop
+                    navStates={navStates}
+                    navLinks={[
+                        { label: 'Contact', link: { href: '#0' } },
+                        {
+                            label: 'Opening Hours',
+                            link: { href: '#1' },
+                        },
+                        {
+                            label: 'About',
+                            link: { href: '#2' },
+                            isActive: true,
+                        },
+                    ]}
+                    languages={[
+                        {
+                            label: 'DE',
+                            link: { href: '/de' },
+                            isActive: true,
+                        },
+                        { label: 'EN', link: { href: '/en' } },
+                    ]}
+                />
+            ),
+            mainBar: (navStates) => (
+                <NavBarMain
+                    logo={{ src: 'https://via.placeholder.com/320x80' }}
+                    navStates={navStates}
+                    primaryAction={primaryCtaFn}
+                />
+            ),
             bottomBar: ({ navItems }) => {
                 return navItems?.length;
             },
