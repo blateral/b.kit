@@ -7,6 +7,11 @@ import AngleRight from 'components/base/icons/AngleRight';
 export default {
     title: 'Sections / CardList',
     component: CardListComponent,
+    parameters: {
+        status: {
+            type: ['preview', 'qsReady'],
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (
