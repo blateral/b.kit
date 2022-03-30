@@ -1,16 +1,18 @@
 import React from 'react';
 import Tag from './Tag';
-import Heading from 'components/typography/Heading';
 import Copy from 'components/typography/Copy';
 import { format } from 'date-fns';
 import de from 'date-fns/locale/de';
-import styled, { ThemeContext } from 'styled-components';
-import { getColors, mq, spacings } from 'utils/styles';
-import AngleRight from 'components/base/icons/AngleRight';
+import styled from 'styled-components';
+import { spacings } from 'utils/styles';
 
-const View = styled.a`
+const View = styled.div`
     text-decoration: none;
     color: inherit;
+
+    & > * + * {
+        margin-top: ${spacings.nudge * 3}px;
+    }
 `;
 
 const TagContainer = styled.div`
@@ -20,15 +22,11 @@ const TagContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
-    &:not(:only-child) {
-        margin-bottom: ${spacings.nudge * 3}px;
-    }
 `;
 
 const Content = styled.div`
     & > * + * {
-        margin-top: ${spacings.nudge * 2}px;
+        margin-top: ${spacings.nudge}px;
     }
 `;
 
@@ -37,33 +35,20 @@ const TagWrapper = styled.div`
     padding-left: ${spacings.nudge}px;
 `;
 
-const Title = styled(Heading)<{ isClickable?: boolean }>`
-    display: inline-block;
+const Title = styled(Copy)``;
 
-    pointer-events: ${({ isClickable }) => (isClickable ? 'all' : 'none')};
-    cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
+// const TitleIcon = styled.span`
+//     display: inline-block;
+//     margin-left: ${spacings.nudge * 2}px;
 
-    transtion: all 0.2s ease-in-out;
+//     @media ${mq.medium} {
+//         margin-left: ${spacings.nudge * 3}px;
+//     }
+// `;
 
-    ${View}:hover & {
-        color: ${({ theme }) => getColors(theme).new.primary.hover};
-    }
-`;
+// const DefaultIcon = styled(AngleRight)``;
 
-const TitleIcon = styled.span`
-    display: inline-block;
-    margin-left: ${spacings.nudge * 2}px;
-
-    @media ${mq.medium} {
-        margin-left: ${spacings.nudge * 3}px;
-    }
-`;
-
-const DefaultIcon = styled(AngleRight)``;
-
-const Text = styled(Copy)`
-    margin-top: ${spacings.spacer}px;
-`;
+const Text = styled(Copy)``;
 
 export interface EventProps {
     customTag?: (props: {
@@ -76,8 +61,7 @@ export interface EventProps {
     date?: Date;
     text?: string;
     isInverted?: boolean;
-    link?: string;
-    customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+    tertiaryAction?: (isInverted?: boolean) => React.ReactNode;
 }
 
 const EventBlock: React.FC<EventProps> = ({
@@ -87,12 +71,10 @@ const EventBlock: React.FC<EventProps> = ({
     text,
     tags,
     isInverted,
-    link,
-    customTitleIcon,
+    tertiaryAction,
 }) => {
-    const theme = React.useContext(ThemeContext);
     return (
-        <View href={link}>
+        <View>
             {tags && (
                 <TagContainer>
                     {tags.map((tag, i) => (
@@ -115,32 +97,15 @@ const EventBlock: React.FC<EventProps> = ({
                     </Copy>
                 )}
                 {title && (
-                    <Title
-                        isInverted={isInverted}
-                        textColor={getColors(theme).new.primary.default}
-                        size="heading-4"
-                        isClickable={!!link}
-                    >
+                    <Title isInverted={isInverted} size="big" type="copy-b">
                         {title}
-                        {title && (
-                            <TitleIcon>
-                                {customTitleIcon ? (
-                                    customTitleIcon({ isInverted })
-                                ) : (
-                                    <DefaultIcon />
-                                )}
-                            </TitleIcon>
-                        )}
                     </Title>
                 )}
             </Content>
             {text && (
-                <Text
-                    isInverted={isInverted}
-                    textColor={getColors(theme).new.elementBg.medium}
-                    innerHTML={text}
-                />
+                <Text size="small" isInverted={isInverted} innerHTML={text} />
             )}
+            {tertiaryAction && <div> {tertiaryAction(isInverted)} </div>}
         </View>
     );
 };

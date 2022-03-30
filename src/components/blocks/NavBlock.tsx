@@ -8,7 +8,7 @@ import { getColors as color, mq, spacings } from 'utils/styles';
 
 const View = styled.div``;
 
-const Main = styled(Link)<{ isInverted?: boolean }>`
+const ContentWrapper = styled(Link)<{ isInverted?: boolean }>`
     color: ${({ theme, isInverted }) =>
         isInverted
             ? color(theme).new.primary.inverted
@@ -16,7 +16,7 @@ const Main = styled(Link)<{ isInverted?: boolean }>`
 
     display: inline-flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     cursor: pointer;
     text-decoration: none;
 
@@ -41,6 +41,10 @@ const Main = styled(Link)<{ isInverted?: boolean }>`
     }
 `;
 
+const MainContent = styled.div`
+    padding-top: 12px;
+`;
+
 const MainLabel = styled.div`
     & > * {
         display: inline-block;
@@ -55,7 +59,12 @@ const Text = styled(Copy)`
     margin-top: ${spacings.nudge * 3}px;
 `;
 
-const Icon = styled.div``;
+const Icon = styled.div`
+    & > * {
+        height: 48px;
+        width: 48px;
+    }
+`;
 
 const Title = styled(Copy)`
     display: inline-block;
@@ -109,28 +118,38 @@ const NavBlock: React.FC<NavBlockProps> = ({
 }) => {
     return (
         <View className={className}>
-            <Main {...link} isInverted={isInverted}>
+            <ContentWrapper {...link} isInverted={isInverted}>
                 <Icon>{customIcon ? customIcon({}) : <ArrowRightGhost />}</Icon>
-                <MainLabel>
-                    {title && (
-                        <Title textColor="inherit" size="medium" type="copy-b">
-                            {title}
-                            {title && (
-                                <TitleIcon>
-                                    {customTitleIcon ? (
-                                        customTitleIcon({})
-                                    ) : (
-                                        <DefaultIcon />
-                                    )}
-                                </TitleIcon>
-                            )}
-                        </Title>
+                <MainContent>
+                    <MainLabel>
+                        {title && (
+                            <Title
+                                textColor="inherit"
+                                size="medium"
+                                type="copy-b"
+                            >
+                                {title}
+                                {title && (
+                                    <TitleIcon>
+                                        {customTitleIcon ? (
+                                            customTitleIcon({})
+                                        ) : (
+                                            <DefaultIcon />
+                                        )}
+                                    </TitleIcon>
+                                )}
+                            </Title>
+                        )}
+                    </MainLabel>
+                    {text && (
+                        <Text
+                            size="small"
+                            isInverted={isInverted}
+                            innerHTML={text}
+                        />
                     )}
-                </MainLabel>
-            </Main>
-            {text && (
-                <Text size="small" isInverted={isInverted} innerHTML={text} />
-            )}
+                </MainContent>
+            </ContentWrapper>
         </View>
     );
 };

@@ -40,6 +40,14 @@ const Content = styled.div<{
     }
 `;
 
+const TertiaryWrapper = styled.div`
+    align-self: flex-start;
+
+    @media ${mq.medium} {
+        align-self: center;
+    }
+`;
+
 export type ActionMode = 'wrap' | 'cover';
 
 const Actions: FC<{
@@ -51,13 +59,23 @@ const Actions: FC<{
     primary?: React.ReactNode;
     /** React node of secondary action */
     secondary?: React.ReactNode;
+    /** React node of tertiary action */
+    tertiary?: React.ReactNode;
     className?: string;
-}> = ({ mode = 'wrap', isMirrored = false, primary, secondary, className }) => {
+}> = ({
+    mode = 'wrap',
+    isMirrored = false,
+    primary,
+    secondary,
+    tertiary,
+    className,
+}) => {
     return (
         <View isCovered={mode === 'cover'} className={className}>
             <Content isCovered={mode === 'cover'} isMirrored={isMirrored}>
                 {primary && primary}
                 {secondary && secondary}
+                {tertiary && <TertiaryWrapper>{tertiary}</TertiaryWrapper>}
             </Content>
         </View>
     );

@@ -50,18 +50,22 @@ const View = styled.a<{
     background: none;
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).mono.light
+            ? color(theme).new.elementBg.medium
             : inverted
-            ? color(theme).light
-            : color(theme).dark};
+            ? color(theme).new.text.copyInverted
+            : color(theme).new.text.copy};
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).mono.light
+                ? color(theme).new.elementBg.medium
                 : inverted
-                ? color(theme).light
-                : color(theme).dark};
+                ? color(theme).new.text.copyInverted
+                : color(theme).new.text.copy};
+    }
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
     }
 
     & > :not(:last-child) {
@@ -136,6 +140,7 @@ const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
                     as={as as any}
                     href={(rest as LinkProps).href}
                     data-disabled={isDisabled}
+                    data-inverted={isInverted}
                     target={
                         (rest as LinkProps).isExternal ? '_blank' : undefined
                     }
@@ -164,17 +169,19 @@ const Icon = styled.div<{ iconColor?: string }>`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    width: 35px;
-    height: 35px;
 
-    color: ${({ theme, iconColor }) =>
-        iconColor || color(theme).primary.medium};
+    color: ${({ theme, iconColor }) => iconColor || color(theme).new.text.copy};
 
     transition: transform 0.2s ease-in-out;
 
+    ${View}[data-inverted='true'] > & {
+        color: ${({ theme, iconColor }) =>
+            iconColor || color(theme).new.text.copyInverted};
+    }
+
     ${View}[data-disabled='true'] > & {
         color: ${({ theme, iconColor }) =>
-            iconColor || color(theme).mono.light};
+            iconColor || color(theme).new.elementBg.medium};
     }
 
     ${View}:hover > & {

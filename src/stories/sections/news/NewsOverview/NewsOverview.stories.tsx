@@ -8,6 +8,8 @@ import NewsOverview, {
 import { generateItemList } from 'utils/storyHelpers';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
+import Pointer from 'components/buttons/Pointer';
+import AngleRight from 'components/base/icons/AngleRight';
 
 export default {
     title: 'Sections/News/NewsOverview',
@@ -29,6 +31,14 @@ const actions = {
         <ButtonGhost.View isInverted={isInverted}>
             <ButtonGhost.Label>Secondary</ButtonGhost.Label>
         </ButtonGhost.View>
+    ),
+    tertiaryAction: (isInverted?: boolean) => (
+        <Pointer.View textDecoration="none" isInverted={isInverted}>
+            <Pointer.Label>Tertiary</Pointer.Label>
+            <Pointer.Icon>
+                <AngleRight />
+            </Pointer.Icon>
+        </Pointer.View>
     ),
 };
 

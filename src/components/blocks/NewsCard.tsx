@@ -105,6 +105,9 @@ export interface NewsCardProps {
     /** Function to inject secondary action */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
+    /** Function to inject tertiary action */
+    tertiaryAction?: (isInverted?: boolean) => React.ReactNode;
+
     /** Function to inject custom tag node */
     customTag?: (props: {
         name: string;
@@ -132,6 +135,7 @@ const NewsCard = forwardRef<
             isInverted,
             primaryAction,
             secondaryAction,
+            tertiaryAction,
             customTag,
             className,
         },
@@ -218,12 +222,13 @@ const NewsCard = forwardRef<
                         />
                     )}
                 </Main>
-                {(primaryAction || secondaryAction) && (
+                {(primaryAction || secondaryAction || tertiaryAction) && (
                     <StyledActions
                         primary={primaryAction && primaryAction(isInverted)}
                         secondary={
                             secondaryAction && secondaryAction(isInverted)
                         }
+                        tertiary={tertiaryAction && tertiaryAction(isInverted)}
                     />
                 )}
             </View>
