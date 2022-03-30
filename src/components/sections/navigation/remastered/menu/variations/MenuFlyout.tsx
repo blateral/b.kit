@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { mq, spacings } from 'utils/styles';
+import { mq, spacings, getColors as color } from 'utils/styles';
 import { MenuBaseProps } from '../Menu';
 
 const Backdrop = styled.div<{ isOpen?: boolean }>`
@@ -40,7 +40,7 @@ const Flyout = styled.div<{ isOpen?: boolean }>`
     position: relative;
     width: 100%;
     height: 100%;
-    background: white;
+    background-color: ${({ theme }) => color(theme).new.elementBg.light};
 
     pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
 
@@ -52,10 +52,11 @@ const Flyout = styled.div<{ isOpen?: boolean }>`
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
+        left: 2px;
         height: 100%;
         width: 40vw;
-        background-color: white;
+        background-color: ${({ theme }) => color(theme).new.elementBg.light};
+        z-index: -1;
 
         transform: translateX(-100%);
     }
