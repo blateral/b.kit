@@ -1,3 +1,4 @@
+import React from 'react';
 import { css, DefaultTheme } from 'styled-components';
 
 export type MediaQueryType =
@@ -385,6 +386,12 @@ export type NavBarHeights = {
     large: number;
 };
 
+export interface LinkIcon {
+    icon: React.ReactNode;
+    /** Patterns of Href value to show this icon (e.g. .svg, .png) */
+    patterns?: string[];
+}
+
 export interface GlobalSettings {
     sections: {
         /** Paddings and Margins for seperating each section */
@@ -456,6 +463,10 @@ export interface GlobalSettings {
             };
         };
     };
+    icons: {
+        /** Icon setup for link/download lists */
+        linkIcons: Array<LinkIcon>;
+    };
 }
 
 const defaultGlobalSettings: GlobalSettings = {
@@ -509,6 +520,19 @@ const defaultGlobalSettings: GlobalSettings = {
                 large: [30, 40],
             },
         },
+    },
+    icons: {
+        // #TODO: icons einpflegen
+        linkIcons: [
+            { icon: '' }, // default link without file type
+            { icon: '', patterns: ['.pdf'] },
+            { icon: '', patterns: ['.docx'] },
+            { icon: '', patterns: ['.xlsx'] },
+            { icon: '', patterns: ['.pptx'] },
+            { icon: '', patterns: ['.jpg', '.jpeg', '.png', '.svg'] },
+            { icon: '', patterns: ['.zip'] },
+            { icon: '', patterns: ['.*'] }, // #TODO: Regex für eine unbekannte Regex finden
+        ],
     },
 };
 
