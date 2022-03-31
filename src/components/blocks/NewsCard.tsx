@@ -1,9 +1,8 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { mq, spacings, getGlobals as global } from 'utils/styles';
+import { spacings, getGlobals as global } from 'utils/styles';
 import Copy from 'components/typography/Copy';
-import Actions from 'components/blocks/Actions';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
 import StatusFormatter from 'utils/statusFormatter';
@@ -60,18 +59,8 @@ const Main = styled.div`
     }
 `;
 
-const StyledActions = styled(Actions)`
+const Action = styled.div`
     margin-top: ${spacings.nudge * 3}px;
-
-    @media ${mq.medium} {
-        width: 100%;
-
-        & > * {
-            /* max-width: 50%; */
-            min-width: 0 !important;
-            flex: 1;
-        }
-    }
 `;
 
 export interface NewsCardProps {
@@ -102,9 +91,6 @@ export interface NewsCardProps {
     /** Function to inject primary action */
     action?: (isInverted?: boolean) => React.ReactNode;
 
-    /** Function to inject pointer action */
-    pointerAction?: (isInverted?: boolean) => React.ReactNode;
-
     /** Function to inject custom tag node */
     customTag?: (props: {
         name: string;
@@ -131,7 +117,6 @@ const NewsCard = forwardRef<
             link,
             isInverted,
             action,
-            pointerAction,
             customTag,
             className,
         },
@@ -218,12 +203,7 @@ const NewsCard = forwardRef<
                         />
                     )}
                 </Main>
-                {(action || pointerAction) && (
-                    <StyledActions
-                        primary={action && action(isInverted)}
-                        secondary={pointerAction && pointerAction(isInverted)}
-                    />
-                )}
+                {action && <Action>{action(isInverted)}</Action>}
             </View>
         );
     }

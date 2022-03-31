@@ -6,7 +6,6 @@ import NewsOverview, {
     NewsOverviewComponent,
 } from 'components/sections/news/NewsOverview';
 import { generateItemList } from 'utils/storyHelpers';
-import Button from 'components/buttons/Button';
 import Pointer from 'components/buttons/Pointer';
 import AngleRight from 'components/base/icons/AngleRight';
 
@@ -20,13 +19,8 @@ export default {
     },
 } as Meta;
 
-const actions = {
-    primaryAction: (isInverted?: boolean) => (
-        <Button.View isInverted={isInverted}>
-            <Button.Label>Primary</Button.Label>
-        </Button.View>
-    ),
-    pointerAction: (isInverted?: boolean) => (
+const action = {
+    action: (isInverted?: boolean) => (
         <Pointer.View textDecoration="none" isInverted={isInverted}>
             <Pointer.Label>Tertiary</Pointer.Label>
             <Pointer.Icon>
@@ -42,7 +36,7 @@ const exampleNewsCard: NewsItem = {
     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
     text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     link: { href: '#0' },
-    ...actions,
+    ...action,
 };
 
 const exampleNewsTag1 = generateItemList<NewsItem>(
