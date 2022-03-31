@@ -5,7 +5,12 @@ import NavBarGrid from '../skeletons/NavBarGrid';
 
 const NavBarMain: FC<{
     isInverted?: boolean;
-    logo?: { src: string; alt?: string };
+    logo?: {
+        desktop?: { src: string; alt?: string };
+        desktopInverted?: { src: string; alt?: string };
+        mobile?: { src: string; alt?: string };
+        mobileInverted?: { src: string; alt?: string };
+    };
     customToggle?: (props: { isInverted?: boolean }) => React.ReactNode;
     primaryAction?: (
         props: { isInverted?: boolean } & NavBarStates
@@ -33,9 +38,12 @@ const NavBarMain: FC<{
                     )}
                 </NavBarGrid.Toggle>
             </NavBarGrid.Col>
-            {logo?.src && (
+            {logo?.desktop && (
                 <NavBarGrid.Col isInverted={isInverted}>
-                    <NavBarGrid.Logo src={logo.src} alt={logo?.alt} />
+                    <NavBarGrid.Logo
+                        src={logo.desktop.src}
+                        alt={logo?.desktop?.alt}
+                    />
                 </NavBarGrid.Col>
             )}
             <NavBarGrid.Col takeSpace vAlign="center">

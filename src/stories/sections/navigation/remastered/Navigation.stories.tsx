@@ -197,7 +197,10 @@ export const WithExampleContent: Story = () => (
             ),
             mainBar: (navStates) => (
                 <NavBarMain
-                    logo={{ src: 'https://via.placeholder.com/320x80' }}
+                    logo={{
+                        mobile: { src: 'https://via.placeholder.com/80x80' },
+                        desktop: { src: 'https://via.placeholder.com/320x80' },
+                    }}
                     navStates={navStates}
                     primaryAction={primaryCtaFn}
                 />
