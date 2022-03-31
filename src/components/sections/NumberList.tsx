@@ -138,7 +138,7 @@ const ContentContainer = styled.div`
     }
 `;
 
-export interface NumberListProps {
+const NumberList: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
@@ -148,9 +148,7 @@ export interface NumberListProps {
         label?: string;
     }[];
     bgMode?: 'full' | 'inverted';
-}
-
-const NumberList: React.FC<NumberListProps> = ({ anchorId, items, bgMode }) => {
+}> = ({ anchorId, items, bgMode }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
