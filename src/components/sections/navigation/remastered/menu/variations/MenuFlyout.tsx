@@ -117,6 +117,15 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                 </li>
                             ))}
                         </ul>
+                        <ul>
+                            {subNavigation?.map((navItem, i) => (
+                                <li key={i}>
+                                    <a href={navItem.link.href}>
+                                        {navItem.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
                     </nav>
                     {footer
                         ? footer({
