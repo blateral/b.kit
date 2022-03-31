@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { NavGroup, NavItem } from '../menu/Menu';
 import Link from 'components/typography/Link';
 import { spacings, getColors as color } from 'utils/styles';
-import { copyStyle } from 'components/typography/Copy';
+import Copy, { copyStyle } from 'components/typography/Copy';
 
 const View = styled.nav``;
 
@@ -48,6 +48,7 @@ const NavLink = styled(Link)<{ isInverted?: boolean }>`
     }
 `;
 
+// #TODO: Stories erstellen
 const BarBreadcrumbs: FC<{
     isInverted?: boolean;
     startItem?: NavItem;
@@ -100,9 +101,9 @@ const BarBreadcrumbs: FC<{
                 )}
                 {currentNavPath?.map((item, i) => (
                     <ListItem key={i}>
-                        <span>
+                        <Copy size="small" isInverted={isInverted}>
                             {seperator ? seperator({ isInverted }) : '/'}
-                        </span>
+                        </Copy>
                         <NavLink {...item.link} isInverted={isInverted}>
                             {item.label}
                         </NavLink>
