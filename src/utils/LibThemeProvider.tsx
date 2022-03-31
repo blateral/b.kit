@@ -10,7 +10,7 @@ import {
     getGlobals,
 } from 'utils/styles';
 
-type RecursivePartial<T> = {
+export type RecursivePartial<T> = {
     [P in keyof T]?: RecursivePartial<T[P]>;
 };
 
