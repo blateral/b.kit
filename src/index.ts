@@ -143,6 +143,10 @@ export { default as Slider } from 'components/blocks/Slider';
 export { default as Navigation } from 'components/sections/navigation/Navigation';
 export { default as Menu } from 'components/sections/navigation/menu/Menu';
 export { default as TopBar } from 'components/sections/navigation/TopBar';
+export { default as NewNavigation } from 'components/sections/navigation/remastered/Navigation';
+export { default as NavBarGrid } from 'components/sections/navigation/remastered/skeletons/NavBarGrid';
+export { default as NavBarMainPartial } from 'components/sections/navigation/remastered/partials/NavBarMain';
+export { default as NavBarTopPartial } from 'components/sections/navigation/remastered/partials/NavBarTop';
 export { default as SocialList } from 'components/blocks/SocialList';
 
 /***** Icons *****/
