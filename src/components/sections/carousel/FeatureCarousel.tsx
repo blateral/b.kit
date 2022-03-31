@@ -33,10 +33,12 @@ const StyledWrapper = styled.div`
 
 const FeatureCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing' | 'isInverted'> & {
+        anchorId?: string;
         bgMode?: 'full' | 'splitted' | 'inverted';
         features?: FeatureProps[];
     }
 > = ({
+    anchorId,
     bgMode,
     features,
     controlNext,
@@ -69,6 +71,7 @@ const FeatureCarousel: FC<
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).dark

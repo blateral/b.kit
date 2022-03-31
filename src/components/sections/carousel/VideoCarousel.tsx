@@ -9,10 +9,12 @@ import VideoCard, { VideoCardProps } from 'components/blocks/VideoCard';
 
 const VideoCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing' | 'isInverted'> & {
+        anchorId?: string;
         bgMode?: 'full' | 'splitted' | 'inverted';
         videos?: VideoCardProps[];
     }
 > = ({
+    anchorId,
     bgMode,
     videos,
     controlNext,
@@ -29,6 +31,7 @@ const VideoCarousel: FC<
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).dark

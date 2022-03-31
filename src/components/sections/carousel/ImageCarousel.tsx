@@ -9,10 +9,12 @@ import { withLibTheme } from 'utils/LibThemeProvider';
 
 const ImageCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'isInverted'> & {
+        anchorId?: string;
         bgMode?: 'full' | 'splitted' | 'inverted';
         images?: ImageProps[];
     }
 > = ({
+    anchorId,
     bgMode,
     spacing = 'normal',
     images,
@@ -30,6 +32,7 @@ const ImageCarousel: FC<
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).dark

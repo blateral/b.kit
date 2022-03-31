@@ -21,11 +21,13 @@ export type PromotionCarouselItem = Omit<
 
 const PromotionCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing' | 'isInverted'> & {
+        anchorId?: string;
         bgMode?: 'full' | 'splitted' | 'inverted';
         promotions?: PromotionCarouselItem[];
         externalLinkIcon?: React.ReactNode;
     }
 > = ({
+    anchorId,
     bgMode,
     promotions,
     externalLinkIcon,
@@ -43,6 +45,7 @@ const PromotionCarousel: FC<
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).dark
