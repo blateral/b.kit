@@ -222,7 +222,17 @@ export const WithExampleContent: Story = () => (
         menu={{
             mainNavigation: [
                 { link: { href: '/services' }, label: 'Services' },
-                { link: { href: '/news' }, label: 'News' },
+                {
+                    link: { href: '/news' },
+                    label: 'News',
+                    subItems: [
+                        {
+                            link: { href: '/companynews' },
+                            label: 'Company',
+                            isCurrent: true,
+                        },
+                    ],
+                },
                 { link: { href: '/impressum' }, label: 'Impressum' },
             ],
             typeSettings: {

@@ -125,6 +125,7 @@ const View = styled.div<{
 
     margin: 0 auto;
     max-width: ${spacings.wrapperLarge}px;
+    z-index: 100;
 
     ${({ isAnimated }) => `transition: ${
         isAnimated ? 'transform 0.3s ease-in-out, ' : ''

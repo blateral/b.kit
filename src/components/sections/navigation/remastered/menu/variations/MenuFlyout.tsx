@@ -12,6 +12,7 @@ const Backdrop = styled.div<{ isOpen?: boolean }>`
     background-color: rgba(0, 0, 0, 0.5);
     opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+    z-index: 101;
 
     transition: opacity 0.3s ease-in-out;
 
@@ -29,6 +30,8 @@ const Stage = styled.div<{ isOpen?: boolean; clampWidth?: 'content' | 'full' }>`
     max-width: ${({ clampWidth }) =>
         clampWidth === 'content' ? spacings.wrapper : spacings.wrapperLarge}px;
     pointer-events: none;
+
+    z-index: 102;
 
     transform: translate(${({ isOpen }) => (isOpen ? '-50%' : '-100%')}, 0px);
 
