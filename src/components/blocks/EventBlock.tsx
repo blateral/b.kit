@@ -70,8 +70,8 @@ export interface EventProps {
     /** Active tags that are highlighted in this event */
     activeTags?: string[];
 
-    /** Event Image */
-    image?: ImageProps;
+    /** Event image */
+    image?: Omit<ImageProps, 'coverSpace'>;
 
     /** Event title */
     title?: string;
@@ -127,7 +127,9 @@ const EventBlock: React.FC<EventProps> = ({
 
     return (
         <View>
-            {image && <StyledImage {...image} />}
+            {image?.small && (
+                <StyledImage {...image} coverSpace isInverted={isInverted} />
+            )}
             <MainContent>
                 {tags && (
                     <TagContainer>
