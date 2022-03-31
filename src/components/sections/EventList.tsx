@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import EventBlock, { EventProps } from 'components/blocks/EventBlock';
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, spacings, withRange } from 'utils/styles';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
 const List = styled.ul<{ hasBg?: boolean }>`
@@ -22,8 +22,8 @@ const List = styled.ul<{ hasBg?: boolean }>`
 `;
 
 const ListItem = styled.li`
-    padding-top: ${spacings.nudge * 5}px;
-    padding-bottom: ${spacings.nudge * 5}px;
+    ${withRange([spacings.nudge * 3, spacings.nudge * 5], 'padding-top')}
+    ${withRange([spacings.nudge * 3, spacings.nudge * 5], 'padding-bottom')}
 
     &:first-child {
         padding-top: 0;

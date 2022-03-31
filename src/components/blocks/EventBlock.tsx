@@ -3,13 +3,36 @@ import styled from 'styled-components';
 
 import Tag from './Tag';
 import Copy from 'components/typography/Copy';
-import { spacings } from 'utils/styles';
+import { spacings, mq } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
 import { useLibTheme } from 'utils/LibThemeProvider';
+import Image, { ImageProps } from './Image';
 
 const View = styled.div`
     text-decoration: none;
     color: inherit;
+
+    & > * + * {
+        margin-top: ${spacings.nudge * 3}px;
+    }
+
+    @media ${mq.large} {
+        display: flex;
+        flex-direction: row-reverse;
+
+        & > * + * {
+            margin-top: 0;
+            padding-right: ${spacings.spacer}px;
+        }
+    }
+`;
+
+const StyledImage = styled(Image)`
+    flex: 1 0 40%;
+`;
+
+const MainContent = styled.div`
+    flex: 1 0 60%;
 
     & > * + * {
         margin-top: ${spacings.nudge * 3}px;
@@ -25,7 +48,7 @@ const TagContainer = styled.div`
     flex-wrap: wrap;
 `;
 
-const Content = styled.div`
+const TitleWrapper = styled.div`
     & > * + * {
         margin-top: ${spacings.nudge}px;
     }
@@ -46,6 +69,9 @@ export interface EventProps {
 
     /** Active tags that are highlighted in this event */
     activeTags?: string[];
+
+    /** Event Image */
+    image?: ImageProps;
 
     /** Event title */
     title?: string;
@@ -77,6 +103,7 @@ export interface EventProps {
 const EventBlock: React.FC<EventProps> = ({
     customTag,
     title,
+    image,
     date,
     text,
     tags,
@@ -100,51 +127,58 @@ const EventBlock: React.FC<EventProps> = ({
 
     return (
         <View>
-            {tags && (
-                <TagContainer>
-                    {tags.map((tag, i) => (
-                        <TagWrapper key={'tag_' + i}>
-                            {customTag ? (
-                                customTag({
-                                    name: tag,
-                                    isInverted: isInverted,
-                                    isActive: false,
-                                    clickHandler: () => {
-                                        onTagClick && onTagClick(tag);
-                                    },
-                                })
-                            ) : (
-                                <Tag
-                                    isInverted={isInverted}
-                                    onClick={
-                                        onTagClick
-                                            ? () => onTagClick(tag)
-                                            : undefined
-                                    }
-                                >
-                                    {tag}
-                                </Tag>
-                            )}
-                        </TagWrapper>
-                    ))}
-                </TagContainer>
-            )}
-            <Content>
-                {date && (
-                    <Copy isInverted={isInverted} size="medium" type="copy">
-                        {publishedAt}
-                    </Copy>
+            {image && <StyledImage {...image} />}
+            <MainContent>
+                {tags && (
+                    <TagContainer>
+                        {tags.map((tag, i) => (
+                            <TagWrapper key={'tag_' + i}>
+                                {customTag ? (
+                                    customTag({
+                                        name: tag,
+                                        isInverted: isInverted,
+                                        isActive: false,
+                                        clickHandler: () => {
+                                            onTagClick && onTagClick(tag);
+                                        },
+                                    })
+                                ) : (
+                                    <Tag
+                                        isInverted={isInverted}
+                                        onClick={
+                                            onTagClick
+                                                ? () => onTagClick(tag)
+                                                : undefined
+                                        }
+                                    >
+                                        {tag}
+                                    </Tag>
+                                )}
+                            </TagWrapper>
+                        ))}
+                    </TagContainer>
                 )}
-                {title && (
-                    <Title isInverted={isInverted} size="big" type="copy-b">
-                        {title}
-                    </Title>
+                <TitleWrapper>
+                    {date && (
+                        <Copy isInverted={isInverted} size="medium" type="copy">
+                            {publishedAt}
+                        </Copy>
+                    )}
+                    {title && (
+                        <Title isInverted={isInverted} size="big" type="copy-b">
+                            {title}
+                        </Title>
+                    )}
+                </TitleWrapper>
+                {text && (
+                    <Text
+                        size="small"
+                        isInverted={isInverted}
+                        innerHTML={text}
+                    />
                 )}
-            </Content>
-            {text && (
-                <Text size="small" isInverted={isInverted} innerHTML={text} />
-            )}
-            {action && <div> {action({ isInverted })} </div>}
+                {action && <div> {action({ isInverted })} </div>}
+            </MainContent>
         </View>
     );
 };

@@ -336,3 +336,119 @@ export const WithCustomTag: Story = () => (
         )}
     />
 );
+
+export const WithImages: Story = () => (
+    <EventList
+        onTagClick={console.log}
+        events={[
+            {
+                date: new Date('July 22, 2021 03:24:00'),
+                title: 'Sitzung des Gemeinderates',
+                image: {
+                    small: 'https://unsplash.it/640/274',
+                    medium: 'https://unsplash.it/832/357',
+                    semilarge: 'https://unsplash.it/1024/439',
+                    large: 'https://unsplash.it/832/624',
+                },
+                text: '17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
+                tags: ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5'],
+                action: ({ isInverted }) => (
+                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                        <Pointer.Label>Lorem Ipsum</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
+            },
+            {
+                date: new Date('July 22, 2021 03:24:00'),
+                title: 'Sitzung des Gemeinderates',
+                image: {
+                    small: 'https://unsplash.it/640/274',
+                    medium: 'https://unsplash.it/832/357',
+                    semilarge: 'https://unsplash.it/1024/439',
+                    large: 'https://unsplash.it/832/624',
+                },
+                text: '17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
+                tags: ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5'],
+                action: ({ isInverted }) => (
+                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                        <Pointer.Label>Lorem Ipsum</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
+            },
+            {
+                date: new Date('July 22, 2021 03:24:00'),
+                title: 'Sitzung des Gemeinderates',
+                image: {
+                    small: 'https://unsplash.it/640/274',
+                    medium: 'https://unsplash.it/832/357',
+                    semilarge: 'https://unsplash.it/1024/439',
+                    large: 'https://unsplash.it/832/624',
+                },
+                text: '17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
+                tags: ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5'],
+                action: ({ isInverted }) => (
+                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                        <Pointer.Label>Lorem Ipsum</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
+            },
+            {
+                date: new Date('July 22, 2021 03:24:00'),
+                title: 'Sitzung des Gemeinderates',
+                image: {
+                    small: 'https://unsplash.it/640/274',
+                    medium: 'https://unsplash.it/832/357',
+                    semilarge: 'https://unsplash.it/1024/439',
+                    large: 'https://unsplash.it/832/624',
+                },
+                text: '17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
+                tags: ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5'],
+                action: ({ isInverted }) => (
+                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                        <Pointer.Label>Lorem Ipsum</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
+            },
+            {
+                date: new Date('July 22, 2021 03:24:00'),
+                title: 'Sitzung des Gemeinderates',
+                image: {
+                    small: 'https://unsplash.it/640/274',
+                    medium: 'https://unsplash.it/832/357',
+                    semilarge: 'https://unsplash.it/1024/439',
+                    large: 'https://unsplash.it/832/624',
+                },
+                text: '17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
+                tags: ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5'],
+                action: ({ isInverted }) => (
+                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                        <Pointer.Label>Lorem Ipsum</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
+            },
+        ]}
+        customTag={({ name, isActive, clickHandler }) => (
+            <button
+                style={{ background: isActive ? 'gray' : 'lightgray' }}
+                onClick={clickHandler}
+            >
+                {name}
+            </button>
+        )}
+    />
+);
