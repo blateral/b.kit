@@ -40,14 +40,26 @@ const Title = styled(Copy)``;
 
 const Text = styled(Copy)``;
 
-// #TODO: Dokumentieren
 export interface EventProps {
+    /** Array of tag item settings */
     tags?: string[];
+
+    /** Active tags that are highlighted in this event */
     activeTags?: string[];
+
+    /** Event title */
     title?: string;
+
+    /** Event publish date */
     date?: Date;
+
+    /** Event text (richtext) */
     text?: string;
+
+    /** Invert color and background for darker themes */
     isInverted?: boolean;
+
+    /** Function to inject action elements */
     action?: (props: { isInverted?: boolean }) => React.ReactNode;
 
     /** Function to inject custom tag node */
