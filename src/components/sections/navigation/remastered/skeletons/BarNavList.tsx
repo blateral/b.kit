@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import Link, { LinkProps } from 'components/typography/Link';
+import Link from 'components/typography/Link';
 import { spacings, getColors as color } from 'utils/styles';
 import { copyStyle } from 'components/typography/Copy';
+import { NavItem } from '../menu/Menu';
 
 const View = styled.nav<{ isInverted?: boolean }>`
     display: inline-flex;
@@ -55,15 +56,9 @@ const NavLink = styled(Link)<{ isInverted?: boolean; isActive?: boolean }>`
     }
 `;
 
-export interface NavBarNavigationItem {
-    label: string;
-    isActive?: boolean;
-    link: LinkProps;
-}
-
 const BarNavList: FC<{
     isInverted?: boolean;
-    navLinks?: NavBarNavigationItem[];
+    navLinks?: NavItem[];
     className?: string;
 }> = ({ isInverted, navLinks, className }) => {
     return (
@@ -73,7 +68,7 @@ const BarNavList: FC<{
                     key={i}
                     {...item.link}
                     isInverted={isInverted}
-                    isActive={item.isActive}
+                    isActive={item.isCurrent}
                 >
                     {item.label}
                 </NavLink>

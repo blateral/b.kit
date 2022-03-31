@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import { mq, spacings } from 'utils/styles';
 import { NavBarStates } from '../Navigation';
 import Skeletons from '../skeletons/Skeletons';
-import { NavBarNavigationItem } from '../skeletons/BarNavList';
+import { NavItem } from '../menu/Menu';
 
 const StyledCol = styled(Skeletons.Col)`
     &:not(:first-child) {
@@ -21,7 +21,7 @@ const StyledNavList = styled(Skeletons.NavList)`
 `;
 
 const NavBarTop: FC<{
-    navLinks?: Array<NavBarNavigationItem>;
+    navLinks?: Array<NavItem>;
     languages?: Array<Language>;
     navStates: NavBarStates;
 }> = ({ navLinks, languages, navStates }) => {

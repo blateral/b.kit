@@ -183,7 +183,7 @@ export const WithExampleContent: Story = () => (
                         {
                             label: 'About',
                             link: { href: '#2' },
-                            isActive: true,
+                            isCurrent: true,
                         },
                     ]}
                     languages={[
