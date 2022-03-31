@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
 import {
     LibThemeProvider,
     ThemeMods,
@@ -64,6 +65,10 @@ export interface NavigationProps {
     menu?: MenuSettings;
     clampWidth?: 'content' | 'full';
 }
+
+const View = styled.header`
+    z-index: 100;
+`;
 
 const Navigation: FC<NavigationProps> = ({
     clampWidth = 'content',
@@ -213,7 +218,7 @@ const Navigation: FC<NavigationProps> = ({
         : undefined;
 
     return (
-        <header>
+        <View>
             <LibThemeProvider theme={navBar?.theme}>
                 <NavBar
                     isOpen={isNavBarOpen}
@@ -243,7 +248,7 @@ const Navigation: FC<NavigationProps> = ({
                     onClose={closeMenu}
                 />
             </LibThemeProvider>
-        </header>
+        </View>
     );
 };
 
