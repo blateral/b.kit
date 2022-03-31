@@ -23,7 +23,7 @@ export interface NavGroup extends NavItem {
 /** Menu base type */
 export interface MenuStates {
     isOpen?: boolean;
-    indexPage?: Array<NavGroup>;
+    isIndexPage?: boolean;
     mainNavigation?: Array<NavGroup>;
     subNavigation?: Array<NavItem>;
 }
@@ -31,7 +31,7 @@ export interface MenuStates {
 export interface MenuBaseProps {
     isOpen?: boolean;
     clampWidth?: 'content' | 'full';
-    indexPage?: Array<NavGroup>;
+    isIndexPage?: boolean;
     mainNavigation?: Array<NavGroup>;
     subNavigation?: Array<NavItem>;
     header?: (props: MenuStates) => React.ReactNode;
@@ -44,7 +44,7 @@ export type MenuTypeProps = FlyoutMenuProps | LargeMenuProps;
 const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
     isOpen,
     clampWidth,
-    indexPage,
+    isIndexPage,
     mainNavigation,
     subNavigation,
     header,
@@ -58,7 +58,7 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
                 <MenuLarge
                     isOpen={isOpen}
                     clampWidth={clampWidth}
-                    indexPage={indexPage}
+                    isIndexPage={isIndexPage}
                     mainNavigation={mainNavigation}
                     subNavigation={subNavigation}
                     header={header}
@@ -75,7 +75,7 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
                 <MenuFlyout
                     isOpen={isOpen}
                     clampWidth={clampWidth}
-                    indexPage={indexPage}
+                    isIndexPage={isIndexPage}
                     mainNavigation={mainNavigation}
                     subNavigation={subNavigation}
                     header={header}

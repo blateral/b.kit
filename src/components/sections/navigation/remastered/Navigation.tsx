@@ -49,7 +49,7 @@ export interface NavBarSettings {
 }
 
 export interface MenuSettings {
-    indexPage?: Array<NavGroup>;
+    isIndexPage?: boolean;
     mainNavigation?: Array<NavGroup>;
     subNavigation?: Array<NavItem>;
     header?: (props: NavMenuStates) => React.ReactNode;
@@ -235,7 +235,7 @@ const Navigation: FC<NavigationProps> = ({
                 <Menu
                     isOpen={isMenuOpen}
                     clampWidth={clampWidth}
-                    indexPage={menu?.indexPage}
+                    isIndexPage={menu?.isIndexPage}
                     mainNavigation={menu?.mainNavigation}
                     subNavigation={menu?.subNavigation}
                     header={menuHeader}

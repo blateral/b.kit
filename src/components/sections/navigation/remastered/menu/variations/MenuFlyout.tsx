@@ -69,7 +69,7 @@ export interface FlyoutMenuProps {
 const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     isOpen,
     clampWidth,
-    indexPage,
+    isIndexPage,
     mainNavigation,
     subNavigation,
     header,
@@ -86,7 +86,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                               isOpen,
                               mainNavigation,
                               subNavigation,
-                              indexPage,
+                              isIndexPage,
                           })
                         : ''}
                     isOpen: {isOpen} Menu Flyout Items:{' '}
@@ -96,7 +96,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                               isOpen,
                               mainNavigation,
                               subNavigation,
-                              indexPage,
+                              isIndexPage,
                           })
                         : ''}
                 </Flyout>
