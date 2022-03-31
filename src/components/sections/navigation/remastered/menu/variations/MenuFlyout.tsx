@@ -92,8 +92,32 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                               isIndexPage,
                           })
                         : ''}
-                    isOpen: {isOpen} Menu Flyout Items:{' '}
-                    {mainNavigation?.length || ''}
+                    <nav>
+                        <ul>
+                            {mainNavigation?.map((navItem, i) => (
+                                <li key={i}>
+                                    <a href={navItem.link.href}>
+                                        {navItem.label}
+                                    </a>
+                                    <ul>
+                                        {navItem?.subItems?.map(
+                                            (subNavItem, ii) => (
+                                                <li key={ii}>
+                                                    <a
+                                                        href={
+                                                            subNavItem.link.href
+                                                        }
+                                                    >
+                                                        {subNavItem.label}
+                                                    </a>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
                     {footer
                         ? footer({
                               isOpen,
