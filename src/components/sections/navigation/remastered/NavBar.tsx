@@ -122,7 +122,6 @@ const View = styled.div<{
     right: 0;
 
     transform: ${({ isOpen }) => !isOpen && 'translate3d(0, -101%, 0)'};
-    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
 
     margin: 0 auto;
     max-width: ${spacings.wrapperLarge}px;
@@ -142,10 +141,7 @@ const View = styled.div<{
         bottom: 0;
         left: 0;
         background: ${({ bgGradient }) => bgGradient || ''};
-        opacity: ${({ bgGradient }) => (bgGradient ? 1 : 0)};
         z-index: -1;
-
-        transition: opacity 0.2s ease-in-out;
     }
 `;
 
@@ -174,7 +170,6 @@ const Header = styled.div<{ size?: NavBarSize; background?: string }>`
 const Main = styled.div<{ background?: string }>`
     background-color: ${({ background }) => background};
 
-    transform: translateZ(0);
     transition: background-color 0.2s ease-in-out;
 `;
 
