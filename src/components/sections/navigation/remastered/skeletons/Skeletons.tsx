@@ -1,3 +1,4 @@
+import BarBreadcrumbs from './BarBreadCrumbs';
 import BarColumn from './BarColumn';
 import BarLogo from './BarLogo';
 import BarMenuToggle from './BarMenuToggle';
@@ -8,4 +9,5 @@ export default {
     Logo: BarLogo,
     Toggle: BarMenuToggle,
     NavList: BarNavList,
+    Breadcrumbs: BarBreadcrumbs,
 };

@@ -8,6 +8,7 @@ import NavBarTop from 'components/sections/navigation/remastered/partials/NavBar
 import NavBarMain from 'components/sections/navigation/remastered/partials/NavBarMain';
 import Button from 'components/buttons/Button';
 import Star from 'components/base/icons/Star';
+import NavBarBottom from 'components/sections/navigation/remastered/partials/NavBarBottom';
 // import ButtonGhost from 'components/buttons/ButtonGhost';
 // import StarGhost from 'components/base/icons/StarGhost';
 
@@ -211,12 +212,19 @@ export const WithExampleContent: Story = () => (
                     primaryAction={primaryCtaFn}
                 />
             ),
-            bottomBar: ({ mainNavigation }) => {
-                return mainNavigation?.length;
-            },
+            bottomBar: (navStates) => (
+                <NavBarBottom
+                    startItem={{ link: { href: '/' }, label: 'Home' }}
+                    navStates={navStates}
+                />
+            ),
         }}
         menu={{
-            mainNavigation: [],
+            mainNavigation: [
+                { link: { href: '/services' }, label: 'Services' },
+                { link: { href: '/news' }, label: 'News' },
+                { link: { href: '/impressum' }, label: 'Impressum' },
+            ],
             typeSettings: {
                 type: 'flyout',
             },

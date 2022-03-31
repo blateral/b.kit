@@ -146,8 +146,11 @@ export { default as TopBar } from 'components/sections/navigation/TopBar';
 
 export { default as NewNavigation } from 'components/sections/navigation/remastered/Navigation';
 export { default as NavSkeletons } from 'components/sections/navigation/remastered/skeletons/Skeletons';
+
 export { default as NavBarMainPartial } from 'components/sections/navigation/remastered/partials/NavBarMain';
 export { default as NavBarTopPartial } from 'components/sections/navigation/remastered/partials/NavBarTop';
+export { default as NavBarBottomPartial } from 'components/sections/navigation/remastered/partials/NavBarBottom';
+
 export { default as SocialList } from 'components/blocks/SocialList';
 
 /***** Icons *****/
