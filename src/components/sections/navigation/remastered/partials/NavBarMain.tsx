@@ -1,7 +1,16 @@
 import React, { FC } from 'react';
+import styled from 'styled-components';
+
 import MenuBurger from 'components/base/icons/MenuBurger';
 import { NavBarStates } from '../Navigation';
-import NavBarGrid from '../skeletons/NavBarGrid';
+import Skeletons from 'components/sections/navigation/remastered/skeletons/Skeletons';
+import { spacings } from 'utils/styles';
+
+const LogoColumn = styled(Skeletons.Col)`
+    display: flex;
+    align-items: center;
+    padding: ${spacings.nudge}px 0;
+`;
 
 const NavBarMain: FC<{
     isInverted?: boolean;
@@ -25,8 +34,8 @@ const NavBarMain: FC<{
 
     return (
         <React.Fragment>
-            <NavBarGrid.Col takeSpace vAlign="center" isInverted={isInverted}>
-                <NavBarGrid.Toggle
+            <Skeletons.Col takeSpace vAlign="center" isInverted={isInverted}>
+                <Skeletons.Toggle
                     isInverted={isInverted}
                     isExpanded={navStates?.isMenuOpen}
                     onClick={navStates?.openMenu}
@@ -36,17 +45,24 @@ const NavBarMain: FC<{
                     ) : (
                         <MenuBurger />
                     )}
-                </NavBarGrid.Toggle>
-            </NavBarGrid.Col>
-            {logo?.desktop && (
-                <NavBarGrid.Col isInverted={isInverted}>
-                    <NavBarGrid.Logo
-                        src={logo.desktop.src}
-                        alt={logo?.desktop?.alt}
+                </Skeletons.Toggle>
+            </Skeletons.Col>
+            {logo?.desktop?.src && (
+                <LogoColumn isInverted={isInverted}>
+                    <Skeletons.Logo
+                        logo={{
+                            small: isInverted
+                                ? logo?.mobileInverted?.src || ''
+                                : logo?.mobile?.src || '',
+                            semilarge: isInverted
+                                ? logo?.desktopInverted?.src || ''
+                                : logo?.desktop?.src || '',
+                            alt: logo?.desktop?.alt,
+                        }}
                     />
-                </NavBarGrid.Col>
+                </LogoColumn>
             )}
-            <NavBarGrid.Col takeSpace vAlign="center">
+            <Skeletons.Col takeSpace vAlign="center">
                 {primaryAction
                     ? primaryAction({
                           isInverted,
@@ -59,7 +75,7 @@ const NavBarMain: FC<{
                           ...navStates,
                       })
                     : undefined}
-            </NavBarGrid.Col>
+            </Skeletons.Col>
         </React.Fragment>
     );
 };

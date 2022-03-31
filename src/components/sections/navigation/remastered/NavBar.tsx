@@ -3,7 +3,7 @@ import styled, { DefaultTheme } from 'styled-components';
 import { spacings, mq, getGlobals as global } from 'utils/styles';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
-import NavBarGrid from './skeletons/NavBarGrid';
+import Skeletons from './skeletons/Skeletons';
 
 const getTopHeights = (
     theme: DefaultTheme,
@@ -358,9 +358,9 @@ const NavBar: FC<
                             {topBar ? (
                                 topBar({ size, isOpen, isSticky, pageFlow })
                             ) : (
-                                <NavBarGrid.Col isInverted>
+                                <Skeletons.Col isInverted>
                                     Top Nav
-                                </NavBarGrid.Col>
+                                </Skeletons.Col>
                             )}
                         </TopContent>
                     </Header>
@@ -371,29 +371,29 @@ const NavBar: FC<
                             mainBar({ size, isOpen, isSticky, pageFlow })
                         ) : (
                             <React.Fragment>
-                                <NavBarGrid.Col
+                                <Skeletons.Col
                                     takeSpace
                                     isInverted={
                                         size === 'large' && isOverContent
                                     }
                                 >
                                     Left
-                                </NavBarGrid.Col>
-                                <NavBarGrid.Col
+                                </Skeletons.Col>
+                                <Skeletons.Col
                                     isInverted={
                                         size === 'large' && isOverContent
                                     }
                                 >
                                     Center
-                                </NavBarGrid.Col>
-                                <NavBarGrid.Col
+                                </Skeletons.Col>
+                                <Skeletons.Col
                                     takeSpace
                                     isInverted={
                                         size === 'large' && isOverContent
                                     }
                                 >
                                     Right
-                                </NavBarGrid.Col>
+                                </Skeletons.Col>
                             </React.Fragment>
                         )}
                     </Content>

@@ -2,16 +2,17 @@ import styled from 'styled-components';
 import LanguageSwitcher, { Language } from 'components/blocks/LanguageSwitcher';
 import React, { FC } from 'react';
 import { mq, spacings } from 'utils/styles';
-import NavBarGrid, { NavBarNavigationItem } from '../skeletons/NavBarGrid';
 import { NavBarStates } from '../Navigation';
+import Skeletons from '../skeletons/Skeletons';
+import { NavBarNavigationItem } from '../skeletons/BarNavList';
 
-const StyledCol = styled(NavBarGrid.Col)`
+const StyledCol = styled(Skeletons.Col)`
     &:not(:first-child) {
         margin-left: ${spacings.spacer}px;
     }
 `;
 
-const StyledNavList = styled(NavBarGrid.Nav)`
+const StyledNavList = styled(Skeletons.NavList)`
     display: none;
 
     @media ${mq.semilarge} {

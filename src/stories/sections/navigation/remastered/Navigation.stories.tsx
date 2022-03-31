@@ -200,6 +200,12 @@ export const WithExampleContent: Story = () => (
                     logo={{
                         mobile: { src: 'https://via.placeholder.com/80x80' },
                         desktop: { src: 'https://via.placeholder.com/320x80' },
+                        mobileInverted: {
+                            src: 'https://via.placeholder.com/80x80?text=inverted',
+                        },
+                        desktopInverted: {
+                            src: 'https://via.placeholder.com/320x80?text=inverted',
+                        },
                     }}
                     navStates={navStates}
                     primaryAction={primaryCtaFn}
