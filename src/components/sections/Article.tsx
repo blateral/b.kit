@@ -10,6 +10,7 @@ import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
+import LinkList, { LinkListProps } from 'components/blocks/LinkList';
 
 const StyledTitle = styled(Title)`
     &:not(:last-child) {
@@ -29,6 +30,10 @@ const StyledActions = styled(Actions)`
     margin-top: ${spacings.spacer}px;
 `;
 
+const LinkListWrapper = styled.div`
+    margin-top: ${spacings.nudge * 5}px;
+`;
+
 const Article: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -44,8 +49,12 @@ const Article: React.FC<{
     intro?: string;
     /** Main article richtext */
     text?: string;
+    /** OptionalLinkList Main */
+    linkList?: LinkListProps;
     /** Additional article richtext in a second column */
     asideText?: string;
+    /** OptionalLinkList Aside */
+    linkListAside?: LinkListProps;
     /** Controls width of left text column (8/12 or 6/12) */
     halfAside?: boolean;
 
@@ -64,7 +73,9 @@ const Article: React.FC<{
     superTitleAs,
     intro,
     text,
+    linkList,
     asideText,
+    linkListAside,
     halfAside,
     bgMode,
     primaryAction,
@@ -118,6 +129,11 @@ const Article: React.FC<{
                                     innerHTML={text}
                                 />
                             )}
+                            {linkList && (
+                                <LinkListWrapper>
+                                    <LinkList {...linkList} />
+                                </LinkListWrapper>
+                            )}
                         </Grid.Col>
                         {asideText && (
                             <Grid.Col
@@ -130,6 +146,11 @@ const Article: React.FC<{
                                     isInverted={isInverted}
                                     innerHTML={asideText}
                                 />
+                                {linkListAside && (
+                                    <LinkListWrapper>
+                                        <LinkList {...linkListAside} />
+                                    </LinkListWrapper>
+                                )}
                             </Grid.Col>
                         )}
                     </Grid.Row>

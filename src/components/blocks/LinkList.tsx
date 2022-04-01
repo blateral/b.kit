@@ -28,9 +28,11 @@ const IconContainer = styled.span`
     margin-left: ${spacings.nudge}px;
 `;
 
-const LinkList: React.FC<{
+export interface LinkListProps {
     items?: { label?: string; link?: LinkProps }[];
-}> = ({ items }) => {
+}
+
+const LinkList: React.FC<LinkListProps> = ({ items }) => {
     const theme = React.useContext(ThemeContext);
     return (
         <View>
