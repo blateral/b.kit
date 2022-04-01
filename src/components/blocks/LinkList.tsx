@@ -1,8 +1,10 @@
+import React from 'react';
+
 import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
-import React from 'react';
-import styled, { ThemeContext } from 'styled-components';
-import { getGlobals, spacings } from 'utils/styles';
+import styled from 'styled-components';
+import { spacings } from 'utils/styles';
+import { useLibTheme } from 'utils/LibThemeProvider';
 
 const View = styled.div``;
 
@@ -33,7 +35,10 @@ export interface LinkListProps {
 }
 
 const LinkList: React.FC<LinkListProps> = ({ items }) => {
-    const theme = React.useContext(ThemeContext);
+    const { globals } = useLibTheme();
+
+    const linkIcons = globals.icons.linkIcons;
+
     return (
         <View>
             <List>
@@ -47,8 +52,8 @@ const LinkList: React.FC<LinkListProps> = ({ items }) => {
                                 <StyledLink {...item.link}>
                                     <Copy>{item.label}</Copy>
                                     <IconContainer>
-                                        {getGlobals(theme)
-                                            .icons.linkIcons.filter((icons) =>
+                                        {linkIcons
+                                            .filter((icons) =>
                                                 icons?.patterns?.find(
                                                     (pattern) =>
                                                         pattern ===

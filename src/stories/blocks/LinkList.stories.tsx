@@ -40,6 +40,18 @@ export const Default: Story = () => (
                     href: 'https://www.lorem.png',
                 },
             },
+            {
+                label: 'Link 6',
+                link: {
+                    href: 'https://www.lorem.psd',
+                },
+            },
+            {
+                label: 'Link 7',
+                link: {
+                    href: 'https://www.lorem.de',
+                },
+            },
         ]}
     />
 );
