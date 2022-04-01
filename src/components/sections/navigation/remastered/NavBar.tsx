@@ -322,8 +322,14 @@ const NavBar: FC<
     const clampContent = clampWidth === 'content';
     const isOverContent = pageFlow === 'overContent';
 
-    const hasHeader = useMemo(() => hasTopBar(theme), [theme]);
-    const hasFooter = useMemo(() => hasBottomBar(theme), [theme]);
+    const hasHeader = useMemo(
+        () => hasTopBar(theme) && topBar !== null,
+        [theme, topBar]
+    );
+    const hasFooter = useMemo(
+        () => hasBottomBar(theme) && bottomBar !== null,
+        [bottomBar, theme]
+    );
     const showBg = useMemo(
         () => size === 'small' || (size === 'large' && !isOverContent),
         [isOverContent, size]

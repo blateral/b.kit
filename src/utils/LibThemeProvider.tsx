@@ -74,17 +74,15 @@ export const assignTo = <T extends ThemeMods | DefaultTheme>(
             typeof targetVal === 'object' &&
             typeof sourceVal === 'object'
         ) {
-            output[key] = assignTo(targetVal, sourceVal);
+            // console.log(key, sourceVal, targetVal);
+            if (Array.isArray(sourceVal)) {
+                output[key] = [...sourceVal];
+            } else {
+                output[key] = assignTo(targetVal, sourceVal);
+            }
         } else if (sourceVal) {
             output[key] = sourceVal;
         }
-        // output[key] =
-        //     targetVal &&
-        //     sourceVal &&
-        //     typeof targetVal === 'object' &&
-        //     typeof sourceVal === 'object'
-        //         ? assignTo(targetVal, sourceVal)
-        //         : sourceVal;
     });
     return output as T;
 };

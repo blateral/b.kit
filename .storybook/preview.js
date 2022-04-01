@@ -8,6 +8,14 @@ const customTheme = {
             newsDateFormat: 'dd.mm.YYYY',
             edgeRadius: '5px',
         },
+        navigation: {
+            navBar: {
+                topHeight: {
+                    small: [0],
+                    large: [0],
+                },
+            },
+        },
     },
     colors: {
         new: {
