@@ -101,6 +101,12 @@ const IndexList: React.FC<{
 
         const target = document.getElementById(href.split('#')?.[1] || href);
         if (target) setActiveElement(target as HTMLElement);
+
+        if (window) {
+            const url = new URL(window.location as any);
+            url.hash = href.split('#')[1];
+            window.history.pushState({}, '', url as any);
+        }
     };
 
     return (
