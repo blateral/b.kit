@@ -44,8 +44,9 @@ const LinkList: React.FC<LinkListProps> = ({ items }) => {
             <List>
                 {items &&
                     items.map((item, i) => {
-                        const fileExtension =
-                            item.link?.href && item.link.href.split('.').pop(); //"pdf"
+                        const fileExtension = `.${
+                            item.link?.href && item.link.href.split('.').pop()
+                        }`; //".pdf"
 
                         return (
                             <ListItem key={i}>
@@ -56,8 +57,9 @@ const LinkList: React.FC<LinkListProps> = ({ items }) => {
                                             .filter((icons) =>
                                                 icons?.patterns?.find(
                                                     (pattern) =>
-                                                        pattern ===
-                                                        `.${fileExtension}`
+                                                        pattern.match(
+                                                            fileExtension
+                                                        )
                                                 )
                                             )
                                             .map((icon, ii) => {
