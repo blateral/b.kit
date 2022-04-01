@@ -14,7 +14,7 @@ const List = styled.ul`
 
 const ListItem = styled.li`
     & + & {
-        padding-top: ${spacings.nudge}px;
+        padding-top: ${spacings.nudge * 2}px;
     }
 `;
 
@@ -22,10 +22,10 @@ const StyledLink = styled(Link)`
     display: flex;
     flex-direction: row;
     align-items: center;
+`;
 
-    & > * + * {
-        margin-left: ${spacings.nudge}px;
-    }
+const IconContainer = styled.span`
+    margin-left: ${spacings.nudge}px;
 `;
 
 const LinkList: React.FC<{
@@ -44,7 +44,7 @@ const LinkList: React.FC<{
                             <ListItem key={i}>
                                 <StyledLink {...item.link}>
                                     <Copy>{item.label}</Copy>
-                                    <span>
+                                    <IconContainer>
                                         {getGlobals(theme)
                                             .icons.linkIcons.filter((icons) =>
                                                 icons?.patterns?.find(
@@ -55,12 +55,12 @@ const LinkList: React.FC<{
                                             )
                                             .map((icon, ii) => {
                                                 return (
-                                                    <div key={ii}>
+                                                    <span key={ii}>
                                                         {icon.icon}
-                                                    </div>
+                                                    </span>
                                                 );
                                             })}
-                                    </span>
+                                    </IconContainer>
                                 </StyledLink>
                             </ListItem>
                         );
