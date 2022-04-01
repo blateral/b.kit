@@ -322,14 +322,8 @@ const NavBar: FC<
     const clampContent = clampWidth === 'content';
     const isOverContent = pageFlow === 'overContent';
 
-    const hasHeader = useMemo(
-        () => hasTopBar(theme) && topBar !== null,
-        [theme, topBar]
-    );
-    const hasFooter = useMemo(
-        () => hasBottomBar(theme) && bottomBar !== null,
-        [bottomBar, theme]
-    );
+    const hasHeader = useMemo(() => hasTopBar(theme), [theme]);
+    const hasFooter = useMemo(() => hasBottomBar(theme), [theme]);
     const showBg = useMemo(
         () => size === 'small' || (size === 'large' && !isOverContent),
         [isOverContent, size]
@@ -341,6 +335,30 @@ const NavBar: FC<
     const onContentBackground =
         onContentBg ||
         'linear-gradient(180deg,rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 100%)';
+
+    const topBarContent = useMemo(
+        () =>
+            topBar &&
+            topBar({
+                size,
+                isOpen,
+                isSticky,
+                pageFlow,
+            }),
+        [topBar, isOpen, isSticky, pageFlow, size]
+    );
+
+    const bottomBarContent = useMemo(
+        () =>
+            bottomBar &&
+            bottomBar({
+                size,
+                isOpen,
+                isSticky,
+                pageFlow,
+            }),
+        [bottomBar, isOpen, isSticky, pageFlow, size]
+    );
 
     return (
         <React.Fragment>
@@ -356,14 +374,14 @@ const NavBar: FC<
                 }
                 className={className}
             >
-                {hasHeader && (
+                {hasHeader && topBarContent !== null && (
                     <Header
                         size={size}
                         background={showBg ? topBackground : undefined}
                     >
                         <TopContent size={size} clamp={clampContent}>
-                            {topBar ? (
-                                topBar({ size, isOpen, isSticky, pageFlow })
+                            {topBarContent ? (
+                                topBarContent
                             ) : (
                                 <Skeletons.Col isInverted>
                                     Top Nav
@@ -405,20 +423,13 @@ const NavBar: FC<
                         )}
                     </Content>
                 </Main>
-                {hasFooter && (
+                {hasFooter && bottomBarContent !== null && (
                     <Footer
                         size={size}
                         background={showBg ? bottomBackground : undefined}
                     >
                         <BottomContent size={size} clamp={clampContent}>
-                            {bottomBar
-                                ? bottomBar({
-                                      size,
-                                      isOpen,
-                                      isSticky,
-                                      pageFlow,
-                                  })
-                                : 'bottom bar'}
+                            {bottomBarContent ? bottomBarContent : 'bottom bar'}
                         </BottomContent>
                     </Footer>
                 )}
