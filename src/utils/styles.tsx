@@ -1,3 +1,10 @@
+import Document from 'components/base/icons/files/Document';
+import Excel from 'components/base/icons/files/Excel';
+import Image from 'components/base/icons/files/Image';
+import Pdf from 'components/base/icons/files/Pdf';
+import PowerPoint from 'components/base/icons/files/PowerPoint';
+import Word from 'components/base/icons/files/Word';
+import Zip from 'components/base/icons/files/Zip';
 import React from 'react';
 import { css, DefaultTheme } from 'styled-components';
 
@@ -524,14 +531,14 @@ const defaultGlobalSettings: GlobalSettings = {
     icons: {
         // #TODO: icons einpflegen
         linkIcons: [
-            { icon: '' }, // default link without file type
-            { icon: '', patterns: ['.pdf'] },
-            { icon: '', patterns: ['.docx'] },
-            { icon: '', patterns: ['.xlsx'] },
-            { icon: '', patterns: ['.pptx'] },
-            { icon: '', patterns: ['.jpg', '.jpeg', '.png', '.svg'] },
-            { icon: '', patterns: ['.zip'] },
-            { icon: '', patterns: ['.*'] }, // #TODO: Regex für eine unbekannte Regex finden
+            { icon: <Document /> }, // default link without file type
+            { icon: <Pdf />, patterns: ['.pdf'] },
+            { icon: <Word />, patterns: ['.docx'] },
+            { icon: <Excel />, patterns: ['.xlsx'] },
+            { icon: <PowerPoint />, patterns: ['.pptx'] },
+            { icon: <Image />, patterns: ['.jpg', '.jpeg', '.png', '.svg'] },
+            { icon: <Zip />, patterns: ['.zip'] },
+            { icon: <Document />, patterns: ['.*'] }, // #TODO: Regex für eine unbekannte Regex finden
         ],
     },
 };
