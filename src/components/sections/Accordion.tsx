@@ -9,6 +9,7 @@ import Minus from 'components/base/icons/Minus';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { generateFAQ } from 'utils/structuredData';
 import Grid, { gridSettings } from 'components/base/Grid';
+import LinkList, { LinkListProps } from 'components/blocks/LinkList';
 
 const AccordionContainer = styled.div`
     margin: 0;
@@ -111,10 +112,16 @@ const AccordionText = styled.div<{
     }
 `;
 
+const LinkListWrapper = styled.div`
+    margin-top: ${spacings.nudge * 5}px;
+`;
+
 interface AccordionItem {
     label?: string;
     text?: string;
     aside?: string;
+    linkList?: LinkListProps;
+    linkListAside?: LinkListProps;
 }
 
 const AccordionBlock: React.FC<
@@ -129,7 +136,9 @@ const AccordionBlock: React.FC<
 > = ({
     label,
     text,
+    linkList,
     aside,
+    linkListAside,
     isSelected,
     onClick,
     hasBg,
@@ -160,8 +169,27 @@ const AccordionBlock: React.FC<
                 hasBg={hasBg}
                 hasAside={!!aside}
             >
-                {text && <Copy type="copy" innerHTML={text} />}
-                {aside && <Copy type="copy" innerHTML={aside} />}
+                {text && (
+                    <div>
+                        <Copy type="copy" innerHTML={text} />
+                        {linkList && (
+                            <LinkListWrapper>
+                                <LinkList {...linkList} />
+                            </LinkListWrapper>
+                        )}
+                    </div>
+                )}
+
+                {aside && (
+                    <div>
+                        <Copy type="copy" innerHTML={aside} />
+                        {linkListAside && (
+                            <LinkListWrapper>
+                                <LinkList {...linkListAside} />
+                            </LinkListWrapper>
+                        )}
+                    </div>
+                )}
             </AccordionText>
         </View>
     );
@@ -205,35 +233,51 @@ const Accordion: React.FC<{
                     <Grid.Col>
                         <AccordionContainer aria-label="Accordion Control Group Buttons">
                             {items &&
-                                items.map(({ label, text, aside }, i) => {
-                                    const isSelected =
-                                        currentItems.indexOf(i) !== -1;
-                                    return (
-                                        <AccordionBlock
-                                            key={`${label}_${i}`}
-                                            isSelected={isSelected}
-                                            label={label}
-                                            text={text}
-                                            aside={aside}
-                                            onClick={() => {
-                                                setCurrentItems((prev) => {
-                                                    const copy = [...prev];
-                                                    const index =
-                                                        copy.indexOf(i);
-                                                    if (index === -1) {
-                                                        copy.push(i);
-                                                    } else {
-                                                        copy.splice(index, 1);
-                                                    }
-                                                    return copy;
-                                                });
-                                            }}
-                                            isInverted={isInverted}
-                                            hasBg={hasBg}
-                                            itemIcon={itemIcon}
-                                        />
-                                    );
-                                })}
+                                items.map(
+                                    (
+                                        {
+                                            label,
+                                            text,
+                                            aside,
+                                            linkList,
+                                            linkListAside,
+                                        },
+                                        i
+                                    ) => {
+                                        const isSelected =
+                                            currentItems.indexOf(i) !== -1;
+                                        return (
+                                            <AccordionBlock
+                                                key={`${label}_${i}`}
+                                                isSelected={isSelected}
+                                                label={label}
+                                                text={text}
+                                                linkList={linkList}
+                                                aside={aside}
+                                                linkListAside={linkListAside}
+                                                onClick={() => {
+                                                    setCurrentItems((prev) => {
+                                                        const copy = [...prev];
+                                                        const index =
+                                                            copy.indexOf(i);
+                                                        if (index === -1) {
+                                                            copy.push(i);
+                                                        } else {
+                                                            copy.splice(
+                                                                index,
+                                                                1
+                                                            );
+                                                        }
+                                                        return copy;
+                                                    });
+                                                }}
+                                                isInverted={isInverted}
+                                                hasBg={hasBg}
+                                                itemIcon={itemIcon}
+                                            />
+                                        );
+                                    }
+                                )}
                         </AccordionContainer>
                     </Grid.Col>
                 </Grid.Row>
