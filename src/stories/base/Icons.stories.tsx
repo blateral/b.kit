@@ -26,6 +26,13 @@ import Xing from 'components/base/icons/socials/Xing';
 import Youtube from 'components/base/icons/socials/Youtube';
 import External from 'components/base/icons/External';
 import ExclamationMark from 'components/base/icons/ExclamationMark';
+import Document from 'components/base/icons/files/Document';
+import Excel from 'components/base/icons/files/Excel';
+import Image from 'components/base/icons/files/Image';
+import Pdf from 'components/base/icons/files/Pdf';
+import PowerPoint from 'components/base/icons/files/PowerPoint';
+import Word from 'components/base/icons/files/Word';
+import Zip from 'components/base/icons/files/Zip';
 
 export default {
     title: 'Base/Icons',
@@ -54,6 +61,13 @@ export default {
         Route,
         External,
         ExclamationMark,
+        Document,
+        Excel,
+        Image,
+        Pdf,
+        PowerPoint,
+        Word,
+        Zip,
     },
     decorators: [
         (Story) => (
@@ -143,3 +157,24 @@ IconYoutube.storyName = 'Youtube logo';
 
 export const IconExclamationMark: Story = () => <ExclamationMark />;
 IconExclamationMark.storyName = 'ExclamationMark';
+
+export const IconDocument: Story = () => <Document />;
+IconDocument.storyName = 'Document';
+
+export const IconExcel: Story = () => <Excel />;
+IconExcel.storyName = 'Excel';
+
+export const IconImage: Story = () => <Image />;
+IconImage.storyName = 'Image';
+
+export const IconPdf: Story = () => <Pdf />;
+IconPdf.storyName = 'Pdf';
+
+export const IconPowerPoint: Story = () => <PowerPoint />;
+IconPowerPoint.storyName = 'PowerPoint';
+
+export const IconWord: Story = () => <Word />;
+IconWord.storyName = 'Word';
+
+export const IconZip: Story = () => <Zip />;
+IconZip.storyName = 'Zip';
