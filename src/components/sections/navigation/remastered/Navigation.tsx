@@ -22,6 +22,8 @@ export interface NavBarStates extends BarStates {
     closeMenu?: () => void;
     mainNavigation?: Array<NavGroup>;
     subNavigation?: Array<NavItem>;
+    isOnPageTop?: boolean;
+    isInTopOffset?: boolean;
 }
 
 export interface NavMenuStates extends MenuStates {
@@ -152,6 +154,8 @@ const Navigation: FC<NavigationProps> = ({
                   closeMenu,
                   mainNavigation: menu?.mainNavigation,
                   subNavigation: menu?.subNavigation,
+                  isOnPageTop: isTop,
+                  isInTopOffset: isInOffset,
               });
           }
         : navBar?.topBar;
@@ -166,6 +170,8 @@ const Navigation: FC<NavigationProps> = ({
                   closeMenu,
                   mainNavigation: menu?.mainNavigation,
                   subNavigation: menu?.subNavigation,
+                  isOnPageTop: isTop,
+                  isInTopOffset: isInOffset,
               });
           }
         : navBar?.mainBar;
@@ -180,6 +186,8 @@ const Navigation: FC<NavigationProps> = ({
                   closeMenu,
                   mainNavigation: menu?.mainNavigation,
                   subNavigation: menu?.subNavigation,
+                  isOnPageTop: isTop,
+                  isInTopOffset: isInOffset,
               });
           }
         : navBar?.bottomBar;

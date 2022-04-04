@@ -6,6 +6,7 @@ import Image, { ImageProps } from 'components/blocks/Image';
 
 const View = styled(Link)`
     display: flex;
+    justify-content: center;
     min-width: 60px;
     max-width: 100%;
     max-height: 100%;

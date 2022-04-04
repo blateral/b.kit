@@ -77,7 +77,7 @@ const hasBottomBar = (theme: DefaultTheme) => {
     );
 };
 
-type IncludeType = 'top' | 'main' | 'bottom';
+type ExcludeType = 'top' | 'main' | 'bottom';
 
 /**
  * Get full height of navigation bar
@@ -89,7 +89,7 @@ type IncludeType = 'top' | 'main' | 'bottom';
 export const getFullHeight = (
     theme: DefaultTheme,
     size?: NavBarSize,
-    exclude?: IncludeType[]
+    exclude?: ExcludeType[]
 ): [number, number] => {
     const includeTop = exclude ? exclude.indexOf('top') === -1 : true;
     const includeMain = exclude ? exclude.indexOf('main') === -1 : true;
@@ -260,11 +260,23 @@ const BottomContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     }
 `;
 
-const BarSpacer = styled.div`
-    height: ${({ theme }) => getFullHeight(theme, 'large')[0]}px;
+const BarSpacer = styled.div<{ hasHeader?: boolean; hasFooter?: boolean }>`
+    height: ${({ theme, hasHeader, hasFooter }) => {
+        const excludes: ExcludeType[] = [];
+        if (!hasHeader) excludes.push('top');
+        if (!hasFooter) excludes.push('bottom');
+
+        return getFullHeight(theme, 'large', excludes)[0];
+    }}px;
 
     @media ${mq.semilarge} {
-        height: ${({ theme }) => getFullHeight(theme, 'large')[1]}px;
+        height: ${({ theme, hasHeader, hasFooter }) => {
+            const excludes: ExcludeType[] = [];
+            if (!hasHeader) excludes.push('top');
+            if (!hasFooter) excludes.push('bottom');
+
+            return getFullHeight(theme, 'large', excludes)[1];
+        }}px;
     }
 `;
 
@@ -322,8 +334,14 @@ const NavBar: FC<
     const clampContent = clampWidth === 'content';
     const isOverContent = pageFlow === 'overContent';
 
-    const hasHeader = useMemo(() => hasTopBar(theme), [theme]);
-    const hasFooter = useMemo(() => hasBottomBar(theme), [theme]);
+    const hasHeader = useMemo(
+        () => hasTopBar(theme) && topBar !== null,
+        [theme, topBar]
+    );
+    const hasFooter = useMemo(
+        () => hasBottomBar(theme) && bottomBar !== null,
+        [bottomBar, theme]
+    );
     const showBg = useMemo(
         () => size === 'small' || (size === 'large' && !isOverContent),
         [isOverContent, size]
@@ -362,7 +380,9 @@ const NavBar: FC<
 
     return (
         <React.Fragment>
-            {pageFlow === 'beforeContent' && <BarSpacer />}
+            {pageFlow === 'beforeContent' && (
+                <BarSpacer hasHeader={hasHeader} hasFooter={hasFooter} />
+            )}
             <View
                 isOpen={isOpen}
                 isSticky={isSticky}
@@ -374,7 +394,7 @@ const NavBar: FC<
                 }
                 className={className}
             >
-                {hasHeader && topBar !== null && (
+                {hasHeader && (
                     <Header
                         size={size}
                         background={showBg ? topBackground : undefined}
@@ -425,7 +445,7 @@ const NavBar: FC<
                         </Content>
                     </Main>
                 )}
-                {hasFooter && bottomBar !== null && (
+                {hasFooter && (
                     <Footer
                         size={size}
                         background={showBg ? bottomBackground : undefined}
