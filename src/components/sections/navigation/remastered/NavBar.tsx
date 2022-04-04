@@ -253,6 +253,7 @@ const BottomContent = styled.div<{ size?: NavBarSize; clamp?: boolean }>`
     margin: 0 auto;
 
     height: ${({ theme, size }) => getBottomHeights(theme, size)[0]}px;
+    transition: 0.2s height ease-in-out;
 
     @media ${mq.semilarge} {
         height: ${({ theme, size }) => getBottomHeights(theme, size)[1]}px;
