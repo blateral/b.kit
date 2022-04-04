@@ -26,10 +26,10 @@ const examplePromotions = generateItemList<PromotionCarouselItem>(
         ...item,
         title: 'Lorem ipsum dolor sit amet',
         image: {
-            small: `${item.image.small}?image=40${i}`,
-            medium: `${item.image.medium}?image=40${i}`,
-            large: `${item.image.large}?image=40${i}`,
-            xlarge: `${item.image.xlarge}?image=40${i}`,
+            small: `${item.image?.small}?image=40${i}`,
+            medium: `${item.image?.medium}?image=40${i}`,
+            large: `${item.image?.large}?image=40${i}`,
+            xlarge: `${item.image?.xlarge}?image=40${i}`,
             alt: 'Image Placeholder ' + i,
         },
     })

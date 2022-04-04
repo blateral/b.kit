@@ -15,6 +15,18 @@ export default {
     },
 } as Meta;
 
+export const WithCardColor: Story = () => (
+    <CrossPromotion
+        main={[
+            {
+                size: 'full',
+                cardColor: 'blue',
+                title: 'Lorem ipsum dolor sit amet',
+            },
+        ]}
+    />
+);
+
 // #TODO: Bildgrößen auf Mobile checken
 export const SingleImageFull: Story = () => (
     <CrossPromotion
@@ -170,6 +182,33 @@ export const TwoHalfCardsRatioC: Story = () => (
 
 TwoHalfCardsRatioC.storyName = 'Two half cards with ratio 4x3';
 
+export const MixedColors: Story = () => (
+    <CrossPromotion
+        main={[
+            {
+                size: 'half',
+                cardColor: 'red',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+        ]}
+        aside={[
+            {
+                size: 'half',
+                cardColor: 'blue',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+            {
+                size: 'half',
+                cardColor: 'darkgreen',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+        ]}
+    />
+);
+
 export const MixedImages: Story = () => (
     <CrossPromotion
         main={[
@@ -214,6 +253,41 @@ export const MixedImages: Story = () => (
                         small: { w: 4, h: 3 },
                     },
                 },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+        ]}
+    />
+);
+
+export const MixedColorsAndImages: Story = () => (
+    <CrossPromotion
+        main={[
+            {
+                size: 'half',
+                cardColor: 'red',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+        ]}
+        aside={[
+            {
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                    },
+                },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+            {
+                size: 'half',
+                cardColor: 'darkgreen',
                 title: 'Lorem ipsum dolor sit amet',
                 superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
