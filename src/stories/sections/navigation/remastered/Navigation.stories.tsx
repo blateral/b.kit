@@ -9,8 +9,36 @@ import NavBarMain from 'components/sections/navigation/remastered/partials/NavBa
 import Button from 'components/buttons/Button';
 import Star from 'components/base/icons/Star';
 import NavBarBottom from 'components/sections/navigation/remastered/partials/NavBarBottom';
-// import ButtonGhost from 'components/buttons/ButtonGhost';
-// import StarGhost from 'components/base/icons/StarGhost';
+import styled from 'styled-components';
+import { mq } from 'utils/styles';
+
+const NavBarButton = styled.span`
+    display: inline-block;
+
+    & > * {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    @media ${mq.semilarge} {
+        & > * {
+            min-width: 240px;
+        }
+    }
+`;
+
+const primaryCtaFn = ({
+    isInverted,
+}: { isInverted?: boolean } & NavBarStates) => (
+    <NavBarButton>
+        <Button.View as="a" href="#" isInverted={isInverted}>
+            <Button.Icon data-btn-mobile>
+                <Star />
+            </Button.Icon>
+            <Button.Label data-btn-desktop>Book online</Button.Label>
+        </Button.View>
+    </NavBarButton>
+);
 
 export default {
     title: 'Sections/Navigation v2',
@@ -139,32 +167,6 @@ export const WithMenu: Story = () => (
     />
 );
 
-// #TODO
-const primaryCtaFn = ({
-    isInverted,
-}: { isInverted?: boolean } & NavBarStates) => (
-    <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
-        <Button.Icon>
-            <Star />
-        </Button.Icon>
-    </Button.View>
-);
-
-// const secondaryCtaFn = ({
-//     isInverted,
-// }: { isInverted?: boolean } & NavBarStates) => (
-//     <ButtonGhost.View
-//         as="a"
-//         href="#"
-//         isInverted={isInverted}
-//         onClick={console.log}
-//     >
-//         <ButtonGhost.Icon>
-//             <StarGhost />
-//         </ButtonGhost.Icon>
-//     </ButtonGhost.View>
-// );
-
 export const WithExampleContent: Story = () => (
     <Navigation
         navBar={{
@@ -214,7 +216,8 @@ export const WithExampleContent: Story = () => (
             ),
             bottomBar: (navStates) => (
                 <NavBarBottom
-                    startItem={{ link: { href: '/' }, label: 'Home' }}
+                    rootLink={{ href: '/' }}
+                    rootLabel="Home"
                     navStates={navStates}
                 />
             ),
@@ -228,7 +231,7 @@ export const WithExampleContent: Story = () => (
                     subItems: [
                         {
                             link: { href: '/companynews' },
-                            label: 'Company',
+                            label: 'Company News Worldwide',
                             isCurrent: true,
                         },
                     ],

@@ -30,7 +30,12 @@ const BarLogo: FC<{
     return (
         <View {...link} className={className}>
             {logo?.small && (
-                <Logo {...logo} coverSpace={false} ratios={undefined} />
+                <Logo
+                    {...logo}
+                    coverSpace={false}
+                    ratios={undefined}
+                    showPlaceholder={false}
+                />
             )}
         </View>
     );

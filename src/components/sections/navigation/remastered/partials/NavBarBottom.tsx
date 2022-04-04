@@ -4,12 +4,13 @@ import React, { FC } from 'react';
 // import { mq, spacings } from 'utils/styles';
 import { NavBarStates } from '../Navigation';
 import Skeletons from '../skeletons/Skeletons';
-import { NavItem } from '../menu/Menu';
+import { LinkProps } from 'components/typography/Link';
 
 const NavBarBottom: FC<{
-    startItem?: NavItem;
+    rootLink?: LinkProps;
+    rootLabel?: string;
     navStates: NavBarStates;
-}> = ({ startItem, navStates }) => {
+}> = ({ rootLink, rootLabel, navStates }) => {
     const isInverted =
         navStates?.size === 'large' && navStates?.pageFlow === 'overContent';
 
@@ -18,7 +19,8 @@ const NavBarBottom: FC<{
             <Skeletons.Col>
                 <Skeletons.Breadcrumbs
                     isInverted={isInverted}
-                    startItem={startItem}
+                    rootLink={rootLink}
+                    rootLabel={rootLabel}
                     navItems={navStates.mainNavigation}
                 />
             </Skeletons.Col>

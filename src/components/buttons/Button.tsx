@@ -5,6 +5,7 @@ import {
     getColors as color,
     getFonts as font,
     getGlobals as global,
+    mq,
     spacings,
     withRange,
 } from 'utils/styles';
@@ -70,8 +71,16 @@ const View = styled.a<{
                 : color(theme).new.text.default};
     }
 
-    & > :not(:last-child) {
-        padding-right: ${spacings.nudge}px;
+    & > *:not(:first-child) {
+        margin-left: ${spacings.nudge}px;
+    }
+
+    & > *[data-btn-desktop='true'] {
+        display: none;
+    }
+
+    & > *:not([data-btn-desktop='true']) + * {
+        margin-left: 0;
     }
 
     @media (hover: hover) and (pointer: fine) {
@@ -99,6 +108,20 @@ const View = styled.a<{
                             : 'rgba(0, 0, 0, 0.3)'};
                 }
             `}
+    }
+
+    @media ${mq.semilarge} {
+        & > *[data-btn-desktop='true'] {
+            display: inherit;
+        }
+
+        & > *[data-btn-mobile='true'] {
+            display: none;
+        }
+
+        & > *:not([data-btn-mobile='true']) + * {
+            margin-left: 0;
+        }
     }
 `;
 
