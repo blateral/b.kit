@@ -13,10 +13,6 @@ export default {
 } as Meta;
 
 export const Default: Story = () => (
-    <PromotionCard title="Lorem ipsum dolor sit amet" cardColor="red" />
-);
-
-export const WithImage: Story = () => (
     <PromotionCard
         title="Lorem ipsum dolor sit amet"
         image={{

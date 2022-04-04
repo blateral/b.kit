@@ -53,14 +53,6 @@ const StyledImage = styled(Image)`
     min-height: 300px;
 `;
 
-const CardBackground = styled.div<{ color: string }>`
-    width: 100%;
-    height: 100%;
-    min-height: 300px;
-
-    background: ${({ color }) => color};
-`;
-
 const IntroContainer = styled.div`
     position: absolute;
     top: 0;
@@ -106,9 +98,7 @@ export interface PromotionCardProps {
     /** Setup Card for dark backgrounds */
     isInverted?: boolean;
     /** Card image settings */
-    image?: ImageProps;
-    /** Optional Card Background Color */
-    cardColor?: string;
+    image: ImageProps;
     /** Card title */
     title?: string;
     /** Card title HTML tag type (h2, h3, h4...) */
@@ -141,7 +131,6 @@ const PromotionCard = forwardRef<
             link,
             externalLinkIcon,
             className,
-            cardColor,
         },
         ref
     ) => {
@@ -167,14 +156,7 @@ const PromotionCard = forwardRef<
                 {...linkObj}
                 className={className}
             >
-                {cardColor && <CardBackground color={cardColor} />}
-                {image && (
-                    <StyledImage
-                        {...image}
-                        isInverted={isInverted}
-                        coverSpace
-                    />
-                )}
+                <StyledImage {...image} isInverted={isInverted} coverSpace />
                 {title && (
                     <IntroContainer>
                         <StyledTitle
