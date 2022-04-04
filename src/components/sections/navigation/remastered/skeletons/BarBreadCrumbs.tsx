@@ -134,16 +134,20 @@ const BarBreadcrumbs: FC<{
         for (let i = 0; i < navList.length; i++) {
             // reset path
             path.length = 0;
-            if (navList[i].isCurrent) {
-                // check if current nav item is start item
-                if (rootLink?.href !== navList[i].link.href) {
-                    path.push(navList[i]);
-                }
-                return path;
+
+            // check if current nav item is start item
+            if (rootLink?.href === navList[i].link.href) {
+                continue;
             }
+
             path.push(navList[i]);
+
             // check sub nav items
             const subItems = (navList[i] as NavGroup).subItems || [];
+            if ((!subItems || subItems.length === 0) && navList[i].isCurrent) {
+                return path;
+            }
+
             for (let ii = 0; ii < subItems.length; ii++) {
                 if (subItems[ii].isCurrent) {
                     // check if current nav item is start item
