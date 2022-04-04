@@ -42,9 +42,9 @@ export interface NavBarSettings {
     /** Custom background value for NavBar with pageFlow === overContent and large size  */
     onContentBg?: string;
 
-    topBar?: (props: NavBarStates) => React.ReactNode;
-    mainBar?: (props: NavBarStates) => React.ReactNode;
-    bottomBar?: (props: NavBarStates) => React.ReactNode;
+    topBar?: ((props: NavBarStates) => React.ReactNode) | null;
+    mainBar?: ((props: NavBarStates) => React.ReactNode) | null;
+    bottomBar?: ((props: NavBarStates) => React.ReactNode) | null;
     theme?: ThemeMods;
 }
 
@@ -154,7 +154,7 @@ const Navigation: FC<NavigationProps> = ({
                   subNavigation: menu?.subNavigation,
               });
           }
-        : undefined;
+        : navBar?.topBar;
 
     const mainBar = navBar?.mainBar
         ? (props: BarStates) => {
@@ -168,7 +168,7 @@ const Navigation: FC<NavigationProps> = ({
                   subNavigation: menu?.subNavigation,
               });
           }
-        : undefined;
+        : navBar?.mainBar;
 
     const bottomBar = navBar?.bottomBar
         ? (props: BarStates) => {
@@ -182,7 +182,7 @@ const Navigation: FC<NavigationProps> = ({
                   subNavigation: menu?.subNavigation,
               });
           }
-        : undefined;
+        : navBar?.bottomBar;
 
     const menuHeader = menu?.header
         ? (props: MenuStates) => {
@@ -213,7 +213,11 @@ const Navigation: FC<NavigationProps> = ({
         : undefined;
 
     return (
-        <header>
+        <header
+            data-nav-ident={`${topBar !== null ? 't-' : ''}${
+                mainBar !== null ? 'm' : ''
+            }${bottomBar !== null ? '-b' : ''}`}
+        >
             <LibThemeProvider theme={navBar?.theme}>
                 <NavBar
                     isOpen={isNavBarOpen}

@@ -293,9 +293,9 @@ export interface NavBarProps {
     /** Custom background value for NavBar with pageFlow === overContent and large size  */
     onContentBg?: string;
 
-    topBar?: (props: BarStates) => React.ReactNode;
-    mainBar?: (props: BarStates) => React.ReactNode;
-    bottomBar?: (props: BarStates) => React.ReactNode;
+    topBar?: ((props: BarStates) => React.ReactNode) | null;
+    mainBar?: ((props: BarStates) => React.ReactNode) | null;
+    bottomBar?: ((props: BarStates) => React.ReactNode) | null;
 }
 
 const NavBar: FC<
@@ -374,7 +374,7 @@ const NavBar: FC<
                 }
                 className={className}
             >
-                {hasHeader && topBarContent !== null && (
+                {hasHeader && topBar !== null && (
                     <Header
                         size={size}
                         background={showBg ? topBackground : undefined}
@@ -390,40 +390,42 @@ const NavBar: FC<
                         </TopContent>
                     </Header>
                 )}
-                <Main background={showBg ? mainBackground : undefined}>
-                    <Content size={size} clamp={clampContent}>
-                        {mainBar ? (
-                            mainBar({ size, isOpen, isSticky, pageFlow })
-                        ) : (
-                            <React.Fragment>
-                                <Skeletons.Col
-                                    takeSpace
-                                    isInverted={
-                                        size === 'large' && isOverContent
-                                    }
-                                >
-                                    Left
-                                </Skeletons.Col>
-                                <Skeletons.Col
-                                    isInverted={
-                                        size === 'large' && isOverContent
-                                    }
-                                >
-                                    Center
-                                </Skeletons.Col>
-                                <Skeletons.Col
-                                    takeSpace
-                                    isInverted={
-                                        size === 'large' && isOverContent
-                                    }
-                                >
-                                    Right
-                                </Skeletons.Col>
-                            </React.Fragment>
-                        )}
-                    </Content>
-                </Main>
-                {hasFooter && bottomBarContent !== null && (
+                {mainBar !== null && (
+                    <Main background={showBg ? mainBackground : undefined}>
+                        <Content size={size} clamp={clampContent}>
+                            {mainBar ? (
+                                mainBar({ size, isOpen, isSticky, pageFlow })
+                            ) : (
+                                <React.Fragment>
+                                    <Skeletons.Col
+                                        takeSpace
+                                        isInverted={
+                                            size === 'large' && isOverContent
+                                        }
+                                    >
+                                        Left
+                                    </Skeletons.Col>
+                                    <Skeletons.Col
+                                        isInverted={
+                                            size === 'large' && isOverContent
+                                        }
+                                    >
+                                        Center
+                                    </Skeletons.Col>
+                                    <Skeletons.Col
+                                        takeSpace
+                                        isInverted={
+                                            size === 'large' && isOverContent
+                                        }
+                                    >
+                                        Right
+                                    </Skeletons.Col>
+                                </React.Fragment>
+                            )}
+                        </Content>
+                    </Main>
+                )}
+                {hasFooter && bottomBar !== null && (
                     <Footer
                         size={size}
                         background={showBg ? bottomBackground : undefined}
