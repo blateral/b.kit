@@ -7,7 +7,9 @@ import { spacings, getColors as color, mq } from 'utils/styles';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import AngleLeft from 'components/base/icons/AngleLeft';
 
-const View = styled.nav``;
+const View = styled.nav`
+    min-width: 0;
+`;
 
 const List = styled.ul`
     display: flex;
@@ -15,6 +17,7 @@ const List = styled.ul`
     list-style: none;
     margin: 0;
     padding: 0;
+    min-width: inherit;
 
     @media ${mq.semilarge} {
         & > li + li {
@@ -25,6 +28,7 @@ const List = styled.ul`
 
 const ListItem = styled.li<{ isCurrent?: boolean }>`
     display: ${({ isCurrent }) => (isCurrent ? 'flex' : 'none')};
+    min-width: inherit;
 
     & > * + * {
         margin-left: ${spacings.nudge}px;
@@ -35,9 +39,10 @@ const ListItem = styled.li<{ isCurrent?: boolean }>`
     }
 `;
 
-const NavLink = styled(Link)<{ isInverted?: boolean }>`
+const NavLink = styled(Link)<{ isInverted?: boolean; clamp?: boolean }>`
     display: inline-block;
-    max-width: 100px;
+    max-width: ${({ clamp }) => clamp && '120px'};
+
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -59,9 +64,10 @@ const NavLink = styled(Link)<{ isInverted?: boolean }>`
     }
 `;
 
-const NavLabel = styled.span<{ isInverted?: boolean }>`
+const NavLabel = styled.span<{ isInverted?: boolean; clamp?: boolean }>`
     display: inline-block;
-    max-width: 100px;
+    max-width: ${({ clamp }) => clamp && '120px'};
+
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -154,13 +160,12 @@ const BarBreadcrumbs: FC<{
     return (
         <View aria-label="breadcrumbs" className={className}>
             <List>
-                {rootLink && (
-                    <ListItem>
-                        <NavLink {...rootLink} isInverted={isInverted}>
-                            {rootLabel || 'Home'}
-                        </NavLink>
-                    </ListItem>
-                )}
+                <ListItem>
+                    <NavLink {...rootLink} isInverted={isInverted} clamp>
+                        {rootLabel || 'Home'}
+                    </NavLink>
+                </ListItem>
+
                 {currentNavPath?.map((item, i) => {
                     const isCurrent = i === currentNavPath.length - 1;
                     const prev =
@@ -194,7 +199,11 @@ const BarBreadcrumbs: FC<{
                                     </NavLabel>
                                 </>
                             ) : (
-                                <NavLink {...item.link} isInverted={isInverted}>
+                                <NavLink
+                                    {...item.link}
+                                    isInverted={isInverted}
+                                    clamp
+                                >
                                     {item.label}
                                 </NavLink>
                             )}

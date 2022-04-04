@@ -15,14 +15,12 @@ const NavBarBottom: FC<{
         navStates?.size === 'large' && navStates?.pageFlow === 'overContent';
 
     return (
-        <Skeletons.Col>
-            <Skeletons.Breadcrumbs
-                isInverted={isInverted}
-                rootLink={rootLink}
-                rootLabel={rootLabel}
-                navItems={navStates.mainNavigation}
-            />
-        </Skeletons.Col>
+        <Skeletons.Breadcrumbs
+            isInverted={isInverted}
+            rootLink={rootLink}
+            rootLabel={rootLabel}
+            navItems={navStates.mainNavigation}
+        />
     );
 };
 
