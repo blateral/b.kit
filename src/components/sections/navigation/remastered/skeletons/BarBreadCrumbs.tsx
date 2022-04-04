@@ -88,6 +88,7 @@ const BackLink = styled(Link)`
     display: inline-flex;
     align-items: center;
     margin: 0;
+    padding: 0 ${spacings.nudge}px;
 
     ${copyStyle('copy', 'small')}
     color: ${({ theme, isInverted }) =>
@@ -162,7 +163,8 @@ const BarBreadcrumbs: FC<{
                 )}
                 {currentNavPath?.map((item, i) => {
                     const isCurrent = i === currentNavPath.length - 1;
-                    const prev = i - 1 >= 0 ? currentNavPath[i - 1] : null;
+                    const prev =
+                        i - 1 >= 0 ? currentNavPath[i - 1] : { link: rootLink };
 
                     return (
                         <ListItem key={i} isCurrent={isCurrent}>
