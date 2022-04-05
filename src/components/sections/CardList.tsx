@@ -205,7 +205,9 @@ const Card: React.FC<
                 />
             )}
             <Content hasIcon={!!icon}>
-                {icon && <Icon src={icon?.src} alt={icon?.alt || ''} />}
+                {icon && icon.src && (
+                    <Icon src={icon?.src} alt={icon?.alt || ''} />
+                )}
                 <TextContainer textColor="inherit">
                     {title && (
                         <Title textColor="inherit" size="big" type="copy">
