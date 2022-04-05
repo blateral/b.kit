@@ -18,6 +18,7 @@ const View = styled.div`
 
     @media ${mq.large} {
         display: flex;
+        justify-content: flex-end;
         flex-direction: row-reverse;
 
         & > * + * {
@@ -36,6 +37,10 @@ const MainContent = styled.div`
 
     & > * + * {
         margin-top: ${spacings.nudge * 3}px;
+    }
+
+    @media ${mq.large} {
+        max-width: 60%;
     }
 `;
 
@@ -61,7 +66,12 @@ const TagWrapper = styled.div`
 
 const Title = styled(Copy)``;
 
-const Text = styled(Copy)``;
+const Text = styled(Copy)`
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+`;
 
 export interface EventProps {
     /** Array of tag item settings */

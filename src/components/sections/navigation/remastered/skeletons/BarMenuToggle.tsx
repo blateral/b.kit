@@ -38,6 +38,7 @@ const BarMenuToggle: FC<{
         <Toggle
             isInverted={isInverted}
             aria-expanded={isExpanded}
+            aria-label="menu"
             onClick={onClick}
             className={className}
         >
