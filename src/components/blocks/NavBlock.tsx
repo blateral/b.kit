@@ -1,4 +1,3 @@
-import AngleRight from 'components/base/icons/AngleRight';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
@@ -79,12 +78,6 @@ const TitleIcon = styled.span`
     }
 `;
 
-const DefaultIcon = styled(AngleRight)`
-    && {
-        margin-bottom: -2px;
-    }
-`;
-
 export interface NavBlockProps {
     /** Invert colors for use on dark backgrounds */
     isInverted?: boolean;
@@ -129,13 +122,9 @@ const NavBlock: React.FC<NavBlockProps> = ({
                                 type="copy-b"
                             >
                                 {title}
-                                {title && (
+                                {title && customTitleIcon && (
                                     <TitleIcon>
-                                        {customTitleIcon ? (
-                                            customTitleIcon({})
-                                        ) : (
-                                            <DefaultIcon />
-                                        )}
+                                        {customTitleIcon({ isInverted })}
                                     </TitleIcon>
                                 )}
                             </Title>
