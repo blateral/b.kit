@@ -33,12 +33,12 @@ const SolidView = styled(View)`
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
-            background-color: ${({ theme, isInverted, cardColor }) =>
+            /* background-color: ${({ theme, isInverted, cardColor }) =>
                 cardColor
                     ? cardColor
                     : isInverted
                     ? color(theme).new.primary.invertedHover
-                    : color(theme).new.primary.hover};
+                    : color(theme).new.primary.hover}; */
         }
     }
 `;
