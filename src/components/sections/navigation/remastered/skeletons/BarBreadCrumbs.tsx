@@ -164,7 +164,7 @@ const BarBreadcrumbs: FC<{
         <View aria-label="breadcrumbs" className={className}>
             <List>
                 <ListItem>
-                    <NavLink {...rootLink} isInverted={isInverted} clamp>
+                    <NavLink {...rootLink} isInverted={isInverted}>
                         {rootLabel || 'Home'}
                     </NavLink>
                 </ListItem>
@@ -202,11 +202,7 @@ const BarBreadcrumbs: FC<{
                                     </NavLabel>
                                 </>
                             ) : (
-                                <NavLink
-                                    {...item.link}
-                                    isInverted={isInverted}
-                                    clamp
-                                >
+                                <NavLink {...item.link} isInverted={isInverted}>
                                     {item.label}
                                 </NavLink>
                             )}
