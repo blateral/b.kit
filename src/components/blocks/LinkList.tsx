@@ -4,7 +4,7 @@ import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import styled from 'styled-components';
 import { spacings } from 'utils/styles';
-import { useLibTheme } from 'utils/LibThemeProvider';
+// import { useLibTheme } from 'utils/LibThemeProvider';
 
 const View = styled.div``;
 
@@ -35,25 +35,25 @@ export interface LinkListProps {
 }
 
 const LinkList: React.FC<LinkListProps> = ({ items }) => {
-    const { globals } = useLibTheme();
+    // const { globals } = useLibTheme();
 
-    const linkIcons = globals.icons.linkIcons;
+    // const linkIcons = globals.icons.linkIcons;
 
     return (
         <View>
             <List>
                 {items &&
                     items.map((item, i) => {
-                        const fileExtension = `.${
-                            item.link?.href && item.link.href.split('.').pop()
-                        }`; //".pdf"
+                        // const fileExtension = `.${
+                        //     item.link?.href && item.link.href.split('.').pop()
+                        // }`;
 
                         return (
                             <ListItem key={i}>
                                 <StyledLink {...item.link}>
                                     <Copy>{item.label}</Copy>
                                     <IconContainer>
-                                        {linkIcons
+                                        {/* {linkIcons
                                             .filter((icons) =>
                                                 icons?.patterns?.find(
                                                     (pattern) =>
@@ -68,7 +68,7 @@ const LinkList: React.FC<LinkListProps> = ({ items }) => {
                                                         {icon.icon}
                                                     </span>
                                                 );
-                                            })}
+                                            })} */}
                                     </IconContainer>
                                 </StyledLink>
                             </ListItem>

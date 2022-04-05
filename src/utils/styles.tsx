@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import Document from 'components/base/icons/files/Document';
 import Excel from 'components/base/icons/files/Excel';
 import Image from 'components/base/icons/files/Image';
@@ -394,7 +395,7 @@ export type NavBarHeights = {
 };
 
 export interface LinkIcon {
-    icon: React.ReactNode;
+    icon: (isInverted?: boolean) => React.ReactNode;
     /** Patterns of Href value to show this icon (e.g. .svg, .png) */
     patterns?: string[];
 }
@@ -472,7 +473,10 @@ export interface GlobalSettings {
     };
     icons: {
         /** Icon setup for link/download lists */
-        linkIcons: Array<LinkIcon>;
+        linkIcons: {
+            default: (isInverted?: boolean) => React.ReactNode;
+            variations: Array<LinkIcon>;
+        };
     };
 }
 
@@ -529,17 +533,20 @@ const defaultGlobalSettings: GlobalSettings = {
         },
     },
     icons: {
-        // #TODO: icons einpflegen
-        linkIcons: [
-            { icon: <Document /> }, // default link without file type
-            { icon: <Pdf />, patterns: ['.pdf'] },
-            { icon: <Word />, patterns: ['.docx'] },
-            { icon: <Excel />, patterns: ['.xlsx'] },
-            { icon: <PowerPoint />, patterns: ['.pptx'] },
-            { icon: <Image />, patterns: ['.jpg', '.jpeg', '.png', '.svg'] },
-            { icon: <Zip />, patterns: ['.zip'] },
-            { icon: <Document />, patterns: ['.*'] }, // #TODO: Regex für eine unbekannte Regex finden
-        ],
+        linkIcons: {
+            default: () => <Document />,
+            variations: [
+                { icon: () => <Pdf />, patterns: ['.pdf'] },
+                { icon: () => <Word />, patterns: ['.docx'] },
+                { icon: () => <Excel />, patterns: ['.xlsx'] },
+                { icon: () => <PowerPoint />, patterns: ['.pptx'] },
+                {
+                    icon: () => <Image />,
+                    patterns: ['.jpg', '.jpeg', '.png', '.svg'],
+                },
+                { icon: () => <Zip />, patterns: ['.zip'] },
+            ],
+        },
     },
 };
 

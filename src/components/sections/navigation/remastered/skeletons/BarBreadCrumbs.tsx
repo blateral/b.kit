@@ -110,7 +110,6 @@ const BackLink = styled(Link)`
     }
 `;
 
-// #TODO: Stories erstellen
 const BarBreadcrumbs: FC<{
     isInverted?: boolean;
     rootLink?: LinkProps;
