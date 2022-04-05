@@ -140,6 +140,12 @@ const TextContainer = styled(Copy)`
 const Title = styled(Copy)`
     text-transform: uppercase;
     display: inline-block;
+
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
 `;
 
 const Footer = styled.div`

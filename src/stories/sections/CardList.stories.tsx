@@ -45,7 +45,7 @@ export const Default: Story = () => (
                 link: { href: '#0' },
             },
             {
-                title: 'Soziale Einrichtungen',
+                title: 'Soziale Einrichtungen Soziale Einrichtungen Soziale Einrichtungen',
                 subLabel: 'überlingen',
                 image: {
                     small: 'https://unsplash.it/619/619',
