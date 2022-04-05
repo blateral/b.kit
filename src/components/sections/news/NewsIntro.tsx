@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -7,13 +7,9 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import Tag from 'components/blocks/Tag';
-import {
-    getColors as color,
-    spacings,
-    getGlobals as global,
-} from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const Content = styled.div`
     & > * + * {
@@ -24,14 +20,37 @@ const Content = styled.div`
 const IntroHead = styled(Copy)`
     display: flex;
 
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
+
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+
+    @media ${mq.medium} {
+        flex-direction: row;
+
+        & > * + * {
+            margin-top: 0;
+            margin-left: ${spacings.nudge * 2}px;
+        }
+    }
 `;
 
-const HeadTag = styled(Tag)`
-    flex: 0 1 auto;
-    margin-right: ${spacings.nudge * 2}px;
+const Tags = styled.div`
+    flex: 1 1 80%;
+
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -${spacings.nudge}px;
+    margin-left: -${spacings.nudge}px;
+`;
+
+const TagWrapper = styled.span`
+    display: inline-block;
+    padding-top: ${spacings.nudge}px;
+    padding-left: ${spacings.nudge}px;
 `;
 
 const MetaBlock = styled.div`
@@ -44,10 +63,6 @@ const MetaBlock = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    * + & {
-        margin-left: ${spacings.nudge * 3}px;
-    }
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
@@ -82,8 +97,16 @@ const NewsIntro: React.FC<{
     image?: ImageProps;
 
     bgMode?: 'full' | 'inverted';
-}> = ({ tags, onTagClick, meta, title, text, image, bgMode }) => {
-    const theme = useContext(ThemeContext);
+
+    /** Function to inject custom tag node */
+    customTag?: (props: {
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+    }) => React.ReactNode;
+}> = ({ tags, onTagClick, meta, title, text, image, bgMode, customTag }) => {
+    const { globals, colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
@@ -92,9 +115,9 @@ const NewsIntro: React.FC<{
         const formatter = new StatusFormatter(
             meta.date.getTime(),
             '',
-            global(theme).sections.newsDateFormat,
-            global(theme).sections.newsTimeFormat,
-            global(theme).sections.newsLocaleKey
+            globals.sections.newsDateFormat,
+            globals.sections.newsTimeFormat,
+            globals.sections.newsLocaleKey
         );
         publishedAt = formatter.getFormattedDate();
     }
@@ -104,9 +127,9 @@ const NewsIntro: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
+                    ? colors.new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
@@ -114,22 +137,33 @@ const NewsIntro: React.FC<{
             <Wrapper clampWidth="small" addWhitespace>
                 <Content>
                     <IntroHead isInverted={isInverted}>
-                        {tags &&
-                            tags.map((tag, index) => {
-                                return (
-                                    <HeadTag
-                                        key={`headtag-${index}`}
-                                        isInverted={isInverted}
-                                        onClick={
-                                            onTagClick
-                                                ? () => onTagClick(tag)
-                                                : undefined
-                                        }
-                                    >
-                                        {tag}
-                                    </HeadTag>
-                                );
-                            })}
+                        <Tags>
+                            {tags?.map((tag, i) => (
+                                <TagWrapper key={`headtag-${i}`}>
+                                    {customTag ? (
+                                        customTag({
+                                            name: tag,
+                                            isInverted: isInverted,
+                                            isActive: false,
+                                            clickHandler: () => {
+                                                onTagClick && onTagClick(tag);
+                                            },
+                                        })
+                                    ) : (
+                                        <Tag
+                                            isInverted={isInverted}
+                                            onClick={
+                                                onTagClick
+                                                    ? () => onTagClick(tag)
+                                                    : undefined
+                                            }
+                                        >
+                                            {tag}
+                                        </Tag>
+                                    )}
+                                </TagWrapper>
+                            ))}
+                        </Tags>
                         {(publishedAt || meta?.author) && (
                             <MetaBlock>
                                 {meta?.author && <div>{meta?.author}</div>}

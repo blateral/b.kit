@@ -9,7 +9,7 @@ export default {
     component: NewsIntroComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -108,5 +108,31 @@ export const isInverted: Story = () => (
             semilarge: 'https://unsplash.it/944/531?image=400',
         }}
         bgMode="inverted"
+    />
+);
+
+export const WithCustomTags: Story = () => (
+    <NewsIntro
+        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
+        onTagClick={console.log}
+        meta={{
+            author: 'Max Mustermann',
+            date: new Date('July 22, 2021 03:24:00'),
+        }}
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        image={{
+            small: 'https://unsplash.it/619/348?image=400',
+            medium: 'https://unsplash.it/791/445?image=400',
+            semilarge: 'https://unsplash.it/944/531?image=400',
+        }}
+        customTag={({ name, isActive, clickHandler }) => (
+            <button
+                style={{ background: isActive ? 'gray' : 'lightgray' }}
+                onClick={clickHandler}
+            >
+                {name}
+            </button>
+        )}
     />
 );
