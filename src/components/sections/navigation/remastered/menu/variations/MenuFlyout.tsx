@@ -40,6 +40,9 @@ const Stage = styled.div<{ isOpen?: boolean; clampWidth?: 'content' | 'full' }>`
 `;
 
 const Flyout = styled.div<{ isOpen?: boolean }>`
+    display: flex;
+    flex-direction: column;
+
     position: relative;
     width: 100%;
     height: 100%;
@@ -63,6 +66,13 @@ const Flyout = styled.div<{ isOpen?: boolean }>`
 
         transform: translateX(-100%);
     }
+`;
+
+const NavContainer = styled.nav`
+    display: block;
+    max-height: 100%;
+
+    overflow: auto;
 `;
 
 export interface FlyoutMenuProps {
@@ -92,7 +102,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                               isIndexPage,
                           })
                         : ''}
-                    <nav>
+                    <NavContainer>
                         <ul>
                             {mainNavigation?.map((navItem, i) => (
                                 <li key={i}>
@@ -126,7 +136,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                 </li>
                             ))}
                         </ul>
-                    </nav>
+                    </NavContainer>
                     {footer
                         ? footer({
                               isOpen,
