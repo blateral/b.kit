@@ -189,11 +189,11 @@ const Card: React.FC<
         className?: string;
     }
 > = ({ isInverted, icon, title, subLabel, image, link, decorator }) => {
-    const CardView = image ? ImageView : SolidView;
+    const CardView = image && image.small ? ImageView : SolidView;
 
     return (
         <CardView isInverted={isInverted}>
-            {image && (
+            {image && image.small && (
                 <StyledImage
                     {...image}
                     coverSpace
