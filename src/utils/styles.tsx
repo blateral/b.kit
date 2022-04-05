@@ -534,17 +534,46 @@ const defaultGlobalSettings: GlobalSettings = {
     },
     icons: {
         linkIcons: {
-            default: () => <Document />,
+            default: (isInverted) => (
+                <Document iconColor={isInverted ? '#ccc' : '#666'} />
+            ),
             variations: [
-                { icon: () => <Pdf />, patterns: ['.pdf'] },
-                { icon: () => <Word />, patterns: ['.docx'] },
-                { icon: () => <Excel />, patterns: ['.xlsx'] },
-                { icon: () => <PowerPoint />, patterns: ['.pptx'] },
                 {
-                    icon: () => <Image />,
+                    icon: (isInverted) => (
+                        <Pdf iconColor={isInverted ? '#ccc' : '#666'} />
+                    ),
+                    patterns: ['.pdf'],
+                },
+                {
+                    icon: (isInverted) => (
+                        <Word iconColor={isInverted ? '#ccc' : '#666'} />
+                    ),
+                    patterns: ['.docx'],
+                },
+                {
+                    icon: (isInverted) => (
+                        <Excel iconColor={isInverted ? '#ccc' : '#666'} />
+                    ),
+                    patterns: ['.xlsx'],
+                },
+                {
+                    icon: (isInverted) => (
+                        <PowerPoint iconColor={isInverted ? '#ccc' : '#666'} />
+                    ),
+                    patterns: ['.pptx'],
+                },
+                {
+                    icon: (isInverted) => (
+                        <Image iconColor={isInverted ? '#ccc' : '#666'} />
+                    ),
                     patterns: ['.jpg', '.jpeg', '.png', '.svg'],
                 },
-                { icon: () => <Zip />, patterns: ['.zip'] },
+                {
+                    icon: (isInverted) => (
+                        <Zip iconColor={isInverted ? '#ccc' : '#666'} />
+                    ),
+                    patterns: ['.zip'],
+                },
             ],
         },
     },
