@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { spacings, getColors as color, mq, getGlobals } from 'utils/styles';
 
-const View = styled.div<{ isInverted?: boolean }>`
+const View = styled.div<{ isInverted?: boolean; cardColor?: string }>`
     position: relative;
     padding-top: 30%;
 
@@ -21,8 +21,10 @@ const View = styled.div<{ isInverted?: boolean }>`
 `;
 
 const SolidView = styled(View)`
-    background-color: ${({ theme, isInverted }) =>
-        isInverted
+    background-color: ${({ theme, isInverted, cardColor }) =>
+        cardColor
+            ? cardColor
+            : isInverted
             ? color(theme).new.primary.inverted
             : color(theme).new.primary.default};
 
@@ -31,8 +33,10 @@ const SolidView = styled(View)`
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
-            background-color: ${({ theme, isInverted }) =>
-                isInverted
+            background-color: ${({ theme, isInverted, cardColor }) =>
+                cardColor
+                    ? cardColor
+                    : isInverted
                     ? color(theme).new.primary.invertedHover
                     : color(theme).new.primary.hover};
         }
@@ -188,17 +192,27 @@ export interface CardProps {
     link?: LinkProps;
     icon?: { src: string; alt?: string };
     decorator?: (props: { isInverted?: boolean }) => React.ReactNode;
+    cardColor?: string;
 }
 
 const Card: React.FC<
     Omit<CardProps, 'coverSpace' | 'ratios'> & {
         className?: string;
     }
-> = ({ isInverted, icon, title, subLabel, image, link, decorator }) => {
+> = ({
+    isInverted,
+    icon,
+    title,
+    subLabel,
+    image,
+    link,
+    decorator,
+    cardColor,
+}) => {
     const CardView = image && image.small ? ImageView : SolidView;
 
     return (
-        <CardView isInverted={isInverted}>
+        <CardView isInverted={isInverted} cardColor={cardColor}>
             {image && image.small && (
                 <StyledImage
                     {...image}

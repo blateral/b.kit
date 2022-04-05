@@ -60,6 +60,55 @@ export const Default: Story = () => (
     />
 );
 
+export const WithCustomCardColor: Story = () => (
+    <CardList
+        items={[
+            {
+                title: 'Musikschule',
+                subLabel: 'überlingen',
+                link: { href: '#0' },
+                cardColor: 'red',
+            },
+            {
+                title: 'Stadtbücherei',
+                subLabel: 'überlingen',
+                image: {
+                    small: 'https://unsplash.it/619/619',
+                    medium: 'https://unsplash.it/791/791',
+                    semilarge: 'https://unsplash.it/883/883',
+                    large: 'https://unsplash.it/766/766',
+                    xlarge: 'https://unsplash.it/824/824',
+                },
+                link: { href: '#0' },
+                cardColor: 'darkgreen',
+            },
+            {
+                title: 'Museum',
+                subLabel: 'überlingen',
+                link: { href: '#0' },
+                cardColor: 'blue',
+            },
+            {
+                title: 'Feuerwehr',
+                subLabel: 'überlingen',
+                link: { href: '#0' },
+            },
+            {
+                title: 'Soziale Einrichtungen Soziale Einrichtungen Soziale Einrichtungen',
+                subLabel: 'überlingen',
+                image: {
+                    small: 'https://unsplash.it/619/619',
+                    medium: 'https://unsplash.it/791/791',
+                    semilarge: 'https://unsplash.it/883/883',
+                    large: 'https://unsplash.it/766/766',
+                    xlarge: 'https://unsplash.it/824/824',
+                },
+                link: { href: '#0' },
+            },
+        ]}
+    />
+);
+
 export const WithIcon: Story = () => (
     <CardList
         items={[
