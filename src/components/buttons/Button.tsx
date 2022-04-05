@@ -93,22 +93,26 @@ const View = styled.a<{
                             ? 'rgba(255, 255, 255, 0.25)'
                             : 'rgba(0, 0, 0, 0.25)'};
                 }
-
-                &:focus {
-                    box-shadow: 0px 2px 6px
-                        ${inverted
-                            ? 'rgba(255, 255, 255, 0.25)'
-                            : 'rgba(0, 0, 0, 0.3)'};
-                }
-
-                &:active {
-                    box-shadow: 0px 2px 6px
-                        ${inverted
-                            ? 'rgba(255, 255, 255, 0.25)'
-                            : 'rgba(0, 0, 0, 0.3)'};
-                }
             `}
     }
+
+    ${({ disable, inverted }) =>
+        !disable &&
+        css`
+            &:focus {
+                box-shadow: 0px 2px 6px
+                    ${inverted
+                        ? 'rgba(255, 255, 255, 0.25)'
+                        : 'rgba(0, 0, 0, 0.3)'};
+            }
+
+            &:active {
+                box-shadow: 0px 2px 6px
+                    ${inverted
+                        ? 'rgba(255, 255, 255, 0.25)'
+                        : 'rgba(0, 0, 0, 0.3)'};
+            }
+        `}
 
     @media ${mq.semilarge} {
         & > *[data-btn-desktop='true'] {
@@ -163,6 +167,7 @@ const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
                 <View
                     ref={ref}
                     as={as as any}
+                    aria-disabled={isDisabled}
                     size={size}
                     inverted={isInverted}
                     disable={isDisabled}
@@ -178,6 +183,7 @@ const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
                 <View
                     ref={ref}
                     as={as as any}
+                    aria-disabled={isDisabled}
                     size={size}
                     href={(rest as LinkProps).href}
                     target={
