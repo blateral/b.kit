@@ -1,13 +1,13 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import EventList from 'components/sections/EventList';
+import EventList, { EventListComponent } from 'components/sections/EventList';
 import Pointer from 'components/buttons/Pointer';
 import AngleRight from 'components/base/icons/AngleRight';
 
 export default {
     title: 'Sections / EventList',
-    component: EventList,
+    component: EventListComponent,
     parameters: {
         status: {
             type: ['preview', 'qsReady'],

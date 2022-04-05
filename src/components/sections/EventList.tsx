@@ -5,7 +5,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import EventBlock, { EventProps } from 'components/blocks/EventBlock';
 import { getColors as color, spacings, withRange } from 'utils/styles';
-import { useLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const List = styled.ul<{ hasBg?: boolean }>`
     list-style: none;
@@ -92,4 +92,5 @@ const EventList: React.FC<{
     );
 };
 
-export default EventList;
+export const EventListComponent = EventList;
+export default withLibTheme(EventList);

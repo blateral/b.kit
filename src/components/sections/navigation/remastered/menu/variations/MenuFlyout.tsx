@@ -102,7 +102,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                               isIndexPage,
                           })
                         : ''}
-                    <NavContainer>
+                    <NavContainer aria-label="menu">
                         <ul>
                             {mainNavigation?.map((navItem, i) => (
                                 <li key={i}>
