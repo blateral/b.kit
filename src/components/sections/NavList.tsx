@@ -43,7 +43,7 @@ const ListItem = styled.li`
 
 export type NavItem = Omit<
     NavBlockProps,
-    'isInverted' | 'customIcon' | 'customTitleIcon' | 'className'
+    'isInverted' | 'customTitleIcon' | 'className'
 >;
 
 const NavList: React.FC<{
@@ -56,12 +56,9 @@ const NavList: React.FC<{
     /** Section backgrounds */
     bgMode?: 'full' | 'inverted';
 
-    /** Function to inject custom alert icon */
-    customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-
     /** Function to inject custom title decorator icon */
     customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-}> = ({ anchorId, items, bgMode, customIcon, customTitleIcon }) => {
+}> = ({ anchorId, items, bgMode, customTitleIcon }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -87,7 +84,6 @@ const NavList: React.FC<{
                             <NavBlock
                                 {...item}
                                 isInverted={isInverted}
-                                customIcon={customIcon}
                                 customTitleIcon={customTitleIcon}
                             />
                         </ListItem>

@@ -163,6 +163,7 @@ const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
                 <View
                     ref={ref}
                     as={as as any}
+                    aria-disabled={isDisabled}
                     size={size}
                     href={(rest as LinkProps).href}
                     target={
