@@ -7,6 +7,7 @@ import Title from 'components/blocks/Title';
 import Copy, { CopyType } from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
+import Image, { ImageProps } from './Image';
 
 const View = styled.div<{ isCentered?: boolean }>`
     display: block;
@@ -15,8 +16,23 @@ const View = styled.div<{ isCentered?: boolean }>`
     width: 100%;
     text-align: ${({ isCentered }) => isCentered && 'center'};
 
+    @media ${mq.semilarge} {
+        display: flex;
+        flex-direction: row;
+
+        & > * + * {
+            padding-left: ${spacings.spacer}px;
+        }
+    }
+`;
+
+const Content = styled.div`
     & > * + * {
         margin-top: ${spacings.spacer}px;
+    }
+
+    @media ${mq.semilarge} {
+        flex: 1 0 66.66%;
     }
 `;
 
@@ -54,6 +70,20 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
     }
 `;
 
+const MobileImage = styled(Image)<{ isCentered?: boolean }>`
+    @media ${mq.semilarge} {
+        display: ${({ isCentered }) => (isCentered ? 'block' : 'none')};
+    }
+`;
+const DesktopImage = styled(Image)`
+    display: none;
+
+    @media ${mq.semilarge} {
+        display: block;
+        flex: 1 0 33.33%;
+    }
+`;
+
 const IntroBlock: React.FC<{
     /** Define rendered HTML DOM tag of intro container */
     renderAs?: 'div' | 'figcaption';
@@ -75,6 +105,8 @@ const IntroBlock: React.FC<{
 
     /** Intro text underneath the title (richtext) */
     text?: string;
+
+    image?: ImageProps;
 
     /** Copy type of intro text (limits richtext capabilites on textType == copy-b or copy-i) */
     textType?: CopyType;
@@ -118,48 +150,57 @@ const IntroBlock: React.FC<{
     clampText = false,
     maxTextLines,
     className,
+    image,
 }) => {
     return (
         <View as={renderAs} isCentered={isCentered} className={className}>
-            {(title || superTitle) && (
-                <StyledTitle
-                    colorMode={colorMode}
-                    title={title}
-                    titleAs={titleAs}
-                    superTitle={superTitle}
-                    superTitleAs={superTitleAs}
-                    isCentered={isCentered}
-                    clamp={clampTitle}
-                    maxLines={maxTitleLines}
-                />
-            )}
-            {text && (
-                <ContentBlock
-                    type={textType}
-                    textColor={colorMode === 'onImage' ? '#fff' : undefined}
-                    isInverted={colorMode === 'inverted'}
-                    isCentered={isCentered}
-                    innerHTML={text}
-                    clamp={clampText}
-                    maxLines={maxTextLines}
-                />
-            )}
-            {(primaryAction || secondaryAction) && (
-                <StyledActions
-                    primary={
-                        primaryAction &&
-                        primaryAction(
-                            colorMode === 'inverted' || colorMode === 'onImage'
-                        )
-                    }
-                    secondary={
-                        secondaryAction &&
-                        secondaryAction(
-                            colorMode === 'inverted' || colorMode === 'onImage'
-                        )
-                    }
-                />
-            )}
+            <Content>
+                {(title || superTitle) && (
+                    <StyledTitle
+                        colorMode={colorMode}
+                        title={title}
+                        titleAs={titleAs}
+                        superTitle={superTitle}
+                        superTitleAs={superTitleAs}
+                        isCentered={isCentered}
+                        clamp={clampTitle}
+                        maxLines={maxTitleLines}
+                    />
+                )}
+                {image && image.small && (
+                    <MobileImage isCentered={isCentered} {...image} />
+                )}
+                {text && (
+                    <ContentBlock
+                        type={textType}
+                        textColor={colorMode === 'onImage' ? '#fff' : undefined}
+                        isInverted={colorMode === 'inverted'}
+                        isCentered={isCentered}
+                        innerHTML={text}
+                        clamp={clampText}
+                        maxLines={maxTextLines}
+                    />
+                )}
+                {(primaryAction || secondaryAction) && (
+                    <StyledActions
+                        primary={
+                            primaryAction &&
+                            primaryAction(
+                                colorMode === 'inverted' ||
+                                    colorMode === 'onImage'
+                            )
+                        }
+                        secondary={
+                            secondaryAction &&
+                            secondaryAction(
+                                colorMode === 'inverted' ||
+                                    colorMode === 'onImage'
+                            )
+                        }
+                    />
+                )}
+            </Content>
+            {image && image.small && !isCentered && <DesktopImage {...image} />}
         </View>
     );
 };

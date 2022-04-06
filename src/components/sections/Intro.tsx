@@ -4,6 +4,7 @@ import Wrapper from 'components/base/Wrapper';
 import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { ImageProps } from 'components/blocks/Image';
 
 const Intro: React.FC<{
     /** ID value for targeting section with anchor hashes */
@@ -23,6 +24,8 @@ const Intro: React.FC<{
 
     /**  Intro text underneath the title (richtext) */
     text?: string;
+
+    image?: ImageProps;
 
     /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -54,6 +57,7 @@ const Intro: React.FC<{
     isCentered = false,
     isStackable = false,
     bgMode,
+    image,
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
@@ -83,6 +87,7 @@ const Intro: React.FC<{
                     secondaryAction={secondaryAction}
                     primaryAction={primaryAction}
                     isCentered={isCentered}
+                    image={image}
                     clampTitle
                     clampText
                 />
