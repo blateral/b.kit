@@ -1,9 +1,12 @@
+/* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import CrossPromotion, {
     CrossPromotionComponent,
 } from 'components/sections/CrossPromotion';
 import Route from 'components/base/icons/Route';
+import Magnifier from 'components/base/icons/Magnifier';
+import Phone from 'components/base/icons/Phone';
 
 export default {
     title: 'Sections/CrossPromotion',
@@ -583,6 +586,71 @@ export const CustomLinkIcons: Story = () => (
                 },
                 title: 'Lorem ipsum dolor sit amet',
                 superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+            {
+                link: {
+                    href: '#0',
+                    isExternal: true,
+                },
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/983/737?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                    },
+                },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+        ]}
+    />
+);
+
+export const WithIcons: Story = () => (
+    <CrossPromotion
+        externalLinkIcon={<Route />}
+        main={[
+            {
+                link: {
+                    href: '#0',
+                },
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/826?image=410',
+                    medium: 'https://unsplash.it/791/1055?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 3, h: 4 },
+                    },
+                },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+                icon: () => <Magnifier />,
+            },
+        ]}
+        aside={[
+            {
+                link: {
+                    href: '#0',
+                    isExternal: true,
+                },
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                    },
+                },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+                icon: () => <Phone />,
             },
             {
                 link: {

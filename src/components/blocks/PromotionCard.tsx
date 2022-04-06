@@ -2,7 +2,13 @@ import React, { forwardRef } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import styled, { css } from 'styled-components';
 
-import { spacings, getGlobals as global, mq } from 'utils/styles';
+import {
+    spacings,
+    getGlobals as global,
+    mq,
+    withRange,
+    getColors as color,
+} from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Link, { LinkProps } from 'components/typography/Link';
 import Title from 'components/blocks/Title';
@@ -94,6 +100,22 @@ const ExternalIconHolder = styled.span`
     }
 `;
 
+const Icon = styled.div`
+    ${withRange([60, 100], 'height')};
+    ${withRange([60, 100], 'width')};
+
+    position: absolute;
+    top: ${spacings.nudge * 3}px;
+    left: ${spacings.nudge * 3}px;
+
+    & > * {
+        ${withRange([60, 100], 'height')};
+        ${withRange([60, 100], 'width')};
+    }
+
+    color: ${({ theme }) => color(theme).new.text.inverted};
+`;
+
 export interface PromotionCardProps {
     /** Setup Card for dark backgrounds */
     isInverted?: boolean;
@@ -113,6 +135,7 @@ export interface PromotionCardProps {
     link?: LinkProps;
     /** Inject custom icon that indicates an external link */
     externalLinkIcon?: React.ReactNode;
+    icon?: (props: { isInverted?: boolean }) => React.ReactNode;
 }
 
 const PromotionCard = forwardRef<
@@ -130,6 +153,7 @@ const PromotionCard = forwardRef<
             href,
             link,
             externalLinkIcon,
+            icon,
             className,
         },
         ref
@@ -157,6 +181,7 @@ const PromotionCard = forwardRef<
                 className={className}
             >
                 <StyledImage {...image} isInverted={isInverted} coverSpace />
+                {icon && <Icon>{icon({ isInverted })}</Icon>}
                 {title && (
                     <IntroContainer>
                         <StyledTitle
