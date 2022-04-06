@@ -44,8 +44,13 @@ const Head = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    margin-top: ${spacings.nudge * 3}px;
-    margin-bottom: ${spacings.nudge * 3}px;
+    &:not(:first-child) {
+        margin-top: ${spacings.nudge * 3}px;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: ${spacings.nudge * 3}px;
+    }
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
