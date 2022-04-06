@@ -4,28 +4,27 @@ import React from 'react';
 import styled from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
 
-const View = styled.div``;
+const View = styled(Link)<{ isInverted?: boolean; hasIcon?: boolean }>`
+    display: -ms-grid;
+    display: grid;
 
-const ContentWrapper = styled(Link)<{ isInverted?: boolean }>`
+    -ms-grid-columns: ${({ hasIcon }) => (hasIcon ? 'min-content 1fr' : '1fr')};
+    grid-template-columns: ${({ hasIcon }) =>
+        hasIcon ? 'min-content 1fr' : '1fr'};
+    -ms-grid-rows: min-content 1fr;
+    grid-auto-rows: min-content 1fr;
+
+    cursor: pointer;
+    text-decoration: none;
     color: ${({ theme, isInverted }) =>
         isInverted
             ? color(theme).new.primary.inverted
             : color(theme).new.primary.default};
 
-    display: inline-flex;
-    flex-direction: row;
-    align-items: flex-start;
-    cursor: pointer;
-    text-decoration: none;
-
     outline-color: ${({ theme, isInverted }) =>
         isInverted
             ? color(theme).new.primary.inverted
             : color(theme).new.primary.default};
-
-    & > * + * {
-        margin-left: ${spacings.nudge * 3}px;
-    }
 
     transition: all ease-in-out 0.2s;
 
@@ -39,25 +38,22 @@ const ContentWrapper = styled(Link)<{ isInverted?: boolean }>`
     }
 `;
 
-const MainContent = styled.div`
-    padding-top: 12px;
+const MainLabel = styled.div<{ hasIcon?: boolean }>`
+    display: flex;
+    align-items: center;
+    margin-left: ${({ hasIcon }) => hasIcon && `${spacings.nudge * 3}px`};
 `;
 
-const MainLabel = styled.div`
-    & > * {
-        display: inline-block;
-    }
-
-    & > * + * {
-        margin-left: ${spacings.nudge * 3}px;
-    }
-`;
-
-const Text = styled(Copy)`
-    margin-top: ${spacings.nudge * 3}px;
+const Text = styled(Copy)<{ hasIcon?: boolean }>`
+    margin-top: ${({ hasIcon }) =>
+        hasIcon ? spacings.nudge : spacings.nudge * 2}px;
+    margin-left: ${({ hasIcon }) => hasIcon && `${spacings.nudge * 3}px`};
 `;
 
 const Icon = styled.div`
+    display: flex;
+    align-items: center;
+
     & > * {
         height: 48px;
         width: 48px;
@@ -109,35 +105,36 @@ const NavBlock: React.FC<NavBlockProps> = ({
     className,
 }) => {
     return (
-        <View className={className}>
-            <ContentWrapper {...link} isInverted={isInverted}>
-                {customIcon ? <Icon>{customIcon({})}</Icon> : ''}
-                <MainContent>
-                    <MainLabel>
-                        {title && (
-                            <Title
-                                textColor="inherit"
-                                size="medium"
-                                type="copy-b"
-                            >
-                                {title}
-                                {title && customTitleIcon && (
-                                    <TitleIcon>
-                                        {customTitleIcon({ isInverted })}
-                                    </TitleIcon>
-                                )}
-                            </Title>
+        <View
+            {...link}
+            isInverted={isInverted}
+            hasIcon={!!customIcon}
+            className={className}
+        >
+            {customIcon ? <Icon>{customIcon({})}</Icon> : ''}
+            <MainLabel hasIcon={!!customIcon}>
+                {title && (
+                    <Title textColor="inherit" size="medium" type="copy-b">
+                        {title}
+                        {title && customTitleIcon && (
+                            <TitleIcon>
+                                {customTitleIcon({ isInverted })}
+                            </TitleIcon>
                         )}
-                    </MainLabel>
-                    {text && (
-                        <Text
-                            size="small"
-                            isInverted={isInverted}
-                            innerHTML={text}
-                        />
-                    )}
-                </MainContent>
-            </ContentWrapper>
+                    </Title>
+                )}
+            </MainLabel>
+            {text && (
+                <>
+                    <span />
+                    <Text
+                        size="small"
+                        isInverted={isInverted}
+                        innerHTML={text}
+                        hasIcon={!!customIcon}
+                    />
+                </>
+            )}
         </View>
     );
 };
