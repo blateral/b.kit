@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Tag from './Tag';
-import Copy from 'components/typography/Copy';
-import { spacings, mq } from 'utils/styles';
+import Copy, { copyStyle } from 'components/typography/Copy';
+import { spacings, mq, getFonts as font } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import Image, { ImageProps } from './Image';
+import Link, { LinkProps } from 'components/typography/Link';
 
 const View = styled.div`
     text-decoration: none;
@@ -64,7 +65,16 @@ const TagWrapper = styled.div`
     padding-left: ${spacings.nudge}px;
 `;
 
-const Title = styled(Copy)``;
+const TitleLink = styled(Link)`
+    display: inline-block;
+    ${copyStyle('copy-b', 'big')}
+
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme)['copy-b'].big.colorInverted
+            : font(theme)['copy-b'].big.color};
+    text-decoration: none;
+`;
 
 const Text = styled(Copy)`
     display: -webkit-box;
@@ -95,6 +105,9 @@ export interface EventProps {
     /** Invert color and background for darker themes */
     isInverted?: boolean;
 
+    /** Event link settings */
+    link?: LinkProps;
+
     /** Function to inject action elements */
     action?: (props: { isInverted?: boolean }) => React.ReactNode;
 
@@ -116,6 +129,7 @@ const EventBlock: React.FC<EventProps> = ({
     image,
     date,
     text,
+    link,
     tags,
     isInverted,
     onTagClick,
@@ -177,9 +191,9 @@ const EventBlock: React.FC<EventProps> = ({
                         </Copy>
                     )}
                     {title && (
-                        <Title isInverted={isInverted} size="big" type="copy-b">
+                        <TitleLink {...link} isInverted={isInverted}>
                             {title}
-                        </Title>
+                        </TitleLink>
                     )}
                 </TitleWrapper>
                 {text && (

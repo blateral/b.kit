@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { spacings, getGlobals as global } from 'utils/styles';
-import Copy from 'components/typography/Copy';
+import { spacings, getGlobals as global, getFonts as font } from 'utils/styles';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
 import StatusFormatter from 'utils/statusFormatter';
@@ -27,6 +27,13 @@ const StyledImage = styled(Image)`
 `;
 
 const TitleLink = styled(Link)`
+    display: inline-block;
+    ${copyStyle('copy-b', 'big')}
+
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme)['copy-b'].big.colorInverted
+            : font(theme)['copy-b'].big.color};
     text-decoration: none;
 `;
 
@@ -183,15 +190,13 @@ const NewsCard = forwardRef<
                 </Head>
                 <Main>
                     {title && (
-                        <TitleLink {...link} ariaLabel={title}>
-                            <Copy
-                                isInverted={isInverted}
-                                size="big"
-                                type="copy-b"
-                                data-sheet="title"
-                            >
-                                {title}
-                            </Copy>
+                        <TitleLink
+                            {...link}
+                            ariaLabel={title}
+                            isInverted={isInverted}
+                            dataSheet="title"
+                        >
+                            {title}
                         </TitleLink>
                     )}
                     {text && (
