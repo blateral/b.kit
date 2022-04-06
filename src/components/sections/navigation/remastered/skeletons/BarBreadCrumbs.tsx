@@ -129,32 +129,28 @@ const BarBreadcrumbs: FC<{
 }) => {
     const currentNavPath = useMemo(() => {
         const navList: NavGroup[] = navItems || [];
-        const path: Array<NavGroup | NavItem> = [];
+        const path: Array<NavItem> = [];
+
         for (let i = 0; i < navList.length; i++) {
-            // reset path
-            path.length = 0;
-
-            // check if current nav item is start item
-            if (rootLink?.href === navList[i].link.href) {
-                continue;
-            }
-
-            path.push(navList[i]);
-
-            // check sub nav items
             const subItems = (navList[i] as NavGroup).subItems || [];
-            if ((!subItems || subItems.length === 0) && navList[i].isCurrent) {
-                return path;
-            }
+            const currentSubItem = subItems.find((subItem) => {
+                return (
+                    subItem.isCurrent && subItem.link.href !== rootLink?.href
+                );
+            });
 
-            for (let ii = 0; ii < subItems.length; ii++) {
-                if (subItems[ii].isCurrent) {
-                    // check if current nav item is start item
-                    if (rootLink?.href !== subItems[ii].link.href) {
-                        path.push(subItems[ii]);
-                    }
-                    return path;
-                }
+            if (
+                (navList[i].isCurrent &&
+                    navList[i].link.href !== rootLink?.href) ||
+                currentSubItem
+            ) {
+                path.push({
+                    label: navList[i].label,
+                    link: navList[i].link,
+                    isCurrent: navList[i].isCurrent,
+                });
+                if (currentSubItem) path.push(currentSubItem);
+                break;
             }
         }
         return path;
@@ -201,10 +197,14 @@ const BarBreadcrumbs: FC<{
                                         {item.label}
                                     </NavLabel>
                                 </>
-                            ) : (
+                            ) : item.link?.href ? (
                                 <NavLink {...item.link} isInverted={isInverted}>
                                     {item.label}
                                 </NavLink>
+                            ) : (
+                                <NavLabel isInverted={isInverted}>
+                                    {item.label}
+                                </NavLabel>
                             )}
                         </ListItem>
                     );

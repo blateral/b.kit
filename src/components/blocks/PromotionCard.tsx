@@ -135,6 +135,8 @@ export interface PromotionCardProps {
     link?: LinkProps;
     /** Inject custom icon that indicates an external link */
     externalLinkIcon?: React.ReactNode;
+
+    /** Function to inject icon in top left corner */
     icon?: (props: { isInverted?: boolean }) => React.ReactNode;
 }
 
