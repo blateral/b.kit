@@ -6,7 +6,12 @@ import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import { spacings, getColors as color, mq, getGlobals } from 'utils/styles';
+import {
+    spacings,
+    getColors as color,
+    mq,
+    getGlobals as global,
+} from 'utils/styles';
 
 const View = styled.div<{ isInverted?: boolean; cardColor?: string }>`
     position: relative;
@@ -70,8 +75,7 @@ const ImageView = styled(View)`
         left: 0;
         bottom: 0;
         right: 0;
-        background: ${({ theme }) =>
-            getGlobals(theme).sections.imageTextGradient};
+        background: ${({ theme }) => global(theme).sections.imageTextGradient};
         pointer-events: none;
     }
 
@@ -136,14 +140,18 @@ const TextContainer = styled(Copy)`
 `;
 
 const Title = styled(Copy)`
-    text-transform: uppercase;
     display: inline-block;
-
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     max-width: 100%;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-transform: uppercase;
+
+    @media ${mq.medium} {
+        -webkit-line-clamp: 2;
+    }
 `;
 
 const Footer = styled.div`
@@ -157,8 +165,13 @@ const Footer = styled.div`
 `;
 
 const SubLabel = styled(Copy)`
-    text-transform: lowercase;
     display: inline-block;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-transform: lowercase;
 `;
 
 const Icon = styled.img`
