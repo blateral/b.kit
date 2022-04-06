@@ -56,30 +56,36 @@ const LinkList: React.FC<LinkListProps> = ({ items, isInverted }) => {
                                 )
                         );
 
-                        return (
-                            <ListItem key={i}>
-                                <StyledLink {...item.link}>
-                                    <Copy isInverted={isInverted}>
-                                        {item.label}
-                                    </Copy>
-                                    <IconContainer>
-                                        {filteredIcons.length > 0 ? (
-                                            filteredIcons.map((icon) => {
-                                                return (
-                                                    <span key={i}>
-                                                        {icon.icon(isInverted)}
-                                                    </span>
-                                                );
-                                            })
-                                        ) : (
-                                            <span>
-                                                {linkIcons.default(isInverted)}
-                                            </span>
-                                        )}
-                                    </IconContainer>
-                                </StyledLink>
-                            </ListItem>
-                        );
+                        if (item.link?.href) {
+                            return (
+                                <ListItem key={i}>
+                                    <StyledLink {...item.link}>
+                                        <Copy isInverted={isInverted}>
+                                            {item.label}
+                                        </Copy>
+                                        <IconContainer>
+                                            {filteredIcons.length > 0 ? (
+                                                filteredIcons.map((icon) => {
+                                                    return (
+                                                        <span key={i}>
+                                                            {icon.icon(
+                                                                isInverted
+                                                            )}
+                                                        </span>
+                                                    );
+                                                })
+                                            ) : (
+                                                <span>
+                                                    {linkIcons.default(
+                                                        isInverted
+                                                    )}
+                                                </span>
+                                            )}
+                                        </IconContainer>
+                                    </StyledLink>
+                                </ListItem>
+                            );
+                        } else return null;
                     })}
             </List>
         </View>
