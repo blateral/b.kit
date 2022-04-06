@@ -1,4 +1,3 @@
-import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
@@ -112,7 +111,7 @@ const NavBlock: React.FC<NavBlockProps> = ({
     return (
         <View className={className}>
             <ContentWrapper {...link} isInverted={isInverted}>
-                <Icon>{customIcon ? customIcon({}) : <ArrowRightGhost />}</Icon>
+                {customIcon ? <Icon>{customIcon({})}</Icon> : ''}
                 <MainContent>
                     <MainLabel>
                         {title && (
