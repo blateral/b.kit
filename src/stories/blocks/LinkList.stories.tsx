@@ -5,6 +5,11 @@ import LinkList from 'components/blocks/LinkList';
 export default {
     title: 'Blocks / LinkList',
     component: LinkList,
+    parameters: {
+        status: {
+            type: 'preview',
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

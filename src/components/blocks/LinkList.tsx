@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
-import styled from 'styled-components';
+import styled, { DefaultTheme } from 'styled-components';
 import { spacings } from 'utils/styles';
 import { useLibTheme } from 'utils/LibThemeProvider';
+import { copyStyle } from 'components/typography/Copy';
 
 const View = styled.div``;
 
@@ -21,65 +21,67 @@ const ListItem = styled.li`
 `;
 
 const StyledLink = styled(Link)`
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
+
+    ${copyStyle('copy', 'medium')}
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
 `;
 
 const IconContainer = styled.span`
-    margin-left: ${spacings.nudge}px;
+    display: inline-block;
 `;
 
 export interface LinkListProps {
-    items?: { label?: string; link?: LinkProps }[];
+    items?: Array<{ label?: string; link?: LinkProps }>;
     isInverted?: boolean;
 }
 
-const LinkList: React.FC<LinkListProps> = ({ items, isInverted }) => {
-    const { globals } = useLibTheme();
+export const getLinkIcon = (
+    theme: DefaultTheme,
+    href: string,
+    isInverted?: boolean
+) => {
+    const linkIcons = theme.globals.icons.linkIcons;
 
-    const linkIcons = globals.icons.linkIcons;
+    const fileExtension = `.${href?.split('.').pop() || ''}`;
+
+    const result = linkIcons.variations.find((icon) => {
+        return icon.patterns?.find((pattern) => pattern.match(fileExtension));
+    });
+
+    return result ? result.icon(isInverted) : linkIcons.default(isInverted);
+};
+
+const LinkList: React.FC<LinkListProps> = ({ items, isInverted }) => {
+    const { theme } = useLibTheme();
 
     return (
         <View>
             <List>
                 {items?.map((item, i) => {
-                    const fileExtension = `.${
-                        item.link?.href && item.link.href.split('.').pop()
-                    }`;
+                    if (!item.link?.href) return null;
 
-                    const filteredIcons = linkIcons.variations.filter((icons) =>
-                        icons.patterns?.find((pattern) =>
-                            pattern.match(fileExtension)
-                        )
+                    const linkIcon = getLinkIcon(
+                        theme,
+                        item.link.href,
+                        isInverted
                     );
 
-                    if (item.link?.href) {
-                        return (
-                            <ListItem key={i}>
-                                <StyledLink {...item.link}>
-                                    <Copy isInverted={isInverted}>
-                                        {item.label}
-                                    </Copy>
-                                    <IconContainer>
-                                        {filteredIcons.length > 0 ? (
-                                            filteredIcons.map((icon) => {
-                                                return (
-                                                    <span key={i}>
-                                                        {icon.icon(isInverted)}
-                                                    </span>
-                                                );
-                                            })
-                                        ) : (
-                                            <span>
-                                                {linkIcons.default(isInverted)}
-                                            </span>
-                                        )}
-                                    </IconContainer>
-                                </StyledLink>
-                            </ListItem>
-                        );
-                    } else return null;
+                    return (
+                        <ListItem key={i}>
+                            <StyledLink {...item.link} isInverted={isInverted}>
+                                <span>{item.label}</span>
+                                {linkIcon && (
+                                    <IconContainer>{linkIcon}</IconContainer>
+                                )}
+                            </StyledLink>
+                        </ListItem>
+                    );
                 })}
             </List>
         </View>

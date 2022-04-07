@@ -1,11 +1,11 @@
 /* eslint-disable react/display-name */
-import Document from 'components/base/icons/files/Document';
 import Excel from 'components/base/icons/files/Excel';
 import Image from 'components/base/icons/files/Image';
 import Pdf from 'components/base/icons/files/Pdf';
 import PowerPoint from 'components/base/icons/files/PowerPoint';
 import Word from 'components/base/icons/files/Word';
 import Zip from 'components/base/icons/files/Zip';
+import DefaultIcon from 'components/base/icons/files/Link';
 import React from 'react';
 import { css, DefaultTheme } from 'styled-components';
 
@@ -534,44 +534,30 @@ const defaultGlobalSettings: GlobalSettings = {
     },
     icons: {
         linkIcons: {
-            default: (isInverted) => (
-                <Document iconColor={isInverted ? '#ccc' : '#666'} />
-            ),
+            default: () => <DefaultIcon />,
             variations: [
                 {
-                    icon: (isInverted) => (
-                        <Pdf iconColor={isInverted ? '#ccc' : '#666'} />
-                    ),
+                    icon: () => <Pdf />,
                     patterns: ['.pdf'],
                 },
                 {
-                    icon: (isInverted) => (
-                        <Word iconColor={isInverted ? '#ccc' : '#666'} />
-                    ),
+                    icon: () => <Word />,
                     patterns: ['.docx'],
                 },
                 {
-                    icon: (isInverted) => (
-                        <Excel iconColor={isInverted ? '#ccc' : '#666'} />
-                    ),
+                    icon: () => <Excel />,
                     patterns: ['.xlsx'],
                 },
                 {
-                    icon: (isInverted) => (
-                        <PowerPoint iconColor={isInverted ? '#ccc' : '#666'} />
-                    ),
+                    icon: () => <PowerPoint />,
                     patterns: ['.pptx'],
                 },
                 {
-                    icon: (isInverted) => (
-                        <Image iconColor={isInverted ? '#ccc' : '#666'} />
-                    ),
+                    icon: () => <Image />,
                     patterns: ['.jpg', '.jpeg', '.png', '.svg'],
                 },
                 {
-                    icon: (isInverted) => (
-                        <Zip iconColor={isInverted ? '#ccc' : '#666'} />
-                    ),
+                    icon: () => <Zip />,
                     patterns: ['.zip'],
                 },
             ],
@@ -587,7 +573,9 @@ export const baseTheme: DefaultTheme = {
 };
 
 export const getTheme = (theme?: DefaultTheme) => {
-    return (theme && theme.colors && theme.fonts && theme.globals) || baseTheme;
+    return theme && theme.colors && theme.fonts && theme.globals
+        ? theme
+        : baseTheme;
 };
 
 export const getColors = (theme?: DefaultTheme) => {

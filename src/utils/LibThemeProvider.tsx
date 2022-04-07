@@ -8,6 +8,7 @@ import {
     getColors,
     getFonts,
     getGlobals,
+    getTheme,
 } from 'utils/styles';
 
 export type RecursivePartial<T> = {
@@ -137,7 +138,7 @@ export const useLibTheme = () => {
         colors: getColors(theme),
         fonts: getFonts(theme),
         globals: getGlobals(theme),
-        theme: theme,
+        theme: getTheme(theme),
     };
 };
 

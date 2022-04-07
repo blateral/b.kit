@@ -134,6 +134,8 @@ export { default as Actions } from 'components/blocks/Actions';
 export { default as Bdot } from 'components/blocks/Bdot';
 export { default as IntroBlock } from 'components/blocks/IntroBlock';
 export { default as Image } from 'components/blocks/Image';
+export { default as LinkList, getLinkIcon } from 'components/blocks/LinkList';
+
 export {
     default as CookieConsent,
     CookieIcon,
