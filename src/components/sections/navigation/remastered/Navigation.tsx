@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
+import { DefaultTheme } from 'styled-components';
 import {
     LibThemeProvider,
     ThemeMods,
@@ -14,7 +15,60 @@ import Menu, {
     NavItem,
 } from './menu/Menu';
 
-import NavBar, { getFullHeight, NavBarSize, BarStates } from './NavBar';
+import NavBar, {
+    getFullHeight,
+    NavBarSize,
+    BarStates,
+    hasTopBar,
+    hasBottomBar,
+    ExcludeType,
+} from './NavBar';
+
+export type NavigationNavbarIdent =
+    | 'top-main-bottom'
+    | 'main-bottom'
+    | 'top-main'
+    | 'top-bottom'
+    | 'top'
+    | 'main'
+    | 'bottom'
+    | '';
+
+/**
+ * Checks which navbar parts are defined in navigation.
+ * With this values you can calculate each height by the Navbar component functions
+ * @param ident Identification string from Navigation component
+ * @returns
+ */
+export const getNavbarState = (ident: NavigationNavbarIdent) => {
+    const navbarIdent = ident || '';
+    return {
+        hasTop: navbarIdent.search('top') !== -1,
+        hasMain: navbarIdent.search('main') !== -1,
+        hasBottom: navbarIdent.search('bottom') !== -1,
+    };
+};
+
+/**
+ * Get full navbar heights
+ * @param theme Theme object
+ * @param ident Indentification string from Navigation component
+ * @returns
+ */
+export const getFullNavbarHeights = (
+    theme: DefaultTheme,
+    ident: NavigationNavbarIdent
+) => {
+    const { hasTop, hasBottom } = getNavbarState(ident || '');
+    const excludes: ExcludeType[] = [];
+    if (!hasTop) excludes.push('top');
+    if (!hasBottom) excludes.push('bottom');
+
+    return {
+        large: getFullHeight(theme, 'large', excludes),
+        small: getFullHeight(theme, 'small', excludes),
+    };
+};
 
 export interface NavBarStates extends BarStates {
     isMenuOpen?: boolean;
@@ -220,12 +274,22 @@ const Navigation: FC<NavigationProps> = ({
           }
         : undefined;
 
+    /**
+     * Get ident string that shows if each navbar section is defined.
+     * @returns Navbar ident string
+     */
+    const getNavBarIdent = (theme: DefaultTheme): NavigationNavbarIdent => {
+        const identParts: string[] = [];
+        if (topBar !== null && hasTopBar(theme)) identParts.push('top');
+        if (mainBar !== null) identParts.push('main');
+        if (bottomBar !== null && hasBottomBar(theme))
+            identParts.push('bottom');
+
+        return identParts.join('-') as NavigationNavbarIdent;
+    };
+
     return (
-        <header
-            data-nav-ident={`${topBar !== null ? 't-' : ''}${
-                mainBar !== null ? 'm' : ''
-            }${bottomBar !== null ? '-b' : ''}`}
-        >
+        <header data-navbar-ident={getNavBarIdent(theme)}>
             <LibThemeProvider theme={navBar?.theme}>
                 <NavBar
                     isOpen={isNavBarOpen}

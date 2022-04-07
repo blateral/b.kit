@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -8,7 +8,12 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from 'utils/styles';
 import Link, { LinkProps } from 'components/typography/Link';
 import ArrowDown from 'components/base/icons/ArrowDown';
-import { useScrollIntoView } from 'utils/useScrollIntoView';
+import { useScrollTo } from 'utils/useScrollTo';
+import {
+    getFullNavbarHeights,
+    NavigationNavbarIdent,
+} from './navigation/remastered/Navigation';
+import { useMediaQueries } from 'utils/useMediaQuery';
 
 const List = styled.ul<{ hasBg?: boolean; isInverted?: boolean }>`
     margin: 0;
@@ -84,9 +89,15 @@ const IndexList: React.FC<{
 
     /** Function to inject custom icon decorator */
     customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-}> = ({ anchorId, items, bgMode, customIcon }) => {
-    const { colors } = useLibTheme();
-    const { setActiveElement } = useScrollIntoView(500);
+
+    /** Top offset for scroll to clicked item. Default: auto */
+    scrollToOffset?: number;
+}> = ({ anchorId, items, bgMode, customIcon, scrollToOffset }) => {
+    const { colors, theme } = useLibTheme();
+    const setTargetPos = useScrollTo(500);
+    const { semilarge } = useMediaQueries();
+
+    const [topOffset, setTopOffset] = useState<number>(0);
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -100,7 +111,12 @@ const IndexList: React.FC<{
         if (!href) return;
 
         const target = document.getElementById(href.split('#')?.[1] || href);
-        if (target) setActiveElement(target as HTMLElement);
+        if (target) {
+            setTargetPos(
+                target.getBoundingClientRect().top -
+                    (scrollToOffset || topOffset)
+            );
+        }
 
         if (window) {
             const url = new URL(window.location as any);
@@ -108,6 +124,22 @@ const IndexList: React.FC<{
             window.history.pushState({}, '', url as any);
         }
     };
+
+    useEffect(() => {
+        if (scrollToOffset) return;
+
+        // if header is defined get navbar height and generate top offset
+        const header = document.querySelector('header[data-navbar-ident]');
+        const navbarIdent = header?.getAttribute(
+            'data-navbar-ident'
+        ) as NavigationNavbarIdent;
+        if (!navbarIdent) return;
+
+        const navbarHeights = getFullNavbarHeights(theme, navbarIdent);
+
+        if (semilarge) setTopOffset(navbarHeights.small[1] + spacings.spacer);
+        else setTopOffset(navbarHeights.small[0] + spacings.spacer);
+    }, [theme, semilarge, scrollToOffset]);
 
     return (
         <Section

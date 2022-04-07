@@ -5,7 +5,7 @@ import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import Skeletons from './skeletons/Skeletons';
 
-const getTopHeights = (
+export const getTopHeights = (
     theme: DefaultTheme,
     size?: NavBarSize
 ): [number, number] => {
@@ -21,7 +21,7 @@ const getTopHeights = (
     ];
 };
 
-const hasTopBar = (theme: DefaultTheme) => {
+export const hasTopBar = (theme: DefaultTheme) => {
     const largeHeights = getTopHeights(theme, 'large');
     const smallHeights = getTopHeights(theme, 'small');
 
@@ -33,7 +33,7 @@ const hasTopBar = (theme: DefaultTheme) => {
     );
 };
 
-const getMainHeights = (
+export const getMainHeights = (
     theme: DefaultTheme,
     size?: NavBarSize
 ): [number, number] => {
@@ -49,7 +49,7 @@ const getMainHeights = (
     ];
 };
 
-const getBottomHeights = (
+export const getBottomHeights = (
     theme: DefaultTheme,
     size?: NavBarSize
 ): [number, number] => {
@@ -65,7 +65,7 @@ const getBottomHeights = (
     ];
 };
 
-const hasBottomBar = (theme: DefaultTheme) => {
+export const hasBottomBar = (theme: DefaultTheme) => {
     const largeHeights = getBottomHeights(theme, 'large');
     const smallHeights = getBottomHeights(theme, 'small');
 
@@ -77,7 +77,7 @@ const hasBottomBar = (theme: DefaultTheme) => {
     );
 };
 
-type ExcludeType = 'top' | 'main' | 'bottom';
+export type ExcludeType = 'top' | 'main' | 'bottom';
 
 /**
  * Get full height of navigation bar

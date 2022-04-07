@@ -146,7 +146,10 @@ export { default as Navigation } from 'components/sections/navigation/Navigation
 export { default as Menu } from 'components/sections/navigation/menu/Menu';
 export { default as TopBar } from 'components/sections/navigation/TopBar';
 
-export { default as NewNavigation } from 'components/sections/navigation/remastered/Navigation';
+export {
+    default as NewNavigation,
+    getFullNavbarHeights,
+} from 'components/sections/navigation/remastered/Navigation';
 export { default as NavSkeletons } from 'components/sections/navigation/remastered/skeletons/Skeletons';
 
 export { default as NavBarMainPartial } from 'components/sections/navigation/remastered/partials/NavBarMain';

@@ -134,6 +134,51 @@ export const WithAnchors: Story = () => (
 WithAnchors.decorators = [
     (Story) => (
         <>
+            <header data-navbar-ident="top-main-bottom" />
+            <Story />
+            <div style={{ height: '110vh' }} />
+            <div id="anchor_1">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+            </div>
+            <div style={{ height: '50vh' }} />
+            <div id="anchor_2">Cum sociis natoque</div>
+            <div style={{ height: '50vh' }} />
+            <div id="anchor_3">Lorem ipsum dolor sit amet</div>
+            <div style={{ height: '50vh' }} />
+            <div id="anchor_4">Lorem ipsum</div>
+            <div style={{ height: '50vh' }} />
+        </>
+    ),
+];
+
+export const WithCustomOffset: Story = () => (
+    <IndexList
+        scrollToOffset={40}
+        items={[
+            {
+                label: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
+                link: { href: '#anchor_1' },
+            },
+            {
+                label: 'Cum sociis natoque',
+                link: { href: '#anchor_2' },
+            },
+            {
+                label: 'Lorem ipsum dolor sit amet',
+                link: { href: '#anchor_3' },
+            },
+            {
+                label: 'Lorem ipsum',
+                link: { href: '#anchor_4' },
+            },
+        ]}
+    />
+);
+
+WithCustomOffset.decorators = [
+    (Story) => (
+        <>
+            <header data-navbar-ident="top-main-bottom" />
             <Story />
             <div style={{ height: '110vh' }} />
             <div id="anchor_1">
