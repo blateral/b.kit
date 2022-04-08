@@ -25,6 +25,7 @@ const Intro: React.FC<{
     /**  Intro text underneath the title (richtext) */
     text?: string;
 
+    /** Intro image */
     image?: ImageProps;
 
     /** Function to inject custom primary button */

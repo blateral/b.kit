@@ -1,16 +1,16 @@
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { getColors as color, spacings } from 'utils/styles';
+import { spacings } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import Pointer from 'components/buttons/Pointer';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 
 const Actions = styled.div`
@@ -26,14 +26,28 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 type NewsFooterMq = 'small' | 'semilarge';
 
 const NewsFooter: React.FC<{
-    news: NewsCardProps[];
+    /** Array of news item settings */
+    news: Omit<NewsCardProps, 'isInverted' | 'onTagClick' | 'customTag'>[];
+
+    /** Text to show on show more button */
+    showMoreText?: string;
+
+    /** Section background */
+    bgMode?: 'full' | 'inverted';
+
+    /** Callback function called if any of the tags are clicked */
     onTagClick?: (tag: string) => void;
 
-    bgMode?: 'full' | 'inverted';
-    showMoreText?: string;
-}> = ({ news, onTagClick, bgMode, showMoreText }) => {
+    /** Function to inject custom tag node */
+    customTag?: (props: {
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+    }) => React.ReactNode;
+}> = ({ news, onTagClick, bgMode, showMoreText, customTag }) => {
+    const { colors } = useLibTheme();
     const newsCount = news?.length || 0;
-    const theme = useContext(ThemeContext);
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -80,31 +94,29 @@ const NewsFooter: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
+                    ? colors.new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
                 <Grid.Row>
-                    {news &&
-                        news
-                            .filter((_, i) => i < visibleRows * itemsPerRow)
-                            .map((item, i) => {
-                                return (
-                                    <Grid.Col medium={{ span: 6 / 12 }} key={i}>
-                                        <div key={i} ref={cardRefs[i]}>
-                                            <NewsCard
-                                                isInverted={isInverted}
-                                                onTagClick={onTagClick}
-                                                {...item}
-                                            />
-                                        </div>
-                                    </Grid.Col>
-                                );
-                            })}
+                    {news
+                        ?.filter((_, i) => i < visibleRows * itemsPerRow)
+                        .map((item, i) => (
+                            <Grid.Col medium={{ span: 6 / 12 }} key={i}>
+                                <NewsCard
+                                    key={i}
+                                    ref={cardRefs[i]}
+                                    {...item}
+                                    isInverted={isInverted}
+                                    onTagClick={onTagClick}
+                                    customTag={customTag}
+                                />
+                            </Grid.Col>
+                        ))}
                 </Grid.Row>
                 {news && news.length > 0 && (
                     <Actions>
