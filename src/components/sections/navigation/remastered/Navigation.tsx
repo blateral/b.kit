@@ -22,17 +22,8 @@ import NavBar, {
     hasTopBar,
     hasBottomBar,
     ExcludeType,
+    PageFlow,
 } from './NavBar';
-
-export type NavigationNavbarIdent =
-    | 'top-main-bottom'
-    | 'main-bottom'
-    | 'top-main'
-    | 'top-bottom'
-    | 'top'
-    | 'main'
-    | 'bottom'
-    | '';
 
 /**
  * Checks which navbar parts are defined in navigation.
@@ -40,12 +31,28 @@ export type NavigationNavbarIdent =
  * @param ident Identification string from Navigation component
  * @returns
  */
-export const getNavbarState = (ident: NavigationNavbarIdent) => {
+export const getNavbarState = (ident: string) => {
     const navbarIdent = ident || '';
+
+    let pageFlow: PageFlow | undefined = undefined;
+    switch (true) {
+        case navbarIdent.search('overContent') !== -1: {
+            pageFlow = 'overContent';
+            break;
+        }
+
+        case navbarIdent.search('beforeContent') !== -1: {
+            pageFlow = 'beforeContent';
+            break;
+        }
+    }
+
     return {
         hasTop: navbarIdent.search('top') !== -1,
         hasMain: navbarIdent.search('main') !== -1,
         hasBottom: navbarIdent.search('bottom') !== -1,
+        pageFlow: pageFlow,
+        isStickable: navbarIdent.search('stickable') !== -1,
     };
 };
 
@@ -55,10 +62,7 @@ export const getNavbarState = (ident: NavigationNavbarIdent) => {
  * @param ident Indentification string from Navigation component
  * @returns
  */
-export const getFullNavbarHeights = (
-    theme: DefaultTheme,
-    ident: NavigationNavbarIdent
-) => {
+export const getFullNavbarHeights = (theme: DefaultTheme, ident: string) => {
     const { hasTop, hasBottom } = getNavbarState(ident || '');
     const excludes: ExcludeType[] = [];
     if (!hasTop) excludes.push('top');
@@ -278,14 +282,17 @@ const Navigation: FC<NavigationProps> = ({
      * Get ident string that shows if each navbar section is defined.
      * @returns Navbar ident string
      */
-    const getNavBarIdent = (theme: DefaultTheme): NavigationNavbarIdent => {
+    const getNavBarIdent = (theme: DefaultTheme) => {
         const identParts: string[] = [];
         if (topBar !== null && hasTopBar(theme)) identParts.push('top');
         if (mainBar !== null) identParts.push('main');
         if (bottomBar !== null && hasBottomBar(theme))
             identParts.push('bottom');
 
-        return identParts.join('-') as NavigationNavbarIdent;
+        if (navBar?.pageFlow) identParts.push(navBar?.pageFlow);
+        if (navBar?.isStickable) identParts.push('stickable');
+
+        return identParts.join('-');
     };
 
     return (

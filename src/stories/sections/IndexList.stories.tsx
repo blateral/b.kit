@@ -134,7 +134,7 @@ export const WithAnchors: Story = () => (
 WithAnchors.decorators = [
     (Story) => (
         <>
-            <header data-navbar-ident="top-main-bottom" />
+            <header data-navbar-ident="top-main-bottom-stickable" />
             <Story />
             <div style={{ height: '110vh' }} />
             <div id="anchor_1">

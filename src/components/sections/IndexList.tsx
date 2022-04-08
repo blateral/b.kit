@@ -11,7 +11,7 @@ import ArrowDown from 'components/base/icons/ArrowDown';
 import { useScrollTo } from 'utils/useScrollTo';
 import {
     getFullNavbarHeights,
-    NavigationNavbarIdent,
+    getNavbarState,
 } from './navigation/remastered/Navigation';
 import { useMediaQueries } from 'utils/useMediaQuery';
 
@@ -130,11 +130,13 @@ const IndexList: React.FC<{
 
         // if header is defined get navbar height and generate top offset
         const header = document.querySelector('header[data-navbar-ident]');
-        const navbarIdent = header?.getAttribute(
-            'data-navbar-ident'
-        ) as NavigationNavbarIdent;
+        const navbarIdent = header?.getAttribute('data-navbar-ident');
         if (!navbarIdent) return;
 
+        const { isStickable } = getNavbarState(navbarIdent);
+        if (!isStickable) return;
+
+        // calculate offset from navbar height
         const navbarHeights = getFullNavbarHeights(theme, navbarIdent);
 
         if (semilarge) setTopOffset(navbarHeights.small[1] + spacings.spacer);
