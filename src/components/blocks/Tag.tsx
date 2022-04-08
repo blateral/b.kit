@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import Copy from 'components/typography/Copy';
+import { copyStyle } from 'components/typography/Copy';
 
-const View = styled(Copy)<{
+const View = styled.button<{
     isInverted?: boolean;
     isActive?: boolean;
     onClick?: () => void;
@@ -22,7 +22,10 @@ const View = styled(Copy)<{
     overflow: hidden;
     text-align: center;
 
-    background: ${({ isActive, isInverted }) =>
+    ${copyStyle('copy', 'small')}
+
+    background: none;
+    background-color: ${({ isActive, isInverted }) =>
         isActive && (isInverted ? '#dddddd' : '#444444')};
 
     color: ${({ isActive, isInverted }) => {
@@ -35,15 +38,18 @@ const View = styled(Copy)<{
 
     cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')};
 
-    transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 
-    @media (hover: hover) and (pointer: fine) {
-        &:hover {
-            background: ${({ isInverted }) =>
-                isInverted ? '#dddddd' : '#444444'};
-            color: ${({ isInverted }) => (isInverted ? '#444444' : '#ffff')};
-        }
-    }
+    ${({ onClick, isInverted }) =>
+        onClick &&
+        css`
+            @media (hover: hover) and (pointer: fine) {
+                &:hover {
+                    background-color: ${isInverted ? '#dddddd' : '#444444'};
+                    color: ${isInverted ? '#444444' : '#ffff'};
+                }
+            }
+        `}
 `;
 
 const Tag: FC<{
@@ -59,7 +65,6 @@ const Tag: FC<{
 }> = ({ isInverted, isActive, onClick, className, children }) => {
     return (
         <View
-            size="small"
             isInverted={isInverted}
             isActive={isActive}
             onClick={onClick}

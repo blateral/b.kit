@@ -89,6 +89,9 @@ const ContentBlock = styled(Copy)<{
 `;
 
 const NewsIntro: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array of news tags */
     tags?: string[];
 
@@ -117,7 +120,17 @@ const NewsIntro: React.FC<{
         isActive?: boolean;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
-}> = ({ tags, onTagClick, meta, title, text, image, bgMode, customTag }) => {
+}> = ({
+    anchorId,
+    tags,
+    onTagClick,
+    meta,
+    title,
+    text,
+    image,
+    bgMode,
+    customTag,
+}) => {
     const { globals, colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -137,6 +150,7 @@ const NewsIntro: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark
