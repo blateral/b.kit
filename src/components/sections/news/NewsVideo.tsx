@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
 import { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
-import { getColors as color, spacings } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { spacings } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Wrapper from 'components/base/Wrapper';
 import VideoCard from 'components/blocks/VideoCard';
 import Actions from 'components/blocks/Actions';
@@ -14,6 +14,9 @@ const StyledActions = styled(Actions)`
 `;
 
 const NewsVideo: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     bgImage?: ImageProps;
     embedId?: string;
     playIcon?: React.ReactChild;
@@ -23,6 +26,7 @@ const NewsVideo: React.FC<{
 
     bgMode?: 'full' | 'inverted';
 }> = ({
+    anchorId,
     bgImage,
     embedId,
     playIcon,
@@ -30,7 +34,7 @@ const NewsVideo: React.FC<{
     secondaryAction,
     bgMode,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -38,11 +42,12 @@ const NewsVideo: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
+                    ? colors.new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}

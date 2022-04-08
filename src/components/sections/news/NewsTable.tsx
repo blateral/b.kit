@@ -1,12 +1,13 @@
+import React from 'react';
+import styled from 'styled-components';
+
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
 import Copy from 'components/typography/Copy';
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
 import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const TableView = styled.div`
     & > * + * {
@@ -150,25 +151,29 @@ const StyledActions = styled(Actions)`
 `;
 
 const NewsTable: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     tableItems: TableProps[];
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     bgMode?: 'full' | 'inverted';
-}> = ({ bgMode, tableItems, primaryAction, secondaryAction }) => {
-    const theme = React.useContext(ThemeContext);
+}> = ({ anchorId, bgMode, tableItems, primaryAction, secondaryAction }) => {
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
+                    ? colors.new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}

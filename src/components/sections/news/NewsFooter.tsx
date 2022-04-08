@@ -25,12 +25,17 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 
 type NewsFooterMq = 'small' | 'semilarge';
 
+export type NewsItem = Omit<
+    NewsCardProps,
+    'isInverted' | 'onTagClick' | 'customTag'
+>;
+
 const NewsFooter: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** Array of news item settings */
-    news: Omit<NewsCardProps, 'isInverted' | 'onTagClick' | 'customTag'>[];
+    news: NewsItem[];
 
     /** Text to show on show more button */
     showMoreText?: string;

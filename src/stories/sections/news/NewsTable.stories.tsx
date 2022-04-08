@@ -11,7 +11,7 @@ export default {
     components: NewsTableComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;

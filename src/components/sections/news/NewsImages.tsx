@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
-import {
-    getColors as color,
-    spacings,
-    getGlobals as global,
-} from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { spacings, getGlobals as global } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -23,6 +19,9 @@ const StyledActions = styled(Actions)`
 `;
 
 const NewsImages: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     images?: Omit<ImageProps, 'coverSpace'>[];
     imageStyle?: 'full' | 'half';
 
@@ -31,13 +30,14 @@ const NewsImages: React.FC<{
 
     bgMode?: 'full' | 'inverted';
 }> = ({
+    anchorId,
     images,
     imageStyle = 'full',
     primaryAction,
     secondaryAction,
     bgMode,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -45,11 +45,12 @@ const NewsImages: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
+                    ? colors.new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
