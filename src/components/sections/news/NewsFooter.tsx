@@ -26,6 +26,9 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 type NewsFooterMq = 'small' | 'semilarge';
 
 const NewsFooter: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Array of news item settings */
     news: Omit<NewsCardProps, 'isInverted' | 'onTagClick' | 'customTag'>[];
 
@@ -45,7 +48,7 @@ const NewsFooter: React.FC<{
         isActive?: boolean;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
-}> = ({ news, onTagClick, bgMode, showMoreText, customTag }) => {
+}> = ({ anchorId, news, onTagClick, bgMode, showMoreText, customTag }) => {
     const { colors } = useLibTheme();
     const newsCount = news?.length || 0;
 
@@ -92,6 +95,7 @@ const NewsFooter: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark

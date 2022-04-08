@@ -89,13 +89,25 @@ const ContentBlock = styled(Copy)<{
 `;
 
 const NewsIntro: React.FC<{
+    /** Array of news tags */
     tags?: string[];
-    onTagClick?: (name: string) => void;
-    meta?: { date?: Date; author?: string };
-    title?: string;
-    text?: string;
-    image?: ImageProps;
 
+    /** Callback function if any tag has been clicked */
+    onTagClick?: (name: string) => void;
+
+    /** News article's meta informations */
+    meta?: { date?: Date; author?: string };
+
+    /** Title of news article */
+    title?: string;
+
+    /** Main image of news article */
+    image?: Omit<ImageProps, 'coverSpace'>;
+
+    /** Text of news article (richtext)  */
+    text?: string;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom tag node */
@@ -185,9 +197,7 @@ const NewsIntro: React.FC<{
                         )}
                     </div>
                     {image?.small && (
-                        <div>
-                            <Image coverSpace {...image} />
-                        </div>
+                        <Image {...image} coverSpace isInverted={isInverted} />
                     )}
                 </Content>
             </Wrapper>
