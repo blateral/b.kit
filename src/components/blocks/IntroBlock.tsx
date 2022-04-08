@@ -106,7 +106,8 @@ const IntroBlock: React.FC<{
     /** Intro text underneath the title (richtext) */
     text?: string;
 
-    image?: ImageProps;
+    /** Intro image */
+    image?: Omit<ImageProps, 'coverSpace'>;
 
     /** Copy type of intro text (limits richtext capabilites on textType == copy-b or copy-i) */
     textType?: CopyType;
@@ -152,6 +153,8 @@ const IntroBlock: React.FC<{
     className,
     image,
 }) => {
+    const isInverted = colorMode === 'inverted' || colorMode === 'onImage';
+
     return (
         <View as={renderAs} isCentered={isCentered} className={className}>
             <Content>
@@ -167,14 +170,14 @@ const IntroBlock: React.FC<{
                         maxLines={maxTitleLines}
                     />
                 )}
-                {image && image.small && (
-                    <MobileImage isCentered={isCentered} {...image} />
+                {image?.small && (
+                    <MobileImage {...image} isCentered={isCentered} />
                 )}
                 {text && (
                     <ContentBlock
                         type={textType}
                         textColor={colorMode === 'onImage' ? '#fff' : undefined}
-                        isInverted={colorMode === 'inverted'}
+                        isInverted={isInverted}
                         isCentered={isCentered}
                         innerHTML={text}
                         clamp={clampText}
@@ -183,24 +186,16 @@ const IntroBlock: React.FC<{
                 )}
                 {(primaryAction || secondaryAction) && (
                     <StyledActions
-                        primary={
-                            primaryAction &&
-                            primaryAction(
-                                colorMode === 'inverted' ||
-                                    colorMode === 'onImage'
-                            )
-                        }
+                        primary={primaryAction && primaryAction(isInverted)}
                         secondary={
-                            secondaryAction &&
-                            secondaryAction(
-                                colorMode === 'inverted' ||
-                                    colorMode === 'onImage'
-                            )
+                            secondaryAction && secondaryAction(isInverted)
                         }
                     />
                 )}
             </Content>
-            {image && image.small && !isCentered && <DesktopImage {...image} />}
+            {image?.small && !isCentered && (
+                <DesktopImage {...image} coverSpace isInverted={isInverted} />
+            )}
         </View>
     );
 };
