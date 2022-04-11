@@ -21,7 +21,7 @@ const View = styled.div<{ isCentered?: boolean }>`
         flex-direction: row;
 
         & > * + * {
-            padding-left: ${spacings.spacer}px;
+            margin-left: ${spacings.spacer}px;
         }
     }
 `;
@@ -77,6 +77,8 @@ const MobileImage = styled(Image)<{ isCentered?: boolean }>`
 `;
 const DesktopImage = styled(Image)`
     display: none;
+    width: 100%;
+    height: 100%;
 
     @media ${mq.semilarge} {
         display: block;
@@ -171,7 +173,12 @@ const IntroBlock: React.FC<{
                     />
                 )}
                 {image?.small && (
-                    <MobileImage {...image} isCentered={isCentered} />
+                    <MobileImage
+                        {...image}
+                        coverSpace
+                        isCentered={isCentered}
+                        isInverted={isInverted}
+                    />
                 )}
                 {text && (
                     <ContentBlock
@@ -194,7 +201,7 @@ const IntroBlock: React.FC<{
                 )}
             </Content>
             {image?.small && !isCentered && (
-                <DesktopImage {...image} isInverted={isInverted} />
+                <DesktopImage {...image} coverSpace isInverted={isInverted} />
             )}
         </View>
     );
