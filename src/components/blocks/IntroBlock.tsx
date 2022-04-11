@@ -194,7 +194,7 @@ const IntroBlock: React.FC<{
                 )}
             </Content>
             {image?.small && !isCentered && (
-                <DesktopImage {...image} coverSpace isInverted={isInverted} />
+                <DesktopImage {...image} isInverted={isInverted} />
             )}
         </View>
     );

@@ -55,6 +55,9 @@ export const WithImage: Story = () => (
         image={{
             small: 'https://unsplash.it/500/500?image=703',
             medium: 'https://unsplash.it/400/400?image=703',
+            ratios: {
+                small: { h: 1, w: 1 },
+            },
         }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
@@ -78,6 +81,9 @@ export const Centered: Story = () => (
         image={{
             small: 'https://unsplash.it/500/500?image=703',
             medium: 'https://unsplash.it/400/400?image=703',
+            ratios: {
+                small: { h: 1, w: 1 },
+            },
         }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
@@ -100,6 +106,9 @@ export const Inverted: Story = () => (
         image={{
             small: 'https://unsplash.it/500/500?image=703',
             medium: 'https://unsplash.it/400/400?image=703',
+            ratios: {
+                small: { h: 1, w: 1 },
+            },
         }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
@@ -123,6 +132,9 @@ export const hasBackground: Story = () => (
         image={{
             small: 'https://unsplash.it/500/500?image=703',
             medium: 'https://unsplash.it/400/400?image=703',
+            ratios: {
+                small: { h: 1, w: 1 },
+            },
         }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
@@ -146,6 +158,9 @@ export const hasSplittedBackground: Story = () => (
         image={{
             small: 'https://unsplash.it/500/500?image=703',
             medium: 'https://unsplash.it/400/400?image=703',
+            ratios: {
+                small: { h: 1, w: 1 },
+            },
         }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
@@ -171,6 +186,9 @@ export const Stackable: Story = () => (
         image={{
             small: 'https://unsplash.it/500/500?image=703',
             medium: 'https://unsplash.it/400/400?image=703',
+            ratios: {
+                small: { h: 1, w: 1 },
+            },
         }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
