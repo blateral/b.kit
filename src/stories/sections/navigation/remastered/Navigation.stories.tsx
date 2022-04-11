@@ -232,7 +232,27 @@ export const WithExampleContent: Story = () => (
                         {
                             link: { href: '/companynews' },
                             label: 'Company News Worldwide',
+                        },
+                        {
+                            link: { href: '/companynews' },
+                            label: 'Company News Worldwide',
                             isCurrent: true,
+                        },
+                        {
+                            link: { href: '/companynews' },
+                            label: 'Company News Worldwide',
+                        },
+                        {
+                            link: { href: '/companynews' },
+                            label: 'Company News Worldwide',
+                        },
+                        {
+                            link: { href: '/companynews' },
+                            label: 'Company News Worldwide',
+                        },
+                        {
+                            link: { href: '/companynews' },
+                            label: 'Company News Worldwide',
                         },
                     ],
                 },
@@ -242,7 +262,15 @@ export const WithExampleContent: Story = () => (
                 type: 'flyout',
             },
             header: ({ closeMenu }) => (
-                <button onClick={closeMenu}>close</button>
+                <div
+                    style={{
+                        flex: '0 0 80px',
+                        display: 'block',
+                        height: '80px',
+                    }}
+                >
+                    <button onClick={closeMenu}>close</button>
+                </div>
             ),
         }}
     />

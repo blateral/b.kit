@@ -11,7 +11,7 @@ import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 import Menu, {
     MenuStates,
     MenuTypeProps,
-    NavGroup,
+    MainNavItem,
     NavItem,
 } from './menu/Menu';
 
@@ -78,7 +78,7 @@ export interface NavBarStates extends BarStates {
     isMenuOpen?: boolean;
     openMenu?: () => void;
     closeMenu?: () => void;
-    mainNavigation?: Array<NavGroup>;
+    mainNavigation?: Array<MainNavItem>;
     subNavigation?: Array<NavItem>;
     isOnPageTop?: boolean;
     isInTopOffset?: boolean;
@@ -110,7 +110,7 @@ export interface NavBarSettings {
 
 export interface MenuSettings {
     isIndexPage?: boolean;
-    mainNavigation?: Array<NavGroup>;
+    mainNavigation?: Array<MainNavItem>;
     subNavigation?: Array<NavItem>;
     header?: (props: NavMenuStates) => React.ReactNode;
     footer?: (props: NavMenuStates) => React.ReactNode;
