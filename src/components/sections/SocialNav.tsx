@@ -3,7 +3,7 @@ import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import Wrapper from 'components/base/Wrapper';
 import Section, { mapToBgMode } from 'components/base/Section';
-import Link from 'components/typography/Link';
+import Link, { LinkProps } from 'components/typography/Link';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 
@@ -40,8 +40,8 @@ const SocialNav: FC<{
     anchorId?: string;
 
     socials: Array<{
-        href: string;
-        icon: React.ReactNode;
+        link?: LinkProps;
+        icon?: React.ReactNode;
     }>;
     bgMode?: 'full' | 'inverted';
 }> = ({ anchorId, socials, bgMode }) => {
@@ -66,6 +66,7 @@ const SocialNav: FC<{
                 <Socials>
                     <Grid.Row valign="center">
                         {socials.map((social, i) => {
+                            if (!social?.link) return null;
                             return (
                                 <Grid.Col
                                     span={
@@ -75,7 +76,9 @@ const SocialNav: FC<{
                                     }
                                     key={i}
                                 >
-                                    <Social>{social?.icon}</Social>
+                                    <Social {...social?.link}>
+                                        {social?.icon}
+                                    </Social>
                                 </Grid.Col>
                             );
                         })}
