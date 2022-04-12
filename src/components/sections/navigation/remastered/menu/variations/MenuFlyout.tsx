@@ -104,8 +104,8 @@ const MainNavItem = styled.li<{ isActive?: boolean }>`
     height: 100%;
     background-color: ${({ theme, isActive }) =>
         isActive
-            ? color(theme).new.sectionBg.medium
-            : color(theme).new.sectionBg.light};
+            ? color(theme).new.elementBg.medium
+            : color(theme).new.elementBg.light};
 
     border: solid 2px transparent;
 
@@ -113,19 +113,19 @@ const MainNavItem = styled.li<{ isActive?: boolean }>`
 
     &:nth-child(even) {
         border-top: solid 2px
-            ${({ theme }) => color(theme).new.sectionBg.medium};
+            ${({ theme }) => color(theme).new.elementBg.medium};
         border-bottom: solid 2px
-            ${({ theme }) => color(theme).new.sectionBg.medium};
+            ${({ theme }) => color(theme).new.elementBg.medium};
     }
 
     &:last-child {
         border-bottom: solid 2px
-            ${({ theme }) => color(theme).new.sectionBg.medium};
+            ${({ theme }) => color(theme).new.elementBg.medium};
     }
 
     &:first-child {
         border-top: solid 2px
-            ${({ theme }) => color(theme).new.sectionBg.medium};
+            ${({ theme }) => color(theme).new.elementBg.medium};
     }
 
     @media ${mq.semilarge} {
@@ -137,13 +137,12 @@ const MainNavItem = styled.li<{ isActive?: boolean }>`
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             background-color: ${({ theme }) =>
-                color(theme).new.sectionBg.medium};
+                color(theme).new.elementBg.medium};
         }
     }
 
     &:focus-within {
-        background-color: ${({ theme }) => color(theme).new.sectionBg.medium};
-        border: solid 2px ${({ theme }) => color(theme).new.primary.default};
+        background-color: ${({ theme }) => color(theme).new.elementBg.medium};
     }
 `;
 
@@ -152,12 +151,12 @@ const MainNavLabel = styled.span<{ isCurrent?: boolean }>`
     align-items: center;
     position: relative;
     min-height: 80px;
-    text-transform: ${({ isCurrent }) => isCurrent && 'underline'};
 
     padding: 0 ${spacings.nudge * 2}px;
 
     ${copyStyle('copy-b', 'medium')}
     color: ${({ theme }) => font(theme)['copy-b'].medium.color};
+    text-decoration: ${({ isCurrent }) => (isCurrent ? 'underline' : 'none')};
 `;
 
 const NavCollapseIcon = styled(AngleRight)`
@@ -187,6 +186,7 @@ const NavButton = styled.button`
     width: 100%;
     cursor: pointer;
     outline: none;
+    border-radius: 0px;
 `;
 
 const SubNavList = styled.ul<{ isActive?: boolean }>`
@@ -195,12 +195,13 @@ const SubNavList = styled.ul<{ isActive?: boolean }>`
     margin: 0;
     padding: 0;
     padding-left: ${spacings.nudge * 3}px;
+    padding-right: ${spacings.nudge * 2}px;
     list-style: none;
 
     max-height: 100%;
     overflow: auto;
 
-    background-color: ${({ theme }) => color(theme).new.sectionBg.medium};
+    background-color: ${({ theme }) => color(theme).new.elementBg.medium};
 
     @media ${mq.semilarge} {
         position: absolute;
@@ -214,7 +215,9 @@ const SubNavList = styled.ul<{ isActive?: boolean }>`
 
 const SubNavItem = styled.li`
     display: block;
-    padding: ${spacings.nudge * 2}px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 
     ${copyStyle('copy-b', 'medium')}
     color: ${({ theme }) => font(theme)['copy-b'].medium.color};
@@ -224,6 +227,19 @@ const SubNavItem = styled.li`
             margin-top: 80px;
         }
     }
+`;
+
+const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
+    display: flex;
+    align-items: center;
+    height: 56px;
+
+    ${copyStyle('copy-b', 'medium')}
+    color: ${({ theme }) => font(theme)['copy-b'].medium.color};
+    text-decoration: ${({ isCurrent }) => (isCurrent ? 'underline' : 'none')};
+    outline-color: ${({ theme }) => color(theme).new.primary.default};
+
+    padding: ${spacings.nudge}px;
 `;
 
 export interface FlyoutMenuProps {
@@ -240,7 +256,18 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     footer,
     onClose,
 }) => {
-    const [activeItem, setActiveItem] = useState<number | null>(0);
+    const [activeItem, setActiveItem] = useState<number | null>(() => {
+        const currentMainNavItem =
+            mainNavigation?.findIndex((item) => {
+                if (item.isCurrent) return true;
+                return item.subItems
+                    ? item.subItems.findIndex(
+                          (subItem) => subItem.isCurrent
+                      ) !== -1
+                    : false;
+            }) || -1;
+        return currentMainNavItem >= 0 ? currentMainNavItem : null;
+    });
 
     return (
         <React.Fragment>
@@ -262,19 +289,31 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                     navItem.subItems &&
                                     navItem.subItems.length > 0;
 
+                                const hasCurrentSubItem = navItem?.subItems
+                                    ? navItem.subItems.findIndex(
+                                          (item) => item.isCurrent
+                                      ) >= 0
+                                    : false;
+
+                                console.log(hasCurrentSubItem);
+
                                 return (
                                     <MainNavItem
                                         key={i}
                                         isActive={activeItem === i}
+                                        data-active={activeItem === i}
                                     >
                                         <MainNavLabel
-                                            isCurrent={navItem.isCurrent}
+                                            isCurrent={
+                                                navItem.isCurrent ||
+                                                hasCurrentSubItem
+                                            }
                                         >
                                             {navItem.label}
                                             {!hasSubItems &&
                                                 navItem.link.href && (
                                                     <NavLink
-                                                        href={navItem.link.href}
+                                                        {...navItem.link}
                                                         ariaLabel={
                                                             navItem.label
                                                         }
@@ -285,6 +324,9 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                     <NavButton
                                                         aria-label={
                                                             navItem.label
+                                                        }
+                                                        aria-expanded={
+                                                            activeItem === i
                                                         }
                                                         onClick={() =>
                                                             setActiveItem(i)
@@ -303,14 +345,14 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                             {navItem?.subItems?.map(
                                                 (subNavItem, ii) => (
                                                     <SubNavItem key={ii}>
-                                                        <a
-                                                            href={
-                                                                subNavItem.link
-                                                                    .href
+                                                        <SubNavLink
+                                                            isCurrent={
+                                                                subNavItem.isCurrent
                                                             }
+                                                            {...subNavItem.link}
                                                         >
                                                             {subNavItem.label}
-                                                        </a>
+                                                        </SubNavLink>
                                                     </SubNavItem>
                                                 )
                                             )}

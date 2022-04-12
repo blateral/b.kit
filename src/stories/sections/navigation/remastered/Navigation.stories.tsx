@@ -224,39 +224,63 @@ export const WithExampleContent: Story = () => (
         }}
         menu={{
             mainNavigation: [
-                { link: { href: '/services' }, label: 'Services' },
+                { link: { href: '/mainItemA' }, label: 'Main Item A' },
                 {
-                    link: { href: '/news' },
-                    label: 'News',
+                    link: { href: '/mainItemB' },
+                    label: 'Main Item B',
                     subItems: [
                         {
-                            link: { href: '/companynews' },
-                            label: 'Company News Worldwide',
+                            link: { href: '/subitemB.1' },
+                            label: 'Sub Item B.1',
                         },
                         {
-                            link: { href: '/companynews' },
-                            label: 'Company News Worldwide',
+                            link: { href: '/subitemB.2' },
+                            label: 'Sub Item B.2',
+                        },
+                        {
+                            link: { href: '/subitemB.3' },
+                            label: 'Sub Item B.3',
                             isCurrent: true,
                         },
                         {
-                            link: { href: '/companynews' },
-                            label: 'Company News Worldwide',
+                            link: { href: '/subitemB.4' },
+                            label: 'Sub Item B.4',
+                            subItems: [
+                                {
+                                    link: { href: '/subitemB.4.1' },
+                                    label: 'Sub Item B.4.1',
+                                },
+                            ],
                         },
                         {
-                            link: { href: '/companynews' },
-                            label: 'Company News Worldwide',
-                        },
-                        {
-                            link: { href: '/companynews' },
-                            label: 'Company News Worldwide',
-                        },
-                        {
-                            link: { href: '/companynews' },
-                            label: 'Company News Worldwide',
+                            link: { href: '/subitemB.5' },
+                            label: 'Sub Item B.5',
                         },
                     ],
                 },
-                { link: { href: '/impressum' }, label: 'Impressum' },
+                { link: { href: '/mainItemC' }, label: 'Main Item C' },
+                {
+                    link: { href: '/mainItemD' },
+                    label: 'Main Item D',
+                    subItems: [
+                        {
+                            link: { href: '/subitemD.1' },
+                            label: 'Sub Item D.1',
+                        },
+                        {
+                            link: { href: '/subitemD.2' },
+                            label: 'Sub Item D.2',
+                        },
+                        {
+                            link: { href: '/subitemD.3' },
+                            label: 'Sub Item D.3',
+                        },
+                        {
+                            link: { href: '/subitemD.5' },
+                            label: 'Sub Item D.5',
+                        },
+                    ],
+                },
             ],
             typeSettings: {
                 type: 'flyout',
