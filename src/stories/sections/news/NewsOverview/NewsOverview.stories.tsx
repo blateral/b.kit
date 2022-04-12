@@ -31,7 +31,7 @@ const action = {
 };
 
 const exampleNewsCard: NewsItem = {
-    tags: ['Tag 1'],
+    tags: [{ name: 'Tag 1', link: { href: '#0' } }],
     publishDate: new Date('July 22, 2021 03:24:00'),
     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
     text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
@@ -44,7 +44,10 @@ const exampleNewsTag1 = generateItemList<NewsItem>(
     10,
     (item, i) => ({
         ...item,
-        tags: ['Tag 1', 'Tag 2'],
+        tags: [
+            { name: 'Tag 1', link: { href: '#0' } },
+            { name: 'Tag 2', link: { href: '#0' } },
+        ],
         publishDate: new Date(`July ${i + 1}, 2021 03:24:00`),
         image: {
             small: 'https://unsplash.it/599/450?image=40' + i,
@@ -64,7 +67,10 @@ const exampleNewsTag2 = generateItemList<NewsItem>(
     10,
     (item, i) => ({
         ...item,
-        tags: ['Tag 1', 'Tag 3'],
+        tags: [
+            { name: 'Tag 1', link: { href: '#0' } },
+            { name: 'Tag 3', link: { href: '#0' } },
+        ],
         publishDate: new Date(`May ${i + 1}, 2021 03:24:00`),
         image: {
             small: 'https://unsplash.it/599/450?image=50' + i,
@@ -83,7 +89,7 @@ const exampleNewsTag3 = generateItemList<NewsItem>(
     10,
     (item, i) => ({
         ...item,
-        tags: ['Tag 3'],
+        tags: [{ name: 'Tag 3', link: { href: '#0' } }],
         publishDate: new Date(`November ${i + 1}, 2021 03:24:00`),
         image: {
             small: 'https://unsplash.it/599/450?image=30' + i,

@@ -18,7 +18,10 @@ export const Default: Story = () => (
     <NewsFooter
         news={[
             {
-                tags: ['Tag 1', 'Tag 2'],
+                tags: [
+                    { name: 'Tag 1', link: { href: '#0' } },
+                    { name: 'Tag 2', link: { href: '#0' } },
+                ],
                 publishDate: new Date('July 22, 2021 03:24:00'),
                 title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
@@ -34,7 +37,7 @@ export const Default: Story = () => (
                 link: { href: '#0' },
             },
             {
-                tags: ['Tag 2'],
+                tags: [{ name: 'Tag 2', link: { href: '#0' } }],
                 publishDate: new Date('July 22, 2021 03:24:00'),
                 title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
@@ -58,7 +61,10 @@ export const WithBackground: Story = () => (
         bgMode="full"
         news={[
             {
-                tags: ['Tag 1', 'Tag 2'],
+                tags: [
+                    { name: 'Tag 1', link: { href: '#0' } },
+                    { name: 'Tag 2', link: { href: '#0' } },
+                ],
                 publishDate: new Date('July 22, 2021 03:24:00'),
                 title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
@@ -74,7 +80,7 @@ export const WithBackground: Story = () => (
                 link: { href: '#0' },
             },
             {
-                tags: ['Tag 2'],
+                tags: [{ name: 'Tag 2', link: { href: '#0' } }],
                 publishDate: new Date('July 22, 2021 03:24:00'),
                 title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
@@ -97,7 +103,10 @@ export const IsInverted: Story = () => (
     <NewsFooter
         news={[
             {
-                tags: ['Tag 1', 'Tag 2'],
+                tags: [
+                    { name: 'Tag 1', link: { href: '#0' } },
+                    { name: 'Tag 2', link: { href: '#0' } },
+                ],
                 publishDate: new Date('July 22, 2021 03:24:00'),
                 title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
@@ -113,7 +122,7 @@ export const IsInverted: Story = () => (
                 link: { href: '#0' },
             },
             {
-                tags: ['Tag 2'],
+                tags: [{ name: 'Tag 2', link: { href: '#0' } }],
                 publishDate: new Date('July 22, 2021 03:24:00'),
                 title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
@@ -137,7 +146,10 @@ export const WithHandler: Story = () => (
     <NewsFooter
         news={[
             {
-                tags: ['Tag 1', 'Tag 2'],
+                tags: [
+                    { name: 'Tag 1', link: { href: '#0' } },
+                    { name: 'Tag 2', link: { href: '#0' } },
+                ],
                 publishDate: new Date('July 22, 2021 03:24:00'),
                 title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
@@ -153,7 +165,7 @@ export const WithHandler: Story = () => (
                 link: { href: '#0' },
             },
             {
-                tags: ['Tag 2'],
+                tags: [{ name: 'Tag 2', link: { href: '#0' } }],
                 publishDate: new Date('July 22, 2021 03:24:00'),
                 title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',

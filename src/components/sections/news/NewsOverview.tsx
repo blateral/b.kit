@@ -295,7 +295,7 @@ const NewsOverview: React.FC<{
 
         let hasTags = false;
         for (let i = 0; i < item.tags.length; i++) {
-            if (selectedTags.indexOf(item.tags[i]) !== -1) {
+            if (selectedTags.indexOf(item.tags[i].name || '') !== -1) {
                 hasTags = true;
                 break;
             }
