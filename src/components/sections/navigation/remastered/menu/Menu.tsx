@@ -5,6 +5,7 @@ import { LinkProps } from 'components/typography/Link';
 /** Menu Variations */
 import MenuFlyout, { FlyoutMenuProps } from './variations/MenuFlyout';
 import MenuLarge, { LargeMenuProps } from './variations/MenuLarge';
+import { NavBarSize } from '../NavBar';
 
 /** Navigation item types */
 
@@ -23,6 +24,7 @@ export interface MenuStates {
     isIndexPage?: boolean;
     mainNavigation?: Array<NavItem>;
     subNavigation?: Array<NavItem>;
+    navBarSize?: NavBarSize;
 }
 
 export interface MenuBaseProps {
@@ -31,6 +33,7 @@ export interface MenuBaseProps {
     isIndexPage?: boolean;
     mainNavigation?: Array<NavItem>;
     subNavigation?: Array<NavItem>;
+    navBarSize?: NavBarSize;
     header?: (props: MenuStates) => React.ReactNode;
     footer?: (props: MenuStates) => React.ReactNode;
     onClose?: () => void;
@@ -44,6 +47,7 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
     isIndexPage,
     mainNavigation,
     subNavigation,
+    navBarSize,
     header,
     footer,
     onClose,
@@ -58,6 +62,7 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
                     isIndexPage={isIndexPage}
                     mainNavigation={mainNavigation}
                     subNavigation={subNavigation}
+                    navBarSize={navBarSize}
                     header={header}
                     footer={footer}
                     onClose={onClose}
@@ -75,6 +80,7 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
                     isIndexPage={isIndexPage}
                     mainNavigation={mainNavigation}
                     subNavigation={subNavigation}
+                    navBarSize={navBarSize}
                     header={header}
                     footer={footer}
                     onClose={onClose}

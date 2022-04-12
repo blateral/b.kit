@@ -286,15 +286,7 @@ export const WithExampleContent: Story = () => (
                 type: 'flyout',
             },
             header: ({ closeMenu }) => (
-                <div
-                    style={{
-                        flex: '0 0 80px',
-                        display: 'block',
-                        height: '80px',
-                    }}
-                >
-                    <button onClick={closeMenu}>close</button>
-                </div>
+                <button onClick={closeMenu}>close</button>
             ),
         }}
     />

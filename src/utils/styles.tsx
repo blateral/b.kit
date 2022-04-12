@@ -470,6 +470,17 @@ export interface GlobalSettings {
                 large: [number, number?];
             };
         };
+        menu: {
+            /**
+             * Heights of menu header.
+             * Array values are like: [mobile, desktop]
+             * Menu header is hidden if value equal 0
+             */
+            headerHeight: {
+                small: [number, number?];
+                large: [number, number?];
+            };
+        };
     };
     icons: {
         /** Icon setup for link/download lists */
@@ -529,6 +540,12 @@ const defaultGlobalSettings: GlobalSettings = {
             bottomHeight: {
                 small: [0, 40],
                 large: [30, 40],
+            },
+        },
+        menu: {
+            headerHeight: {
+                small: [80, 120],
+                large: [80, 120],
             },
         },
     },

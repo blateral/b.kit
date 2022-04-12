@@ -316,6 +316,7 @@ const Navigation: FC<NavigationProps> = ({
                     isIndexPage={menu?.isIndexPage}
                     mainNavigation={menu?.mainNavigation}
                     subNavigation={menu?.subNavigation}
+                    navBarSize={navbarSize}
                     header={menuHeader}
                     footer={menuFooter}
                     onClose={closeMenu}

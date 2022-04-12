@@ -2,13 +2,16 @@ import AngleRight from 'components/base/icons/AngleRight';
 import { copyStyle } from 'components/typography/Copy';
 import Link from 'components/typography/Link';
 import React, { FC, useState } from 'react';
-import styled from 'styled-components';
+import styled, { DefaultTheme } from 'styled-components';
+import { clampValue } from 'utils/clamp';
 import {
     mq,
     spacings,
     getColors as color,
     getFonts as font,
+    getGlobals as global,
 } from 'utils/styles';
+import { NavBarSize } from '../../NavBar';
 import { MenuBaseProps } from '../Menu';
 
 const Backdrop = styled.div<{ isOpen?: boolean }>`
@@ -76,13 +79,36 @@ const Flyout = styled.div<{ isOpen?: boolean }>`
     }
 `;
 
+export const getMenuHeaderHeights = (
+    theme: DefaultTheme,
+    size?: NavBarSize
+): [number, number] => {
+    const heights =
+        size === 'large'
+            ? global(theme).navigation.menu.headerHeight.large
+            : global(theme).navigation.menu.headerHeight.small;
+
+    // if second value is not defined use first array index value for both
+    return [
+        clampValue(heights[0], 0),
+        clampValue(heights?.[1] === undefined ? heights[0] : heights[1], 0),
+    ];
+};
+
+const Header = styled.div<{ navBarSize?: NavBarSize }>`
+    height: ${({ theme, navBarSize }) =>
+        getMenuHeaderHeights(theme, navBarSize)[0]}px;
+
+    @media ${mq.semilarge} {
+        height: ${({ theme, navBarSize }) =>
+            getMenuHeaderHeights(theme, navBarSize)[1]}px;
+    }
+`;
+
 const NavContainer = styled.nav`
-    /* position: relative; */
     display: block;
     max-height: 100%;
     min-height: 0;
-
-    /* overflow: auto; */
 `;
 
 const NavList = styled.ul`
@@ -107,14 +133,10 @@ const MainNavItem = styled.li<{ isActive?: boolean }>`
             ? color(theme).new.elementBg.medium
             : color(theme).new.elementBg.light};
 
-    border: solid 2px transparent;
-
     transition: background-color 0.2s ease-in-out;
 
-    &:nth-child(even) {
+    li + & {
         border-top: solid 2px
-            ${({ theme }) => color(theme).new.elementBg.medium};
-        border-bottom: solid 2px
             ${({ theme }) => color(theme).new.elementBg.medium};
     }
 
@@ -159,8 +181,29 @@ const MainNavLabel = styled.span<{ isCurrent?: boolean }>`
     text-decoration: ${({ isCurrent }) => (isCurrent ? 'underline' : 'none')};
 `;
 
-const NavCollapseIcon = styled(AngleRight)`
+const Icon = styled.span`
+    display: block;
+
+    &:not(:first-child) {
+        margin-left: ${spacings.nudge * 3}px;
+    }
+`;
+
+const Label = styled.span`
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:not(:first-child) {
+        margin-left: ${spacings.nudge * 3}px;
+    }
+`;
+
+const CollapseIcon = styled.span`
+    display: block;
     margin-left: auto;
+    padding-left: ${spacings.nudge * 3}px;
 `;
 
 const NavLink = styled(Link)`
@@ -183,10 +226,15 @@ const NavButton = styled.button`
 
     background: none;
     border: none;
+    border-bottom: solid 2px ${({ theme }) => color(theme).new.elementBg.light};
     width: 100%;
     cursor: pointer;
     outline: none;
     border-radius: 0px;
+
+    @media ${mq.semilarge} {
+        border-bottom: none;
+    }
 `;
 
 const SubNavList = styled.ul<{ isActive?: boolean }>`
@@ -206,40 +254,43 @@ const SubNavList = styled.ul<{ isActive?: boolean }>`
     @media ${mq.semilarge} {
         position: absolute;
         top: 0;
-        left: 100%;
+        left: calc(100% - 1px);
         width: 100vw;
         height: 100%;
         max-width: 384px;
     }
 `;
 
-const SubNavItem = styled.li`
-    display: block;
+const SubNavItem = styled.li<{ navBarSize?: NavBarSize }>`
+    display: flex;
+    align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
+    height: 56px;
 
     ${copyStyle('copy-b', 'medium')}
     color: ${({ theme }) => font(theme)['copy-b'].medium.color};
 
     @media ${mq.semilarge} {
         &:first-child {
-            margin-top: 80px;
+            margin-top: ${({ theme, navBarSize }) =>
+                getMenuHeaderHeights(theme, navBarSize)[1]}px;
         }
     }
 `;
 
 const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
-    display: flex;
-    align-items: center;
-    height: 56px;
+    padding: ${spacings.nudge}px 0;
+    outline-color: ${({ theme }) => color(theme).new.primary.default};
+    vertical-align: middle;
 
     ${copyStyle('copy-b', 'medium')}
     color: ${({ theme }) => font(theme)['copy-b'].medium.color};
     text-decoration: ${({ isCurrent }) => (isCurrent ? 'underline' : 'none')};
-    outline-color: ${({ theme }) => color(theme).new.primary.default};
-
-    padding: ${spacings.nudge}px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export interface FlyoutMenuProps {
@@ -252,12 +303,13 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     isIndexPage,
     mainNavigation,
     subNavigation,
+    navBarSize,
     header,
     footer,
     onClose,
 }) => {
     const [activeItem, setActiveItem] = useState<number | null>(() => {
-        const currentMainNavItem =
+        const currentNavIndex =
             mainNavigation?.findIndex((item) => {
                 if (item.isCurrent) return true;
                 return item.subItems
@@ -266,7 +318,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                       ) !== -1
                     : false;
             }) || -1;
-        return currentMainNavItem >= 0 ? currentMainNavItem : null;
+        return currentNavIndex >= 0 ? currentNavIndex : null;
     });
 
     return (
@@ -274,14 +326,17 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
             <Backdrop isOpen={isOpen} onClick={onClose} />
             <Stage isOpen={isOpen} clampWidth={clampWidth}>
                 <Flyout isOpen={isOpen}>
-                    {header
-                        ? header({
-                              isOpen,
-                              mainNavigation,
-                              subNavigation,
-                              isIndexPage,
-                          })
-                        : ''}
+                    <Header navBarSize={navBarSize}>
+                        {header
+                            ? header({
+                                  isOpen,
+                                  mainNavigation,
+                                  subNavigation,
+                                  isIndexPage,
+                                  navBarSize,
+                              })
+                            : ''}
+                    </Header>
                     <NavContainer aria-label="menu">
                         <NavList>
                             {mainNavigation?.map((navItem, i) => {
@@ -295,13 +350,10 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                       ) >= 0
                                     : false;
 
-                                console.log(hasCurrentSubItem);
-
                                 return (
                                     <MainNavItem
                                         key={i}
                                         isActive={activeItem === i}
-                                        data-active={activeItem === i}
                                     >
                                         <MainNavLabel
                                             isCurrent={
@@ -309,7 +361,15 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                 hasCurrentSubItem
                                             }
                                         >
-                                            {navItem.label}
+                                            <Icon>icon</Icon>
+                                            {navItem.label && (
+                                                <Label>{navItem.label}</Label>
+                                            )}
+                                            {hasSubItems && (
+                                                <CollapseIcon>
+                                                    <AngleRight />
+                                                </CollapseIcon>
+                                            )}
                                             {!hasSubItems &&
                                                 navItem.link.href && (
                                                     <NavLink
@@ -332,31 +392,40 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                             setActiveItem(i)
                                                         }
                                                     />
-                                                    <NavCollapseIcon />
                                                 </React.Fragment>
                                             )}
                                         </MainNavLabel>
 
-                                        <SubNavList
-                                            isActive={
-                                                activeItem === i && hasSubItems
-                                            }
-                                        >
-                                            {navItem?.subItems?.map(
-                                                (subNavItem, ii) => (
-                                                    <SubNavItem key={ii}>
-                                                        <SubNavLink
-                                                            isCurrent={
-                                                                subNavItem.isCurrent
+                                        {hasSubItems && (
+                                            <SubNavList
+                                                isActive={
+                                                    activeItem === i &&
+                                                    hasSubItems
+                                                }
+                                            >
+                                                {navItem?.subItems?.map(
+                                                    (subNavItem, ii) => (
+                                                        <SubNavItem
+                                                            key={ii}
+                                                            navBarSize={
+                                                                navBarSize
                                                             }
-                                                            {...subNavItem.link}
                                                         >
-                                                            {subNavItem.label}
-                                                        </SubNavLink>
-                                                    </SubNavItem>
-                                                )
-                                            )}
-                                        </SubNavList>
+                                                            <SubNavLink
+                                                                isCurrent={
+                                                                    subNavItem.isCurrent
+                                                                }
+                                                                {...subNavItem.link}
+                                                            >
+                                                                {
+                                                                    subNavItem.label
+                                                                }
+                                                            </SubNavLink>
+                                                        </SubNavItem>
+                                                    )
+                                                )}
+                                            </SubNavList>
+                                        )}
                                     </MainNavItem>
                                 );
                             })}
