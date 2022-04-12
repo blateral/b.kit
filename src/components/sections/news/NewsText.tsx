@@ -1,13 +1,12 @@
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Actions from 'components/blocks/Actions';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
-import { getColors as color, spacings } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
-import { useContext } from 'react';
+import { spacings } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const ContentBlock = styled(Copy)<{
     clampText?: boolean;
@@ -28,24 +27,28 @@ const StyledActions = styled(Actions)`
 `;
 
 const NewsText: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     text: string;
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
     bgMode?: 'full' | 'inverted';
-}> = ({ text, primaryAction, secondaryAction, bgMode }) => {
-    const theme = useContext(ThemeContext);
+}> = ({ anchorId, text, primaryAction, secondaryAction, bgMode }) => {
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? colors.new.sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
+                    ? colors.new.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}

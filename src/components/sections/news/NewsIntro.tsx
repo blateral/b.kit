@@ -89,13 +89,28 @@ const ContentBlock = styled(Copy)<{
 `;
 
 const NewsIntro: React.FC<{
-    tags?: string[];
-    onTagClick?: (name: string) => void;
-    meta?: { date?: Date; author?: string };
-    title?: string;
-    text?: string;
-    image?: ImageProps;
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
 
+    /** Array of news tags */
+    tags?: string[];
+
+    /** Callback function if any tag has been clicked */
+    onTagClick?: (name: string) => void;
+
+    /** News article's meta informations */
+    meta?: { date?: Date; author?: string };
+
+    /** Title of news article */
+    title?: string;
+
+    /** Main image of news article */
+    image?: Omit<ImageProps, 'coverSpace'>;
+
+    /** Text of news article (richtext)  */
+    text?: string;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom tag node */
@@ -105,7 +120,17 @@ const NewsIntro: React.FC<{
         isActive?: boolean;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
-}> = ({ tags, onTagClick, meta, title, text, image, bgMode, customTag }) => {
+}> = ({
+    anchorId,
+    tags,
+    onTagClick,
+    meta,
+    title,
+    text,
+    image,
+    bgMode,
+    customTag,
+}) => {
     const { globals, colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -125,6 +150,7 @@ const NewsIntro: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.new.sectionBg.dark
@@ -185,9 +211,7 @@ const NewsIntro: React.FC<{
                         )}
                     </div>
                     {image?.small && (
-                        <div>
-                            <Image coverSpace {...image} />
-                        </div>
+                        <Image {...image} coverSpace isInverted={isInverted} />
                     )}
                 </Content>
             </Wrapper>

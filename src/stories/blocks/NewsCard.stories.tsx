@@ -25,18 +25,18 @@ export const WithText: Story = () => (
     />
 );
 
-export const WithTag: Story = () => (
+export const WithTags: Story = () => (
     <NewsCard
-        tag="Secondary Tag"
+        tags={['Tag A', 'TagB', 'TagC']}
         onTagClick={console.log}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
     />
 );
 
-export const WithCustomTag: Story = () => (
+export const WithCustomTags: Story = () => (
     <NewsCard
-        tag="Secondary Tag"
+        tags={['Tag A', 'TagB', 'TagC']}
         onTagClick={console.log}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -53,7 +53,7 @@ export const WithCustomTag: Story = () => (
 
 export const WithPublishDate: Story = () => (
     <NewsCard
-        tag="Secondary Tag"
+        tags={['Tag A', 'TagB', 'TagC']}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -63,7 +63,7 @@ export const WithPublishDate: Story = () => (
 
 export const WithImage: Story = () => (
     <NewsCard
-        tag="Secondary Tag"
+        tags={['Tag A', 'TagB', 'TagC']}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -79,7 +79,7 @@ export const WithImage: Story = () => (
 
 export const WithAction: Story = () => (
     <NewsCard
-        tag="Secondary Tag"
+        tags={['Tag A', 'TagB', 'TagC']}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -104,7 +104,7 @@ export const WithAction: Story = () => (
 export const Inverted: Story = () => (
     <NewsCard
         isInverted
-        tag="Secondary Tag"
+        tags={['Tag A', 'TagB', 'TagC']}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"

@@ -289,6 +289,20 @@ const NewsOverview: React.FC<{
         } else return 0;
     };
 
+    const tagFilterFn = (item: NewsItem) => {
+        if (!selectedTags || selectedTags.length === 0) return true;
+        if (!item.tags) return false;
+
+        let hasTags = false;
+        for (let i = 0; i < item.tags.length; i++) {
+            if (selectedTags.indexOf(item.tags[i]) !== -1) {
+                hasTags = true;
+                break;
+            }
+        }
+        return hasTags;
+    };
+
     return (
         <Section
             addSeperation
@@ -340,11 +354,7 @@ const NewsOverview: React.FC<{
                 )}
                 <News>
                     {news
-                        ?.filter((item) =>
-                            selectedTags.length > 0 && item.tag
-                                ? selectedTags.indexOf(item.tag) !== -1
-                                : true
-                        )
+                        ?.filter(tagFilterFn)
                         .sort(sortFilterFn)
                         .filter((_, i) => i < visibleRows * itemsPerRow)
                         .map((item, i) => (

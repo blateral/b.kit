@@ -57,6 +57,15 @@ const Head = styled.div`
     }
 `;
 
+const Tags = styled.div`
+    display: flex;
+    overflow: hidden;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+`;
+
 const PublishDate = styled(Copy)`
     &:only-child {
         margin-left: auto;
@@ -165,33 +174,36 @@ const NewsCard = forwardRef<
                     </ImageLink>
                 )}
                 <Head data-sheet="head">
-                    {tags &&
-                        tags.length > 0 &&
-                        tags.map((tag) => {
-                            return customTag ? (
-                                customTag({
+                    <Tags>
+                        {tags?.map((tag, i) => {
+                            if (customTag) {
+                                return customTag({
                                     name: tag,
                                     isInverted: isInverted,
                                     isActive: false,
                                     clickHandler: () => {
                                         onTagClick && onTagClick(tag);
                                     },
-                                })
-                            ) : (
-                                <Tag
-                                    isInverted={isInverted}
-                                    onClick={
-                                        onTagClick
-                                            ? () => onTagClick(tag)
-                                            : undefined
-                                    }
-                                >
-                                    {tag}
-                                </Tag>
-                            );
+                                });
+                            } else {
+                                return (
+                                    <Tag
+                                        key={i}
+                                        isInverted={isInverted}
+                                        onClick={
+                                            onTagClick
+                                                ? () => onTagClick(tag)
+                                                : undefined
+                                        }
+                                    >
+                                        {tag}
+                                    </Tag>
+                                );
+                            }
                         })}
+                    </Tags>
                     {publishedAt && (
-                        <PublishDate renderAs="p" isInverted={isInverted}>
+                        <PublishDate renderAs="div" isInverted={isInverted}>
                             {publishedAt}
                         </PublishDate>
                     )}

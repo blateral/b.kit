@@ -1,6 +1,11 @@
 import React, { FC, useMemo } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
-import { spacings, mq, getGlobals as global } from 'utils/styles';
+import {
+    spacings,
+    mq,
+    getGlobals as global,
+    getColors as color,
+} from 'utils/styles';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import Skeletons from './skeletons/Skeletons';
@@ -155,6 +160,10 @@ const Header = styled.div<{ size?: NavBarSize; background?: string }>`
         getTopHeights(theme, size)[0] <= 0 && 'hidden'};
 
     background-color: ${({ background }) => background};
+    color: ${({ theme, background }) =>
+        background
+            ? color(theme).new.text.default
+            : color(theme).new.text.inverted};
 
     transition: background-color 0.2s ease-in-out;
 
@@ -170,6 +179,10 @@ const Header = styled.div<{ size?: NavBarSize; background?: string }>`
 
 const Main = styled.div<{ background?: string }>`
     background-color: ${({ background }) => background};
+    color: ${({ theme, background }) =>
+        background
+            ? color(theme).new.text.default
+            : color(theme).new.text.inverted};
 
     transition: background-color 0.2s ease-in-out;
 `;
@@ -183,6 +196,11 @@ const Footer = styled.div<{ size?: NavBarSize; background?: string }>`
         getBottomHeights(theme, size)[0] <= 0 && 'hidden'};
 
     background-color: ${({ background }) => background};
+    color: ${({ theme, background }) =>
+        background
+            ? color(theme).new.text.default
+            : color(theme).new.text.inverted};
+
     opacity: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] > 0 ? 1 : 0};
 

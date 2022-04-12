@@ -12,19 +12,16 @@ export interface NavItem {
     label: string;
     link: LinkProps;
     isCurrent?: boolean;
-}
-
-export interface NavGroup extends NavItem {
+    subItems?: NavItem[];
     isFeatured?: boolean;
     icon?: React.ReactNode;
-    subItems?: NavItem[];
 }
 
 /** Menu base type */
 export interface MenuStates {
     isOpen?: boolean;
     isIndexPage?: boolean;
-    mainNavigation?: Array<NavGroup>;
+    mainNavigation?: Array<NavItem>;
     subNavigation?: Array<NavItem>;
 }
 
@@ -32,7 +29,7 @@ export interface MenuBaseProps {
     isOpen?: boolean;
     clampWidth?: 'content' | 'full';
     isIndexPage?: boolean;
-    mainNavigation?: Array<NavGroup>;
+    mainNavigation?: Array<NavItem>;
     subNavigation?: Array<NavItem>;
     header?: (props: MenuStates) => React.ReactNode;
     footer?: (props: MenuStates) => React.ReactNode;
