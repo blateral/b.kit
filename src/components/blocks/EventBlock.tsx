@@ -157,27 +157,26 @@ const EventBlock: React.FC<EventProps> = ({
             <MainContent>
                 {tags && (
                     <TagContainer>
-                        {tags.map((tag, i) =>
-                            tag ? (
-                                <TagWrapper key={'tag_' + i}>
-                                    {customTag ? (
-                                        customTag({
-                                            name: tag.name || '',
-                                            isInverted: isInverted,
-                                            isActive: false,
-                                            link: tag.link || {},
-                                        })
-                                    ) : (
-                                        <Tag
-                                            isInverted={isInverted}
-                                            name={tag.name}
-                                            link={tag.link}
-                                        />
-                                    )}
-                                </TagWrapper>
-                            ) : (
-                                ''
-                            )
+                        {tags.map(
+                            (tag, i) =>
+                                tag && (
+                                    <TagWrapper key={'tag_' + i}>
+                                        {customTag ? (
+                                            customTag({
+                                                name: tag.name || '',
+                                                isInverted: isInverted,
+                                                isActive: false,
+                                                link: tag.link || {},
+                                            })
+                                        ) : (
+                                            <Tag
+                                                isInverted={isInverted}
+                                                name={tag.name}
+                                                link={tag.link}
+                                            />
+                                        )}
+                                    </TagWrapper>
+                                )
                         )}
                     </TagContainer>
                 )}
