@@ -8,6 +8,7 @@ import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { mq, spacings } from 'utils/styles';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { TagProps } from 'components/blocks/Tag';
 
 const News = styled.ul`
     list-style: none;
@@ -61,14 +62,14 @@ const NewsList: React.FC<{
     /**
      * Callback function to handle tag click outside of component
      * */
-    onTagClick?: (tag: string) => void;
+    onTagClick?: (tag: TagProps) => void;
 
     /** Function to inject custom tag node */
     customTag?: (props: {
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
     }) => React.ReactNode;
 }> = ({ anchorId, mode = 'short', news, bgMode, onTagClick, customTag }) => {
     const { colors } = useLibTheme();

@@ -51,7 +51,7 @@ export const WithCustomTags: Story = () => (
         customTag={({ name, isActive, clickHandler }) => (
             <button
                 style={{ background: isActive ? 'gray' : 'lightgray' }}
-                onClick={clickHandler}
+                onClick={() => clickHandler && clickHandler()}
             >
                 {name}
             </button>

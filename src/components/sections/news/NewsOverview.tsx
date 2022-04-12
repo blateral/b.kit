@@ -115,7 +115,7 @@ const NewsOverview: React.FC<{
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
     }) => React.ReactNode;
 }> = ({
     anchorId,
