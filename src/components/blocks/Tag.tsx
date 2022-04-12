@@ -90,7 +90,7 @@ const Tag: FC<
             className={className}
             {...link}
         >
-            {name ? name : children}
+            {name || children}
         </View>
     );
 };
