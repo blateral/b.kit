@@ -1,27 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
-
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { spacings } from 'utils/styles';
-import Copy from 'components/typography/Copy';
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-import Pointer from 'components/buttons/Pointer';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
-
-const Actions = styled.div`
-    margin-top: ${spacings.spacer}px;
-    text-align: left;
-`;
-
-const ShowMore = styled.span<{ itemCount?: number }>`
-    display: ${({ itemCount }) =>
-        itemCount && itemCount > 2 ? 'block' : 'none'};
-`;
 
 type NewsFooterMq = 'small' | 'semilarge';
 
@@ -37,9 +22,6 @@ const NewsFooter: React.FC<{
     /** Array of news item settings */
     news: NewsItem[];
 
-    /** Text to show on show more button */
-    showMoreText?: string;
-
     /** Section background */
     bgMode?: 'full' | 'inverted';
 
@@ -53,7 +35,7 @@ const NewsFooter: React.FC<{
         isActive?: boolean;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
-}> = ({ anchorId, news, onTagClick, bgMode, showMoreText, customTag }) => {
+}> = ({ anchorId, news, onTagClick, bgMode, customTag }) => {
     const { colors } = useLibTheme();
     const newsCount = news?.length || 0;
 
@@ -127,35 +109,6 @@ const NewsFooter: React.FC<{
                             </Grid.Col>
                         ))}
                 </Grid.Row>
-                {news && news.length > 0 && (
-                    <Actions>
-                        <Copy isInverted={isInverted}>
-                            <ShowMore
-                                itemCount={news.length}
-                                onClick={(ev) => {
-                                    ev.preventDefault();
-                                    if (
-                                        visibleRows <
-                                        Math.ceil(newsCount / itemsPerRow)
-                                    ) {
-                                        setVisibleRows((prev) => prev + 1);
-                                    }
-                                }}
-                            >
-                                {visibleRows < newsCount / itemsPerRow && (
-                                    <Pointer.View
-                                        as="button"
-                                        isInverted={isInverted}
-                                    >
-                                        <Pointer.Label>
-                                            {showMoreText || 'mehr anzeigen'}
-                                        </Pointer.Label>
-                                    </Pointer.View>
-                                )}
-                            </ShowMore>
-                        </Copy>
-                    </Actions>
-                )}
             </Wrapper>
         </Section>
     );
