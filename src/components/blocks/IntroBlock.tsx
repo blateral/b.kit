@@ -71,6 +71,12 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
 `;
 
 const MobileImage = styled(Image)<{ isCentered?: boolean }>`
+    width: 400px;
+    height: 400px;
+
+    margin: 0 auto;
+    margin-top: ${spacings.spacer}px;
+
     @media ${mq.semilarge} {
         display: ${({ isCentered }) => (isCentered ? 'block' : 'none')};
     }
@@ -79,6 +85,9 @@ const DesktopImage = styled(Image)`
     display: none;
     width: 100%;
     height: 100%;
+
+    max-width: 400px;
+    max-height: 400px;
 
     @media ${mq.semilarge} {
         display: block;
