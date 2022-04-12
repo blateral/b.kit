@@ -60,20 +60,24 @@ const View = styled(Link)<{
         `}
 `;
 
-const Tag: FC<{
+export interface TagProps {
     name?: string;
     link?: LinkProps;
+}
 
-    /** Invert colors to use on dark background */
-    isInverted?: boolean;
+const Tag: FC<
+    TagProps & {
+        /** Invert colors to use on dark background */
+        isInverted?: boolean;
 
-    /** Highlight tag if active */
-    isActive?: boolean;
+        /** Highlight tag if active */
+        isActive?: boolean;
 
-    /** Click callback */
-    onClick?: () => void;
-    className?: string;
-}> = ({ name, link, isInverted, isActive, onClick, className, children }) => {
+        /** Click callback */
+        onClick?: () => void;
+        className?: string;
+    }
+> = ({ name, link, isInverted, isActive, onClick, className, children }) => {
     return (
         <View
             isInverted={isInverted}
