@@ -111,6 +111,7 @@ const NewsList: React.FC<{
                     {items?.map((item, i) => (
                         <NewsItem key={i}>
                             <NewsCard
+                                key={i}
                                 ref={cardRefs[i]}
                                 {...item}
                                 isInverted={isInverted}

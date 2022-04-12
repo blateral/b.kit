@@ -10,7 +10,7 @@ import {
 import StatusFormatter from '../../utils/statusFormatter';
 import ExclamationMark from '../base/icons/ExclamationMark';
 
-const View = styled(Link)<{ isInverted?: boolean }>`
+const View = styled.div<{ isInverted?: boolean }>`
     display: -ms-grid;
     display: grid;
 
@@ -88,6 +88,18 @@ const Title = styled(Copy)`
     display: inline-block;
 `;
 
+const ViewLink = styled(Link)`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    && {
+        margin: 0;
+    }
+`;
+
 export interface AlertProps {
     /** Invert colors for use on dark backgrounds */
     isInverted?: boolean;
@@ -133,7 +145,6 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
         <View
             isInverted={isInverted}
             data-sheet="alert"
-            ariaLabel={link?.href ? title : undefined}
             className={className}
             {...link}
         >
@@ -162,6 +173,12 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
                     </Copy>
                 )}
             </Content>
+            {link && (
+                <ViewLink
+                    {...link}
+                    ariaLabel={link?.href ? title : undefined}
+                />
+            )}
         </View>
     );
 };
