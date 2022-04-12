@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Tag from './Tag';
+import Tag, { TagProps } from './Tag';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import { spacings, mq, getFonts as font } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
@@ -85,7 +85,7 @@ const Text = styled(Copy)`
 
 export interface EventProps {
     /** Array of tag item settings */
-    tags?: string[];
+    tags?: TagProps[];
 
     /** Active tags that are highlighted in this event */
     activeTags?: string[];
@@ -116,6 +116,7 @@ export interface EventProps {
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
+        link: LinkProps;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
 
@@ -132,7 +133,6 @@ const EventBlock: React.FC<EventProps> = ({
     link,
     tags,
     isInverted,
-    onTagClick,
     action,
 }) => {
     const { globals } = useLibTheme();
@@ -157,31 +157,27 @@ const EventBlock: React.FC<EventProps> = ({
             <MainContent>
                 {tags && (
                     <TagContainer>
-                        {tags.map((tag, i) => (
-                            <TagWrapper key={'tag_' + i}>
-                                {customTag ? (
-                                    customTag({
-                                        name: tag,
-                                        isInverted: isInverted,
-                                        isActive: false,
-                                        clickHandler: () => {
-                                            onTagClick && onTagClick(tag);
-                                        },
-                                    })
-                                ) : (
-                                    <Tag
-                                        isInverted={isInverted}
-                                        onClick={
-                                            onTagClick
-                                                ? () => onTagClick(tag)
-                                                : undefined
-                                        }
-                                    >
-                                        {tag}
-                                    </Tag>
-                                )}
-                            </TagWrapper>
-                        ))}
+                        {tags.map(
+                            (tag, i) =>
+                                tag && (
+                                    <TagWrapper key={'tag_' + i}>
+                                        {customTag ? (
+                                            customTag({
+                                                name: tag.name || '',
+                                                isInverted: isInverted,
+                                                isActive: false,
+                                                link: tag.link || {},
+                                            })
+                                        ) : (
+                                            <Tag
+                                                isInverted={isInverted}
+                                                name={tag.name}
+                                                link={tag.link}
+                                            />
+                                        )}
+                                    </TagWrapper>
+                                )
+                        )}
                     </TagContainer>
                 )}
                 <TitleWrapper>

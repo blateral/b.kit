@@ -14,7 +14,13 @@ export const Default: Story = () => (
         date={new Date('July 22, 2021 03:24:00')}
         title="Sitzung des Gemeinderates"
         text="17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5"
-        tags={['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5']}
+        tags={[
+            { name: 'Tag 1', link: { href: '#0' } },
+            { name: 'Tag 2', link: { href: '#0' } },
+            { name: 'Tag 3', link: { href: '#0' } },
+            { name: 'Tag 4', link: { href: '#0' } },
+            { name: 'Tag 5', link: { href: '#0' } },
+        ]}
     />
 );
 
@@ -23,7 +29,13 @@ export const WithTertiaryAction: Story = () => (
         date={new Date('July 22, 2021 03:24:00')}
         title="Sitzung des Gemeinderates"
         text="17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5"
-        tags={['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5']}
+        tags={[
+            { name: 'Tag 1', link: { href: '#0' } },
+            { name: 'Tag 2', link: { href: '#0' } },
+            { name: 'Tag 3', link: { href: '#0' } },
+            { name: 'Tag 4', link: { href: '#0' } },
+            { name: 'Tag 5', link: { href: '#0' } },
+        ]}
         action={({ isInverted }) => (
             <Pointer.View
                 href="#0"
@@ -50,7 +62,13 @@ export const WithImage: Story = () => (
         }}
         title="Sitzung des Gemeinderates"
         text="17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5"
-        tags={['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5']}
+        tags={[
+            { name: 'Tag 1', link: { href: '#0' } },
+            { name: 'Tag 2', link: { href: '#0' } },
+            { name: 'Tag 3', link: { href: '#0' } },
+            { name: 'Tag 4', link: { href: '#0' } },
+            { name: 'Tag 5', link: { href: '#0' } },
+        ]}
         action={({ isInverted }) => (
             <Pointer.View
                 href="#0"

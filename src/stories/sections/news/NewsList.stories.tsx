@@ -31,7 +31,11 @@ const action = {
 };
 
 const exampleNewsCard: NewsItem = {
-    tags: ['Tag A', 'Tag B', 'Tag C'],
+    tags: [
+        { name: 'Tag A', link: { href: '#0' } },
+        { name: 'TagB', link: { href: '#0' } },
+        { name: 'TagC', link: { href: '#0' } },
+    ],
     publishDate: new Date('July 22, 2021 03:24:00'),
     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
     text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',

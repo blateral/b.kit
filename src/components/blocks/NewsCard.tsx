@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { spacings, getGlobals as global, getFonts as font } from 'utils/styles';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Tag from 'components/blocks/Tag';
+import Tag, { TagProps } from 'components/blocks/Tag';
 import StatusFormatter from 'utils/statusFormatter';
 import Link, { LinkProps } from 'components/typography/Link';
 import { useLibTheme } from 'utils/LibThemeProvider';
@@ -89,7 +89,7 @@ export interface NewsCardProps {
     isInverted?: boolean;
 
     /** News tag name */
-    tags?: string[];
+    tags?: TagProps[];
 
     /** News publish date */
     publishDate?: Date;
@@ -117,6 +117,7 @@ export interface NewsCardProps {
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
+        link?: LinkProps;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
 }
@@ -130,7 +131,7 @@ const NewsCard = forwardRef<
     (
         {
             tags,
-            onTagClick,
+            // onTagClick,
             publishDate,
             title,
             text,
@@ -178,26 +179,19 @@ const NewsCard = forwardRef<
                         {tags?.map((tag, i) => {
                             if (customTag) {
                                 return customTag({
-                                    name: tag,
+                                    name: tag.name || '',
                                     isInverted: isInverted,
                                     isActive: false,
-                                    clickHandler: () => {
-                                        onTagClick && onTagClick(tag);
-                                    },
+                                    link: tag.link,
                                 });
                             } else {
                                 return (
                                     <Tag
                                         key={i}
                                         isInverted={isInverted}
-                                        onClick={
-                                            onTagClick
-                                                ? () => onTagClick(tag)
-                                                : undefined
-                                        }
-                                    >
-                                        {tag}
-                                    </Tag>
+                                        name={tag.name}
+                                        link={tag.link}
+                                    />
                                 );
                             }
                         })}

@@ -27,7 +27,11 @@ export const WithText: Story = () => (
 
 export const WithTags: Story = () => (
     <NewsCard
-        tags={['Tag A', 'TagB', 'TagC']}
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -36,7 +40,11 @@ export const WithTags: Story = () => (
 
 export const WithCustomTags: Story = () => (
     <NewsCard
-        tags={['Tag A', 'TagB', 'TagC']}
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
@@ -53,7 +61,11 @@ export const WithCustomTags: Story = () => (
 
 export const WithPublishDate: Story = () => (
     <NewsCard
-        tags={['Tag A', 'TagB', 'TagC']}
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -63,7 +75,11 @@ export const WithPublishDate: Story = () => (
 
 export const WithImage: Story = () => (
     <NewsCard
-        tags={['Tag A', 'TagB', 'TagC']}
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -79,7 +95,11 @@ export const WithImage: Story = () => (
 
 export const WithAction: Story = () => (
     <NewsCard
-        tags={['Tag A', 'TagB', 'TagC']}
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -104,7 +124,11 @@ export const WithAction: Story = () => (
 export const Inverted: Story = () => (
     <NewsCard
         isInverted
-        tags={['Tag A', 'TagB', 'TagC']}
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
