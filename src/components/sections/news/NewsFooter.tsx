@@ -7,7 +7,6 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
-import { TagProps } from 'components/blocks/Tag';
 
 type NewsFooterMq = 'small' | 'semilarge';
 
@@ -26,9 +25,6 @@ const NewsFooter: React.FC<{
     /** Section background */
     bgMode?: 'full' | 'inverted';
 
-    /** Callback function called if any of the tags are clicked */
-    onTagClick?: (tag: TagProps) => void;
-
     /** Function to inject custom tag node */
     customTag?: (props: {
         name: string;
@@ -36,7 +32,7 @@ const NewsFooter: React.FC<{
         isActive?: boolean;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
     }) => React.ReactNode;
-}> = ({ anchorId, news, onTagClick, bgMode, customTag }) => {
+}> = ({ anchorId, news, bgMode, customTag }) => {
     const { colors } = useLibTheme();
     const newsCount = news?.length || 0;
 
@@ -104,7 +100,6 @@ const NewsFooter: React.FC<{
                                     ref={cardRefs[i]}
                                     {...item}
                                     isInverted={isInverted}
-                                    onTagClick={onTagClick}
                                     customTag={customTag}
                                 />
                             </Grid.Col>

@@ -70,24 +70,14 @@ export const Inverted: Story = () => (
     <NewsList bgMode="inverted" news={exampleNews} />
 );
 
-export const WithHandler: Story = () => (
-    <NewsList bgMode="inverted" news={exampleNews} onTagClick={console.log} />
-);
-
 export const WithMoreVisibleItems: Story = () => (
-    <NewsList
-        mode="expanded"
-        bgMode="inverted"
-        news={exampleNews}
-        onTagClick={console.log}
-    />
+    <NewsList mode="expanded" bgMode="inverted" news={exampleNews} />
 );
 
 export const WithCustomTag: Story = () => (
     <NewsList
         bgMode="inverted"
         news={exampleNews}
-        onTagClick={console.log}
         customTag={({ name, isActive, clickHandler }) => (
             <button
                 style={{ background: isActive ? 'gray' : 'lightgray' }}

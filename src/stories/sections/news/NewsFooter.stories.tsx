@@ -181,6 +181,5 @@ export const WithHandler: Story = () => (
                 link: { href: '#0' },
             },
         ]}
-        onTagClick={console.log}
     />
 );

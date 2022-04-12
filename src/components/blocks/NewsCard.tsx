@@ -163,12 +163,13 @@ const NewsCard = forwardRef<
             text = text.slice(0, 301) + '...';
         }
 
-        const handleTagClick =
-            (tag: TagProps) =>
-            (ev?: React.SyntheticEvent<HTMLAnchorElement>) => {
-                ev?.preventDefault();
-                onTagClick && onTagClick(tag);
-            };
+        const handleTagClick = (tag: TagProps) =>
+            onTagClick
+                ? (ev?: React.SyntheticEvent<HTMLAnchorElement>) => {
+                      ev?.preventDefault();
+                      onTagClick(tag);
+                  }
+                : undefined;
 
         return (
             <View ref={ref} className={className}>

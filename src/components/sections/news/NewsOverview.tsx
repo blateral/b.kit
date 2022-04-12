@@ -368,10 +368,11 @@ const NewsOverview: React.FC<{
                                 <NewsCard
                                     ref={cardRefs[i]}
                                     {...item}
+                                    tags={item.tags?.map((tag) => ({
+                                        name: tag.name,
+                                    }))}
                                     isInverted={isInverted}
                                     onTagClick={(tag) => {
-                                        console.log(tag);
-
                                         // scroll back to top
                                         setNewPos(0);
                                         if (!onTagClick) {

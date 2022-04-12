@@ -8,7 +8,6 @@ import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { mq, spacings } from 'utils/styles';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import { TagProps } from 'components/blocks/Tag';
 
 const News = styled.ul`
     list-style: none;
@@ -59,11 +58,6 @@ const NewsList: React.FC<{
     /** Sections background */
     bgMode?: 'full' | 'inverted';
 
-    /**
-     * Callback function to handle tag click outside of component
-     * */
-    onTagClick?: (tag: TagProps) => void;
-
     /** Function to inject custom tag node */
     customTag?: (props: {
         name: string;
@@ -71,7 +65,7 @@ const NewsList: React.FC<{
         isActive?: boolean;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
     }) => React.ReactNode;
-}> = ({ anchorId, mode = 'short', news, bgMode, onTagClick, customTag }) => {
+}> = ({ anchorId, mode = 'short', news, bgMode, customTag }) => {
     const { colors } = useLibTheme();
 
     const items = useMemo<NewsCardProps[]>(() => {
@@ -119,7 +113,6 @@ const NewsList: React.FC<{
                             <NewsCard
                                 ref={cardRefs[i]}
                                 {...item}
-                                onTagClick={onTagClick}
                                 isInverted={isInverted}
                                 customTag={customTag}
                             />
