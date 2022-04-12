@@ -13,9 +13,6 @@ export interface NavItem {
     link: LinkProps;
     isCurrent?: boolean;
     subItems?: NavItem[];
-}
-
-export interface MainNavItem extends NavItem {
     isFeatured?: boolean;
     icon?: React.ReactNode;
 }
@@ -24,7 +21,7 @@ export interface MainNavItem extends NavItem {
 export interface MenuStates {
     isOpen?: boolean;
     isIndexPage?: boolean;
-    mainNavigation?: Array<MainNavItem>;
+    mainNavigation?: Array<NavItem>;
     subNavigation?: Array<NavItem>;
 }
 
@@ -32,7 +29,7 @@ export interface MenuBaseProps {
     isOpen?: boolean;
     clampWidth?: 'content' | 'full';
     isIndexPage?: boolean;
-    mainNavigation?: Array<MainNavItem>;
+    mainNavigation?: Array<NavItem>;
     subNavigation?: Array<NavItem>;
     header?: (props: MenuStates) => React.ReactNode;
     footer?: (props: MenuStates) => React.ReactNode;

@@ -8,12 +8,7 @@ import {
 import { useMediaQueries } from 'utils/useMediaQuery';
 // import styled from 'styled-components';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
-import Menu, {
-    MenuStates,
-    MenuTypeProps,
-    MainNavItem,
-    NavItem,
-} from './menu/Menu';
+import Menu, { MenuStates, MenuTypeProps, NavItem } from './menu/Menu';
 
 import NavBar, {
     getFullHeight,
@@ -78,7 +73,7 @@ export interface NavBarStates extends BarStates {
     isMenuOpen?: boolean;
     openMenu?: () => void;
     closeMenu?: () => void;
-    mainNavigation?: Array<MainNavItem>;
+    mainNavigation?: Array<NavItem>;
     subNavigation?: Array<NavItem>;
     isOnPageTop?: boolean;
     isInTopOffset?: boolean;
@@ -110,7 +105,7 @@ export interface NavBarSettings {
 
 export interface MenuSettings {
     isIndexPage?: boolean;
-    mainNavigation?: Array<MainNavItem>;
+    mainNavigation?: Array<NavItem>;
     subNavigation?: Array<NavItem>;
     header?: (props: NavMenuStates) => React.ReactNode;
     footer?: (props: NavMenuStates) => React.ReactNode;

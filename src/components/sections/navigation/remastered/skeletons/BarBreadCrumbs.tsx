@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import styled from 'styled-components';
 
-import { MainNavItem, NavItem } from '../menu/Menu';
+import { NavItem } from '../menu/Menu';
 import Link, { LinkProps } from 'components/typography/Link';
 import { spacings, getColors as color, mq } from 'utils/styles';
 import Copy, { copyStyle } from 'components/typography/Copy';
@@ -114,7 +114,7 @@ const BarBreadcrumbs: FC<{
     isInverted?: boolean;
     rootLink?: LinkProps;
     rootLabel?: string;
-    navItems?: Array<MainNavItem>;
+    navItems?: Array<NavItem>;
     seperator?: (props: { isInverted?: boolean }) => React.ReactNode;
     back?: (props: { isInverted?: boolean }) => React.ReactNode;
     className?: string;
@@ -128,11 +128,11 @@ const BarBreadcrumbs: FC<{
     className,
 }) => {
     const currentNavPath = useMemo(() => {
-        const navList: MainNavItem[] = navItems || [];
+        const navList: NavItem[] = navItems || [];
         const path: Array<NavItem> = [];
 
         for (let i = 0; i < navList.length; i++) {
-            const subItems = (navList[i] as MainNavItem).subItems || [];
+            const subItems = (navList[i] as NavItem).subItems || [];
             const currentSubItem = subItems.find((subItem) => {
                 return (
                     subItem.isCurrent && subItem.link.href !== rootLink?.href
