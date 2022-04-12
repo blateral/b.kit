@@ -295,7 +295,6 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                       ) >= 0
                                     : false;
 
-                                console.log(hasCurrentSubItem);
 
                                 return (
                                     <MainNavItem
