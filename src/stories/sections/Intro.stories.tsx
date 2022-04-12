@@ -54,7 +54,7 @@ export const WithImage: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/500/500?image=703',
-            medium: 'https://unsplash.it/400/400?image=703',
+            medium: 'https://unsplash.it/800/800?image=703',
             ratios: {
                 small: { h: 1, w: 1 },
             },
@@ -80,7 +80,7 @@ export const Centered: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/500/500?image=703',
-            medium: 'https://unsplash.it/400/400?image=703',
+            medium: 'https://unsplash.it/800/800?image=703',
             ratios: {
                 small: { h: 1, w: 1 },
             },
@@ -105,7 +105,7 @@ export const Inverted: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/500/500?image=703',
-            medium: 'https://unsplash.it/400/400?image=703',
+            medium: 'https://unsplash.it/800/800?image=703',
             ratios: {
                 small: { h: 1, w: 1 },
             },
@@ -131,7 +131,7 @@ export const hasBackground: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/500/500?image=703',
-            medium: 'https://unsplash.it/400/400?image=703',
+            medium: 'https://unsplash.it/800/800?image=703',
             ratios: {
                 small: { h: 1, w: 1 },
             },
@@ -157,7 +157,7 @@ export const hasSplittedBackground: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/500/500?image=703',
-            medium: 'https://unsplash.it/400/400?image=703',
+            medium: 'https://unsplash.it/800/800?image=703',
             ratios: {
                 small: { h: 1, w: 1 },
             },
@@ -185,7 +185,7 @@ export const Stackable: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/500/500?image=703',
-            medium: 'https://unsplash.it/400/400?image=703',
+            medium: 'https://unsplash.it/800/800?image=703',
             ratios: {
                 small: { h: 1, w: 1 },
             },
