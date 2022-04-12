@@ -11,7 +11,7 @@ export default {
     component: SocialNavComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -19,10 +19,10 @@ export default {
 export const Default: Story = () => (
     <SocialNav
         socials={[
-            { href: '#0', icon: <Twitter /> },
-            { href: '#0', icon: <LinkedIn /> },
-            { href: '#0', icon: <Xing /> },
-            { href: '#0', icon: <Facebook /> },
+            { link: { href: '#0' }, icon: <Twitter /> },
+            { link: { href: '#0' }, icon: <LinkedIn /> },
+            { link: { href: '#0' }, icon: <Xing /> },
+            { link: { href: '#0' }, icon: <Facebook /> },
         ]}
     />
 );
@@ -31,10 +31,10 @@ export const WithBackground: Story = () => (
     <SocialNav
         bgMode="full"
         socials={[
-            { href: '#0', icon: <Twitter /> },
-            { href: '#0', icon: <LinkedIn /> },
-            { href: '#0', icon: <Xing /> },
-            { href: '#0', icon: <Facebook /> },
+            { link: { href: '#0' }, icon: <Twitter /> },
+            { link: { href: '#0' }, icon: <LinkedIn /> },
+            { link: { href: '#0' }, icon: <Xing /> },
+            { link: { href: '#0' }, icon: <Facebook /> },
         ]}
     />
 );
@@ -42,10 +42,10 @@ export const WithBackground: Story = () => (
 export const IsInverted: Story = () => (
     <SocialNav
         socials={[
-            { href: '#0', icon: <Twitter /> },
-            { href: '#0', icon: <LinkedIn /> },
-            { href: '#0', icon: <Xing /> },
-            { href: '#0', icon: <Facebook /> },
+            { link: { href: '#0' }, icon: <Twitter /> },
+            { link: { href: '#0' }, icon: <LinkedIn /> },
+            { link: { href: '#0' }, icon: <Xing /> },
+            { link: { href: '#0' }, icon: <Facebook /> },
         ]}
         bgMode="inverted"
     />
