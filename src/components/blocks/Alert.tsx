@@ -10,7 +10,17 @@ import {
 import StatusFormatter from '../../utils/statusFormatter';
 import ExclamationMark from '../base/icons/ExclamationMark';
 
-const View = styled.div<{ isInverted?: boolean }>`
+const View = styled(Link)<{ isInverted?: boolean }>`
+    display: -ms-grid;
+    display: grid;
+
+    -ms-grid-columns: min-content 1fr;
+    grid-template-columns: min-content 1fr;
+    -ms-grid-rows: min-content 1fr;
+    grid-auto-rows: min-content 1fr;
+
+    text-decoration: none;
+
     position: relative;
     border: 2px solid
         ${({ theme, isInverted }) =>
@@ -28,10 +38,6 @@ const View = styled.div<{ isInverted?: boolean }>`
 
     text-align: left;
     width: 100%;
-
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
     cursor: pointer;
 
     transition: color ease-in-out 0.2s, border 0.2s ease-in-out;
@@ -55,23 +61,24 @@ const View = styled.div<{ isInverted?: boolean }>`
     }
 `;
 
-const ViewLink = styled(Link)<{ isInverted?: boolean }>`
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: 0;
-    outline-color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+const Icon = styled.div`
+    display: flex;
+    align-items: center;
+
+    & > * {
+        height: 48px;
+        width: 48px;
+    }
 `;
 
-const Icon = styled.div``;
+const MainLabel = styled.div`
+    display: flex;
+    align-items: center;
+`;
 
 const Content = styled.div`
+    margin-top: ${spacings.nudge}px;
+
     & > * + * {
         margin-top: ${spacings.nudge}px;
     }
@@ -123,16 +130,25 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
     }
 
     return (
-        <View isInverted={isInverted} data-sheet="alert" className={className}>
+        <View
+            isInverted={isInverted}
+            data-sheet="alert"
+            ariaLabel={link?.href ? title : undefined}
+            className={className}
+            {...link}
+        >
             <Icon>
                 {customIcon ? customIcon({ isInverted }) : <ExclamationMark />}
             </Icon>
-            <Content>
+            <MainLabel>
                 {title && (
                     <Title textColor="inherit" size="medium" type="copy-b">
                         {title}
                     </Title>
                 )}
+            </MainLabel>
+            <span />
+            <Content>
                 {description && (
                     <Copy
                         isInverted={isInverted}
@@ -146,11 +162,6 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
                     </Copy>
                 )}
             </Content>
-            <ViewLink
-                {...link}
-                isInverted={isInverted}
-                ariaLabel={link?.href ? title : undefined}
-            />
         </View>
     );
 };

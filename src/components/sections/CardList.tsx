@@ -174,9 +174,11 @@ const SubLabel = styled(Copy)`
     text-transform: lowercase;
 `;
 
-const Icon = styled.img`
-    height: 60px;
-    width: 60px;
+const Icon = styled.div`
+    & > * {
+        height: 60px;
+        width: 60px;
+    }
 `;
 
 const CardLink = styled(Link)`
@@ -197,9 +199,9 @@ export interface CardProps {
     subLabel?: string;
     image?: ImageProps;
     link?: LinkProps;
-    icon?: { src: string; alt?: string };
     decorator?: (props: { isInverted?: boolean }) => React.ReactNode;
     cardColor?: string;
+    customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
 }
 
 const Card: React.FC<
@@ -208,13 +210,13 @@ const Card: React.FC<
     }
 > = ({
     isInverted,
-    icon,
     title,
     subLabel,
     image,
     link,
     decorator,
     cardColor,
+    customIcon,
 }) => {
     const CardView = image && image.small ? ImageView : SolidView;
 
@@ -231,10 +233,8 @@ const Card: React.FC<
                     }}
                 />
             )}
-            <Content hasIcon={!!icon}>
-                {icon && icon.src && (
-                    <Icon src={icon?.src} alt={icon?.alt || ''} />
-                )}
+            <Content hasIcon={!!customIcon}>
+                {customIcon ? <Icon>{customIcon({})}</Icon> : ''}
                 <TextContainer textColor="inherit">
                     {title && (
                         <Title textColor="inherit" size="big" type="copy">

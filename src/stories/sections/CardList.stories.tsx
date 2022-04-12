@@ -3,6 +3,7 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import CardList, { CardListComponent } from 'components/sections/CardList';
 import AngleRight from 'components/base/icons/AngleRight';
+import Magnifier from 'components/base/icons/Magnifier';
 
 export default {
     title: 'Sections / CardList',
@@ -115,19 +116,13 @@ export const WithIcon: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -140,28 +135,19 @@ export const WithIcon: Story = () => (
             {
                 title: 'Museum',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -181,19 +167,13 @@ export const EqualItemAmount: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -205,28 +185,19 @@ export const EqualItemAmount: Story = () => (
             },
             {
                 title: 'Museum',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 image: {
                     small: 'https://unsplash.it/619/619',
@@ -239,10 +210,7 @@ export const EqualItemAmount: Story = () => (
             },
             {
                 title: 'Krankenhaus',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
@@ -257,19 +225,13 @@ export const WithBackground: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -281,28 +243,19 @@ export const WithBackground: Story = () => (
             },
             {
                 title: 'Museum',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 image: {
                     small: 'https://unsplash.it/619/619',
@@ -315,10 +268,7 @@ export const WithBackground: Story = () => (
             },
             {
                 title: 'Krankenhaus',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
@@ -333,19 +283,13 @@ export const IsInverted: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -357,28 +301,19 @@ export const IsInverted: Story = () => (
             },
             {
                 title: 'Museum',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 image: {
                     small: 'https://unsplash.it/619/619',
@@ -391,10 +326,7 @@ export const IsInverted: Story = () => (
             },
             {
                 title: 'Krankenhaus',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
@@ -409,19 +341,13 @@ export const WithDecorator: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -433,28 +359,19 @@ export const WithDecorator: Story = () => (
             },
             {
                 title: 'Museum',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 image: {
                     small: 'https://unsplash.it/619/619',
@@ -467,10 +384,7 @@ export const WithDecorator: Story = () => (
             },
             {
                 title: 'Krankenhaus',
-                icon: {
-                    src: 'https://via.placeholder.com/60',
-                    alt: 'card_icon',
-                },
+                customIcon: () => <Magnifier />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
