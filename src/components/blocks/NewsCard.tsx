@@ -203,7 +203,7 @@ const NewsCard = forwardRef<
                         })}
                     </Tags>
                     {publishedAt && (
-                        <PublishDate renderAs="p" isInverted={isInverted}>
+                        <PublishDate renderAs="div" isInverted={isInverted}>
                             {publishedAt}
                         </PublishDate>
                     )}
