@@ -80,7 +80,7 @@ export interface NewsCardProps {
     isInverted?: boolean;
 
     /** News tag name */
-    tag?: string;
+    tags?: string[];
 
     /** News publish date */
     publishDate?: Date;
@@ -120,7 +120,7 @@ const NewsCard = forwardRef<
 >(
     (
         {
-            tag,
+            tags,
             onTagClick,
             publishDate,
             title,
@@ -165,28 +165,31 @@ const NewsCard = forwardRef<
                     </ImageLink>
                 )}
                 <Head data-sheet="head">
-                    {tag &&
-                        (customTag ? (
-                            customTag({
-                                name: tag,
-                                isInverted: isInverted,
-                                isActive: false,
-                                clickHandler: () => {
-                                    onTagClick && onTagClick(tag);
-                                },
-                            })
-                        ) : (
-                            <Tag
-                                isInverted={isInverted}
-                                onClick={
-                                    onTagClick
-                                        ? () => onTagClick(tag)
-                                        : undefined
-                                }
-                            >
-                                {tag}
-                            </Tag>
-                        ))}
+                    {tags &&
+                        tags.length > 0 &&
+                        tags.map((tag) => {
+                            return customTag ? (
+                                customTag({
+                                    name: tag,
+                                    isInverted: isInverted,
+                                    isActive: false,
+                                    clickHandler: () => {
+                                        onTagClick && onTagClick(tag);
+                                    },
+                                })
+                            ) : (
+                                <Tag
+                                    isInverted={isInverted}
+                                    onClick={
+                                        onTagClick
+                                            ? () => onTagClick(tag)
+                                            : undefined
+                                    }
+                                >
+                                    {tag}
+                                </Tag>
+                            );
+                        })}
                     {publishedAt && (
                         <PublishDate renderAs="p" isInverted={isInverted}>
                             {publishedAt}
