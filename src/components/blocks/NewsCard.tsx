@@ -107,7 +107,7 @@ export interface NewsCardProps {
     link?: LinkProps;
 
     /** Callback function if tag in news iten has been clicked */
-    onTagClick?: (name: string) => void;
+    onTagClick?: (tag: TagProps) => void;
 
     /** Function to inject primary action */
     action?: (isInverted?: boolean) => React.ReactNode;
@@ -118,7 +118,7 @@ export interface NewsCardProps {
         isInverted?: boolean;
         isActive?: boolean;
         link?: LinkProps;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
     }) => React.ReactNode;
 }
 
@@ -131,7 +131,7 @@ const NewsCard = forwardRef<
     (
         {
             tags,
-            // onTagClick,
+            onTagClick,
             publishDate,
             title,
             text,
@@ -163,6 +163,13 @@ const NewsCard = forwardRef<
             text = text.slice(0, 301) + '...';
         }
 
+        const handleTagClick =
+            (tag: TagProps) =>
+            (ev?: React.SyntheticEvent<HTMLAnchorElement>) => {
+                ev?.preventDefault();
+                onTagClick && onTagClick(tag);
+            };
+
         return (
             <View ref={ref} className={className}>
                 {image && (
@@ -183,6 +190,7 @@ const NewsCard = forwardRef<
                                     isInverted: isInverted,
                                     isActive: false,
                                     link: tag.link,
+                                    clickHandler: handleTagClick(tag),
                                 });
                             } else {
                                 return (
@@ -191,6 +199,7 @@ const NewsCard = forwardRef<
                                         isInverted={isInverted}
                                         name={tag.name}
                                         link={tag.link}
+                                        onClick={handleTagClick(tag)}
                                     />
                                 );
                             }

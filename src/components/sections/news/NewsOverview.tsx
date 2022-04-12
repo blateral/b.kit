@@ -7,7 +7,7 @@ import Wrapper from 'components/base/Wrapper';
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { mq, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import Tag from 'components/blocks/Tag';
+import Tag, { TagProps } from 'components/blocks/Tag';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useObserverSupport } from 'utils/useObserverSupport';
@@ -108,14 +108,14 @@ const NewsOverview: React.FC<{
      * Callback function to handle tag click outside of component
      * If no callback is defined filtering is controlled on client
      * */
-    onTagClick?: (tag: string, insideList?: boolean) => void;
+    onTagClick?: (tag: TagProps, insideList?: boolean) => void;
 
     /** Function to inject custom tag node */
     customTag?: (props: {
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
     }) => React.ReactNode;
 }> = ({
     anchorId,
@@ -239,13 +239,13 @@ const NewsOverview: React.FC<{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTags]);
 
-    const handleTagClick = (tag: string) => {
+    const handleTagClick = (tag: TagProps) => {
         setSelectedTags((prev) => {
             const prevCopy = [...prev];
-            const itemIndex = prev.indexOf(tag);
+            const itemIndex = tag.name ? prev.indexOf(tag.name) : -1;
 
-            if (itemIndex === -1) {
-                return [...prevCopy, tag];
+            if (itemIndex === -1 && tag.name) {
+                return [...prevCopy, tag.name];
             } else {
                 prevCopy.splice(itemIndex, 1);
                 return prevCopy;
@@ -327,19 +327,25 @@ const NewsOverview: React.FC<{
                                         isInverted: isInverted,
                                         isActive:
                                             selectedTags.indexOf(tag) !== -1,
-                                        clickHandler: () => {
+                                        clickHandler: (ev) => {
+                                            ev?.preventDefault();
                                             if (!onTagClick) {
-                                                handleTagClick(tag);
-                                            } else onTagClick(tag, false);
+                                                handleTagClick({ name: tag });
+                                            } else onTagClick({ name: tag });
                                         },
                                     })
                                 ) : (
                                     <Tag
                                         isInverted={isInverted}
-                                        onClick={() => {
+                                        onClick={(ev) => {
+                                            ev?.preventDefault();
                                             if (!onTagClick) {
-                                                handleTagClick(tag);
-                                            } else onTagClick(tag, false);
+                                                handleTagClick({ name: tag });
+                                            } else
+                                                onTagClick(
+                                                    { name: tag },
+                                                    false
+                                                );
                                         }}
                                         isActive={
                                             selectedTags.indexOf(tag) !== -1
@@ -363,14 +369,16 @@ const NewsOverview: React.FC<{
                                     ref={cardRefs[i]}
                                     {...item}
                                     isInverted={isInverted}
-                                    onTagClick={(name) => {
+                                    onTagClick={(tag) => {
+                                        console.log(tag);
+
                                         // scroll back to top
                                         setNewPos(0);
                                         if (!onTagClick) {
                                             // if no callback is defined handle filtering on client side inside the component
-                                            handleTagClick(name);
+                                            handleTagClick(tag);
                                         } else {
-                                            onTagClick(name, true);
+                                            onTagClick(tag, true);
                                         }
                                     }}
                                     customTag={customTag}

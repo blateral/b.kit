@@ -74,12 +74,15 @@ const Tag: FC<
         isActive?: boolean;
 
         /** Click callback */
-        onClick?: () => void;
+        onClick?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
         className?: string;
     }
 > = ({ name, link, isInverted, isActive, onClick, className, children }) => {
+    const tag = link?.href ? 'a' : onClick ? 'button' : 'span';
+
     return (
         <View
+            as={tag}
             isInverted={isInverted}
             isActive={isActive}
             onClick={onClick}
