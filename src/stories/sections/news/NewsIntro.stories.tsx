@@ -44,8 +44,20 @@ export const WithAuthorAndDate: Story = () => (
 
 export const WithTags: Story = () => (
     <NewsIntro
-        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
-        onTagClick={console.log}
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
         meta={{
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
@@ -57,8 +69,20 @@ export const WithTags: Story = () => (
 
 export const WithImage: Story = () => (
     <NewsIntro
-        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
-        onTagClick={console.log}
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
         meta={{
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
@@ -79,8 +103,20 @@ export const WithImage: Story = () => (
 export const WithBackground: Story = () => (
     <NewsIntro
         bgMode="full"
-        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
-        onTagClick={console.log}
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
         meta={{
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
@@ -98,10 +134,22 @@ export const WithBackground: Story = () => (
     />
 );
 
-export const isInverted: Story = () => (
+export const IsInverted: Story = () => (
     <NewsIntro
-        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
-        onTagClick={console.log}
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
         meta={{
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
@@ -122,8 +170,20 @@ export const isInverted: Story = () => (
 
 export const WithCustomTags: Story = () => (
     <NewsIntro
-        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
-        onTagClick={console.log}
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
         meta={{
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
@@ -138,13 +198,16 @@ export const WithCustomTags: Story = () => (
                 small: { w: 619, h: 348 },
             },
         }}
-        customTag={({ name, isActive, clickHandler }) => (
-            <button
-                style={{ background: isActive ? 'gray' : 'lightgray' }}
-                onClick={clickHandler}
+        customTag={({ name, isActive, link }) => (
+            <a
+                style={{
+                    display: 'block',
+                    background: isActive ? 'gray' : 'lightgray',
+                }}
+                {...link}
             >
                 {name}
-            </button>
+            </a>
         )}
     />
 );

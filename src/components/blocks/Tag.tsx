@@ -28,35 +28,39 @@ const View = styled(Link)<{
     ${copyStyle('copy', 'small')}
 
     background: none;
-    background-color: ${({ isActive, isInverted }) =>
-        isActive && (isInverted ? '#dddddd' : '#444444')};
 
-    color: ${({ isActive, isInverted }) => {
-        if (isActive) {
-            return isInverted ? '#444444' : '#ffff';
-        } else {
-            return isInverted ? '#dddddd' : '#444444';
-        }
-    }};
+    && {
+        background-color: ${({ isActive, isInverted }) =>
+            isActive && (isInverted ? '#dddddd' : '#444444')};
+        color: ${({ isActive, isInverted }) => {
+            if (isActive) {
+                return isInverted ? '#444444' : '#ffff';
+            } else {
+                return isInverted ? '#dddddd' : '#444444';
+            }
+        }};
+
+        transition: background-color 0.2s ease-in-out, color 0.1s ease-in-out;
+    }
 
     cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
-
-    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 
     ${({ isClickable, isInverted }) =>
         isClickable &&
         css`
             @media (hover: hover) and (pointer: fine) {
-                &:hover {
+                &&:hover {
                     background-color: ${isInverted ? '#dddddd' : '#444444'};
                     color: ${isInverted ? '#444444' : '#ffff'};
-
-                    & > * {
-                        color: inherit;
-                    }
                 }
             }
         `}
+
+    &&:focus {
+        background-color: ${({ isInverted }) =>
+            isInverted ? '#dddddd' : '#444444'};
+        color: ${({ isInverted }) => (isInverted ? '#444444' : '#ffff')};
+    }
 `;
 
 export interface TagProps {

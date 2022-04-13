@@ -165,7 +165,7 @@ const NewsIntro: React.FC<{
                                         })
                                     ) : (
                                         <Tag
-                                            {...tag.link}
+                                            link={tag.link}
                                             isInverted={isInverted}
                                         >
                                             {tag.name}
