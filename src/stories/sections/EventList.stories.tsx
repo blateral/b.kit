@@ -19,7 +19,6 @@ export default {
 
 export const Default: Story = () => (
     <EventList
-        onTagClick={console.log}
         events={[
             {
                 date: new Date('July 22, 2021 03:24:00'),
@@ -132,7 +131,6 @@ export const Default: Story = () => (
 
 export const WithImages: Story = () => (
     <EventList
-        onTagClick={console.log}
         events={[
             {
                 date: new Date('July 22, 2021 03:24:00'),
@@ -300,7 +298,6 @@ export const WithImages: Story = () => (
 
 export const WithBackground: Story = () => (
     <EventList
-        onTagClick={console.log}
         events={[
             {
                 date: new Date('July 22, 2021 03:24:00'),
@@ -469,7 +466,6 @@ export const WithBackground: Story = () => (
 
 export const IsInverted: Story = () => (
     <EventList
-        onTagClick={console.log}
         events={[
             {
                 date: new Date('July 22, 2021 03:24:00'),
@@ -638,7 +634,6 @@ export const IsInverted: Story = () => (
 
 export const WithCustomTag: Story = () => (
     <EventList
-        onTagClick={console.log}
         events={[
             {
                 date: new Date('July 22, 2021 03:24:00'),
@@ -801,13 +796,16 @@ export const WithCustomTag: Story = () => (
                 ),
             },
         ]}
-        customTag={({ name, isActive, clickHandler }) => (
-            <button
-                style={{ background: isActive ? 'gray' : 'lightgray' }}
-                onClick={clickHandler}
+        customTag={({ name, isActive, link }) => (
+            <a
+                style={{
+                    display: 'block',
+                    background: isActive ? 'gray' : 'lightgray',
+                }}
+                {...link}
             >
                 {name}
-            </button>
+            </a>
         )}
     />
 );

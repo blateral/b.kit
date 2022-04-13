@@ -7,6 +7,11 @@ import AngleRight from 'components/base/icons/AngleRight';
 export default {
     title: 'Blocks / EventBlock',
     component: EventBlock,
+    parameters: {
+        status: {
+            type: ['preview'],
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

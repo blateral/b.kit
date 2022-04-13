@@ -218,11 +218,18 @@ const Card: React.FC<
     cardColor,
     customIcon,
 }) => {
+    const { colors } = useLibTheme();
     const CardView = image && image.small ? ImageView : SolidView;
+    const defaultCardColor = isInverted
+        ? colors.new.primary.inverted
+        : colors.new.primary.default;
 
     return (
-        <CardView isInverted={isInverted} cardColor={cardColor}>
-            {image && image.small && (
+        <CardView
+            isInverted={isInverted}
+            cardColor={cardColor || defaultCardColor}
+        >
+            {image?.small && (
                 <StyledImage
                     {...image}
                     coverSpace

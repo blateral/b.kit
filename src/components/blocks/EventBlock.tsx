@@ -113,19 +113,21 @@ export interface EventProps {
 
     /** Function to inject custom tag node */
     customTag?: (props: {
+        key: React.Key;
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
         link: LinkProps;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
     }) => React.ReactNode;
 
     /** Callback function if tag in news iten has been clicked */
-    onTagClick?: (name: string) => void;
+    onTagClick?: (tag: TagProps) => void;
 }
 
 const EventBlock: React.FC<EventProps> = ({
     customTag,
+    onTagClick,
     title,
     image,
     date,
@@ -149,6 +151,14 @@ const EventBlock: React.FC<EventProps> = ({
         publishedAt = formatter.getFormattedDate();
     }
 
+    const handleTagClick = (tag: TagProps) =>
+        onTagClick
+            ? (ev?: React.SyntheticEvent<HTMLElement>) => {
+                  ev?.preventDefault();
+                  onTagClick(tag);
+              }
+            : undefined;
+
     return (
         <View>
             {image?.small && (
@@ -163,16 +173,20 @@ const EventBlock: React.FC<EventProps> = ({
                                     <TagWrapper key={'tag_' + i}>
                                         {customTag ? (
                                             customTag({
+                                                key: 'tag_' + i,
                                                 name: tag.name || '',
                                                 isInverted: isInverted,
                                                 isActive: false,
                                                 link: tag.link || {},
+                                                clickHandler:
+                                                    handleTagClick(tag),
                                             })
                                         ) : (
                                             <Tag
                                                 isInverted={isInverted}
                                                 name={tag.name}
                                                 link={tag.link}
+                                                onClick={handleTagClick(tag)}
                                             />
                                         )}
                                     </TagWrapper>

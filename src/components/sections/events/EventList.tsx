@@ -6,6 +6,7 @@ import Wrapper from 'components/base/Wrapper';
 import EventBlock, { EventProps } from 'components/blocks/EventBlock';
 import { getColors as color, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { LinkProps } from 'components/typography/Link';
 
 const List = styled.ul`
     list-style: none;
@@ -39,19 +40,15 @@ const EventList: React.FC<{
     /** Section background */
     bgMode?: 'inverted' | 'full';
 
-    /**
-     * Callback function to handle tag click outside of component
-     * */
-    onTagClick?: (tag: string) => void;
-
     /** Function to inject custom tag node */
     customTag?: (props: {
+        key: React.Key;
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+        link?: LinkProps;
     }) => React.ReactNode;
-}> = ({ anchorId, events, bgMode, customTag, onTagClick }) => {
+}> = ({ anchorId, events, bgMode, customTag }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -77,7 +74,6 @@ const EventList: React.FC<{
                                 {...event}
                                 isInverted={isInverted}
                                 customTag={customTag}
-                                onTagClick={onTagClick}
                             />
                         </ListItem>
                     ))}
