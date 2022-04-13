@@ -8,6 +8,7 @@ import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
 import { mq, spacings } from 'utils/styles';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { LinkProps } from 'components/typography/Link';
 
 const News = styled.ul`
     list-style: none;
@@ -60,10 +61,11 @@ const NewsList: React.FC<{
 
     /** Function to inject custom tag node */
     customTag?: (props: {
+        key: React.Key;
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
+        link?: LinkProps;
     }) => React.ReactNode;
 }> = ({ anchorId, mode = 'short', news, bgMode, customTag }) => {
     const { colors } = useLibTheme();

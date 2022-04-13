@@ -121,6 +121,7 @@ export interface NewsCardProps {
 
     /** Function to inject custom tag node */
     customTag?: (props: {
+        key: React.Key;
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
@@ -194,6 +195,7 @@ const NewsCard = forwardRef<
                         {tags?.map((tag, i) => {
                             if (customTag) {
                                 return customTag({
+                                    key: i,
                                     name: tag.name || '',
                                     isInverted: isInverted,
                                     isActive: false,

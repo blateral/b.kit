@@ -112,6 +112,7 @@ const NewsOverview: React.FC<{
 
     /** Function to inject custom tag node */
     customTag?: (props: {
+        key: React.Key;
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
@@ -320,9 +321,10 @@ const NewsOverview: React.FC<{
                 {tags && (
                     <TagContainer>
                         {tags.map((tag, i) => (
-                            <TagWrapper key={'tag_' + i}>
+                            <TagWrapper key={i}>
                                 {customTag ? (
                                     customTag({
+                                        key: i,
                                         name: tag,
                                         isInverted: isInverted,
                                         isActive:
@@ -364,7 +366,7 @@ const NewsOverview: React.FC<{
                         .sort(sortFilterFn)
                         .filter((_, i) => i < visibleRows * itemsPerRow)
                         .map((item, i) => (
-                            <NewsItem key={i}>
+                            <NewsItem key={`${i}_news_${item.title}`}>
                                 <NewsCard
                                     ref={cardRefs[i]}
                                     {...item}
@@ -377,9 +379,12 @@ const NewsOverview: React.FC<{
                                         setNewPos(0);
                                         if (!onTagClick) {
                                             // if no callback is defined handle filtering on client side inside the component
-                                            handleTagClick(tag);
+                                            handleTagClick({ name: tag.name });
                                         } else {
-                                            onTagClick(tag, true);
+                                            onTagClick(
+                                                { name: tag.name },
+                                                true
+                                            );
                                         }
                                     }}
                                     customTag={customTag}

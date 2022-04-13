@@ -78,13 +78,16 @@ export const WithCustomTag: Story = () => (
     <NewsList
         bgMode="inverted"
         news={exampleNews}
-        customTag={({ name, isActive, clickHandler }) => (
-            <button
-                style={{ background: isActive ? 'gray' : 'lightgray' }}
-                onClick={clickHandler}
+        customTag={({ name, isActive, link }) => (
+            <a
+                style={{
+                    display: 'block',
+                    background: isActive ? 'gray' : 'lightgray',
+                }}
+                {...link}
             >
                 {name}
-            </button>
+            </a>
         )}
     />
 );
