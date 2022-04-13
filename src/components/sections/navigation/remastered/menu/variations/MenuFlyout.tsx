@@ -124,7 +124,7 @@ const NavList = styled.ul`
     }
 `;
 
-const MainNavItem = styled.li<{ isActive?: boolean; isFeatured?: boolean }>`
+const MainNavItem = styled.li<{ isActive?: boolean }>`
     flex: 0 0 80px;
 
     height: 100%;
@@ -135,28 +135,23 @@ const MainNavItem = styled.li<{ isActive?: boolean; isFeatured?: boolean }>`
 
     transition: background-color 0.2s ease-in-out;
 
-    li + & {
+    li + &:not([data-featured]) {
         border-top: solid 2px
-            ${({ theme, isFeatured }) =>
-                !isFeatured
-                    ? color(theme).new.elementBg.medium
-                    : 'transparent'};
+            ${({ theme }) => color(theme).new.elementBg.medium};
     }
 
-    &:last-child {
+    li[data-featured] + &:not([data-featured]) {
+        margin-top: ${spacings.spacer}px;
+    }
+
+    &:not([data-featured]):last-child {
         border-bottom: solid 2px
-            ${({ theme, isFeatured }) =>
-                !isFeatured
-                    ? color(theme).new.elementBg.medium
-                    : 'transparent'};
+            ${({ theme }) => color(theme).new.elementBg.medium};
     }
 
-    &:first-child {
+    &:not([data-featured]):first-child {
         border-top: solid 2px
-            ${({ theme, isFeatured }) =>
-                !isFeatured
-                    ? color(theme).new.elementBg.medium
-                    : 'transparent'};
+            ${({ theme }) => color(theme).new.elementBg.medium};
     }
 
     @media ${mq.semilarge} {
@@ -394,7 +389,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                     <MainNavItem
                                         key={i}
                                         isActive={isActiveItem}
-                                        isFeatured={navItem.isFeatured}
+                                        data-featured={navItem.isFeatured}
                                     >
                                         <MainNavLabel
                                             isCurrent={
