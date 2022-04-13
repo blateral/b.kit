@@ -6,10 +6,11 @@ import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Title from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
-import Tag from 'components/blocks/Tag';
+import Tag, { TagProps } from 'components/blocks/Tag';
 import { mq, spacings } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { LinkProps } from 'components/typography/Link';
 
 const Content = styled.div`
     & > * + * {
@@ -93,10 +94,7 @@ const NewsIntro: React.FC<{
     anchorId?: string;
 
     /** Array of news tags */
-    tags?: string[];
-
-    /** Callback function if any tag has been clicked */
-    onTagClick?: (name: string) => void;
+    tags?: TagProps[];
 
     /** News article's meta informations */
     meta?: { date?: Date; author?: string };
@@ -115,22 +113,13 @@ const NewsIntro: React.FC<{
 
     /** Function to inject custom tag node */
     customTag?: (props: {
+        key: React.Key;
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
+        link?: LinkProps;
     }) => React.ReactNode;
-}> = ({
-    anchorId,
-    tags,
-    onTagClick,
-    meta,
-    title,
-    text,
-    image,
-    bgMode,
-    customTag,
-}) => {
+}> = ({ anchorId, tags, meta, title, text, image, bgMode, customTag }) => {
     const { globals, colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -168,23 +157,18 @@ const NewsIntro: React.FC<{
                                 <TagWrapper key={`headtag-${i}`}>
                                     {customTag ? (
                                         customTag({
-                                            name: tag,
+                                            key: `headtag-${i}`,
+                                            name: tag.name || '',
                                             isInverted: isInverted,
                                             isActive: false,
-                                            clickHandler: () => {
-                                                onTagClick && onTagClick(tag);
-                                            },
+                                            link: tag.link,
                                         })
                                     ) : (
                                         <Tag
+                                            {...tag.link}
                                             isInverted={isInverted}
-                                            onClick={
-                                                onTagClick
-                                                    ? () => onTagClick(tag)
-                                                    : undefined
-                                            }
                                         >
-                                            {tag}
+                                            {tag.name}
                                         </Tag>
                                     )}
                                 </TagWrapper>

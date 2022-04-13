@@ -8,7 +8,6 @@ const View = styled(Link)<{
     isInverted?: boolean;
     isActive?: boolean;
     isClickable?: boolean;
-    onClick?: () => void;
 }>`
     display: inline-block;
     border: 1px solid

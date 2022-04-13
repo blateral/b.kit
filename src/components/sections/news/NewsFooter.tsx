@@ -7,6 +7,7 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
+import { LinkProps } from 'components/typography/Link';
 
 type NewsFooterMq = 'small' | 'semilarge';
 
@@ -27,10 +28,11 @@ const NewsFooter: React.FC<{
 
     /** Function to inject custom tag node */
     customTag?: (props: {
+        key: React.Key;
         name: string;
         isInverted?: boolean;
         isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
+        link?: LinkProps;
     }) => React.ReactNode;
 }> = ({ anchorId, news, bgMode, customTag }) => {
     const { colors } = useLibTheme();
@@ -94,7 +96,10 @@ const NewsFooter: React.FC<{
                     {news
                         ?.filter((_, i) => i < visibleRows * itemsPerRow)
                         .map((item, i) => (
-                            <Grid.Col medium={{ span: 6 / 12 }} key={i}>
+                            <Grid.Col
+                                medium={{ span: 6 / 12 }}
+                                key={`${i}_news_${item.title}`}
+                            >
                                 <NewsCard
                                     key={i}
                                     ref={cardRefs[i]}
