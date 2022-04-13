@@ -59,7 +59,14 @@ const Head = styled.div`
 
 const Tags = styled.div`
     display: flex;
-    overflow: hidden;
+    overflow: scroll;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        display: none;
+    }
 
     & > * + * {
         margin-left: ${spacings.nudge}px;
