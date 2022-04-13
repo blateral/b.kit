@@ -1,7 +1,7 @@
 import AngleRight from 'components/base/icons/AngleRight';
 import { copyStyle } from 'components/typography/Copy';
 import Link from 'components/typography/Link';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useMemo } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 import { clampValue } from 'utils/clamp';
 import {
@@ -124,7 +124,7 @@ const NavList = styled.ul`
     }
 `;
 
-const MainNavItem = styled.li<{ isActive?: boolean }>`
+const MainNavItem = styled.li<{ isActive?: boolean; isFeatured?: boolean }>`
     flex: 0 0 80px;
 
     height: 100%;
@@ -137,17 +137,26 @@ const MainNavItem = styled.li<{ isActive?: boolean }>`
 
     li + & {
         border-top: solid 2px
-            ${({ theme }) => color(theme).new.elementBg.medium};
+            ${({ theme, isFeatured }) =>
+                !isFeatured
+                    ? color(theme).new.elementBg.medium
+                    : 'transparent'};
     }
 
     &:last-child {
         border-bottom: solid 2px
-            ${({ theme }) => color(theme).new.elementBg.medium};
+            ${({ theme, isFeatured }) =>
+                !isFeatured
+                    ? color(theme).new.elementBg.medium
+                    : 'transparent'};
     }
 
     &:first-child {
         border-top: solid 2px
-            ${({ theme }) => color(theme).new.elementBg.medium};
+            ${({ theme, isFeatured }) =>
+                !isFeatured
+                    ? color(theme).new.elementBg.medium
+                    : 'transparent'};
     }
 
     @media ${mq.semilarge} {
@@ -183,9 +192,12 @@ const MainNavLabel = styled.span<{ isCurrent?: boolean }>`
 
 const Icon = styled.span`
     display: block;
+    width: 48px;
+    max-width: 48px;
 
-    &:not(:first-child) {
-        margin-left: ${spacings.nudge * 3}px;
+    * {
+        width: 100%;
+        max-width: 48px;
     }
 `;
 
@@ -200,10 +212,20 @@ const Label = styled.span`
     }
 `;
 
-const CollapseIcon = styled.span`
+const CollapseIconContainer = styled.span`
     display: block;
     margin-left: auto;
     padding-left: ${spacings.nudge * 3}px;
+`;
+
+const CollapseIcon = styled(AngleRight)<{ isCollapsed?: boolean }>`
+    transform: ${({ isCollapsed }) => !isCollapsed && 'rotate(90deg)'};
+
+    transition: transform 0.2s ease-in-out;
+
+    @media ${mq.semilarge} {
+        transform: rotate(0deg);
+    }
 `;
 
 const NavLink = styled(Link)`
@@ -237,12 +259,13 @@ const NavButton = styled.button`
     }
 `;
 
-const SubNavList = styled.ul<{ isActive?: boolean }>`
+const SubNavList = styled.ul<{ isActive?: boolean; hasIcons?: boolean }>`
     display: ${({ isActive }) => !isActive && 'none'};
     position: relative;
     margin: 0;
     padding: 0;
-    padding-left: ${spacings.nudge * 3}px;
+    padding-left: ${({ hasIcons }) =>
+        hasIcons ? 48 + spacings.nudge * 5 : spacings.nudge * 2}px;
     padding-right: ${spacings.nudge * 2}px;
     list-style: none;
 
@@ -258,6 +281,7 @@ const SubNavList = styled.ul<{ isActive?: boolean }>`
         width: 100vw;
         height: 100%;
         max-width: 384px;
+        padding-left: ${spacings.nudge * 3}px;
     }
 `;
 
@@ -281,6 +305,7 @@ const SubNavItem = styled.li<{ navBarSize?: NavBarSize }>`
 `;
 
 const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
+    width: 100%;
     padding: ${spacings.nudge}px 0;
     outline-color: ${({ theme }) => color(theme).new.primary.default};
     vertical-align: middle;
@@ -295,6 +320,7 @@ const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
 
 export interface FlyoutMenuProps {
     type: 'flyout';
+    collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
 }
 
 const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
@@ -307,7 +333,15 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     header,
     footer,
     onClose,
+    collapseIcon,
 }) => {
+    const mainList = useMemo(() => {
+        const featured = mainNavigation?.filter((n) => n.isFeatured) || [];
+        const main = mainNavigation?.filter((n) => !n.isFeatured) || [];
+
+        return [...featured, ...main];
+    }, [mainNavigation]);
+
     const [activeItem, setActiveItem] = useState<number | null>(() => {
         const currentNavIndex =
             mainNavigation?.findIndex((item) => {
@@ -320,6 +354,10 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
             }) || -1;
         return currentNavIndex >= 0 ? currentNavIndex : null;
     });
+
+    const hasIcons = useMemo(() => {
+        return !!mainNavigation?.find((item) => item.icon);
+    }, [mainNavigation]);
 
     return (
         <React.Fragment>
@@ -339,7 +377,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                     </Header>
                     <NavContainer aria-label="menu">
                         <NavList>
-                            {mainNavigation?.map((navItem, i) => {
+                            {mainList?.map((navItem, i) => {
                                 const hasSubItems =
                                     navItem.subItems &&
                                     navItem.subItems.length > 0;
@@ -350,10 +388,13 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                       ) >= 0
                                     : false;
 
+                                const isActiveItem = activeItem === i;
+
                                 return (
                                     <MainNavItem
                                         key={i}
-                                        isActive={activeItem === i}
+                                        isActive={isActiveItem}
+                                        isFeatured={navItem.isFeatured}
                                     >
                                         <MainNavLabel
                                             isCurrent={
@@ -361,14 +402,27 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                 hasCurrentSubItem
                                             }
                                         >
-                                            <Icon>icon</Icon>
+                                            {hasIcons && (
+                                                <Icon>{navItem.icon}</Icon>
+                                            )}
                                             {navItem.label && (
                                                 <Label>{navItem.label}</Label>
                                             )}
                                             {hasSubItems && (
-                                                <CollapseIcon>
-                                                    <AngleRight />
-                                                </CollapseIcon>
+                                                <CollapseIconContainer>
+                                                    {collapseIcon ? (
+                                                        collapseIcon({
+                                                            isCollapsed:
+                                                                !isActiveItem,
+                                                        })
+                                                    ) : (
+                                                        <CollapseIcon
+                                                            isCollapsed={
+                                                                !isActiveItem
+                                                            }
+                                                        />
+                                                    )}
+                                                </CollapseIconContainer>
                                             )}
                                             {!hasSubItems &&
                                                 navItem.link.href && (
@@ -386,7 +440,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                             navItem.label
                                                         }
                                                         aria-expanded={
-                                                            activeItem === i
+                                                            isActiveItem
                                                         }
                                                         onClick={() =>
                                                             setActiveItem(i)
@@ -402,7 +456,21 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                     activeItem === i &&
                                                     hasSubItems
                                                 }
+                                                hasIcons={hasIcons}
                                             >
+                                                <SubNavItem
+                                                    key={`navItem_${i}_overview`}
+                                                    navBarSize={navBarSize}
+                                                >
+                                                    <SubNavLink
+                                                        isCurrent={
+                                                            navItem.isCurrent
+                                                        }
+                                                        {...navItem.link}
+                                                    >
+                                                        Übersicht
+                                                    </SubNavLink>
+                                                </SubNavItem>
                                                 {navItem?.subItems?.map(
                                                     (subNavItem, ii) => (
                                                         <SubNavItem

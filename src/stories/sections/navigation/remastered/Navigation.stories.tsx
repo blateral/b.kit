@@ -224,10 +224,15 @@ export const WithExampleContent: Story = () => (
         }}
         menu={{
             mainNavigation: [
-                { link: { href: '/mainItemA' }, label: 'Main Item A' },
+                {
+                    link: { href: '/mainItemA' },
+                    label: 'Main Item A',
+                    icon: <Star />,
+                },
                 {
                     link: { href: '/mainItemB' },
                     label: 'Main Item B',
+                    icon: <Star />,
                     subItems: [
                         {
                             link: { href: '/subitemB.1' },
@@ -258,10 +263,16 @@ export const WithExampleContent: Story = () => (
                         },
                     ],
                 },
-                { link: { href: '/mainItemC' }, label: 'Main Item C' },
+                {
+                    link: { href: '/mainItemC' },
+                    label: 'Main Item C',
+                    icon: <Star />,
+                    isFeatured: true,
+                },
                 {
                     link: { href: '/mainItemD' },
                     label: 'Main Item D',
+                    icon: <Star />,
                     subItems: [
                         {
                             link: { href: '/subitemD.1' },
@@ -281,9 +292,34 @@ export const WithExampleContent: Story = () => (
                         },
                     ],
                 },
+                {
+                    link: { href: '/mainItemE' },
+                    label: 'Main Item E',
+                    icon: <Star />,
+                    isFeatured: true,
+                    subItems: [
+                        {
+                            link: { href: '/subitemE.1' },
+                            label: 'Sub Item E.1',
+                        },
+                        {
+                            link: { href: '/subitemE.2' },
+                            label: 'Sub Item E.2',
+                        },
+                        {
+                            link: { href: '/subitemE.3' },
+                            label: 'Sub Item E.3',
+                        },
+                        {
+                            link: { href: '/subitemE.5' },
+                            label: 'Sub Item E.5',
+                        },
+                    ],
+                },
             ],
             typeSettings: {
                 type: 'flyout',
+                // collapseIcon: () => <ArrowRight />,
             },
             header: ({ closeMenu }) => (
                 <button onClick={closeMenu}>close</button>
