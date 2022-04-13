@@ -16,6 +16,7 @@ const View = styled(Link)<{
 
     padding: 4px 12px;
     max-height: 28px;
+    min-width: 40px;
     user-select: none;
 
     white-space: nowrap;
