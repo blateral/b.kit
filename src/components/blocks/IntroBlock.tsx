@@ -71,8 +71,10 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
 `;
 
 const MobileImage = styled(Image)<{ isCentered?: boolean }>`
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    height: 100%;
+    max-width: 400px;
+    max-height: 400px;
 
     margin: 0 auto;
     margin-top: ${spacings.spacer}px;
