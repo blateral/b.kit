@@ -319,6 +319,7 @@ const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
 export interface FlyoutMenuProps {
     type: 'flyout';
     collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
+    topSubNavLabel?: string;
 }
 
 const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
@@ -328,6 +329,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     mainNavigation,
     subNavigation,
     navBarSize,
+    topSubNavLabel,
     header,
     footer,
     onClose,
@@ -456,19 +458,23 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                 }
                                                 hasIcons={hasIcons}
                                             >
-                                                <SubNavItem
-                                                    key={`navItem_${i}_overview`}
-                                                    navBarSize={navBarSize}
-                                                >
-                                                    <SubNavLink
-                                                        isCurrent={
-                                                            navItem.isCurrent
-                                                        }
-                                                        {...navItem.link}
+                                                {navItem?.link?.href && (
+                                                    <SubNavItem
+                                                        key={`navItem_${i}_overview`}
+                                                        navBarSize={navBarSize}
                                                     >
-                                                        Übersicht
-                                                    </SubNavLink>
-                                                </SubNavItem>
+                                                        <SubNavLink
+                                                            isCurrent={
+                                                                navItem.isCurrent
+                                                            }
+                                                            {...navItem.link}
+                                                        >
+                                                            {topSubNavLabel ||
+                                                                'Overview'}
+                                                        </SubNavLink>
+                                                    </SubNavItem>
+                                                )}
+
                                                 {navItem?.subItems?.map(
                                                     (subNavItem, ii) => (
                                                         <SubNavItem
