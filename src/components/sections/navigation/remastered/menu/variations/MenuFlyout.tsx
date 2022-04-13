@@ -96,6 +96,9 @@ export const getMenuHeaderHeights = (
 };
 
 const Header = styled.div<{ navBarSize?: NavBarSize }>`
+    flex: 0 0
+        ${({ theme, navBarSize }) =>
+            getMenuHeaderHeights(theme, navBarSize)[0]}px;
     height: ${({ theme, navBarSize }) =>
         getMenuHeaderHeights(theme, navBarSize)[0]}px;
 

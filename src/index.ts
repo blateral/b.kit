@@ -157,6 +157,7 @@ export { default as NavSkeletons } from 'components/sections/navigation/remaster
 export { default as NavBarMainPartial } from 'components/sections/navigation/remastered/partials/NavBarMain';
 export { default as NavBarTopPartial } from 'components/sections/navigation/remastered/partials/NavBarTop';
 export { default as NavBarBottomPartial } from 'components/sections/navigation/remastered/partials/NavBarBottom';
+export { default as MenuHeaderPartial } from 'components/sections/navigation/remastered/partials/MenuHeader';
 
 export { default as SocialList } from 'components/blocks/SocialList';
 

@@ -544,8 +544,8 @@ const defaultGlobalSettings: GlobalSettings = {
         },
         menu: {
             headerHeight: {
-                small: [80, 120],
-                large: [80, 120],
+                small: [210],
+                large: [210],
             },
         },
     },

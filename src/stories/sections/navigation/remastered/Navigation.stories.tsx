@@ -3,6 +3,7 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Navigation, {
     NavBarStates,
+    NavMenuStates,
 } from 'components/sections/navigation/remastered/Navigation';
 import NavBarTop from 'components/sections/navigation/remastered/partials/NavBarTop';
 import NavBarMain from 'components/sections/navigation/remastered/partials/NavBarMain';
@@ -11,6 +12,7 @@ import Star from 'components/base/icons/Star';
 import NavBarBottom from 'components/sections/navigation/remastered/partials/NavBarBottom';
 import styled from 'styled-components';
 import { mq } from 'utils/styles';
+import MenuHeader from 'components/sections/navigation/remastered/partials/MenuHeader';
 
 const NavBarButton = styled.span`
     display: inline-block;
@@ -36,6 +38,16 @@ const primaryCtaFn = ({
                 <Star />
             </Button.Icon>
             <Button.Label data-btn-desktop>Book online</Button.Label>
+        </Button.View>
+    </NavBarButton>
+);
+
+const menuActionFn = ({
+    isInverted,
+}: { isInverted?: boolean } & NavMenuStates) => (
+    <NavBarButton>
+        <Button.View as="a" href="#" isInverted={isInverted}>
+            <Button.Label>PrimaryButton</Button.Label>
         </Button.View>
     </NavBarButton>
 );
@@ -321,8 +333,8 @@ export const WithExampleContent: Story = () => (
                 type: 'flyout',
                 // collapseIcon: () => <ArrowRight />,
             },
-            header: ({ closeMenu }) => (
-                <button onClick={closeMenu}>close</button>
+            header: (settings) => (
+                <MenuHeader menuStates={settings} action={menuActionFn} />
             ),
         }}
     />
