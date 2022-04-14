@@ -13,6 +13,7 @@ const Toggle = styled.button<{ isInverted?: boolean }>`
 
     padding: ${spacings.nudge}px;
     margin-left: -${spacings.nudge}px;
+    outline: none;
 
     cursor: pointer;
 
@@ -25,6 +26,19 @@ const Toggle = styled.button<{ isInverted?: boolean }>`
                     ? color(theme).new.primary.invertedHover
                     : color(theme).new.primary.hover};
         }
+    }
+
+    &:focus > * {
+        outline: solid 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).new.primary.inverted
+                    : color(theme).new.primary.default};
+        outline-offset: 4px;
+    }
+
+    &:focus:not(:focus-visible) > * {
+        outline: none;
     }
 `;
 

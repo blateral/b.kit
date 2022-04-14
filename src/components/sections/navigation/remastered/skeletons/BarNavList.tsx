@@ -54,6 +54,18 @@ const NavLink = styled(Link)<{ isInverted?: boolean; isActive?: boolean }>`
             text-decoration: underline;
         }
     }
+
+    &:focus {
+        outline: solid 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).new.primary.inverted
+                    : color(theme).new.primary.default};
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 const BarNavList: FC<{

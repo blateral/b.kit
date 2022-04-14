@@ -200,10 +200,6 @@ const MainNavItem = styled.li<{ isActive?: boolean }>`
                 color(theme).new.elementBg.medium};
         }
     }
-
-    &:focus-within {
-        background-color: ${({ theme }) => color(theme).new.elementBg.medium};
-    }
 `;
 
 const MainNavLabel = styled.span<{ isCurrent?: boolean }>`
@@ -264,7 +260,18 @@ const NavLink = styled(Link)`
     right: 0;
     bottom: 0;
     left: 0;
-    outline: none;
+
+    &:focus {
+        outline: solid 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).new.primary.inverted
+                    : color(theme).new.primary.default};
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 const NavButton = styled.button`
@@ -282,6 +289,14 @@ const NavButton = styled.button`
     cursor: pointer;
     outline: none;
     border-radius: 0px;
+
+    &:focus {
+        outline: solid 2px ${({ theme }) => color(theme).new.primary.default};
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 
     @media ${mq.semilarge} {
         border-bottom: none;
@@ -356,6 +371,19 @@ const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &:focus {
+        outline: solid 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).new.primary.inverted
+                    : color(theme).new.primary.default};
+        outline-offset: 4px;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 const SecondaryNavList = styled.ul`
@@ -383,6 +411,19 @@ const SecondaryNavLink = styled(Link)<{ isCurrent?: boolean }>`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &:focus {
+        outline: solid 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).new.primary.inverted
+                    : color(theme).new.primary.default};
+        outline-offset: 1px;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 export interface FlyoutMenuProps {
