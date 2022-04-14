@@ -29,6 +29,7 @@ const NewsItem = styled.li`
     padding-top: ${spacings.nudge * 6}px;
     padding-left: ${spacings.spacer}px;
     flex: 1 0 100%;
+    max-width: 100%;
 
     @media ${mq.medium} {
         flex: 1 0 50%;

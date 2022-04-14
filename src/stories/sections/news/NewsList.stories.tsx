@@ -32,9 +32,13 @@ const action = {
 
 const exampleNewsCard: NewsItem = {
     tags: [
-        { name: 'Tag A', link: { href: '#0' } },
+        { name: 'rathaus', link: { href: '#0' } },
         { name: 'TagB', link: { href: '#0' } },
         { name: 'TagC', link: { href: '#0' } },
+        { name: 'TagD', link: { href: '#0' } },
+        { name: 'TagE', link: { href: '#0' } },
+        { name: 'TagF', link: { href: '#0' } },
+        { name: 'TagG', link: { href: '#0' } },
     ],
     publishDate: new Date('July 22, 2021 03:24:00'),
     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
