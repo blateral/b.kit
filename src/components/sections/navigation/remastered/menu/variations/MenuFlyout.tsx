@@ -358,6 +358,33 @@ const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
     text-overflow: ellipsis;
 `;
 
+const SecondaryNavList = styled.ul`
+    display: block;
+    list-style: none;
+    padding: 0 ${spacings.nudge * 2}px;
+    margin: ${spacings.spacer}px 0;
+
+    li {
+        display: flex;
+        margin: 0;
+        padding; 0;
+    }
+`;
+
+const SecondaryNavLink = styled(Link)<{ isCurrent?: boolean }>`
+    display: inline-block;
+    padding: ${spacings.nudge * 0.5}px 0;
+    outline-color: ${({ theme }) => color(theme).new.primary.default};
+    vertical-align: middle;
+
+    ${copyStyle('copy', 'medium')}
+    color: ${({ theme }) => font(theme)['copy-b'].medium.color};
+    text-decoration: ${({ isCurrent }) => (isCurrent ? 'underline' : 'none')};
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
 export interface FlyoutMenuProps {
     type: 'flyout';
     collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
@@ -576,15 +603,18 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                         );
                                     })}
                                 </NavList>
-                                <ul>
+                                <SecondaryNavList>
                                     {subNavigation?.map((navItem, i) => (
                                         <li key={i}>
-                                            <a href={navItem.link.href}>
+                                            <SecondaryNavLink
+                                                isCurrent={navItem.isCurrent}
+                                                href={navItem.link.href}
+                                            >
                                                 {navItem.label}
-                                            </a>
+                                            </SecondaryNavLink>
                                         </li>
                                     ))}
-                                </ul>
+                                </SecondaryNavList>
                             </Nav>
                             {footer
                                 ? footer({
