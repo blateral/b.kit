@@ -329,6 +329,11 @@ export const WithExampleContent: Story = () => (
                     ],
                 },
             ],
+            subNavigation: [
+                { label: 'Subnav Item A', link: { href: '/subnavitemA' } },
+                { label: 'Subnav Item B', link: { href: '/subnavitemA' } },
+                { label: 'Subnav Item C', link: { href: '/subnavitemA' } },
+            ],
             typeSettings: {
                 type: 'flyout',
                 // collapseIcon: () => <ArrowRight />,
@@ -336,6 +341,7 @@ export const WithExampleContent: Story = () => (
             header: (settings) => (
                 <MenuHeader menuStates={settings} action={menuActionFn} />
             ),
+            footer: () => <div>Footer</div>,
         }}
     />
 );
