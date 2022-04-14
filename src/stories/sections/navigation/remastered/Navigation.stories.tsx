@@ -13,6 +13,12 @@ import NavBarBottom from 'components/sections/navigation/remastered/partials/Nav
 import styled from 'styled-components';
 import { mq } from 'utils/styles';
 import MenuHeader from 'components/sections/navigation/remastered/partials/MenuHeader';
+import MenuFooter from 'components/sections/navigation/remastered/partials/MenuFooter';
+
+import FacebookIcon from 'components/base/icons/socials/Facebook';
+import LinkedInIcon from 'components/base/icons/socials/LinkedIn';
+import XingIcon from 'components/base/icons/socials/Xing';
+import TwitterIcon from 'components/base/icons/socials/Twitter';
 
 const NavBarButton = styled.span`
     display: inline-block;
@@ -341,7 +347,22 @@ export const WithExampleContent: Story = () => (
             header: (settings) => (
                 <MenuHeader menuStates={settings} action={menuActionFn} />
             ),
-            footer: () => <div>Footer</div>,
+            footer: (settings) => (
+                <MenuFooter
+                    menuStates={settings}
+                    langs={[
+                        { label: 'DE', link: { href: '/de' }, isActive: true },
+                        { label: 'EN', link: { href: '/en' } },
+                        { label: 'FR', link: { href: '/fr' } },
+                    ]}
+                    socials={[
+                        { href: '#', icon: () => <FacebookIcon /> },
+                        { href: '#', icon: () => <LinkedInIcon /> },
+                        { href: '#', icon: () => <XingIcon /> },
+                        { href: '#', icon: () => <TwitterIcon /> },
+                    ]}
+                />
+            ),
         }}
     />
 );

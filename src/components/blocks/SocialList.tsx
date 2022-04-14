@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 
 import { getColors as color, spacings } from 'utils/styles';
 import Link from 'components/typography/Link';
@@ -8,63 +8,66 @@ const View = styled.div`
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    // padding: ${spacings.nudge * 2}px 0;
-    // overflow: hidden;
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
     }
 `;
 
-const IconItemView = styled.div`
-    transition: all ease-in-out 0.2s;
+const IconContainer = styled.div``;
 
-    &:hover {
-        transform: scale(1.1);
-    }
-
-    &:focus {
-        text-decoration: underline;
-        transform: scale(1.012);
-    }
-
-    &:active {
-        transform: scale(0.95);
-    }
-`;
-
-const StyledLink = styled(Link)<{ textColor?: string }>`
+const StyledLink = styled(Link)`
     display: block;
     padding: ${spacings.nudge * 2}px ${spacings.nudge * 1.5}px;
     margin: -${spacings.nudge * 2}px -${spacings.nudge * 1.5}px;
-    color: ${({ theme, textColor }) => textColor || color(theme).dark};
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).new.text.inverted
+            : color(theme).new.text.default};
+    outline: none;
+
+    transition: all ease-in-out 0.2s;
+
+    &:focus > * {
+        outline: solid 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).new.primary.inverted
+                    : color(theme).new.primary.default};
+        outline-offset: 2px;
+    }
+
+    &:focus:not(:focus-visible) > * {
+        outline: none;
+    }
 `;
+
+export interface SocialItem {
+    href: string;
+    icon: (props: { isInverted?: boolean; title?: string }) => React.ReactNode;
+    title?: string;
+}
 
 const SocialList: FC<{
     isInverted?: boolean;
-    items?: { href: string; icon: React.ReactNode }[];
+    items?: SocialItem[];
     className?: string;
 }> = ({ isInverted = false, items, className }) => {
-    const theme = React.useContext(ThemeContext);
-
     return (
         <View className={className}>
-            {items &&
-                items.map((item, i) => (
-                    <IconItemView key={i}>
-                        <StyledLink
-                            isExternal
-                            href={item.href}
-                            textColor={
-                                isInverted
-                                    ? color(theme).light
-                                    : color(theme).dark
-                            }
-                        >
-                            {item.icon}
-                        </StyledLink>
-                    </IconItemView>
-                ))}
+            {items?.map((item, i) => (
+                <IconContainer key={i}>
+                    <StyledLink
+                        isExternal
+                        href={item.href}
+                        isInverted={isInverted}
+                        ariaLabel={item.title}
+                    >
+                        {item.icon &&
+                            item.icon({ isInverted, title: item.title })}
+                    </StyledLink>
+                </IconContainer>
+            ))}
         </View>
     );
 };

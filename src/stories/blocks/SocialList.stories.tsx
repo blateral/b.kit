@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
@@ -13,7 +14,7 @@ export default {
     component: SocialList,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview'],
         },
     },
 } as Meta;
@@ -21,10 +22,10 @@ export default {
 export const Default: Story = () => (
     <SocialList
         items={[
-            { href: '#', icon: <FacebookIcon /> },
-            { href: '#', icon: <LinkedInIcon /> },
-            { href: '#', icon: <XingIcon /> },
-            { href: '#', icon: <TwitterIcon /> },
+            { href: '#', title: 'Facebook', icon: () => <FacebookIcon /> },
+            { href: '#', title: 'LinkedIn', icon: () => <LinkedInIcon /> },
+            { href: '#', title: 'Xing', icon: () => <XingIcon /> },
+            { href: '#', title: 'Twitter', icon: () => <TwitterIcon /> },
         ]}
     />
 );
@@ -33,10 +34,10 @@ export const Inverted: Story = () => (
     <SocialList
         isInverted
         items={[
-            { href: '#', icon: <FacebookIcon /> },
-            { href: '#', icon: <LinkedInIcon /> },
-            { href: '#', icon: <XingIcon /> },
-            { href: '#', icon: <TwitterIcon /> },
+            { href: '#', title: 'Facebook', icon: () => <FacebookIcon /> },
+            { href: '#', title: 'LinkedIn', icon: () => <LinkedInIcon /> },
+            { href: '#', title: 'Xing', icon: () => <XingIcon /> },
+            { href: '#', title: 'Twitter', icon: () => <TwitterIcon /> },
         ]}
     />
 );

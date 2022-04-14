@@ -237,7 +237,7 @@ const Label = styled.span`
     text-overflow: ellipsis;
 
     &:not(:first-child) {
-        margin-left: ${spacings.nudge * 3}px;
+        margin-left: ${spacings.nudge * 2}px;
     }
 `;
 
@@ -294,7 +294,7 @@ const SubNavList = styled.ul<{ isActive?: boolean; hasIcons?: boolean }>`
     margin: 0;
     padding: 0;
     padding-left: ${({ hasIcons }) =>
-        hasIcons ? 48 + spacings.nudge * 5 : spacings.nudge * 2}px;
+        hasIcons ? 48 + spacings.nudge * 4 : spacings.nudge * 2}px;
     padding-right: ${spacings.nudge * 2}px;
     list-style: none;
 

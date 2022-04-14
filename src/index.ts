@@ -158,6 +158,7 @@ export { default as NavBarMainPartial } from 'components/sections/navigation/rem
 export { default as NavBarTopPartial } from 'components/sections/navigation/remastered/partials/NavBarTop';
 export { default as NavBarBottomPartial } from 'components/sections/navigation/remastered/partials/NavBarBottom';
 export { default as MenuHeaderPartial } from 'components/sections/navigation/remastered/partials/MenuHeader';
+export { default as MenuFooterPartial } from 'components/sections/navigation/remastered/partials/MenuFooter';
 
 export { default as SocialList } from 'components/blocks/SocialList';
 

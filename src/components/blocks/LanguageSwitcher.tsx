@@ -8,6 +8,7 @@ import { copyStyle } from 'components/typography/Copy';
 const View = styled.div<{ isInverted?: boolean }>`
     display: inline-flex;
     align-items: center;
+    margin: 0 -${spacings.nudge}px;
 
     & > * + * {
         &:before {
