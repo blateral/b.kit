@@ -141,6 +141,10 @@ const ScrollArea = styled.div`
         display: none; /* for Chrome, Safari, and Opera */
     }
 
+    & > *:last-child {
+        margin-bottom: ${spacings.nudge * 3}px;
+    }
+
     @media ${mq.medium} {
         max-width: 384px;
     }
@@ -644,18 +648,22 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                         );
                                     })}
                                 </NavList>
-                                <SecondaryNavList>
-                                    {subNavigation?.map((navItem, i) => (
-                                        <li key={i}>
-                                            <SecondaryNavLink
-                                                isCurrent={navItem.isCurrent}
-                                                href={navItem.link.href}
-                                            >
-                                                {navItem.label}
-                                            </SecondaryNavLink>
-                                        </li>
-                                    ))}
-                                </SecondaryNavList>
+                                {subNavigation && subNavigation.length > 0 && (
+                                    <SecondaryNavList>
+                                        {subNavigation?.map((navItem, i) => (
+                                            <li key={i}>
+                                                <SecondaryNavLink
+                                                    isCurrent={
+                                                        navItem.isCurrent
+                                                    }
+                                                    href={navItem.link.href}
+                                                >
+                                                    {navItem.label}
+                                                </SecondaryNavLink>
+                                            </li>
+                                        ))}
+                                    </SecondaryNavList>
+                                )}
                             </Nav>
                             {footer
                                 ? footer({
