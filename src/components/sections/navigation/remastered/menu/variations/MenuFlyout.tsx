@@ -4,6 +4,7 @@ import Link from 'components/typography/Link';
 import React, { FC, useState, useMemo } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 import { clampValue } from 'utils/clamp';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     mq,
     spacings,
@@ -12,6 +13,7 @@ import {
     getGlobals as global,
 } from 'utils/styles';
 import { NavBarSize } from '../../NavBar';
+import MenuHeader from '../../partials/MenuHeader';
 import { MenuBaseProps } from '../Menu';
 
 const Backdrop = styled.div<{ isOpen?: boolean }>`
@@ -95,6 +97,18 @@ export const getMenuHeaderHeights = (
     ];
 };
 
+export const hasMenuHeader = (theme: DefaultTheme) => {
+    const largeHeights = getMenuHeaderHeights(theme, 'large');
+    const smallHeights = getMenuHeaderHeights(theme, 'small');
+
+    return (
+        largeHeights[0] > 0 ||
+        largeHeights[1] > 0 ||
+        smallHeights[0] > 0 ||
+        smallHeights[1] > 0
+    );
+};
+
 const Header = styled.div<{ navBarSize?: NavBarSize }>`
     flex: 0 0
         ${({ theme, navBarSize }) =>
@@ -121,6 +135,13 @@ const NavList = styled.ul`
     width: 100vw;
     max-height: 100%;
     overflow: auto;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none; /* for Chrome, Safari, and Opera */
+    }
 
     @media ${mq.medium} {
         max-width: 384px;
@@ -138,21 +159,21 @@ const MainNavItem = styled.li<{ isActive?: boolean }>`
 
     transition: background-color 0.2s ease-in-out;
 
-    li + &:not([data-featured]) {
+    li + &:not([data-featured='true']) {
         border-top: solid 2px
             ${({ theme }) => color(theme).new.elementBg.medium};
     }
 
-    li[data-featured] + &:not([data-featured]) {
+    li[data-featured='true'] + &:not([data-featured='true']) {
         margin-top: ${spacings.spacer}px;
     }
 
-    &:not([data-featured]):last-child {
+    &:not([data-featured='true']):last-child {
         border-bottom: solid 2px
             ${({ theme }) => color(theme).new.elementBg.medium};
     }
 
-    &:not([data-featured]):first-child {
+    &:not([data-featured='true']):first-child {
         border-top: solid 2px
             ${({ theme }) => color(theme).new.elementBg.medium};
     }
@@ -269,6 +290,13 @@ const SubNavList = styled.ul<{ isActive?: boolean; hasIcons?: boolean }>`
 
     max-height: 100%;
     overflow: auto;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none; /* for Chrome, Safari, and Opera */
+    }
 
     background-color: ${({ theme }) => color(theme).new.elementBg.medium};
 
@@ -298,6 +326,10 @@ const SubNavItem = styled.li<{ navBarSize?: NavBarSize }>`
         &:first-child {
             margin-top: ${({ theme, navBarSize }) =>
                 getMenuHeaderHeights(theme, navBarSize)[1]}px;
+        }
+
+        &:last-child {
+            margin-bottom: ${spacings.spacer}px;
         }
     }
 `;
@@ -335,6 +367,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     onClose,
     collapseIcon,
 }) => {
+    const { theme } = useLibTheme();
     const mainList = useMemo(() => {
         const featured = mainNavigation?.filter((n) => n.isFeatured) || [];
         const main = mainNavigation?.filter((n) => !n.isFeatured) || [];
@@ -359,22 +392,36 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
         return !!mainNavigation?.find((item) => item.icon);
     }, [mainNavigation]);
 
+    const hasHeader = useMemo(() => hasMenuHeader(theme), [theme]);
+
     return (
         <React.Fragment>
             <Backdrop isOpen={isOpen} onClick={onClose} />
             <Stage isOpen={isOpen} clampWidth={clampWidth}>
                 <Flyout isOpen={isOpen}>
-                    <Header navBarSize={navBarSize}>
-                        {header
-                            ? header({
-                                  isOpen,
-                                  mainNavigation,
-                                  subNavigation,
-                                  isIndexPage,
-                                  navBarSize,
-                              })
-                            : ''}
-                    </Header>
+                    {hasHeader && (
+                        <Header navBarSize={navBarSize}>
+                            {header ? (
+                                header({
+                                    isOpen,
+                                    mainNavigation,
+                                    subNavigation,
+                                    isIndexPage,
+                                    navBarSize,
+                                })
+                            ) : (
+                                <MenuHeader
+                                    menuStates={{
+                                        isOpen,
+                                        mainNavigation,
+                                        subNavigation,
+                                        isIndexPage,
+                                        navBarSize,
+                                    }}
+                                />
+                            )}
+                        </Header>
+                    )}
                     <NavContainer aria-label="menu">
                         <NavList>
                             {mainList?.map((navItem, i) => {

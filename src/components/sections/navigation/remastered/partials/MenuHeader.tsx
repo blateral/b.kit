@@ -27,7 +27,8 @@ const MenuHeader: FC<{
         <React.Fragment>
             <Header>
                 <Skeletons.Toggle
-                    isExpanded={false}
+                    isInverted={isInverted}
+                    isExpanded={true}
                     onClick={menuStates?.closeMenu}
                 >
                     {customToggle ? customToggle({ isInverted }) : <Cross />}

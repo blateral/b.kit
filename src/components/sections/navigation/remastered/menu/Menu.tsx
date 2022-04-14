@@ -4,7 +4,7 @@ import { LinkProps } from 'components/typography/Link';
 
 /** Menu Variations */
 import MenuFlyout, { FlyoutMenuProps } from './variations/MenuFlyout';
-import MenuLarge, { LargeMenuProps } from './variations/MenuLarge';
+import { /* MenuLarge,*/ LargeMenuProps } from './variations/MenuLarge';
 import { NavBarSize } from '../NavBar';
 
 /** Navigation item types */
@@ -53,23 +53,27 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
     onClose,
     typeSettings,
 }) => {
+    if (!typeSettings) {
+        typeSettings = { type: 'flyout' };
+    }
+
     switch (typeSettings?.type) {
-        case 'large': {
-            return (
-                <MenuLarge
-                    isOpen={isOpen}
-                    clampWidth={clampWidth}
-                    isIndexPage={isIndexPage}
-                    mainNavigation={mainNavigation}
-                    subNavigation={subNavigation}
-                    navBarSize={navBarSize}
-                    header={header}
-                    footer={footer}
-                    onClose={onClose}
-                    {...(typeSettings as LargeMenuProps)}
-                />
-            );
-        }
+        // case 'large': {
+        //     return (
+        //         <MenuLarge
+        //             isOpen={isOpen}
+        //             clampWidth={clampWidth}
+        //             isIndexPage={isIndexPage}
+        //             mainNavigation={mainNavigation}
+        //             subNavigation={subNavigation}
+        //             navBarSize={navBarSize}
+        //             header={header}
+        //             footer={footer}
+        //             onClose={onClose}
+        //             {...(typeSettings as LargeMenuProps)}
+        //         />
+        //     );
+        // }
 
         default:
         case 'flyout': {
