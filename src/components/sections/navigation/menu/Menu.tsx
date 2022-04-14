@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { mq, spacings } from 'utils/styles';
 import Flyout, { FlyoutBackgroundSettings, NavGroup } from './Flyout';
-import SocialList from 'components/blocks/SocialList';
+import SocialList, { SocialItem } from 'components/blocks/SocialList';
 import { LogoProps } from '../Navigation';
 
 const View = styled.div`
@@ -72,7 +72,7 @@ interface MenuProps {
     activeNavItem?: string;
     navItems?: NavGroup[];
     navItemIndicator?: (isInverted: boolean) => React.ReactNode;
-    socials?: Array<{ icon: React.ReactNode; href: string }>;
+    socials?: Array<SocialItem>;
     onCloseClick?: () => void;
 }
 

@@ -1,3 +1,4 @@
+import { SocialItem } from 'components/blocks/SocialList';
 import React, { FC, useEffect, useState } from 'react';
 import { LibThemeProvider, ThemeMods } from 'utils/LibThemeProvider';
 import { FlyoutBackgroundSettings, NavGroup } from './menu/Flyout';
@@ -37,7 +38,7 @@ export interface NavProps {
     navItems?: NavGroup[];
     navItemIndicator?: (isInverted: boolean) => React.ReactNode;
     backdropOpacity?: number;
-    socials?: Array<{ icon: React.ReactNode; href: string }>;
+    socials?: Array<SocialItem>;
     logo?: LogoProps;
     background?: FlyoutBackgroundSettings;
     /** Allow overflow of topbar over content if page is on top */

@@ -14,7 +14,7 @@ import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import Bdot from 'components/blocks/Bdot';
-import SocialList from 'components/blocks/SocialList';
+import SocialList, { SocialItem } from 'components/blocks/SocialList';
 
 const MainView = styled(Wrapper)<{ isInverted?: boolean }>`
     background: ${({ theme, isInverted }) =>
@@ -239,7 +239,7 @@ const Footer: FC<{
     newsTitle?: string;
     newsText?: string;
     newsForm?: (isInverted?: boolean) => React.ReactNode;
-    socials?: Array<{ icon: React.ReactNode; href: string }>;
+    socials?: Array<SocialItem>;
     bottomLinks?: { href: string; label?: string; isExternal?: boolean }[];
     brandIcon?: React.ReactNode;
 }> = ({

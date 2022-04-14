@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Navigation from 'components/sections/navigation/Navigation';
@@ -400,9 +401,9 @@ export const WithMenuSocials: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -426,9 +427,9 @@ export const WithMirroredView: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -452,9 +453,9 @@ export const HideTopbarBackgroundUnderMenu: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -478,9 +479,9 @@ export const WithInvertedMenu: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -504,9 +505,9 @@ export const WithLargeMenu: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -530,9 +531,9 @@ export const WithLargeMenuAndPointerActions: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -557,9 +558,9 @@ export const WithLargeMirroredMenu: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -584,9 +585,9 @@ export const WithLargeMirroredMenuAndPointers: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -611,9 +612,9 @@ export const WithInvertedLargeMenu: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );

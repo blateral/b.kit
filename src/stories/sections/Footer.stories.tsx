@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 
@@ -131,10 +132,10 @@ export const WithSocials: Story = () => (
             { href: '#', label: 'Dolor' },
         ]}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Xing /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Xing /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -161,10 +162,10 @@ export const WithNewsletterTitleAndText: Story = () => (
             { href: '#', label: 'Elitr' },
         ]}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Xing /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Xing /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
         newsTitle="Newsletter"
         newsText={`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <a href="#">E-Mail Adresse</a>  no sea takimata sanctus est Lorem ipsum dolor sit amet.`}
@@ -205,10 +206,10 @@ export const WithNewsletterForm: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Xing /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Xing /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -248,10 +249,10 @@ export const WithColumnTopSpace: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Xing /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Xing /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -291,10 +292,10 @@ export const WithBottomLinks: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Xing /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Xing /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
         bottomLinks={[
             { href: '/impressum', label: 'Impressum' },
@@ -339,10 +340,10 @@ export const Inverted: Story = () => (
             />
         )}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Xing /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Xing /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
         bottomLinks={[
             { href: '/impressum', label: 'Impressum' },

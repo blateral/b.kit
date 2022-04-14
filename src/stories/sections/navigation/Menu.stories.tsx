@@ -327,9 +327,9 @@ export const WithSocials: Story = () => (
         )}
         {...exampleNavItems}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -354,9 +354,9 @@ export const WithFullWidthFlyout: Story = () => (
         secondaryAction={secondaryCtaFn}
         {...exampleNavItems}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -382,9 +382,9 @@ export const WithMirroredView: Story = () => (
         secondaryAction={secondaryCtaFn}
         {...exampleNavItems}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -403,9 +403,9 @@ export const Inverted: Story = () => (
         )}
         {...exampleNavItems}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -431,9 +431,9 @@ export const InvertedFull: Story = () => (
         secondaryAction={secondaryCtaFn}
         {...exampleNavItems}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -463,9 +463,9 @@ export const WithBackgroundSettings: Story = () => (
         secondaryAction={secondaryCtaFn}
         {...exampleNavItems}
         socials={[
-            { href: '#', icon: <Facebook /> },
-            { href: '#', icon: <LinkedIn /> },
-            { href: '#', icon: <Twitter /> },
+            { href: '#', icon: () => <Facebook /> },
+            { href: '#', icon: () => <LinkedIn /> },
+            { href: '#', icon: () => <Twitter /> },
         ]}
     />
 );
