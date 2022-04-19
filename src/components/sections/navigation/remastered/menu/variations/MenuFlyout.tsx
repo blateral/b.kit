@@ -1,6 +1,6 @@
 import AngleRight from 'components/base/icons/AngleRight';
 import { copyStyle } from 'components/typography/Copy';
-import Link from 'components/typography/Link';
+import Link, { LinkProps } from 'components/typography/Link';
 import React, { FC, useState, useMemo } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 import { clampValue } from 'utils/clamp';
@@ -14,7 +14,7 @@ import {
 } from 'utils/styles';
 import { NavBarSize } from '../../NavBar';
 import MenuHeader from '../../partials/MenuHeader';
-import { MenuBaseProps } from '../Menu';
+import { MenuBaseProps, NavItem } from '../Menu';
 
 const Backdrop = styled.div<{ isOpen?: boolean }>`
     position: fixed;
@@ -150,15 +150,22 @@ const ScrollArea = styled.div`
     }
 `;
 
-const Nav = styled.nav``;
+//#region NAVIGATION
+//#region NAVIGATION.Containers
+const Navigation: FC = ({ children }) => {
+    return <nav aria-label="menu">{children}</nav>;
+};
 
 const NavList = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
+    margin: ${spacings.nudge * 2}px 0;
 `;
 
-const MainNavItem = styled.li<{ isActive?: boolean }>`
+// #endregion
+// #region NAVIGATION.NavItem
+const NavItemView = styled.li<{ isActive?: boolean }>`
     flex: 0 0 80px;
 
     height: 100%;
@@ -172,10 +179,6 @@ const MainNavItem = styled.li<{ isActive?: boolean }>`
     li + &:not([data-featured='true']) {
         border-top: solid 2px
             ${({ theme }) => color(theme).new.elementBg.medium};
-    }
-
-    &[data-featured='true']:first-child {
-        margin-top: ${spacings.spacer}px;
     }
 
     li[data-featured='true'] + &:not([data-featured='true']) {
@@ -206,7 +209,7 @@ const MainNavItem = styled.li<{ isActive?: boolean }>`
     }
 `;
 
-const MainNavLabel = styled.span<{ isCurrent?: boolean }>`
+const NavItemContent = styled.span<{ isCurrent?: boolean }>`
     display: flex;
     align-items: center;
     position: relative;
@@ -219,7 +222,7 @@ const MainNavLabel = styled.span<{ isCurrent?: boolean }>`
     text-decoration: ${({ isCurrent }) => (isCurrent ? 'underline' : 'none')};
 `;
 
-const Icon = styled.span`
+const NavItemIcon = styled.span`
     display: block;
     width: 48px;
     max-width: 48px;
@@ -230,7 +233,7 @@ const Icon = styled.span`
     }
 `;
 
-const Label = styled.span`
+const NavItemLabel = styled.span`
     display: block;
     white-space: nowrap;
     overflow: hidden;
@@ -241,13 +244,13 @@ const Label = styled.span`
     }
 `;
 
-const CollapseIconContainer = styled.span`
+const NavItemCollapse = styled.span`
     display: block;
     margin-left: auto;
     padding-left: ${spacings.nudge * 3}px;
 `;
 
-const CollapseIcon = styled(AngleRight)<{ isCollapsed?: boolean }>`
+const NavItemCollapseIcon = styled(AngleRight)<{ isCollapsed?: boolean }>`
     transform: ${({ isCollapsed }) => !isCollapsed && 'rotate(90deg)'};
 
     transition: transform 0.2s ease-in-out;
@@ -257,7 +260,7 @@ const CollapseIcon = styled(AngleRight)<{ isCollapsed?: boolean }>`
     }
 `;
 
-const NavLink = styled(Link)`
+const NavItemLink = styled(Link)`
     display: block;
     position: absolute;
     top: 0;
@@ -278,7 +281,7 @@ const NavLink = styled(Link)`
     }
 `;
 
-const NavButton = styled.button`
+const NavItemButton = styled.button`
     display: block;
     position: absolute;
     top: 0;
@@ -307,13 +310,13 @@ const NavButton = styled.button`
     }
 `;
 
-const SubNavList = styled.ul<{ isActive?: boolean; hasIcons?: boolean }>`
+const SubNavList = styled.ul<{ isActive?: boolean; isIndented?: boolean }>`
     display: ${({ isActive }) => !isActive && 'none'};
     position: relative;
     margin: 0;
     padding: 0;
-    padding-left: ${({ hasIcons }) =>
-        hasIcons ? 48 + spacings.nudge * 4 : spacings.nudge * 2}px;
+    padding-left: ${({ isIndented }) =>
+        isIndented ? 48 + spacings.nudge * 4 : spacings.nudge * 2}px;
     padding-right: ${spacings.nudge * 2}px;
     list-style: none;
 
@@ -340,6 +343,86 @@ const SubNavList = styled.ul<{ isActive?: boolean; hasIcons?: boolean }>`
     }
 `;
 
+const NavigationItem: FC<{
+    id: React.Key;
+    isCurrent?: boolean;
+    isActive?: boolean;
+    isFeatured?: boolean;
+    label?: string;
+    link?: LinkProps;
+    icon?: React.ReactNode;
+
+    subNavTitle?: string;
+
+    navBarSize?: NavBarSize;
+    onItemClick?: (id: React.Key) => void;
+    collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
+}> = ({
+    id,
+    isCurrent,
+    isActive,
+    isFeatured,
+    label,
+    link,
+    icon,
+    subNavTitle,
+    navBarSize,
+    onItemClick,
+    collapseIcon,
+    children,
+}) => {
+    const hasSubItems = !!children && React.Children.count(children) > 0;
+
+    return (
+        <NavItemView key={id} isActive={isActive} data-featured={isFeatured}>
+            <NavItemContent isCurrent={isCurrent}>
+                {icon && <NavItemIcon>{icon}</NavItemIcon>}
+                {label && <NavItemLabel>{label}</NavItemLabel>}
+                {hasSubItems && (
+                    <NavItemCollapse>
+                        {collapseIcon ? (
+                            collapseIcon({
+                                isCollapsed: !isActive,
+                            })
+                        ) : (
+                            <NavItemCollapseIcon isCollapsed={!isActive} />
+                        )}
+                    </NavItemCollapse>
+                )}
+                {!hasSubItems && link?.href && (
+                    <NavItemLink {...link} ariaLabel={label} />
+                )}
+                {hasSubItems && (
+                    <React.Fragment>
+                        <NavItemButton
+                            aria-label={label}
+                            aria-expanded={isActive}
+                            onClick={() => onItemClick && onItemClick(id)}
+                        />
+                    </React.Fragment>
+                )}
+            </NavItemContent>
+            {hasSubItems && (
+                <SubNavList
+                    isActive={isActive && hasSubItems}
+                    isIndented={!!icon}
+                >
+                    {link?.href && (
+                        <MenuNav.SubItem
+                            key={`${id}_overview`}
+                            link={link}
+                            label={subNavTitle || 'Overview'}
+                            navBarSize={navBarSize}
+                        />
+                    )}
+                    {children}
+                </SubNavList>
+            )}
+        </NavItemView>
+    );
+};
+//#endregion NAVIGATION.NavItem
+//#region NAVIGATION.SubNavItem
 const SubNavItem = styled.li<{ navBarSize?: NavBarSize }>`
     display: flex;
     align-items: center;
@@ -354,7 +437,8 @@ const SubNavItem = styled.li<{ navBarSize?: NavBarSize }>`
     @media ${mq.semilarge} {
         &:first-child {
             margin-top: ${({ theme, navBarSize }) =>
-                getMenuHeaderHeights(theme, navBarSize)[1]}px;
+                getMenuHeaderHeights(theme, navBarSize)[1] +
+                spacings.nudge * 2}px;
         }
 
         &:last-child {
@@ -390,6 +474,22 @@ const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
     }
 `;
 
+const NavigationSubItem: FC<{
+    isCurrent?: boolean;
+    label: string;
+    link?: LinkProps;
+    navBarSize?: NavBarSize;
+}> = ({ isCurrent, label, link, navBarSize }) => {
+    return (
+        <SubNavItem navBarSize={navBarSize}>
+            <SubNavLink isCurrent={isCurrent} {...link}>
+                {label}
+            </SubNavLink>
+        </SubNavItem>
+    );
+};
+//#endregion
+//#region NAVIGATION.SecondaryNavigation
 const SecondaryNavList = styled.ul`
     display: block;
     list-style: none;
@@ -430,10 +530,39 @@ const SecondaryNavLink = styled(Link)<{ isCurrent?: boolean }>`
     }
 `;
 
+const SecondaryNavigation: FC<{
+    items?: NavItem[];
+}> = ({ items }) => {
+    return items && items.length > 0 ? (
+        <SecondaryNavList>
+            {items?.map((item, i) => (
+                <li key={i}>
+                    <SecondaryNavLink
+                        isCurrent={item.isCurrent}
+                        href={item.link.href}
+                    >
+                        {item.label}
+                    </SecondaryNavLink>
+                </li>
+            ))}
+        </SecondaryNavList>
+    ) : null;
+};
+//#endregion
+
+const MenuNav = {
+    View: Navigation,
+    List: NavList,
+    Item: NavigationItem,
+    SubItem: NavigationSubItem,
+    SubList: SecondaryNavigation,
+};
+// #endregion
+
 export interface FlyoutMenuProps {
     type: 'flyout';
     collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
-    topSubNavLabel?: string;
+    subNavTitle?: string;
 }
 
 const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
@@ -443,7 +572,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     mainNavigation,
     subNavigation,
     navBarSize,
-    topSubNavLabel,
+    subNavTitle,
     header,
     footer,
     onClose,
@@ -469,10 +598,6 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
             }) || -1;
         return currentNavIndex >= 0 ? currentNavIndex : null;
     });
-
-    const hasIcons = useMemo(() => {
-        return !!mainNavigation?.find((item) => item.icon);
-    }, [mainNavigation]);
 
     const hasHeader = useMemo(() => hasMenuHeader(theme), [theme]);
 
@@ -504,177 +629,67 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                             )}
                         </Header>
                     )}
-                    <ScrollContainer>
-                        <ScrollArea>
-                            <Nav aria-label="menu">
-                                <NavList>
-                                    {mainList?.map((navItem, i) => {
-                                        const hasSubItems =
-                                            navItem.subItems &&
-                                            navItem.subItems.length > 0;
+                    {mainList && mainList.length > 0 && (
+                        <ScrollContainer>
+                            <ScrollArea>
+                                <MenuNav.View>
+                                    <MenuNav.List>
+                                        {mainList?.map((item, i) => {
+                                            const isActive = activeItem === i;
+                                            const hasCurrentSubItem =
+                                                item?.subItems
+                                                    ? item.subItems.findIndex(
+                                                          (n) => n.isCurrent
+                                                      ) >= 0
+                                                    : false;
 
-                                        const hasCurrentSubItem =
-                                            navItem?.subItems
-                                                ? navItem.subItems.findIndex(
-                                                      (item) => item.isCurrent
-                                                  ) >= 0
-                                                : false;
-
-                                        const isActiveItem = activeItem === i;
-
-                                        return (
-                                            <MainNavItem
-                                                key={i}
-                                                isActive={isActiveItem}
-                                                data-featured={
-                                                    navItem.isFeatured
-                                                }
-                                            >
-                                                <MainNavLabel
+                                            return (
+                                                <MenuNav.Item
+                                                    key={i}
+                                                    id={i}
+                                                    {...item}
+                                                    isActive={isActive}
                                                     isCurrent={
-                                                        navItem.isCurrent ||
+                                                        item.isCurrent ||
                                                         hasCurrentSubItem
                                                     }
+                                                    subNavTitle={subNavTitle}
+                                                    navBarSize={navBarSize}
+                                                    collapseIcon={collapseIcon}
+                                                    onItemClick={(key) =>
+                                                        setActiveItem(
+                                                            key as number
+                                                        )
+                                                    }
                                                 >
-                                                    {hasIcons && (
-                                                        <Icon>
-                                                            {navItem.icon}
-                                                        </Icon>
-                                                    )}
-                                                    {navItem.label && (
-                                                        <Label>
-                                                            {navItem.label}
-                                                        </Label>
-                                                    )}
-                                                    {hasSubItems && (
-                                                        <CollapseIconContainer>
-                                                            {collapseIcon ? (
-                                                                collapseIcon({
-                                                                    isCollapsed:
-                                                                        !isActiveItem,
-                                                                })
-                                                            ) : (
-                                                                <CollapseIcon
-                                                                    isCollapsed={
-                                                                        !isActiveItem
-                                                                    }
-                                                                />
-                                                            )}
-                                                        </CollapseIconContainer>
-                                                    )}
-                                                    {!hasSubItems &&
-                                                        navItem.link.href && (
-                                                            <NavLink
-                                                                {...navItem.link}
-                                                                ariaLabel={
-                                                                    navItem.label
-                                                                }
-                                                            />
-                                                        )}
-                                                    {hasSubItems && (
-                                                        <React.Fragment>
-                                                            <NavButton
-                                                                aria-label={
-                                                                    navItem.label
-                                                                }
-                                                                aria-expanded={
-                                                                    isActiveItem
-                                                                }
-                                                                onClick={() =>
-                                                                    setActiveItem(
-                                                                        i
-                                                                    )
-                                                                }
-                                                            />
-                                                        </React.Fragment>
-                                                    )}
-                                                </MainNavLabel>
-
-                                                {hasSubItems && (
-                                                    <SubNavList
-                                                        isActive={
-                                                            activeItem === i &&
-                                                            hasSubItems
-                                                        }
-                                                        hasIcons={hasIcons}
-                                                    >
-                                                        {navItem?.link
-                                                            ?.href && (
-                                                            <SubNavItem
-                                                                key={`navItem_${i}_overview`}
+                                                    {item?.subItems?.map(
+                                                        (subItem, ii) => (
+                                                            <MenuNav.SubItem
+                                                                key={ii}
+                                                                {...subItem}
                                                                 navBarSize={
                                                                     navBarSize
                                                                 }
-                                                            >
-                                                                <SubNavLink
-                                                                    isCurrent={
-                                                                        navItem.isCurrent
-                                                                    }
-                                                                    {...navItem.link}
-                                                                >
-                                                                    {topSubNavLabel ||
-                                                                        'Overview'}
-                                                                </SubNavLink>
-                                                            </SubNavItem>
-                                                        )}
-
-                                                        {navItem?.subItems?.map(
-                                                            (
-                                                                subNavItem,
-                                                                ii
-                                                            ) => (
-                                                                <SubNavItem
-                                                                    key={ii}
-                                                                    navBarSize={
-                                                                        navBarSize
-                                                                    }
-                                                                >
-                                                                    <SubNavLink
-                                                                        isCurrent={
-                                                                            subNavItem.isCurrent
-                                                                        }
-                                                                        {...subNavItem.link}
-                                                                    >
-                                                                        {
-                                                                            subNavItem.label
-                                                                        }
-                                                                    </SubNavLink>
-                                                                </SubNavItem>
-                                                            )
-                                                        )}
-                                                    </SubNavList>
-                                                )}
-                                            </MainNavItem>
-                                        );
-                                    })}
-                                </NavList>
-                                {subNavigation && subNavigation.length > 0 && (
-                                    <SecondaryNavList>
-                                        {subNavigation?.map((navItem, i) => (
-                                            <li key={i}>
-                                                <SecondaryNavLink
-                                                    isCurrent={
-                                                        navItem.isCurrent
-                                                    }
-                                                    href={navItem.link.href}
-                                                >
-                                                    {navItem.label}
-                                                </SecondaryNavLink>
-                                            </li>
-                                        ))}
-                                    </SecondaryNavList>
-                                )}
-                            </Nav>
-                            {footer
-                                ? footer({
-                                      isOpen,
-                                      mainNavigation,
-                                      subNavigation,
-                                      isIndexPage,
-                                  })
-                                : ''}
-                        </ScrollArea>
-                    </ScrollContainer>
+                                                            />
+                                                        )
+                                                    )}
+                                                </MenuNav.Item>
+                                            );
+                                        })}
+                                    </MenuNav.List>
+                                    <MenuNav.SubList items={subNavigation} />
+                                </MenuNav.View>
+                                {footer
+                                    ? footer({
+                                          isOpen,
+                                          mainNavigation,
+                                          subNavigation,
+                                          isIndexPage,
+                                      })
+                                    : ''}
+                            </ScrollArea>
+                        </ScrollContainer>
+                    )}
                 </Flyout>
             </Stage>
         </React.Fragment>

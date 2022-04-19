@@ -337,8 +337,8 @@ export const WithExampleContent: Story = () => (
             ],
             subNavigation: [
                 { label: 'Subnav Item A', link: { href: '/subnavitemA' } },
-                { label: 'Subnav Item B', link: { href: '/subnavitemA' } },
-                { label: 'Subnav Item C', link: { href: '/subnavitemA' } },
+                { label: 'Subnav Item B', link: { href: '/subnavitemB' } },
+                { label: 'Subnav Item C', link: { href: '/subnavitemC' } },
             ],
             typeSettings: {
                 type: 'flyout',
