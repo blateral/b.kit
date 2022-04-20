@@ -37,9 +37,9 @@ const Toggle = styled.button<{ isInverted?: boolean }>`
         outline-offset: 4px;
     }
 
-    &:focus:not(:focus-visible) > * {
+    /* &:focus:not(:focus-visible) > * {
         outline: none;
-    }
+    } */
 `;
 
 const BarMenuToggle: FC<{
@@ -52,7 +52,9 @@ const BarMenuToggle: FC<{
         <Toggle
             isInverted={isInverted}
             aria-expanded={isExpanded}
-            aria-label="menu"
+            aria-label={isExpanded ? 'close menu' : 'open menu'}
+            aria-haspopup="true"
+            aria-controls="mainMenu"
             onClick={onClick}
             className={className}
         >

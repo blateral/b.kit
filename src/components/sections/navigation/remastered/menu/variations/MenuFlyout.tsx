@@ -579,6 +579,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     collapseIcon,
 }) => {
     const { theme } = useLibTheme();
+
     const mainList = useMemo(() => {
         const featured = mainNavigation?.filter((n) => n.isFeatured) || [];
         const main = mainNavigation?.filter((n) => !n.isFeatured) || [];
@@ -633,7 +634,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                         <ScrollContainer>
                             <ScrollArea>
                                 <MenuNav.View>
-                                    <MenuNav.List>
+                                    <MenuNav.List id="mainMenu">
                                         {mainList?.map((item, i) => {
                                             const isActive = activeItem === i;
                                             const hasCurrentSubItem =

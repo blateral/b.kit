@@ -6,7 +6,7 @@ import {
     useLibTheme,
 } from 'utils/LibThemeProvider';
 import { useMediaQueries } from 'utils/useMediaQuery';
-// import styled from 'styled-components';
+import { useMenuKeyboard } from 'utils/menuHooks';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 import Menu, { MenuStates, MenuTypeProps, NavItem } from './menu/Menu';
 
@@ -183,7 +183,7 @@ const Navigation: FC<NavigationProps> = ({
     }, [isCollapsible, isStickable, isTop, leftOffsetFromTop]);
 
     /** Menu states */
-    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+    const { isMenuOpen, setIsMenuOpen, setRoot } = useMenuKeyboard(false, {});
 
     const openMenu = () => {
         setIsMenuOpen(true);
@@ -291,7 +291,7 @@ const Navigation: FC<NavigationProps> = ({
     };
 
     return (
-        <header data-navbar-ident={getNavBarIdent(theme)}>
+        <header ref={setRoot} data-navbar-ident={getNavBarIdent(theme)}>
             <LibThemeProvider theme={navBar?.theme}>
                 <NavBar
                     isOpen={isNavBarOpen}
