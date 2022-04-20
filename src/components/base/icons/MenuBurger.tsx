@@ -5,14 +5,16 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const MenuBurger: React.FC<{ iconColor?: string; className?: string }> = ({
-    iconColor = 'currentColor',
-    className,
-}) => (
+const MenuBurger: React.FC<{
+    iconColor?: string;
+    ariaHidden?: boolean;
+    className?: string;
+}> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
     <SVG
         width="31"
         height="37"
         viewBox="0 0 31 37"
+        aria-hidden={ariaHidden}
         xmlns="http://www.w3.org/2000/svg"
         className={className}
     >

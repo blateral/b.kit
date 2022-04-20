@@ -43,7 +43,7 @@ const NavBarMain: FC<{
                     {customToggle ? (
                         customToggle({ isInverted })
                     ) : (
-                        <MenuBurger />
+                        <MenuBurger ariaHidden={true} />
                     )}
                 </Skeletons.Toggle>
             </Skeletons.Col>

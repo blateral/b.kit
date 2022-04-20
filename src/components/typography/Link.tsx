@@ -35,6 +35,7 @@ const Link = forwardRef<
     HTMLAnchorElement,
     LinkProps & {
         ariaLabel?: string;
+        tabIndex?: number;
         dataSheet?: string;
         isInverted?: boolean;
         onClick?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
@@ -49,6 +50,7 @@ const Link = forwardRef<
             onClick,
             href,
             ariaLabel,
+            tabIndex,
             dataSheet,
             children,
             className,
@@ -63,6 +65,7 @@ const Link = forwardRef<
                 rel={isExternal ? 'noopener noreferrer' : undefined}
                 isInverted={isInverted}
                 aria-label={ariaLabel}
+                tabIndex={tabIndex}
                 data-sheet={dataSheet}
                 onClick={onClick}
                 className={className}

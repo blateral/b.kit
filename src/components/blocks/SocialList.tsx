@@ -61,7 +61,7 @@ const SocialList: FC<{
                         isExternal
                         href={item.href}
                         isInverted={isInverted}
-                        ariaLabel={item.title}
+                        ariaLabel={item.title || `social_${i}`}
                     >
                         {item.icon &&
                             item.icon({ isInverted, title: item.title })}

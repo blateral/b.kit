@@ -344,7 +344,6 @@ const SubNavList = styled.ul<{ isActive?: boolean; isIndented?: boolean }>`
 `;
 
 const NavigationItem: FC<{
-    id: React.Key;
     isCurrent?: boolean;
     isActive?: boolean;
     isFeatured?: boolean;
@@ -355,10 +354,9 @@ const NavigationItem: FC<{
     subNavTitle?: string;
 
     navBarSize?: NavBarSize;
-    onItemClick?: (id: React.Key) => void;
+    onItemClick?: () => void;
     collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
 }> = ({
-    id,
     isCurrent,
     isActive,
     isFeatured,
@@ -374,7 +372,7 @@ const NavigationItem: FC<{
     const hasSubItems = !!children && React.Children.count(children) > 0;
 
     return (
-        <NavItemView key={id} isActive={isActive} data-featured={isFeatured}>
+        <NavItemView isActive={isActive} data-featured={isFeatured}>
             <NavItemContent isCurrent={isCurrent}>
                 {icon && <NavItemIcon>{icon}</NavItemIcon>}
                 {label && <NavItemLabel>{label}</NavItemLabel>}
@@ -397,19 +395,16 @@ const NavigationItem: FC<{
                         <NavItemButton
                             aria-label={label}
                             aria-expanded={isActive}
-                            onClick={() => onItemClick && onItemClick(id)}
+                            onClick={onItemClick}
                         />
                     </React.Fragment>
                 )}
             </NavItemContent>
             {hasSubItems && (
-                <SubNavList
-                    isActive={isActive && hasSubItems}
-                    isIndented={!!icon}
-                >
+                <SubNavList isActive={isActive} isIndented={!!icon}>
                     {link?.href && (
                         <MenuNav.SubItem
-                            key={`${id}_overview`}
+                            key="overview"
                             link={link}
                             label={subNavTitle || 'Overview'}
                             navBarSize={navBarSize}
@@ -579,6 +574,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     collapseIcon,
 }) => {
     const { theme } = useLibTheme();
+
     const mainList = useMemo(() => {
         const featured = mainNavigation?.filter((n) => n.isFeatured) || [];
         const main = mainNavigation?.filter((n) => !n.isFeatured) || [];
@@ -601,11 +597,17 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
 
     const hasHeader = useMemo(() => hasMenuHeader(theme), [theme]);
 
+    const handleFlyoutBlur = (ev: React.FocusEvent<HTMLDivElement>) => {
+        if (!ev.currentTarget.contains(ev.relatedTarget as Node)) {
+            onClose && onClose();
+        }
+    };
+
     return (
         <React.Fragment>
             <Backdrop isOpen={isOpen} onClick={onClose} />
             <Stage isOpen={isOpen} clampWidth={clampWidth}>
-                <Flyout isOpen={isOpen}>
+                <Flyout isOpen={isOpen} onBlur={handleFlyoutBlur}>
                     {hasHeader && (
                         <Header navBarSize={navBarSize}>
                             {header ? (
@@ -633,7 +635,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                         <ScrollContainer>
                             <ScrollArea>
                                 <MenuNav.View>
-                                    <MenuNav.List>
+                                    <MenuNav.List id="mainMenu">
                                         {mainList?.map((item, i) => {
                                             const isActive = activeItem === i;
                                             const hasCurrentSubItem =
@@ -646,7 +648,6 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                             return (
                                                 <MenuNav.Item
                                                     key={i}
-                                                    id={i}
                                                     {...item}
                                                     isActive={isActive}
                                                     isCurrent={
@@ -656,10 +657,8 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                     subNavTitle={subNavTitle}
                                                     navBarSize={navBarSize}
                                                     collapseIcon={collapseIcon}
-                                                    onItemClick={(key) =>
-                                                        setActiveItem(
-                                                            key as number
-                                                        )
+                                                    onItemClick={() =>
+                                                        setActiveItem(i)
                                                     }
                                                 >
                                                     {item?.subItems?.map(
