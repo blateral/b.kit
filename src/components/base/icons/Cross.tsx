@@ -5,14 +5,16 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const Cross: React.FC<{ iconColor?: string; className?: string }> = ({
-    iconColor = 'currentColor',
-    className,
-}) => (
+const Cross: React.FC<{
+    iconColor?: string;
+    ariaHidden?: boolean;
+    className?: string;
+}> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
     <SVG
         width="35"
         height="35"
         viewBox="0 0 35 35"
+        aria-hidden={ariaHidden}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={className}

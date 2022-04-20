@@ -602,11 +602,17 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
 
     const hasHeader = useMemo(() => hasMenuHeader(theme), [theme]);
 
+    const handleFlyoutBlur = (ev: React.FocusEvent<HTMLDivElement>) => {
+        if (!ev.currentTarget.contains(ev.relatedTarget as Node)) {
+            onClose && onClose();
+        }
+    };
+
     return (
         <React.Fragment>
             <Backdrop isOpen={isOpen} onClick={onClose} />
             <Stage isOpen={isOpen} clampWidth={clampWidth}>
-                <Flyout isOpen={isOpen}>
+                <Flyout isOpen={isOpen} onBlur={handleFlyoutBlur}>
                     {hasHeader && (
                         <Header navBarSize={navBarSize}>
                             {header ? (

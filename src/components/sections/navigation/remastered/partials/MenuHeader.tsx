@@ -31,7 +31,11 @@ const MenuHeader: FC<{
                     isExpanded={true}
                     onClick={menuStates?.closeMenu}
                 >
-                    {customToggle ? customToggle({ isInverted }) : <Cross />}
+                    {customToggle ? (
+                        customToggle({ isInverted })
+                    ) : (
+                        <Cross ariaHidden={true} />
+                    )}
                 </Skeletons.Toggle>
                 {action && action({ isInverted, ...menuStates })}
             </Header>

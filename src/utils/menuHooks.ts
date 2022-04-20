@@ -58,6 +58,7 @@ export const useMenuKeyboard = (
         }
 
         prevMenuState.current = isMenuOpen;
+
         window.addEventListener('keydown', handleKeyDown);
 
         return () => {
