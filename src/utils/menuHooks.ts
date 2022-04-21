@@ -5,6 +5,13 @@ interface Settings {
     closeMenuIdent: string;
 }
 
+/**
+ * Hooks in to menu state to control it with keyboard inputs
+ * window.disableMenuBlur can be used for debugging
+ * @param initialMenuState
+ * @param settings
+ * @returns
+ */
 export const useMenuKeyboard = (
     initialMenuState: boolean,
     settings: Partial<Settings>
@@ -20,6 +27,11 @@ export const useMenuKeyboard = (
         openMenuIdent: 'button[aria-label="open menu"]',
         closeMenuIdent: 'button[aria-label="close menu"]',
         ...settings,
+    };
+
+    const setMenu = (isOpen = false) => {
+        if (!isOpen && (window as any).disableMenuBlur) setIsMenuOpen(true);
+        else setIsMenuOpen(isOpen);
     };
 
     useEffect(() => {
@@ -69,6 +81,6 @@ export const useMenuKeyboard = (
     return {
         setRoot,
         isMenuOpen,
-        setIsMenuOpen,
+        setMenu,
     };
 };

@@ -67,6 +67,10 @@ const Flyout = styled.div<{ isOpen?: boolean }>`
         width: 384px;
     }
 
+    @media ${mq.large} {
+        width: 540px;
+    }
+
     &:before {
         content: '';
         position: absolute;
@@ -146,7 +150,7 @@ const ScrollArea = styled.div`
     }
 
     @media ${mq.medium} {
-        max-width: 384px;
+        max-width: 100%;
     }
 `;
 
@@ -599,6 +603,8 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
 
     const handleFlyoutBlur = (ev: React.FocusEvent<HTMLDivElement>) => {
         if (!ev.currentTarget.contains(ev.relatedTarget as Node)) {
+            console.log('blur');
+
             onClose && onClose();
         }
     };

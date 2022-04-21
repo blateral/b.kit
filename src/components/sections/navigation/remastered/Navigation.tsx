@@ -183,14 +183,14 @@ const Navigation: FC<NavigationProps> = ({
     }, [isCollapsible, isStickable, isTop, leftOffsetFromTop]);
 
     /** Menu states */
-    const { isMenuOpen, setIsMenuOpen, setRoot } = useMenuKeyboard(false, {});
+    const { isMenuOpen, setMenu, setRoot } = useMenuKeyboard(false, {});
 
     const openMenu = () => {
-        setIsMenuOpen(true);
+        setMenu(true);
     };
 
     const closeMenu = () => {
-        setIsMenuOpen(false);
+        setMenu(false);
     };
 
     useEffect(() => {
