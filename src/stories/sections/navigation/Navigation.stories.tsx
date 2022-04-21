@@ -1,25 +1,69 @@
 /* eslint-disable react/display-name */
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Navigation from 'components/sections/navigation/Navigation';
-import ButtonGhost from 'components/buttons/ButtonGhost';
+import Navigation, {
+    NavBarStates,
+    NavMenuStates,
+} from 'components/sections/navigation/Navigation';
+import NavBarTop from 'components/sections/navigation/partials/NavBarTop';
+import NavBarMain from 'components/sections/navigation/partials/NavBarMain';
 import Button from 'components/buttons/Button';
-import ArrowRight from 'components/base/icons/ArrowRight';
 import Star from 'components/base/icons/Star';
-import StarGhost from 'components/base/icons/StarGhost';
-import SearchInput from 'components/fields/SearchInput';
-import Magnifier from 'components/base/icons/Magnifier';
-import Facebook from 'components/base/icons/socials/Facebook';
-import LinkedIn from 'components/base/icons/socials/LinkedIn';
-import Twitter from 'components/base/icons/socials/Twitter';
-import Pointer from 'components/buttons/Pointer';
+import NavBarBottom from 'components/sections/navigation/partials/NavBarBottom';
+import styled from 'styled-components';
+import { mq } from 'utils/styles';
+import MenuHeader from 'components/sections/navigation/partials/MenuHeader';
+import MenuFooter from 'components/sections/navigation/partials/MenuFooter';
+
+import FacebookIcon from 'components/base/icons/socials/Facebook';
+import LinkedInIcon from 'components/base/icons/socials/LinkedIn';
+import XingIcon from 'components/base/icons/socials/Xing';
+import TwitterIcon from 'components/base/icons/socials/Twitter';
+
+const NavBarButton = styled.span`
+    display: inline-block;
+
+    & > * {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    @media ${mq.semilarge} {
+        & > * {
+            min-width: 240px;
+        }
+    }
+`;
+
+const primaryCtaFn = ({
+    isInverted,
+}: { isInverted?: boolean } & NavBarStates) => (
+    <NavBarButton>
+        <Button.View as="a" href="#" isInverted={isInverted}>
+            <Button.Icon data-btn-mobile>
+                <Star />
+            </Button.Icon>
+            <Button.Label data-btn-desktop>Book online</Button.Label>
+        </Button.View>
+    </NavBarButton>
+);
+
+const menuActionFn = ({
+    isInverted,
+}: { isInverted?: boolean } & NavMenuStates) => (
+    <NavBarButton>
+        <Button.View as="a" href="#" isInverted={isInverted}>
+            <Button.Label>PrimaryButton</Button.Label>
+        </Button.View>
+    </NavBarButton>
+);
 
 export default {
     title: 'Sections/Navigation',
     component: Navigation,
     decorators: [
         (Story) => (
-            <div style={{ height: '120vh', width: '100%', background: 'grey' }}>
+            <div style={{ height: '180vh', width: '100%', background: 'grey' }}>
                 <Story />
                 <div
                     style={{
@@ -35,586 +79,290 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'deprecated',
+            type: 'preview',
         },
+        docs: {
+            inlineStories: false,
+            iframeHeight: 600,
+        },
+        // viewMode: 'story',
+        // previewTabs: {
+        //     'storybook/docs/panel': {
+        //         hidden: true,
+        //     },
+        // },
     },
 } as Meta;
 
-const logoFn = ({
-    isInverted,
-    size,
-}: {
-    isInverted: boolean;
-    size?: 'full' | 'small';
-}) => {
-    if (!isInverted)
-        return (
-            <img
-                src={`https://via.placeholder.com/${
-                    size === 'full' ? '425' : '107'
-                }x115/000000/FFFFFF/?text=${size}`}
-            />
-        );
-    else
-        return (
-            <img
-                src={`https://via.placeholder.com/${
-                    size === 'full' ? '425' : '107'
-                }x115/FFFFFF/000000/?text=${size}`}
-            />
-        );
-};
+export const Default: Story = () => <Navigation />;
 
-const primaryCtaFn = ({
-    isInverted,
-    size,
-}: {
-    isInverted?: boolean;
-    size: 'mobile' | 'desktop';
-}) => (
-    <Button.View as="a" href="#" isInverted={isInverted} onClick={console.log}>
-        {size === 'desktop' && (
-            <>
-                <Button.Label>Lorem Ipsum</Button.Label>
-                <Button.Icon>
-                    <ArrowRight />
-                </Button.Icon>
-            </>
-        )}
-        {size === 'mobile' && (
-            <Button.Icon>
-                <Star />
-            </Button.Icon>
-        )}
-    </Button.View>
+export const WithoutContentClamp: Story = () => (
+    <Navigation clampWidth="full" />
 );
 
-const secondaryCtaFn = ({
-    isInverted,
-    size,
-}: {
-    isInverted?: boolean;
-    size: 'mobile' | 'desktop';
-}) => (
-    <ButtonGhost.View
-        as="a"
-        href="#"
-        isInverted={isInverted}
-        onClick={console.log}
-    >
-        {size === 'desktop' && (
-            <ButtonGhost.Label>Lorem Ipsum</ButtonGhost.Label>
-        )}
-        {size === 'mobile' && (
-            <ButtonGhost.Icon>
-                <StarGhost />
-            </ButtonGhost.Icon>
-        )}
-    </ButtonGhost.View>
+export const StickableNavbar: Story = () => (
+    <Navigation navBar={{ isStickable: true }} />
 );
 
-const primaryPointer = ({ isInverted }: { isInverted?: boolean }) => (
-    <Pointer.View
-        as="a"
-        href="#"
-        isInverted={isInverted}
-        onClick={console.log}
-        textDecoration="none"
-    >
-        <Pointer.Label>Primary</Pointer.Label>
-    </Pointer.View>
+export const CollapsibleNavbar: Story = () => (
+    <Navigation navBar={{ isStickable: true, isCollapsible: true }} />
 );
 
-const secondaryPointer = ({ isInverted }: { isInverted?: boolean }) => (
-    <Pointer.View
-        as="a"
-        href="#"
-        isInverted={isInverted}
-        onClick={console.log}
-        textDecoration="none"
-    >
-        <Pointer.Label>Secondary</Pointer.Label>
-    </Pointer.View>
+export const WithCustomBackgrounds: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            topBg: 'green',
+            mainBg: 'yellow',
+            bottomBg: 'blue',
+        }}
+    />
 );
 
-const exampleNavItems = {
-    activeNavItem: 'navGroup2.activeb',
-    navItems: [
-        {
-            id: 'navGroup1',
-            items: [
+export const CustomTopBarContent: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            topBar: ({ size }) => (
+                <button style={{ margin: '0 auto' }}>NavBar is: {size}</button>
+            ),
+        }}
+    />
+);
+
+export const CustomBottomBarContent: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            bottomBar: ({ size }) => (
+                <button style={{ margin: '0 auto' }}>NavBar is: {size}</button>
+            ),
+        }}
+    />
+);
+
+export const BarOverPageContent: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            pageFlow: 'overContent',
+        }}
+    />
+);
+
+export const WithCustomBgGradient: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            pageFlow: 'overContent',
+            onContentBg:
+                'linear-gradient(180deg,rgba(255,0,0,0.3) 0%, rgba(255,0,0,0.2) 40%, rgba(255,0,0,0) 100%)',
+        }}
+    />
+);
+
+export const WithMenu: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            pageFlow: 'overContent',
+            mainBar: ({ openMenu }) => (
+                <button onClick={openMenu}>Open Menu</button>
+            ),
+        }}
+        menu={{
+            mainNavigation: [],
+            typeSettings: {
+                type: 'flyout',
+            },
+        }}
+    />
+);
+
+export const WithExampleContent: Story = () => (
+    <Navigation
+        navBar={{
+            isStickable: true,
+            isCollapsible: true,
+            pageFlow: 'overContent',
+            topBar: (navStates) => (
+                <NavBarTop
+                    navStates={navStates}
+                    navLinks={[
+                        { label: 'Contact', link: { href: '#0' } },
+                        {
+                            label: 'Opening Hours',
+                            link: { href: '#1' },
+                        },
+                        {
+                            label: 'About',
+                            link: { href: '#2' },
+                            isCurrent: true,
+                        },
+                    ]}
+                    languages={[
+                        {
+                            label: 'DE',
+                            link: { href: '/de' },
+                            isActive: true,
+                        },
+                        { label: 'EN', link: { href: '/en' } },
+                    ]}
+                />
+            ),
+            mainBar: (navStates) => (
+                <NavBarMain
+                    logo={{
+                        mobile: { src: 'https://via.placeholder.com/80x80' },
+                        desktop: { src: 'https://via.placeholder.com/320x80' },
+                        mobileInverted: {
+                            src: 'https://via.placeholder.com/80x80?text=inverted',
+                        },
+                        desktopInverted: {
+                            src: 'https://via.placeholder.com/320x80?text=inverted',
+                        },
+                    }}
+                    navStates={navStates}
+                    primaryAction={primaryCtaFn}
+                />
+            ),
+            bottomBar: (navStates) => (
+                <NavBarBottom
+                    rootLink={{ href: '/' }}
+                    rootLabel="Home"
+                    navStates={navStates}
+                />
+            ),
+        }}
+        menu={{
+            mainNavigation: [
                 {
-                    id: 'start',
-                    label: 'Startseite',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
+                    link: { href: '/mainItemA' },
+                    label: 'Main Item A',
+                    icon: <Star />,
                 },
                 {
-                    id: 'about',
-                    label: 'Über uns',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
+                    link: { href: '/mainItemB' },
+                    label: 'Main Item B',
+                    icon: <Star />,
+                    subItems: [
+                        {
+                            link: { href: '/subitemB.1' },
+                            label: 'Sub Item B.1',
+                        },
+                        {
+                            link: { href: '/subitemB.2' },
+                            label: 'Sub Item B.2',
+                        },
+                        {
+                            link: { href: '/subitemB.3' },
+                            label: 'Sub Item B.3',
+                            isCurrent: true,
+                        },
+                        {
+                            link: { href: '/subitemB.4' },
+                            label: 'Sub Item B.4',
+                            subItems: [
+                                {
+                                    link: { href: '/subitemB.4.1' },
+                                    label: 'Sub Item B.4.1',
+                                },
+                            ],
+                        },
+                        {
+                            link: { href: '/subitemB.5' },
+                            label: 'Sub Item B.5',
+                        },
+                    ],
                 },
                 {
-                    id: 'corona',
-                    label: 'Corona Info',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
+                    link: { href: '/mainItemC' },
+                    label: 'Main Item C',
+                    icon: <Star />,
+                    isFeatured: true,
+                },
+                {
+                    link: { href: '/mainItemD' },
+                    label: 'Main Item D',
+                    icon: <Star />,
+                    subItems: [
+                        {
+                            link: { href: '/subitemD.1' },
+                            label: 'Sub Item D.1',
+                        },
+                        {
+                            link: { href: '/subitemD.2' },
+                            label: 'Sub Item D.2',
+                        },
+                        {
+                            link: { href: '/subitemD.3' },
+                            label: 'Sub Item D.3',
+                        },
+                        {
+                            link: { href: '/subitemD.5' },
+                            label: 'Sub Item D.5',
+                        },
+                    ],
+                },
+                {
+                    link: { href: '/mainItemE' },
+                    label: 'Main Item E',
+                    icon: <Star />,
+                    isFeatured: true,
+                    subItems: [
+                        {
+                            link: { href: '/subitemE.1' },
+                            label: 'Sub Item E.1',
+                        },
+                        {
+                            link: { href: '/subitemE.2' },
+                            label: 'Sub Item E.2',
+                        },
+                        {
+                            link: { href: '/subitemE.3' },
+                            label: 'Sub Item E.3',
+                        },
+                        {
+                            link: { href: '/subitemE.5' },
+                            label: 'Sub Item E.5',
+                        },
+                    ],
                 },
             ],
-        },
-        {
-            id: 'navGroup2',
-            name: 'Gruppe 2',
-            items: [
-                {
-                    id: 'activea',
-                    label: 'Unterpunkt 1',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-                {
-                    id: 'activeb',
-                    label: 'Unterpunkt 2',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-                {
-                    id: 'activec',
-                    label: 'Unterpunkt 3',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-                {
-                    id: 'actived',
-                    label: 'Unterpunkt 4',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
+            subNavigation: [
+                { label: 'Subnav Item A', link: { href: '/subnavitemA' } },
+                { label: 'Subnav Item B', link: { href: '/subnavitemB' } },
+                { label: 'Subnav Item C', link: { href: '/subnavitemC' } },
             ],
-        },
-        {
-            id: 'navGroup3',
-            name: 'Gruppe 3',
-            items: [
-                {
-                    id: 'activea',
-                    label: 'Unterpunkt 1',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-                {
-                    id: 'activeb',
-                    label: 'Unterpunkt 2',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-                {
-                    id: 'activec',
-                    label: 'Unterpunkt 3',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-                {
-                    id: 'actived',
-                    label: 'Unterpunkt 4',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-            ],
-        },
-        {
-            id: 'navGroup3',
-            isSmall: true,
-            items: [
-                {
-                    id: 'add1',
-                    label: 'Unterpunkt 1',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-                {
-                    id: 'add2',
-                    label: 'Unterpunkt 2',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-                {
-                    id: 'add3',
-                    label: 'Unterpunkt 3',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-                {
-                    id: 'add4',
-                    label: 'Unterpunkt 4',
-                    link: { href: '#' },
-                    onClick: (id: string, fullId: string) =>
-                        console.log(fullId),
-                },
-            ],
-        },
-    ],
-};
-
-export const WithLogo: Story = () => (
-    <Navigation
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
+            typeSettings: {
+                type: 'flyout',
+                // collapseIcon: () => <ArrowRight />,
+            },
+            header: (settings) => (
+                <MenuHeader menuStates={settings} action={menuActionFn} />
+            ),
+            footer: (settings) => (
+                <MenuFooter
+                    menuStates={settings}
+                    langs={[
+                        { label: 'DE', link: { href: '/de' }, isActive: true },
+                        { label: 'EN', link: { href: '/en' } },
+                        { label: 'FR', link: { href: '/fr' } },
+                    ]}
+                    socials={[
+                        { href: '#', icon: () => <FacebookIcon /> },
+                        { href: '#', icon: () => <LinkedInIcon /> },
+                        { href: '#', icon: () => <XingIcon /> },
+                        { href: '#', icon: () => <TwitterIcon /> },
+                    ]}
+                />
+            ),
         }}
-    />
-);
-
-export const WithTopbarActions: Story = () => (
-    <Navigation
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-    />
-);
-
-export const WithTopbarPointers: Story = () => (
-    <Navigation
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryPointer}
-        secondaryCta={secondaryPointer}
-    />
-);
-
-export const WithInvertedTopbar: Story = () => (
-    <Navigation
-        isTopbarInverted
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-    />
-);
-
-export const PreventTopbarOverflow: Story = () => (
-    <Navigation
-        allowTopbarOverflow={false}
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-    />
-);
-
-export const WithoutTopbarLargeState: Story = () => (
-    <Navigation
-        isTopbarLargeOnPageTop={false}
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-    />
-);
-
-export const WithoutLargeAndOverflow: Story = () => (
-    <Navigation
-        allowTopbarOverflow={false}
-        isTopbarLargeOnPageTop={false}
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-    />
-);
-
-export const WithMenuNavItems: Story = () => (
-    <Navigation
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-        {...exampleNavItems}
-    />
-);
-
-export const WithMenuSearchbar: Story = () => (
-    <Navigation
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-    />
-);
-
-export const WithMenuSocials: Story = () => (
-    <Navigation
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        socials={[
-            { href: '#', icon: () => <Facebook /> },
-            { href: '#', icon: () => <LinkedIn /> },
-            { href: '#', icon: () => <Twitter /> },
-        ]}
-    />
-);
-
-export const WithMirroredView: Story = () => (
-    <Navigation
-        isMirrored
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        socials={[
-            { href: '#', icon: () => <Facebook /> },
-            { href: '#', icon: () => <LinkedIn /> },
-            { href: '#', icon: () => <Twitter /> },
-        ]}
-    />
-);
-
-export const HideTopbarBackgroundUnderMenu: Story = () => (
-    <Navigation
-        hideTopbarBackUnderMenu
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        socials={[
-            { href: '#', icon: () => <Facebook /> },
-            { href: '#', icon: () => <LinkedIn /> },
-            { href: '#', icon: () => <Twitter /> },
-        ]}
-    />
-);
-
-export const WithInvertedMenu: Story = () => (
-    <Navigation
-        isMenuInverted
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        socials={[
-            { href: '#', icon: () => <Facebook /> },
-            { href: '#', icon: () => <LinkedIn /> },
-            { href: '#', icon: () => <Twitter /> },
-        ]}
-    />
-);
-
-export const WithLargeMenu: Story = () => (
-    <Navigation
-        isLargeMenu
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        socials={[
-            { href: '#', icon: () => <Facebook /> },
-            { href: '#', icon: () => <LinkedIn /> },
-            { href: '#', icon: () => <Twitter /> },
-        ]}
-    />
-);
-
-export const WithLargeMenuAndPointerActions: Story = () => (
-    <Navigation
-        isLargeMenu
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryPointer}
-        secondaryCta={secondaryPointer}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        socials={[
-            { href: '#', icon: () => <Facebook /> },
-            { href: '#', icon: () => <LinkedIn /> },
-            { href: '#', icon: () => <Twitter /> },
-        ]}
-    />
-);
-
-export const WithLargeMirroredMenu: Story = () => (
-    <Navigation
-        isLargeMenu
-        isMirrored
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        socials={[
-            { href: '#', icon: () => <Facebook /> },
-            { href: '#', icon: () => <LinkedIn /> },
-            { href: '#', icon: () => <Twitter /> },
-        ]}
-    />
-);
-
-export const WithLargeMirroredMenuAndPointers: Story = () => (
-    <Navigation
-        isLargeMenu
-        isMirrored
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryPointer}
-        secondaryCta={secondaryPointer}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        socials={[
-            { href: '#', icon: () => <Facebook /> },
-            { href: '#', icon: () => <LinkedIn /> },
-            { href: '#', icon: () => <Twitter /> },
-        ]}
-    />
-);
-
-export const WithInvertedLargeMenu: Story = () => (
-    <Navigation
-        isLargeMenu
-        isMenuInverted
-        logo={{
-            icon: logoFn,
-            link: '#logoLink',
-        }}
-        primaryCta={primaryCtaFn}
-        secondaryCta={secondaryCtaFn}
-        {...exampleNavItems}
-        search={(isInverted) => (
-            <SearchInput
-                isInverted={isInverted}
-                placeholder="Search"
-                submitIcon={<Magnifier />}
-                onSubmit={() => console.log('submit')}
-            />
-        )}
-        socials={[
-            { href: '#', icon: () => <Facebook /> },
-            { href: '#', icon: () => <LinkedIn /> },
-            { href: '#', icon: () => <Twitter /> },
-        ]}
     />
 );

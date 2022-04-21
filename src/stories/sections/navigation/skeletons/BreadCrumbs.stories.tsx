@@ -1,10 +1,10 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import BarBreadcrumbs from 'components/sections/navigation/remastered/skeletons/BarBreadCrumbs';
+import BarBreadcrumbs from 'components/sections/navigation/skeletons/BarBreadCrumbs';
 
 export default {
-    title: 'Sections/Navigation v2/Skeletons/Breadcrumbs',
+    title: 'Sections/Navigation/Skeletons/Breadcrumbs',
     component: BarBreadcrumbs,
     parameters: {
         status: {

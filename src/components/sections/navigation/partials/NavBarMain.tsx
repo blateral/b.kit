@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import MenuBurger from 'components/base/icons/MenuBurger';
 import { NavBarStates } from '../Navigation';
-import Skeletons from 'components/sections/navigation/remastered/skeletons/Skeletons';
+import Skeletons from 'components/sections/navigation/skeletons/Skeletons';
 import { spacings } from 'utils/styles';
 
 const LogoColumn = styled(Skeletons.Col)`

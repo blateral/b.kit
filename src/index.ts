@@ -144,9 +144,6 @@ export {
     CookieActions,
 } from 'components/blocks/CookieConsent';
 export { default as Slider } from 'components/blocks/Slider';
-export { default as Navigation } from 'components/sections/navigation/Navigation';
-export { default as Menu } from 'components/sections/navigation/menu/Menu';
-export { default as TopBar } from 'components/sections/navigation/TopBar';
 
 export {
     default as NewNavigation,
