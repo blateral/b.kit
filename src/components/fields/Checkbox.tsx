@@ -33,7 +33,7 @@ const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
 
     &:focus-within {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
     }
 `;
 
@@ -56,13 +56,15 @@ const Box = styled.span<{
     border: 2px solid
         ${({ isInverted, theme, isSelected }) =>
             isSelected
-                ? color(theme).primary.medium
+                ? color(theme).new.primary.default
                 : isInverted
-                ? color(theme).light
-                : color(theme).mono.medium};
+                ? color(theme).new.elementBg.light
+                : color(theme).new.elementBg.medium};
 
     background-color: ${({ isSelected, theme }) =>
-        isSelected ? color(theme).primary.medium : color(theme).light};
+        isSelected
+            ? color(theme).new.primary.default
+            : color(theme).new.elementBg.light};
 `;
 
 const StyledCheck = styled(Check)`
@@ -125,7 +127,11 @@ const Checkbox: React.FC<{
                     size="small"
                     type="copy-b"
                     isInverted={isInverted}
-                    textColor={isDisabled ? color(theme).mono.dark : undefined}
+                    textColor={
+                        isDisabled
+                            ? color(theme).new.text.copyInverted
+                            : undefined
+                    }
                     innerHTML={`${label}${isRequired ? '<span> *</span>' : ''}`}
                 />
             )}
