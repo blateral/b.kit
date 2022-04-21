@@ -102,8 +102,8 @@ const ItemLink = styled(Link)<{ isInverted?: boolean }>`
     display: block;
     outline-color: ${({ theme, isInverted }) =>
         isInverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
 `;
 
 const Image = styled.img<{ isInverted?: boolean }>`
@@ -216,10 +216,10 @@ const IconList: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : bgMode
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             isCentered={isCentered}

@@ -23,24 +23,24 @@ const List = styled.ul<{ hasBg?: boolean; isInverted?: boolean }>`
         border-top: 1px solid
             ${({ theme, hasBg, isInverted }) =>
                 hasBg && !isInverted
-                    ? color(theme).new.elementBg.light
-                    : color(theme).new.elementBg.medium};
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.medium};
     }
 
     & > li:first-child {
         border-top: 1px solid
             ${({ theme, hasBg, isInverted }) =>
                 hasBg && !isInverted
-                    ? color(theme).new.elementBg.light
-                    : color(theme).new.elementBg.medium};
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.medium};
     }
 
     & > li:last-child {
         border-bottom: 1px solid
             ${({ theme, hasBg, isInverted }) =>
                 hasBg && !isInverted
-                    ? color(theme).new.elementBg.light
-                    : color(theme).new.elementBg.medium};
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.medium};
     }
 `;
 
@@ -146,10 +146,10 @@ const IndexList: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
