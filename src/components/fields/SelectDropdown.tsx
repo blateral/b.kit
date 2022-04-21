@@ -31,7 +31,9 @@ const Select = styled.button<{
     hasBg?: boolean;
 }>`
     border: ${({ hasError, theme }) =>
-        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+        hasError
+            ? `2px solid ${color(theme).new.error}`
+            : '2px solid transparent'};
     border-radius: ${({ isActive, theme }) => {
         const edgeRadius = global(theme).sections.edgeRadius;
         const topLeft = edgeRadius;
@@ -42,7 +44,9 @@ const Select = styled.button<{
         return `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
     }};
     background: ${({ theme, hasBg }) =>
-        hasBg ? color(theme).mono.light : color(theme).light};
+        hasBg
+            ? color(theme).new.elementBg.medium
+            : color(theme).new.elementBg.light};
     outline: none;
     padding: ${spacings.spacer}px;
     width: 100%;
@@ -53,18 +57,18 @@ const Select = styled.button<{
 
     &:active {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
     }
 
     &:focus {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
     }
 
     ${({ isActive, theme }) =>
         isActive &&
         css`
-            border: 2px solid ${hexToRgba(color(theme).dark, 0.2)};
+            border: 2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)};
         `}
 
     display: flex;
@@ -104,8 +108,9 @@ const Flyout = styled.ul<{ isVisible?: boolean }>`
     z-index: 2;
 
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
-    background: ${({ theme }) => color(theme).light};
-    border: 2px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.2)};
+    background: ${({ theme }) => color(theme).new.elementBg.light};
+    border: 2px solid
+        ${({ theme }) => hexToRgba(color(theme).new.elementBg.dark, 0.2)};
     border-radius: ${({ isVisible, theme }) => {
         const edgeRadius = global(theme).sections.edgeRadius;
         const topLeft = isVisible ? '0px' : edgeRadius;
@@ -128,7 +133,7 @@ const Flyout = styled.ul<{ isVisible?: boolean }>`
 
     ::-webkit-scrollbar-thumb {
         border-radius: 8px;
-        background-color: ${({ theme }) => color(theme).mono.medium};
+        background-color: ${({ theme }) => color(theme).new.elementBg.medium};
         border: 4px solid rgba(0, 0, 0, 0);
         background-clip: padding-box;
     }
@@ -147,7 +152,8 @@ const Item = styled(Copy)<{ isSelected?: boolean }>`
     ${ItemStyle}:hover & {
         &:before {
             content: '';
-            background: ${({ theme }) => hexToRgba(color(theme).dark, 0.4)};
+            background: ${({ theme }) =>
+                hexToRgba(color(theme).new.elementBg.dark, 0.4)};
             opacity: 0.25;
             display: block;
             position: absolute;
@@ -163,13 +169,13 @@ const Item = styled(Copy)<{ isSelected?: boolean }>`
         isSelected &&
         css`
             &:hover {
-                color: ${({ theme }) => color(theme).dark};
+                color: ${({ theme }) => color(theme).new.elementBg.dark};
             }
 
             &:before {
                 content: '';
                 background-color: ${({ theme }) =>
-                    hexToRgba(color(theme).dark, 0.4)};
+                    hexToRgba(color(theme).new.elementBg.dark, 0.4)};
                 position: absolute;
                 top: 0;
                 bottom: 0;
@@ -274,7 +280,11 @@ const SelectDropdown: React.FC<{
                 <FieldHead
                     renderAs="span"
                     isInverted={isInverted}
-                    textColor={isDisabled ? color(theme).mono.dark : undefined}
+                    textColor={
+                        isDisabled
+                            ? color(theme).new.elementBg.medium
+                            : undefined
+                    }
                     size="medium"
                     type="copy-b"
                 >
@@ -325,8 +335,8 @@ const SelectDropdown: React.FC<{
                             <Label
                                 textColor={
                                     isDisabled
-                                        ? color(theme).mono.medium
-                                        : color(theme).dark
+                                        ? color(theme).new.elementBg.medium
+                                        : color(theme).new.elementBg.dark
                                 }
                                 size="medium"
                                 type="copy"
@@ -341,16 +351,16 @@ const SelectDropdown: React.FC<{
                             <AngleUp
                                 iconColor={
                                     isDisabled
-                                        ? color(theme).mono.medium
-                                        : color(theme).dark
+                                        ? color(theme).new.elementBg.medium
+                                        : color(theme).new.elementBg.dark
                                 }
                             />
                         ) : (
                             <AngleDown
                                 iconColor={
                                     isDisabled
-                                        ? color(theme).mono.medium
-                                        : color(theme).dark
+                                        ? color(theme).new.elementBg.medium
+                                        : color(theme).new.elementBg.dark
                                 }
                             />
                         ))}
@@ -383,8 +393,8 @@ const SelectDropdown: React.FC<{
                                     size="small"
                                     textColor={
                                         i === activeItemIndex
-                                            ? color(theme).light
-                                            : color(theme).dark
+                                            ? color(theme).new.elementBg.light
+                                            : color(theme).new.elementBg.dark
                                     }
                                 >
                                     {item.label}
@@ -399,7 +409,7 @@ const SelectDropdown: React.FC<{
             )}
             {errorMessage && (
                 <ErrorMessage
-                    textColor={color(theme).error}
+                    textColor={color(theme).new.error}
                     size="small"
                     type="copy-i"
                 >
