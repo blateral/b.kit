@@ -131,7 +131,7 @@ const Delete = styled.div`
     cursor: pointer;
 
     & > * {
-        color: ${({ theme }) => color(theme).new.error};
+        color: ${({ theme }) => color(theme).new.text.error};
     }
 
     &:hover {
@@ -231,7 +231,7 @@ const FileUpload: FC<
                     renderAs="span"
                     isInverted={isInverted}
                     textColor={
-                        isDisabled ? color(theme).new.text.copy : undefined
+                        isDisabled ? color(theme).new.text.default : undefined
                     }
                     size="medium"
                     type="copy-b"
@@ -324,7 +324,7 @@ const FileUpload: FC<
             </FieldWrapper>
             {infoMessage && (
                 <InfoMessage
-                    textColor={color(theme).new.text.copy}
+                    textColor={color(theme).new.text.default}
                     size="small"
                 >
                     {infoMessage}
@@ -332,7 +332,7 @@ const FileUpload: FC<
             )}
             {errorMessage && (
                 <ErrorMessage
-                    textColor={color(theme).new.error}
+                    textColor={color(theme).new.text.error}
                     size="small"
                     type="copy-i"
                 >

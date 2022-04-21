@@ -796,7 +796,7 @@ const Datepicker: React.FC<{
             )}
             {errorMessage && (
                 <ErrorMessage
-                    textColor={color(theme).new.error}
+                    textColor={color(theme).new.text.error}
                     size="small"
                     type="copy-i"
                 >

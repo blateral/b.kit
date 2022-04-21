@@ -146,7 +146,11 @@ const Textarea: React.FC<
             />
             {infoMessage && (
                 <InfoMessage
-                    textColor={color(theme).new.text.copy}
+                    textColor={
+                        isInverted
+                            ? color(theme).new.text.inverted
+                            : color(theme).new.text.default
+                    }
                     size="small"
                 >
                     {infoMessage}
@@ -154,7 +158,7 @@ const Textarea: React.FC<
             )}
             {errorMessage && (
                 <ErrorMessage
-                    textColor={color(theme).new.error}
+                    textColor={color(theme).new.text.error}
                     size="small"
                     type="copy-i"
                 >

@@ -128,9 +128,7 @@ const Checkbox: React.FC<{
                     type="copy-b"
                     isInverted={isInverted}
                     textColor={
-                        isDisabled
-                            ? color(theme).new.text.copyInverted
-                            : undefined
+                        isDisabled ? color(theme).new.text.inverted : undefined
                     }
                     innerHTML={`${label}${isRequired ? '<span> *</span>' : ''}`}
                 />

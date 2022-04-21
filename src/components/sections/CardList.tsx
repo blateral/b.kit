@@ -17,7 +17,7 @@ const View = styled.div<{ isInverted?: boolean; cardColor?: string }>`
     position: relative;
     padding-top: 30%;
 
-    color: ${({ theme }) => color(theme).new.text.copyInverted};
+    color: ${({ theme }) => color(theme).new.text.inverted};
     cursor: pointer;
 
     @media ${mq.medium} {

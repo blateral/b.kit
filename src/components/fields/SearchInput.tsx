@@ -63,7 +63,7 @@ const ControlBtn = styled.button<{ isInverted?: boolean }>`
 
     margin: -2px;
     background-color: transparent;
-    color: ${({ theme }) => color(theme).new.text.copy};
+    color: ${({ theme }) => color(theme).new.text.default};
 
     outline: none;
     border: none;

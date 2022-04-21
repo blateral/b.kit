@@ -128,8 +128,8 @@ const RadioButton: React.FC<{
                         isDisabled
                             ? color(theme).new.elementBg.medium
                             : isInverted
-                            ? color(theme).new.text.copyInverted
-                            : color(theme).new.text.copy
+                            ? color(theme).new.text.inverted
+                            : color(theme).new.text.default
                     }
                     innerHTML={label}
                     isInverted={isInverted}
