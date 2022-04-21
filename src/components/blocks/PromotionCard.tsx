@@ -113,7 +113,7 @@ const Icon = styled.div`
         ${withRange([60, 100], 'width')};
     }
 
-    color: ${({ theme }) => color(theme).new.text.inverted};
+    color: ${({ theme }) => color(theme).text.inverted};
 `;
 
 export interface PromotionCardProps {

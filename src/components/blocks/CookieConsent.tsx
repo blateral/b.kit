@@ -34,7 +34,7 @@ const View = styled.div`
     transform: translate(-50%, 0);
     text-align: center;
 
-    background-color: ${({ theme }) => color(theme).new.elementBg.light};
+    background-color: ${({ theme }) => color(theme).elementBg.light};
     box-shadow: 0 2px 44px rgba(0, 0, 0, 0.3);
 
     & > * + * {

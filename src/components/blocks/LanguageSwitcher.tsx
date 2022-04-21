@@ -21,8 +21,8 @@ const View = styled.div<{ isInverted?: boolean }>`
             width: 2px;
             background-color: ${({ isInverted, theme }) =>
                 isInverted
-                    ? color(theme).new.text.inverted
-                    : color(theme).new.text.default};
+                    ? color(theme).text.inverted
+                    : color(theme).text.default};
 
             transition: background-color 0.2s ease-in-out;
         }
@@ -38,17 +38,15 @@ const LanguageLink = styled(Link)<{ isInverted?: boolean; isActive?: boolean }>`
     font-weight: ${({ isActive }) => isActive && '700'};
 
     color: ${({ isInverted, theme }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
     text-decoration: none;
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             color: ${({ isInverted, theme }) =>
                 isInverted
-                    ? color(theme).new.text.inverted
-                    : color(theme).new.text.default};
+                    ? color(theme).text.inverted
+                    : color(theme).text.default};
             text-decoration: underline;
         }
     }
@@ -57,8 +55,8 @@ const LanguageLink = styled(Link)<{ isInverted?: boolean; isActive?: boolean }>`
         outline: solid 2px
             ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.primary.inverted
-                    : color(theme).new.primary.default};
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
     }
 
     &:focus:not(:focus-visible) {

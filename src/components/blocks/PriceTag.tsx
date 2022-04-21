@@ -23,13 +23,13 @@ const View = styled.div<{
     background: ${({ theme, hasBg, isInverted, isHighlighted }) =>
         isInverted
             ? isHighlighted
-                ? color(theme).new.primary.inverted
-                : color(theme).new.elementBg.medium
+                ? color(theme).primary.inverted
+                : color(theme).elementBg.medium
             : isHighlighted
-            ? color(theme).new.primary.default
+            ? color(theme).primary.default
             : hasBg
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.medium};
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.medium};
 
     display: flex;
     flex-direction: column;

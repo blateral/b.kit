@@ -83,7 +83,7 @@ const Title: FC<{
                     size="super"
                     textColor={
                         colorMode === 'onImage'
-                            ? color(theme).new.text.inverted
+                            ? color(theme).text.inverted
                             : undefined
                     }
                     isInverted={colorMode === 'inverted'}
@@ -96,7 +96,7 @@ const Title: FC<{
                     size="heading-2"
                     textColor={
                         colorMode === 'onImage'
-                            ? color(theme).new.text.inverted
+                            ? color(theme).text.inverted
                             : undefined
                     }
                     isInverted={colorMode === 'inverted'}

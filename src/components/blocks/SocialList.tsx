@@ -21,9 +21,7 @@ const StyledLink = styled(Link)`
     padding: ${spacings.nudge * 2}px ${spacings.nudge * 1.5}px;
     margin: -${spacings.nudge * 2}px -${spacings.nudge * 1.5}px;
     color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
     outline: none;
 
     transition: all ease-in-out 0.2s;
@@ -32,8 +30,8 @@ const StyledLink = styled(Link)`
         outline: solid 2px
             ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.primary.inverted
-                    : color(theme).new.primary.default};
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
         outline-offset: 2px;
     }
 

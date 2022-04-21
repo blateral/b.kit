@@ -16,7 +16,7 @@ const FylToCtrlContainer = styled.div`
 
     margin-top: ${spacings.spacer}px;
     margin-right: ${spacings.spacer}px;
-    color: ${({ theme }) => color(theme).new.elementBg.dark};
+    color: ${({ theme }) => color(theme).elementBg.dark};
 
     cursor: pointer;
 `;

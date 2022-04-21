@@ -18,13 +18,13 @@ const View = styled(Link)<{ isInverted?: boolean; hasIcon?: boolean }>`
     text-decoration: none;
     color: ${({ theme, isInverted }) =>
         isInverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
 
     outline-color: ${({ theme, isInverted }) =>
         isInverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
 
     transition: all ease-in-out 0.2s;
 
@@ -32,8 +32,8 @@ const View = styled(Link)<{ isInverted?: boolean; hasIcon?: boolean }>`
         &:hover {
             color: ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.primary.invertedHover
-                    : color(theme).new.primary.hover};
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
         }
     }
 `;

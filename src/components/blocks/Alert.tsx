@@ -25,14 +25,14 @@ const View = styled.div<{ isInverted?: boolean }>`
     border: 2px solid
         ${({ theme, isInverted }) =>
             isInverted
-                ? color(theme).new.primary.inverted
-                : color(theme).new.primary.default};
+                ? color(theme).primary.inverted
+                : color(theme).primary.default};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     color: ${({ theme, isInverted }) =>
         isInverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
 
     padding: ${spacings.nudge * 3}px;
 
@@ -51,12 +51,12 @@ const View = styled.div<{ isInverted?: boolean }>`
             border: 2px solid
                 ${({ theme, isInverted }) =>
                     isInverted
-                        ? color(theme).new.primary.invertedHover
-                        : color(theme).new.primary.hover};
+                        ? color(theme).primary.invertedHover
+                        : color(theme).primary.hover};
             color: ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.primary.invertedHover
-                    : color(theme).new.primary.hover};
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
         }
     }
 `;

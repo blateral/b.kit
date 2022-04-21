@@ -148,9 +148,7 @@ const AspectContainer = styled.div<{
 const Img = styled.img<{ isInverted?: boolean; showPlaceholder?: boolean }>`
     display: block;
     color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
 
     &[data-img-loaded='false'] {
         background: ${({ theme, isInverted, showPlaceholder }) =>
