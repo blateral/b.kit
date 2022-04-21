@@ -237,8 +237,8 @@ export const CallToAction: FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
-                    : color(theme).new.sectionBg.medium
+                    ? color(theme).sectionBg.dark
+                    : color(theme).sectionBg.medium
             }
             bgMode={bgMode ? mapToBgMode(bgMode, true) : 'full'}
         >

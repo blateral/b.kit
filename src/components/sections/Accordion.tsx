@@ -41,8 +41,8 @@ const AccordionHead = styled.summary<{
 
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.medium};
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.medium};
 
     cursor: pointer;
     transition: background 0.2s ease-in-out;
@@ -63,16 +63,16 @@ const AccordionHead = styled.summary<{
         &:hover {
             background: ${({ theme, isInverted, hasBg }) =>
                 isInverted || hasBg
-                    ? color(theme).new.elementBg.lightHover
-                    : color(theme).new.elementBg.mediumHover};
+                    ? color(theme).elementBg.lightHover
+                    : color(theme).elementBg.mediumHover};
         }
     }
 
     &:focus {
         background: ${({ theme, isInverted, hasBg }) =>
             isInverted || hasBg
-                ? color(theme).new.elementBg.lightHover
-                : color(theme).new.elementBg.mediumHover};
+                ? color(theme).elementBg.lightHover
+                : color(theme).elementBg.mediumHover};
     }
 `;
 
@@ -87,8 +87,8 @@ const AccordionText = styled.div<{
     margin-top: 2px;
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.medium};
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.medium};
 
     & > * {
         max-width: 880px;
@@ -158,9 +158,9 @@ const AccordionBlock: React.FC<
                     {itemIcon ? (
                         itemIcon({ isSelected: isSelected || false })
                     ) : isSelected ? (
-                        <Minus iconColor={colors.new.text.default} />
+                        <Minus iconColor={colors.text.default} />
                     ) : (
-                        <Plus iconColor={colors.new.text.default} />
+                        <Plus iconColor={colors.text.default} />
                     )}
                 </span>
             </AccordionHead>
@@ -220,10 +220,10 @@ const Accordion: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

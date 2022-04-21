@@ -17,7 +17,7 @@ const View = styled.div<{ isInverted?: boolean; cardColor?: string }>`
     position: relative;
     padding-top: 30%;
 
-    color: ${({ theme }) => color(theme).new.text.inverted};
+    color: ${({ theme }) => color(theme).text.inverted};
     cursor: pointer;
 
     @media ${mq.medium} {
@@ -30,8 +30,8 @@ const SolidView = styled(View)`
         cardColor
             ? cardColor
             : isInverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
 
     transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
@@ -190,7 +190,7 @@ const CardLink = styled(Link)`
     bottom: 0;
     left: 0;
 
-    outline-color: ${({ theme }) => color(theme).new.primary.default};
+    outline-color: ${({ theme }) => color(theme).primary.default};
 `;
 
 export interface CardProps {
@@ -221,8 +221,8 @@ const Card: React.FC<
     const { colors } = useLibTheme();
     const CardView = image && image.small ? ImageView : SolidView;
     const defaultCardColor = isInverted
-        ? colors.new.primary.inverted
-        : colors.new.primary.default;
+        ? colors.primary.inverted
+        : colors.primary.default;
 
     return (
         <CardView
@@ -328,10 +328,10 @@ const CardList: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : bgMode
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation

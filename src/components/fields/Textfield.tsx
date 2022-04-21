@@ -41,36 +41,33 @@ const Field = styled.input<{
 
     padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
     border: ${({ hasError, theme }) =>
-        hasError
-            ? `2px solid ${color(theme).new.error}`
-            : '2px solid transparent'};
+        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     background-color: ${({ isInverted, hasBack, theme }) =>
         isInverted || !hasBack
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.medium};
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.medium};
 
     font-weight: inherit;
     font-family: inherit;
     font-size: inherit;
     color: ${({ hasError, theme }) =>
-        hasError ? color(theme).new.text.error : 'inherit'};
+        hasError ? color(theme).text.error : 'inherit'};
 
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
     &:active {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
     }
 
     &:focus {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
     }
 
     &::placeholder {
-        color: ${({ theme }) =>
-            hexToRgba(color(theme).new.elementBg.dark, 0.4)};
+        color: ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.4)};
     }
 `;
 
@@ -128,9 +125,7 @@ const Textfield: React.FC<
                     renderAs="span"
                     isInverted={isInverted}
                     textColor={
-                        isDisabled
-                            ? color(theme).new.elementBg.medium
-                            : undefined
+                        isDisabled ? color(theme).elementBg.medium : undefined
                     }
                     size="medium"
                     type="copy-b"
@@ -155,8 +150,8 @@ const Textfield: React.FC<
                 <InfoMessage
                     textColor={
                         isInverted
-                            ? color(theme).new.text.inverted
-                            : color(theme).new.text.default
+                            ? color(theme).text.inverted
+                            : color(theme).text.default
                     }
                     size="small"
                 >
@@ -165,7 +160,7 @@ const Textfield: React.FC<
             )}
             {errorMessage && (
                 <ErrorMessage
-                    textColor={color(theme).new.text.error}
+                    textColor={color(theme).text.error}
                     size="small"
                     type="copy-i"
                 >
