@@ -572,10 +572,10 @@ const DynamicForm: FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? color(theme).sectionBg.dark
                     : bgMode
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? color(theme).sectionBg.medium
+                    : color(theme).sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
@@ -871,10 +871,7 @@ const generateCheckboxGroup = ({
                 ))}
             </Fields>
             {error && isTouched && (
-                <ErrorMessage
-                    textColor={color(theme).new.text.error}
-                    size="small"
-                >
+                <ErrorMessage textColor={color(theme).text.error} size="small">
                     {error}
                 </ErrorMessage>
             )}
@@ -924,10 +921,7 @@ const generateRadioGroup = ({
                 ))}
             </Fields>
             {error && isTouched && (
-                <ErrorMessage
-                    textColor={color(theme).new.text.error}
-                    size="small"
-                >
+                <ErrorMessage textColor={color(theme).text.error} size="small">
                     {error}
                 </ErrorMessage>
             )}

@@ -164,9 +164,9 @@ const Control = styled.div`
     align-items: center;
     height: 54px;
     width: 54px;
-    border: solid 2px ${({ theme }) => color(theme).new.elementBg.light};
+    border: solid 2px ${({ theme }) => color(theme).elementBg.light};
     border-radius: 50%;
-    background-color: ${({ theme }) => color(theme).new.elementBg.medium};
+    background-color: ${({ theme }) => color(theme).elementBg.medium};
 `;
 
 const ComparisonSlider: FC<{
@@ -294,10 +294,10 @@ const ComparisonSlider: FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : bgMode
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >
@@ -325,7 +325,7 @@ const ComparisonSlider: FC<{
                         <BackgroundImg {...backgroundImg} />
                         {backgroundLabel && (
                             <BackgroundLabel
-                                textColor={colors.new.text.inverted}
+                                textColor={colors.text.inverted}
                                 bgColor={labelColor}
                             >
                                 {backgroundLabel}
@@ -340,7 +340,7 @@ const ComparisonSlider: FC<{
                             <ForegroundImg {...foregroundImg} />
                             {foregroundLabel && (
                                 <ForegroundLabel
-                                    textColor={colors.new.text.inverted}
+                                    textColor={colors.text.inverted}
                                     bgColor={labelColor}
                                 >
                                     {foregroundLabel}
@@ -360,7 +360,7 @@ const ComparisonSlider: FC<{
                             ) : (
                                 <Control>
                                     <ArrowLeftRight
-                                        iconColor={colors.new.elementBg.light}
+                                        iconColor={colors.elementBg.light}
                                     />
                                 </Control>
                             )}
