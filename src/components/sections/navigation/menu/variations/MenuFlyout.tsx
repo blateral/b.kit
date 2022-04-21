@@ -1,7 +1,7 @@
 import AngleRight from 'components/base/icons/AngleRight';
 import { copyStyle } from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
-import React, { FC, useState, useMemo } from 'react';
+import React, { FC, useState, useMemo, useRef, useEffect } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
@@ -574,6 +574,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     collapseIcon,
 }) => {
     const { theme } = useLibTheme();
+    const flyoutRef = useRef<HTMLDivElement>(null);
 
     const mainList = useMemo(() => {
         const featured = mainNavigation?.filter((n) => n.isFeatured) || [];
@@ -597,19 +598,32 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
 
     const hasHeader = useMemo(() => hasMenuHeader(theme), [theme]);
 
-    const handleFlyoutBlur = (ev: React.FocusEvent<HTMLDivElement>) => {
-        if (!ev.currentTarget.contains(ev.relatedTarget as Node)) {
-            console.log('blur');
+    useEffect(() => {
+        const handleFocus = (ev: FocusEvent) => {
+            if (!flyoutRef.current || !ev.target) return;
+            const isFlyoutChild = flyoutRef.current.contains(
+                ev.target as Element
+            );
 
-            onClose && onClose();
+            if (!isFlyoutChild) onClose && onClose();
+        };
+
+        if (isOpen) {
+            document.addEventListener('focusin', handleFocus);
+        } else {
+            document.removeEventListener('focusin', handleFocus);
         }
-    };
+
+        return () => {
+            document.removeEventListener('focusin', handleFocus);
+        };
+    }, [isOpen, onClose]);
 
     return (
         <React.Fragment>
             <Backdrop isOpen={isOpen} onClick={onClose} />
             <Stage isOpen={isOpen} clampWidth={clampWidth}>
-                <Flyout isOpen={isOpen} onBlur={handleFlyoutBlur}>
+                <Flyout ref={flyoutRef} isOpen={isOpen}>
                     {hasHeader && (
                         <Header navBarSize={navBarSize}>
                             {header ? (
