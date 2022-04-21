@@ -198,7 +198,7 @@ const Icon = styled.div<{ iconColor?: string }>`
     height: 35px;
 
     color: ${({ theme, iconColor }) =>
-        iconColor || color(theme).primary.medium};
+        iconColor || color(theme).new.primary.default};
 
     transition: transform 0.2s ease-in-out;
 
