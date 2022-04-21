@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 
-import { getColors as color, getGlobals as global } from 'utils/styles';
+import { getGlobals as global } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const ImageCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'isInverted'> & {
@@ -25,7 +25,7 @@ const ImageCarousel: FC<
     onInit,
     dot,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const imageCount = images?.length || 0;
 
@@ -35,10 +35,10 @@ const ImageCarousel: FC<
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.new.sectionBg.dark
                     : bgMode
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >

@@ -1,5 +1,5 @@
-import React, { FC, useContext, useEffect, useRef, useState } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -8,7 +8,7 @@ import { getColors as color, spacings } from 'utils/styles';
 import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
 import Copy from 'components/typography/Copy';
 import useIE from 'utils/useIE';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const clamp = (num: number, min: number, max: number) => {
     return Math.min(Math.max(num, min), max);
@@ -205,7 +205,7 @@ const ComparisonSlider: FC<{
     const [interacted, setInteracted] = useState<boolean>(true);
     const [sideOffset, setSideOffset] = useState<number>(0);
     const controlRef = useRef<HTMLDivElement | null>(null);
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     useEffect(() => {
         if (controlRef.current) {
@@ -294,10 +294,10 @@ const ComparisonSlider: FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.new.sectionBg.dark
                     : bgMode
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >
@@ -325,7 +325,7 @@ const ComparisonSlider: FC<{
                         <BackgroundImg {...backgroundImg} />
                         {backgroundLabel && (
                             <BackgroundLabel
-                                textColor={color(theme).new.text.inverted}
+                                textColor={colors.new.text.inverted}
                                 bgColor={labelColor}
                             >
                                 {backgroundLabel}
@@ -340,7 +340,7 @@ const ComparisonSlider: FC<{
                             <ForegroundImg {...foregroundImg} />
                             {foregroundLabel && (
                                 <ForegroundLabel
-                                    textColor={color(theme).new.text.inverted}
+                                    textColor={colors.new.text.inverted}
                                     bgColor={labelColor}
                                 >
                                     {foregroundLabel}
@@ -360,9 +360,7 @@ const ComparisonSlider: FC<{
                             ) : (
                                 <Control>
                                     <ArrowLeftRight
-                                        iconColor={
-                                            color(theme).new.elementBg.light
-                                        }
+                                        iconColor={colors.new.elementBg.light}
                                     />
                                 </Control>
                             )}

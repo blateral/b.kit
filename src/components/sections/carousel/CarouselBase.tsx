@@ -47,16 +47,17 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
     padding: 0 ${spacings.nudge * 3}px;
 
     color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).light : color(theme).dark};
-    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        isInverted
+            ? color(theme).new.text.inverted
+            : color(theme).new.text.default};
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 
     &:enabled {
         cursor: pointer;
     }
 
     &:disabled {
-        color: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).mono.dark : color(theme).mono.medium};
+        opacity: 0.5;
     }
 `;
 
@@ -120,7 +121,9 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     width: 14px;
     border: solid 1px
         ${({ theme, isInverted }) =>
-            isInverted ? color(theme).light : color(theme).dark};
+            isInverted
+                ? color(theme).new.text.inverted
+                : color(theme).new.text.default};
     border-radius: 14px;
 
     transition: background-color 0.2s ease-in-out;
@@ -128,8 +131,8 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     background-color: ${({ isActive, isInverted, theme }) =>
         isActive
             ? isInverted
-                ? color(theme).light
-                : color(theme).dark
+                ? color(theme).new.text.inverted
+                : color(theme).new.text.default
             : 'transparent'};
 `;
 

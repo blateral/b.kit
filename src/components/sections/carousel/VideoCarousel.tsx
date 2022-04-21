@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
-import { ThemeContext } from 'styled-components';
 
-import { getColors as color } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import VideoCard, { VideoCardProps } from 'components/blocks/VideoCard';
@@ -24,7 +22,7 @@ const VideoCarousel: FC<
     onInit,
     dot,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const videoCount = videos?.length || 0;
 
@@ -34,10 +32,10 @@ const VideoCarousel: FC<
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.new.sectionBg.dark
                     : bgMode
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.new.sectionBg.medium
+                    : colors.new.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >

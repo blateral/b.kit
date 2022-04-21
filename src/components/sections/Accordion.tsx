@@ -158,9 +158,9 @@ const AccordionBlock: React.FC<
                     {itemIcon ? (
                         itemIcon({ isSelected: isSelected || false })
                     ) : isSelected ? (
-                        <Minus iconColor={colors.dark} />
+                        <Minus iconColor={colors.new.text.default} />
                     ) : (
-                        <Plus iconColor={colors.dark} />
+                        <Plus iconColor={colors.new.text.default} />
                     )}
                 </span>
             </AccordionHead>
