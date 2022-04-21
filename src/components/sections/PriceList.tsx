@@ -22,9 +22,7 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
     padding: ${spacings.nudge * 2}px;
 
     background: ${({ theme, hasBg }) =>
-        hasBg
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.medium};
+        hasBg ? color(theme).elementBg.light : color(theme).elementBg.medium};
 
     & > * + * {
         margin-top: ${spacings.nudge * 2}px;
@@ -102,10 +100,10 @@ const PriceList: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : bgMode === 'full'
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

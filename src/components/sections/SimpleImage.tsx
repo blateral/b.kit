@@ -31,10 +31,10 @@ const SimpleImage: FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? getColors(theme).new.sectionBg.dark
+                    ? getColors(theme).sectionBg.dark
                     : hasBg
-                    ? getColors(theme).new.sectionBg.medium
-                    : getColors(theme).new.sectionBg.light
+                    ? getColors(theme).sectionBg.medium
+                    : getColors(theme).sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >

@@ -35,11 +35,11 @@ const TableBody = styled.table`
 
 const TableHead = styled.th<{ hasBack?: boolean; isInverted?: boolean }>`
     text-align: left;
-    color: ${({ theme }) => color(theme).new.text.default};
+    color: ${({ theme }) => color(theme).text.default};
     background-color: ${({ theme, hasBack, isInverted }) =>
         hasBack && !isInverted
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.medium};
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.medium};
 
     padding: ${spacings.nudge * 2}px ${spacings.nudge * 3}px;
     min-width: 60px;
@@ -58,8 +58,8 @@ const TableData = styled.td<{ isInverted?: boolean; hasBack?: boolean }>`
     background-color: ${({ isInverted, hasBack, theme }) =>
         hexToRgba(
             hasBack && !isInverted
-                ? color(theme).new.elementBg.light
-                : color(theme).new.elementBg.medium,
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.medium,
             isInverted ? 0.2 : 0.4
         )};
 
@@ -171,9 +171,9 @@ const NewsTable: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? colors.new.sectionBg.medium
+                    ? colors.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
