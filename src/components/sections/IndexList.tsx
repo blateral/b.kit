@@ -9,10 +9,7 @@ import { getColors as color, spacings } from 'utils/styles';
 import Link, { LinkProps } from 'components/typography/Link';
 import ArrowDown from 'components/base/icons/ArrowDown';
 import { useScrollTo } from 'utils/useScrollTo';
-import {
-    getFullNavbarHeights,
-    getNavbarState,
-} from './navigation/remastered/Navigation';
+import { getFullNavbarHeights, getNavbarState } from './navigation/Navigation';
 import { useMediaQueries } from 'utils/useMediaQuery';
 
 const List = styled.ul<{ hasBg?: boolean; isInverted?: boolean }>`

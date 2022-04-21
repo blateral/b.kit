@@ -35,7 +35,7 @@ const TableBody = styled.table`
 
 const TableHead = styled.th<{ hasBack?: boolean; isInverted?: boolean }>`
     text-align: left;
-    color: ${({ theme }) => color(theme).dark};
+    color: ${({ theme }) => color(theme).new.text.default};
     background-color: ${({ theme, hasBack, isInverted }) =>
         hasBack && !isInverted
             ? color(theme).new.elementBg.light

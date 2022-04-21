@@ -61,7 +61,9 @@ const Number = styled(Callout)<{ isInverted?: boolean; stringLength: number }>`
             : withRange([52, 72], 'font-size')}
 
     color: ${({ isInverted, theme }) =>
-        isInverted ? color(theme).light : color(theme).primary.dark};
+        isInverted
+            ? color(theme).new.primary.inverted
+            : color(theme).new.primary.default};
 `;
 
 const Label = styled(Heading)`
@@ -94,8 +96,8 @@ const IconBlock: React.FC<{
                 size="super"
                 textColor={
                     isInverted
-                        ? color(theme).light
-                        : color(theme).secondary.dark
+                        ? color(theme).new.primary.inverted
+                        : color(theme).new.primary.default
                 }
             >
                 {label}
