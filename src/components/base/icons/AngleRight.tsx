@@ -5,10 +5,11 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const AngleRight: React.FC<{ iconColor?: string; className?: string }> = ({
-    iconColor = 'currentColor',
-    className,
-}) => (
+const AngleRight: React.FC<{
+    iconColor?: string;
+    ariaHidden?: boolean;
+    className?: string;
+}> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
     <SVG
         width="8"
         height="11"
@@ -16,6 +17,7 @@ const AngleRight: React.FC<{ iconColor?: string; className?: string }> = ({
         fill="none"
         className={className}
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden={ariaHidden}
     >
         <path
             fillRule="evenodd"

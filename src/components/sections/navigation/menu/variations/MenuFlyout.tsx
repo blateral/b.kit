@@ -55,6 +55,7 @@ const Stage = styled.div<{ isOpen?: boolean; clampWidth?: 'content' | 'full' }>`
 const Flyout = styled.div<{ isOpen?: boolean }>`
     display: flex;
     flex-direction: column;
+    visibility: visible;
 
     position: relative;
     width: 100%;
@@ -63,12 +64,15 @@ const Flyout = styled.div<{ isOpen?: boolean }>`
 
     pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
 
+    /** Animation to disable keyboard tabbing if flyout is closed */
+    animation: ${({ isOpen }) => !isOpen && 'hideAnim 0s ease-in 2s forwards'};
+
     @media ${mq.medium} {
         width: 384px;
     }
 
     @media ${mq.large} {
-        width: 540px;
+        width: 460px;
     }
 
     &:before {
@@ -82,6 +86,12 @@ const Flyout = styled.div<{ isOpen?: boolean }>`
         z-index: -1;
 
         transform: translateX(-100%);
+    }
+
+    @keyframes hideAnim {
+        to {
+            visibility: hidden;
+        }
     }
 `;
 
@@ -356,6 +366,7 @@ const NavigationItem: FC<{
     navBarSize?: NavBarSize;
     onItemClick?: () => void;
     collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
+    canFocus?: boolean;
 }> = ({
     isCurrent,
     isActive,
@@ -367,6 +378,7 @@ const NavigationItem: FC<{
     navBarSize,
     onItemClick,
     collapseIcon,
+    canFocus,
     children,
 }) => {
     const hasSubItems = !!children && React.Children.count(children) > 0;
@@ -383,12 +395,19 @@ const NavigationItem: FC<{
                                 isCollapsed: !isActive,
                             })
                         ) : (
-                            <NavItemCollapseIcon isCollapsed={!isActive} />
+                            <NavItemCollapseIcon
+                                ariaHidden
+                                isCollapsed={!isActive}
+                            />
                         )}
                     </NavItemCollapse>
                 )}
                 {!hasSubItems && link?.href && (
-                    <NavItemLink {...link} ariaLabel={label} />
+                    <NavItemLink
+                        {...link}
+                        ariaLabel={label}
+                        tabIndex={!canFocus ? -1 : undefined}
+                    />
                 )}
                 {hasSubItems && (
                     <React.Fragment>
@@ -396,6 +415,7 @@ const NavigationItem: FC<{
                             aria-label={label}
                             aria-expanded={isActive}
                             onClick={onItemClick}
+                            tabIndex={!canFocus ? -1 : undefined}
                         />
                     </React.Fragment>
                 )}
@@ -408,6 +428,7 @@ const NavigationItem: FC<{
                             link={link}
                             label={subNavTitle || 'Overview'}
                             navBarSize={navBarSize}
+                            canFocus={canFocus}
                         />
                     )}
                     {children}
@@ -474,10 +495,15 @@ const NavigationSubItem: FC<{
     label: string;
     link?: LinkProps;
     navBarSize?: NavBarSize;
-}> = ({ isCurrent, label, link, navBarSize }) => {
+    canFocus?: boolean;
+}> = ({ isCurrent, label, link, navBarSize, canFocus }) => {
     return (
         <SubNavItem navBarSize={navBarSize}>
-            <SubNavLink isCurrent={isCurrent} {...link}>
+            <SubNavLink
+                tabIndex={!canFocus ? -1 : undefined}
+                isCurrent={isCurrent}
+                {...link}
+            >
                 {label}
             </SubNavLink>
         </SubNavItem>
@@ -527,7 +553,8 @@ const SecondaryNavLink = styled(Link)<{ isCurrent?: boolean }>`
 
 const SecondaryNavigation: FC<{
     items?: NavItem[];
-}> = ({ items }) => {
+    canFocus?: boolean;
+}> = ({ items, canFocus }) => {
     return items && items.length > 0 ? (
         <SecondaryNavList>
             {items?.map((item, i) => (
@@ -535,6 +562,7 @@ const SecondaryNavigation: FC<{
                     <SecondaryNavLink
                         isCurrent={item.isCurrent}
                         href={item.link.href}
+                        tabIndex={!canFocus ? -1 : undefined}
                     >
                         {item.label}
                     </SecondaryNavLink>
@@ -676,6 +704,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                     onItemClick={() =>
                                                         setActiveItem(i)
                                                     }
+                                                    canFocus={isOpen}
                                                 >
                                                     {item?.subItems?.map(
                                                         (subItem, ii) => (
@@ -685,6 +714,9 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                                 navBarSize={
                                                                     navBarSize
                                                                 }
+                                                                canFocus={
+                                                                    isOpen
+                                                                }
                                                             />
                                                         )
                                                     )}
@@ -692,7 +724,10 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                             );
                                         })}
                                     </MenuNav.List>
-                                    <MenuNav.SubList items={subNavigation} />
+                                    <MenuNav.SubList
+                                        items={subNavigation}
+                                        canFocus={isOpen}
+                                    />
                                 </MenuNav.View>
                                 {footer
                                     ? footer({
