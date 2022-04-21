@@ -1,7 +1,14 @@
 import AngleRight from 'components/base/icons/AngleRight';
 import { copyStyle } from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
-import React, { FC, useState, useMemo, useRef, useEffect } from 'react';
+import React, {
+    FC,
+    useState,
+    useMemo,
+    useRef,
+    useEffect,
+    forwardRef,
+} from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
@@ -353,90 +360,106 @@ const SubNavList = styled.ul<{ isActive?: boolean; isIndented?: boolean }>`
     }
 `;
 
-const NavigationItem: FC<{
-    isCurrent?: boolean;
-    isActive?: boolean;
-    isFeatured?: boolean;
-    label?: string;
-    link?: LinkProps;
-    icon?: React.ReactNode;
+const NavigationItem = forwardRef<
+    HTMLLIElement,
+    {
+        isCurrent?: boolean;
+        isActive?: boolean;
+        isFeatured?: boolean;
+        label?: string;
+        link?: LinkProps;
+        icon?: React.ReactNode;
 
-    subNavTitle?: string;
+        subNavTitle?: string;
 
-    navBarSize?: NavBarSize;
-    onItemClick?: () => void;
-    collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
-    canFocus?: boolean;
-}> = ({
-    isCurrent,
-    isActive,
-    isFeatured,
-    label,
-    link,
-    icon,
-    subNavTitle,
-    navBarSize,
-    onItemClick,
-    collapseIcon,
-    canFocus,
-    children,
-}) => {
-    const hasSubItems = !!children && React.Children.count(children) > 0;
+        navBarSize?: NavBarSize;
+        onItemClick?: () => void;
+        collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
+        canFocus?: boolean;
+        children?: React.ReactNode;
+    }
+>(
+    (
+        {
+            isCurrent,
+            isActive,
+            isFeatured,
+            label,
+            link,
+            icon,
+            subNavTitle,
+            navBarSize,
+            onItemClick,
+            collapseIcon,
+            canFocus,
+            children,
+        },
+        ref
+    ) => {
+        const hasSubItems = !!children && React.Children.count(children) > 0;
 
-    return (
-        <NavItemView isActive={isActive} data-featured={isFeatured}>
-            <NavItemContent isCurrent={isCurrent}>
-                {icon && <NavItemIcon>{icon}</NavItemIcon>}
-                {label && <NavItemLabel>{label}</NavItemLabel>}
-                {hasSubItems && (
-                    <NavItemCollapse>
-                        {collapseIcon ? (
-                            collapseIcon({
-                                isCollapsed: !isActive,
-                            })
-                        ) : (
-                            <NavItemCollapseIcon
-                                ariaHidden
-                                isCollapsed={!isActive}
-                            />
-                        )}
-                    </NavItemCollapse>
-                )}
-                {!hasSubItems && link?.href && (
-                    <NavItemLink
-                        {...link}
-                        ariaLabel={label}
-                        tabIndex={!canFocus ? -1 : undefined}
-                    />
-                )}
-                {hasSubItems && (
-                    <React.Fragment>
-                        <NavItemButton
-                            aria-label={label}
-                            aria-expanded={isActive}
-                            onClick={onItemClick}
+        return (
+            <NavItemView
+                ref={ref}
+                isActive={isActive}
+                data-featured={isFeatured}
+            >
+                <NavItemContent isCurrent={isCurrent}>
+                    {icon && <NavItemIcon>{icon}</NavItemIcon>}
+                    {label && <NavItemLabel>{label}</NavItemLabel>}
+                    {hasSubItems && (
+                        <NavItemCollapse>
+                            {collapseIcon ? (
+                                collapseIcon({
+                                    isCollapsed: !isActive,
+                                })
+                            ) : (
+                                <NavItemCollapseIcon
+                                    ariaHidden
+                                    isCollapsed={!isActive}
+                                />
+                            )}
+                        </NavItemCollapse>
+                    )}
+                    {!hasSubItems && link?.href && (
+                        <NavItemLink
+                            {...link}
+                            ariaLabel={label}
                             tabIndex={!canFocus ? -1 : undefined}
                         />
-                    </React.Fragment>
-                )}
-            </NavItemContent>
-            {hasSubItems && (
-                <SubNavList isActive={isActive} isIndented={!!icon}>
-                    {link?.href && (
-                        <MenuNav.SubItem
-                            key="overview"
-                            link={link}
-                            label={subNavTitle || 'Overview'}
-                            navBarSize={navBarSize}
-                            canFocus={canFocus}
-                        />
                     )}
-                    {children}
-                </SubNavList>
-            )}
-        </NavItemView>
-    );
-};
+                    {hasSubItems && (
+                        <React.Fragment>
+                            <NavItemButton
+                                aria-label={label}
+                                aria-expanded={isActive}
+                                onClick={onItemClick}
+                                tabIndex={!canFocus ? -1 : undefined}
+                            />
+                        </React.Fragment>
+                    )}
+                </NavItemContent>
+                {hasSubItems && (
+                    <SubNavList isActive={isActive} isIndented={!!icon}>
+                        {link?.href && (
+                            <MenuNav.SubItem
+                                key="overview"
+                                link={link}
+                                label={subNavTitle || 'Overview'}
+                                navBarSize={navBarSize}
+                                canFocus={canFocus}
+                            />
+                        )}
+                        {children}
+                    </SubNavList>
+                )}
+            </NavItemView>
+        );
+    }
+);
+
+NavigationItem.displayName = 'NavigationItem';
+
 //#endregion NAVIGATION.NavItem
 //#region NAVIGATION.SubNavItem
 const SubNavItem = styled.li<{ navBarSize?: NavBarSize }>`
@@ -490,15 +513,18 @@ const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
     }
 `;
 
-const NavigationSubItem: FC<{
-    isCurrent?: boolean;
-    label: string;
-    link?: LinkProps;
-    navBarSize?: NavBarSize;
-    canFocus?: boolean;
-}> = ({ isCurrent, label, link, navBarSize, canFocus }) => {
+const NavigationSubItem = forwardRef<
+    HTMLLIElement,
+    {
+        isCurrent?: boolean;
+        label: string;
+        link?: LinkProps;
+        navBarSize?: NavBarSize;
+        canFocus?: boolean;
+    }
+>(({ isCurrent, label, link, navBarSize, canFocus }, ref) => {
     return (
-        <SubNavItem navBarSize={navBarSize}>
+        <SubNavItem ref={ref} navBarSize={navBarSize}>
             <SubNavLink
                 tabIndex={!canFocus ? -1 : undefined}
                 isCurrent={isCurrent}
@@ -508,7 +534,9 @@ const NavigationSubItem: FC<{
             </SubNavLink>
         </SubNavItem>
     );
-};
+});
+
+NavigationSubItem.displayName = 'NavigationSubItem';
 //#endregion
 //#region NAVIGATION.SecondaryNavigation
 const SecondaryNavList = styled.ul`
@@ -616,6 +644,10 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
         const initial = getCurrentNavItem(mainList)?.rootIndex;
         return initial ? [initial] : [0];
     });
+    const [currentNavEl, setCurrentNavEl] =
+        useState<HTMLLIElement | null>(null);
+    const [currentSubNavEl, setCurrentSubNavEl] =
+        useState<HTMLLIElement | null>(null);
 
     const toggleActiveItem = (index: number) => {
         setActiveItems((prev) => (prev.includes(index) ? [] : [index]));
@@ -633,6 +665,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
         // });
     };
 
+    // check if flyout lost focus
     useEffect(() => {
         const handleFocus = (ev: FocusEvent) => {
             if (!flyoutRef.current || !ev.target) return;
@@ -653,6 +686,22 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
             document.removeEventListener('focusin', handleFocus);
         };
     }, [isOpen, onClose]);
+
+    // scroll to current nav items
+    useEffect(() => {
+        try {
+            currentNavEl?.scrollIntoView({
+                block: 'center',
+                inline: 'start',
+            });
+            currentSubNavEl?.scrollIntoView({
+                block: 'center',
+                inline: 'start',
+            });
+        } catch (e) {
+            // console.log(e);
+        }
+    }, [currentNavEl, currentSubNavEl]);
 
     return (
         <React.Fragment>
@@ -697,15 +746,21 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                       ) >= 0
                                                     : false;
 
+                                            const isCurrent =
+                                                item.isCurrent ||
+                                                hasCurrentSubItem;
+
                                             return (
                                                 <MenuNav.Item
                                                     key={i}
                                                     {...item}
-                                                    isActive={isActive}
-                                                    isCurrent={
-                                                        item.isCurrent ||
-                                                        hasCurrentSubItem
+                                                    ref={
+                                                        isCurrent
+                                                            ? setCurrentNavEl
+                                                            : undefined
                                                     }
+                                                    isActive={isActive}
+                                                    isCurrent={isCurrent}
                                                     subNavTitle={subNavTitle}
                                                     navBarSize={navBarSize}
                                                     collapseIcon={collapseIcon}
@@ -718,6 +773,11 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                         (subItem, ii) => (
                                                             <MenuNav.SubItem
                                                                 key={ii}
+                                                                ref={
+                                                                    subItem.isCurrent
+                                                                        ? setCurrentSubNavEl
+                                                                        : undefined
+                                                                }
                                                                 {...subItem}
                                                                 navBarSize={
                                                                     navBarSize
