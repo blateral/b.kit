@@ -52,31 +52,36 @@ const Area = styled.textarea<{
     padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
 
     border: ${({ hasError, theme }) =>
-        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+        hasError
+            ? `2px solid ${color(theme).new.error}`
+            : '2px solid transparent'};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     background-color: ${({ isInverted, hasBack, theme }) =>
-        isInverted || !hasBack ? color(theme).light : color(theme).mono.light};
+        isInverted || !hasBack
+            ? color(theme).new.elementBg.light
+            : color(theme).new.elementBg.medium};
 
     font-weight: inherit;
     font-family: inherit;
     font-size: inherit;
     color: ${({ hasError, theme }) =>
-        hasError ? color(theme).error : 'inherit'};
+        hasError ? color(theme).new.text.error : 'inherit'};
 
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
     &:active {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
     }
 
     &:focus {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
     }
 
     &::placeholder {
-        color: ${({ theme }) => hexToRgba(color(theme).dark, 0.4)};
+        color: ${({ theme }) =>
+            hexToRgba(color(theme).new.elementBg.dark, 0.4)};
     }
 `;
 
@@ -116,7 +121,11 @@ const Textarea: React.FC<
                 <FieldHead
                     renderAs="span"
                     isInverted={isInverted}
-                    textColor={isDisabled ? color(theme).mono.dark : undefined}
+                    textColor={
+                        isDisabled
+                            ? color(theme).new.elementBg.medium
+                            : undefined
+                    }
                     size="medium"
                     type="copy-b"
                 >
@@ -136,13 +145,16 @@ const Textarea: React.FC<
                 onBlur={onBlur}
             />
             {infoMessage && (
-                <InfoMessage textColor={color(theme).mono.dark} size="small">
+                <InfoMessage
+                    textColor={color(theme).new.text.copy}
+                    size="small"
+                >
                     {infoMessage}
                 </InfoMessage>
             )}
             {errorMessage && (
                 <ErrorMessage
-                    textColor={color(theme).error}
+                    textColor={color(theme).new.error}
                     size="small"
                     type="copy-i"
                 >
