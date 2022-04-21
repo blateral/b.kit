@@ -28,9 +28,7 @@ const Column = styled.div<{
 
     text-align: center;
     color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.inverted};
+        isInverted ? color(theme).text.inverted : color(theme).text.inverted};
 
     &:first-child {
         text-align: left;

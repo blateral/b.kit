@@ -161,9 +161,7 @@ const Header = styled.div<{ size?: NavBarSize; background?: string }>`
 
     background-color: ${({ background }) => background};
     color: ${({ theme, background }) =>
-        background
-            ? color(theme).new.text.default
-            : color(theme).new.text.inverted};
+        background ? color(theme).text.default : color(theme).text.inverted};
 
     transition: background-color 0.2s ease-in-out;
 
@@ -180,9 +178,7 @@ const Header = styled.div<{ size?: NavBarSize; background?: string }>`
 const Main = styled.div<{ background?: string }>`
     background-color: ${({ background }) => background};
     color: ${({ theme, background }) =>
-        background
-            ? color(theme).new.text.default
-            : color(theme).new.text.inverted};
+        background ? color(theme).text.default : color(theme).text.inverted};
 
     transition: background-color 0.2s ease-in-out;
 `;
@@ -197,9 +193,7 @@ const Footer = styled.div<{ size?: NavBarSize; background?: string }>`
 
     background-color: ${({ background }) => background};
     color: ${({ theme, background }) =>
-        background
-            ? color(theme).new.text.default
-            : color(theme).new.text.inverted};
+        background ? color(theme).text.default : color(theme).text.inverted};
 
     opacity: ${({ theme, size }) =>
         getBottomHeights(theme, size)[0] > 0 ? 1 : 0};
@@ -366,9 +360,9 @@ const NavBar: FC<
         [isOverContent, size]
     );
 
-    const topBackground = topBg || colors.new.elementBg.light;
-    const mainBackground = mainBg || colors.new.elementBg.light;
-    const bottomBackground = bottomBg || colors.new.elementBg.light;
+    const topBackground = topBg || colors.elementBg.light;
+    const mainBackground = mainBg || colors.elementBg.light;
+    const bottomBackground = bottomBg || colors.elementBg.light;
     const onContentBackground =
         onContentBg ||
         'linear-gradient(180deg,rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 100%)';

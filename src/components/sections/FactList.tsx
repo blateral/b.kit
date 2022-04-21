@@ -21,9 +21,7 @@ const FactItem = styled.li<{ hasText?: boolean; hasBack?: boolean }>`
     padding: ${spacings.nudge * 2}px;
 
     background: ${({ theme, hasBack }) =>
-        hasBack
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.medium};
+        hasBack ? color(theme).elementBg.light : color(theme).elementBg.medium};
 
     display: flex;
     flex-direction: row;
@@ -80,10 +78,10 @@ const FactList: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : bgMode === 'full'
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

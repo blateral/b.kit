@@ -62,8 +62,8 @@ const Number = styled(Callout)<{ isInverted?: boolean; stringLength: number }>`
 
     color: ${({ isInverted, theme }) =>
         isInverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
 `;
 
 const Label = styled(Heading)`
@@ -96,8 +96,8 @@ const IconBlock: React.FC<{
                 size="super"
                 textColor={
                     isInverted
-                        ? color(theme).new.primary.inverted
-                        : color(theme).new.primary.default
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default
                 }
             >
                 {label}
@@ -161,10 +161,10 @@ const NumberList: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? color(theme).sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? color(theme).sectionBg.medium
+                    : color(theme).sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

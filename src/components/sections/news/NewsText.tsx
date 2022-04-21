@@ -46,9 +46,9 @@ const NewsText: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? colors.new.sectionBg.medium
+                    ? colors.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}

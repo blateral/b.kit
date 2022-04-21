@@ -44,14 +44,14 @@ const EventItem = styled.li<{ hasBg?: boolean }>`
     border-top: 1px solid
         ${({ theme, hasBg }) =>
             hasBg
-                ? color(theme).new.elementBg.light
-                : color(theme).new.elementBg.medium};
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.medium};
 
     border-bottom: 1px solid
         ${({ theme, hasBg }) =>
             hasBg
-                ? color(theme).new.elementBg.light
-                : color(theme).new.elementBg.medium};
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.medium};
 
     padding: ${spacings.nudge * 3}px 0;
 `;
@@ -249,9 +249,9 @@ const EventOverview: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? colors.new.sectionBg.medium
+                    ? colors.sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}

@@ -155,9 +155,7 @@ const ContactList = styled.ul<{ isInverted?: boolean }>`
     padding: 0;
     list-style-type: none;
     color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
 
     a {
         color: inherit;
@@ -376,8 +374,8 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     border: solid 1px
         ${({ theme, isInverted }) =>
             isInverted
-                ? color(theme).new.text.inverted
-                : color(theme).new.text.default};
+                ? color(theme).text.inverted
+                : color(theme).text.default};
     border-radius: 14px;
 
     transition: background-color 0.2s ease-in-out;
@@ -385,8 +383,8 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     background-color: ${({ isActive, isInverted, theme }) =>
         isActive
             ? isInverted
-                ? color(theme).new.text.inverted
-                : color(theme).new.text.default
+                ? color(theme).text.inverted
+                : color(theme).text.default
             : 'transparent'};
 `;
 
@@ -398,9 +396,7 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
     padding: 0 ${spacings.nudge * 3}px;
 
     color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 
     &:enabled {
@@ -537,8 +533,8 @@ const Map: FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
-                    : color(theme).new.sectionBg.medium
+                    ? color(theme).sectionBg.dark
+                    : color(theme).sectionBg.medium
             }
             bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
         >

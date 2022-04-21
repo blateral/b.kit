@@ -102,10 +102,10 @@ const NewsList: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

@@ -59,7 +59,7 @@ const Flyout = styled.div<{ isOpen?: boolean }>`
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: ${({ theme }) => color(theme).new.elementBg.light};
+    background-color: ${({ theme }) => color(theme).elementBg.light};
 
     pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
 
@@ -78,7 +78,7 @@ const Flyout = styled.div<{ isOpen?: boolean }>`
         left: 2px;
         height: 100%;
         width: 40vw;
-        background-color: ${({ theme }) => color(theme).new.elementBg.light};
+        background-color: ${({ theme }) => color(theme).elementBg.light};
         z-index: -1;
 
         transform: translateX(-100%);
@@ -175,14 +175,13 @@ const NavItemView = styled.li<{ isActive?: boolean }>`
     height: 100%;
     background-color: ${({ theme, isActive }) =>
         isActive
-            ? color(theme).new.elementBg.medium
-            : color(theme).new.elementBg.light};
+            ? color(theme).elementBg.medium
+            : color(theme).elementBg.light};
 
     transition: background-color 0.2s ease-in-out;
 
     li + &:not([data-featured='true']) {
-        border-top: solid 2px
-            ${({ theme }) => color(theme).new.elementBg.medium};
+        border-top: solid 2px ${({ theme }) => color(theme).elementBg.medium};
     }
 
     li[data-featured='true'] + &:not([data-featured='true']) {
@@ -190,13 +189,11 @@ const NavItemView = styled.li<{ isActive?: boolean }>`
     }
 
     &:not([data-featured='true']):first-child {
-        border-top: solid 2px
-            ${({ theme }) => color(theme).new.elementBg.medium};
+        border-top: solid 2px ${({ theme }) => color(theme).elementBg.medium};
     }
 
     &:last-child {
-        border-bottom: solid 2px
-            ${({ theme }) => color(theme).new.elementBg.medium};
+        border-bottom: solid 2px ${({ theme }) => color(theme).elementBg.medium};
     }
 
     @media ${mq.semilarge} {
@@ -207,8 +204,7 @@ const NavItemView = styled.li<{ isActive?: boolean }>`
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
-            background-color: ${({ theme }) =>
-                color(theme).new.elementBg.medium};
+            background-color: ${({ theme }) => color(theme).elementBg.medium};
         }
     }
 `;
@@ -276,8 +272,8 @@ const NavItemLink = styled(Link)`
         outline: solid 2px
             ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.primary.inverted
-                    : color(theme).new.primary.default};
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
     }
 
     &:focus:not(:focus-visible) {
@@ -295,14 +291,14 @@ const NavItemButton = styled.button`
 
     background: none;
     border: none;
-    border-bottom: solid 2px ${({ theme }) => color(theme).new.elementBg.light};
+    border-bottom: solid 2px ${({ theme }) => color(theme).elementBg.light};
     width: 100%;
     cursor: pointer;
     outline: none;
     border-radius: 0px;
 
     &:focus {
-        outline: solid 2px ${({ theme }) => color(theme).new.primary.default};
+        outline: solid 2px ${({ theme }) => color(theme).primary.default};
     }
 
     &:focus:not(:focus-visible) {
@@ -334,7 +330,7 @@ const SubNavList = styled.ul<{ isActive?: boolean; isIndented?: boolean }>`
         display: none; /* for Chrome, Safari, and Opera */
     }
 
-    background-color: ${({ theme }) => color(theme).new.elementBg.medium};
+    background-color: ${({ theme }) => color(theme).elementBg.medium};
 
     @media ${mq.semilarge} {
         position: absolute;
@@ -449,7 +445,7 @@ const SubNavItem = styled.li<{ navBarSize?: NavBarSize }>`
 const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
     width: 100%;
     padding: ${spacings.nudge}px 0;
-    outline-color: ${({ theme }) => color(theme).new.primary.default};
+    outline-color: ${({ theme }) => color(theme).primary.default};
     vertical-align: middle;
 
     ${copyStyle('copy-b', 'medium')}
@@ -463,8 +459,8 @@ const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
         outline: solid 2px
             ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.primary.inverted
-                    : color(theme).new.primary.default};
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
         outline-offset: 4px;
     }
 
@@ -505,7 +501,7 @@ const SecondaryNavList = styled.ul`
 const SecondaryNavLink = styled(Link)<{ isCurrent?: boolean }>`
     display: inline-block;
     padding: ${spacings.nudge * 0.5}px 0;
-    outline-color: ${({ theme }) => color(theme).new.primary.default};
+    outline-color: ${({ theme }) => color(theme).primary.default};
     vertical-align: middle;
 
     ${copyStyle('copy', 'medium')}
@@ -519,8 +515,8 @@ const SecondaryNavLink = styled(Link)<{ isCurrent?: boolean }>`
         outline: solid 2px
             ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.primary.inverted
-                    : color(theme).new.primary.default};
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
         outline-offset: 1px;
     }
 

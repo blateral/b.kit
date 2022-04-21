@@ -12,8 +12,8 @@ const Seperator = styled.div<{ isInverted?: boolean; isTop?: boolean }>`
     border-bottom: solid 1px
         ${({ isInverted, theme }) =>
             isInverted
-                ? color(theme).new.elementBg.light
-                : color(theme).new.elementBg.dark};
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
 
     margin-top: ${({ isTop }) => !isTop && spacings.spacer}px;
     margin-bottom: ${({ isTop }) => isTop && spacings.spacer}px;
@@ -70,9 +70,9 @@ const NewsAuthorCard: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? color(theme).sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
+                    ? color(theme).sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
