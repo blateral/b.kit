@@ -871,7 +871,7 @@ const generateCheckboxGroup = ({
                 ))}
             </Fields>
             {error && isTouched && (
-                <ErrorMessage textColor={color(theme).error} size="small">
+                <ErrorMessage textColor={color(theme).new.error} size="small">
                     {error}
                 </ErrorMessage>
             )}
@@ -921,7 +921,7 @@ const generateRadioGroup = ({
                 ))}
             </Fields>
             {error && isTouched && (
-                <ErrorMessage textColor={color(theme).error} size="small">
+                <ErrorMessage textColor={color(theme).new.error} size="small">
                     {error}
                 </ErrorMessage>
             )}
