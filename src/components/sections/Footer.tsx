@@ -18,7 +18,9 @@ import SocialList, { SocialItem } from 'components/blocks/SocialList';
 
 const MainView = styled(Wrapper)<{ isInverted?: boolean }>`
     background: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).dark : color(theme).light};
+        isInverted
+            ? color(theme).new.elementBg.dark
+            : color(theme).new.elementBg.light};
 `;
 
 const StyledLink = styled(Link)`
@@ -38,7 +40,9 @@ const Content = styled.div<{ isInverted?: boolean }>`
     margin-right: -${spacings.spacer}px;
 
     color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).light : color(theme).dark};
+        isInverted
+            ? color(theme).new.text.inverted
+            : color(theme).new.text.default};
 
     & > * {
         flex: 1;
@@ -173,7 +177,9 @@ const LinkWrapper = styled(Copy)<{ isActive?: boolean; isInverted?: boolean }>`
         width: 4px;
 
         background-color: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).light : color(theme).dark};
+            isInverted
+                ? color(theme).new.elementBg.light
+                : color(theme).new.elementBg.dark};
         border-radius: 4px;
 
         transform: translateY(-100%);
@@ -186,7 +192,7 @@ const LinkWrapper = styled(Copy)<{ isActive?: boolean; isInverted?: boolean }>`
         bottom: 0;
         right: 0;
         height: 1px;
-        background-color: ${({ theme }) => color(theme).primary.medium};
+        background-color: ${({ theme }) => color(theme).new.primary.default};
         margin-top: ${spacings.nudge * 10}px;
         opacity: 0;
 
@@ -200,7 +206,7 @@ const LinkWrapper = styled(Copy)<{ isActive?: boolean; isInverted?: boolean }>`
 
 /**** BOTTOM FOOTER CONTENT ****/
 const BottomWrapper = styled(Wrapper)`
-    background-color: ${({ theme }) => color(theme).mono.light};
+    background-color: ${({ theme }) => color(theme).new.elementBg.medium};
 `;
 
 const BottomView = styled(Wrapper)`
@@ -215,7 +221,7 @@ const BottomView = styled(Wrapper)`
     padding-top: ${spacings.nudge * 1.5}px;
     padding-bottom: ${spacings.nudge * 1.5}px;
 
-    color: ${({ theme }) => color(theme).dark};
+    color: ${({ theme }) => color(theme).new.text.default};
 
     & > * + * {
         margin-left: ${spacings.spacer}px;
