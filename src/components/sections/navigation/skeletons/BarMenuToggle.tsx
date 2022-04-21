@@ -7,9 +7,7 @@ const Toggle = styled.button<{ isInverted?: boolean }>`
     background: transparent;
     border: none;
     color: ${({ isInverted, theme }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
 
     padding: ${spacings.nudge}px;
     margin-left: -${spacings.nudge}px;
@@ -23,8 +21,8 @@ const Toggle = styled.button<{ isInverted?: boolean }>`
         &:hover {
             color: ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.primary.invertedHover
-                    : color(theme).new.primary.hover};
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
         }
     }
 
@@ -32,8 +30,8 @@ const Toggle = styled.button<{ isInverted?: boolean }>`
         outline: solid 2px
             ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.primary.inverted
-                    : color(theme).new.primary.default};
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
         outline-offset: 4px;
     }
 

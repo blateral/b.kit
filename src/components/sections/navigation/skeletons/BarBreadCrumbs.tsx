@@ -49,17 +49,15 @@ const NavLink = styled(Link)<{ isInverted?: boolean; clamp?: boolean }>`
 
     ${copyStyle('copy', 'small')}
     color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
     text-decoration: underline;
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             color: ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.text.inverted
-                    : color(theme).new.text.default};
+                    ? color(theme).text.inverted
+                    : color(theme).text.default};
         }
     }
 `;
@@ -74,9 +72,7 @@ const NavLabel = styled.span<{ isInverted?: boolean; clamp?: boolean }>`
 
     ${copyStyle('copy', 'small')}
     color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
     text-decoration: none;
 `;
 
@@ -98,9 +94,7 @@ const BackLink = styled(Link)`
 
     ${copyStyle('copy', 'small')}
     color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
     text-decoration: none;
 
     transition: color 0.2s ease-in-out;
