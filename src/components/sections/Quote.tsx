@@ -61,10 +61,10 @@ const Quote: FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : bgMode === 'full'
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

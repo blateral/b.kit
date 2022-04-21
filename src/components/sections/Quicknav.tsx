@@ -61,8 +61,8 @@ const Slider = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
     bottom: 0;
     background-color: ${({ theme, isInverted }) =>
         isInverted
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.dark};
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.dark};
     left: 15px;
     right: 15px;
 `;
@@ -114,8 +114,8 @@ const Quicknav: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
-                    : color(theme).new.sectionBg.light
+                    ? color(theme).sectionBg.dark
+                    : color(theme).sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation
