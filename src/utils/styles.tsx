@@ -133,12 +133,6 @@ interface ColorOptions {
 export type ColorOptionsType = keyof ColorOptions;
 
 export interface Colors {
-    dark: string;
-    light: string;
-    mono: ColorOptions;
-    primary: ColorOptions;
-    secondary: ColorOptions;
-    error: string;
     new: NewColors;
 }
 
@@ -236,24 +230,6 @@ const newColors: NewColors = {
 
 /***** Colors *****/
 const defaultColors: Colors = {
-    dark: '#000000',
-    light: '#ffffff',
-    mono: {
-        light: '#F0F0F0',
-        medium: '#C8C8C8',
-        dark: '#A5A5A5',
-    },
-    primary: {
-        light: '#FFC5A5',
-        medium: '#FF9B63',
-        dark: '#FF7F37',
-    },
-    secondary: {
-        light: '#5A7384',
-        medium: '#35444E',
-        dark: '#222A30',
-    },
-    error: '#ff0000',
     new: newColors,
 };
 
