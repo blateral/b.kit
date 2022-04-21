@@ -26,20 +26,16 @@ const FieldHead = styled(Copy)`
 
 const FieldWrapper = styled.div<{ hasError?: boolean; hasBg?: boolean }>`
     border: ${({ hasError, theme }) =>
-        hasError
-            ? `2px solid ${color(theme).new.error}`
-            : '2px solid transparent'};
+        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     background: ${({ theme, hasBg }) =>
-        hasBg
-            ? color(theme).new.elementBg.medium
-            : color(theme).new.elementBg.light};
+        hasBg ? color(theme).elementBg.medium : color(theme).elementBg.light};
     padding: ${spacings.nudge * 3}px;
 
     &:focus-within {
         border: ${({ hasError, theme }) =>
             hasError
-                ? `2px solid ${color(theme).new.error}`
+                ? `2px solid ${color(theme).error}`
                 : '2px solid transparent'};
     }
 
@@ -66,9 +62,7 @@ const InputView = styled.div<{ isDisabled?: boolean }>`
     /* display: block;
     border: 1px solid
         ${({ isDisabled, theme }) =>
-        isDisabled
-            ? color(theme).new.elementBg.medium
-            : 'rgba(56, 56, 56, 0.94)'};
+        isDisabled ? color(theme).elementBg.medium : 'rgba(56, 56, 56, 0.94)'};
     cursor: pointer;
     outline: none;
     width: 100%;
@@ -90,26 +84,26 @@ const InputView = styled.div<{ isDisabled?: boolean }>`
 
     &:hover {
         border: 1px solid transparent;
-        background: ${({ theme }) => color(theme).new.elementBg.dark};
+        background: ${({ theme }) => color(theme).elementBg.dark};
 
         & > * {
-            color: ${({ theme }) => color(theme).new.text.inverted};
+            color: ${({ theme }) => color(theme).text.inverted};
         }
     }
 
     &:active {
-        color: ${({ theme }) => color(theme).new.text.default};
+        color: ${({ theme }) => color(theme).text.default};
 
         &::placeholder {
-            color: ${({ theme }) => color(theme).new.text.default};
+            color: ${({ theme }) => color(theme).text.default};
         }
     }
 
     &:focus {
-        color: ${({ theme }) => color(theme).new.text.default};
+        color: ${({ theme }) => color(theme).text.default};
 
         &::placeholder {
-            color: ${({ theme }) => color(theme).new.text.default};
+            color: ${({ theme }) => color(theme).text.default};
         }
     } */
 `;
@@ -131,7 +125,7 @@ const Delete = styled.div`
     cursor: pointer;
 
     & > * {
-        color: ${({ theme }) => color(theme).new.text.error};
+        color: ${({ theme }) => color(theme).text.error};
     }
 
     &:hover {
@@ -231,7 +225,7 @@ const FileUpload: FC<
                     renderAs="span"
                     isInverted={isInverted}
                     textColor={
-                        isDisabled ? color(theme).new.text.default : undefined
+                        isDisabled ? color(theme).text.default : undefined
                     }
                     size="medium"
                     type="copy-b"
@@ -278,7 +272,7 @@ const FileUpload: FC<
                             <Copy
                                 textColor={
                                     isDisabled
-                                        ? color(theme).new.elementBg.medium
+                                        ? color(theme).elementBg.medium
                                         : undefined
                                 }
                                 size="medium"
@@ -323,16 +317,13 @@ const FileUpload: FC<
                 })}
             </FieldWrapper>
             {infoMessage && (
-                <InfoMessage
-                    textColor={color(theme).new.text.default}
-                    size="small"
-                >
+                <InfoMessage textColor={color(theme).text.default} size="small">
                     {infoMessage}
                 </InfoMessage>
             )}
             {errorMessage && (
                 <ErrorMessage
-                    textColor={color(theme).new.text.error}
+                    textColor={color(theme).text.error}
                     size="small"
                     type="copy-i"
                 >

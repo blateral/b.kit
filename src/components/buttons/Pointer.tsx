@@ -40,8 +40,8 @@ const View = styled.a<{
 
     outline-color: ${({ theme, inverted }) =>
         inverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
     border: none;
     cursor: pointer;
 
@@ -50,18 +50,18 @@ const View = styled.a<{
     background: none;
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).new.elementBg.medium
+            ? color(theme).elementBg.medium
             : inverted
-            ? color(theme).new.text.copyInverted
-            : color(theme).new.text.copy};
+            ? color(theme).text.copyInverted
+            : color(theme).text.copy};
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).new.elementBg.medium
+                ? color(theme).elementBg.medium
                 : inverted
-                ? color(theme).new.text.copyInverted
-                : color(theme).new.text.copy};
+                ? color(theme).text.copyInverted
+                : color(theme).text.copy};
     }
 
     & > * + * {
@@ -170,18 +170,18 @@ const Icon = styled.div<{ iconColor?: string }>`
     justify-content: flex-end;
     align-items: center;
 
-    color: ${({ theme, iconColor }) => iconColor || color(theme).new.text.copy};
+    color: ${({ theme, iconColor }) => iconColor || color(theme).text.copy};
 
     transition: transform 0.2s ease-in-out;
 
     ${View}[data-inverted='true'] > & {
         color: ${({ theme, iconColor }) =>
-            iconColor || color(theme).new.text.copyInverted};
+            iconColor || color(theme).text.copyInverted};
     }
 
     ${View}[data-disabled='true'] > & {
         color: ${({ theme, iconColor }) =>
-            iconColor || color(theme).new.elementBg.medium};
+            iconColor || color(theme).elementBg.medium};
     }
 
     ${View}:hover > & {

@@ -50,14 +50,14 @@ const View = styled.a<{
         disable
             ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher mono.medium)
             : inverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
     color: ${({ theme, inverted, disable }) =>
         disable
             ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher light)
             : !inverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+            ? color(theme).text.inverted
+            : color(theme).text.default};
     text-align: left;
 
     transition: all ease-in-out 0.2s;
@@ -67,8 +67,8 @@ const View = styled.a<{
             disable
                 ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher light)
                 : !inverted
-                ? color(theme).new.text.inverted
-                : color(theme).new.text.default};
+                ? color(theme).text.inverted
+                : color(theme).text.default};
     }
 
     & > *:not(:first-child) {
@@ -217,7 +217,7 @@ const Icon = styled.div<{ iconColor?: string }>`
     height: 35px;
 
     color: ${({ theme, iconColor }) =>
-        iconColor || color(theme).new.primary.default};
+        iconColor || color(theme).primary.default};
 
     transition: transform 0.2s ease-in-out;
 

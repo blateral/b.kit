@@ -11,7 +11,7 @@ const View = styled.a<{
     display: block;
     text-decoration: none;
     color: ${({ isInverted, theme }) =>
-        isInverted ? color(theme).new.text.inverted : 'inherit'};
+        isInverted ? color(theme).text.inverted : 'inherit'};
     max-width: min-content;
 
     text-align: center;

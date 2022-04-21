@@ -15,7 +15,7 @@ const View = styled.form`
     display: flex;
     flex-direction: column;
 
-    color: ${({ theme }) => color(theme).new.text.default};
+    color: ${({ theme }) => color(theme).text.default};
 
     @media ${mq.medium} {
         flex-direction: row;
@@ -58,8 +58,8 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
 
     margin-top: ${spacings.spacer * 0.5}px;
 
-    background-color: ${({ theme }) => color(theme).new.primary.default};
-    color: ${({ theme }) => color(theme).new.text.inverted};
+    background-color: ${({ theme }) => color(theme).primary.default};
+    color: ${({ theme }) => color(theme).text.inverted};
 
     outline: none;
     border: none;
@@ -113,9 +113,7 @@ const CompactForm: FC<{
 }) => {
     const { colors } = useLibTheme();
     const bgColor =
-        mode === 'default'
-            ? colors.new.elementBg.medium
-            : colors.new.elementBg.light;
+        mode === 'default' ? colors.elementBg.medium : colors.elementBg.light;
 
     return (
         <View

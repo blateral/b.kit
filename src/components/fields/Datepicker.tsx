@@ -48,7 +48,7 @@ const PickerView = styled.div`
     .react-datepicker {
         font-family: 'Roboto', sans-serif;
         border: 1px solid
-            ${({ theme }) => hexToRgba(color(theme).new.elementBg.dark, 0.2)} !important;
+            ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.2)} !important;
         border-radius: ${({ theme }) =>
             global(theme).sections.edgeRadius} !important;
         padding: ${spacings.spacer}px;
@@ -88,9 +88,9 @@ const PickerView = styled.div`
         font-size: 17px;
         line-height: 1.3;
         text-transform: uppercase;
-        background-color: ${({ theme }) => color(theme).new.primary.default};
+        background-color: ${({ theme }) => color(theme).primary.default};
         padding: 10px 15px;
-        color: ${({ theme }) => color(theme).new.text.inverted} !important;
+        color: ${({ theme }) => color(theme).text.inverted} !important;
         width: max-content;
         margin: 0 auto;
     }
@@ -127,7 +127,7 @@ const PickerView = styled.div`
 
     .react-datepicker__day {
         flex: 1 0 auto;
-        background-color: ${({ theme }) => color(theme).new.elementBg.light};
+        background-color: ${({ theme }) => color(theme).elementBg.light};
         border-radius: 0 !important;
         font-weight: 600;
 
@@ -137,27 +137,27 @@ const PickerView = styled.div`
     @media ${mq.medium} {
         .react-datepicker__day:hover {
             background-color: ${({ theme }) =>
-                color(theme).new.elementBg.dark} !important;
+                color(theme).elementBg.dark} !important;
             border-radius: 0 !important;
-            color: ${({ theme }) => color(theme).new.text.inverted};
+            color: ${({ theme }) => color(theme).text.inverted};
         }
     }
 
     .react-datepicker__day--outside-month {
-        color: ${({ theme }) => color(theme).new.elementBg.medium} !important;
+        color: ${({ theme }) => color(theme).elementBg.medium} !important;
         cursor: default;
     }
 
     .react-datepicker__day--selected {
         background-color: ${({ theme }) =>
-            color(theme).new.primary.default} !important;
+            color(theme).primary.default} !important;
         border-radius: 0 !important;
-        color: ${({ theme }) => color(theme).new.text.inverted};
+        color: ${({ theme }) => color(theme).text.inverted};
     }
 
     .react-datepicker__day--today {
         border: 1px solid
-            ${({ theme }) => hexToRgba(color(theme).new.elementBg.dark, 0.6)} !important;
+            ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.6)} !important;
         border-radius: 0 !important;
     }
 
@@ -165,55 +165,55 @@ const PickerView = styled.div`
 
     .react-datepicker__triangle:before {
         border-bottom-color: ${({ theme }) =>
-            hexToRgba(color(theme).new.elementBg.dark, 0.2)} !important;
+            hexToRgba(color(theme).elementBg.dark, 0.2)} !important;
     }
 
     .react-datepicker__triangle:after {
         border-bottom-color: ${({ theme }) =>
-            color(theme).new.elementBg.light} !important;
+            color(theme).elementBg.light} !important;
     }
 
     /* Day Ranges */
 
     .react-datepicker__day--in-range {
         background-color: ${({ theme }) =>
-            hexToRgba(color(theme).new.primary.default, 0.7)} !important;
+            hexToRgba(color(theme).primary.default, 0.7)} !important;
     }
 
     @media ${mq.medium} {
         .react-datepicker__day--in-range:hover {
             background-color: ${({ theme }) =>
-                hexToRgba(color(theme).new.primary.default, 0.25)} !important;
+                hexToRgba(color(theme).primary.default, 0.25)} !important;
         }
     }
 
     .react-datepicker__day--range-start {
         background-color: ${({ theme }) =>
-            color(theme).new.primary.default} !important;
+            color(theme).primary.default} !important;
     }
 
     @media ${mq.medium} {
         .react-datepicker__day--range-start:hover {
             background-color: ${({ theme }) =>
-                hexToRgba(color(theme).new.primary.default, 0.25)} !important;
+                hexToRgba(color(theme).primary.default, 0.25)} !important;
         }
     }
 
     .react-datepicker__day--range-end {
         background-color: ${({ theme }) =>
-            color(theme).new.primary.default} !important;
+            color(theme).primary.default} !important;
     }
 
     @media ${mq.medium} {
         .react-datepicker__day--range-end:hover {
             background-color: ${({ theme }) =>
-                hexToRgba(color(theme).new.primary.default, 0.25)} !important;
+                hexToRgba(color(theme).primary.default, 0.25)} !important;
         }
     }
 
     .react-datepicker__day--in-selecting-range {
         background-color: ${({ theme }) =>
-            hexToRgba(color(theme).new.primary.default, 0.7)} !important;
+            hexToRgba(color(theme).primary.default, 0.7)} !important;
     }
 
     /* Next-/Prev-Arrow */
@@ -227,7 +227,7 @@ const PickerView = styled.div`
 
     /* Keyboard selection */
     .react-datepicker__day--keyboard-selected {
-        background: ${({ theme }) => color(theme).new.elementBg.dark};
+        background: ${({ theme }) => color(theme).elementBg.dark};
     }
 `;
 
@@ -259,13 +259,9 @@ const DatepickerButton = styled.button<{
     hasBg?: boolean;
 }>`
     background: ${({ theme, hasBg }) =>
-        hasBg
-            ? color(theme).new.elementBg.medium
-            : color(theme).new.elementBg.light};
+        hasBg ? color(theme).elementBg.medium : color(theme).elementBg.light};
     border: ${({ hasError, theme }) =>
-        hasError
-            ? `2px solid ${color(theme).new.error}`
-            : '2px solid transparent'};
+        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     outline: none;
     padding: ${spacings.spacer}px ${spacings.nudge * 3}px;
@@ -277,19 +273,19 @@ const DatepickerButton = styled.button<{
 
     &:focus {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
     }
 
     &:active {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
     }
 
     ${({ isActive }) =>
         isActive &&
         css`
             border: ${({ theme }) =>
-                `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
+                `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
         `}
 
     display: flex;
@@ -432,12 +428,10 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                     {indicator && indicator({ isOpen: isFocused })}
                     {!indicator &&
                         (isFocused ? (
-                            <AngleUp
-                                iconColor={color(theme).new.elementBg.dark}
-                            />
+                            <AngleUp iconColor={color(theme).elementBg.dark} />
                         ) : (
                             <AngleDown
-                                iconColor={color(theme).new.elementBg.dark}
+                                iconColor={color(theme).elementBg.dark}
                             />
                         ))}
                 </DatepickerButton>
@@ -787,16 +781,13 @@ const Datepicker: React.FC<{
                 </DatepickerFoot>
             </ReactDatePicker>
             {infoMessage && (
-                <InfoMessage
-                    textColor={color(theme).new.text.default}
-                    size="small"
-                >
+                <InfoMessage textColor={color(theme).text.default} size="small">
                     {infoMessage}
                 </InfoMessage>
             )}
             {errorMessage && (
                 <ErrorMessage
-                    textColor={color(theme).new.text.error}
+                    textColor={color(theme).text.error}
                     size="small"
                     type="copy-i"
                 >
