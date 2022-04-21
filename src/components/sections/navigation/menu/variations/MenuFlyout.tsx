@@ -14,7 +14,7 @@ import {
 } from 'utils/styles';
 import { NavBarSize } from '../../NavBar';
 import MenuHeader from '../../partials/MenuHeader';
-import { MenuBaseProps, NavItem } from '../Menu';
+import { getCurrentNavItem, MenuBaseProps, NavItem } from '../Menu';
 
 const Backdrop = styled.div<{ isOpen?: boolean }>`
     position: fixed;
@@ -603,6 +603,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
 }) => {
     const { theme } = useLibTheme();
     const flyoutRef = useRef<HTMLDivElement>(null);
+    const hasHeader = useMemo(() => hasMenuHeader(theme), [theme]);
 
     const mainList = useMemo(() => {
         const featured = mainNavigation?.filter((n) => n.isFeatured) || [];
@@ -611,20 +612,26 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
         return [...featured, ...main];
     }, [mainNavigation]);
 
-    const [activeItem, setActiveItem] = useState<number | null>(() => {
-        const currentNavIndex =
-            mainNavigation?.findIndex((item) => {
-                if (item.isCurrent) return true;
-                return item.subItems
-                    ? item.subItems.findIndex(
-                          (subItem) => subItem.isCurrent
-                      ) !== -1
-                    : false;
-            }) || -1;
-        return currentNavIndex >= 0 ? currentNavIndex : null;
+    const [activeItems, setActiveItems] = useState<number[]>(() => {
+        const initial = getCurrentNavItem(mainList)?.rootIndex;
+        return initial ? [initial] : [0];
     });
 
-    const hasHeader = useMemo(() => hasMenuHeader(theme), [theme]);
+    const toggleActiveItem = (index: number) => {
+        setActiveItems((prev) => (prev.includes(index) ? [] : [index]));
+
+        // if multiple nav items can be selected:
+        // setActiveItems((prev) => {
+        //     const copy = [...prev];
+        //     const activeIndex = activeItems.indexOf(index);
+        //     if (activeIndex !== -1) {
+        //         copy.splice(activeIndex, 1);
+        //     } else {
+        //         copy.push(index);
+        //     }
+        //     return copy;
+        // });
+    };
 
     useEffect(() => {
         const handleFocus = (ev: FocusEvent) => {
@@ -681,7 +688,8 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                 <MenuNav.View>
                                     <MenuNav.List id="mainMenu">
                                         {mainList?.map((item, i) => {
-                                            const isActive = activeItem === i;
+                                            const isActive =
+                                                activeItems.includes(i);
                                             const hasCurrentSubItem =
                                                 item?.subItems
                                                     ? item.subItems.findIndex(
@@ -702,7 +710,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                     navBarSize={navBarSize}
                                                     collapseIcon={collapseIcon}
                                                     onItemClick={() =>
-                                                        setActiveItem(i)
+                                                        toggleActiveItem(i)
                                                     }
                                                     canFocus={isOpen}
                                                 >
