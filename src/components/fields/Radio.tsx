@@ -23,7 +23,7 @@ const RadioContainer = styled.div<{ isDisabled?: boolean }>`
 
     &:focus-within {
         border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+            `2px solid ${hexToRgba(color(theme).new.elementBg.dark, 0.2)}`};
     }
 `;
 
@@ -38,7 +38,9 @@ const StyledRadioButton = styled.span<{
     hasBg?: boolean;
 }>`
     background-color: ${({ theme, hasBg }) =>
-        hasBg ? color(theme).mono.light : color(theme).light};
+        hasBg
+            ? color(theme).new.elementBg.medium
+            : color(theme).new.elementBg.light};
     border-radius: 50%;
 
     position: relative;
@@ -50,7 +52,7 @@ const StyledRadioButton = styled.span<{
     ${({ isSelected, theme }) =>
         isSelected
             ? css`
-                  background-color: ${color(theme).primary.medium};
+                  background-color: ${color(theme).new.primary.default};
 
                   &:before {
                       content: '';
@@ -58,7 +60,7 @@ const StyledRadioButton = styled.span<{
                       display: block;
                       height: 8px;
                       width: 8px;
-                      background-color: ${color(theme).light};
+                      background-color: ${color(theme).new.elementBg.light};
                       border-radius: 50%;
                       top: 50%;
                       left: 50%;
@@ -124,10 +126,10 @@ const RadioButton: React.FC<{
                     type="copy-b"
                     textColor={
                         isDisabled
-                            ? color(theme).mono.medium
+                            ? color(theme).new.elementBg.medium
                             : isInverted
-                            ? color(theme).light
-                            : color(theme).dark
+                            ? color(theme).new.text.copyInverted
+                            : color(theme).new.text.copy
                     }
                     innerHTML={label}
                     isInverted={isInverted}
