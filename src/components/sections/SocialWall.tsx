@@ -55,8 +55,8 @@ const Card = styled(Link)<{ isInverted?: boolean }>`
     color: '#fff';
     outline-color: ${({ theme, isInverted }) =>
         isInverted
-            ? color(theme).new.primary.inverted
-            : color(theme).new.primary.default};
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
 
     &:before {
         content: '';
@@ -67,8 +67,8 @@ const Card = styled(Link)<{ isInverted?: boolean }>`
         right: 0;
         background: ${({ theme, isInverted }) =>
             isInverted
-                ? color(theme).new.secondary.inverted
-                : color(theme).new.secondary.default};
+                ? color(theme).secondary.inverted
+                : color(theme).secondary.default};
 
         opacity: 0;
         pointer-events: none;
@@ -123,14 +123,14 @@ const InstagramIcon = styled.div`
     position: absolute;
     left: 20px;
     bottom: 20px;
-    color: ${({ theme }) => color(theme).new.text.inverted};
+    color: ${({ theme }) => color(theme).text.inverted};
     z-index: 2;
 
     & > * {
         fill: #fff;
 
         ${Card}:hover & {
-            color: ${({ theme }) => color(theme).new.text.inverted};
+            color: ${({ theme }) => color(theme).text.inverted};
         }
     }
 `;
@@ -166,10 +166,10 @@ const SocialWall: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation

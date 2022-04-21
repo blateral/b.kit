@@ -35,18 +35,18 @@ const TimelineBlock = styled.div<{
         border: 2px solid
             ${({ theme, isInverted }) =>
                 isInverted
-                    ? color(theme).new.elementBg.light
-                    : color(theme).new.elementBg.dark};
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.dark};
         border-radius: 50%;
 
         background: ${({ theme, isActive, isInverted }) =>
             isActive
                 ? isInverted
-                    ? color(theme).new.elementBg.light
-                    : color(theme).new.elementBg.dark
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.dark
                 : isInverted
-                ? color(theme).new.elementBg.dark
-                : color(theme).new.elementBg.light};
+                ? color(theme).elementBg.dark
+                : color(theme).elementBg.light};
 
         position: absolute;
         top: 0;
@@ -73,8 +73,8 @@ const TimelineBlock = styled.div<{
         height: 100%;
         background: ${({ theme, isInverted }) =>
             isInverted
-                ? color(theme).new.elementBg.light
-                : color(theme).new.elementBg.dark};
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
         left: 5px;
 
         @media ${mq.large} {
@@ -167,9 +167,9 @@ const Timeline: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? color(theme).sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
+                    ? color(theme).sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
@@ -192,10 +192,8 @@ const Timeline: React.FC<{
                                             size="heading-1"
                                             textColor={
                                                 isInverted
-                                                    ? color(theme).new.text
-                                                          .inverted
-                                                    : color(theme).new.text
-                                                          .default
+                                                    ? color(theme).text.inverted
+                                                    : color(theme).text.default
                                             }
                                         >
                                             {item.label}

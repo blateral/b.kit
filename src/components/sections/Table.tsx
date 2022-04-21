@@ -37,13 +37,11 @@ const TableHead = styled(Copy)<{
 }>`
     text-align: left;
     color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).new.text.inverted
-            : color(theme).new.text.default};
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
     background-color: ${({ theme, isInverted }) =>
         isInverted
-            ? color(theme).new.elementBg.dark
-            : color(theme).new.elementBg.medium};
+            ? color(theme).elementBg.dark
+            : color(theme).elementBg.medium};
 
     padding: 0 ${spacings.nudge * 3}px;
     height: 56px;
@@ -64,9 +62,7 @@ const TableData = styled(Copy)<{
     box-sizing: content-box;
 
     background-color: ${({ hasBack, theme }) =>
-        hasBack
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.medium};
+        hasBack ? color(theme).elementBg.light : color(theme).elementBg.medium};
 
     :last-child {
         text-align: ${({ alignRight }) => (alignRight ? 'right' : 'left')};
@@ -186,10 +182,10 @@ const Table: React.FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? colors.new.sectionBg.dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? colors.new.sectionBg.medium
-                    : colors.new.sectionBg.light
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

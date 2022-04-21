@@ -10,8 +10,8 @@ import Grid from 'components/base/Grid';
 const Socials = styled.div<{ isInverted?: boolean }>`
     color: ${({ isInverted, theme }) =>
         isInverted
-            ? color(theme).new.elementBg.light
-            : color(theme).new.elementBg.dark};
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.dark};
 `;
 
 const StyledWrapper = styled(Wrapper)`
@@ -25,7 +25,7 @@ const Social = styled(Link)`
     transition: color 0.2s ease-in-out;
 
     &:hover {
-        color: ${({ theme }) => color(theme).new.elementBg.mediumHover};
+        color: ${({ theme }) => color(theme).elementBg.mediumHover};
     }
 
     & > * {
@@ -54,10 +54,10 @@ const SocialNav: FC<{
             anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).new.sectionBg.dark
+                    ? color(theme).sectionBg.dark
                     : hasBg
-                    ? color(theme).new.sectionBg.medium
-                    : color(theme).new.sectionBg.light
+                    ? color(theme).sectionBg.medium
+                    : color(theme).sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation
