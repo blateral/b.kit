@@ -148,14 +148,14 @@ export { default as Slider } from 'components/blocks/Slider';
 export {
     default as NewNavigation,
     getFullNavbarHeights,
-} from 'components/sections/navigation/remastered/Navigation';
-export { default as NavSkeletons } from 'components/sections/navigation/remastered/skeletons/Skeletons';
+} from 'components/sections/navigation/Navigation';
+export { default as NavSkeletons } from 'components/sections/navigation/skeletons/Skeletons';
 
-export { default as NavBarMainPartial } from 'components/sections/navigation/remastered/partials/NavBarMain';
-export { default as NavBarTopPartial } from 'components/sections/navigation/remastered/partials/NavBarTop';
-export { default as NavBarBottomPartial } from 'components/sections/navigation/remastered/partials/NavBarBottom';
-export { default as MenuHeaderPartial } from 'components/sections/navigation/remastered/partials/MenuHeader';
-export { default as MenuFooterPartial } from 'components/sections/navigation/remastered/partials/MenuFooter';
+export { default as NavBarMainPartial } from 'components/sections/navigation/partials/NavBarMain';
+export { default as NavBarTopPartial } from 'components/sections/navigation/partials/NavBarTop';
+export { default as NavBarBottomPartial } from 'components/sections/navigation/partials/NavBarBottom';
+export { default as MenuHeaderPartial } from 'components/sections/navigation/partials/MenuHeader';
+export { default as MenuFooterPartial } from 'components/sections/navigation/partials/MenuFooter';
 
 export { default as SocialList } from 'components/blocks/SocialList';
 
