@@ -83,17 +83,17 @@ export const styleTextColor = (fallbackColor?: string, gradient?: string) => {
     }
 };
 
-/***** New Color Types *****/
-interface NewColorOptions {
+/***** Color Types *****/
+interface ColorOptions {
     default: string;
     inverted: string;
     hover: string;
     invertedHover: string;
 }
 
-export type NewColorOptionsType = keyof NewColorOptions;
+export type ColorOptionsType = keyof ColorOptions;
 
-export interface NewColors {
+export interface Colors {
     text: {
         default: string;
         inverted: string;
@@ -116,24 +116,9 @@ export interface NewColors {
         dark: string;
         darkHover: string;
     };
-    primary: NewColorOptions;
-    secondary: NewColorOptions;
+    primary: ColorOptions;
+    secondary: ColorOptions;
     error: string;
-}
-
-export type NewColorType = keyof NewColors;
-
-/***** Color Types *****/
-interface ColorOptions {
-    light: string;
-    medium: string;
-    dark: string;
-}
-
-export type ColorOptionsType = keyof ColorOptions;
-
-export interface Colors {
-    new: NewColors;
 }
 
 export type ColorType = keyof Colors;
@@ -190,7 +175,8 @@ export type FontType = keyof Fonts;
  */
 export type FontBase = FontProps;
 
-const newColors: NewColors = {
+/***** Colors *****/
+const defaultColors: Colors = {
     text: {
         default: '#333333',
         inverted: '#FAFAFA',
@@ -228,11 +214,6 @@ const newColors: NewColors = {
     error: '#FF2D2D',
 };
 
-/***** Colors *****/
-const defaultColors: Colors = {
-    new: newColors,
-};
-
 /***** Fonts *****/
 const copyBase: FontProps = {
     family: '"Roboto", Roboto-fallback, Helvetica, sans-serif',
@@ -242,8 +223,8 @@ const copyBase: FontProps = {
     letterSpacing: '0',
     size: [16],
     textTransform: '',
-    color: defaultColors.new.text.copy,
-    colorInverted: defaultColors.new.text.copyInverted,
+    color: defaultColors.text.copy,
+    colorInverted: defaultColors.text.copyInverted,
 };
 
 const headingBase: FontProps = {
@@ -253,8 +234,8 @@ const headingBase: FontProps = {
     lineHeight: '1.17',
     letterSpacing: '0',
     size: [56],
-    color: defaultColors.new.text.heading,
-    colorInverted: defaultColors.new.text.headingInverted,
+    color: defaultColors.text.heading,
+    colorInverted: defaultColors.text.headingInverted,
 };
 
 const defaultFonts: Fonts = {
