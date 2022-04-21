@@ -14,10 +14,12 @@ const View = styled.div<{ isInverted?: boolean }>`
     display: flex;
     flex-direction: row;
 
-    color: ${({ theme }) => color(theme).dark};
+    color: ${({ theme }) => color(theme).new.text.default};
 
     background-color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).light : color(theme).mono.light};
+        isInverted
+            ? color(theme).new.elementBg.light
+            : color(theme).new.elementBg.medium};
 `;
 
 const InputField = styled.input<{
@@ -61,7 +63,7 @@ const ControlBtn = styled.button<{ isInverted?: boolean }>`
 
     margin: -2px;
     background-color: transparent;
-    color: ${({ theme }) => color(theme).dark};
+    color: ${({ theme }) => color(theme).new.text.copy};
 
     outline: none;
     border: none;
