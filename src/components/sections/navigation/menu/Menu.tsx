@@ -16,14 +16,20 @@ export interface NavItem {
     subItems?: NavItem[];
     isFeatured?: boolean;
     icon?: React.ReactNode;
+    hideFromMenu?: boolean;
 }
 
-export const getCurrentNavItem = (items?: NavItem[]) => {
+export const getCurrentNavItem = (
+    items?: NavItem[],
+    includeHidden?: boolean
+) => {
     if (!items || items.length === 0) return null;
 
     const findCurrent = (item?: NavItem): NavItem | null => {
         if (!item) return null;
-        if (item.isCurrent) return item;
+        if (item.isCurrent && (includeHidden || !item.hideFromMenu)) {
+            return item;
+        }
         if (item.subItems && item.subItems.length > 0) {
             for (let i = 0; i < item.subItems.length; i++) {
                 const result = findCurrent(item.subItems[i]);

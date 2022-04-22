@@ -149,7 +149,10 @@ export {
     default as NewNavigation,
     getFullNavbarHeights,
 } from 'components/sections/navigation/Navigation';
-export { default as NavSkeletons } from 'components/sections/navigation/skeletons/Skeletons';
+export {
+    default as NavSkeletons,
+    utils,
+} from 'components/sections/navigation/skeletons/Skeletons';
 
 export { default as NavBarMainPartial } from 'components/sections/navigation/partials/NavBarMain';
 export { default as NavBarTopPartial } from 'components/sections/navigation/partials/NavBarTop';
