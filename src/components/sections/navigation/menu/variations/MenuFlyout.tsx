@@ -12,6 +12,7 @@ import React, {
 import styled, { DefaultTheme } from 'styled-components';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
+import { getCurrentNavItem } from 'utils/navigation';
 import {
     mq,
     spacings,
@@ -21,7 +22,7 @@ import {
 } from 'utils/styles';
 import { NavBarSize } from '../../NavBar';
 import MenuHeader from '../../partials/MenuHeader';
-import { getCurrentNavItem, MenuBaseProps, NavItem } from '../Menu';
+import { MenuBaseProps, NavItem } from '../Menu';
 
 const Backdrop = styled.div<{ isOpen?: boolean }>`
     position: fixed;

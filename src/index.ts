@@ -47,6 +47,7 @@ export { hexToRgba } from 'utils/hexRgbConverter';
 export { getBgImage } from 'utils/backgroundImage';
 export { clampValue } from 'utils/clamp';
 export { importFonts } from 'utils/fontLoading';
+export { getCurrentNavItem, getCurrentNavPath } from 'utils/navigation';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
@@ -149,10 +150,7 @@ export {
     default as NewNavigation,
     getFullNavbarHeights,
 } from 'components/sections/navigation/Navigation';
-export {
-    default as NavSkeletons,
-    utils,
-} from 'components/sections/navigation/skeletons/Skeletons';
+export { default as NavSkeletons } from 'components/sections/navigation/skeletons/Skeletons';
 
 export { default as NavBarMainPartial } from 'components/sections/navigation/partials/NavBarMain';
 export { default as NavBarTopPartial } from 'components/sections/navigation/partials/NavBarTop';

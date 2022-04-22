@@ -6,37 +6,7 @@ import Link, { LinkProps } from 'components/typography/Link';
 import { spacings, getColors as color, mq } from 'utils/styles';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import AngleLeft from 'components/base/icons/AngleLeft';
-
-export const getCurrentNavPath = (
-    items?: NavItem[],
-    exludeHrefs?: string[]
-) => {
-    if (!items || items.length === 0) return [];
-    const excludes = exludeHrefs || [];
-
-    const isItemValid = (item: NavItem) => {
-        return item.link?.href && !excludes.includes(item.link.href);
-    };
-
-    const getPathToCurrent = (item: NavItem): NavItem[] => {
-        if (item.isCurrent && isItemValid(item)) return [item];
-        if (!item.subItems) return [];
-
-        for (let i = 0; i < item.subItems.length; i++) {
-            const subPath = getPathToCurrent(item.subItems[i]);
-            if (subPath.length > 0) return [item, ...subPath];
-        }
-
-        return [];
-    };
-
-    for (let i = 0; i < items.length; i++) {
-        const path = getPathToCurrent(items[i]);
-        if (path.length > 0) return [...path];
-    }
-
-    return [];
-};
+import { getCurrentNavPath } from 'utils/navigation';
 
 const View = styled.nav`
     min-width: 0;
