@@ -616,6 +616,8 @@ export interface FlyoutMenuProps {
     subNavTitle?: string;
 }
 
+const menuFilter = (item: NavItem) => !item.hideFromMenu;
+
 const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     isOpen,
     clampWidth,
@@ -641,7 +643,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     }, [mainNavigation]);
 
     const [activeItems, setActiveItems] = useState<number[]>(() => {
-        const initial = getCurrentNavItem(mainList)?.rootIndex;
+        const initial = getCurrentNavItem(mainList, true)?.rootIndex;
         return initial ? [initial] : [0];
     });
     const [currentNavEl, setCurrentNavEl] =
@@ -736,61 +738,72 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                             <ScrollArea>
                                 <MenuNav.View>
                                     <MenuNav.List id="mainMenu">
-                                        {mainList?.map((item, i) => {
-                                            const isActive =
-                                                activeItems.includes(i);
-                                            const hasCurrentSubItem =
-                                                item?.subItems
-                                                    ? item.subItems.findIndex(
-                                                          (n) => n.isCurrent
-                                                      ) >= 0
-                                                    : false;
+                                        {mainList
+                                            ?.filter(menuFilter)
+                                            .map((item, i) => {
+                                                const isActive =
+                                                    activeItems.includes(i);
+                                                const hasCurrentSubItem =
+                                                    item?.subItems
+                                                        ? item.subItems.findIndex(
+                                                              (n) => n.isCurrent
+                                                          ) >= 0
+                                                        : false;
 
-                                            const isCurrent =
-                                                item.isCurrent ||
-                                                hasCurrentSubItem;
+                                                const isCurrent =
+                                                    item.isCurrent ||
+                                                    hasCurrentSubItem;
 
-                                            return (
-                                                <MenuNav.Item
-                                                    key={i}
-                                                    {...item}
-                                                    ref={
-                                                        isCurrent
-                                                            ? setCurrentNavEl
-                                                            : undefined
-                                                    }
-                                                    isActive={isActive}
-                                                    isCurrent={isCurrent}
-                                                    subNavTitle={subNavTitle}
-                                                    navBarSize={navBarSize}
-                                                    collapseIcon={collapseIcon}
-                                                    onItemClick={() =>
-                                                        toggleActiveItem(i)
-                                                    }
-                                                    canFocus={isOpen}
-                                                >
-                                                    {item?.subItems?.map(
-                                                        (subItem, ii) => (
-                                                            <MenuNav.SubItem
-                                                                key={ii}
-                                                                ref={
-                                                                    subItem.isCurrent
-                                                                        ? setCurrentSubNavEl
-                                                                        : undefined
-                                                                }
-                                                                {...subItem}
-                                                                navBarSize={
-                                                                    navBarSize
-                                                                }
-                                                                canFocus={
-                                                                    isOpen
-                                                                }
-                                                            />
-                                                        )
-                                                    )}
-                                                </MenuNav.Item>
-                                            );
-                                        })}
+                                                return (
+                                                    <MenuNav.Item
+                                                        key={i}
+                                                        {...item}
+                                                        ref={
+                                                            isCurrent
+                                                                ? setCurrentNavEl
+                                                                : undefined
+                                                        }
+                                                        isActive={isActive}
+                                                        isCurrent={isCurrent}
+                                                        subNavTitle={
+                                                            subNavTitle
+                                                        }
+                                                        navBarSize={navBarSize}
+                                                        collapseIcon={
+                                                            collapseIcon
+                                                        }
+                                                        onItemClick={() =>
+                                                            toggleActiveItem(i)
+                                                        }
+                                                        canFocus={isOpen}
+                                                    >
+                                                        {item?.subItems
+                                                            ?.filter(menuFilter)
+                                                            .map(
+                                                                (
+                                                                    subItem,
+                                                                    ii
+                                                                ) => (
+                                                                    <MenuNav.SubItem
+                                                                        key={ii}
+                                                                        ref={
+                                                                            subItem.isCurrent
+                                                                                ? setCurrentSubNavEl
+                                                                                : undefined
+                                                                        }
+                                                                        {...subItem}
+                                                                        navBarSize={
+                                                                            navBarSize
+                                                                        }
+                                                                        canFocus={
+                                                                            isOpen
+                                                                        }
+                                                                    />
+                                                                )
+                                                            )}
+                                                    </MenuNav.Item>
+                                                );
+                                            })}
                                     </MenuNav.List>
                                     <MenuNav.SubList
                                         items={subNavigation}

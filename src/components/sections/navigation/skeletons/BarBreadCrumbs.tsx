@@ -7,6 +7,37 @@ import { spacings, getColors as color, mq } from 'utils/styles';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import AngleLeft from 'components/base/icons/AngleLeft';
 
+export const getCurrentNavPath = (
+    items?: NavItem[],
+    exludeHrefs?: string[]
+) => {
+    if (!items || items.length === 0) return [];
+    const excludes = exludeHrefs || [];
+
+    const isItemValid = (item: NavItem) => {
+        return item.link?.href && !excludes.includes(item.link.href);
+    };
+
+    const getPathToCurrent = (item: NavItem): NavItem[] => {
+        if (item.isCurrent && isItemValid(item)) return [item];
+        if (!item.subItems) return [];
+
+        for (let i = 0; i < item.subItems.length; i++) {
+            const subPath = getPathToCurrent(item.subItems[i]);
+            if (subPath.length > 0) return [item, ...subPath];
+        }
+
+        return [];
+    };
+
+    for (let i = 0; i < items.length; i++) {
+        const path = getPathToCurrent(items[i]);
+        if (path.length > 0) return [...path];
+    }
+
+    return [];
+};
+
 const View = styled.nav`
     min-width: 0;
 `;
@@ -122,32 +153,36 @@ const BarBreadcrumbs: FC<{
     className,
 }) => {
     const currentNavPath = useMemo(() => {
-        const navList: NavItem[] = navItems || [];
-        const path: Array<NavItem> = [];
+        // const navList: NavItem[] = navItems || [];
+        // const path: Array<NavItem> = [];
 
-        for (let i = 0; i < navList.length; i++) {
-            const subItems = (navList[i] as NavItem).subItems || [];
-            const currentSubItem = subItems.find((subItem) => {
-                return (
-                    subItem.isCurrent && subItem.link.href !== rootLink?.href
-                );
-            });
+        // for (let i = 0; i < navList.length; i++) {
+        //     const subItems = (navList[i] as NavItem).subItems || [];
+        //     const currentSubItem = subItems.find((subItem) => {
+        //         return (
+        //             subItem.isCurrent && subItem.link.href !== rootLink?.href
+        //         );
+        //     });
 
-            if (
-                (navList[i].isCurrent &&
-                    navList[i].link.href !== rootLink?.href) ||
-                currentSubItem
-            ) {
-                path.push({
-                    label: navList[i].label,
-                    link: navList[i].link,
-                    isCurrent: navList[i].isCurrent,
-                });
-                if (currentSubItem) path.push(currentSubItem);
-                break;
-            }
-        }
-        return path;
+        //     if (
+        //         (navList[i].isCurrent &&
+        //             navList[i].link.href !== rootLink?.href) ||
+        //         currentSubItem
+        //     ) {
+        //         path.push({
+        //             label: navList[i].label,
+        //             link: navList[i].link,
+        //             isCurrent: navList[i].isCurrent,
+        //         });
+        //         if (currentSubItem) path.push(currentSubItem);
+        //         break;
+        //     }
+        // }
+        // return path;
+        return getCurrentNavPath(
+            navItems,
+            rootLink?.href ? [rootLink?.href] : []
+        );
     }, [navItems, rootLink?.href]);
 
     return (
