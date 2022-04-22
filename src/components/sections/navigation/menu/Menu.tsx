@@ -11,7 +11,7 @@ import { NavBarSize } from '../NavBar';
 
 export interface NavItem {
     label: string;
-    link: LinkProps;
+    link?: LinkProps;
     isCurrent?: boolean;
     subItems?: NavItem[];
     isFeatured?: boolean;

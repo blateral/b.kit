@@ -61,17 +61,23 @@ const ListItem = styled.li<{ isCurrent?: boolean }>`
     display: ${({ isCurrent }) => (isCurrent ? 'flex' : 'none')};
     min-width: inherit;
 
-    & > * + * {
-        margin-left: ${spacings.nudge}px;
-    }
-
     @media ${mq.semilarge} {
         display: flex;
+
+        & > * + * {
+            margin-left: ${spacings.nudge}px;
+        }
     }
 `;
 
-const NavLink = styled(Link)<{ isInverted?: boolean; clamp?: boolean }>`
-    display: inline-block;
+const NavLink = styled(Link)<{
+    isInverted?: boolean;
+    clamp?: boolean;
+    showOnMobile?: boolean;
+    showOnDesktop?: boolean;
+}>`
+    display: ${({ showOnMobile }) => (showOnMobile ? 'inline-flex' : 'none')};
+    align-items: center;
     max-width: ${({ clamp }) => clamp && '120px'};
 
     overflow: hidden;
@@ -83,6 +89,10 @@ const NavLink = styled(Link)<{ isInverted?: boolean; clamp?: boolean }>`
         isInverted ? color(theme).text.inverted : color(theme).text.default};
     text-decoration: underline;
 
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             color: ${({ theme, isInverted }) =>
@@ -91,10 +101,21 @@ const NavLink = styled(Link)<{ isInverted?: boolean; clamp?: boolean }>`
                     : color(theme).text.default};
         }
     }
+
+    @media ${mq.semilarge} {
+        display: ${({ showOnDesktop }) =>
+            showOnDesktop ? 'inline-flex' : 'none'};
+    }
 `;
 
-const NavLabel = styled.span<{ isInverted?: boolean; clamp?: boolean }>`
-    display: inline-block;
+const NavLabel = styled.span<{
+    isInverted?: boolean;
+    clamp?: boolean;
+    showOnMobile?: boolean;
+    showOnDesktop?: boolean;
+}>`
+    display: ${({ showOnMobile }) => (showOnMobile ? 'inline-flex' : 'none')};
+    align-items: center;
     max-width: ${({ clamp }) => clamp && '120px'};
 
     overflow: hidden;
@@ -105,10 +126,19 @@ const NavLabel = styled.span<{ isInverted?: boolean; clamp?: boolean }>`
     color: ${({ theme, isInverted }) =>
         isInverted ? color(theme).text.inverted : color(theme).text.default};
     text-decoration: none;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+
+    @media ${mq.semilarge} {
+        display: ${({ showOnDesktop }) =>
+            showOnDesktop ? 'inline-flex' : 'none'};
+    }
 `;
 
-const Seperator = styled(Copy)<{ isCurrent?: boolean }>`
-    display: ${({ isCurrent }) => isCurrent && 'none'};
+const Seperator = styled(Copy)`
+    display: none;
 
     transition: color 0.2s ease-in-out;
 
@@ -117,23 +147,36 @@ const Seperator = styled(Copy)<{ isCurrent?: boolean }>`
     }
 `;
 
-const BackLink = styled(Link)`
-    display: inline-flex;
-    align-items: center;
-    margin: 0;
-    padding: 0 ${spacings.nudge}px;
-
-    ${copyStyle('copy', 'small')}
-    color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).text.inverted : color(theme).text.default};
-    text-decoration: none;
-
-    transition: color 0.2s ease-in-out;
-
-    @media ${mq.semilarge} {
-        display: none;
+const BreadcrumbItem: FC<
+    NavItem & {
+        isInverted?: boolean;
+        showOnMobile?: boolean;
+        showOnDesktop?: boolean;
     }
-`;
+> = ({ isInverted, label, link, showOnMobile, showOnDesktop, children }) => {
+    if (link?.href) {
+        return (
+            <NavLink
+                {...link}
+                isInverted={isInverted}
+                showOnMobile={showOnMobile}
+                showOnDesktop={showOnDesktop}
+            >
+                {children || label}
+            </NavLink>
+        );
+    } else {
+        return (
+            <NavLabel
+                isInverted={isInverted}
+                showOnMobile={showOnMobile}
+                showOnDesktop={showOnDesktop}
+            >
+                {children || label}
+            </NavLabel>
+        );
+    }
+};
 
 const BarBreadcrumbs: FC<{
     isInverted?: boolean;
@@ -153,64 +196,56 @@ const BarBreadcrumbs: FC<{
     className,
 }) => {
     const currentNavPath = useMemo(() => {
-        // const navList: NavItem[] = navItems || [];
-        // const path: Array<NavItem> = [];
-
-        // for (let i = 0; i < navList.length; i++) {
-        //     const subItems = (navList[i] as NavItem).subItems || [];
-        //     const currentSubItem = subItems.find((subItem) => {
-        //         return (
-        //             subItem.isCurrent && subItem.link.href !== rootLink?.href
-        //         );
-        //     });
-
-        //     if (
-        //         (navList[i].isCurrent &&
-        //             navList[i].link.href !== rootLink?.href) ||
-        //         currentSubItem
-        //     ) {
-        //         path.push({
-        //             label: navList[i].label,
-        //             link: navList[i].link,
-        //             isCurrent: navList[i].isCurrent,
-        //         });
-        //         if (currentSubItem) path.push(currentSubItem);
-        //         break;
-        //     }
-        // }
-        // return path;
         return getCurrentNavPath(
             navItems,
             rootLink?.href ? [rootLink?.href] : []
         );
     }, [navItems, rootLink?.href]);
 
+    const rootItem: NavItem = {
+        label: rootLabel || 'Home',
+        link: rootLink,
+    };
+
     return (
         <View aria-label="breadcrumbs" className={className}>
             <List>
                 <ListItem>
-                    <NavLink {...rootLink} isInverted={isInverted}>
-                        {rootLabel || 'Home'}
-                    </NavLink>
+                    <BreadcrumbItem
+                        showOnDesktop
+                        isInverted={isInverted}
+                        {...rootItem}
+                    />
                 </ListItem>
 
                 {currentNavPath?.map((item, i) => {
                     const isCurrent = i === currentNavPath.length - 1;
-                    const prev =
-                        i - 1 >= 0 ? currentNavPath[i - 1] : { link: rootLink };
+                    const prev = i - 1 >= 0 ? currentNavPath[i - 1] : rootItem;
 
                     return (
                         <ListItem key={i} isCurrent={isCurrent}>
-                            <Seperator
-                                size="small"
-                                isInverted={isInverted}
-                                isCurrent={isCurrent}
-                            >
+                            <Seperator size="small" isInverted={isInverted}>
                                 {seperator ? seperator({ isInverted }) : '/'}
                             </Seperator>
                             {isCurrent ? (
                                 <>
                                     {prev && (
+                                        <BreadcrumbItem
+                                            {...prev}
+                                            showOnMobile
+                                            isInverted={isInverted}
+                                        >
+                                            <span>
+                                                {back ? (
+                                                    back({ isInverted })
+                                                ) : (
+                                                    <AngleLeft />
+                                                )}
+                                            </span>
+                                            <span>{prev.label}</span>
+                                        </BreadcrumbItem>
+                                    )}
+                                    {/* {prev && (
                                         <BackLink
                                             isInverted={isInverted}
                                             {...prev.link}
@@ -221,19 +256,20 @@ const BarBreadcrumbs: FC<{
                                                 <AngleLeft />
                                             )}
                                         </BackLink>
-                                    )}
-                                    <NavLabel isInverted={isInverted}>
-                                        {item.label}
-                                    </NavLabel>
+                                    )} */}
+                                    <BreadcrumbItem
+                                        {...item}
+                                        link={{}}
+                                        showOnDesktop
+                                        isInverted={isInverted}
+                                    />
                                 </>
-                            ) : item.link?.href ? (
-                                <NavLink {...item.link} isInverted={isInverted}>
-                                    {item.label}
-                                </NavLink>
                             ) : (
-                                <NavLabel isInverted={isInverted}>
-                                    {item.label}
-                                </NavLabel>
+                                <BreadcrumbItem
+                                    {...item}
+                                    showOnDesktop
+                                    isInverted={isInverted}
+                                />
                             )}
                         </ListItem>
                     );

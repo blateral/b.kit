@@ -585,17 +585,19 @@ const SecondaryNavigation: FC<{
 }> = ({ items, canFocus }) => {
     return items && items.length > 0 ? (
         <SecondaryNavList>
-            {items?.map((item, i) => (
-                <li key={i}>
-                    <SecondaryNavLink
-                        isCurrent={item.isCurrent}
-                        href={item.link.href}
-                        tabIndex={!canFocus ? -1 : undefined}
-                    >
-                        {item.label}
-                    </SecondaryNavLink>
-                </li>
-            ))}
+            {items
+                ?.filter((n) => n.link?.href)
+                .map((item, i) => (
+                    <li key={i}>
+                        <SecondaryNavLink
+                            isCurrent={item.isCurrent}
+                            href={item.link?.href}
+                            tabIndex={!canFocus ? -1 : undefined}
+                        >
+                            {item.label}
+                        </SecondaryNavLink>
+                    </li>
+                ))}
         </SecondaryNavList>
     ) : null;
 };
