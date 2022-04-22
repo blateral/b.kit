@@ -8,9 +8,14 @@ import Heading from 'components/typography/Heading';
 import { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled from 'styled-components';
-import { mq, spacings } from 'utils/styles';
+import { getColors, mq, spacings } from 'utils/styles';
 
-const Content = styled.div`
+const Content = styled.div<{ isInverted?: boolean }>`
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? getColors(theme).text.inverted
+            : getColors(theme).text.default};
+
     @media ${mq.large} {
         display: flex;
         flex-direction: row;
