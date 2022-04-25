@@ -82,6 +82,11 @@ const ForegroundImg = styled(Image)`
     height: 100%;
     max-width: none;
     object-fit: cover;
+
+    img {
+        height: auto;
+        width: auto;
+    }
 `;
 
 const ForegroundOverlay = styled.div<{ color: string }>`
