@@ -147,7 +147,7 @@ export {
 export { default as Slider } from 'components/blocks/Slider';
 
 export {
-    default as NewNavigation,
+    default as Navigation,
     getFullNavbarHeights,
 } from 'components/sections/navigation/Navigation';
 export { default as NavSkeletons } from 'components/sections/navigation/skeletons/Skeletons';
