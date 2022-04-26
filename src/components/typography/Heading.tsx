@@ -141,6 +141,7 @@ const Heading: React.FC<{
 
     return (
         <View
+            lang="de"
             as={renderAs || tag}
             headingType={size}
             textColor={
