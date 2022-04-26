@@ -11,7 +11,7 @@ export const Default: Story = () => (
     <JobList
         jobs={[
             {
-                jobTitle: 'Junior Steuerfach-angestellter<br/>(m/w/d)',
+                jobTitle: 'Junior Steuerfachangestellter<br/>(m/w/d)',
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
             },
@@ -36,22 +36,22 @@ export const Default: Story = () => (
                 location: 'Immenstaad / Ravensburg',
             },
             {
-                jobTitle: `Junior Steuerfach-angestellter<br/>(m/w/d)`,
+                jobTitle: `Junior Steuerfachangestellter<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
             },
             {
-                jobTitle: `Junior Steuerfach-angestellter<br/>(m/w/d)`,
+                jobTitle: `Junior Steuerfachangestellter<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
             },
             {
-                jobTitle: `Junior Steuerfach-angestellter<br/>(m/w/d)`,
+                jobTitle: `Junior Steuerfachangestellter<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
             },
             {
-                jobTitle: `Junior Steuerfach-angestellter<br/>(m/w/d)`,
+                jobTitle: `Junior Steuerfachangestellter<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
             },
