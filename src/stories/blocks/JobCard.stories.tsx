@@ -9,7 +9,7 @@ export default {
 
 export const Default: Story = () => (
     <JobCard
-        jobTitle="Junior Steuerfach-angestellter (m/w/d)"
+        jobTitle="Jobtitle<br/>(m/w/d)"
         timeModel="Vollzeit"
         location="Immenstaad / Ravensburg"
     />
