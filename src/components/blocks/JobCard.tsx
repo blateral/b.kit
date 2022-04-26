@@ -35,6 +35,10 @@ const Info = styled.div`
     -ms-grid-rows: min-content 1fr;
     grid-auto-rows: min-content 1fr;
 
+    & + & {
+        margin-top: ${spacings.nudge * 3}px;
+    }
+
     & > * + * {
         margin-left: ${spacings.nudge * 2}px;
     }
