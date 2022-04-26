@@ -22,10 +22,8 @@ const JobList: React.FC<{
         identifiers: ['[data-sheet="title"]', '[data-sheet="info"]'],
         responsive: {
             small: 1,
-            medium: 1,
             semilarge: 2,
             large: 3,
-            xlarge: 3,
         },
     });
     return (
