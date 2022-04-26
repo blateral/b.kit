@@ -106,12 +106,20 @@ const InfoItem = styled.li`
 `;
 
 const InfoTitle = styled(Copy)`
+    display: block;
     margin-bottom: ${spacings.nudge * 3}px;
 `;
 
-const InfoContent = styled.div`
+const Infos = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 0;
+`;
+
+const InfoContent = styled.li`
     display: -ms-grid;
     display: grid;
+    margin: 0;
 
     -ms-grid-columns: min-content 1fr;
     grid-template-columns: min-content 1fr;
@@ -151,26 +159,29 @@ const InfoList: FC<{
                         <InfoTitle
                             size="small"
                             type="copy-b"
+                            renderAs="span"
                             isInverted={isInverted}
                         >
                             {group.title}
                         </InfoTitle>
-                        {group?.items?.map((info, ii) => (
-                            <InfoContent key={ii}>
-                                {info.icon && (
-                                    <Icon isInverted={isInverted}>
-                                        {info.icon(isInverted)}
-                                    </Icon>
-                                )}
-                                {info.text && (
-                                    <Copy
-                                        size="small"
-                                        isInverted={isInverted}
-                                        innerHTML={info.text}
-                                    />
-                                )}
-                            </InfoContent>
-                        ))}
+                        <Infos>
+                            {group?.items?.map((info, ii) => (
+                                <InfoContent key={ii}>
+                                    {info.icon && (
+                                        <Icon isInverted={isInverted}>
+                                            {info.icon(isInverted)}
+                                        </Icon>
+                                    )}
+                                    {info.text && (
+                                        <Copy
+                                            size="small"
+                                            isInverted={isInverted}
+                                            innerHTML={info.text}
+                                        />
+                                    )}
+                                </InfoContent>
+                            ))}
+                        </Infos>
                     </InfoItem>
                 ))}
         </InfoListView>
