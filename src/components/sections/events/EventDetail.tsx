@@ -6,9 +6,9 @@ import Wrapper from 'components/base/Wrapper';
 import { EventProps } from 'components/blocks/EventBlock';
 import Image from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
-import Copy, { copyStyle } from 'components/typography/Copy';
+import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
-import Link, { LinkProps } from 'components/typography/Link';
+import { LinkProps } from 'components/typography/Link';
 import { mq, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
@@ -137,10 +137,6 @@ const Icon = styled(Copy)`
     }
 `;
 
-const InfoLink = styled(Link)`
-    ${copyStyle('copy', 'small')}
-`;
-
 const InfoList: FC<{
     isInverted?: boolean;
     items?: EventInfoGroup[];
@@ -148,38 +144,35 @@ const InfoList: FC<{
 }> = ({ isInverted, items, className }) => {
     return (
         <InfoListView className={className}>
-            {items?.map((group, i) => (
-                <InfoItem key={i}>
-                    <InfoTitle
-                        size="small"
-                        type="copy-b"
-                        isInverted={isInverted}
-                    >
-                        {group.title}
-                    </InfoTitle>
-                    {group?.items?.map((info, ii) => (
-                        <InfoContent key={ii}>
-                            {info.icon && (
-                                <Icon isInverted={isInverted}>
-                                    {info.icon(isInverted)}
-                                </Icon>
-                            )}
-                            {info.link?.href ? (
-                                <InfoLink
-                                    {...info.link}
-                                    isInverted={isInverted}
-                                >
-                                    {info.label}
-                                </InfoLink>
-                            ) : (
-                                <Copy size="small" isInverted={isInverted}>
-                                    {info.label}
-                                </Copy>
-                            )}
-                        </InfoContent>
-                    ))}
-                </InfoItem>
-            ))}
+            {items
+                ?.filter((e) => e.title)
+                .map((group, i) => (
+                    <InfoItem key={i}>
+                        <InfoTitle
+                            size="small"
+                            type="copy-b"
+                            isInverted={isInverted}
+                        >
+                            {group.title}
+                        </InfoTitle>
+                        {group?.items?.map((info, ii) => (
+                            <InfoContent key={ii}>
+                                {info.icon && (
+                                    <Icon isInverted={isInverted}>
+                                        {info.icon(isInverted)}
+                                    </Icon>
+                                )}
+                                {info.text && (
+                                    <Copy
+                                        size="small"
+                                        isInverted={isInverted}
+                                        innerHTML={info.text}
+                                    />
+                                )}
+                            </InfoContent>
+                        ))}
+                    </InfoItem>
+                ))}
         </InfoListView>
     );
 };
@@ -195,9 +188,10 @@ export interface EventInfoGroup {
 }
 
 export interface EventInfo {
+    /** icon injection function */
     icon?: (isInverted?: boolean) => React.ReactNode;
-    label?: string;
-    link?: LinkProps;
+    /** Event info text (richtText) */
+    text?: string;
 }
 
 const EventDetail: React.FC<{

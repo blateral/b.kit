@@ -122,19 +122,19 @@ export const WithInfoList: Story = () => (
                 items: [
                     {
                         icon: () => <Magnifier />,
-                        label: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
+                        text: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'Auf Karte anzeigen',
+                        text: 'Auf Karte anzeigen',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'Eintritt frei',
+                        text: 'Eintritt frei',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -143,20 +143,19 @@ export const WithInfoList: Story = () => (
                 items: [
                     {
                         icon: () => <Phone />,
-                        label: '07551 / 888666',
+                        text: '07551 / 888666',
                     },
                     {
                         icon: () => <Mail />,
-                        label: 'max.mustermann@gmail.com',
-                        link: { href: 'mailto:max.mustermann@gmail.com' },
+                        text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'www.topevents.com',
+                        text: 'www.topevents.com',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -165,20 +164,19 @@ export const WithInfoList: Story = () => (
                 items: [
                     {
                         icon: () => <Phone />,
-                        label: '07551 / 888666',
+                        text: '07551 / 888666',
                     },
                     {
                         icon: () => <Mail />,
-                        label: 'max.mustermann@gmail.com',
-                        link: { href: 'mailto:max.mustermann@gmail.com' },
+                        text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'www.topevents.com',
+                        text: 'www.topevents.com',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -218,19 +216,19 @@ export const WithBackground: Story = () => (
                 items: [
                     {
                         icon: () => <Magnifier />,
-                        label: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
+                        text: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'Auf Karte anzeigen',
+                        text: 'Auf Karte anzeigen',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'Eintritt frei',
+                        text: 'Eintritt frei',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -239,20 +237,19 @@ export const WithBackground: Story = () => (
                 items: [
                     {
                         icon: () => <Phone />,
-                        label: '07551 / 888666',
+                        text: '07551 / 888666',
                     },
                     {
                         icon: () => <Mail />,
-                        label: 'max.mustermann@gmail.com',
-                        link: { href: 'mailto:max.mustermann@gmail.com' },
+                        text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'www.topevents.com',
+                        text: 'www.topevents.com',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -261,20 +258,19 @@ export const WithBackground: Story = () => (
                 items: [
                     {
                         icon: () => <Phone />,
-                        label: '07551 / 888666',
+                        text: '07551 / 888666',
                     },
                     {
                         icon: () => <Mail />,
-                        label: 'max.mustermann@gmail.com',
-                        link: { href: 'mailto:max.mustermann@gmail.com' },
+                        text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'www.topevents.com',
+                        text: 'www.topevents.com',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -314,19 +310,19 @@ export const IsInverted: Story = () => (
                 items: [
                     {
                         icon: () => <Magnifier />,
-                        label: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
+                        text: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'Auf Karte anzeigen',
+                        text: 'Auf Karte anzeigen',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'Eintritt frei',
+                        text: 'Eintritt frei',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -335,20 +331,19 @@ export const IsInverted: Story = () => (
                 items: [
                     {
                         icon: () => <Phone />,
-                        label: '07551 / 888666',
+                        text: '07551 / 888666',
                     },
                     {
                         icon: () => <Mail />,
-                        label: 'max.mustermann@gmail.com',
-                        link: { href: 'mailto:max.mustermann@gmail.com' },
+                        text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'www.topevents.com',
+                        text: 'www.topevents.com',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -357,20 +352,19 @@ export const IsInverted: Story = () => (
                 items: [
                     {
                         icon: () => <Phone />,
-                        label: '07551 / 888666',
+                        text: '07551 / 888666',
                     },
                     {
                         icon: () => <Mail />,
-                        label: 'max.mustermann@gmail.com',
-                        link: { href: 'mailto:max.mustermann@gmail.com' },
+                        text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'www.topevents.com',
+                        text: 'www.topevents.com',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -409,19 +403,19 @@ export const CustomTag: Story = () => (
                 items: [
                     {
                         icon: () => <Magnifier />,
-                        label: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
+                        text: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'Auf Karte anzeigen',
+                        text: 'Auf Karte anzeigen',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'Eintritt frei',
+                        text: 'Eintritt frei',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -430,20 +424,19 @@ export const CustomTag: Story = () => (
                 items: [
                     {
                         icon: () => <Phone />,
-                        label: '07551 / 888666',
+                        text: '07551 / 888666',
                     },
                     {
                         icon: () => <Mail />,
-                        label: 'max.mustermann@gmail.com',
-                        link: { href: 'mailto:max.mustermann@gmail.com' },
+                        text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'www.topevents.com',
+                        text: 'www.topevents.com',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
@@ -452,20 +445,19 @@ export const CustomTag: Story = () => (
                 items: [
                     {
                         icon: () => <Phone />,
-                        label: '07551 / 888666',
+                        text: '07551 / 888666',
                     },
                     {
                         icon: () => <Mail />,
-                        label: 'max.mustermann@gmail.com',
-                        link: { href: 'mailto:max.mustermann@gmail.com' },
+                        text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
                         icon: () => <Magnifier />,
-                        label: 'www.topevents.com',
+                        text: 'www.topevents.com',
                     },
                     {
                         icon: () => <ExclamationMark />,
-                        label: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
+                        text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
             },
