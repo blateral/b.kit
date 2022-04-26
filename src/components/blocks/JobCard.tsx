@@ -79,9 +79,8 @@ const JobCard = React.forwardRef<
                     textColor="inherit"
                     size="heading-2"
                     data-sheet="title"
-                >
-                    {jobTitle}
-                </Heading>
+                    innerHTML={jobTitle}
+                />
                 <Copy type="copy-b" textColor="inherit" data-sheet="info">
                     <Info>
                         <Icon>{modelIcon ? modelIcon() : <Clock />}</Icon>
