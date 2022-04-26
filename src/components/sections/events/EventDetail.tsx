@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -65,7 +65,7 @@ const EventText = styled(Copy)`
     }
 `;
 
-const InfoList = styled.ul`
+const InfoListView = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
@@ -119,11 +119,11 @@ const InfoContent = styled.div`
     grid-auto-rows: min-content 1fr;
 
     & + & {
-        padding-top: ${spacings.nudge * 2}px;
+        margin-top: ${spacings.nudge * 2}px;
     }
 
     & > * + * {
-        padding-left: ${spacings.nudge * 2}px;
+        margin-left: ${spacings.nudge * 2}px;
     }
 `;
 
@@ -137,6 +137,46 @@ const Icon = styled(Copy)`
     }
 `;
 
+const InfoList: FC<{
+    isInverted?: boolean;
+    items?: EventInfoGroup[];
+    className?: string;
+}> = ({ isInverted, items, className }) => {
+    return (
+        <InfoListView className={className}>
+            {items
+                ?.filter((e) => e.title)
+                .map((group, i) => (
+                    <InfoItem key={i}>
+                        <InfoTitle
+                            size="small"
+                            type="copy-b"
+                            isInverted={isInverted}
+                        >
+                            {group.title}
+                        </InfoTitle>
+                        {group?.items?.map((info, ii) => (
+                            <InfoContent key={ii}>
+                                {info.icon && (
+                                    <Icon isInverted={isInverted}>
+                                        {info.icon(isInverted)}
+                                    </Icon>
+                                )}
+                                {info.text && (
+                                    <Copy
+                                        size="small"
+                                        isInverted={isInverted}
+                                        innerHTML={info.text}
+                                    />
+                                )}
+                            </InfoContent>
+                        ))}
+                    </InfoItem>
+                ))}
+        </InfoListView>
+    );
+};
+
 export type DetailEventProps = Omit<
     EventProps,
     'customTag' | 'isInverted' | 'onTagClick' | 'link'
@@ -148,8 +188,10 @@ export interface EventInfoGroup {
 }
 
 export interface EventInfo {
+    /** icon injection function */
     icon?: (isInverted?: boolean) => React.ReactNode;
-    label?: string;
+    /** Event info text (richtText) */
+    text?: string;
 }
 
 const EventDetail: React.FC<{
@@ -253,37 +295,7 @@ const EventDetail: React.FC<{
                     </Grid.Col>
                     {infos && infos.length > 0 && (
                         <Grid.Col large={{ span: 3 / 12 }}>
-                            <InfoList>
-                                {infos.map((infoGroup, i) => (
-                                    <InfoItem key={i}>
-                                        <InfoTitle
-                                            size="small"
-                                            type="copy-b"
-                                            isInverted={isInverted}
-                                        >
-                                            {infoGroup.title}
-                                        </InfoTitle>
-                                        {infoGroup?.items?.map((info, ii) => (
-                                            <InfoContent key={ii}>
-                                                {info.icon && (
-                                                    <Icon
-                                                        isInverted={isInverted}
-                                                    >
-                                                        {info.icon(isInverted)}
-                                                    </Icon>
-                                                )}
-                                                <Copy
-                                                    size="small"
-                                                    type="copy"
-                                                    isInverted={isInverted}
-                                                >
-                                                    {info.label}
-                                                </Copy>
-                                            </InfoContent>
-                                        ))}
-                                    </InfoItem>
-                                ))}
-                            </InfoList>
+                            <InfoList isInverted={isInverted} items={infos} />
                         </Grid.Col>
                     )}
                 </Grid.Row>
