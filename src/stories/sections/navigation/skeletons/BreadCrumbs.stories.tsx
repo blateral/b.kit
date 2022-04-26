@@ -17,19 +17,21 @@ export const Default: Story = () => (
     <BarBreadcrumbs
         rootLink={{ href: '' }}
         navItems={[
-            { link: { href: '/services' }, label: 'Services' },
+            { uid: 'itemA', link: { href: '/services' }, label: 'Services' },
             {
+                uid: 'itemB',
                 link: { href: '/news' },
                 label: 'News',
                 subItems: [
                     {
+                        uid: 'itemA1',
                         link: { href: '/companynews' },
                         label: 'Company News Worldwide',
                         isCurrent: true,
                     },
                 ],
             },
-            { link: { href: '/impressum' }, label: 'Impressum' },
+            { uid: 'itemC', link: { href: '/impressum' }, label: 'Impressum' },
         ]}
     />
 );
