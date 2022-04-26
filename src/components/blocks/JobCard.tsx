@@ -82,6 +82,7 @@ const JobCard = React.forwardRef<
                     size="heading-2"
                     data-sheet="title"
                     innerHTML={jobTitle}
+                    hyphens
                 />
                 <Copy type="copy-b" textColor="inherit" data-sheet="info">
                     <Info>
