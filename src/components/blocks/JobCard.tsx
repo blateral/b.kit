@@ -26,8 +26,6 @@ const View = styled.div`
     }
 `;
 
-const JobTitle = styled(Heading)``;
-
 const Info = styled.div`
     display: -ms-grid;
     display: grid;
@@ -77,7 +75,7 @@ const JobCard = React.forwardRef<
     ) => {
         return (
             <View ref={ref} className={className}>
-                <JobTitle
+                <Heading
                     textColor="inherit"
                     size="heading-2"
                     data-sheet="title"
