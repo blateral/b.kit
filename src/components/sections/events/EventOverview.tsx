@@ -2,15 +2,14 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import EventBlock, { EventProps } from 'components/blocks/EventBlock';
 import Tag, { TagProps } from 'components/blocks/Tag';
+import Pointer from 'components/buttons/Pointer';
+import Copy from 'components/typography/Copy';
 import React from 'react';
 import styled from 'styled-components';
-import { useLibTheme } from 'utils/LibThemeProvider';
-import { getColors as color, spacings } from 'utils/styles';
-import { useMediaQuery } from 'utils/useMediaQuery';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { getColors as color, mq, spacings } from 'utils/styles';
 import { useObserverSupport } from 'utils/useObserverSupport';
 import { useScrollTo } from 'utils/useScrollTo';
-
-type EventOverviewMq = 'small' | 'semilarge' | 'large';
 
 export type EventItem = Omit<
     EventProps,
@@ -56,6 +55,20 @@ const EventItem = styled.li<{ hasBg?: boolean }>`
     padding: ${spacings.nudge * 3}px 0;
 `;
 
+const ListFooter = styled.div`
+    margin-top: ${spacings.nudge * 6}px;
+    text-align: center;
+
+    @media ${mq.medium} {
+        text-align: left;
+    }
+`;
+
+const ShowMore = styled.span<{ itemCount?: number }>`
+    display: ${({ itemCount }) =>
+        itemCount && itemCount > 2 ? 'block' : 'none'};
+`;
+
 const EventOverview: React.FC<{
     tags?: string[];
     bgMode?: 'full' | 'inverted';
@@ -63,6 +76,9 @@ const EventOverview: React.FC<{
     activeTags?: string[];
 
     events?: EventItem[];
+
+    /** Text for load more toggle. Only visible if browser doesn't support IntersectionObserver. */
+    showMoreText?: string;
 
     /**
      * Callback function to handle tag click outside of component
@@ -84,6 +100,7 @@ const EventOverview: React.FC<{
     bgMode,
     anchorId,
     activeTags,
+    showMoreText,
     onTagClick,
     customTag,
 }) => {
@@ -95,9 +112,7 @@ const EventOverview: React.FC<{
     const [selectedTags, setSelectedTags] = React.useState<string[]>(
         activeTags || []
     );
-    const mqs: EventOverviewMq[] = ['small', 'semilarge', 'large'];
-    const currentMq = useMediaQuery(mqs) as EventOverviewMq | undefined;
-    const [itemsPerRow, setItemsPerRow] = React.useState(3);
+    const [itemsPerRow] = React.useState(1);
     const [visibleRows, setVisibleRows] = React.useState(3);
 
     const targetRef = React.useRef<HTMLDivElement>(null);
@@ -106,26 +121,6 @@ const EventOverview: React.FC<{
     const eventCount = events?.length || 0;
 
     const setNewPos = useScrollTo(800);
-
-    React.useEffect(() => {
-        switch (currentMq) {
-            case 'large':
-                setItemsPerRow(3);
-                break;
-
-            case 'semilarge':
-                setItemsPerRow(2);
-                break;
-
-            case 'small':
-                setItemsPerRow(1);
-                if (visibleRows < 3) setVisibleRows(3);
-                break;
-
-            default:
-                setItemsPerRow(1);
-        }
-    }, [currentMq, visibleRows]);
 
     const getFilterParams = () => {
         const tags: string[] = [];
@@ -333,9 +328,47 @@ const EventOverview: React.FC<{
                             </EventItem>
                         ))}
                 </Events>
+                <div ref={targetRef} />
+                {!observerSupported && (
+                    <ListFooter>
+                        {events && events.length > 0 && (
+                            <Copy
+                                type="copy"
+                                size="medium"
+                                isInverted={isInverted}
+                            >
+                                <ShowMore
+                                    itemCount={events.length}
+                                    onClick={(ev) => {
+                                        ev.preventDefault();
+                                        if (
+                                            visibleRows <
+                                            Math.ceil(eventCount / itemsPerRow)
+                                        ) {
+                                            setVisibleRows((prev) => prev + 1);
+                                        }
+                                    }}
+                                >
+                                    {visibleRows < eventCount / itemsPerRow && (
+                                        <Pointer.View
+                                            as="button"
+                                            isInverted={isInverted}
+                                        >
+                                            <Pointer.Label>
+                                                {showMoreText ||
+                                                    'mehr anzeigen'}
+                                            </Pointer.Label>
+                                        </Pointer.View>
+                                    )}
+                                </ShowMore>
+                            </Copy>
+                        )}
+                    </ListFooter>
+                )}
             </Wrapper>
         </Section>
     );
 };
 
-export default EventOverview;
+export const EventOverviewComponent = EventOverview;
+export default withLibTheme(EventOverview);

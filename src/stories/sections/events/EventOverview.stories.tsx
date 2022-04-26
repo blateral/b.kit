@@ -2,12 +2,18 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import EventOverview, {
     EventItem,
+    EventOverviewComponent,
 } from 'components/sections/events/EventOverview';
 import { generateItemList } from 'utils/storyHelpers';
 
 export default {
     title: 'Sections / Events / EventOverview',
-    component: EventOverview,
+    component: EventOverviewComponent,
+    parameters: {
+        status: {
+            type: ['preview', 'qsReady'],
+        },
+    },
 } as Meta;
 
 const exampleEventCard: EventItem = {
