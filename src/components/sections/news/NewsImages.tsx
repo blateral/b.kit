@@ -51,7 +51,7 @@ const NewsImages: React.FC<{
                     ? colors.sectionBg.dark
                     : hasBg
                     ? colors.sectionBg.medium
-                    : 'transparent'
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

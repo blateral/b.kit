@@ -619,7 +619,7 @@ export interface FlyoutMenuProps {
     subNavTitle?: string;
 }
 
-const menuFilter = (item: NavItem) => !item.hideFromMenu;
+const menuFilter = (item: NavItem) => !item.hideFromMenu && item.label;
 
 const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     isOpen,

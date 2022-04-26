@@ -1,12 +1,12 @@
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { getColors as color, mq, spacings } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const Seperator = styled.div<{ isInverted?: boolean; isTop?: boolean }>`
     border-bottom: solid 1px
@@ -60,8 +60,7 @@ const NewsAuthorCard: React.FC<{
 
     bgMode?: 'full' | 'inverted';
 }> = ({ label, author, avatar, bgMode }) => {
-    const theme = React.useContext(ThemeContext);
-
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
@@ -70,10 +69,10 @@ const NewsAuthorCard: React.FC<{
             addSeperation
             bgColor={
                 isInverted
-                    ? color(theme).sectionBg.dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? color(theme).sectionBg.medium
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
