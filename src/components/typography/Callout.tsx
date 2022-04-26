@@ -107,7 +107,6 @@ const Callout: React.FC<{
 
     return (
         <View
-            lang="de"
             as={renderAs}
             size={size}
             textColor={

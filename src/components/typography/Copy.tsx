@@ -262,7 +262,6 @@ const Copy: React.FC<{
 
     return (
         <View
-            lang="de"
             as={renderAs}
             copyType={type}
             size={size}
