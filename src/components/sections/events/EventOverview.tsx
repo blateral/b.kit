@@ -70,15 +70,23 @@ const ShowMore = styled.span<{ itemCount?: number }>`
 `;
 
 const EventOverview: React.FC<{
-    tags?: string[];
-    bgMode?: 'full' | 'inverted';
+    /** ID value for targeting section with anchor hashes */
     anchorId?: string;
-    activeTags?: string[];
 
+    /** Array of event item settings */
     events?: EventItem[];
+
+    /** Tags for events filtering */
+    tags?: string[];
+
+    /** Initial active tags in filter */
+    activeTags?: string[];
 
     /** Text for load more toggle. Only visible if browser doesn't support IntersectionObserver. */
     showMoreText?: string;
+
+    /** Section background */
+    bgMode?: 'full' | 'inverted';
 
     /**
      * Callback function to handle tag click outside of component
