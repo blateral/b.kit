@@ -173,6 +173,7 @@ const BarBreadcrumbs: FC<{
     }, [navItems, rootLink?.href]);
 
     const rootItem: NavItem = {
+        uid: 'root',
         label: rootLabel || 'Home',
         link: rootLink,
     };
