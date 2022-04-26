@@ -10,6 +10,7 @@ import { NavBarSize } from '../NavBar';
 /** Navigation item types */
 
 export interface NavItem {
+    uid: string;
     label: string;
     link?: LinkProps;
     isCurrent?: boolean;
