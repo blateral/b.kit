@@ -5,6 +5,11 @@ import JobCard from 'components/blocks/JobCard';
 export default {
     title: 'Blocks / JobCard',
     component: JobCard,
+    parameters: {
+        status: {
+            type: ['preview', 'qsReady'],
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

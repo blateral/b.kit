@@ -1,21 +1,78 @@
-import Grid from 'components/base/Grid';
+import React from 'react';
+import styled from 'styled-components';
+
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import JobCard, { JobCardProps } from 'components/blocks/JobCard';
-import React from 'react';
-import { useLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+import { mq, spacings } from 'utils/styles';
+
+const List = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    margin-top: -${spacings.nudge * 2}px;
+    margin-left: -${spacings.nudge * 2}px;
+
+    @media ${mq.medium} {
+        margin-top: -${spacings.spacer}px;
+        margin-left: -${spacings.spacer}px;
+    }
+`;
+
+const Item = styled.li`
+    flex: 0 1 100%;
+    max-width: 100%;
+    margin: 0;
+
+    padding-top: ${spacings.nudge * 2}px;
+    padding-left: ${spacings.nudge * 2}px;
+
+    @media ${mq.medium} {
+        flex: 0 1 50%;
+        max-width: 50%;
+
+        padding-top: ${spacings.spacer}px;
+        padding-left: ${spacings.spacer}px;
+    }
+
+    @media ${mq.large} {
+        flex: 0 1 33.33%;
+        max-width: 33.33%;
+    }
+`;
+
+export type JobItem = Omit<
+    JobCardProps,
+    'isInverted' | 'hasBackground' | 'modelIcon' | 'locationIcon'
+>;
 
 const JobList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
     anchorId?: string;
-    jobs: JobCardProps[];
+
+    /** Array of job item settings */
+    jobs?: JobItem[];
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, jobs, bgMode }) => {
+
+    /** Injection function for job time model icon */
+    modelIcon?: () => React.ReactNode;
+
+    /** Injection function for job location icon */
+    locationIcon?: () => React.ReactNode;
+}> = ({ anchorId, jobs, bgMode, modelIcon, locationIcon }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
 
-    const jobCount = jobs.length || 0;
+    const jobCount = jobs?.length || 0;
 
     const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
         listLength: jobCount,
@@ -37,26 +94,27 @@ const JobList: React.FC<{
                     ? colors.sectionBg.medium
                     : colors.sectionBg.light
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <Grid.Row>
-                    {jobs.map((job, i) => (
-                        <Grid.Col
-                            semilarge={{ span: 6 / 12 }}
-                            large={{
-                                span: 4 / 12,
-                                move: 0,
-                            }}
-                            key={i}
-                        >
-                            <JobCard ref={cardRefs[i]} {...job} />
-                        </Grid.Col>
+                <List>
+                    {jobs?.map((job, i) => (
+                        <Item key={i}>
+                            <JobCard
+                                ref={cardRefs[i]}
+                                {...job}
+                                isInverted={isInverted}
+                                hasBackground={hasBg}
+                                modelIcon={modelIcon}
+                                locationIcon={locationIcon}
+                            />
+                        </Item>
                     ))}
-                </Grid.Row>
+                </List>
             </Wrapper>
         </Section>
     );
 };
 
-export default JobList;
+export const JobListComponent = JobList;
+export default withLibTheme(JobList);

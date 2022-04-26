@@ -1,10 +1,15 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import JobList from 'components/sections/JobList';
+import JobList, { JobListComponent } from 'components/sections/JobList';
 
 export default {
     title: 'Sections / JobList',
-    component: JobList,
+    component: JobListComponent,
+    parameters: {
+        status: {
+            type: ['preview', 'qsReady'],
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (

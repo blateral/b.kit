@@ -6,9 +6,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
 
-const View = styled.div`
+const View = styled.div<{ isInverted?: boolean; hasBg?: boolean }>`
     color: ${({ theme }) => color(theme).primary.default};
-    background: ${({ theme }) => color(theme).elementBg.medium};
+    background: ${({ theme, hasBg, isInverted }) =>
+        isInverted
+            ? color(theme).elementBg.medium
+            : hasBg
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.medium};
 
     padding: ${spacings.spacer}px;
 
@@ -16,7 +21,7 @@ const View = styled.div`
         margin-top: ${spacings.spacer}px;
     }
 
-    @media ${mq.semilarge} {
+    @media ${mq.medium} {
         min-height: 440px;
 
         display: flex;
@@ -60,10 +65,25 @@ const MainLabel = styled.div`
 `;
 
 export interface JobCardProps {
+    /** Invert text and background color */
+    isInverted?: boolean;
+
+    /** For use on light backgrounds */
+    hasBackground?: boolean;
+
+    /** Job card title (richtext) */
     jobTitle: string;
+
+    /** Label job time model (e.g. fulltime) */
     timeModel?: string;
+
+    /** Injection function for job time model icon */
     modelIcon?: () => React.ReactNode;
+
+    /** Label for job location */
     location?: string;
+
+    /** Injection function for job location icon */
     locationIcon?: () => React.ReactNode;
 }
 
@@ -74,11 +94,25 @@ const JobCard = React.forwardRef<
     }
 >(
     (
-        { jobTitle, timeModel, location, modelIcon, locationIcon, className },
+        {
+            isInverted,
+            hasBackground,
+            jobTitle,
+            timeModel,
+            location,
+            modelIcon,
+            locationIcon,
+            className,
+        },
         ref
     ) => {
         return (
-            <View ref={ref} className={className}>
+            <View
+                ref={ref}
+                isInverted={isInverted}
+                hasBg={hasBackground}
+                className={className}
+            >
                 <Heading
                     textColor="inherit"
                     size="heading-2"
