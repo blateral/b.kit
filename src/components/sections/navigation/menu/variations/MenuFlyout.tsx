@@ -241,13 +241,15 @@ const NavItemContent = styled.span<{ isCurrent?: boolean }>`
 `;
 
 const NavItemIcon = styled.span`
-    display: block;
+    display: flex;
+    align-items: center;
     width: 48px;
     max-width: 48px;
 
     * {
         width: 100%;
         max-width: 48px;
+        max-height: 80px;
     }
 `;
 
