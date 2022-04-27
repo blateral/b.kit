@@ -76,6 +76,7 @@ const Slider: FC<
         }) => void;
         afterChange?: (currentStep: number) => void;
         onInit?: (steps: number, goToStep: (step: number) => void) => void;
+        children?: React.ReactNode;
     }
 > = ({
     initialStep = 0,
@@ -273,6 +274,7 @@ const SlidesView = styled.div<{
 
 const StyledSlider = styled(SlickSlider)<{
     leftMargin?: { min: number; max: number };
+    children?: React.ReactNode;
 }>`
     ${({ leftMargin }) =>
         leftMargin &&
@@ -286,6 +288,7 @@ enum CursorState {
 
 const Slides: FC<{
     className?: string;
+    children?: React.ReactNode;
 }> = ({ children, className }) => {
     const context = useContext(SliderContext);
     const [cursor, setCursor] = useState<CursorState | null>();
@@ -392,6 +395,7 @@ const SlideView = styled.div<{ spacing?: { min: number; max: number } }>`
 
 const Slide: FC<{
     className?: string;
+    children?: React.ReactNode;
 }> = ({ children, className }) => {
     return (
         <SliderContext.Consumer>
@@ -474,6 +478,7 @@ interface DotProps {
 const Dot: FC<
     DotProps & {
         className?: string;
+        children?: React.ReactNode;
     }
 > = ({ step, disabled, onClick, className, children }) => {
     return (

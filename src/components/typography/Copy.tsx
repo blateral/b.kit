@@ -243,6 +243,7 @@ const Copy: React.FC<{
     innerHTML?: string;
     onClick?: (ev: React.SyntheticEvent<HTMLElement>) => void;
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     renderAs,
     isInverted,

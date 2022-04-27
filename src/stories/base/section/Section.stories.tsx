@@ -6,6 +6,7 @@ import Section from 'components/base/Section';
 export const ExampleContent: React.FC<{
     isInverted?: boolean;
     textAlign?: 'left' | 'center' | 'right';
+    children?: React.ReactNode;
 }> = ({ isInverted, textAlign, children }) => (
     <div
         style={{

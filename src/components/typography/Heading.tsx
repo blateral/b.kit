@@ -101,6 +101,7 @@ const Heading: React.FC<{
     innerHTML?: string;
 
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     renderAs,
     isInverted,

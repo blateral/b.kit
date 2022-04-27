@@ -122,6 +122,7 @@ const BreadcrumbItem: FC<
         isInverted?: boolean;
         showOnMobile?: boolean;
         showOnDesktop?: boolean;
+        children?: React.ReactNode;
     }
 > = ({ isInverted, label, link, showOnMobile, showOnDesktop, children }) => {
     if (link?.href) {

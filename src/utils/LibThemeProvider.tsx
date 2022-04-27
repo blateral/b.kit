@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
-import React, { FC, useContext } from 'react';
-import { DefaultTheme, ThemeContext, ThemeProvider } from 'styled-components';
-
+import React, { FC } from 'react';
+import { DefaultTheme, ThemeProvider, useTheme } from 'styled-components';
 import {
     FontBase,
     baseTheme,
@@ -90,8 +89,9 @@ export const assignTo = <T extends ThemeMods | DefaultTheme>(
 
 export const LibThemeProvider: FC<{
     theme?: ThemeMods;
+    children?: React.ReactNode;
 }> = ({ theme, children }) => {
-    const ctx = useContext(ThemeContext);
+    const ctx = useTheme();
 
     if (theme) {
         const newTheme = modifyTheme(ctx, theme);
@@ -132,7 +132,7 @@ export const modifyTheme = (
 };
 
 export const useLibTheme = () => {
-    const theme = useContext(ThemeContext);
+    const theme = useTheme();
 
     return {
         colors: getColors(theme),
@@ -152,7 +152,7 @@ export const withLibTheme =
         }
     > =>
     ({ theme, ...props }: WithLibThemeProps) => {
-        const ctx = useContext(ThemeContext);
+        const ctx = useTheme();
         const newTheme = modifyTheme(ctx, theme);
 
         return (

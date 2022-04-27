@@ -115,6 +115,7 @@ interface Props {
     isInverted?: boolean;
     isDisabled?: boolean;
     className?: string;
+    children?: React.ReactNode;
 }
 
 export type BtnProps = Props & {

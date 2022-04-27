@@ -146,6 +146,7 @@ const HeaderKenBurns: React.FC<{
     interval?: number;
     onImageChange?: (currentImg: HeaderKenBurnsImageProps) => void;
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     images,
     zoom = 1.08,

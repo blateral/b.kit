@@ -174,7 +174,7 @@ const ScrollArea = styled.div`
 
 //#region NAVIGATION
 //#region NAVIGATION.Containers
-const Navigation: FC = ({ children }) => {
+const Navigation: FC<{ children?: React.ReactNode }> = ({ children }) => {
     return <nav aria-label="menu">{children}</nav>;
 };
 

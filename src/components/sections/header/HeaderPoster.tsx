@@ -37,6 +37,7 @@ const BackgroundImg = styled(Image)`
 const HeaderPoster: React.FC<{
     bgImage: HeaderPosterImageProps;
     className?: string;
+    children?: React.ReactNode;
 }> = ({ bgImage, className, children }) => {
     return (
         <PosterView className={className}>

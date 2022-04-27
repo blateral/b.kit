@@ -208,6 +208,7 @@ const TitleView = styled(Copy)`
 export const CookieTitle: FC<{
     innerHTML?: string;
     className?: string;
+    children?: React.ReactNode;
 }> = ({ innerHTML, className, children }) => {
     return (
         <TitleView
@@ -231,6 +232,7 @@ const TextView = styled(Copy)`
 export const CookieText: FC<{
     innerHTML?: string;
     className?: string;
+    children?: React.ReactNode;
 }> = ({ innerHTML, className, children }) => {
     return (
         <TextView innerHTML={innerHTML} className={className}>

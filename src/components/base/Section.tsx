@@ -189,6 +189,7 @@ const Section: React.FC<{
     isStackable?: boolean;
 
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     anchorId,
     renderAs,

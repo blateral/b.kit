@@ -68,6 +68,7 @@ const HeaderVideo: React.FC<{
     placeholderImg?: HeaderVideoImageProps;
     videoUrl?: string;
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     loadOnMobile = true,
     placeholderImg,

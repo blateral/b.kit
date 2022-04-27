@@ -80,6 +80,7 @@ const Tag: FC<
         /** Click callback */
         onClick?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
         className?: string;
+        children?: React.ReactNode;
     }
 > = ({ name, link, isInverted, isActive, onClick, className, children }) => {
     const tag = link?.href ? 'a' : onClick ? 'button' : 'span';

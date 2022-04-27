@@ -89,6 +89,7 @@ const Callout: React.FC<{
     innerHTML?: string;
 
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     isInverted,
     renderAs = 'h2',

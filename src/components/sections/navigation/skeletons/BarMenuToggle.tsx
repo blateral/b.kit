@@ -45,6 +45,7 @@ const BarMenuToggle: FC<{
     isExpanded?: boolean;
     onClick?: (ev?: React.SyntheticEvent<HTMLButtonElement>) => void;
     className?: string;
+    children?: React.ReactNode;
 }> = ({ isInverted, isExpanded = false, onClick, children, className }) => {
     return (
         <Toggle

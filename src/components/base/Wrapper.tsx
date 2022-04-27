@@ -36,6 +36,7 @@ const Wrapper: React.FC<{
     addWhitespace?: boolean;
     clampWidth?: ClampWidthType;
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     addWhitespace = false,
     clampWidth = 'normal',

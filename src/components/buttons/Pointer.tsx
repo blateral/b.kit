@@ -91,6 +91,7 @@ interface Props {
     onClick?: () => void;
     textDecoration?: 'none' | 'underline';
     className?: string;
+    children?: React.ReactNode;
 }
 
 export type BtnProps = Props & {

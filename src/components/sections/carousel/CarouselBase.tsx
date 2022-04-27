@@ -160,7 +160,9 @@ export interface CarouselProps {
     slidesToShow?: number;
 }
 
-const CarouselBase: FC<CarouselProps & { className?: string }> = ({
+const CarouselBase: FC<
+    CarouselProps & { className?: string; children?: React.ReactNode }
+> = ({
     spacing,
     variableWidths,
     isInverted,

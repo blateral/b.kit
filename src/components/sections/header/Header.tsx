@@ -106,6 +106,7 @@ const Poster: FC<{
     kenBurnsZoomPoint?: [number, number];
     kenBurnsInterval?: number;
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     videoUrl,
     images,

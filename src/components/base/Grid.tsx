@@ -368,7 +368,7 @@ const StyledCol = styled.div<GridProps & ColProps>`
     ${getVerticalAlign(true)}
 `;
 
-const Col: React.FC<ColProps> = (props) => {
+const Col: React.FC<ColProps & { children?: React.ReactNode }> = (props) => {
     return <React.Fragment>{props?.children}</React.Fragment>;
 };
 
@@ -409,7 +409,7 @@ const mapGutterToCol = (gutter?: number, colSettings?: any) => {
     }
 };
 
-const Grid: React.FC<GridProps> = ({
+const Grid: React.FC<GridProps & { children?: React.ReactNode }> = ({
     gutter,
     valign,
     children,
