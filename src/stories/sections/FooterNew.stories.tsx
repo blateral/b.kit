@@ -6,7 +6,6 @@ import Facebook from 'components/base/icons/socials/Facebook';
 import Instagram from 'components/base/icons/socials/Instagram';
 import Youtube from 'components/base/icons/socials/Youtube';
 import ButtonGhost from 'components/buttons/ButtonGhost';
-import Copy from 'components/typography/Copy';
 
 const exampleSiteLinks = [
     {
