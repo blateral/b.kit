@@ -26,7 +26,7 @@ const View = styled.div<{
     ${({ clickable, isInverted }) =>
         clickable &&
         css`
-            transition: box-shadow 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
             cursor: pointer;
 
             &:hover {
@@ -34,6 +34,8 @@ const View = styled.div<{
                     ${isInverted
                         ? 'rgba(255, 255, 255, 0.7)'
                         : 'rgba(0, 0, 0, 0.35)'};
+
+                color: ${({ theme }) => color(theme).primary.hover};
             }
 
             &:focus {
