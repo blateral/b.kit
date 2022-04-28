@@ -4,7 +4,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Bdot from 'components/blocks/Bdot';
 import LanguageSwitcher, { Language } from 'components/blocks/LanguageSwitcher';
-import SocialList from 'components/blocks/SocialList';
+import SocialList, { SocialItem } from 'components/blocks/SocialList';
 import Copy from 'components/typography/Copy';
 import Link from 'components/typography/Link';
 import React from 'react';
@@ -34,7 +34,7 @@ const LinkItem = styled.li`
 
 const FooterCol = styled.div`
     & > * + * {
-        margin-top: ${spacings.nudge * 5}px;
+        margin-top: ${spacings.spacer}px;
     }
 `;
 
@@ -43,7 +43,7 @@ const Action = styled.div`
 `;
 
 const FootNote = styled(Copy)`
-    margin-top: ${spacings.nudge * 5}px;
+    margin-top: ${spacings.spacer}px;
 `;
 
 const BottomView = styled.div`
@@ -96,10 +96,7 @@ const FooterNew: React.FC<{
 
     socials?: {
         title?: string;
-        social: {
-            icon?: (isInverted?: boolean) => React.ReactNode;
-            href?: string;
-        }[];
+        social: SocialItem[];
     };
     footNote?: string;
     bottomLinks?: { href: string; label?: string; isExternal?: boolean }[];
@@ -123,6 +120,7 @@ const FooterNew: React.FC<{
             renderAs="footer"
             bgMode={mapToBgMode(bgMode)}
             bgColor={bgMode ? colors.sectionBg.dark : colors.sectionBg.light}
+            addSeperation
         >
             <Wrapper addWhitespace>
                 <MainView>
@@ -134,7 +132,6 @@ const FooterNew: React.FC<{
                                         semilarge={{ span: 4 / 12 }}
                                         large={{ span: 3 / 12 }}
                                         key={i}
-                                        className="col"
                                     >
                                         <ColTitle
                                             type="copy-b"
@@ -203,8 +200,8 @@ const FooterNew: React.FC<{
                                             items={socials.social.map(
                                                 (item) => {
                                                     return {
-                                                        href: item.href,
-                                                        icon: item.icon,
+                                                        href: item?.href || '',
+                                                        icon: item?.icon,
                                                     };
                                                 }
                                             )}
