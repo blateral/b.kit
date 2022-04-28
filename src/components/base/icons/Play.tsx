@@ -6,7 +6,7 @@ const SVG = styled.svg`
 `;
 
 const Play: React.FC<{ iconColor?: string; className?: string }> = ({
-    iconColor = '#000',
+    iconColor = 'currentColor',
     className,
 }) => (
     <SVG

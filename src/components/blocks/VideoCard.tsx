@@ -74,17 +74,23 @@ const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
     }
 `;
 
-const VideoControls = styled.div`
+const VideoControls = styled.button`
+    display: block;
+    border: none;
+    background: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: ${({ theme }) => color(theme).elementBg.light};
     z-index: 1;
+    padding: 0;
 
     & > * {
         opacity: 0.8;
         transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+        color: ${({ theme }) => color(theme).elementBg.dark};
     }
 
     ${View}:hover > & > * {
@@ -95,6 +101,16 @@ const VideoControls = styled.div`
     ${View}:active > & > * {
         transform: scale(0.95);
         opacity: 1;
+    }
+
+    &:focus {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
+        border-radius: 50%;
+        opacity: 1;
+
+        & > * {
+            color: ${({ theme }) => color(theme).primary.default};
+        }
     }
 `;
 
