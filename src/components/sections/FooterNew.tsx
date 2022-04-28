@@ -21,9 +21,12 @@ const ColTitle = styled(Copy)`
     margin-bottom: ${spacings.nudge * 2}px;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link)<{ isInverted?: boolean }>`
     display: block;
     text-decoration: none;
+
+    color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
 `;
 
 const LinkList = styled.ul`
