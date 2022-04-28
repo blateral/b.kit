@@ -137,6 +137,7 @@ export { default as Bdot } from 'components/blocks/Bdot';
 export { default as IntroBlock } from 'components/blocks/IntroBlock';
 export { default as Image } from 'components/blocks/Image';
 export { default as LinkList, getLinkIcon } from 'components/blocks/LinkList';
+export { default as LanguageSwitcher } from 'components/blocks/LanguageSwitcher';
 
 export {
     default as CookieConsent,
