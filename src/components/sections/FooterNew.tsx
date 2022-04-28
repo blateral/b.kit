@@ -40,7 +40,13 @@ const LinkItem = styled.li`
 
 const FooterCol = styled.div`
     & > * + * {
-        margin-top: ${spacings.spacer}px;
+        margin-top: ${spacings.nudge * 5}px;
+    }
+
+    @media ${mq.semilarge} {
+        & > * + * {
+            margin-top: ${spacings.spacer}px;
+        }
     }
 `;
 
@@ -49,18 +55,10 @@ const Action = styled.div`
 `;
 
 const FootNote = styled(Copy)`
-    margin-top: ${spacings.spacer}px;
-`;
-
-const BottomView = styled.div`
-    border-top: 1px solid ${({ theme }) => color(theme).elementBg.medium};
-    padding: ${spacings.nudge * 2}px 0;
+    margin-top: ${spacings.nudge * 5}px;
 
     @media ${mq.semilarge} {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+        margin-top: ${spacings.spacer}px;
     }
 `;
 
@@ -77,6 +75,27 @@ const BottomLinkList = styled.ul`
 const BottomLinkItem = styled.li`
     & + & {
         margin-left: ${spacings.nudge}px;
+    }
+`;
+
+const BottomView = styled.div`
+    border-top: 1px solid ${({ theme }) => color(theme).elementBg.medium};
+    padding: ${spacings.nudge * 2}px 0;
+
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+
+    @media ${mq.semilarge} {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        & > * + * {
+            margin-top: 0;
+            margin-left: ${spacings.nudge * 2}px;
+        }
     }
 `;
 
@@ -123,7 +142,7 @@ const FooterNew: React.FC<{
         >
             <Wrapper addWhitespace>
                 <MainView>
-                    <Grid.Row>
+                    <Grid.Row gutter={40} medium={{ gutter: 32 }}>
                         {siteLinks &&
                             siteLinks.map((links, i) => {
                                 return (
