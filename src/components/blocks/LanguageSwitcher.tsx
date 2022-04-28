@@ -5,7 +5,26 @@ import Link, { LinkProps } from 'components/typography/Link';
 import { spacings, getColors as color } from 'utils/styles';
 import { copyStyle } from 'components/typography/Copy';
 
-const View = styled.div<{ isInverted?: boolean }>`
+const View = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > * + * {
+        margin-left: ${spacings.nudge / 2}px;
+    }
+`;
+
+const Icon = styled.div<{ isInverted?: boolean }>`
+    color: ${({ isInverted, theme }) =>
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
+
+    & > * {
+        margin-right: ${spacings.nudge}px;
+    }
+`;
+
+const SelectView = styled.div<{ isInverted?: boolean }>`
     display: inline-flex;
     align-items: center;
     margin: 0 -${spacings.nudge}px;
@@ -50,18 +69,6 @@ const LanguageLink = styled(Link)<{ isInverted?: boolean; isActive?: boolean }>`
             text-decoration: underline;
         }
     }
-
-    &:focus {
-        outline: solid 2px
-            ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).primary.inverted
-                    : color(theme).primary.default};
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
-    }
 `;
 
 export interface Language {
@@ -73,19 +80,25 @@ export interface Language {
 const LanguageSwitcher: FC<{
     langs?: Language[];
     isInverted?: boolean;
-}> = ({ langs, isInverted }) => {
+    languageIcon?: (isInverted?: boolean) => React.ReactNode;
+}> = ({ langs, isInverted, languageIcon }) => {
     return (
-        <View isInverted={isInverted}>
-            {langs?.map((lang, i) => (
-                <LanguageLink
-                    key={i}
-                    {...lang.link}
-                    isInverted={isInverted}
-                    isActive={lang.isActive}
-                >
-                    {lang.label}
-                </LanguageLink>
-            ))}
+        <View>
+            {languageIcon && (
+                <Icon isInverted={isInverted}>{languageIcon(isInverted)}</Icon>
+            )}
+            <SelectView isInverted={isInverted}>
+                {langs?.map((lang, i) => (
+                    <LanguageLink
+                        key={i}
+                        {...lang.link}
+                        isInverted={isInverted}
+                        isActive={lang.isActive}
+                    >
+                        {lang.label}
+                    </LanguageLink>
+                ))}
+            </SelectView>
         </View>
     );
 };

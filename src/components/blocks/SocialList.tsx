@@ -26,8 +26,12 @@ const StyledLink = styled(Link)`
 
     transition: all ease-in-out 0.2s;
 
+    &:focus {
+        outline: none;
+    }
+
     &:focus > * {
-        outline: solid 2px
+        outline: 2px solid
             ${({ theme, isInverted }) =>
                 isInverted
                     ? color(theme).primary.inverted

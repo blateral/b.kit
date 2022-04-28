@@ -5,8 +5,8 @@ import Link from 'components/typography/Link';
 const bdotColor = '#1fc2f4';
 
 const Dot = styled(Link)`
-    width: 11px;
-    height: 11px;
+    width: 14px;
+    height: 14px;
 
     display: inline-block;
     vertical-align: middle;

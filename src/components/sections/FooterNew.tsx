@@ -1,5 +1,4 @@
 import Grid from 'components/base/Grid';
-import LanguageIcon from 'components/base/icons/Language';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Bdot from 'components/blocks/Bdot';
@@ -22,8 +21,12 @@ const ColTitle = styled(Copy)`
     margin-bottom: ${spacings.nudge * 2}px;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link)<{ isInverted?: boolean }>`
+    display: block;
     text-decoration: none;
+
+    color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).text.inverted : color(theme).text.default};
 `;
 
 const LinkList = styled.ul`
@@ -40,7 +43,13 @@ const LinkItem = styled.li`
 
 const FooterCol = styled.div`
     & > * + * {
-        margin-top: ${spacings.spacer}px;
+        margin-top: ${spacings.nudge * 5}px;
+    }
+
+    @media ${mq.semilarge} {
+        & > * + * {
+            margin-top: ${spacings.spacer}px;
+        }
     }
 `;
 
@@ -49,28 +58,10 @@ const Action = styled.div`
 `;
 
 const FootNote = styled(Copy)`
-    margin-top: ${spacings.spacer}px;
-`;
-
-const BottomView = styled.div`
-    border-top: 1px solid ${({ theme }) => color(theme).elementBg.medium};
-    padding-top: ${spacings.nudge * 2}px;
+    margin-top: ${spacings.nudge * 5}px;
 
     @media ${mq.semilarge} {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-`;
-
-const LanguageBlock = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    & > * + * {
-        margin-left: ${spacings.nudge / 2}px;
+        margin-top: ${spacings.spacer}px;
     }
 `;
 
@@ -87,6 +78,27 @@ const BottomLinkList = styled.ul`
 const BottomLinkItem = styled.li`
     & + & {
         margin-left: ${spacings.nudge}px;
+    }
+`;
+
+const BottomView = styled.div`
+    border-top: 1px solid ${({ theme }) => color(theme).elementBg.medium};
+    padding: ${spacings.nudge * 2}px 0;
+
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+
+    @media ${mq.semilarge} {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        & > * + * {
+            margin-top: 0;
+            margin-left: ${spacings.nudge * 2}px;
+        }
     }
 `;
 
@@ -109,7 +121,8 @@ const FooterNew: React.FC<{
     footNote?: string;
     bottomLinks?: { href: string; label?: string; isExternal?: boolean }[];
     language?: Language[];
-    languageIcon?: boolean;
+    languageIcon?: () => React.ReactNode;
+    brandIcon?: boolean;
 }> = ({
     bgMode,
     siteLinks,
@@ -119,6 +132,7 @@ const FooterNew: React.FC<{
     bottomLinks,
     languageIcon,
     language,
+    brandIcon = true,
 }) => {
     const { colors } = useLibTheme();
 
@@ -128,15 +142,15 @@ const FooterNew: React.FC<{
             renderAs="footer"
             bgMode={mapToBgMode(bgMode)}
             bgColor={bgMode ? colors.sectionBg.dark : colors.sectionBg.light}
-            addSeperation
         >
             <Wrapper addWhitespace>
                 <MainView>
-                    <Grid.Row>
+                    <Grid.Row gutter={40} medium={{ gutter: 32 }}>
                         {siteLinks &&
                             siteLinks.map((links, i) => {
                                 return (
                                     <Grid.Col
+                                        medium={{ span: 6 / 12 }}
                                         semilarge={{ span: 4 / 12 }}
                                         large={{ span: 3 / 12 }}
                                         key={i}
@@ -157,11 +171,7 @@ const FooterNew: React.FC<{
                                                             }
                                                             href={link.href}
                                                         >
-                                                            <Copy
-                                                                isInverted={
-                                                                    isInverted
-                                                                }
-                                                            >
+                                                            <Copy textColor="inherit">
                                                                 {link.label}
                                                             </Copy>
                                                         </StyledLink>
@@ -172,52 +182,56 @@ const FooterNew: React.FC<{
                                     </Grid.Col>
                                 );
                             })}
-                        <Grid.Col large={{ span: 3 / 12 }}>
-                            <FooterCol>
-                                {callToAction && (
-                                    <div>
-                                        <ColTitle
-                                            type="copy-b"
-                                            isInverted={isInverted}
-                                        >
-                                            {callToAction.title}
-                                        </ColTitle>
-                                        <Copy isInverted={isInverted}>
-                                            {callToAction.text}
-                                        </Copy>
+                        {(callToAction || socials) && (
+                            <Grid.Col large={{ span: 3 / 12 }}>
+                                <FooterCol>
+                                    {callToAction && (
+                                        <div>
+                                            <ColTitle
+                                                type="copy-b"
+                                                isInverted={isInverted}
+                                            >
+                                                {callToAction.title}
+                                            </ColTitle>
+                                            <Copy isInverted={isInverted}>
+                                                {callToAction.text}
+                                            </Copy>
 
-                                        {callToAction.action && (
-                                            <Action>
-                                                {callToAction.action(
-                                                    isInverted
-                                                )}
-                                            </Action>
-                                        )}
-                                    </div>
-                                )}
-                                {socials && (
-                                    <div>
-                                        <ColTitle
-                                            isInverted={isInverted}
-                                            type="copy-b"
-                                        >
-                                            {socials.title}
-                                        </ColTitle>
-                                        <SocialList
-                                            isInverted={isInverted}
-                                            items={socials.social.map(
-                                                (item) => {
-                                                    return {
-                                                        href: item?.href || '',
-                                                        icon: item?.icon,
-                                                    };
-                                                }
+                                            {callToAction.action && (
+                                                <Action>
+                                                    {callToAction.action(
+                                                        isInverted
+                                                    )}
+                                                </Action>
                                             )}
-                                        />
-                                    </div>
-                                )}
-                            </FooterCol>
-                        </Grid.Col>
+                                        </div>
+                                    )}
+                                    {socials && (
+                                        <div>
+                                            <ColTitle
+                                                isInverted={isInverted}
+                                                type="copy-b"
+                                            >
+                                                {socials.title}
+                                            </ColTitle>
+                                            <SocialList
+                                                isInverted={isInverted}
+                                                items={socials.social.map(
+                                                    (item) => {
+                                                        return {
+                                                            href:
+                                                                item?.href ||
+                                                                '',
+                                                            icon: item?.icon,
+                                                        };
+                                                    }
+                                                )}
+                                            />
+                                        </div>
+                                    )}
+                                </FooterCol>
+                            </Grid.Col>
+                        )}
                     </Grid.Row>
                     {footNote && (
                         <FootNote
@@ -226,47 +240,41 @@ const FooterNew: React.FC<{
                         />
                     )}
                 </MainView>
-                <BottomView>
-                    <LanguageBlock>
-                        {languageIcon && (
-                            <span>
-                                <LanguageIcon
-                                    iconColor={
-                                        isInverted
-                                            ? colors.text.inverted
-                                            : colors.text.default
-                                    }
-                                />
-                            </span>
-                        )}
+                {((bottomLinks && bottomLinks.length > 0) ||
+                    language ||
+                    !brandIcon) && (
+                    <BottomView>
                         {language && (
                             <LanguageSwitcher
                                 isInverted={isInverted}
                                 langs={language}
+                                languageIcon={languageIcon}
                             />
                         )}
-                    </LanguageBlock>
-                    <BottomLinkList>
-                        {bottomLinks?.map((bottomLink, i) => {
-                            return (
-                                <BottomLinkItem key={i}>
-                                    <StyledLink
-                                        isInverted={isInverted}
-                                        href={bottomLink.href}
-                                        isExternal={bottomLink.isExternal}
-                                    >
-                                        <Copy isInverted={isInverted}>
-                                            {bottomLink.label}
-                                        </Copy>
-                                    </StyledLink>
+                        <BottomLinkList>
+                            {bottomLinks?.map((bottomLink, i) => {
+                                return (
+                                    <BottomLinkItem key={i}>
+                                        <StyledLink
+                                            isInverted={isInverted}
+                                            href={bottomLink.href}
+                                            isExternal={bottomLink.isExternal}
+                                        >
+                                            <Copy textColor="inherit">
+                                                {bottomLink.label}
+                                            </Copy>
+                                        </StyledLink>
+                                    </BottomLinkItem>
+                                );
+                            })}
+                            {brandIcon && (
+                                <BottomLinkItem>
+                                    <Bdot />
                                 </BottomLinkItem>
-                            );
-                        })}
-                        <BottomLinkItem>
-                            <Bdot />
-                        </BottomLinkItem>
-                    </BottomLinkList>
-                </BottomView>
+                            )}
+                        </BottomLinkList>
+                    </BottomView>
+                )}
             </Wrapper>
         </Section>
     );

@@ -6,6 +6,7 @@ import Facebook from 'components/base/icons/socials/Facebook';
 import Instagram from 'components/base/icons/socials/Instagram';
 import Youtube from 'components/base/icons/socials/Youtube';
 import ButtonGhost from 'components/buttons/ButtonGhost';
+import LanguageIcon from 'components/base/icons/Language';
 
 const exampleSiteLinks = [
     {
@@ -178,7 +179,7 @@ export const WithLanguageSwitcherIcon: Story = () => (
             { label: 'englisch', link: { href: '/en' } },
             { label: 'französisch', link: { href: '/fr' } },
         ]}
-        languageIcon
+        languageIcon={() => <LanguageIcon />}
     />
 );
 
@@ -195,6 +196,6 @@ export const IsInverted: Story = () => (
             { label: 'englisch', link: { href: '/en' } },
             { label: 'französisch', link: { href: '/fr' } },
         ]}
-        languageIcon
+        languageIcon={() => <LanguageIcon />}
     />
 );
