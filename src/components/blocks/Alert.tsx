@@ -142,12 +142,7 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
     }
 
     return (
-        <View
-            isInverted={isInverted}
-            data-sheet="alert"
-            className={className}
-            {...link}
-        >
+        <View isInverted={isInverted} data-sheet="alert" className={className}>
             <Icon>
                 {customIcon ? customIcon({ isInverted }) : <ExclamationMark />}
             </Icon>

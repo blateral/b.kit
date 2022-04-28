@@ -52,6 +52,11 @@ const InputField = styled.input<{
     &::placeholder {
         color: inherit;
     }
+
+    &:focus {
+        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline-offset: 0;
+    }
 `;
 
 const ControlBtn = styled.button<{ isInverted?: boolean }>`

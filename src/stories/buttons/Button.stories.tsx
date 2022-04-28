@@ -17,7 +17,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;

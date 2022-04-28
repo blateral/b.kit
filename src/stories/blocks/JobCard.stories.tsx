@@ -17,5 +17,6 @@ export const Default: Story = () => (
         jobTitle="Jobtitle<br/>(m/w/d)"
         timeModel="Vollzeit"
         location="Immenstaad / Ravensburg"
+        link={{ href: '#0' }}
     />
 );

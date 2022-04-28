@@ -1,13 +1,22 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { getColors as color, withRange, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    withRange,
+    spacings,
+    getColors,
+} from 'utils/styles';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
-const View = styled.div``;
+const View = styled.div`
+    &:focus {
+        outline: 1px dashed ${({ theme }) => getColors(theme).primary.default};
+    }
+`;
 
 const Caption = styled(Copy)`
     margin-bottom: ${spacings.nudge}px;
@@ -19,6 +28,11 @@ const TableContainer = styled.div`
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
+
+    &:focus {
+        outline: none;
+        border: 1px solid ${({ theme }) => getColors(theme).primary.default};
+    }
 `;
 
 const TableBody = styled.table`
@@ -95,7 +109,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableProps>(
     ) => {
         return (
             <View ref={ref}>
-                <TableContainer tabIndex={0}>
+                <TableContainer tabIndex={1}>
                     <TableBody>
                         {tableTitle && (
                             <Caption

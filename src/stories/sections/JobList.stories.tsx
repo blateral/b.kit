@@ -19,46 +19,55 @@ export const Default: Story = () => (
                 jobTitle: 'Jobtitle 1<br/>(m/w/d)',
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 2<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 3<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 4<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 5<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 6<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 7<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 8<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 9<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
         ]}
     />
@@ -72,46 +81,55 @@ export const WithBackground: Story = () => (
                 jobTitle: 'Jobtitle 1<br/>(m/w/d)',
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 2<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 3<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 4<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 5<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 6<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 7<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 8<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 9<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
         ]}
     />
@@ -125,46 +143,55 @@ export const IsInverted: Story = () => (
                 jobTitle: 'Jobtitle 1<br/>(m/w/d)',
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 2<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 3<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 4<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 5<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 6<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 7<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 8<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
             {
                 jobTitle: `Jobtitle 9<br/>(m/w/d)`,
                 timeModel: 'Vollzeit',
                 location: 'Immenstaad / Ravensburg',
+                link: { href: '#0' },
             },
         ]}
     />

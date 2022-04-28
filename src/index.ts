@@ -70,7 +70,6 @@ export { default as FactList } from 'components/sections/FactList';
 export { default as FeatureCarousel } from 'components/sections/carousel/FeatureCarousel';
 export { default as FeatureList } from 'components/sections/FeatureList';
 export { default as Footer } from 'components/sections/Footer';
-export { default as Form } from 'components/sections/Form';
 export { default as Gallery } from 'components/sections/Gallery';
 export { default as Header } from 'components/sections/header/Header';
 export { default as IconList } from 'components/sections/IconList';

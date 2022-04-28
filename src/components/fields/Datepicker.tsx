@@ -225,8 +225,13 @@ const PickerView = styled.div`
         top: 0 !important;
     }
 
+    .react-datepicker__navigation:focus {
+        outline: 1px solid ${({ theme }) => color(theme).primary.default};
+    }
+
     /* Keyboard selection */
     .react-datepicker__day--keyboard-selected {
+        outline: none;
         background: ${({ theme }) => color(theme).elementBg.dark};
     }
 `;
@@ -272,8 +277,8 @@ const DatepickerButton = styled.button<{
     position: relative;
 
     &:focus {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
+        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline-offset: 0;
     }
 
     &:active {

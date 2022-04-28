@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
+import { hexToRgba } from 'utils/hexRgbConverter';
 
 import {
     getColors as color,
@@ -19,60 +20,56 @@ const View = styled.a<{
     min-width: ${({ size }) => (size === 'default' ? '240px' : '120px')};
     padding: 0.1em 1.2em;
 
-    display: inline-block;
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+
     vertical-align: middle;
 
     font-family: ${({ theme }) => font(theme).copy.medium.family};
     ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
     font-weight: ${({ theme }) => font(theme).copy.medium.weight};
-    text-align: center;
-    text-decoration: none;
     line-height: 1;
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
 
-    perspective: 1000;
-    -webkit-font-smoothing: subpixel-antialiased;
-    -webkit-perspective: 1000;
-    -moz-osx-font-smoothing: grayscale;
-    will-change: auto;
+    text-align: center;
+    text-decoration: none;
 
     outline: none;
     box-shadow: none;
     border: solid 1px
-        ${({ inverted, disable }) =>
+        ${({ inverted, disable, theme }) =>
             disable
-                ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher mono.medium)
+                ? color(theme).elementBg.medium
                 : inverted
-                ? '#fff' // #TODO: Rahmenfarben definieren
-                : '#000'};
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     user-select: none;
     cursor: pointer;
 
     pointer-events: ${({ disable }) => (disable ? 'none' : 'all')};
 
-    // will-change: transform;
-
     background-color: transparent;
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher mono.medium)
+            ? inverted
+                ? hexToRgba(color(theme).text.inverted, 0.6)
+                : hexToRgba(color(theme).text.default, 0.6)
             : inverted
             ? color(theme).text.inverted
             : color(theme).text.default};
-    text-align: center;
 
     transition: all ease-in-out 0.2s;
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher mono.medium)
+                ? inverted
+                    ? hexToRgba(color(theme).text.inverted, 0.6)
+                    : hexToRgba(color(theme).text.default, 0.6)
                 : inverted
                 ? color(theme).text.inverted
                 : color(theme).text.default};
@@ -83,7 +80,7 @@ const View = styled.a<{
     }
 
     @media (hover: hover) and (pointer: fine) {
-        ${({ disable, inverted }) =>
+        ${({ disable, inverted, theme }) =>
             !disable &&
             css`
                 &:hover {
@@ -94,6 +91,11 @@ const View = styled.a<{
                 }
 
                 &:focus {
+                    outline: 1px solid
+                        ${inverted
+                            ? color(theme).primary.inverted
+                            : color(theme).primary.default};
+                    outline-offset: 0;
                     box-shadow: 0px 2px 6px
                         ${inverted
                             ? 'rgba(255, 255, 255, 0.25)'
@@ -198,8 +200,7 @@ const Icon = styled.div<{ iconColor?: string }>`
     width: 35px;
     height: 35px;
 
-    color: ${({ theme, iconColor }) =>
-        iconColor || color(theme).primary.default};
+    color: ${({ iconColor }) => iconColor || 'inherit'};
 
     transition: transform 0.2s ease-in-out;
 

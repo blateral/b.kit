@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { hexToRgba } from 'utils/hexRgbConverter';
 
 import {
     getColors as color,
@@ -20,21 +21,20 @@ const View = styled.a<{
     min-width: ${({ size }) => (size === 'default' ? '240px' : '120px')};
     padding: 0.1em 1.2em;
 
-    display: inline-block;
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+
     vertical-align: middle;
 
     font-family: ${({ theme }) => font(theme).copy.medium.family};
     ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
     font-weight: ${({ theme }) => font(theme).copy.medium.weight};
-    text-align: center;
-    text-decoration: none;
     line-height: 1;
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
+    text-decoration: none;
 
     outline: none;
     border: 1px solid transparent;
@@ -44,17 +44,15 @@ const View = styled.a<{
 
     pointer-events: ${({ disable }) => (disable ? 'none' : 'all')};
 
-    // will-change: transform;
-
     background-color: ${({ theme, inverted, disable }) =>
         disable
-            ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher mono.medium)
+            ? color(theme).elementBg.medium
             : inverted
             ? color(theme).primary.inverted
             : color(theme).primary.default};
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher light)
+            ? hexToRgba(color(theme).text.default, 0.4)
             : !inverted
             ? color(theme).text.inverted
             : color(theme).text.default};
@@ -65,7 +63,7 @@ const View = styled.a<{
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? '#B5B5B5' // #TODO: Disabled Farbe definieren (vorher light)
+                ? hexToRgba(color(theme).text.default, 0.4)
                 : !inverted
                 ? color(theme).text.inverted
                 : color(theme).text.default};
@@ -100,10 +98,11 @@ const View = styled.a<{
         !disable &&
         css`
             &:focus {
-                box-shadow: 0px 2px 6px
+                text-decoration: underline;
+                box-shadow: 0px 8px 16px
                     ${inverted
                         ? 'rgba(255, 255, 255, 0.25)'
-                        : 'rgba(0, 0, 0, 0.3)'};
+                        : 'rgba(0, 0, 0, 0.25)'};
             }
 
             &:active {
@@ -217,8 +216,7 @@ const Icon = styled.div<{ iconColor?: string }>`
     width: 35px;
     height: 35px;
 
-    color: ${({ theme, iconColor }) =>
-        iconColor || color(theme).primary.default};
+    color: ${({ iconColor }) => iconColor || 'inherit'};
 
     transition: transform 0.2s ease-in-out;
 

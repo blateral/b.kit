@@ -490,7 +490,7 @@ const SubNavItem = styled.li<{ navBarSize?: NavBarSize }>`
 `;
 
 const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
-    width: 100%;
+    /* width: 100%; */
     padding: ${spacings.nudge}px 0;
     outline-color: ${({ theme }) => color(theme).primary.default};
     vertical-align: middle;
@@ -502,16 +502,24 @@ const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
     overflow: hidden;
     text-overflow: ellipsis;
 
+    & > * {
+        margin: 2px;
+    }
+
     &:focus {
-        outline: solid 2px
+        outline: none;
+    }
+
+    &:focus > * {
+        outline: dashed 1px
             ${({ theme, isInverted }) =>
                 isInverted
                     ? color(theme).primary.inverted
                     : color(theme).primary.default};
-        outline-offset: 4px;
+        outline-offset: 1px;
     }
 
-    &:focus:not(:focus-visible) {
+    &:focus:not(:focus-visible) > * {
         outline: none;
     }
 `;
@@ -533,7 +541,7 @@ const NavigationSubItem = forwardRef<
                 isCurrent={isCurrent}
                 {...link}
             >
-                {label}
+                <span>{label}</span>
             </SubNavLink>
         </SubNavItem>
     );
@@ -569,7 +577,7 @@ const SecondaryNavLink = styled(Link)<{ isCurrent?: boolean }>`
     text-overflow: ellipsis;
 
     &:focus {
-        outline: solid 2px
+        outline: dashed 2px
             ${({ theme, isInverted }) =>
                 isInverted
                     ? color(theme).primary.inverted

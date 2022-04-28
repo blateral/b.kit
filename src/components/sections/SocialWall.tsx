@@ -82,6 +82,13 @@ const Card = styled(Link)<{ isInverted?: boolean }>`
             pointer-events: all;
         }
     }
+
+    &:focus {
+        &:before {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
 `;
 
 const StyledImage = styled(Image)`
@@ -110,6 +117,11 @@ const TextContainer = styled.div`
     }
 
     ${Card}:hover & {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    ${Card}:focus & {
         opacity: 1;
         pointer-events: all;
     }
