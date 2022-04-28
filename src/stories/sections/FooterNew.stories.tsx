@@ -189,5 +189,12 @@ export const IsInverted: Story = () => (
         callToAction={exampleCallToAction}
         socials={exampleSocials}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
+        bottomLinks={exampleBottomLinks}
+        language={[
+            { label: 'deutsch', link: { href: '/de' } },
+            { label: 'englisch', link: { href: '/en' } },
+            { label: 'französisch', link: { href: '/fr' } },
+        ]}
+        languageIcon
     />
 );

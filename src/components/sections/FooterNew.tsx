@@ -22,14 +22,20 @@ const ColTitle = styled(Copy)`
     margin-bottom: ${spacings.nudge * 2}px;
 `;
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;
+
 const LinkList = styled.ul`
     padding: 0;
-    margin: -${spacings.nudge}px;
+    margin: 0;
     list-style: none;
 `;
 
 const LinkItem = styled.li`
-    padding: ${spacings.nudge}px;
+    & + & {
+        margin-top: ${spacings.nudge}px;
+    }
 `;
 
 const FooterCol = styled.div`
@@ -70,7 +76,7 @@ const LanguageBlock = styled.div`
 
 const BottomLinkList = styled.ul`
     padding: 0;
-    margin: -${spacings.nudge}px;
+    margin: 0;
     list-style: none;
 
     display: flex;
@@ -79,7 +85,9 @@ const BottomLinkList = styled.ul`
 `;
 
 const BottomLinkItem = styled.li`
-    padding: ${spacings.nudge}px;
+    & + & {
+        margin-left: ${spacings.nudge}px;
+    }
 `;
 
 const FooterNew: React.FC<{
@@ -143,7 +151,7 @@ const FooterNew: React.FC<{
                                             {links.colLinks?.map((link, ii) => {
                                                 return (
                                                     <LinkItem key={ii}>
-                                                        <Link
+                                                        <StyledLink
                                                             isInverted={
                                                                 isInverted
                                                             }
@@ -156,7 +164,7 @@ const FooterNew: React.FC<{
                                                             >
                                                                 {link.label}
                                                             </Copy>
-                                                        </Link>
+                                                        </StyledLink>
                                                     </LinkItem>
                                                 );
                                             })}
@@ -242,7 +250,7 @@ const FooterNew: React.FC<{
                         {bottomLinks?.map((bottomLink, i) => {
                             return (
                                 <BottomLinkItem key={i}>
-                                    <Link
+                                    <StyledLink
                                         isInverted={isInverted}
                                         href={bottomLink.href}
                                         isExternal={bottomLink.isExternal}
@@ -250,7 +258,7 @@ const FooterNew: React.FC<{
                                         <Copy isInverted={isInverted}>
                                             {bottomLink.label}
                                         </Copy>
-                                    </Link>
+                                    </StyledLink>
                                 </BottomLinkItem>
                             );
                         })}
