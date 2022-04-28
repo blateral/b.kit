@@ -20,12 +20,26 @@ const StyledWrapper = styled(Wrapper)`
 `;
 
 const Social = styled(Link)`
+    display: block;
     color: inherit;
 
     transition: color 0.2s ease-in-out;
 
     &:hover {
         color: ${({ theme }) => color(theme).elementBg.mediumHover};
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus > * {
+        outline: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+        outline-offset: 2px;
     }
 
     & > * {
