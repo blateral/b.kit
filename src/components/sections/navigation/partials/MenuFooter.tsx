@@ -27,8 +27,12 @@ const MenuFooter: FC<{
 }> = ({ isInverted, langs, socials }) => {
     return (
         <Footer>
-            <SocialList isInverted={isInverted} items={socials} />
-            <LanguageSwitcher isInverted={isInverted} langs={langs} />
+            {socials && socials.length > 0 && (
+                <SocialList isInverted={isInverted} items={socials} />
+            )}
+            {langs && langs.length > 0 && (
+                <LanguageSwitcher isInverted={isInverted} langs={langs} />
+            )}
         </Footer>
     );
 };
