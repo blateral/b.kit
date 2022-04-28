@@ -17,6 +17,8 @@ export const linkStyles = (isInverted?: boolean) => css`
 
     transition: color 0.2s ease-in-out;
 
+    outline: none;
+
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             color: ${({ theme }) =>
@@ -24,6 +26,19 @@ export const linkStyles = (isInverted?: boolean) => css`
                     ? font(theme).link.colorHoverInverted
                     : font(theme).link.colorHover};
         }
+    }
+
+    &:focus {
+        outline: 1px dashed
+            ${({ theme }) =>
+                isInverted
+                    ? font(theme).link.colorInverted
+                    : font(theme).link.color};
+        outline-offset: 1px;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
     }
 `;
 
