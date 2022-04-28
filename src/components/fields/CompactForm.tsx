@@ -43,6 +43,11 @@ const InputField = styled.input<{ backColor?: string }>`
     ${({ theme }) => withRange(font(theme).copy.small.size, 'font-size')}
     line-height: ${({ theme }) => font(theme).copy.small.lineHeight};
 
+    &:focus {
+        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline-offset: 0;
+    }
+
     &::placeholder {
         color: inherit;
     }
