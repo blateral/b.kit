@@ -1,5 +1,4 @@
 import Grid from 'components/base/Grid';
-import LanguageIcon from 'components/base/icons/Language';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Bdot from 'components/blocks/Bdot';
@@ -65,16 +64,6 @@ const BottomView = styled.div`
     }
 `;
 
-const LanguageBlock = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    & > * + * {
-        margin-left: ${spacings.nudge / 2}px;
-    }
-`;
-
 const BottomLinkList = styled.ul`
     padding: 0;
     margin: 0;
@@ -110,7 +99,7 @@ const FooterNew: React.FC<{
     footNote?: string;
     bottomLinks?: { href: string; label?: string; isExternal?: boolean }[];
     language?: Language[];
-    languageIcon?: boolean;
+    languageIcon?: () => React.ReactNode;
     brandIcon?: boolean;
 }> = ({
     bgMode,
@@ -233,25 +222,13 @@ const FooterNew: React.FC<{
                     language ||
                     !brandIcon) && (
                     <BottomView>
-                        <LanguageBlock>
-                            {languageIcon && (
-                                <span>
-                                    <LanguageIcon
-                                        iconColor={
-                                            isInverted
-                                                ? colors.text.inverted
-                                                : colors.text.default
-                                        }
-                                    />
-                                </span>
-                            )}
-                            {language && (
-                                <LanguageSwitcher
-                                    isInverted={isInverted}
-                                    langs={language}
-                                />
-                            )}
-                        </LanguageBlock>
+                        {language && (
+                            <LanguageSwitcher
+                                isInverted={isInverted}
+                                langs={language}
+                                languageIcon={languageIcon}
+                            />
+                        )}
                         <BottomLinkList>
                             {bottomLinks?.map((bottomLink, i) => {
                                 return (
