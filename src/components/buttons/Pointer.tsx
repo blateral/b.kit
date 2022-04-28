@@ -76,13 +76,13 @@ const View = styled.a<{
         opacity: 0.6;
     }
 
-    /* &:focus {
-        text-decoration: underline;
+    &:focus {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
     }
 
     &:active {
-        text-decoration: underline;
-    } */
+        opacity: 0.6;
+    }
 `;
 
 interface Props {
