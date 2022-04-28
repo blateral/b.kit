@@ -19,7 +19,7 @@ export default {
             values: [{ name: 'gray', value: '#F0F0F0' }],
         },
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;

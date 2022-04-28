@@ -62,8 +62,8 @@ const Field = styled.input<{
     }
 
     &:focus {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
+        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline-offset: 0;
     }
 
     &::placeholder {

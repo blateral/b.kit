@@ -277,8 +277,8 @@ const DatepickerButton = styled.button<{
     position: relative;
 
     &:focus {
-        outline: none;
-        border: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline-offset: 0;
     }
 
     &:active {
