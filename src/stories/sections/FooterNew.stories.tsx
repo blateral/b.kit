@@ -137,7 +137,7 @@ export const WithFootNote: Story = () => (
         siteLinks={exampleSiteLinks}
         callToAction={exampleCallToAction}
         socials={exampleSocials}
-        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
+        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
     />
 );
 
@@ -146,7 +146,7 @@ export const WithBottomLinks: Story = () => (
         siteLinks={exampleSiteLinks}
         callToAction={exampleCallToAction}
         socials={exampleSocials}
-        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
+        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
         bottomLinks={exampleBottomLinks}
     />
 );
@@ -156,7 +156,7 @@ export const WithLanguageSwitcher: Story = () => (
         siteLinks={exampleSiteLinks}
         callToAction={exampleCallToAction}
         socials={exampleSocials}
-        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
+        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
         bottomLinks={exampleBottomLinks}
         language={[
             { label: 'deutsch', link: { href: '/de' } },
@@ -171,7 +171,7 @@ export const WithLanguageSwitcherIcon: Story = () => (
         siteLinks={exampleSiteLinks}
         callToAction={exampleCallToAction}
         socials={exampleSocials}
-        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
+        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
         bottomLinks={exampleBottomLinks}
         language={[
             { label: 'deutsch', link: { href: '/de' } },
@@ -188,6 +188,6 @@ export const IsInverted: Story = () => (
         siteLinks={exampleSiteLinks}
         callToAction={exampleCallToAction}
         socials={exampleSocials}
-        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
+        footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
     />
 );
