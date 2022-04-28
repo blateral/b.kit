@@ -87,16 +87,19 @@ export const parameters = {
         },
     },
     options: {
-        storySort: (previous, next) => {
-            // const [previousStory, previousMeta] = previous;
-            const [nextStory, nextMeta] = next;
+        // storySort: (previous, next) => {
+        //     // const [previousStory, previousMeta] = previous;
+        //     const [nextStory, nextMeta] = next;
 
-            if (
-                nextMeta.kind.search('Info') ||
-                nextMeta.kind.search('Introduction')
-            ) {
-                return -1;
-            } else return 0;
+        //     if (
+        //         nextMeta.kind.search('Info') ||
+        //         nextMeta.kind.search('Introduction')
+        //     ) {
+        //         return -1;
+        //     } else return 0;
+        // },
+        storySort: {
+            order: ['Introduction', 'Getting Started', 'Accessibility'],
         },
     },
 };
