@@ -46,7 +46,7 @@ const View = styled.a<{
 
     background-color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).elementBg.medium // #TODO: Disabled Farbe definieren (vorher mono.medium)
+            ? color(theme).elementBg.medium
             : inverted
             ? color(theme).primary.inverted
             : color(theme).primary.default};
