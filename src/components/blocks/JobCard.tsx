@@ -5,7 +5,7 @@ import Heading from 'components/typography/Heading';
 import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { getColors as color, getGlobals, mq, spacings } from 'utils/styles';
 
 const View = styled.div<{
     isInverted?: boolean;
@@ -22,6 +22,8 @@ const View = styled.div<{
             : color(theme).elementBg.medium};
 
     padding: ${spacings.spacer}px;
+
+    border-radius: ${({ theme }) => getGlobals(theme).sections.edgeRadius};
 
     ${({ clickable, isInverted }) =>
         clickable &&
