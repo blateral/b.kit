@@ -80,7 +80,7 @@ const View = styled.a<{
     }
 
     @media (hover: hover) and (pointer: fine) {
-        ${({ disable, inverted }) =>
+        ${({ disable, inverted, theme }) =>
             !disable &&
             css`
                 &:hover {
@@ -91,6 +91,11 @@ const View = styled.a<{
                 }
 
                 &:focus {
+                    outline: 1px solid
+                        ${inverted
+                            ? color(theme).primary.inverted
+                            : color(theme).primary.default};
+                    outline-offset: 0;
                     box-shadow: 0px 2px 6px
                         ${inverted
                             ? 'rgba(255, 255, 255, 0.25)'
