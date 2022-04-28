@@ -27,6 +27,10 @@ const View = styled.a<{
         }
     }
 
+    &:focus {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
+    }
+
     & > * {
         opacity: ${({ isDisabled }) => (isDisabled ? '0.3' : '1')};
     }
