@@ -65,6 +65,12 @@ const View = styled.div<{
     }
 `;
 
+const JobInfos = styled(Copy)`
+    &:not(:first-child) {
+        margin-top: ${spacings.nudge * 4}px;
+    }
+`;
+
 const Info = styled.div`
     display: -ms-grid;
     display: grid;
@@ -170,7 +176,7 @@ const JobCard = React.forwardRef<
                     innerHTML={jobTitle}
                     hyphens
                 />
-                <Copy type="copy-b" textColor="inherit" data-sheet="info">
+                <JobInfos type="copy-b" textColor="inherit" data-sheet="info">
                     <Info>
                         <Icon>{modelIcon ? modelIcon() : <Clock />}</Icon>
                         <MainLabel>{timeModel}</MainLabel>
@@ -182,7 +188,7 @@ const JobCard = React.forwardRef<
                         </Icon>
                         <MainLabel>{location}</MainLabel>
                     </Info>
-                </Copy>
+                </JobInfos>
                 {link && (
                     <ViewLink
                         {...link}
