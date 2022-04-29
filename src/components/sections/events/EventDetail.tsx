@@ -12,6 +12,7 @@ import { LinkProps } from 'components/typography/Link';
 import { mq, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
+import StatusFormatter from 'utils/statusFormatter';
 
 const StyledImage = styled(Image)`
     &:not(:last-child) {
@@ -46,16 +47,27 @@ const EventTitle = styled(Heading)`
     }
 `;
 
-const EventInfo = styled(Copy)`
+const EventDateTime = styled(Copy)`
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* number of lines to show */
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
+    white-space: nowrap;
 
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
+    }
+`;
+
+const EventAddress = styled(Copy)`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:not(:first-child) {
+        margin-top: ${spacings.nudge * 3}px;
+    }
+
+    ${EventDateTime} + & {
+        margin-top: ${spacings.nudge}px;
     }
 `;
 
@@ -210,7 +222,7 @@ const EventDetail: React.FC<{
     anchorId?: string;
 
     /** Array of event item settings */
-    event: DetailEventProps & { infoText?: string };
+    event: DetailEventProps & { address?: string };
 
     /** Additional event infos */
     infos?: EventInfoGroup[];
@@ -227,9 +239,33 @@ const EventDetail: React.FC<{
         link?: LinkProps;
     }) => React.ReactNode;
 }> = ({ anchorId, event, infos, bgMode, customTag }) => {
-    const { colors } = useLibTheme();
+    const { colors, globals } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
+    let publishedAt = '';
+    let startTime = '';
+    let endTime = '';
+
+    if (event?.date) {
+        const formatter = new StatusFormatter(
+            event.date.getTime(),
+            '',
+            globals.sections.eventDateFormat,
+            globals.sections.eventTimeFormat,
+            globals.sections.eventLocaleKey
+        );
+        publishedAt = formatter.getFormattedDate();
+        startTime = formatter.getFormattedTime();
+
+        if (event.duration) {
+            const endDate = new Date(event.date);
+            endDate.setSeconds(event.date.getSeconds() + (event.duration || 0));
+            formatter.setDate(endDate.getTime());
+
+            endTime = formatter.getFormattedTime();
+        }
+    }
 
     return (
         <Section
@@ -289,11 +325,21 @@ const EventDetail: React.FC<{
                                 {event.title}
                             </EventTitle>
                         )}
-                        {event.infoText && (
-                            <EventInfo
+                        {publishedAt && (
+                            <EventDateTime size="big" type="copy-b">
+                                {publishedAt || ''}
+                                {publishedAt && event.duration ? ' | ' : ''}
+                                {event.duration
+                                    ? startTime +
+                                      (endTime ? ' - ' + endTime : '')
+                                    : ''}
+                            </EventDateTime>
+                        )}
+                        {event.address && (
+                            <EventAddress
                                 size="big"
-                                isInverted={isInverted}
-                                innerHTML={event.infoText}
+                                type="copy"
+                                innerHTML={event.address}
                             />
                         )}
                         {event.text && (

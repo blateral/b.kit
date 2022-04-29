@@ -99,6 +99,9 @@ export interface EventProps {
     /** Event publish date */
     date?: Date;
 
+    /** Event duration in seconds  */
+    duration?: number;
+
     /** Event text (richtext) */
     text?: string;
 

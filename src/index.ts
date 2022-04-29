@@ -136,6 +136,7 @@ export { default as Image } from 'components/blocks/Image';
 export { default as LinkList, getLinkIcon } from 'components/blocks/LinkList';
 export { default as LanguageSwitcher } from 'components/blocks/LanguageSwitcher';
 export { default as VideoBlock } from 'components/blocks/VideoBlock';
+export { default as EventBlock } from 'components/blocks/EventBlock';
 
 export {
     default as CookieConsent,
