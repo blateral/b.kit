@@ -165,6 +165,66 @@ export default class StatusFormatter {
         return formattedTime;
     }
 
+    private areOnSameDay(first: Date, second: Date) {
+        return (
+            first.getFullYear() === second.getFullYear() &&
+            first.getMonth() === second.getMonth() &&
+            first.getDate() === second.getDate()
+        );
+    }
+
+    /**
+     * Get formatted string of timespan from current date + duration in seconds
+     * @param duration Duration in seconds. Added to current date
+     * @returns
+     */
+    public getFormattedTimespan(
+        format = '',
+        duration?: number,
+        seperator = ' - '
+    ) {
+        const startTime = this.getFormattedTime();
+        let endTime = '';
+
+        if (duration === undefined) return '';
+
+        // create endDate
+        if (duration > 0) {
+            const endDate = new Date(this.date);
+            endDate.setSeconds(this.date.getSeconds() + duration);
+
+            const endTimeFormatter = new StatusFormatter(
+                endDate.getTime(),
+                this.input,
+                this.dateFormat,
+                this.timeFormat,
+                this.localeKey
+            );
+
+            endTime = endTimeFormatter.getFormattedTime();
+
+            console.log(this.areOnSameDay(this.date, endDate));
+        }
+
+        // concatenate timespan string
+        const placeholders: {
+            [key: string]: any;
+        } = {
+            '%START%': startTime,
+            '%END%': endTime,
+            '%SEP%': seperator,
+        };
+
+        const formattedTimespan = format.replace(/%\w+%/g, (foundString) => {
+            if (foundString === '%SEP%' && !(startTime && endTime)) return '';
+            if (foundString === '%END%' && !endTime) return '';
+
+            return placeholders[foundString] || foundString;
+        });
+
+        return formattedTimespan;
+    }
+
     private getDoubleDigitString(value: number) {
         return value < 10 ? '0' + value.toString() : value.toString();
     }

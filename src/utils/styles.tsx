@@ -392,6 +392,8 @@ export interface GlobalSettings {
         /** Date and Time Formats for all event sections */
         eventDateFormat: string;
         eventTimeFormat: string;
+        eventTimespanFormat: string;
+        eventTimespanSeperator: string;
         eventLocaleKey: 'de' | 'en';
 
         /** Date and Time Formats for Datepickers */
@@ -475,12 +477,14 @@ const defaultGlobalSettings: GlobalSettings = {
             default: '#e2e2e2',
             inverted: '#1e1c1f',
         },
-        newsDateFormat: 'dd/mm/yy',
+        newsDateFormat: 'dd.mm.yy',
         newsTimeFormat: 'hh:mm',
-        newsLocaleKey: 'en',
-        eventDateFormat: 'ddd, dd/mm/yy',
+        newsLocaleKey: 'de',
+        eventDateFormat: 'ddd, dd.mm.yyyy',
         eventTimeFormat: 'hh:mm',
-        eventLocaleKey: 'en',
+        eventTimespanFormat: '%START%%SEP%%END% Uhr',
+        eventTimespanSeperator: ' - ',
+        eventLocaleKey: 'de',
         datepickerLocaleKey: 'de',
         datepickerDateFormat: 'dd.MM.yyyy',
     },

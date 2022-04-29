@@ -244,8 +244,7 @@ const EventDetail: React.FC<{
     const hasBg = bgMode === 'full';
 
     let publishedAt = '';
-    let startTime = '';
-    let endTime = '';
+    let timespan = '';
 
     if (event?.date) {
         const formatter = new StatusFormatter(
@@ -256,15 +255,12 @@ const EventDetail: React.FC<{
             globals.sections.eventLocaleKey
         );
         publishedAt = formatter.getFormattedDate();
-        startTime = formatter.getFormattedTime();
 
-        if (event.duration) {
-            const endDate = new Date(event.date);
-            endDate.setSeconds(event.date.getSeconds() + (event.duration || 0));
-            formatter.setDate(endDate.getTime());
-
-            endTime = formatter.getFormattedTime();
-        }
+        timespan = formatter.getFormattedTimespan(
+            globals.sections.eventTimespanFormat,
+            event.duration,
+            globals.sections.eventTimespanSeperator
+        );
     }
 
     return (
@@ -328,11 +324,8 @@ const EventDetail: React.FC<{
                         {publishedAt && (
                             <EventDateTime size="big" type="copy-b">
                                 {publishedAt || ''}
-                                {publishedAt && event.duration ? ' | ' : ''}
-                                {event.duration
-                                    ? startTime +
-                                      (endTime ? ' - ' + endTime : '')
-                                    : ''}
+                                {publishedAt && timespan ? ' | ' : ''}
+                                {timespan}
                             </EventDateTime>
                         )}
                         {event.address && (
