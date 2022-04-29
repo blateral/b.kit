@@ -5,6 +5,7 @@ import MenuBurger from 'components/base/icons/MenuBurger';
 import { NavBarStates } from '../Navigation';
 import Skeletons from 'components/sections/navigation/skeletons/Skeletons';
 import { spacings } from 'utils/styles';
+import { LinkProps } from 'components/typography/Link';
 
 const LogoColumn = styled(Skeletons.Col)`
     display: flex;
@@ -19,6 +20,7 @@ const NavBarMain: FC<{
         desktopInverted?: { src: string; alt?: string };
         mobile?: { src: string; alt?: string };
         mobileInverted?: { src: string; alt?: string };
+        link?: Omit<LinkProps, 'coverSpace' | 'ratios'>;
     };
     customToggle?: (props: { isInverted?: boolean }) => React.ReactNode;
     primaryAction?: (
@@ -50,6 +52,7 @@ const NavBarMain: FC<{
             {logo?.desktop?.src && (
                 <LogoColumn isInverted={isInverted}>
                     <Skeletons.Logo
+                        link={logo.link}
                         logo={{
                             small: isInverted
                                 ? logo?.mobileInverted?.src || ''

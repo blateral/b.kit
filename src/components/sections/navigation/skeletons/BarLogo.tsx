@@ -3,13 +3,20 @@ import styled from 'styled-components';
 
 import Link, { LinkProps } from 'components/typography/Link';
 import Image, { ImageProps } from 'components/blocks/Image';
+import { getColors } from 'utils/styles';
 
 const View = styled(Link)`
+    display: block;
     display: flex;
     justify-content: center;
     min-width: 60px;
     max-width: 100%;
     max-height: 100%;
+
+    &:focus {
+        outline: 2px solid ${({ theme }) => getColors(theme).primary.default};
+        outline-offset: 1px;
+    }
 `;
 
 const Logo = styled(Image)`
