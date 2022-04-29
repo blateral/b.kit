@@ -138,6 +138,7 @@ export interface JobCardProps {
     /** Injection function for job location icon */
     locationIcon?: () => React.ReactNode;
 
+    /** Job card link */
     link?: LinkProps;
 }
 
