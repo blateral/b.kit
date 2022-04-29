@@ -225,6 +225,7 @@ export const WithExampleContent: Story = () => (
             mainBar: (navStates) => (
                 <NavBarMain
                     logo={{
+                        link: { href: '#0' },
                         mobile: { src: 'https://via.placeholder.com/80x80' },
                         desktop: { src: 'https://via.placeholder.com/320x80' },
                         mobileInverted: {
