@@ -1,5 +1,3 @@
-/***** Version: 2.0.0-beta.8.1 *****/
-
 import 'styled-components';
 import { Colors, FontBase, Fonts, GlobalSettings } from 'utils/styles';
 
