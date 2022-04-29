@@ -27,12 +27,17 @@ const Toggle = styled.button<{ isInverted?: boolean }>`
     }
 
     &:focus > * {
-        outline: solid 2px
+        outline: dotted 2px
             ${({ theme, isInverted }) =>
                 isInverted
                     ? color(theme).primary.inverted
                     : color(theme).primary.default};
         outline-offset: 4px;
+
+        color: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).primary.invertedHover
+                : color(theme).primary.hover};
     }
 
     /* &:focus:not(:focus-visible) > * {
