@@ -53,7 +53,6 @@ export { getCurrentNavItem, getCurrentNavPath } from 'utils/navigation';
 export * from 'utils/LibThemeProvider';
 
 /***** Sections *****/
-
 export { default as Accordion } from 'components/sections/Accordion';
 export { default as AlertList } from 'components/sections/AlertList';
 export { default as Article } from 'components/sections/Article';
@@ -138,6 +137,7 @@ export { default as IntroBlock } from 'components/blocks/IntroBlock';
 export { default as Image } from 'components/blocks/Image';
 export { default as LinkList, getLinkIcon } from 'components/blocks/LinkList';
 export { default as LanguageSwitcher } from 'components/blocks/LanguageSwitcher';
+export { default as VideoBlock } from 'components/blocks/VideoBlock';
 
 export {
     default as CookieConsent,
