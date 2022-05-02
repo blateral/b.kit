@@ -5,20 +5,20 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const LocationPin: React.FC<{ iconColor?: string; className?: string }> = ({
-    iconColor = 'currentColor',
-    className,
-}) => (
+const LocationPin: React.FC<{
+    iconColor?: string;
+    className?: string;
+}> = ({ iconColor = 'currentColor', className }) => (
     <SVG
-        className={className}
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
+        viewBox="0 0 16 20"
+        width="16"
+        height="20"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className={className}
     >
         <path
-            d="M16 2.667A9.327 9.327 0 0 0 6.667 12C6.667 19 16 29.333 16 29.333S25.333 19 25.333 12A9.326 9.326 0 0 0 16 2.667Zm0 12.666A3.335 3.335 0 1 1 19.333 12 3.335 3.335 0 0 1 16 15.333Z"
+            d="M8 10c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2Zm6-1.8C14 4.57 11.35 2 8 2S2 4.57 2 8.2c0 2.34 1.95 5.44 6 9.14 4.05-3.7 6-6.8 6-9.14ZM8 0c4.2 0 8 3.22 8 8.2 0 3.32-2.67 7.25-8 11.8-5.33-4.55-8-8.48-8-11.8C0 3.22 3.8 0 8 0Z"
             fill={iconColor}
         />
     </SVG>

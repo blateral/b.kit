@@ -162,21 +162,7 @@ export { default as MenuFooterPartial } from 'components/sections/navigation/par
 export { default as SocialList } from 'components/blocks/SocialList';
 
 /***** Icons *****/
-export { default as ArrowRightIcon } from 'components/base/icons/ArrowRight';
-export { default as ArrowLeftGhostIcon } from 'components/base/icons/ArrowLeftGhost';
-export { default as ArrowRightGhostIcon } from 'components/base/icons/ArrowRightGhost';
-export { default as CrossIcon } from 'components/base/icons/Cross';
-export { default as CrossSmallIcon } from 'components/base/icons/CrossSmall';
-export { default as MagnifierIcon } from 'components/base/icons/Magnifier';
-export { default as MenuBurgerIcon } from 'components/base/icons/MenuBurger';
-export { default as PlayIcon } from 'components/base/icons/Play';
-export { default as FlyToIcon } from 'components/base/icons/FlyTo';
-export { default as StarIcon } from 'components/base/icons/Star';
-export { default as StarGhostIcon } from 'components/base/icons/StarGhost';
-export { default as MailIcon } from 'components/base/icons/Mail';
-export { default as PhoneIcon } from 'components/base/icons/Phone';
-export { default as RouteIcon } from 'components/base/icons/Route';
-export { default as ExternalIcon } from 'components/base/icons/External';
+export * as Icons from 'components/base/icons/Icons';
 
 /***** Social Icons *****/
 export { default as FacebookIcon } from 'components/base/icons/socials/Facebook';
