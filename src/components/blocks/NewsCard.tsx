@@ -159,8 +159,8 @@ const NewsCard = forwardRef<
             const formatter = new StatusFormatter(
                 publishDate.getTime(),
                 '',
-                globals.sections.newsDateFormat,
-                globals.sections.newsTimeFormat,
+                globals.sections.newsDateFormat(publishDate),
+                globals.sections.newsTimeFormat(publishDate),
                 globals.sections.newsLocaleKey
             );
             publishedAt = formatter.getFormattedDate();

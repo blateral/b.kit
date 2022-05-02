@@ -250,16 +250,15 @@ const EventDetail: React.FC<{
         const formatter = new StatusFormatter(
             event.date.getTime(),
             '',
-            globals.sections.eventDateFormat,
-            globals.sections.eventTimeFormat,
+            globals.sections.eventDateFormat(event.date),
+            globals.sections.eventTimeFormat(event.date),
             globals.sections.eventLocaleKey
         );
         publishedAt = formatter.getFormattedDate();
 
         timespan = formatter.getFormattedTimespan(
-            globals.sections.eventTimespanFormat,
-            event.duration,
-            globals.sections.eventTimespanSeperator
+            globals.sections.eventTimespanFormat(event.date, event.duration),
+            event.duration
         );
     }
 

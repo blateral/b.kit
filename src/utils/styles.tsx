@@ -385,15 +385,14 @@ export interface GlobalSettings {
         };
 
         /** Date and Time Formats for all news sections */
-        newsDateFormat: string;
-        newsTimeFormat: string;
+        newsDateFormat: (date: Date) => string;
+        newsTimeFormat: (date: Date) => string;
         newsLocaleKey: 'de' | 'en';
 
         /** Date and Time Formats for all event sections */
-        eventDateFormat: string;
-        eventTimeFormat: string;
-        eventTimespanFormat: string;
-        eventTimespanSeperator: string;
+        eventDateFormat: (date: Date) => string;
+        eventTimeFormat: (date: Date) => string;
+        eventTimespanFormat: (start: Date, duration?: number) => string;
         eventLocaleKey: 'de' | 'en';
 
         /** Date and Time Formats for Datepickers */
@@ -477,13 +476,12 @@ const defaultGlobalSettings: GlobalSettings = {
             default: '#e2e2e2',
             inverted: '#1e1c1f',
         },
-        newsDateFormat: 'dd.mm.yy',
-        newsTimeFormat: 'hh:mm',
+        newsDateFormat: () => 'dd.mm.yy',
+        newsTimeFormat: () => 'hh:mm',
         newsLocaleKey: 'de',
-        eventDateFormat: 'ddd, dd.mm.yyyy',
-        eventTimeFormat: 'hh:mm',
-        eventTimespanFormat: '%START%%SEP%%END% Uhr',
-        eventTimespanSeperator: ' - ',
+        eventDateFormat: () => 'ddd, dd.mm.yyyy',
+        eventTimeFormat: () => 'hh:mm',
+        eventTimespanFormat: () => '<START><SEP><END> Uhr',
         eventLocaleKey: 'de',
         datepickerLocaleKey: 'de',
         datepickerDateFormat: 'dd.MM.yyyy',

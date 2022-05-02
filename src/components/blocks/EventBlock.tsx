@@ -147,8 +147,8 @@ const EventBlock: React.FC<EventProps> = ({
         const formatter = new StatusFormatter(
             date.getTime(),
             '',
-            globals.sections.eventDateFormat,
-            globals.sections.eventTimeFormat,
+            globals.sections.eventDateFormat(date),
+            globals.sections.eventTimeFormat(date),
             globals.sections.eventLocaleKey
         );
         publishedAt = formatter.getFormattedDate();

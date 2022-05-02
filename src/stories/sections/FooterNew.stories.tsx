@@ -1,85 +1,85 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import FooterNew from 'components/sections/FooterNew';
+import FooterNew, { SiteLinkGroup } from 'components/sections/FooterNew';
 import Facebook from 'components/base/icons/socials/Facebook';
 import Instagram from 'components/base/icons/socials/Instagram';
 import Youtube from 'components/base/icons/socials/Youtube';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 import LanguageIcon from 'components/base/icons/Language';
 
-const exampleSiteLinks = [
+const exampleSiteLinks: SiteLinkGroup[] = [
     {
-        siteColTitle: 'Produkte',
-        colLinks: [
+        title: 'Produkte',
+        links: [
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Lorem ipsum',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Dolor sit amet',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Consectetur adipisicing elit',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Totam iste odio',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Quos inventore hic a',
             },
         ],
     },
     {
-        siteColTitle: 'Dienstleistungen',
-        colLinks: [
+        title: 'Dienstleistungen',
+        links: [
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Lorem ipsum',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Dolor sit amet',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Consectetur adipisicing elit',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Totam iste odio',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Quos inventore hic a',
             },
         ],
     },
     {
-        siteColTitle: 'Unternehmen',
-        colLinks: [
+        title: 'Unternehmen',
+        links: [
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Lorem ipsum',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Dolor sit amet',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Consectetur adipisicing elit',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Totam iste odio',
             },
             {
-                href: '#0',
+                link: { href: '#0' },
                 label: 'Quos inventore hic a',
             },
         ],

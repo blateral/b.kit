@@ -5,11 +5,16 @@ import Bdot from 'components/blocks/Bdot';
 import LanguageSwitcher, { Language } from 'components/blocks/LanguageSwitcher';
 import SocialList, { SocialItem } from 'components/blocks/SocialList';
 import Copy from 'components/typography/Copy';
-import Link from 'components/typography/Link';
+import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+
+const Footer = styled(Section)`
+    ${withRange([0], 'padding-bottom')}
+    ${withRange([0], 'margin-bottom')}
+`;
 
 const MainView = styled.div`
     & > * {
@@ -102,12 +107,19 @@ const BottomView = styled.div`
     }
 `;
 
+export interface SiteLinkGroup {
+    title?: string;
+    links?: Array<{ label?: string; link?: LinkProps }>;
+}
+
 const FooterNew: React.FC<{
-    bgMode?: 'inverted';
-    siteLinks?: {
-        siteColTitle?: string;
-        colLinks?: { href?: string; label?: string }[];
-    }[];
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Section background */
+    bgMode?: 'full' | 'inverted';
+
+    siteLinks?: SiteLinkGroup[];
     callToAction?: {
         title?: string;
         text?: string;
@@ -137,51 +149,54 @@ const FooterNew: React.FC<{
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
+
     return (
-        <Section
+        <Footer
+            addSeperation
             renderAs="footer"
-            bgMode={mapToBgMode(bgMode)}
-            bgColor={bgMode ? colors.sectionBg.dark : colors.sectionBg.light}
+            bgMode={mapToBgMode(bgMode, true)}
+            bgColor={
+                isInverted
+                    ? colors.sectionBg.dark
+                    : bgMode
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
+            }
         >
             <Wrapper addWhitespace>
                 <MainView>
                     <Grid.Row gutter={40} medium={{ gutter: 32 }}>
-                        {siteLinks &&
-                            siteLinks.map((links, i) => {
-                                return (
-                                    <Grid.Col
-                                        medium={{ span: 6 / 12 }}
-                                        semilarge={{ span: 4 / 12 }}
-                                        large={{ span: 3 / 12 }}
-                                        key={i}
+                        {siteLinks?.map(({ title, links }, i) => {
+                            return (
+                                <Grid.Col
+                                    medium={{ span: 6 / 12 }}
+                                    semilarge={{ span: 4 / 12 }}
+                                    large={{ span: 3 / 12 }}
+                                    key={i}
+                                >
+                                    <ColTitle
+                                        type="copy-b"
+                                        isInverted={isInverted}
                                     >
-                                        <ColTitle
-                                            type="copy-b"
-                                            isInverted={isInverted}
-                                        >
-                                            {links.siteColTitle}
-                                        </ColTitle>
-                                        <LinkList>
-                                            {links.colLinks?.map((link, ii) => {
-                                                return (
-                                                    <LinkItem key={ii}>
-                                                        <StyledLink
-                                                            isInverted={
-                                                                isInverted
-                                                            }
-                                                            href={link.href}
-                                                        >
-                                                            <Copy textColor="inherit">
-                                                                {link.label}
-                                                            </Copy>
-                                                        </StyledLink>
-                                                    </LinkItem>
-                                                );
-                                            })}
-                                        </LinkList>
-                                    </Grid.Col>
-                                );
-                            })}
+                                        {title}
+                                    </ColTitle>
+                                    <LinkList>
+                                        {links?.map((link, ii) => (
+                                            <LinkItem key={ii}>
+                                                <StyledLink
+                                                    {...link}
+                                                    isInverted={isInverted}
+                                                >
+                                                    <Copy textColor="inherit">
+                                                        {link.label}
+                                                    </Copy>
+                                                </StyledLink>
+                                            </LinkItem>
+                                        ))}
+                                    </LinkList>
+                                </Grid.Col>
+                            );
+                        })}
                         {(callToAction || socials) && (
                             <Grid.Col large={{ span: 3 / 12 }}>
                                 <FooterCol>
@@ -276,7 +291,7 @@ const FooterNew: React.FC<{
                     </BottomView>
                 )}
             </Wrapper>
-        </Section>
+        </Footer>
     );
 };
 

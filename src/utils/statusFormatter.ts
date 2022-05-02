@@ -125,11 +125,11 @@ export default class StatusFormatter {
         const placeholders: {
             [key: string]: any;
         } = {
-            '%DATE%': this.getFormattedDate(),
-            '%TIME%': this.getFormattedTime(),
+            '<DATE>': this.getFormattedDate(),
+            '<TIME>': this.getFormattedTime(),
         };
 
-        const formattedInput = this.input.replace(/%\w+%/g, (foundString) => {
+        const formattedInput = this.input.replace(/<\w+>/g, (foundString) => {
             return placeholders[foundString] || foundString;
         });
         return formattedInput;
@@ -210,14 +210,14 @@ export default class StatusFormatter {
         const placeholders: {
             [key: string]: any;
         } = {
-            '%START%': startTime,
-            '%END%': endTime,
-            '%SEP%': seperator,
+            '<START>': startTime,
+            '<END>': endTime,
+            '<SEP>': seperator,
         };
 
-        const formattedTimespan = format.replace(/%\w+%/g, (foundString) => {
-            if (foundString === '%SEP%' && !(startTime && endTime)) return '';
-            if (foundString === '%END%' && !endTime) return '';
+        const formattedTimespan = format.replace(/<\w+>/g, (foundString) => {
+            if (foundString === '<SEP>' && !(startTime && endTime)) return '';
+            if (foundString === '<END>' && !endTime) return '';
 
             return placeholders[foundString] || foundString;
         });

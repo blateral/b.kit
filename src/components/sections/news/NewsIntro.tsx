@@ -129,8 +129,8 @@ const NewsIntro: React.FC<{
         const formatter = new StatusFormatter(
             meta.date.getTime(),
             '',
-            globals.sections.newsDateFormat,
-            globals.sections.newsTimeFormat,
+            globals.sections.newsDateFormat(meta.date),
+            globals.sections.newsTimeFormat(meta.date),
             globals.sections.newsLocaleKey
         );
         publishedAt = formatter.getFormattedDate();

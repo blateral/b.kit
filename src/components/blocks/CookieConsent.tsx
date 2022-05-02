@@ -91,8 +91,8 @@ export const CookieConsent: FC<
 > = ({
     cookieName = 'cookie-consent',
     urlWhitelist,
-    consentAcceptStatusMsg = 'Akzeptiert am %DATE% um %TIME% Uhr',
-    consentDeclineStatusMsg = 'Abgelehnt am %DATE% um %TIME% Uhr',
+    consentAcceptStatusMsg = 'Akzeptiert am <DATE> um <TIME> Uhr',
+    consentDeclineStatusMsg = 'Abgelehnt am <DATE> um <TIME> Uhr',
     noCookieStatusMsg = '-',
     dateFormat = 'dd.mm.yy',
     timeFormat = 'hh:mm',

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 
