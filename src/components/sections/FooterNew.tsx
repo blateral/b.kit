@@ -169,10 +169,10 @@ const FooterNew: React.FC<{
                         {siteLinks?.map(({ title, links }, i) => {
                             return (
                                 <Grid.Col
+                                    key={i}
                                     medium={{ span: 6 / 12 }}
                                     semilarge={{ span: 4 / 12 }}
                                     large={{ span: 3 / 12 }}
-                                    key={i}
                                 >
                                     <ColTitle
                                         type="copy-b"
@@ -181,14 +181,14 @@ const FooterNew: React.FC<{
                                         {title}
                                     </ColTitle>
                                     <LinkList>
-                                        {links?.map((link, ii) => (
+                                        {links?.map(({ link, label }, ii) => (
                                             <LinkItem key={ii}>
                                                 <StyledLink
                                                     {...link}
                                                     isInverted={isInverted}
                                                 >
                                                     <Copy textColor="inherit">
-                                                        {link.label}
+                                                        {label}
                                                     </Copy>
                                                 </StyledLink>
                                             </LinkItem>
