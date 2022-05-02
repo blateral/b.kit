@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
 import SocialList from 'components/blocks/SocialList';
@@ -14,7 +14,7 @@ export default {
     component: SocialList,
     parameters: {
         status: {
-            type: ['preview'],
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
@@ -30,9 +30,22 @@ export const Default: Story = () => (
     />
 );
 
+export const WithTitle: Story = () => (
+    <SocialList
+        title="Follow us"
+        items={[
+            { href: '#', title: 'Facebook', icon: () => <FacebookIcon /> },
+            { href: '#', title: 'LinkedIn', icon: () => <LinkedInIcon /> },
+            { href: '#', title: 'Xing', icon: () => <XingIcon /> },
+            { href: '#', title: 'Twitter', icon: () => <TwitterIcon /> },
+        ]}
+    />
+);
+
 export const Inverted: Story = () => (
     <SocialList
         isInverted
+        title="Follow us"
         items={[
             { href: '#', title: 'Facebook', icon: () => <FacebookIcon /> },
             { href: '#', title: 'LinkedIn', icon: () => <LinkedInIcon /> },

@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { spacings } from 'utils/styles';
 import { NavMenuStates } from '../Navigation';
-import Skeletons from '../skeletons/Skeletons';
+import * as Skeletons from 'components/sections/navigation/skeletons/index';
 
 const Header = styled.div`
     display: flex;
@@ -26,7 +26,7 @@ const MenuHeader: FC<{
     return (
         <React.Fragment>
             <Header>
-                <Skeletons.Toggle
+                <Skeletons.MenuToggle
                     isInverted={isInverted}
                     isExpanded={true}
                     onClick={menuStates?.closeMenu}
@@ -36,7 +36,7 @@ const MenuHeader: FC<{
                     ) : (
                         <Cross ariaHidden={true} />
                     )}
-                </Skeletons.Toggle>
+                </Skeletons.MenuToggle>
                 {action && action({ isInverted, ...menuStates })}
             </Header>
         </React.Fragment>

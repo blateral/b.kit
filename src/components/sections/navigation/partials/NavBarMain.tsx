@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import MenuBurger from 'components/base/icons/MenuBurger';
 import { NavBarStates } from '../Navigation';
-import Skeletons from 'components/sections/navigation/skeletons/Skeletons';
+import * as Skeletons from 'components/sections/navigation/skeletons/index';
 import { spacings } from 'utils/styles';
 import { LinkProps } from 'components/typography/Link';
 
-const LogoColumn = styled(Skeletons.Col)`
+const LogoColumn = styled(Skeletons.Column)`
     display: flex;
     align-items: center;
     padding: ${spacings.nudge}px 0;
@@ -36,8 +36,8 @@ const NavBarMain: FC<{
 
     return (
         <React.Fragment>
-            <Skeletons.Col takeSpace vAlign="center" isInverted={isInverted}>
-                <Skeletons.Toggle
+            <Skeletons.Column takeSpace vAlign="center" isInverted={isInverted}>
+                <Skeletons.MenuToggle
                     isInverted={isInverted}
                     isExpanded={navStates?.isMenuOpen}
                     onClick={navStates?.openMenu}
@@ -47,8 +47,8 @@ const NavBarMain: FC<{
                     ) : (
                         <MenuBurger ariaHidden={true} />
                     )}
-                </Skeletons.Toggle>
-            </Skeletons.Col>
+                </Skeletons.MenuToggle>
+            </Skeletons.Column>
             {logo?.desktop?.src && (
                 <LogoColumn isInverted={isInverted}>
                     <Skeletons.Logo
@@ -65,7 +65,7 @@ const NavBarMain: FC<{
                     />
                 </LogoColumn>
             )}
-            <Skeletons.Col takeSpace vAlign="center">
+            <Skeletons.Column takeSpace vAlign="center">
                 {primaryAction
                     ? primaryAction({
                           isInverted,
@@ -78,7 +78,7 @@ const NavBarMain: FC<{
                           ...navStates,
                       })
                     : undefined}
-            </Skeletons.Col>
+            </Skeletons.Column>
         </React.Fragment>
     );
 };

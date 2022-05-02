@@ -8,7 +8,7 @@ import {
 } from 'utils/styles';
 import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
-import Skeletons from './skeletons/Skeletons';
+import * as Skeletons from 'components/sections/navigation/skeletons/index';
 
 export const getTopHeights = (
     theme: DefaultTheme,
@@ -416,9 +416,9 @@ const NavBar: FC<
                             {topBarContent ? (
                                 topBarContent
                             ) : (
-                                <Skeletons.Col isInverted>
+                                <Skeletons.Column isInverted>
                                     Top Nav
-                                </Skeletons.Col>
+                                </Skeletons.Column>
                             )}
                         </TopContent>
                     </Header>
@@ -430,29 +430,29 @@ const NavBar: FC<
                                 mainBar({ size, isOpen, isSticky, pageFlow })
                             ) : (
                                 <React.Fragment>
-                                    <Skeletons.Col
+                                    <Skeletons.Column
                                         takeSpace
                                         isInverted={
                                             size === 'large' && isOverContent
                                         }
                                     >
                                         Left
-                                    </Skeletons.Col>
-                                    <Skeletons.Col
+                                    </Skeletons.Column>
+                                    <Skeletons.Column
                                         isInverted={
                                             size === 'large' && isOverContent
                                         }
                                     >
                                         Center
-                                    </Skeletons.Col>
-                                    <Skeletons.Col
+                                    </Skeletons.Column>
+                                    <Skeletons.Column
                                         takeSpace
                                         isInverted={
                                             size === 'large' && isOverContent
                                         }
                                     >
                                         Right
-                                    </Skeletons.Col>
+                                    </Skeletons.Column>
                                 </React.Fragment>
                             )}
                         </Content>

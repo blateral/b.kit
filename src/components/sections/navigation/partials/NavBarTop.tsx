@@ -3,10 +3,10 @@ import LanguageSwitcher, { Language } from 'components/blocks/LanguageSwitcher';
 import React, { FC } from 'react';
 import { mq, spacings } from 'utils/styles';
 import { NavBarStates } from '../Navigation';
-import Skeletons from '../skeletons/Skeletons';
+import * as Skeletons from 'components/sections/navigation/skeletons/index';
 import { NavItem } from '../menu/Menu';
 
-const StyledCol = styled(Skeletons.Col)`
+const StyledCol = styled(Skeletons.Column)`
     &:not(:first-child) {
         margin-left: ${spacings.spacer}px;
     }

@@ -66,7 +66,6 @@ export { default as FactGrid } from 'components/sections/FactGrid';
 export { default as FactList } from 'components/sections/FactList';
 export { default as FeatureCarousel } from 'components/sections/carousel/FeatureCarousel';
 export { default as FeatureList } from 'components/sections/FeatureList';
-export { default as Footer } from 'components/sections/Footer';
 export { default as Gallery } from 'components/sections/Gallery';
 export { default as Header } from 'components/sections/header/Header';
 export { default as IconList } from 'components/sections/IconList';
@@ -147,11 +146,13 @@ export {
 } from 'components/blocks/CookieConsent';
 export { default as Slider } from 'components/blocks/Slider';
 
+/***** Navigation *****/
 export {
     default as Navigation,
     getFullNavbarHeights,
 } from 'components/sections/navigation/Navigation';
-export { default as NavSkeletons } from 'components/sections/navigation/skeletons/Skeletons';
+export * as NavPartials from 'components/sections/navigation/partials/index';
+export * as NavSkeletons from 'components/sections/navigation/partials/index';
 
 export { default as NavBarMainPartial } from 'components/sections/navigation/partials/NavBarMain';
 export { default as NavBarTopPartial } from 'components/sections/navigation/partials/NavBarTop';
@@ -160,6 +161,11 @@ export { default as MenuHeaderPartial } from 'components/sections/navigation/par
 export { default as MenuFooterPartial } from 'components/sections/navigation/partials/MenuFooter';
 
 export { default as SocialList } from 'components/blocks/SocialList';
+
+/***** Footer *****/
+export { default as Footer } from 'components/sections/footer/Footer';
+export * as FooterPartials from 'components/sections/footer/partials/index';
+export * as FooterSkeletons from 'components/sections/footer/skeletons/index';
 
 /***** Icons *****/
 export * as Icons from 'components/base/icons/Icons';

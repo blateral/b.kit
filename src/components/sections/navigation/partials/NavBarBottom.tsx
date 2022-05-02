@@ -1,9 +1,7 @@
-// import styled from 'styled-components';
 import React, { FC } from 'react';
 
-// import { mq, spacings } from 'utils/styles';
 import { NavBarStates } from '../Navigation';
-import Skeletons from '../skeletons/Skeletons';
+import * as Skeletons from 'components/sections/navigation/skeletons/index';
 import { LinkProps } from 'components/typography/Link';
 
 const NavBarBottom: FC<{

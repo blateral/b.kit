@@ -3,15 +3,14 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Bdot from 'components/blocks/Bdot';
 import LanguageSwitcher, { Language } from 'components/blocks/LanguageSwitcher';
-import SocialList, { SocialItem } from 'components/blocks/SocialList';
 import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 
-const Footer = styled(Section)`
+const FooterSection = styled(Section)`
     ${withRange([0], 'padding-bottom')}
     ${withRange([0], 'margin-bottom')}
 `;
@@ -46,7 +45,7 @@ const LinkItem = styled.li`
     }
 `;
 
-const FooterCol = styled.div`
+const CustomCol = styled.div`
     & > * + * {
         margin-top: ${spacings.nudge * 5}px;
     }
@@ -56,10 +55,6 @@ const FooterCol = styled.div`
             margin-top: ${spacings.spacer}px;
         }
     }
-`;
-
-const Action = styled.div`
-    padding-top: ${spacings.nudge * 2}px;
 `;
 
 const FootNote = styled(Copy)`
@@ -112,34 +107,31 @@ export interface SiteLinkGroup {
     links?: Array<{ label?: string; link?: LinkProps }>;
 }
 
-const FooterNew: React.FC<{
+const Footer: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
 
+    /** Array of sitelink groups */
     siteLinks?: SiteLinkGroup[];
-    callToAction?: {
-        title?: string;
-        text?: string;
-        action?: (isInverted?: boolean) => React.ReactNode;
-    };
 
-    socials?: {
-        title?: string;
-        social: SocialItem[];
-    };
+    /** Function to inject custom footer column content */
+    customColumn?: (props: {
+        isInverted?: boolean;
+        siteLinks?: SiteLinkGroup[];
+    }) => React.ReactNode;
+
     footNote?: string;
     bottomLinks?: { href: string; label?: string; isExternal?: boolean }[];
     language?: Language[];
-    languageIcon?: () => React.ReactNode;
+    languageIcon?: () => React.ReactNode | null;
     brandIcon?: boolean;
 }> = ({
     bgMode,
     siteLinks,
-    callToAction,
-    socials,
+    customColumn,
     footNote,
     bottomLinks,
     languageIcon,
@@ -150,8 +142,12 @@ const FooterNew: React.FC<{
 
     const isInverted = bgMode === 'inverted';
 
+    const customCol = useMemo(() => {
+        return customColumn ? customColumn({ isInverted, siteLinks }) : null;
+    }, [customColumn, isInverted, siteLinks]);
+
     return (
-        <Footer
+        <FooterSection
             addSeperation
             renderAs="footer"
             bgMode={mapToBgMode(bgMode, true)}
@@ -197,54 +193,9 @@ const FooterNew: React.FC<{
                                 </Grid.Col>
                             );
                         })}
-                        {(callToAction || socials) && (
+                        {customCol && (
                             <Grid.Col large={{ span: 3 / 12 }}>
-                                <FooterCol>
-                                    {callToAction && (
-                                        <div>
-                                            <ColTitle
-                                                type="copy-b"
-                                                isInverted={isInverted}
-                                            >
-                                                {callToAction.title}
-                                            </ColTitle>
-                                            <Copy isInverted={isInverted}>
-                                                {callToAction.text}
-                                            </Copy>
-
-                                            {callToAction.action && (
-                                                <Action>
-                                                    {callToAction.action(
-                                                        isInverted
-                                                    )}
-                                                </Action>
-                                            )}
-                                        </div>
-                                    )}
-                                    {socials && (
-                                        <div>
-                                            <ColTitle
-                                                isInverted={isInverted}
-                                                type="copy-b"
-                                            >
-                                                {socials.title}
-                                            </ColTitle>
-                                            <SocialList
-                                                isInverted={isInverted}
-                                                items={socials.social.map(
-                                                    (item) => {
-                                                        return {
-                                                            href:
-                                                                item?.href ||
-                                                                '',
-                                                            icon: item?.icon,
-                                                        };
-                                                    }
-                                                )}
-                                            />
-                                        </div>
-                                    )}
-                                </FooterCol>
+                                <CustomCol>{customCol}</CustomCol>
                             </Grid.Col>
                         )}
                     </Grid.Row>
@@ -291,8 +242,8 @@ const FooterNew: React.FC<{
                     </BottomView>
                 )}
             </Wrapper>
-        </Footer>
+        </FooterSection>
     );
 };
 
-export default FooterNew;
+export default Footer;

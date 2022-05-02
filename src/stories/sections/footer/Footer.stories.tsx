@@ -1,12 +1,14 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import FooterNew, { SiteLinkGroup } from 'components/sections/FooterNew';
+import Footer, { SiteLinkGroup } from 'components/sections/footer/Footer';
 import Facebook from 'components/base/icons/socials/Facebook';
 import Instagram from 'components/base/icons/socials/Instagram';
 import Youtube from 'components/base/icons/socials/Youtube';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 import LanguageIcon from 'components/base/icons/Language';
+
+import FooterColumn from 'components/sections/footer/partials/FooterColumn';
 
 const exampleSiteLinks: SiteLinkGroup[] = [
     {
@@ -86,24 +88,11 @@ const exampleSiteLinks: SiteLinkGroup[] = [
     },
 ];
 
-const exampleCallToAction = {
-    title: 'Newsletter',
-    text: 'Immer gut informiert. Abbonieren Sie unseren Newsletter um regelmäßig Informationen zu bekommen.',
-    action: (isInverted?: boolean) => (
-        <ButtonGhost.View isInverted={isInverted}>
-            <ButtonGhost.Label>Primary</ButtonGhost.Label>
-        </ButtonGhost.View>
-    ),
-};
-
-const exampleSocials = {
-    title: 'Folgen Sie Uns',
-    social: [
-        { href: '#', icon: () => <Facebook /> },
-        { href: '#', icon: () => <Instagram /> },
-        { href: '#', icon: () => <Youtube /> },
-    ],
-};
+const exampleSocials = [
+    { href: '#', icon: () => <Facebook /> },
+    { href: '#', icon: () => <Instagram /> },
+    { href: '#', icon: () => <Youtube /> },
+];
 
 const exampleBottomLinks = [
     { href: '/impressum', label: 'Impressum' },
@@ -112,51 +101,93 @@ const exampleBottomLinks = [
 ];
 
 export default {
-    title: 'Sections / FooterNew',
-    component: FooterNew,
+    title: 'Sections / Footer',
+    component: Footer,
+    parameters: {
+        status: {
+            type: 'preview',
+        },
+    },
 } as Meta;
 
-export const Default: Story = () => <FooterNew siteLinks={exampleSiteLinks} />;
+export const Default: Story = () => <Footer siteLinks={exampleSiteLinks} />;
 
-export const WithCallToAction: Story = () => (
-    <FooterNew
+export const WithCustomColumn: Story = () => (
+    <Footer
         siteLinks={exampleSiteLinks}
-        callToAction={exampleCallToAction}
-    />
-);
-
-export const WithSocials: Story = () => (
-    <FooterNew
-        siteLinks={exampleSiteLinks}
-        callToAction={exampleCallToAction}
-        socials={exampleSocials}
+        customColumn={() => (
+            <FooterColumn
+                title="Newsletter"
+                text="Immer gut informiert. Abbonieren Sie unseren Newsletter um regelmäßig Informationen zu bekommen."
+                action={({ isInverted }) => (
+                    <ButtonGhost.View isInverted={isInverted} href="#0">
+                        <ButtonGhost.Label>Primary</ButtonGhost.Label>
+                    </ButtonGhost.View>
+                )}
+                socialTitle="Follow us"
+                socials={exampleSocials}
+            />
+        )}
     />
 );
 
 export const WithFootNote: Story = () => (
-    <FooterNew
+    <Footer
         siteLinks={exampleSiteLinks}
-        callToAction={exampleCallToAction}
-        socials={exampleSocials}
+        customColumn={() => (
+            <FooterColumn
+                title="Newsletter"
+                text="Immer gut informiert. Abbonieren Sie unseren Newsletter um regelmäßig Informationen zu bekommen."
+                action={({ isInverted }) => (
+                    <ButtonGhost.View isInverted={isInverted} href="#0">
+                        <ButtonGhost.Label>Primary</ButtonGhost.Label>
+                    </ButtonGhost.View>
+                )}
+                socialTitle="Follow us"
+                socials={exampleSocials}
+            />
+        )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
     />
 );
 
 export const WithBottomLinks: Story = () => (
-    <FooterNew
+    <Footer
         siteLinks={exampleSiteLinks}
-        callToAction={exampleCallToAction}
-        socials={exampleSocials}
+        customColumn={() => (
+            <FooterColumn
+                title="Newsletter"
+                text="Immer gut informiert. Abbonieren Sie unseren Newsletter um regelmäßig Informationen zu bekommen."
+                action={({ isInverted }) => (
+                    <ButtonGhost.View isInverted={isInverted} href="#0">
+                        <ButtonGhost.Label>Primary</ButtonGhost.Label>
+                    </ButtonGhost.View>
+                )}
+                socialTitle="Follow us"
+                socials={exampleSocials}
+            />
+        )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
         bottomLinks={exampleBottomLinks}
     />
 );
 
 export const WithLanguageSwitcher: Story = () => (
-    <FooterNew
+    <Footer
         siteLinks={exampleSiteLinks}
-        callToAction={exampleCallToAction}
-        socials={exampleSocials}
+        customColumn={() => (
+            <FooterColumn
+                title="Newsletter"
+                text="Immer gut informiert. Abbonieren Sie unseren Newsletter um regelmäßig Informationen zu bekommen."
+                action={({ isInverted }) => (
+                    <ButtonGhost.View isInverted={isInverted} href="#0">
+                        <ButtonGhost.Label>Primary</ButtonGhost.Label>
+                    </ButtonGhost.View>
+                )}
+                socialTitle="Follow us"
+                socials={exampleSocials}
+            />
+        )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
         bottomLinks={exampleBottomLinks}
         language={[
@@ -168,10 +199,21 @@ export const WithLanguageSwitcher: Story = () => (
 );
 
 export const WithLanguageSwitcherIcon: Story = () => (
-    <FooterNew
+    <Footer
         siteLinks={exampleSiteLinks}
-        callToAction={exampleCallToAction}
-        socials={exampleSocials}
+        customColumn={() => (
+            <FooterColumn
+                title="Newsletter"
+                text="Immer gut informiert. Abbonieren Sie unseren Newsletter um regelmäßig Informationen zu bekommen."
+                action={({ isInverted }) => (
+                    <ButtonGhost.View isInverted={isInverted} href="#0">
+                        <ButtonGhost.Label>Primary</ButtonGhost.Label>
+                    </ButtonGhost.View>
+                )}
+                socialTitle="Follow us"
+                socials={exampleSocials}
+            />
+        )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
         bottomLinks={exampleBottomLinks}
         language={[
@@ -184,11 +226,22 @@ export const WithLanguageSwitcherIcon: Story = () => (
 );
 
 export const IsInverted: Story = () => (
-    <FooterNew
+    <Footer
         bgMode="inverted"
         siteLinks={exampleSiteLinks}
-        callToAction={exampleCallToAction}
-        socials={exampleSocials}
+        customColumn={() => (
+            <FooterColumn
+                title="Newsletter"
+                text="Immer gut informiert. Abbonieren Sie unseren Newsletter um regelmäßig Informationen zu bekommen."
+                action={({ isInverted }) => (
+                    <ButtonGhost.View isInverted={isInverted} href="#0">
+                        <ButtonGhost.Label>Primary</ButtonGhost.Label>
+                    </ButtonGhost.View>
+                )}
+                socialTitle="Follow us"
+                socials={exampleSocials}
+            />
+        )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
         bottomLinks={exampleBottomLinks}
         language={[
