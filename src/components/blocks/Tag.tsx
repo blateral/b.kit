@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { copyStyle } from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
+import { getColors } from 'utils/styles';
 
 const View = styled(Link)<{
     isInverted?: boolean;
@@ -57,10 +58,17 @@ const View = styled(Link)<{
             }
         `}
 
-    &&:focus {
-        background-color: ${({ isInverted }) =>
+    &:focus {
+        /* background-color: ${({ isInverted }) =>
             isInverted ? '#dddddd' : '#444444'};
-        color: ${({ isInverted }) => (isInverted ? '#444444' : '#ffff')};
+        color: ${({ isInverted }) => (isInverted ? '#444444' : '#ffff')}; */
+        outline: 2px solid
+            ${({ isInverted, theme }) =>
+                isInverted
+                    ? getColors(theme).primary.inverted
+                    : getColors(theme).primary.default};
+        outline-offset: -1px;
+        text-decoration: underline;
     }
 `;
 
