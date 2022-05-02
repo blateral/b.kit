@@ -181,7 +181,7 @@ const Icon = styled.div`
     }
 `;
 
-const CardLink = styled(Link)`
+const CardLink = styled(Link)<{ isInverted?: boolean }>`
     z-index: 1;
     display: block;
     position: absolute;
@@ -191,6 +191,20 @@ const CardLink = styled(Link)`
     left: 0;
 
     outline-color: ${({ theme }) => color(theme).primary.default};
+
+    &:focus {
+        outline: solid 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+        outline-offset: 4px;
+
+        color: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).primary.invertedHover
+                : color(theme).primary.hover};
+    }
 `;
 
 export interface CardProps {
@@ -262,7 +276,13 @@ const Card: React.FC<
                     )}
                 </TextContainer>
             </Content>
-            {link && <CardLink {...link} ariaLabel={title || undefined} />}
+            {link && (
+                <CardLink
+                    isInverted={isInverted}
+                    {...link}
+                    ariaLabel={title || undefined}
+                />
+            )}
         </CardView>
     );
 };

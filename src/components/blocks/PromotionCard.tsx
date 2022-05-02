@@ -37,7 +37,7 @@ const View = styled(Link)<{
         pointer-events: none;
     }
 
-    ${({ clickable }) =>
+    ${({ clickable, theme, isInverted }) =>
         clickable &&
         css`
             transition: box-shadow 0.2s ease-in-out;
@@ -49,6 +49,15 @@ const View = styled(Link)<{
 
             &:focus {
                 box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+                outline: solid 2px
+                    ${isInverted
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default};
+                outline-offset: 4px;
+
+                color: ${isInverted
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
             }
         `}
 `;
