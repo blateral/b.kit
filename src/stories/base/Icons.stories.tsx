@@ -34,6 +34,8 @@ import Pdf from 'components/base/icons/files/Pdf';
 import PowerPoint from 'components/base/icons/files/PowerPoint';
 import Word from 'components/base/icons/files/Word';
 import Zip from 'components/base/icons/files/Zip';
+import LocationPin from 'components/base/icons/LocationPin';
+import Map from 'components/base/icons/Map';
 
 export default {
     title: 'Base/Icons',
@@ -70,6 +72,9 @@ export default {
         PowerPoint,
         Word,
         Zip,
+        LocationPin,
+        LocationPinBordered: LocationPin,
+        Map,
     },
     decorators: [
         (Story) => (
@@ -183,3 +188,9 @@ IconWord.storyName = 'Word';
 
 export const IconZip: Story = () => <Zip />;
 IconZip.storyName = 'Zip';
+
+export const IconLocationPin: Story = () => <LocationPin />;
+IconLocationPin.storyName = 'LocationPin';
+
+export const IconMap: Story = () => <Map />;
+IconMap.storyName = 'Map';

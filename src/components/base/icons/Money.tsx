@@ -5,7 +5,7 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const Mail: React.FC<{ iconColor?: string; className?: string }> = ({
+const Money: React.FC<{ iconColor?: string; className?: string }> = ({
     iconColor = 'currentColor',
     className,
 }) => (
@@ -18,10 +18,10 @@ const Mail: React.FC<{ iconColor?: string; className?: string }> = ({
         className={className}
     >
         <path
-            d="M20 2c0-1.1-.9-2-2-2H2C.9 0 0 .9 0 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V2Zm-2 0-8 5-8-5h16Zm0 12H2V4l8 5 8-5v10Z"
+            d="M13 12h3c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1Zm1-6h1v4h-1V6Zm-7 6h3c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1Zm1-6h1v4H8V6ZM3 4h2v8H3V4ZM0 0v16h20V0H0Zm18 14H2V2h16v12Z"
             fill={iconColor}
         />
     </SVG>
 );
 
-export default Mail;
+export default Money;
