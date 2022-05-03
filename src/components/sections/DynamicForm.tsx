@@ -38,11 +38,11 @@ const FieldContainer = styled.div`
     text-align: center;
 
     & + & {
-        margin-top: ${spacings.spacer * 1.5}px;
+        margin-top: ${spacings.nudge * 3}px;
     }
 
     & > * + * {
-        margin-top: ${spacings.spacer * 1.5}px;
+        margin-top: ${spacings.nudge * 3}px;
     }
 
     @media ${mq.semilarge} {
@@ -789,22 +789,12 @@ const FieldSet = styled.fieldset`
     text-align: left;
 `;
 
-const FieldHead = styled(Copy)`
-    display: inline-flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-between;
-    padding-bottom: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge}px;
-    padding-right: ${spacings.nudge}px;
-`;
-
 export const DynamicFormComponent = DynamicForm;
 export default withLibTheme(DynamicForm);
 
 const Fields = styled.div`
     & > * + * {
-        margin-top: ${spacings.nudge * 1.5}px;
+        margin-top: ${spacings.nudge}px;
     }
 `;
 
@@ -894,9 +884,7 @@ const generateRadioGroup = ({
     return (
         <FieldSet key={key}>
             {key && (
-                <FieldHead renderAs="legend" type="copy-b" size="medium">
-                    {`${key}${field.isRequired ? '*' : ''}`}
-                </FieldHead>
+                <FieldWrapper.Head label={key} isRequired={field.isRequired} />
             )}
             <Fields>
                 {group?.fields?.map((field, fi) => (
