@@ -1,37 +1,40 @@
 import AngleDown from 'components/base/icons/AngleDown';
 import AngleUp from 'components/base/icons/AngleUp';
 import Copy from 'components/typography/Copy';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
 import { hexToRgba } from 'utils/hexRgbConverter';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     getColors as color,
     spacings,
     getGlobals as global,
 } from 'utils/styles';
-
-const View = styled(Copy)`
-    display: block;
-    text-align: left;
-`;
-
-const FieldHead = styled(Copy)`
-    display: inline-flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-between;
-    padding-bottom: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge}px;
-    padding-right: ${spacings.nudge}px;
-`;
+import Field, { FieldProps } from './Field';
 
 const Select = styled.button<{
     hasError?: boolean;
     isActive?: boolean;
-    hasBg?: boolean;
+    isInverted?: boolean;
 }>`
-    border: ${({ hasError, theme }) =>
-        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    display: block;
+    outline: none;
+    width: 100%;
+    min-height: 50px;
+    box-shadow: none;
+
+    border-radius: 0px;
+    -webkit-appearance: none;
+
+    padding: ${spacings.nudge}px;
+
+    border: 1px solid
+        ${({ theme, isInverted, hasError }) =>
+            hasError
+                ? color(theme).error
+                : isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
     border-radius: ${({ isActive, theme }) => {
         const edgeRadius = global(theme).sections.edgeRadius;
         const topLeft = edgeRadius;
@@ -41,23 +44,29 @@ const Select = styled.button<{
 
         return `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
     }};
-    background: ${({ theme, hasBg }) =>
-        hasBg ? color(theme).elementBg.medium : color(theme).elementBg.light};
+
+    background: transparent;
+
+    color: ${({ hasError, theme, isInverted }) =>
+        hasError
+            ? color(theme).text.error
+            : isInverted
+            ? color(theme).text.inverted
+            : color(theme).text.default};
+
     outline: none;
-    padding: ${spacings.spacer}px;
     width: 100%;
-    height: 60px;
-    max-height: 60px;
+    height: 50px;
+    max-height: 50px;
 
     position: relative;
 
     &:active {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
+        border: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
     }
 
     &:focus {
-        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
         outline-offset: 0;
     }
 
@@ -80,18 +89,8 @@ const SelectMain = styled.div`
     user-select: none;
 
     & > * + * {
-        margin-left: ${spacings.spacer}px;
+        margin-left: ${spacings.nudge}px;
     }
-`;
-
-const Icon = styled.img`
-    height: 100%;
-    max-height: 25px;
-    max-width: 30px;
-`;
-
-const Label = styled(Copy)`
-    padding-top: 2px;
 `;
 
 const Flyout = styled.ul<{ isVisible?: boolean }>`
@@ -183,11 +182,6 @@ const Item = styled(Copy)<{ isSelected?: boolean }>`
         `}
 `;
 
-const ErrorMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
-`;
-
 const Container = styled.div`
     position: relative;
     outline: none;
@@ -199,18 +193,13 @@ interface SelectItem {
 }
 
 const SelectDropdown: React.FC<{
+    field?: FieldProps;
     icon?: { src: string; alt?: string };
-    label?: string;
+
     placeholder?: string;
     name?: string;
     value?: string;
     items: SelectItem[];
-
-    isDisabled?: boolean;
-    errorMessage?: string;
-    isRequired?: boolean;
-    isInverted?: boolean;
-    hasBg?: boolean;
 
     onChange?: (value: string) => void;
     onBlur?: () => void;
@@ -219,22 +208,16 @@ const SelectDropdown: React.FC<{
         isDisabled?: boolean;
     }) => React.ReactNode;
 }> = ({
-    label,
+    field,
     items,
     name,
     value,
     placeholder,
-    isDisabled,
-    isInverted,
-    hasBg,
-    errorMessage,
-    isRequired,
-    icon,
     onChange,
     onBlur,
     indicator,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const [isOpen, setIsOpen] = useState(false);
 
     const [activeItemIndex, setActiveItemIndex] = useState<number>(
@@ -271,20 +254,7 @@ const SelectDropdown: React.FC<{
             : undefined;
 
     return (
-        <View renderAs="label">
-            {label && (
-                <FieldHead
-                    renderAs="span"
-                    isInverted={isInverted}
-                    textColor={
-                        isDisabled ? color(theme).elementBg.medium : undefined
-                    }
-                    size="medium"
-                    type="copy-b"
-                >
-                    {`${label}${isRequired ? ' *' : ''}`}
-                </FieldHead>
-            )}
+        <Field {...field}>
             <Container>
                 <Select
                     ref={selectBtnRef}
@@ -292,8 +262,8 @@ const SelectDropdown: React.FC<{
                         activeItem?.label || placeholder || 'Select item'
                     }
                     isActive={isOpen}
-                    hasBg={hasBg && !isInverted}
-                    hasError={!!errorMessage}
+                    isInverted={field?.isInverted}
+                    hasError={!!field?.errorMessage}
                     onClick={() => {
                         setIsOpen((prev) => !prev);
                     }}
@@ -322,39 +292,37 @@ const SelectDropdown: React.FC<{
                     }}
                 >
                     <SelectMain>
-                        {icon?.src && (
-                            <Icon src={icon.src} alt={icon.alt || ''} />
-                        )}
                         {(placeholder || activeItem?.label) && (
-                            <Label
+                            <Copy
                                 textColor={
-                                    isDisabled
-                                        ? color(theme).elementBg.medium
-                                        : color(theme).elementBg.dark
+                                    field?.isDisabled
+                                        ? colors.elementBg.medium
+                                        : colors.elementBg.dark
                                 }
                                 size="medium"
                                 type="copy"
                             >
                                 {activeItem?.label || placeholder}
-                            </Label>
+                            </Copy>
                         )}
                     </SelectMain>
-                    {indicator && indicator({ isOpen, isDisabled })}
+                    {indicator &&
+                        indicator({ isOpen, isDisabled: field?.isDisabled })}
                     {!indicator &&
                         (isOpen ? (
                             <AngleUp
                                 iconColor={
-                                    isDisabled
-                                        ? color(theme).elementBg.medium
-                                        : color(theme).elementBg.dark
+                                    field?.isDisabled
+                                        ? colors.elementBg.medium
+                                        : colors.elementBg.dark
                                 }
                             />
                         ) : (
                             <AngleDown
                                 iconColor={
-                                    isDisabled
-                                        ? color(theme).elementBg.medium
-                                        : color(theme).elementBg.dark
+                                    field?.isDisabled
+                                        ? colors.elementBg.medium
+                                        : colors.elementBg.dark
                                 }
                             />
                         ))}
@@ -387,8 +355,8 @@ const SelectDropdown: React.FC<{
                                     size="small"
                                     textColor={
                                         i === activeItemIndex
-                                            ? color(theme).elementBg.light
-                                            : color(theme).elementBg.dark
+                                            ? colors.elementBg.light
+                                            : colors.elementBg.dark
                                     }
                                 >
                                     {item.label}
@@ -401,18 +369,7 @@ const SelectDropdown: React.FC<{
             {activeItem && (
                 <input type="hidden" name={name} value={activeItem.value} />
             )}
-            {errorMessage && (
-                <ErrorMessage
-                    textColor={color(theme).text.error}
-                    size="small"
-                    type="copy-i"
-                >
-                    {errorMessage
-                        ? errorMessage
-                        : 'Bitte geben Sie einen gültigen Text ein'}
-                </ErrorMessage>
-            )}
-        </View>
+        </Field>
     );
 };
 

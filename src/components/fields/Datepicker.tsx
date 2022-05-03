@@ -257,6 +257,8 @@ const DatepickerButton = styled.button<{
                 : color(theme).elementBg.dark};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
+    background: none;
+
     outline: none;
     width: 100%;
     min-height: 50px;

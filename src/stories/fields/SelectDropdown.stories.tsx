@@ -61,7 +61,7 @@ export const Default: Story = () => (
 
 export const WithLabel: Story = () => (
     <SelectDropdown
-        label="Label"
+        field={{ label: 'Label' }}
         placeholder="Prompt Text"
         items={[
             {
@@ -92,7 +92,7 @@ export const WithLabel: Story = () => (
 export const WithInitial: Story = () => (
     <SelectDropdown
         value="2"
-        label="Label"
+        field={{ label: 'Label' }}
         placeholder="Prompt Text"
         items={[
             {
@@ -122,7 +122,7 @@ export const WithInitial: Story = () => (
 
 export const AsRequired: Story = () => (
     <SelectDropdown
-        label="Label"
+        field={{ label: 'Label', isRequired: true }}
         placeholder="Prompt Text"
         items={[
             {
@@ -146,14 +146,13 @@ export const AsRequired: Story = () => (
                 value: '5',
             },
         ]}
-        isRequired
         onChange={console.log}
     />
 );
 
 export const IsDisabled: Story = () => (
     <SelectDropdown
-        label="Label"
+        field={{ label: 'Label', isRequired: true, isDisabled: true }}
         placeholder="Prompt Text"
         items={[
             {
@@ -177,14 +176,13 @@ export const IsDisabled: Story = () => (
                 value: '5',
             },
         ]}
-        isDisabled
         onChange={console.log}
     />
 );
 
 export const IsInverted: Story = () => (
     <SelectDropdown
-        label="Label"
+        field={{ label: 'Label', isInverted: true }}
         placeholder="Prompt Text"
         items={[
             {
@@ -208,7 +206,6 @@ export const IsInverted: Story = () => (
                 value: '5',
             },
         ]}
-        isInverted
         onChange={console.log}
     />
 );
@@ -223,7 +220,7 @@ IsInverted.parameters = {
 export const WithIcon: Story = () => (
     <SelectDropdown
         icon={{ src: 'http://placehold.it/25' }}
-        label="Label"
+        field={{ label: 'Label', isRequired: true }}
         placeholder="Prompt Text"
         items={[
             {
@@ -255,14 +252,17 @@ export const WithIcon: Story = () => (
                 value: '7',
             },
         ]}
-        isRequired
         onChange={console.log}
     />
 );
 
 export const HasError: Story = () => (
     <SelectDropdown
-        label="Label"
+        field={{
+            label: 'Label',
+            isRequired: true,
+            errorMessage: 'Bitte wählen Sie etwas aus!',
+        }}
         placeholder="Prompt Text"
         items={[
             {
@@ -286,15 +286,17 @@ export const HasError: Story = () => (
                 value: '5',
             },
         ]}
-        isRequired
-        errorMessage="Bitte wählen Sie etwas aus!"
         onChange={console.log}
     />
 );
 
 export const WithCustomIndicator: Story = () => (
     <SelectDropdown
-        label="Label"
+        field={{
+            label: 'Label',
+            isRequired: true,
+            errorMessage: 'Bitte wählen Sie etwas aus!',
+        }}
         placeholder="Prompt Text"
         items={[
             {

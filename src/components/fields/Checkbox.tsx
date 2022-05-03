@@ -61,9 +61,7 @@ const Box = styled.span<{
                 : color(theme).elementBg.medium};
 
     background-color: ${({ isSelected, theme }) =>
-        isSelected
-            ? color(theme).primary.default
-            : color(theme).elementBg.light};
+        isSelected ? color(theme).primary.default : 'transparent'};
 `;
 
 const StyledCheck = styled(Check)`

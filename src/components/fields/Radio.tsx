@@ -34,10 +34,9 @@ const Original = styled.input`
 
 const StyledRadioButton = styled.span<{
     isSelected?: boolean;
-    hasBg?: boolean;
+    isInverted?: boolean;
 }>`
-    background-color: ${({ theme, hasBg }) =>
-        hasBg ? color(theme).elementBg.medium : color(theme).elementBg.light};
+    brackground: transparent;
     border-radius: 50%;
 
     position: relative;
@@ -45,6 +44,14 @@ const StyledRadioButton = styled.span<{
     width: 20px;
     height: 20px;
     display: block;
+
+    border: 2px solid
+        ${({ isInverted, theme, isSelected }) =>
+            isSelected
+                ? color(theme).primary.default
+                : isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.medium};
 
     ${({ isSelected, theme }) =>
         isSelected
@@ -87,7 +94,6 @@ const RadioButton: React.FC<{
     id?: string;
     value?: string;
     label?: string;
-    hasBg?: boolean;
 }> = ({
     isDisabled,
     isSelected,
@@ -97,7 +103,6 @@ const RadioButton: React.FC<{
     id,
     name,
     value,
-    hasBg,
 }) => {
     const theme = React.useContext(ThemeContext);
     return (
@@ -105,7 +110,7 @@ const RadioButton: React.FC<{
             <RadioContainer isDisabled={isDisabled}>
                 <StyledRadioButton
                     isSelected={isSelected}
-                    hasBg={hasBg && !isInverted}
+                    isInverted={isInverted}
                 />
                 <Original
                     type="radio"
