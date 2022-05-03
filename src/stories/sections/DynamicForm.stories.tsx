@@ -67,6 +67,7 @@ export const Default: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,
@@ -146,6 +147,7 @@ export const WithTwoColumns: Story = () => (
                 column: 'right',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,
@@ -232,6 +234,7 @@ export const WithCustomDatepickerButtons: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,
@@ -309,6 +312,7 @@ export const WithBackground: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,
@@ -386,6 +390,7 @@ export const Inverted: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,
@@ -462,6 +467,7 @@ export const CustomSubmitButton: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,
@@ -549,6 +555,7 @@ export const WithCustomErrorMessages: Story = () => (
                 errorMsg: 'Bitte geben Sie ein Alter an',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,
@@ -683,6 +690,7 @@ export const CustomValidation: Story = () => (
                 },
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,
@@ -791,6 +799,7 @@ export const WithCustomFieldDefinition: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,
@@ -875,6 +884,7 @@ export const WithCustomDatepicker: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
                 // initalValue: 'Germany',
                 isRequired: true,

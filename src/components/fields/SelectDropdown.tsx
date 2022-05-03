@@ -148,8 +148,7 @@ const Item = styled(Copy)<{ isSelected?: boolean }>`
     ${ItemStyle}:hover & {
         &:before {
             content: '';
-            background: ${({ theme }) =>
-                hexToRgba(color(theme).elementBg.dark, 0.4)};
+            background: ${({ theme }) => color(theme).primary.hover};
             opacity: 0.25;
             display: block;
             position: absolute;
@@ -164,14 +163,9 @@ const Item = styled(Copy)<{ isSelected?: boolean }>`
     ${({ isSelected }) =>
         isSelected &&
         css`
-            &:hover {
-                color: ${({ theme }) => color(theme).elementBg.dark};
-            }
-
             &:before {
                 content: '';
-                background-color: ${({ theme }) =>
-                    hexToRgba(color(theme).elementBg.dark, 0.4)};
+                background: ${({ theme }) => color(theme).primary.default};
                 position: absolute;
                 top: 0;
                 bottom: 0;
@@ -225,7 +219,7 @@ const SelectDropdown: React.FC<
     indicator,
 }) => {
     const { colors } = useLibTheme();
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     const [activeItemIndex, setActiveItemIndex] = useState<number>(
         items?.findIndex((item) => item.value === value) || -1
