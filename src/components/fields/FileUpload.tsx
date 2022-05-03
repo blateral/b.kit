@@ -17,6 +17,7 @@ const FieldMain = styled.div<{
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 
     & > * + * {
         margin-left: ${spacings.spacer}px;
@@ -128,6 +129,7 @@ const FileUpload: FC<
         acceptedFormats?: string;
         uploadLabel?: string;
         removeUploadLabel?: string;
+        customIcon?: () => React.ReactNode;
     }
 > = ({
     onUploadFiles,
@@ -140,6 +142,7 @@ const FileUpload: FC<
     acceptedFormats,
     uploadLabel,
     removeUploadLabel,
+    customIcon,
 }) => {
     const theme = useContext(ThemeContext);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -204,6 +207,7 @@ const FileUpload: FC<
                             </Copy>
                         </Delete>
                     )}
+                    {customIcon && <span>{customIcon()}</span>}
                 </FieldMain>
 
                 <Original

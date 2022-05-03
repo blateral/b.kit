@@ -358,10 +358,10 @@ interface PickerBtnProps {
     altText?: string;
     startDate?: Date | null | undefined;
     endDate?: Date | null | undefined;
-    icon?: { src: string; alt?: string };
     setFocused: React.Dispatch<React.SetStateAction<boolean>>;
     onClick?: (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     dateFormat?: string;
+    icon?: { src: string; alt?: string };
     customIcon?: () => React.ReactNode;
 }
 

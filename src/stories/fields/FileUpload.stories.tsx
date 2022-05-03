@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
 import FileUpload from 'components/fields/FileUpload';
+import Clock from 'components/base/icons/Clock';
 
 export default {
     title: 'fields/FileUpload',
@@ -97,5 +98,16 @@ export const WithCustomButton: Story = () => (
         infoMessage="Optionale Info Message"
         isRequired
         errorMessage="Error!"
+    />
+);
+
+export const WithIcon: Story = () => (
+    <FileUpload
+        uploadLabel="Dateien auswählen"
+        label="Label"
+        infoMessage="Optionale Info Message"
+        isRequired
+        errorMessage="Error!"
+        customIcon={() => <Clock />}
     />
 );
