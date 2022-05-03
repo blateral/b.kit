@@ -1,14 +1,14 @@
 import Grid from 'components/base/Grid';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import Bdot from 'components/blocks/Bdot';
-import LanguageSwitcher, { Language } from 'components/blocks/LanguageSwitcher';
-import Copy from 'components/typography/Copy';
+import { Language } from 'components/blocks/LanguageSwitcher';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import FooterBottomBar from './partials/FooterBottomBar';
 
 const FooterSection = styled(Section)`
     ${withRange([0], 'padding-bottom')}
@@ -26,9 +26,10 @@ const ColTitle = styled(Copy)`
 `;
 
 const StyledLink = styled(Link)<{ isInverted?: boolean }>`
-    display: block;
+    display: inline-block;
     text-decoration: none;
 
+    ${copyStyle('copy', 'medium')}
     color: ${({ theme, isInverted }) =>
         isInverted ? color(theme).text.inverted : color(theme).text.default};
 `;
@@ -65,46 +66,21 @@ const FootNote = styled(Copy)`
     }
 `;
 
-const BottomLinkList = styled.ul`
-    padding: 0;
-    margin: 0;
-    list-style: none;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-`;
-
-const BottomLinkItem = styled.li`
-    & + & {
-        margin-left: ${spacings.nudge}px;
-    }
-`;
-
-const BottomView = styled.div`
-    border-top: 1px solid ${({ theme }) => color(theme).elementBg.medium};
-    padding: ${spacings.nudge * 2}px 0;
-
-    & > * + * {
-        margin-top: ${spacings.nudge * 2}px;
-    }
-
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-
-        & > * + * {
-            margin-top: 0;
-            margin-left: ${spacings.nudge * 2}px;
-        }
-    }
-`;
-
 export interface SiteLinkGroup {
     title?: string;
     links?: Array<{ label?: string; link?: LinkProps }>;
+}
+
+export interface FooterState {
+    isInverted?: boolean;
+    siteLinks?: SiteLinkGroup[];
+    bottomLinks?: BottomLink[];
+    languages?: Language[];
+}
+
+export interface BottomLink {
+    label?: string;
+    link?: LinkProps;
 }
 
 const Footer: React.FC<{
@@ -118,33 +94,53 @@ const Footer: React.FC<{
     siteLinks?: SiteLinkGroup[];
 
     /** Function to inject custom footer column content */
-    customColumn?: (props: {
-        isInverted?: boolean;
-        siteLinks?: SiteLinkGroup[];
-    }) => React.ReactNode;
+    customColumn?: (props: FooterState) => React.ReactNode;
 
+    /** Footnote text of main section */
     footNote?: string;
-    bottomLinks?: { href: string; label?: string; isExternal?: boolean }[];
-    language?: Language[];
-    languageIcon?: () => React.ReactNode | null;
-    brandIcon?: boolean;
+
+    /** Link list in bottom bar */
+    bottomLinks?: BottomLink[];
+
+    /** Language toggler settings */
+    languages?: Language[];
+
+    /** Inject function to suppress bottom bar or define a custom definition */
+    bottomBar?: ((props: FooterState) => React.ReactNode | null) | null;
 }> = ({
     bgMode,
     siteLinks,
     customColumn,
     footNote,
+    bottomBar,
     bottomLinks,
-    languageIcon,
-    language,
-    brandIcon = true,
+    languages,
 }) => {
     const { colors } = useLibTheme();
-
     const isInverted = bgMode === 'inverted';
 
     const customCol = useMemo(() => {
-        return customColumn ? customColumn({ isInverted, siteLinks }) : null;
-    }, [customColumn, isInverted, siteLinks]);
+        return customColumn
+            ? customColumn({ isInverted, siteLinks, languages, bottomLinks })
+            : undefined;
+    }, [bottomLinks, customColumn, isInverted, languages, siteLinks]);
+
+    const bottom = useMemo(() => {
+        return bottomBar
+            ? bottomBar({ isInverted, siteLinks, languages, bottomLinks })
+            : undefined;
+    }, [bottomBar, bottomLinks, isInverted, languages, siteLinks]);
+
+    const hasBottomBar = useMemo(() => {
+        if (bottomBar === null) return false;
+        if (bottom) return true;
+        if (bottom === null) return false;
+
+        return (
+            (languages && languages.length > 0) ||
+            (bottomLinks && bottomLinks.length > 0)
+        );
+    }, [bottom, bottomBar, bottomLinks, languages]);
 
     return (
         <FooterSection
@@ -161,7 +157,10 @@ const Footer: React.FC<{
         >
             <Wrapper addWhitespace>
                 <MainView>
-                    <Grid.Row gutter={40} medium={{ gutter: 32 }}>
+                    <Grid.Row
+                        gutter={spacings.nudge * 5}
+                        medium={{ gutter: spacings.spacer }}
+                    >
                         {siteLinks?.map(({ title, links }, i) => {
                             return (
                                 <Grid.Col
@@ -183,9 +182,7 @@ const Footer: React.FC<{
                                                     {...link}
                                                     isInverted={isInverted}
                                                 >
-                                                    <Copy textColor="inherit">
-                                                        {label}
-                                                    </Copy>
+                                                    {label}
                                                 </StyledLink>
                                             </LinkItem>
                                         ))}
@@ -206,41 +203,15 @@ const Footer: React.FC<{
                         />
                     )}
                 </MainView>
-                {((bottomLinks && bottomLinks.length > 0) ||
-                    language ||
-                    !brandIcon) && (
-                    <BottomView>
-                        {language && (
-                            <LanguageSwitcher
-                                isInverted={isInverted}
-                                langs={language}
-                                languageIcon={languageIcon}
-                            />
-                        )}
-                        <BottomLinkList>
-                            {bottomLinks?.map((bottomLink, i) => {
-                                return (
-                                    <BottomLinkItem key={i}>
-                                        <StyledLink
-                                            isInverted={isInverted}
-                                            href={bottomLink.href}
-                                            isExternal={bottomLink.isExternal}
-                                        >
-                                            <Copy textColor="inherit">
-                                                {bottomLink.label}
-                                            </Copy>
-                                        </StyledLink>
-                                    </BottomLinkItem>
-                                );
-                            })}
-                            {brandIcon && (
-                                <BottomLinkItem>
-                                    <Bdot />
-                                </BottomLinkItem>
-                            )}
-                        </BottomLinkList>
-                    </BottomView>
-                )}
+                {bottom ? (
+                    bottom
+                ) : hasBottomBar ? (
+                    <FooterBottomBar
+                        isInverted={isInverted}
+                        links={bottomLinks}
+                        languages={languages}
+                    />
+                ) : null}
             </Wrapper>
         </FooterSection>
     );

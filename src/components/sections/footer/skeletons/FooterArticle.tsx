@@ -19,8 +19,14 @@ const FooterArticle: FC<{
 }> = ({ isInverted, title, text, action, className }) => {
     return (
         <View className={className}>
-            {title && <Copy type="copy-b">{title}</Copy>}
-            {text && <Copy size="small" innerHTML={text} />}
+            {title && (
+                <Copy type="copy-b" isInverted={isInverted}>
+                    {title}
+                </Copy>
+            )}
+            {text && (
+                <Copy size="small" isInverted={isInverted} innerHTML={text} />
+            )}
             {action && action({ isInverted })}
         </View>
     );

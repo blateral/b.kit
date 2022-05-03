@@ -13,7 +13,12 @@ const FooterColumn: FC<{
     return (
         <React.Fragment>
             {(title || text || action) && (
-                <FooterArticle title={title} text={text} action={action} />
+                <FooterArticle
+                    isInverted={isInverted}
+                    title={title}
+                    text={text}
+                    action={action}
+                />
             )}
             {socials && socials.length > 0 && (
                 <SocialList

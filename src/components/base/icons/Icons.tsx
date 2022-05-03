@@ -20,3 +20,4 @@ export { default as Money } from 'components/base/icons/Money';
 export { default as ExclamationMark } from 'components/base/icons/ExclamationMark';
 export { default as Phone } from 'components/base/icons/Phone';
 export { default as Computer } from 'components/base/icons/Computer';
+export { default as Language } from 'components/base/icons/Language';

@@ -25,7 +25,12 @@ const Dot = styled(Link)`
 
 const Bdot: React.FC<{ className?: string }> = ({ className }) => {
     return (
-        <Dot className={className} href="https://blateral.com" isExternal>
+        <Dot
+            ariaLabel="b.lateral - creative agency"
+            className={className}
+            href="https://blateral.com"
+            isExternal
+        >
             <span>b.lateral - creative agency</span>
         </Dot>
     );
