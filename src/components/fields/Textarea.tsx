@@ -1,7 +1,6 @@
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { hexToRgba } from 'utils/hexRgbConverter';
 import {
     getColors as color,
     mq,
@@ -20,9 +19,7 @@ const FieldHead = styled(Copy)`
     flex-direction: row;
     align-items: top;
     justify-content: space-between;
-    padding-bottom: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge}px;
-    padding-right: ${spacings.nudge}px;
+    padding-bottom: ${spacings.nudge}px;
 `;
 
 const Area = styled.textarea<{
@@ -36,58 +33,58 @@ const Area = styled.textarea<{
     width: 100%;
     min-height: 60px;
     box-shadow: none;
-    border: none;
     border-radius: 0px;
-    outline: none;
     -webkit-appearance: none;
 
     resize: none;
     width: 100%;
-    min-height: 120px;
+    min-height: 100px;
 
     @media ${mq.semilarge} {
-        min-height: 185px;
+        min-height: 120px;
     }
 
-    padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
+    padding: ${spacings.nudge}px;
 
-    border: ${({ hasError, theme }) =>
-        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    border: 1px solid
+        ${({ theme, isInverted, hasError }) =>
+            hasError
+                ? color(theme).error
+                : isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-    background-color: ${({ isInverted, hasBack, theme }) =>
-        isInverted || !hasBack
-            ? color(theme).elementBg.light
-            : color(theme).elementBg.medium};
+
+    background: transparent;
 
     font-weight: inherit;
     font-family: inherit;
     font-size: inherit;
-    color: ${({ hasError, theme }) =>
-        hasError ? color(theme).text.error : 'inherit'};
+    color: ${({ hasError, theme, isInverted }) =>
+        hasError
+            ? color(theme).text.error
+            : isInverted
+            ? color(theme).text.inverted
+            : color(theme).text.default};
 
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
     &:active {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
+        border: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
     }
 
     &:focus {
-        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
         outline-offset: 0;
     }
 
     &::placeholder {
-        color: ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.4)};
+        color: ${({ theme }) => color(theme).elementBg.medium};
     }
 `;
 
-const InfoMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-`;
-
-const ErrorMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
+const FieldMessage = styled(Copy)`
+    margin-top: ${spacings.nudge}px;
 `;
 
 const Textarea: React.FC<
@@ -140,27 +137,28 @@ const Textarea: React.FC<
                 onBlur={onBlur}
             />
             {infoMessage && (
-                <InfoMessage
+                <FieldMessage
                     textColor={
                         isInverted
                             ? color(theme).text.inverted
                             : color(theme).text.default
                     }
                     size="small"
+                    type="copy"
                 >
                     {infoMessage}
-                </InfoMessage>
+                </FieldMessage>
             )}
             {errorMessage && (
-                <ErrorMessage
+                <FieldMessage
                     textColor={color(theme).text.error}
                     size="small"
-                    type="copy-i"
+                    type="copy"
                 >
                     {errorMessage
                         ? errorMessage
                         : 'Bitte geben Sie einen gültigen Text ein'}
-                </ErrorMessage>
+                </FieldMessage>
             )}
         </View>
     );
