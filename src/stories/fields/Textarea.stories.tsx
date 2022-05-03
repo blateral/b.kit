@@ -29,9 +29,7 @@ const Helper = styled.div`
 
 export const Default: Story = () => <Textarea name="field_a" />;
 
-export const WithLightBackground: Story = () => (
-    <Textarea name="field_a" lightBg />
-);
+export const WithLightBackground: Story = () => <Textarea name="field_a" />;
 WithLightBackground.parameters = {
     backgrounds: {
         default: 'gray',
@@ -87,7 +85,6 @@ export const IsInverted: Story = () => (
         label="Label"
         placeholder="Placeholder"
         infoMessage="This is a Textarea"
-        lightBg={false}
         isInverted
     />
 );

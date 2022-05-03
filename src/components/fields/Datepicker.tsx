@@ -24,7 +24,7 @@ import Copy from 'components/typography/Copy';
 
 import ReactDatePicker from 'react-datepicker';
 import { hexToRgba } from 'utils/hexRgbConverter';
-import Field, { FieldProps } from './Field';
+import Field from './Field';
 
 const PickerView = styled.div`
     position: relative;
@@ -337,7 +337,12 @@ const ButtonGhostLabel = styled(ButtonGhost.Label)`
 `;
 
 interface PickerBtnProps {
-    field?: FieldProps;
+    label?: string;
+    errorMessage?: string;
+    infoMessage?: string;
+    isRequired?: boolean;
+    isDisabled?: boolean;
+    isInverted?: boolean;
     isFocused?: boolean;
     name?: string;
     altText?: string;
@@ -346,8 +351,6 @@ interface PickerBtnProps {
     icon?: { src: string; alt?: string };
     setFocused: React.Dispatch<React.SetStateAction<boolean>>;
     onClick?: (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-    hasBg?: boolean;
-    isInverted?: boolean;
     dateFormat?: string;
     customIcon?: () => React.ReactNode;
 }
@@ -355,8 +358,13 @@ interface PickerBtnProps {
 const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
     (
         {
+            label,
+            errorMessage,
+            infoMessage,
+            isRequired,
+            isInverted,
+            isDisabled,
             isFocused,
-            field,
             name,
             altText,
             startDate,
@@ -370,51 +378,68 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
         ref
     ) => {
         return (
-            <Field {...field}>
-                <DatepickerButton
-                    ref={ref}
-                    onClick={(e) => {
-                        setFocused && setFocused(true);
-                        onClick && onClick(e);
-                    }}
-                    isActive={isFocused}
-                    isInverted={field?.isInverted}
-                    hasError={!!field?.errorMessage}
-                    className="myPickerButton"
-                >
-                    <DatepickerButtonMain>
-                        <Copy type="copy">
-                            {startDate
-                                ? `${format(startDate, dateFormat)}${
-                                      endDate
-                                          ? ` – ${format(endDate, dateFormat)}`
-                                          : ''
-                                  }`
-                                : altText}
-                        </Copy>
-                    </DatepickerButtonMain>
-                    {customIcon ? (
-                        <span>{customIcon()}</span>
-                    ) : (
-                        icon &&
-                        icon.src && <Icon src={icon.src} alt={icon.alt || ''} />
+            <Field.View>
+                <Field.Head
+                    label={label}
+                    isRequired={isRequired}
+                    isDisabled={isDisabled}
+                />
+                <Field.Content>
+                    <DatepickerButton
+                        ref={ref}
+                        onClick={(e) => {
+                            setFocused && setFocused(true);
+                            onClick && onClick(e);
+                        }}
+                        isActive={isFocused}
+                        isInverted={isInverted}
+                        hasError={!!errorMessage}
+                        className="myPickerButton"
+                    >
+                        <DatepickerButtonMain>
+                            <Copy type="copy">
+                                {startDate
+                                    ? `${format(startDate, dateFormat)}${
+                                          endDate
+                                              ? ` – ${format(
+                                                    endDate,
+                                                    dateFormat
+                                                )}`
+                                              : ''
+                                      }`
+                                    : altText}
+                            </Copy>
+                        </DatepickerButtonMain>
+                        {customIcon ? (
+                            <span>{customIcon()}</span>
+                        ) : (
+                            icon &&
+                            icon.src && (
+                                <Icon src={icon.src} alt={icon.alt || ''} />
+                            )
+                        )}
+                    </DatepickerButton>
+                    {name && (
+                        <>
+                            <input
+                                type="hidden"
+                                name={`${name}["start"]`}
+                                value={startDate?.toString()}
+                            />
+                            <input
+                                type="hidden"
+                                name={`${name}["end"]`}
+                                value={endDate?.toString()}
+                            />
+                        </>
                     )}
-                </DatepickerButton>
-                {name && (
-                    <>
-                        <input
-                            type="hidden"
-                            name={`${name}["start"]`}
-                            value={startDate?.toString()}
-                        />
-                        <input
-                            type="hidden"
-                            name={`${name}["end"]`}
-                            value={endDate?.toString()}
-                        />
-                    </>
-                )}
-            </Field>
+                </Field.Content>
+                <Field.Messages
+                    infoMessage={infoMessage}
+                    errorMessage={errorMessage}
+                    isInverted={isInverted}
+                />
+            </Field.View>
         );
     }
 );
@@ -513,7 +538,12 @@ const getPickerHeader =
         );
 
 const Datepicker: React.FC<{
-    field?: FieldProps;
+    label?: string;
+    errorMessage?: string;
+    infoMessage?: string;
+    isRequired?: boolean;
+    isDisabled?: boolean;
+    isInverted?: boolean;
     name?: string;
     icon?: { src: string; alt?: string };
     placeholder?: string;
@@ -539,7 +569,12 @@ const Datepicker: React.FC<{
 
     singleSelect?: boolean;
 }> = ({
-    field,
+    label,
+    errorMessage,
+    infoMessage,
+    isRequired,
+    isDisabled,
+    isInverted,
     name,
     icon,
     dateSubmitLabel,
@@ -679,7 +714,12 @@ const Datepicker: React.FC<{
                 shouldCloseOnSelect={singleSelect}
                 customInput={
                     <PickerButton
-                        field={field}
+                        label={label}
+                        isInverted={isInverted}
+                        isDisabled={isDisabled}
+                        infoMessage={infoMessage}
+                        errorMessage={errorMessage}
+                        isRequired={isRequired}
                         ref={pickerBtnRef}
                         name={name}
                         altText={placeholder}

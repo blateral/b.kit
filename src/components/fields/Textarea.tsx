@@ -70,21 +70,45 @@ const Textarea: React.FC<
         onChange?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
         onBlur?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
     }
-> = ({ field, placeholder, value, name, onChange, onBlur }) => {
+> = ({
+    label,
+    isRequired,
+    errorMessage,
+    infoMessage,
+    isDisabled,
+    isInverted,
+    placeholder,
+    value,
+    name,
+    onChange,
+    onBlur,
+}) => {
     return (
-        <Field {...field}>
-            <Area
-                value={value}
-                name={name}
-                placeholder={placeholder}
-                hasError={!!field?.errorMessage}
-                isDisabled={field?.isDisabled}
-                isInverted={field?.isInverted}
-                required={field?.isRequired}
-                onChange={onChange}
-                onBlur={onBlur}
+        <Field.View>
+            <Field.Head
+                label={label}
+                isRequired={isRequired}
+                isDisabled={isDisabled}
             />
-        </Field>
+            <Field.Content>
+                <Area
+                    value={value}
+                    name={name}
+                    placeholder={placeholder}
+                    hasError={!!errorMessage}
+                    isDisabled={isDisabled}
+                    isInverted={isInverted}
+                    required={isRequired}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                />
+            </Field.Content>
+            <Field.Messages
+                infoMessage={infoMessage}
+                errorMessage={errorMessage}
+                isInverted={isInverted}
+            />
+        </Field.View>
     );
 };
 

@@ -61,7 +61,7 @@ export const Default: Story = () => (
 
 export const WithLabel: Story = () => (
     <SelectDropdown
-        field={{ label: 'Label' }}
+        label="Label"
         placeholder="Prompt Text"
         items={[
             {
@@ -92,7 +92,7 @@ export const WithLabel: Story = () => (
 export const WithInitial: Story = () => (
     <SelectDropdown
         value="2"
-        field={{ label: 'Label' }}
+        label="Label"
         placeholder="Prompt Text"
         items={[
             {
@@ -122,7 +122,8 @@ export const WithInitial: Story = () => (
 
 export const AsRequired: Story = () => (
     <SelectDropdown
-        field={{ label: 'Label', isRequired: true }}
+        label="Label"
+        isRequired
         placeholder="Prompt Text"
         items={[
             {
@@ -152,7 +153,9 @@ export const AsRequired: Story = () => (
 
 export const IsDisabled: Story = () => (
     <SelectDropdown
-        field={{ label: 'Label', isRequired: true, isDisabled: true }}
+        label="Label"
+        isRequired
+        isDisabled
         placeholder="Prompt Text"
         items={[
             {
@@ -182,7 +185,8 @@ export const IsDisabled: Story = () => (
 
 export const IsInverted: Story = () => (
     <SelectDropdown
-        field={{ label: 'Label', isInverted: true }}
+        label="Label"
+        isInverted
         placeholder="Prompt Text"
         items={[
             {
@@ -220,7 +224,8 @@ IsInverted.parameters = {
 export const WithIcon: Story = () => (
     <SelectDropdown
         icon={{ src: 'http://placehold.it/25' }}
-        field={{ label: 'Label', isRequired: true }}
+        label="Label"
+        isRequired
         placeholder="Prompt Text"
         items={[
             {
@@ -258,11 +263,9 @@ export const WithIcon: Story = () => (
 
 export const HasError: Story = () => (
     <SelectDropdown
-        field={{
-            label: 'Label',
-            isRequired: true,
-            errorMessage: 'Bitte wählen Sie etwas aus!',
-        }}
+        label="Label"
+        isRequired
+        errorMessage="Bitte wählen Sie etwas aus!"
         placeholder="Prompt Text"
         items={[
             {
@@ -292,11 +295,9 @@ export const HasError: Story = () => (
 
 export const WithCustomIndicator: Story = () => (
     <SelectDropdown
-        field={{
-            label: 'Label',
-            isRequired: true,
-            errorMessage: 'Bitte wählen Sie etwas aus!',
-        }}
+        label="Label"
+        isRequired
+        errorMessage="Bitte wählen Sie etwas aus!"
         placeholder="Prompt Text"
         items={[
             {

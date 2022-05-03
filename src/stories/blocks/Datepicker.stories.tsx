@@ -39,41 +39,21 @@ export const Default: Story = () => (
 );
 
 export const WithLabel: Story = () => (
-    <Datepicker field={{ label: 'Label' }} placeholder="Prompt Text" />
+    <Datepicker label="Label" placeholder="Prompt Text" />
 );
 
 export const WithIcon: Story = () => (
     <Datepicker
-        icon={{ src: 'https://unsplash.it/50' }}
-        field={{ label: 'Label' }}
-        placeholder="Prompt Text"
-    />
-);
-
-export const WithInfoMessage: Story = () => (
-    <Datepicker
-        icon={{ src: 'https://unsplash.it/50' }}
-        field={{ label: 'Label', infoMessage: 'This is a Datepicker' }}
-        placeholder="Prompt Text"
-    />
-);
-
-export const WithErrorMessage: Story = () => (
-    <Datepicker
-        icon={{ src: 'https://unsplash.it/50' }}
-        field={{
-            label: 'Label',
-            infoMessage: 'This is a Datepicker',
-            errorMessage: 'Error!',
-        }}
+        icon={{ src: 'http://placehold.it/50' }}
+        label="Label"
         placeholder="Prompt Text"
     />
 );
 
 export const WithCustomButtons: Story = () => (
     <Datepicker
-        icon={{ src: 'https://unsplash.it/50' }}
-        field={{ label: 'Label', infoMessage: 'This is a Datepicker' }}
+        icon={{ src: 'http://placehold.it/50' }}
+        label="Label"
         placeholder="Prompt Text"
         submitAction={(clickHandler) => (
             <button onClick={clickHandler}>Auswählen</button>
@@ -86,10 +66,10 @@ export const WithCustomButtons: Story = () => (
     />
 );
 
-export const WithCustomIcon: Story = () => (
+export const CustomIcon: Story = () => (
     <Datepicker
         customIcon={() => <Clock />}
-        field={{ label: 'Label', infoMessage: 'This is a Datepicker' }}
+        label="Label"
         placeholder="Prompt Text"
         nextCtrlUrl="/images/Arrow-Right.svg"
         prevCtrlUrl="/images/Arrow-Left.svg"

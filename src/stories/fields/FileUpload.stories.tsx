@@ -14,6 +14,10 @@ export default {
         ),
     ],
     parameters: {
+        backgrounds: {
+            default: 'gray',
+            values: [{ name: 'gray', value: '#F0F0F0' }],
+        },
         status: {
             type: 'stable',
         },
@@ -30,52 +34,43 @@ const Helper = styled.div`
 export const Default: Story = () => <FileUpload />;
 
 export const WithLabel: Story = () => (
-    <FileUpload uploadLabel="Dateien auswählen" field={{ label: 'Label' }} />
+    <FileUpload uploadLabel="Dateien auswählen" label="Label" />
 );
 
 export const WithInfoMessage: Story = () => (
     <FileUpload
         uploadLabel="Dateien auswählen"
-        field={{
-            label: 'Label',
-            infoMessage: 'Optionale Info Message',
-        }}
+        label="Label"
+        infoMessage="Optionale Info Message"
     />
 );
 
 export const AsRequired: Story = () => (
     <FileUpload
         uploadLabel="Dateien auswählen"
-        field={{
-            label: 'Label',
-            infoMessage: 'Optionale Info Message',
-            isRequired: true,
-        }}
+        label="Label"
+        infoMessage="Optionale Info Message"
+        isRequired
     />
 );
 
 export const isDisabled: Story = () => (
     <FileUpload
         uploadLabel="Dateien auswählen"
-        field={{
-            label: 'Label',
-            infoMessage: 'Optionale Info Message',
-            isRequired: true,
-            isDisabled: true,
-        }}
+        label="Label"
+        infoMessage="Optionale Info Message"
+        isRequired
+        isDisabled
     />
 );
 
 export const IsInverted: Story = () => (
     <FileUpload
         uploadLabel="Dateien auswählen"
-        field={{
-            label: 'Label',
-            infoMessage: 'Optionale Info Message',
-            isRequired: true,
-            isDisabled: true,
-            isInverted: true,
-        }}
+        label="Label"
+        infoMessage="Optionale Info Message"
+        isRequired
+        isInverted
     />
 );
 IsInverted.parameters = {
@@ -88,11 +83,19 @@ IsInverted.parameters = {
 export const HasError: Story = () => (
     <FileUpload
         uploadLabel="Dateien auswählen"
-        field={{
-            label: 'Label',
-            infoMessage: 'Optionale Info Message',
-            isRequired: true,
-            errorMessage: 'Error!',
-        }}
+        label="Label"
+        infoMessage="Optionale Info Message"
+        isRequired
+        errorMessage="Error!"
+    />
+);
+
+export const WithCustomButton: Story = () => (
+    <FileUpload
+        uploadLabel="Dateien auswählen"
+        label="Label"
+        infoMessage="Optionale Info Message"
+        isRequired
+        errorMessage="Error!"
     />
 );

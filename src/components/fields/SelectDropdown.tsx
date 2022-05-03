@@ -10,7 +10,8 @@ import {
     spacings,
     getGlobals as global,
 } from 'utils/styles';
-import Field, { FieldProps } from './Field';
+import Field from './Field';
+import { FormProps } from './Textfield';
 
 const Select = styled.button<{
     hasError?: boolean;
@@ -192,23 +193,29 @@ interface SelectItem {
     label?: string;
 }
 
-const SelectDropdown: React.FC<{
-    field?: FieldProps;
-    icon?: { src: string; alt?: string };
+const SelectDropdown: React.FC<
+    FormProps & {
+        icon?: { src: string; alt?: string };
 
-    placeholder?: string;
-    name?: string;
-    value?: string;
-    items: SelectItem[];
+        placeholder?: string;
+        name?: string;
+        value?: string;
+        items: SelectItem[];
 
-    onChange?: (value: string) => void;
-    onBlur?: () => void;
-    indicator?: (props: {
-        isOpen: boolean;
-        isDisabled?: boolean;
-    }) => React.ReactNode;
-}> = ({
-    field,
+        onChange?: (value: string) => void;
+        onBlur?: () => void;
+        indicator?: (props: {
+            isOpen: boolean;
+            isDisabled?: boolean;
+        }) => React.ReactNode;
+    }
+> = ({
+    label,
+    isRequired,
+    errorMessage,
+    infoMessage,
+    isDisabled,
+    isInverted,
     items,
     name,
     value,
@@ -254,122 +261,140 @@ const SelectDropdown: React.FC<{
             : undefined;
 
     return (
-        <Field {...field}>
-            <Container>
-                <Select
-                    ref={selectBtnRef}
-                    aria-label={
-                        activeItem?.label || placeholder || 'Select item'
-                    }
-                    isActive={isOpen}
-                    isInverted={field?.isInverted}
-                    hasError={!!field?.errorMessage}
-                    onClick={() => {
-                        setIsOpen((prev) => !prev);
-                    }}
-                    onBlur={() => {
-                        if (!itemHasBeenClicked.current) {
-                            setIsOpen(false);
-                            onBlur && onBlur();
+        <Field.View>
+            <Field.Head
+                label={label}
+                isRequired={isRequired}
+                isDisabled={isDisabled}
+            />
+            <Field.Content>
+                <Container>
+                    <Select
+                        ref={selectBtnRef}
+                        aria-label={
+                            activeItem?.label || placeholder || 'Select item'
                         }
-                    }}
-                    onKeyDown={(ev) => {
-                        if (ev.key === 'ArrowDown') {
-                            ev.preventDefault();
-                            setIsOpen(true);
-
-                            if (isOpen && selectItems[activeItemIndex + 1]) {
-                                setActiveItemIndex((prev) => prev + 1);
+                        isActive={isOpen}
+                        isInverted={isInverted}
+                        hasError={!!errorMessage}
+                        onClick={() => {
+                            setIsOpen((prev) => !prev);
+                        }}
+                        onBlur={() => {
+                            if (!itemHasBeenClicked.current) {
+                                setIsOpen(false);
+                                onBlur && onBlur();
                             }
-                        } else if (ev.key === 'ArrowUp') {
-                            ev.preventDefault();
-                            setIsOpen(true);
+                        }}
+                        onKeyDown={(ev) => {
+                            if (ev.key === 'ArrowDown') {
+                                ev.preventDefault();
+                                setIsOpen(true);
 
-                            if (isOpen && selectItems[activeItemIndex - 1]) {
-                                setActiveItemIndex((prev) => prev - 1);
+                                if (
+                                    isOpen &&
+                                    selectItems[activeItemIndex + 1]
+                                ) {
+                                    setActiveItemIndex((prev) => prev + 1);
+                                }
+                            } else if (ev.key === 'ArrowUp') {
+                                ev.preventDefault();
+                                setIsOpen(true);
+
+                                if (
+                                    isOpen &&
+                                    selectItems[activeItemIndex - 1]
+                                ) {
+                                    setActiveItemIndex((prev) => prev - 1);
+                                }
                             }
-                        }
-                    }}
-                >
-                    <SelectMain>
-                        {(placeholder || activeItem?.label) && (
-                            <Copy
-                                textColor={
-                                    field?.isDisabled
-                                        ? colors.elementBg.medium
-                                        : colors.elementBg.dark
-                                }
-                                size="medium"
-                                type="copy"
-                            >
-                                {activeItem?.label || placeholder}
-                            </Copy>
-                        )}
-                    </SelectMain>
-                    {indicator &&
-                        indicator({ isOpen, isDisabled: field?.isDisabled })}
-                    {!indicator &&
-                        (isOpen ? (
-                            <AngleUp
-                                iconColor={
-                                    field?.isDisabled
-                                        ? colors.elementBg.medium
-                                        : colors.elementBg.dark
-                                }
-                            />
-                        ) : (
-                            <AngleDown
-                                iconColor={
-                                    field?.isDisabled
-                                        ? colors.elementBg.medium
-                                        : colors.elementBg.dark
-                                }
-                            />
-                        ))}
-                </Select>
-                <Flyout isVisible={isOpen}>
-                    {items.map((item, i) => {
-                        return (
-                            <ItemStyle
-                                key={i}
-                                onMouseDown={() => {
-                                    itemHasBeenClicked.current = true;
-                                }}
-                                onClick={(ev) => {
-                                    ev.preventDefault();
-
-                                    // set new item
-                                    setActiveItemIndex(i);
-
-                                    // set focus back to toggle
-                                    selectBtnRef.current?.focus();
-
-                                    // close flyout
-                                    setIsOpen(false);
-                                    itemHasBeenClicked.current = false;
-                                }}
-                            >
-                                <Item
-                                    renderAs="span"
-                                    isSelected={i === activeItemIndex}
-                                    size="small"
+                        }}
+                    >
+                        <SelectMain>
+                            {(placeholder || activeItem?.label) && (
+                                <Copy
                                     textColor={
-                                        i === activeItemIndex
-                                            ? colors.elementBg.light
+                                        isDisabled
+                                            ? colors.elementBg.medium
                                             : colors.elementBg.dark
                                     }
+                                    size="medium"
+                                    type="copy"
                                 >
-                                    {item.label}
-                                </Item>
-                            </ItemStyle>
-                        );
-                    })}
-                </Flyout>
-            </Container>
-            {activeItem && (
-                <input type="hidden" name={name} value={activeItem.value} />
-            )}
-        </Field>
+                                    {activeItem?.label || placeholder}
+                                </Copy>
+                            )}
+                        </SelectMain>
+                        {indicator &&
+                            indicator({ isOpen, isDisabled: isDisabled })}
+                        {!indicator &&
+                            (isOpen ? (
+                                <AngleUp
+                                    iconColor={
+                                        isDisabled
+                                            ? colors.elementBg.medium
+                                            : colors.elementBg.dark
+                                    }
+                                />
+                            ) : (
+                                <AngleDown
+                                    iconColor={
+                                        isDisabled
+                                            ? colors.elementBg.medium
+                                            : colors.elementBg.dark
+                                    }
+                                />
+                            ))}
+                    </Select>
+                    <Flyout isVisible={isOpen}>
+                        {items.map((item, i) => {
+                            return (
+                                <ItemStyle
+                                    key={i}
+                                    onMouseDown={() => {
+                                        itemHasBeenClicked.current = true;
+                                    }}
+                                    onClick={(ev) => {
+                                        ev.preventDefault();
+
+                                        // set new item
+                                        setActiveItemIndex(i);
+
+                                        // set focus back to toggle
+                                        selectBtnRef.current?.focus();
+
+                                        // close flyout
+                                        setIsOpen(false);
+                                        itemHasBeenClicked.current = false;
+                                    }}
+                                >
+                                    <Item
+                                        renderAs="span"
+                                        isSelected={i === activeItemIndex}
+                                        size="small"
+                                        textColor={
+                                            i === activeItemIndex
+                                                ? colors.elementBg.light
+                                                : colors.elementBg.dark
+                                        }
+                                    >
+                                        {item.label}
+                                    </Item>
+                                </ItemStyle>
+                            );
+                        })}
+                    </Flyout>
+                </Container>
+                {activeItem && (
+                    <input type="hidden" name={name} value={activeItem.value} />
+                )}
+            </Field.Content>
+            <Field.Messages
+                infoMessage={infoMessage}
+                errorMessage={errorMessage}
+                isInverted={isInverted}
+            />
+        </Field.View>
     );
 };
 

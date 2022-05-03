@@ -61,9 +61,7 @@ const InputField = styled.input<{
     }
 `;
 
-export type FormProps = {
-    field?: FieldProps;
-
+export type FormProps = FieldProps & {
     value?: string;
     name?: string;
     placeholder?: string;
@@ -80,30 +78,46 @@ const Textfield: React.FC<
 > = ({
     lightBg,
     type = 'text',
-    field,
+    label,
+    errorMessage,
+    infoMessage,
+    isRequired,
+    isDisabled,
+    isInverted,
     placeholder,
     value,
     name,
-    isInverted,
     onChange,
     onBlur,
 }) => {
     return (
-        <Field {...field}>
-            <InputField
-                hasBack={!lightBg}
-                placeholder={placeholder}
-                hasError={!!field?.errorMessage}
-                type={type}
-                isInverted={isInverted}
-                isDisabled={field?.isDisabled}
-                name={name}
-                value={value}
-                required={field?.isRequired}
-                onChange={onChange}
-                onBlur={onBlur}
+        <Field.View>
+            <Field.Head
+                label={label}
+                isRequired={isRequired}
+                isDisabled={isDisabled}
             />
-        </Field>
+            <Field.Content>
+                <InputField
+                    hasBack={!lightBg}
+                    placeholder={placeholder}
+                    hasError={!!errorMessage}
+                    type={type}
+                    isInverted={isInverted}
+                    isDisabled={isDisabled}
+                    name={name}
+                    value={value}
+                    required={isRequired}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                />
+            </Field.Content>
+            <Field.Messages
+                infoMessage={infoMessage}
+                errorMessage={errorMessage}
+                isInverted={isInverted}
+            />
+        </Field.View>
     );
 };
 

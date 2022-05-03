@@ -30,19 +30,24 @@ export interface FieldProps {
     isInverted?: boolean;
 }
 
-const Field: React.FC<FieldProps & { children: React.ReactNode }> = ({
-    label,
-    children,
-    errorMessage,
-    infoMessage,
-    isDisabled,
-    isRequired,
-    isInverted,
-}) => {
+const Field: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    return (
+        <View renderAs="label">
+            <span>{children}</span>
+        </View>
+    );
+};
+
+const Head: React.FC<{
+    label?: string;
+    isRequired?: boolean;
+    isDisabled?: boolean;
+    isInverted?: boolean;
+}> = ({ label, isDisabled, isRequired, isInverted }) => {
     const { colors } = useLibTheme();
 
     return (
-        <View renderAs="label">
+        <>
             {label && (
                 <FieldHead
                     renderAs="span"
@@ -54,7 +59,19 @@ const Field: React.FC<FieldProps & { children: React.ReactNode }> = ({
                     {`${label}${isRequired ? ' *' : ''}`}
                 </FieldHead>
             )}
-            <span>{children}</span>
+        </>
+    );
+};
+
+const Messages: React.FC<{
+    errorMessage?: string;
+    infoMessage?: string;
+    isInverted?: boolean;
+}> = ({ errorMessage, infoMessage, isInverted }) => {
+    const { colors } = useLibTheme();
+
+    return (
+        <>
             {infoMessage && (
                 <FieldMessage
                     textColor={
@@ -77,8 +94,17 @@ const Field: React.FC<FieldProps & { children: React.ReactNode }> = ({
                         : 'Bitte geben Sie einen gültigen Text ein'}
                 </FieldMessage>
             )}
-        </View>
+        </>
     );
 };
 
-export default Field;
+const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    return <span>{children}</span>;
+};
+
+export default {
+    View: Field,
+    Head: Head,
+    Messages: Messages,
+    Content: Content,
+};

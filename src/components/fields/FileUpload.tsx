@@ -131,7 +131,12 @@ const FileUpload: FC<
     }
 > = ({
     onUploadFiles,
-    field,
+    label,
+    isInverted,
+    isDisabled,
+    isRequired,
+    infoMessage,
+    errorMessage,
     acceptedFormats,
     uploadLabel,
     removeUploadLabel,
@@ -155,78 +160,90 @@ const FileUpload: FC<
     };
 
     return (
-        <Field {...field}>
-            <FieldMain
-                isInverted={field?.isInverted}
-                isDisabled={field?.isDisabled}
-                onClick={() => handleClick}
-            >
-                {previews.length < 0 && (
-                    <Copy
-                        textColor={color(theme).elementBg.medium}
-                        size="medium"
-                        type="copy"
-                    >
-                        {uploadLabel}
-                    </Copy>
-                )}
-                {previews.length > 0 && (
-                    <Delete
-                        onClick={() => {
-                            if (fileInputRef && fileInputRef.current) {
-                                fileInputRef.current.value = '';
-                                setSelectedFiles([]);
-                                setPreviews([]);
-                            }
-                        }}
-                    >
-                        <Copy
-                            textColor={
-                                field?.isDisabled
-                                    ? color(theme).elementBg.medium
-                                    : undefined
-                            }
-                            size="medium"
-                            type="copy-b"
-                        >
-                            {removeUploadLabel || 'Clear selection'}
-                        </Copy>
-                    </Delete>
-                )}
-            </FieldMain>
-
-            <Original
-                onChange={(e) => {
-                    if (e.currentTarget.files) {
-                        const files = Array.from(e.currentTarget.files);
-
-                        const promises = files.map((file) => {
-                            return readFileAsync(file);
-                        });
-
-                        Promise.all(promises).then((p) => {
-                            setPreviews((prev) => [...prev, ...p]);
-                        });
-
-                        setSelectedFiles((prev) => [...prev, ...files]);
-                    }
-                }}
-                type="file"
-                ref={fileInputRef}
-                multiple
-                required={field?.isRequired}
-                disabled={field?.isDisabled}
-                accept={acceptedFormats}
+        <Field.View>
+            <Field.Head
+                label={label}
+                isRequired={isRequired}
+                isDisabled={isDisabled}
             />
-            {previews.map((file, i) => {
-                const fileName = (file.url && file.url.split('/')) || [];
-                return (
-                    <File key={i}>
-                        <Copy>{fileName}</Copy>
-                    </File>
-                );
-            })}
-        </Field>
+            <Field.Content>
+                <FieldMain
+                    isInverted={isInverted}
+                    isDisabled={isDisabled}
+                    onClick={() => handleClick}
+                >
+                    {previews.length < 0 && (
+                        <Copy
+                            textColor={color(theme).elementBg.medium}
+                            size="medium"
+                            type="copy"
+                        >
+                            {uploadLabel}
+                        </Copy>
+                    )}
+                    {previews.length > 0 && (
+                        <Delete
+                            onClick={() => {
+                                if (fileInputRef && fileInputRef.current) {
+                                    fileInputRef.current.value = '';
+                                    setSelectedFiles([]);
+                                    setPreviews([]);
+                                }
+                            }}
+                        >
+                            <Copy
+                                textColor={
+                                    isDisabled
+                                        ? color(theme).elementBg.medium
+                                        : undefined
+                                }
+                                size="medium"
+                                type="copy-b"
+                            >
+                                {removeUploadLabel || 'Clear selection'}
+                            </Copy>
+                        </Delete>
+                    )}
+                </FieldMain>
+
+                <Original
+                    onChange={(e) => {
+                        if (e.currentTarget.files) {
+                            const files = Array.from(e.currentTarget.files);
+
+                            const promises = files.map((file) => {
+                                return readFileAsync(file);
+                            });
+
+                            Promise.all(promises).then((p) => {
+                                setPreviews((prev) => [...prev, ...p]);
+                            });
+
+                            setSelectedFiles((prev) => [...prev, ...files]);
+                        }
+                    }}
+                    type="file"
+                    ref={fileInputRef}
+                    multiple
+                    required={isRequired}
+                    disabled={isDisabled}
+                    accept={acceptedFormats}
+                />
+                {previews.map((file, i) => {
+                    const fileName = (file.url && file.url.split('/')) || [];
+                    return (
+                        <File key={i}>
+                            <Copy>{fileName}</Copy>
+                        </File>
+                    );
+                })}
+            </Field.Content>
+            <Field.Messages
+                infoMessage={infoMessage}
+                errorMessage={errorMessage}
+                isInverted={isInverted}
+            />
+        </Field.View>
     );
 };
 
