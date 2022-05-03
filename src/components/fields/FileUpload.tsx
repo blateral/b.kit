@@ -1,4 +1,3 @@
-import ButtonGhost from 'components/buttons/ButtonGhost';
 import Copy from 'components/typography/Copy';
 import React, { FC, useEffect, useContext, useState, useRef } from 'react';
 import styled, { ThemeContext } from 'styled-components';
@@ -7,44 +6,14 @@ import {
     spacings,
     getGlobals as global,
 } from 'utils/styles';
+import Field from './Field';
 import { FormProps } from './Textfield';
 
-const View = styled(Copy)`
-    display: block;
-    text-align: left;
-`;
-
-const FieldHead = styled(Copy)`
-    display: inline-flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-between;
-    padding-bottom: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge}px;
-    padding-right: ${spacings.nudge}px;
-`;
-
-const FieldWrapper = styled.div<{ hasError?: boolean; hasBg?: boolean }>`
-    border: ${({ hasError, theme }) =>
-        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
-    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-    background: ${({ theme, hasBg }) =>
-        hasBg ? color(theme).elementBg.medium : color(theme).elementBg.light};
-    padding: ${spacings.nudge * 3}px;
-
-    &:focus-within {
-        border: ${({ hasError, theme }) =>
-            hasError
-                ? `2px solid ${color(theme).error}`
-                : '2px solid transparent'};
-    }
-
-    & > * {
-        flex: 1 1 auto;
-    }
-`;
-
-const FieldMain = styled.div`
+const FieldMain = styled.div<{
+    isInverted?: boolean;
+    hasError?: boolean;
+    isDisabled?: boolean;
+}>`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -52,60 +21,52 @@ const FieldMain = styled.div`
     & > * + * {
         margin-left: ${spacings.spacer}px;
     }
-`;
 
-const Original = styled.input`
-    display: none;
-`;
-
-const InputView = styled.div<{ isDisabled?: boolean }>`
-    /* display: block;
-    border: 1px solid
-        ${({ isDisabled, theme }) =>
-        isDisabled ? color(theme).elementBg.medium : 'rgba(56, 56, 56, 0.94)'};
-    cursor: pointer;
     outline: none;
     width: 100%;
-    max-height: 60px;
-    max-width: max-content;
+    min-height: 50px;
     box-shadow: none;
-    outline: none;
+
+    border-radius: 0px;
     -webkit-appearance: none;
 
-    padding: ${spacings.nudge}px ${spacings.nudge * 3}px;
+    padding: ${spacings.nudge}px;
+
+    border: 1px solid
+        ${({ theme, isInverted, hasError }) =>
+            hasError
+                ? color(theme).error
+                : isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+
+    background: transparent;
 
     font-weight: inherit;
     font-family: inherit;
     font-size: inherit;
+    color: ${({ hasError, theme, isInverted }) =>
+        hasError
+            ? color(theme).text.error
+            : isInverted
+            ? color(theme).text.inverted
+            : color(theme).text.default};
 
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
-    transition: all 0.2s ease-in-out;
-
-    &:hover {
-        border: 1px solid transparent;
-        background: ${({ theme }) => color(theme).elementBg.dark};
-
-        & > * {
-            color: ${({ theme }) => color(theme).text.inverted};
-        }
-    }
-
     &:active {
-        color: ${({ theme }) => color(theme).text.default};
-
-        &::placeholder {
-            color: ${({ theme }) => color(theme).text.default};
-        }
+        border: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
     }
 
     &:focus {
-        color: ${({ theme }) => color(theme).text.default};
+        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        outline-offset: 0;
+    }
+`;
 
-        &::placeholder {
-            color: ${({ theme }) => color(theme).text.default};
-        }
-    } */
+const Original = styled.input`
+    display: none;
 `;
 
 const File = styled.div`
@@ -135,17 +96,6 @@ const Delete = styled.div`
     }
 `;
 
-const FileLabel = styled(Copy)``;
-
-const InfoMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
-`;
-
-const ErrorMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
-`;
 interface Preview {
     type: string;
     url: string | null;
@@ -175,30 +125,16 @@ const readFileAsync = (file: File) =>
 const FileUpload: FC<
     Omit<FormProps, 'value' | 'placeholder'> & {
         onUploadFiles?: (files: File[]) => void;
-        isInverted?: boolean;
-        hasBg?: boolean;
-        addBtnLabel?: string;
-        removeBtnLabel?: string;
         acceptedFormats?: string;
-        action?: (props?: {
-            isInverted?: boolean;
-            isDisabled?: boolean;
-            clickHandler?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
-        }) => React.ReactNode;
+        uploadLabel?: string;
+        removeUploadLabel?: string;
     }
 > = ({
     onUploadFiles,
-    label,
-    isDisabled,
-    isRequired,
-    errorMessage,
-    infoMessage,
-    isInverted,
-    hasBg,
-    addBtnLabel,
-    removeBtnLabel,
+    field,
     acceptedFormats,
-    action,
+    uploadLabel,
+    removeUploadLabel,
 }) => {
     const theme = useContext(ThemeContext);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -219,120 +155,78 @@ const FileUpload: FC<
     };
 
     return (
-        <View renderAs="label">
-            {label && (
-                <FieldHead
-                    renderAs="span"
-                    isInverted={isInverted}
-                    textColor={
-                        isDisabled ? color(theme).text.default : undefined
-                    }
-                    size="medium"
-                    type="copy-b"
-                >
-                    {`${label}${isRequired ? ' *' : ''}`}
-                </FieldHead>
-            )}
-            <FieldWrapper
-                hasError={!!errorMessage}
-                hasBg={hasBg && !isInverted}
+        <Field {...field}>
+            <FieldMain
+                isInverted={field?.isInverted}
+                isDisabled={field?.isDisabled}
+                onClick={() => handleClick}
             >
-                <FieldMain>
-                    <InputView isDisabled={isDisabled}>
-                        {action ? (
-                            action({
-                                isDisabled,
-                                isInverted: false,
-                                clickHandler: handleClick,
-                            })
-                        ) : (
-                            <ButtonGhost.View
-                                as="button"
-                                size="small"
-                                isInverted={false}
-                                isDisabled={isDisabled}
-                                onClick={handleClick}
-                            >
-                                <ButtonGhost.Label>
-                                    {addBtnLabel || 'Select file'}
-                                </ButtonGhost.Label>
-                            </ButtonGhost.View>
-                        )}
-                    </InputView>
-                    {previews.length > 0 && (
-                        <Delete
-                            onClick={() => {
-                                if (fileInputRef && fileInputRef.current) {
-                                    fileInputRef.current.value = '';
-                                    setSelectedFiles([]);
-                                    setPreviews([]);
-                                }
-                            }}
+                {previews.length < 0 && (
+                    <Copy
+                        textColor={color(theme).elementBg.medium}
+                        size="medium"
+                        type="copy"
+                    >
+                        {uploadLabel}
+                    </Copy>
+                )}
+                {previews.length > 0 && (
+                    <Delete
+                        onClick={() => {
+                            if (fileInputRef && fileInputRef.current) {
+                                fileInputRef.current.value = '';
+                                setSelectedFiles([]);
+                                setPreviews([]);
+                            }
+                        }}
+                    >
+                        <Copy
+                            textColor={
+                                field?.isDisabled
+                                    ? color(theme).elementBg.medium
+                                    : undefined
+                            }
+                            size="medium"
+                            type="copy-b"
                         >
-                            <Copy
-                                textColor={
-                                    isDisabled
-                                        ? color(theme).elementBg.medium
-                                        : undefined
-                                }
-                                size="medium"
-                                type="copy-b"
-                            >
-                                {removeBtnLabel || 'Clear selection'}
-                            </Copy>
-                        </Delete>
-                    )}
-                </FieldMain>
+                            {removeUploadLabel || 'Clear selection'}
+                        </Copy>
+                    </Delete>
+                )}
+            </FieldMain>
 
-                <Original
-                    onChange={(e) => {
-                        if (e.currentTarget.files) {
-                            const files = Array.from(e.currentTarget.files);
+            <Original
+                onChange={(e) => {
+                    if (e.currentTarget.files) {
+                        const files = Array.from(e.currentTarget.files);
 
-                            const promises = files.map((file) => {
-                                return readFileAsync(file);
-                            });
+                        const promises = files.map((file) => {
+                            return readFileAsync(file);
+                        });
 
-                            Promise.all(promises).then((p) => {
-                                setPreviews((prev) => [...prev, ...p]);
-                            });
+                        Promise.all(promises).then((p) => {
+                            setPreviews((prev) => [...prev, ...p]);
+                        });
 
-                            setSelectedFiles((prev) => [...prev, ...files]);
-                        }
-                    }}
-                    type="file"
-                    ref={fileInputRef}
-                    multiple
-                    required={isRequired}
-                    disabled={isDisabled}
-                    accept={acceptedFormats}
-                />
-                {previews.map((file, i) => {
-                    const fileName = (file.url && file.url.split('/')) || [];
-                    return (
-                        <File key={i}>
-                            <FileLabel>{fileName}</FileLabel>
-                        </File>
-                    );
-                })}
-            </FieldWrapper>
-            {infoMessage && (
-                <InfoMessage textColor={color(theme).text.default} size="small">
-                    {infoMessage}
-                </InfoMessage>
-            )}
-            {errorMessage && (
-                <ErrorMessage
-                    textColor={color(theme).text.error}
-                    size="small"
-                    type="copy-i"
-                >
-                    {errorMessage
-                        ? errorMessage
-                        : 'Bitte geben Sie einen gültigen Text ein'}
-                </ErrorMessage>
-            )}
-        </View>
+                        setSelectedFiles((prev) => [...prev, ...files]);
+                    }
+                }}
+                type="file"
+                ref={fileInputRef}
+                multiple
+                required={field?.isRequired}
+                disabled={field?.isDisabled}
+                accept={acceptedFormats}
+            />
+            {previews.map((file, i) => {
+                const fileName = (file.url && file.url.split('/')) || [];
+                return (
+                    <File key={i}>
+                        <Copy>{fileName}</Copy>
+                    </File>
+                );
+            })}
+        </Field>
     );
 };
 

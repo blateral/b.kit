@@ -14,10 +14,6 @@ export default {
         ),
     ],
     parameters: {
-        backgrounds: {
-            default: 'gray',
-            values: [{ name: 'gray', value: '#F0F0F0' }],
-        },
         status: {
             type: 'stable',
         },
@@ -33,22 +29,54 @@ const Helper = styled.div`
 
 export const Default: Story = () => <FileUpload />;
 
-export const WithLabel: Story = () => <FileUpload label="Label" />;
+export const WithLabel: Story = () => (
+    <FileUpload uploadLabel="Dateien auswählen" field={{ label: 'Label' }} />
+);
 
 export const WithInfoMessage: Story = () => (
-    <FileUpload label="Label" infoMessage="Optionale Info Message" />
+    <FileUpload
+        uploadLabel="Dateien auswählen"
+        field={{
+            label: 'Label',
+            infoMessage: 'Optionale Info Message',
+        }}
+    />
 );
 
 export const AsRequired: Story = () => (
-    <FileUpload label="Label" infoMessage="Optionale Info Message" isRequired />
+    <FileUpload
+        uploadLabel="Dateien auswählen"
+        field={{
+            label: 'Label',
+            infoMessage: 'Optionale Info Message',
+            isRequired: true,
+        }}
+    />
 );
 
 export const isDisabled: Story = () => (
-    <FileUpload label="Label" infoMessage="Optionale Info Message" isDisabled />
+    <FileUpload
+        uploadLabel="Dateien auswählen"
+        field={{
+            label: 'Label',
+            infoMessage: 'Optionale Info Message',
+            isRequired: true,
+            isDisabled: true,
+        }}
+    />
 );
 
 export const IsInverted: Story = () => (
-    <FileUpload isInverted label="Label" infoMessage="Optionale Info Message" />
+    <FileUpload
+        uploadLabel="Dateien auswählen"
+        field={{
+            label: 'Label',
+            infoMessage: 'Optionale Info Message',
+            isRequired: true,
+            isDisabled: true,
+            isInverted: true,
+        }}
+    />
 );
 IsInverted.parameters = {
     backgrounds: {
@@ -59,17 +87,12 @@ IsInverted.parameters = {
 
 export const HasError: Story = () => (
     <FileUpload
-        label="Label"
-        infoMessage="Optionale Info Message"
-        errorMessage="Ich bin eine Error Message"
-    />
-);
-
-export const WithCustomButton: Story = () => (
-    <FileUpload
-        label="Label"
-        action={(props) => (
-            <button onClick={props?.clickHandler}>Start upload</button>
-        )}
+        uploadLabel="Dateien auswählen"
+        field={{
+            label: 'Label',
+            infoMessage: 'Optionale Info Message',
+            isRequired: true,
+            errorMessage: 'Error!',
+        }}
     />
 );
