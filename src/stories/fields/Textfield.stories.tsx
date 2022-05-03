@@ -40,28 +40,28 @@ WithLightBackground.parameters = {
 };
 
 export const WithPlaceholder: Story = () => (
-    <Textfield name="field_a" placeholder="Enter text.." />
+    <Textfield name="field_a" placeholder="Placeholder" />
 );
 
 export const WithLabel: Story = () => (
-    <Textfield name="field_a" label="Label text" placeholder="Enter text.." />
+    <Textfield name="field_a" label="Label" placeholder="Placeholder" />
 );
 
 export const WithInfoMessage: Story = () => (
     <Textfield
         name="field_a"
-        label="Label text"
-        placeholder="Enter text.."
-        infoMessage="Das ist ein Textfeld"
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a Textfield"
     />
 );
 
 export const AsRequired: Story = () => (
     <Textfield
         name="field_a"
-        label="Label text"
-        placeholder="Enter text.."
-        infoMessage="Das ist ein Textfeld"
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a Textfield"
         isRequired
     />
 );
@@ -70,8 +70,8 @@ export const IsDisabled: Story = () => (
     <Textfield
         isDisabled
         name="field_a"
-        label="Label text"
-        placeholder="Enter text.."
+        label="Label"
+        placeholder="Placeholder"
         infoMessage="Das ist ein Textfeld"
     />
 );
@@ -79,8 +79,8 @@ export const IsDisabled: Story = () => (
 export const HasError: Story = () => (
     <Textfield
         name="field_a"
-        label="Label text"
-        placeholder="Enter text.."
+        label="Label"
+        placeholder="Placeholder"
         infoMessage="Das ist ein Textfeld"
         errorMessage="Bitte geben Sie einen gültigen Wert ein!"
     />
@@ -89,9 +89,9 @@ export const HasError: Story = () => (
 export const IsInverted: Story = () => (
     <Textfield
         name="field_a"
-        label="Label text"
-        placeholder="Enter text.."
-        infoMessage="Das ist ein Textfeld"
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a Textfield"
         isInverted
     />
 );

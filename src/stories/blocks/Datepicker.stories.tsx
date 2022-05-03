@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
 import Datepicker from 'components/fields/Datepicker';
+import Clock from 'components/base/icons/Clock';
 
 export default {
     title: 'Fields / Datepicker',
@@ -38,21 +39,41 @@ export const Default: Story = () => (
 );
 
 export const WithLabel: Story = () => (
-    <Datepicker label="Label" placeholder="Prompt Text" />
+    <Datepicker field={{ label: 'Label' }} placeholder="Prompt Text" />
 );
 
 export const WithIcon: Story = () => (
     <Datepicker
-        icon={{ src: 'http://placehold.it/50' }}
-        label="Label"
+        icon={{ src: 'https://unsplash.it/50' }}
+        field={{ label: 'Label' }}
+        placeholder="Prompt Text"
+    />
+);
+
+export const WithInfoMessage: Story = () => (
+    <Datepicker
+        icon={{ src: 'https://unsplash.it/50' }}
+        field={{ label: 'Label', infoMessage: 'This is a Datepicker' }}
+        placeholder="Prompt Text"
+    />
+);
+
+export const WithErrorMessage: Story = () => (
+    <Datepicker
+        icon={{ src: 'https://unsplash.it/50' }}
+        field={{
+            label: 'Label',
+            infoMessage: 'This is a Datepicker',
+            errorMessage: 'Error!',
+        }}
         placeholder="Prompt Text"
     />
 );
 
 export const WithCustomButtons: Story = () => (
     <Datepicker
-        icon={{ src: 'http://placehold.it/50' }}
-        label="Label"
+        icon={{ src: 'https://unsplash.it/50' }}
+        field={{ label: 'Label', infoMessage: 'This is a Datepicker' }}
         placeholder="Prompt Text"
         submitAction={(clickHandler) => (
             <button onClick={clickHandler}>Auswählen</button>
@@ -65,12 +86,11 @@ export const WithCustomButtons: Story = () => (
     />
 );
 
-export const WithCustomIndicator: Story = () => (
+export const WithCustomIcon: Story = () => (
     <Datepicker
-        icon={{ src: 'http://placehold.it/50' }}
-        label="Label"
+        customIcon={() => <Clock />}
+        field={{ label: 'Label', infoMessage: 'This is a Datepicker' }}
         placeholder="Prompt Text"
-        indicator={({ isOpen }) => <div>{isOpen ? 'close' : 'open'}</div>}
         nextCtrlUrl="/images/Arrow-Right.svg"
         prevCtrlUrl="/images/Arrow-Left.svg"
     />

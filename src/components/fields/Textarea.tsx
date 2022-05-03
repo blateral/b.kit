@@ -1,26 +1,12 @@
-import Copy from 'components/typography/Copy';
 import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 import {
     getColors as color,
-    mq,
     spacings,
     getGlobals as global,
 } from 'utils/styles';
+import Field from './Field';
 import { FormProps } from './Textfield';
-
-const View = styled(Copy)`
-    display: block;
-    text-align: left;
-`;
-
-const FieldHead = styled(Copy)`
-    display: inline-flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-between;
-    padding-bottom: ${spacings.nudge}px;
-`;
 
 const Area = styled.textarea<{
     isInverted?: boolean;
@@ -39,10 +25,6 @@ const Area = styled.textarea<{
     resize: none;
     width: 100%;
     min-height: 100px;
-
-    @media ${mq.semilarge} {
-        min-height: 120px;
-    }
 
     padding: ${spacings.nudge}px;
 
@@ -83,84 +65,26 @@ const Area = styled.textarea<{
     }
 `;
 
-const FieldMessage = styled(Copy)`
-    margin-top: ${spacings.nudge}px;
-`;
-
 const Textarea: React.FC<
     FormProps & {
-        isInverted?: boolean;
-        lightBg?: boolean;
         onChange?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
         onBlur?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
     }
-> = ({
-    lightBg,
-    label,
-    errorMessage,
-    infoMessage,
-    placeholder,
-    value,
-    name,
-    isInverted,
-    isDisabled,
-    isRequired,
-    onChange,
-    onBlur,
-}) => {
-    const theme = React.useContext(ThemeContext);
+> = ({ field, placeholder, value, name, onChange, onBlur }) => {
     return (
-        <View renderAs="label">
-            {label && (
-                <FieldHead
-                    renderAs="span"
-                    isInverted={isInverted}
-                    textColor={
-                        isDisabled ? color(theme).elementBg.medium : undefined
-                    }
-                    size="medium"
-                    type="copy-b"
-                >
-                    {`${label}${isRequired ? ' *' : ''}`}
-                </FieldHead>
-            )}
+        <Field {...field}>
             <Area
                 value={value}
                 name={name}
                 placeholder={placeholder}
-                hasError={!!errorMessage}
-                isDisabled={isDisabled}
-                isInverted={isInverted}
-                required={isRequired}
-                hasBack={!lightBg}
+                hasError={!!field?.errorMessage}
+                isDisabled={field?.isDisabled}
+                isInverted={field?.isInverted}
+                required={field?.isRequired}
                 onChange={onChange}
                 onBlur={onBlur}
             />
-            {infoMessage && (
-                <FieldMessage
-                    textColor={
-                        isInverted
-                            ? color(theme).text.inverted
-                            : color(theme).text.default
-                    }
-                    size="small"
-                    type="copy"
-                >
-                    {infoMessage}
-                </FieldMessage>
-            )}
-            {errorMessage && (
-                <FieldMessage
-                    textColor={color(theme).text.error}
-                    size="small"
-                    type="copy"
-                >
-                    {errorMessage
-                        ? errorMessage
-                        : 'Bitte geben Sie einen gültigen Text ein'}
-                </FieldMessage>
-            )}
-        </View>
+        </Field>
     );
 };
 

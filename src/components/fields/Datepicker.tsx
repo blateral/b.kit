@@ -22,10 +22,9 @@ import Button from 'components/buttons/Button';
 
 import Copy from 'components/typography/Copy';
 
-import AngleDown from 'components/base/icons/AngleDown';
-import AngleUp from 'components/base/icons/AngleUp';
 import ReactDatePicker from 'react-datepicker';
 import { hexToRgba } from 'utils/hexRgbConverter';
+import Field, { FieldProps } from './Field';
 
 const PickerView = styled.div`
     position: relative;
@@ -236,22 +235,6 @@ const PickerView = styled.div`
     }
 `;
 
-const View = styled(Copy)`
-    display: block;
-    text-align: left;
-    width: 100%;
-`;
-
-const FieldHead = styled(Copy)`
-    display: inline-flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-between;
-    padding-bottom: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge}px;
-    padding-right: ${spacings.nudge}px;
-`;
-
 const Icon = styled.img`
     height: 100%;
     max-height: 25px;
@@ -261,36 +244,45 @@ const Icon = styled.img`
 const DatepickerButton = styled.button<{
     hasError?: boolean;
     isActive?: boolean;
-    hasBg?: boolean;
+    isInverted?: boolean;
 }>`
-    background: ${({ theme, hasBg }) =>
-        hasBg ? color(theme).elementBg.medium : color(theme).elementBg.light};
-    border: ${({ hasError, theme }) =>
-        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    padding: ${spacings.nudge}px;
+
+    border: 1px solid
+        ${({ theme, isInverted, hasError }) =>
+            hasError
+                ? color(theme).error
+                : isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+
     outline: none;
-    padding: ${spacings.spacer}px ${spacings.nudge * 3}px;
     width: 100%;
-    max-height: 60px;
+    min-height: 50px;
+    max-height: 50px;
     pointer-events: ${({ isActive }) => (isActive ? 'none' : 'all')};
 
     position: relative;
 
+    &:active {
+        border: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+    }
+
     &:focus {
-        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
         outline-offset: 0;
     }
 
-    &:active {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
+    &:focus:not(:focus-visible) {
+        outline: none;
     }
 
     ${({ isActive }) =>
         isActive &&
         css`
             border: ${({ theme }) =>
-                `2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)}`};
+                `1px solid ${color(theme).primary.default}`};
         `}
 
     display: flex;
@@ -335,16 +327,6 @@ const FootFlex = styled.div`
     }
 `;
 
-const InfoMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
-`;
-
-const ErrorMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
-`;
-
 const ButtonLabel = styled(Button.Label)`
     font-size: 12px;
 `;
@@ -353,11 +335,10 @@ const ButtonGhostLabel = styled(ButtonGhost.Label)`
 `;
 
 interface PickerBtnProps {
+    field?: FieldProps;
     isFocused?: boolean;
-    label?: string;
     name?: string;
     altText?: string;
-    errorMessage?: string;
     startDate?: Date | null | undefined;
     endDate?: Date | null | undefined;
     icon?: { src: string; alt?: string };
@@ -366,46 +347,28 @@ interface PickerBtnProps {
     hasBg?: boolean;
     isInverted?: boolean;
     dateFormat?: string;
-    indicator?: (props: {
-        isOpen?: boolean;
-        isDisabled?: boolean;
-    }) => React.ReactNode;
+    customIcon?: () => React.ReactNode;
 }
 
 const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
     (
         {
             isFocused,
-            label,
+            field,
             name,
             altText,
-            errorMessage,
             startDate,
             endDate,
             icon,
-            isInverted,
-            hasBg,
             setFocused,
             onClick,
             dateFormat = 'dd.MM.yyyy',
-            indicator,
+            customIcon,
         },
         ref
     ) => {
-        const theme = useContext(ThemeContext);
-
         return (
-            <View renderAs="label">
-                {label && (
-                    <FieldHead
-                        renderAs="span"
-                        isInverted={isInverted}
-                        size="medium"
-                        type="copy-b"
-                    >
-                        {label}
-                    </FieldHead>
-                )}
+            <Field {...field}>
                 <DatepickerButton
                     ref={ref}
                     onClick={(e) => {
@@ -413,13 +376,11 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                         onClick && onClick(e);
                     }}
                     isActive={isFocused}
-                    hasBg={hasBg && !isInverted}
-                    hasError={!!errorMessage}
+                    isInverted={field?.isInverted}
+                    hasError={!!field?.errorMessage}
                     className="myPickerButton"
                 >
                     <DatepickerButtonMain>
-                        {icon && <Icon src={icon.src} alt={icon.alt || ''} />}
-
                         <Copy type="copy">
                             {startDate
                                 ? `${format(startDate, dateFormat)}${
@@ -430,15 +391,12 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                                 : altText}
                         </Copy>
                     </DatepickerButtonMain>
-                    {indicator && indicator({ isOpen: isFocused })}
-                    {!indicator &&
-                        (isFocused ? (
-                            <AngleUp iconColor={color(theme).elementBg.dark} />
-                        ) : (
-                            <AngleDown
-                                iconColor={color(theme).elementBg.dark}
-                            />
-                        ))}
+                    {customIcon ? (
+                        <span>{customIcon()}</span>
+                    ) : (
+                        icon &&
+                        icon.src && <Icon src={icon.src} alt={icon.alt || ''} />
+                    )}
                 </DatepickerButton>
                 {name && (
                     <>
@@ -454,7 +412,7 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                         />
                     </>
                 )}
-            </View>
+            </Field>
         );
     }
 );
@@ -553,12 +511,10 @@ const getPickerHeader =
         );
 
 const Datepicker: React.FC<{
-    label?: string;
+    field?: FieldProps;
     name?: string;
     icon?: { src: string; alt?: string };
     placeholder?: string;
-    errorMessage?: string;
-    infoMessage?: string;
     dateSubmitLabel?: string;
     dateDeleteLabel?: string;
 
@@ -575,18 +531,13 @@ const Datepicker: React.FC<{
             e: React.SyntheticEvent<HTMLButtonElement, Event>
         ) => void
     ) => React.ReactNode;
-    indicator?: (props: {
-        isOpen?: boolean;
-        isDisabled?: boolean;
-    }) => React.ReactNode;
+    customIcon?: () => React.ReactNode;
     nextCtrlUrl?: React.ReactNode;
     prevCtrlUrl?: React.ReactNode;
 
     singleSelect?: boolean;
-    hasBg?: boolean;
-    isInverted?: boolean;
 }> = ({
-    label,
+    field,
     name,
     icon,
     dateSubmitLabel,
@@ -596,15 +547,11 @@ const Datepicker: React.FC<{
     values,
     minDate = new Date(),
     maxDate,
-    errorMessage,
-    infoMessage,
-    isInverted,
-    hasBg,
     onDataChange,
     onSubmit,
     deleteAction,
     submitAction,
-    indicator,
+    customIcon,
     nextCtrlUrl,
     prevCtrlUrl,
 }) => {
@@ -730,20 +677,17 @@ const Datepicker: React.FC<{
                 shouldCloseOnSelect={singleSelect}
                 customInput={
                     <PickerButton
+                        field={field}
                         ref={pickerBtnRef}
-                        label={label}
                         name={name}
                         altText={placeholder}
                         startDate={startDate}
                         endDate={endDate}
-                        errorMessage={errorMessage}
                         icon={icon}
                         isFocused={focused}
                         setFocused={setFocused}
-                        isInverted={isInverted}
-                        hasBg={hasBg}
                         dateFormat={dateFormat}
-                        indicator={indicator}
+                        customIcon={customIcon}
                     />
                 }
                 showPopperArrow
@@ -785,22 +729,6 @@ const Datepicker: React.FC<{
                     </FootFlex>
                 </DatepickerFoot>
             </ReactDatePicker>
-            {infoMessage && (
-                <InfoMessage textColor={color(theme).text.default} size="small">
-                    {infoMessage}
-                </InfoMessage>
-            )}
-            {errorMessage && (
-                <ErrorMessage
-                    textColor={color(theme).text.error}
-                    size="small"
-                    type="copy-i"
-                >
-                    {errorMessage
-                        ? errorMessage
-                        : 'Bitte geben Sie einen gültigen Text ein'}
-                </ErrorMessage>
-            )}
         </PickerView>
     );
 };
