@@ -4,6 +4,7 @@ import { Meta, Story } from '@storybook/react';
 import Footer, {
     BottomLink,
     SiteLinkGroup,
+    FooterComponent,
 } from 'components/sections/footer/Footer';
 import Facebook from 'components/base/icons/socials/Facebook';
 import Instagram from 'components/base/icons/socials/Instagram';
@@ -104,7 +105,7 @@ const exampleBottomLinks: BottomLink[] = [
 
 export default {
     title: 'Sections / Footer',
-    component: Footer,
+    component: FooterComponent,
     parameters: {
         status: {
             type: ['preview', 'qsReady'],

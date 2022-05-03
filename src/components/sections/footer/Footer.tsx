@@ -8,6 +8,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 import FooterBottomBar from './partials/FooterBottomBar';
 
 const FooterSection = styled(Section)`
@@ -96,7 +97,7 @@ const Footer: React.FC<{
     /** Function to inject custom footer column content */
     customColumn?: (props: FooterState) => React.ReactNode;
 
-    /** Footnote text of main section */
+    /** Footnote text of main section (richtext) */
     footNote?: string;
 
     /** Link list in bottom bar */
@@ -217,4 +218,5 @@ const Footer: React.FC<{
     );
 };
 
-export default Footer;
+export const FooterComponent = Footer;
+export default withLibTheme(Footer);
