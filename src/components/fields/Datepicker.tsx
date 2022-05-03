@@ -245,10 +245,13 @@ const PickerView = styled.div`
     }
 `;
 
-const Icon = styled.img`
+const Icon = styled.div`
     height: 100%;
-    max-height: 25px;
-    max-width: 30px;
+
+    & > * {
+        height: 25px;
+        width: 30px;
+    }
 `;
 
 const DatepickerButton = styled.button<{
@@ -361,7 +364,6 @@ interface PickerBtnProps {
     setFocused: React.Dispatch<React.SetStateAction<boolean>>;
     onClick?: (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     dateFormat?: string;
-    icon?: { src: string; alt?: string };
     customIcon?: () => React.ReactNode;
 }
 
@@ -379,7 +381,6 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
             altText,
             startDate,
             endDate,
-            icon,
             setFocused,
             onClick,
             dateFormat = 'dd.MM.yyyy',
@@ -420,14 +421,7 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                                     : altText}
                             </Copy>
                         </DatepickerButtonMain>
-                        {customIcon ? (
-                            <span>{customIcon()}</span>
-                        ) : (
-                            icon &&
-                            icon.src && (
-                                <Icon src={icon.src} alt={icon.alt || ''} />
-                            )
-                        )}
+                        {customIcon && <Icon>{customIcon()}</Icon>}
                     </DatepickerButton>
                     {name && (
                         <>
@@ -555,7 +549,6 @@ const Datepicker: React.FC<{
     isDisabled?: boolean;
     isInverted?: boolean;
     name?: string;
-    icon?: { src: string; alt?: string };
     placeholder?: string;
     dateSubmitLabel?: string;
     dateDeleteLabel?: string;
@@ -586,7 +579,6 @@ const Datepicker: React.FC<{
     isDisabled,
     isInverted,
     name,
-    icon,
     dateSubmitLabel,
     dateDeleteLabel,
     placeholder,
@@ -735,7 +727,6 @@ const Datepicker: React.FC<{
                         altText={placeholder}
                         startDate={startDate}
                         endDate={endDate}
-                        icon={icon}
                         isFocused={focused}
                         setFocused={setFocused}
                         dateFormat={dateFormat}

@@ -42,17 +42,8 @@ export const WithLabel: Story = () => (
     <Datepicker label="Label" placeholder="Prompt Text" />
 );
 
-export const WithIcon: Story = () => (
-    <Datepicker
-        icon={{ src: 'http://placehold.it/50' }}
-        label="Label"
-        placeholder="Prompt Text"
-    />
-);
-
 export const WithCustomButtons: Story = () => (
     <Datepicker
-        icon={{ src: 'http://placehold.it/50' }}
         label="Label"
         placeholder="Prompt Text"
         submitAction={(clickHandler) => (

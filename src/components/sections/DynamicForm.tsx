@@ -124,6 +124,7 @@ export interface Datepicker extends FormField {
     singleSelect?: boolean;
     icon?: { src: string; alt?: string };
     info?: string;
+    customIcon?: () => React.ReactNode;
 
     singleDateError?: string;
     multiDateError?: string;
@@ -165,6 +166,7 @@ export interface FileUpload extends FormField {
     removeBtnLabel?: string;
     info?: string;
     acceptedFormats?: string;
+    customIcon: () => React.ReactNode;
     validate?: (
         key: string,
         value: Array<File>,
@@ -191,6 +193,7 @@ export interface FieldGenerationProps<T extends FieldTypes> {
     value: FormDataTypes;
     error: string;
     info?: string;
+    customIcon?: () => React.ReactNode;
     isTouched: boolean;
     key: string;
     isInverted: boolean;
@@ -924,6 +927,7 @@ const generateDatepicker = ({
     setField,
     setTouched,
     validateField,
+    customIcon,
 }: FieldGenerationProps<Datepicker>) => {
     const dates = value as [Date | null, Date | null];
 
@@ -941,11 +945,11 @@ const generateDatepicker = ({
             values={[dates?.[0] as Date, dates?.[1] as Date]}
             label={`${key}${field.isRequired ? '*' : ''}`}
             placeholder={field.placeholder}
-            icon={field.icon}
             singleSelect={field.singleSelect}
             infoMessage={field.info}
             errorMessage={error && isTouched ? error : undefined}
             name={key}
+            customIcon={customIcon}
             isInverted={isInverted}
             minDate={field.minDate}
             maxDate={field.maxDate}
@@ -1002,6 +1006,7 @@ const generateUpload = ({
     isTouched,
     isInverted,
     setField,
+    customIcon,
 }: FieldGenerationProps<FileUpload>) => (
     <FileUpload
         key={key}
@@ -1015,6 +1020,7 @@ const generateUpload = ({
         onUploadFiles={(files) => {
             setField(key, files);
         }}
+        customIcon={customIcon}
         isInverted={isInverted}
     />
 );

@@ -97,6 +97,15 @@ const Delete = styled.div`
     }
 `;
 
+const Icon = styled.div`
+    height: 100%;
+
+    & > * {
+        height: 25px;
+        width: 30px;
+    }
+`;
+
 interface Preview {
     type: string;
     url: string | null;
@@ -207,7 +216,7 @@ const FileUpload: FC<
                             </Copy>
                         </Delete>
                     )}
-                    {customIcon && <span>{customIcon()}</span>}
+                    {customIcon && <Icon>{customIcon()}</Icon>}
                 </FieldMain>
 
                 <Original

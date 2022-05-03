@@ -4,6 +4,7 @@ import { Meta, Story } from '@storybook/react';
 import DynamicForm, {
     DynamicFormComponent,
 } from 'components/sections/DynamicForm';
+import Clock from 'components/base/icons/Clock';
 
 export default {
     title: 'Sections / DynamicForm',
@@ -39,6 +40,7 @@ export const Default: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -79,6 +81,7 @@ export const Default: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -116,6 +119,7 @@ export const WithTwoColumns: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -160,6 +164,7 @@ export const WithTwoColumns: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -198,6 +203,7 @@ export const WithCustomDatepickerButtons: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -246,6 +252,7 @@ export const WithCustomDatepickerButtons: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -284,6 +291,7 @@ export const WithBackground: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -324,6 +332,7 @@ export const WithBackground: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -362,6 +371,7 @@ export const Inverted: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -402,6 +412,7 @@ export const Inverted: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -439,6 +450,7 @@ export const CustomSubmitButton: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -479,6 +491,7 @@ export const CustomSubmitButton: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -522,6 +535,7 @@ export const WithCustomErrorMessages: Story = () => (
                 errorMsg: 'Bitte geben Sie eine valide E-Mail an',
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -568,6 +582,7 @@ export const WithCustomErrorMessages: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -638,6 +653,7 @@ export const CustomValidation: Story = () => (
                 },
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -708,6 +724,7 @@ export const CustomValidation: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -771,6 +788,7 @@ export const WithCustomFieldDefinition: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -811,6 +829,7 @@ export const WithCustomFieldDefinition: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -848,6 +867,7 @@ export const WithCustomDatepicker: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: () => <Clock />,
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -896,6 +916,7 @@ export const WithCustomDatepicker: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customIcon: () => <Clock />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
