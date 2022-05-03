@@ -30,7 +30,9 @@ export interface FieldProps {
     isInverted?: boolean;
 }
 
-const Field: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const FieldWrapper: React.FC<{ children: React.ReactNode }> = ({
+    children,
+}) => {
     return (
         <View renderAs="label">
             <span>{children}</span>
@@ -103,7 +105,7 @@ const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 export default {
-    View: Field,
+    View: FieldWrapper,
     Head: Head,
     Messages: Messages,
     Content: Content,

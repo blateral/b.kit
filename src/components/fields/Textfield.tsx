@@ -5,13 +5,12 @@ import {
     spacings,
     getGlobals as global,
 } from 'utils/styles';
-import Field, { FieldProps } from './Field';
+import FieldWrapper, { FieldProps } from './Field';
 
 const InputField = styled.input<{
     isInverted?: boolean;
     hasError?: boolean;
     isDisabled?: boolean;
-    hasBack?: boolean;
 }>`
     display: block;
     outline: none;
@@ -71,12 +70,10 @@ const Textfield: React.FC<
     FormProps & {
         type?: 'number' | 'text' | 'tel' | 'email' | 'password';
         isInverted?: boolean;
-        lightBg?: boolean;
         onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
         onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     }
 > = ({
-    lightBg,
     type = 'text',
     label,
     errorMessage,
@@ -91,15 +88,14 @@ const Textfield: React.FC<
     onBlur,
 }) => {
     return (
-        <Field.View>
-            <Field.Head
+        <FieldWrapper.View>
+            <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
                 isDisabled={isDisabled}
             />
-            <Field.Content>
+            <FieldWrapper.Content>
                 <InputField
-                    hasBack={!lightBg}
                     placeholder={placeholder}
                     hasError={!!errorMessage}
                     type={type}
@@ -111,13 +107,13 @@ const Textfield: React.FC<
                     onChange={onChange}
                     onBlur={onBlur}
                 />
-            </Field.Content>
-            <Field.Messages
+            </FieldWrapper.Content>
+            <FieldWrapper.Messages
                 infoMessage={infoMessage}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />
-        </Field.View>
+        </FieldWrapper.View>
     );
 };
 

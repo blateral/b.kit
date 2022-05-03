@@ -6,7 +6,7 @@ import {
     spacings,
     getGlobals as global,
 } from 'utils/styles';
-import Field from './Field';
+import FieldWrapper from './Field';
 import { FormProps } from './Textfield';
 
 const FieldMain = styled.div<{
@@ -160,13 +160,13 @@ const FileUpload: FC<
     };
 
     return (
-        <Field.View>
-            <Field.Head
+        <FieldWrapper.View>
+            <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
                 isDisabled={isDisabled}
             />
-            <Field.Content>
+            <FieldWrapper.Content>
                 <FieldMain
                     isInverted={isInverted}
                     isDisabled={isDisabled}
@@ -237,13 +237,13 @@ const FileUpload: FC<
                         </File>
                     );
                 })}
-            </Field.Content>
-            <Field.Messages
+            </FieldWrapper.Content>
+            <FieldWrapper.Messages
                 infoMessage={infoMessage}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />
-        </Field.View>
+        </FieldWrapper.View>
     );
 };
 

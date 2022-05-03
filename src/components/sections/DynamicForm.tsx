@@ -17,6 +17,7 @@ import Textfield from 'components/fields/Textfield';
 import SelectDropdown from 'components/fields/SelectDropdown';
 import Copy from 'components/typography/Copy';
 import FileUpload from 'components/fields/FileUpload';
+import FieldWrapper from 'components/fields/Field';
 
 const StyledSection = styled(Section)`
     overflow: visible;
@@ -155,6 +156,7 @@ export interface FieldGroup extends FormField {
         config: FieldGroup
     ) => Promise<string>;
     errorMsg?: string;
+    infoMsg?: string;
 }
 
 export interface FileUpload extends FormField {
@@ -188,10 +190,10 @@ export interface FieldGenerationProps<T extends FieldTypes> {
     field: T;
     value: FormDataTypes;
     error: string;
+    info?: string;
     isTouched: boolean;
     key: string;
     isInverted: boolean;
-    hasBg: boolean;
     theme: DefaultTheme;
     setField: (
         field: string,
@@ -255,7 +257,6 @@ const DynamicForm: FC<{
     bgMode,
 }) => {
     const isInverted = bgMode === 'inverted';
-    const hasBg = bgMode === 'full';
 
     // generate initial data and setup yup validation definition
     const initalData: FormData = {};
@@ -592,7 +593,6 @@ const DynamicForm: FC<{
                                     error: errors[label],
                                     isTouched: touched[label] || false,
                                     isInverted: isInverted,
-                                    hasBg: hasBg,
                                     setField: setField,
                                     setTouched: setFieldTouched,
                                     validateField: validateField,
@@ -669,7 +669,6 @@ const DynamicForm: FC<{
                                         error: errors[label],
                                         isTouched: touched[label] || false,
                                         isInverted: isInverted,
-                                        hasBg: hasBg,
                                         setField: setField,
                                         setTouched: setFieldTouched,
                                         validateField: validateField,
@@ -822,10 +821,10 @@ const generateCheckboxGroup = ({
     value,
     isTouched,
     error,
+    info,
     setTouched,
     validateField,
     setField,
-    theme,
 }: FieldGenerationProps<FieldGroup>) => {
     const group = field;
     const groupData = value as string[];
@@ -833,10 +832,9 @@ const generateCheckboxGroup = ({
     return (
         <FieldSet key={key}>
             {key && (
-                <FieldHead renderAs="legend" type="copy-b" size="medium">
-                    {`${key}${field.isRequired ? '*' : ''}`}
-                </FieldHead>
+                <FieldWrapper.Head label={key} isRequired={field.isRequired} />
             )}
+
             <Fields>
                 {group?.fields?.map((field, ci) => (
                     <Checkbox
@@ -870,10 +868,11 @@ const generateCheckboxGroup = ({
                     />
                 ))}
             </Fields>
-            {error && isTouched && (
-                <ErrorMessage textColor={color(theme).text.error} size="small">
-                    {error}
-                </ErrorMessage>
+            {isTouched && error && (
+                <FieldWrapper.Messages
+                    errorMessage={error}
+                    infoMessage={info}
+                />
             )}
         </FieldSet>
     );
@@ -886,7 +885,6 @@ const generateRadioGroup = ({
     error,
     isTouched,
     isInverted,
-    hasBg,
     setField,
     theme,
 }: FieldGenerationProps<FieldGroup>) => {
@@ -916,7 +914,6 @@ const generateRadioGroup = ({
                                 setField(key, e.currentTarget.value);
                             }
                         }}
-                        hasBg={!hasBg}
                     />
                 ))}
             </Fields>
@@ -936,7 +933,6 @@ const generateDatepicker = ({
     error,
     isTouched,
     isInverted,
-    hasBg,
     setField,
     setTouched,
     validateField,
@@ -963,7 +959,6 @@ const generateDatepicker = ({
             errorMessage={error && isTouched ? error : undefined}
             name={key}
             isInverted={isInverted}
-            hasBg={!hasBg}
             minDate={field.minDate}
             maxDate={field.maxDate}
             deleteAction={(handleReset) =>
@@ -995,7 +990,6 @@ const generateArea = ({
     error,
     isTouched,
     isInverted,
-    hasBg,
     handleChange,
     handleBlur,
 }: FieldGenerationProps<Area>) => (
@@ -1010,7 +1004,6 @@ const generateArea = ({
         onBlur={handleBlur}
         infoMessage={field.info}
         errorMessage={error && isTouched ? error : undefined}
-        lightBg={hasBg}
     />
 );
 
@@ -1020,7 +1013,6 @@ const generateUpload = ({
     error,
     isTouched,
     isInverted,
-    hasBg,
     setField,
 }: FieldGenerationProps<FileUpload>) => (
     <FileUpload
@@ -1028,14 +1020,13 @@ const generateUpload = ({
         label={`${key}${field.isRequired ? '*' : ''}`}
         name={key}
         infoMessage={field.info}
-        addBtnLabel={field.addBtnLabel}
-        removeBtnLabel={field.removeBtnLabel}
+        uploadLabel={field.addBtnLabel}
+        removeUploadLabel={field.removeBtnLabel}
         errorMessage={error && isTouched ? error : undefined}
         acceptedFormats={field.acceptedFormats}
         onUploadFiles={(files) => {
             setField(key, files);
         }}
-        hasBg={!hasBg}
         isInverted={isInverted}
     />
 );
@@ -1049,7 +1040,6 @@ const generateField = ({
     handleChange,
     handleBlur,
     isInverted,
-    hasBg,
 }: FieldGenerationProps<Field>) => (
     <Textfield
         key={key}
@@ -1063,7 +1053,6 @@ const generateField = ({
         onBlur={handleBlur}
         infoMessage={field.info}
         errorMessage={error && isTouched ? error : undefined}
-        lightBg={hasBg}
     />
 );
 
@@ -1074,7 +1063,6 @@ const generateSelect = ({
     error,
     isTouched,
     isInverted,
-    hasBg,
     setField,
     setTouched,
     validateField,
@@ -1095,6 +1083,5 @@ const generateSelect = ({
         onBlur={() => setTouched(key, true, true)}
         icon={field.icon}
         isInverted={isInverted}
-        hasBg={!hasBg}
     />
 );

@@ -24,7 +24,7 @@ import Copy from 'components/typography/Copy';
 
 import ReactDatePicker from 'react-datepicker';
 import { hexToRgba } from 'utils/hexRgbConverter';
-import Field from './Field';
+import FieldWrapper from './Field';
 
 const PickerView = styled.div`
     position: relative;
@@ -378,13 +378,13 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
         ref
     ) => {
         return (
-            <Field.View>
-                <Field.Head
+            <FieldWrapper.View>
+                <FieldWrapper.Head
                     label={label}
                     isRequired={isRequired}
                     isDisabled={isDisabled}
                 />
-                <Field.Content>
+                <FieldWrapper.Content>
                     <DatepickerButton
                         ref={ref}
                         onClick={(e) => {
@@ -433,13 +433,13 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                             />
                         </>
                     )}
-                </Field.Content>
-                <Field.Messages
+                </FieldWrapper.Content>
+                <FieldWrapper.Messages
                     infoMessage={infoMessage}
                     errorMessage={errorMessage}
                     isInverted={isInverted}
                 />
-            </Field.View>
+            </FieldWrapper.View>
         );
     }
 );

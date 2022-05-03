@@ -10,7 +10,7 @@ import {
     spacings,
     getGlobals as global,
 } from 'utils/styles';
-import Field from './Field';
+import FieldWrapper from './Field';
 import { FormProps } from './Textfield';
 
 const Select = styled.button<{
@@ -261,13 +261,13 @@ const SelectDropdown: React.FC<
             : undefined;
 
     return (
-        <Field.View>
-            <Field.Head
+        <FieldWrapper.View>
+            <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
                 isDisabled={isDisabled}
             />
-            <Field.Content>
+            <FieldWrapper.Content>
                 <Container>
                     <Select
                         ref={selectBtnRef}
@@ -388,13 +388,13 @@ const SelectDropdown: React.FC<
                 {activeItem && (
                     <input type="hidden" name={name} value={activeItem.value} />
                 )}
-            </Field.Content>
-            <Field.Messages
+            </FieldWrapper.Content>
+            <FieldWrapper.Messages
                 infoMessage={infoMessage}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />
-        </Field.View>
+        </FieldWrapper.View>
     );
 };
 
