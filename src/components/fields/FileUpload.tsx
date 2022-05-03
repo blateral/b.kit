@@ -172,7 +172,7 @@ const FileUpload: FC<
                     isDisabled={isDisabled}
                     onClick={() => handleClick}
                 >
-                    {previews.length < 0 && (
+                    {previews.length <= 0 && (
                         <Copy
                             textColor={color(theme).elementBg.medium}
                             size="medium"

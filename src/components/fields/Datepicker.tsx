@@ -50,7 +50,7 @@ const PickerView = styled.div`
             ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.2)} !important;
         border-radius: ${({ theme }) =>
             global(theme).sections.edgeRadius} !important;
-        padding: ${spacings.spacer}px;
+        padding: ${spacings.nudge * 3}px;
         width: 100%;
 
         box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.15);
@@ -63,11 +63,13 @@ const PickerView = styled.div`
     .react-datepicker__header {
         border: none !important;
         background-color: transparent !important;
+        margin: 0 ${spacings.nudge * 3}px;
     }
 
     /* Month */
     .react-datepicker__month-container {
         width: 100%;
+        margin-bottom: ${spacings.nudge * 3}px;
     }
 
     @media ${mq.medium} {
@@ -77,8 +79,8 @@ const PickerView = styled.div`
     }
 
     .react-datepicker__month {
-        margin-left: ${spacings.spacer}px;
-        margin-right: ${spacings.spacer}px;
+        margin-left: ${spacings.nudge * 2}px;
+        margin-right: ${spacings.nudge * 2}px;
     }
 
     .react-datepicker__current-month {
@@ -221,7 +223,15 @@ const PickerView = styled.div`
     }
 
     .react-datepicker__navigation {
-        top: 0 !important;
+        top: ${spacings.nudge}px !important;
+    }
+
+    .react-datepicker__navigation-icon--next::before {
+        left: 0 !important;
+    }
+
+    .react-datepicker__navigation-icon--previous::before {
+        left: 0 !important;
     }
 
     .react-datepicker__navigation:focus {
@@ -306,7 +316,7 @@ const DatepickerButtonMain = styled.div`
 const DatepickerFoot = styled.div`
     display: block;
 
-    margin-top: ${spacings.spacer * 14}px;
+    /* margin-top: ${spacings.spacer * 14}px; */
 `;
 
 const FootFlex = styled.div`
@@ -446,7 +456,7 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
 PickerButton.displayName = 'PickerButton';
 
 const PickerHeader = styled.div`
-    margin-bottom: ${spacings.nudge * 2}px;
+    margin-bottom: ${spacings.nudge * 3}px;
 `;
 
 const getPickerHeader =

@@ -96,8 +96,8 @@ const SelectMain = styled.div`
 
 const Flyout = styled.ul<{ isVisible?: boolean }>`
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 0 !important;
+    margin: 0 !important;
 
     position: absolute;
     width: 100%;
@@ -136,7 +136,7 @@ const Flyout = styled.ul<{ isVisible?: boolean }>`
 `;
 
 const ItemStyle = styled.li`
-    padding: ${spacings.spacer}px ${spacings.nudge * 3}px;
+    padding: ${spacings.nudge * 2}px;
     width: 100%;
     cursor: pointer;
     position: relative;
@@ -225,7 +225,7 @@ const SelectDropdown: React.FC<
     indicator,
 }) => {
     const { colors } = useLibTheme();
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     const [activeItemIndex, setActiveItemIndex] = useState<number>(
         items?.findIndex((item) => item.value === value) || -1
