@@ -825,7 +825,11 @@ const generateCheckboxGroup = ({
     return (
         <FieldSet key={key}>
             {key && (
-                <FieldWrapper.Head label={key} isRequired={field.isRequired} />
+                <FieldWrapper.Head
+                    isInverted={isInverted}
+                    label={key}
+                    isRequired={field.isRequired}
+                />
             )}
 
             <Fields>
@@ -887,7 +891,11 @@ const generateRadioGroup = ({
     return (
         <FieldSet key={key}>
             {key && (
-                <FieldWrapper.Head label={key} isRequired={field.isRequired} />
+                <FieldWrapper.Head
+                    isInverted={isInverted}
+                    label={key}
+                    isRequired={field.isRequired}
+                />
             )}
             <Fields>
                 {group?.fields?.map((field, fi) => (

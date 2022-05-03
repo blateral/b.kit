@@ -92,6 +92,7 @@ const Textfield: React.FC<
             <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
+                isInverted={isInverted}
                 isDisabled={isDisabled}
             />
             <FieldWrapper.Content>

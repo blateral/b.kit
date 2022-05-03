@@ -259,6 +259,7 @@ const SelectDropdown: React.FC<
             <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
+                isInverted={isInverted}
                 isDisabled={isDisabled}
             />
             <FieldWrapper.Content>
@@ -308,9 +309,13 @@ const SelectDropdown: React.FC<
                             {(placeholder || activeItem?.label) && (
                                 <Copy
                                     textColor={
-                                        isDisabled
+                                        !activeItem
                                             ? colors.elementBg.medium
-                                            : colors.elementBg.dark
+                                            : isDisabled
+                                            ? colors.elementBg.medium
+                                            : isInverted
+                                            ? colors.text.inverted
+                                            : colors.text.default
                                     }
                                     size="medium"
                                     type="copy"
