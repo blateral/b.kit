@@ -2,21 +2,9 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useMediaQuery } from 'utils/useMediaQuery';
-import { canUseWebP } from 'utils/usePoster';
 import Image from 'components/blocks/Image';
-
-export interface HeaderKenBurnsImageProps {
-    small: string;
-    medium: string;
-    large: string;
-    xlarge: string;
-    webp?: {
-        small: string;
-        medium: string;
-        large: string;
-        xlarge: string;
-    };
-}
+import { clampValue } from 'utils/clamp';
+import { HeaderImage } from './Header';
 
 const AnimationContainer = styled.div`
     position: relative;
@@ -33,8 +21,9 @@ const PosterImage = styled(Image)`
     height: 100%;
     width: 100%;
 
-    object-fit: cover;
-    object-position: center;
+    img {
+        height: 100%;
+    }
 `;
 
 const AnimationImage = styled.img<{
@@ -68,7 +57,7 @@ const AnimationImage = styled.img<{
 const AnimationImages: FC<{
     zoom?: number;
     zoomPoint?: [number, number];
-    images: { id: number | string; image: string }[];
+    images: KenBurnsImage[];
     interval?: number;
     onChange?: (imgId: number) => void;
 }> = ({
@@ -107,44 +96,72 @@ const AnimationImages: FC<{
     }, [activeImg]);
 
     return (
-        <>
-            {images.map((img, i) => (
-                <AnimationImage
-                    key={i}
-                    style={{
-                        zIndex: i === activeImg ? 1 : 0,
-                    }}
-                    src={img.image}
-                    scale={i === activeImg ? zoom : 1}
-                    opacity={i === activeImg ? 1 : 0}
-                    zoomPoint={zoomPoint}
-                    alt=""
-                />
-            ))}
-        </>
+        <React.Fragment>
+            {images.map((img, i) => {
+                let imgZoom = 1;
+                let imgZoomPoint = zoomPoint;
+
+                if (i === activeImg) {
+                    imgZoom = img.zoom !== undefined ? img.zoom : zoom;
+                }
+
+                if (img.zoomPoint) {
+                    imgZoomPoint = getValidZoomPoint(img.zoomPoint);
+                }
+
+                return (
+                    <AnimationImage
+                        key={i}
+                        style={{
+                            zIndex: i === activeImg ? 1 : 0,
+                        }}
+                        src={img.image}
+                        scale={imgZoom}
+                        opacity={i === activeImg ? 1 : 0}
+                        zoomPoint={imgZoomPoint}
+                        alt={img.alt || ''}
+                    />
+                );
+            })}
+        </React.Fragment>
     );
 };
 
-const preloadImages = (imageUrls: string[]) => {
-    const images = imageUrls.map((src, i) => {
-        return new Promise((res) => {
+const preloadImages = (images: KenBurnsImage[]): Promise<KenBurnsImage>[] => {
+    const loadedImages: Promise<KenBurnsImage>[] = images.map((req) => {
+        return new Promise((resolve) => {
             const img = new window.Image();
-            img.src = src;
-            img.onload = () => res({ url: src, i });
+            img.src = req.image;
+            img.onload = () => resolve(req);
         });
     });
 
-    return images;
+    return loadedImages;
 };
 
 type KenBurnsMq = 'small' | 'medium' | 'large' | 'xlarge';
 
+interface KenBurnsImage {
+    id: number | string;
+    image: string;
+    alt?: string;
+    zoom?: number;
+    zoomPoint?: [number, number];
+}
+
+const getValidZoomPoint = (point: [number, number]) => {
+    return [clampValue(point[0], 0, 1), clampValue(point[1], 0, 1)] as [
+        number,
+        number
+    ];
+};
+
 const HeaderKenBurns: React.FC<{
-    images: HeaderKenBurnsImageProps[];
+    images: HeaderImage[];
     zoom?: number;
     zoomPoint?: [number, number];
     interval?: number;
-    onImageChange?: (currentImg: HeaderKenBurnsImageProps) => void;
+    onImageChange?: (currentImg: HeaderImage) => void;
     className?: string;
     children?: React.ReactNode;
 }> = ({
@@ -159,8 +176,8 @@ const HeaderKenBurns: React.FC<{
     const mqs: KenBurnsMq[] = ['small', 'medium', 'large', 'xlarge'];
     const currentMq = useMediaQuery(mqs) as KenBurnsMq | undefined;
 
-    const [loadedImages, setLoadedImages] = React.useState<{
-        [key: string]: { id: number | string; image: string }[];
+    const [loadedImages, setLoadedImages] = useState<{
+        [key: string]: KenBurnsImage[];
     }>({
         small: [],
         medium: [],
@@ -168,31 +185,39 @@ const HeaderKenBurns: React.FC<{
         xlarge: [],
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (currentMq) {
             const loadedForMq = loadedImages[currentMq];
-            const useWebp = canUseWebP();
 
             if (loadedForMq.length < images.length && images.length >= 2) {
-                const requestedImages = images.map((img) =>
-                    img.webp && useWebp ? img.webp[currentMq] : img[currentMq]
+                const requestedImages: KenBurnsImage[] = images.map(
+                    (img, i) => ({
+                        id: i,
+                        image: img[currentMq] as string,
+                        zoom: img.zoom || zoom,
+                        zoomPoint: img.zoomPoint || zoomPoint,
+                        alt: img.alt,
+                    })
                 );
 
-                const resolve = async (items: any) => {
-                    for (const item of items) {
-                        const x = await item;
+                const resolve = async (
+                    imagePromises: Promise<KenBurnsImage>[]
+                ) => {
+                    for (const promise of imagePromises) {
+                        const loadedImg = await promise;
 
                         setLoadedImages((prev) => {
                             // check if image id already exists in array
-                            if (!prev[currentMq].find((e) => e.id === x.i)) {
+                            if (
+                                !prev[currentMq].find(
+                                    (e) => e.id === loadedImg.id
+                                )
+                            ) {
                                 return {
                                     ...prev,
                                     [currentMq]: [
                                         ...prev[currentMq],
-                                        {
-                                            id: x.i,
-                                            image: x.url,
-                                        },
+                                        loadedImg,
                                     ],
                                 };
                             } else return prev;
@@ -203,15 +228,15 @@ const HeaderKenBurns: React.FC<{
                 resolve(preloadImages(requestedImages));
             }
         }
-    }, [currentMq, images, loadedImages]);
+    }, [currentMq, images, loadedImages, zoom, zoomPoint]);
 
     return (
         <AnimationContainer className={className}>
-            <PosterImage {...images[0]} />
+            <PosterImage {...images[0]} coverSpace ratios={undefined} />
             {currentMq && loadedImages[currentMq].length >= images.length && (
                 <AnimationImages
                     zoom={zoom}
-                    zoomPoint={zoomPoint}
+                    zoomPoint={getValidZoomPoint(zoomPoint)}
                     interval={interval}
                     images={loadedImages[currentMq]}
                     onChange={(id) =>

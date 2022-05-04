@@ -1,8 +1,9 @@
-import React, { FC, useContext } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import React, { FC } from 'react';
+import styled, { css } from 'styled-components';
 
 import Heading, { HeadlineTag } from 'components/typography/Heading';
-import { spacings, getColors as color } from 'utils/styles';
+import { spacings } from 'utils/styles';
+import { useLibTheme } from 'utils/LibThemeProvider';
 
 const View = styled.div<{ isCentered?: boolean }>`
     display: block;
@@ -73,7 +74,7 @@ const Title: FC<{
     isCentered = false,
     className,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     return (
         <View isCentered={isCentered} className={className}>
@@ -83,7 +84,7 @@ const Title: FC<{
                     size="super"
                     textColor={
                         colorMode === 'onImage'
-                            ? color(theme).text.inverted
+                            ? colors.text.inverted
                             : undefined
                     }
                     isInverted={colorMode === 'inverted'}
@@ -96,7 +97,7 @@ const Title: FC<{
                     size="heading-2"
                     textColor={
                         colorMode === 'onImage'
-                            ? color(theme).text.inverted
+                            ? colors.text.inverted
                             : undefined
                     }
                     isInverted={colorMode === 'inverted'}
