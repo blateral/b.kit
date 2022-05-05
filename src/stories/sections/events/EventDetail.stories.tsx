@@ -4,7 +4,7 @@ import { Meta, Story } from '@storybook/react';
 import EventDetail, {
     EventDetailComponent,
 } from 'components/sections/events/EventDetail';
-import Magnifier from 'components/base/icons/Magnifier';
+import Star from 'components/base/icons/Star';
 import ExclamationMark from 'components/base/icons/ExclamationMark';
 import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
@@ -150,15 +150,15 @@ export const WithInfoList: Story = () => (
                 title: 'Allgemeine Infos',
                 items: [
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Auf Karte anzeigen',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Eintritt frei',
                     },
                     {
@@ -179,7 +179,7 @@ export const WithInfoList: Story = () => (
                         text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'www.topevents.com',
                     },
                     {
@@ -200,7 +200,7 @@ export const WithInfoList: Story = () => (
                         text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'www.topevents.com',
                     },
                     {
@@ -246,15 +246,15 @@ export const WithBackground: Story = () => (
                 title: 'Allgemeine Infos',
                 items: [
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Auf Karte anzeigen',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Eintritt frei',
                     },
                     {
@@ -275,7 +275,7 @@ export const WithBackground: Story = () => (
                         text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'www.topevents.com',
                     },
                     {
@@ -296,7 +296,7 @@ export const WithBackground: Story = () => (
                         text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'www.topevents.com',
                     },
                     {
@@ -342,15 +342,15 @@ export const IsInverted: Story = () => (
                 title: 'Allgemeine Infos',
                 items: [
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Auf Karte anzeigen',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Eintritt frei',
                     },
                     {
@@ -371,7 +371,7 @@ export const IsInverted: Story = () => (
                         text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'www.topevents.com',
                     },
                     {
@@ -392,7 +392,7 @@ export const IsInverted: Story = () => (
                         text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'www.topevents.com',
                     },
                     {
@@ -437,15 +437,15 @@ export const CustomTag: Story = () => (
                 title: 'Allgemeine Infos',
                 items: [
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Altes Rauthaus, Münsterstraße 23, 88662 Überlingen',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Auf Karte anzeigen',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'Eintritt frei',
                     },
                     {
@@ -466,7 +466,7 @@ export const CustomTag: Story = () => (
                         text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'www.topevents.com',
                     },
                     {
@@ -487,7 +487,7 @@ export const CustomTag: Story = () => (
                         text: '<a href="mailto:max.mustermann@gmail.com">max.mustermann@gmail.com</a>',
                     },
                     {
-                        icon: () => <Magnifier />,
+                        icon: () => <Star />,
                         text: 'www.topevents.com',
                     },
                     {

@@ -5,7 +5,7 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const ArrowRight: React.FC<{ iconColor?: string; className?: string }> = ({
+const ArrowLeft: React.FC<{ iconColor?: string; className?: string }> = ({
     iconColor = 'currentColor',
     className,
 }) => (
@@ -17,8 +17,8 @@ const ArrowRight: React.FC<{ iconColor?: string; className?: string }> = ({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
     >
-        <path d="M16.01 11H4v2h12.01v3L20 12l-3.99-4v3Z" fill={iconColor} />
+        <path d="M7.99 13H20v-2H7.99V8L4 12l3.99 4v-3Z" fill={iconColor} />
     </SVG>
 );
 
-export default ArrowRight;
+export default ArrowLeft;

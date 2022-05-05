@@ -5,7 +5,7 @@ import CrossPromotion, {
     CrossPromotionComponent,
 } from 'components/sections/CrossPromotion';
 import Route from 'components/base/icons/Route';
-import Magnifier from 'components/base/icons/Magnifier';
+import Star from 'components/base/icons/Star';
 import Phone from 'components/base/icons/Phone';
 
 export default {
@@ -629,7 +629,7 @@ export const WithIcons: Story = () => (
                 },
                 title: 'Lorem ipsum dolor sit amet',
                 superTitle: 'Lorem ipsum dolor sit amet dolor',
-                icon: () => <Magnifier />,
+                icon: () => <Star />,
             },
         ]}
         aside={[

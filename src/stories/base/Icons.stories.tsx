@@ -1,80 +1,102 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
+/** Arrows **/
+import { default as ArrowUp } from 'components/base/icons/ArrowUp';
+import { default as ArrowDown } from 'components/base/icons/ArrowDown';
+import { default as ArrowRight } from 'components/base/icons/ArrowRight';
+import { default as ArrowRightGhost } from 'components/base/icons/ArrowRightGhost';
+import { default as ArrowLeft } from 'components/base/icons/ArrowLeft';
+import { default as ArrowLeftGhost } from 'components/base/icons/ArrowLeftGhost';
+import { default as ArrowLeftRight } from 'components/base/icons/ArrowLeftRight';
+import { default as AngleUp } from 'components/base/icons/AngleUp';
+import { default as AngleDown } from 'components/base/icons/AngleDown';
+import { default as AngleLeft } from 'components/base/icons/AngleLeft';
+import { default as AngleRight } from 'components/base/icons/AngleRight';
 
-import ArrowRight from 'components/base/icons/ArrowRight';
-import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
-import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
-import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
-import AngleRight from 'components/base/icons/AngleRight';
-import AngleLeft from 'components/base/icons/AngleLeft';
-import ArrowDown from 'components/base/icons/ArrowDown';
-import Cross from 'components/base/icons/Cross';
-import CrossSmall from 'components/base/icons/CrossSmall';
-import Magnifier from 'components/base/icons/Magnifier';
-import MenuBurger from 'components/base/icons/MenuBurger';
-import Play from 'components/base/icons/Play';
-import Star from 'components/base/icons/Star';
-import StarGhost from 'components/base/icons/StarGhost';
-import Phone from 'components/base/icons/Phone';
-import Route from 'components/base/icons/Route';
-import Mail from 'components/base/icons/Mail';
-import FlyTo from 'components/base/icons/FlyTo';
-import Facebook from 'components/base/icons/socials/Facebook';
-import Instagram from 'components/base/icons/socials/Instagram';
-import LinkedIn from 'components/base/icons/socials/LinkedIn';
-import Twitter from 'components/base/icons/socials/Twitter';
-import Xing from 'components/base/icons/socials/Xing';
-import Youtube from 'components/base/icons/socials/Youtube';
-import External from 'components/base/icons/External';
-import ExclamationMark from 'components/base/icons/ExclamationMark';
-import Document from 'components/base/icons/files/Document';
-import Excel from 'components/base/icons/files/Excel';
-import Image from 'components/base/icons/files/Image';
-import Pdf from 'components/base/icons/files/Pdf';
-import PowerPoint from 'components/base/icons/files/PowerPoint';
-import Word from 'components/base/icons/files/Word';
-import Zip from 'components/base/icons/files/Zip';
-import LocationPin from 'components/base/icons/LocationPin';
-import Map from 'components/base/icons/Map';
+/** Files **/
+import { default as Excel } from 'components/base/icons/files/Excel';
+import { default as Image } from 'components/base/icons/files/Image';
+import { default as Pdf } from 'components/base/icons/files/Pdf';
+import { default as PowerPoint } from 'components/base/icons/files/PowerPoint';
+import { default as Word } from 'components/base/icons/files/Word';
+import { default as Zip } from 'components/base/icons/files/Zip';
+import { default as External } from 'components/base/icons/External';
+
+/** Socials **/
+import { default as Facebook } from 'components/base/icons/socials/Facebook';
+import { default as Instagram } from 'components/base/icons/socials/Instagram';
+import { default as LinkedIn } from 'components/base/icons/socials/LinkedIn';
+import { default as Twitter } from 'components/base/icons/socials/Twitter';
+import { default as Xing } from 'components/base/icons/socials/Xing';
+import { default as Youtube } from 'components/base/icons/socials/Youtube';
+
+/** Media **/
+import { default as Computer } from 'components/base/icons/Computer';
+import { default as Mail } from 'components/base/icons/Mail';
+import { default as Phone } from 'components/base/icons/Phone';
+import { default as Play } from 'components/base/icons/Play';
+
+/** Menu **/
+import { default as MenuBurger } from 'components/base/icons/MenuBurger';
+import { default as Language } from 'components/base/icons/Language';
+import { default as Cross } from 'components/base/icons/Cross';
+import { default as CrossSmall } from 'components/base/icons/CrossSmall';
+
+/** Mixed **/
+import { default as Check } from 'components/base/icons/Check';
+import { default as Clock } from 'components/base/icons/Clock';
+import { default as ExclamationMark } from 'components/base/icons/ExclamationMark';
+import { default as FlyTo } from 'components/base/icons/FlyTo';
+import { default as LocationPin } from 'components/base/icons/LocationPin';
+import { default as Route } from 'components/base/icons/Route';
+import { default as Star } from 'components/base/icons/Star';
+import { default as Minus } from 'components/base/icons/Minus';
+import { default as Plus } from 'components/base/icons/Plus';
 
 export default {
     title: 'Base/Icons',
     subcomponents: {
+        ArrowDown,
+        ArrowUp,
         ArrowRight,
         ArrowRightGhost,
+        ArrowLeft,
         ArrowLeftGhost,
         ArrowLeftRight,
-        AngleRight,
+        AngleUp,
+        AngleDown,
         AngleLeft,
-        ArrowDown,
-        Cross,
-        CrossSmall,
-        Magnifier,
-        MenuBurger,
-        Play,
-        Star,
-        StarGhost,
-        Facebook,
-        Instagram,
-        Twitter,
-        LinkedIn,
-        Youtube,
-        Phone,
-        Mail,
-        FlyTo,
-        Route,
-        External,
-        ExclamationMark,
-        Document,
+        AngleRight,
         Excel,
         Image,
         Pdf,
         PowerPoint,
         Word,
         Zip,
+        External,
+        Facebook,
+        Instagram,
+        LinkedIn,
+        Twitter,
+        Xing,
+        Youtube,
+        Computer,
+        Mail,
+        Phone,
+        Play,
+        MenuBurger,
+        Language,
+        Cross,
+        CrossSmall,
+        Check,
+        Clock,
+        ExclamationMark,
+        FlyTo,
         LocationPin,
-        LocationPinBordered: LocationPin,
-        Map,
+        Minus,
+        Plus,
+        Route,
+        Star,
     },
     decorators: [
         (Story) => (
@@ -90,86 +112,38 @@ export default {
     },
 } as Meta;
 
+export const IconArrowDown: Story = () => <ArrowDown />;
+IconArrowDown.storyName = 'Arrow Down';
+
+export const IconArrowUp: Story = () => <ArrowUp />;
+IconArrowUp.storyName = 'Arrow Up';
+
 export const IconArrowRight: Story = () => <ArrowRight />;
-IconArrowRight.storyName = 'Arrow right';
+IconArrowRight.storyName = 'Arrow Right';
 
 export const IconArrowRightGhost: Story = () => <ArrowRightGhost />;
-IconArrowRightGhost.storyName = 'Arrow right ghost';
+IconArrowRightGhost.storyName = 'Arrow Right Ghost';
+
+export const IconArrowLeft: Story = () => <ArrowLeft />;
+IconArrowLeft.storyName = 'Arrow Left';
 
 export const IconArrowLeftGhost: Story = () => <ArrowLeftGhost />;
-IconArrowLeftGhost.storyName = 'Arrow left ghost';
+IconArrowLeftGhost.storyName = 'Arrow Left Ghost';
 
 export const IconArrowLeftRight: Story = () => <ArrowLeftRight />;
-IconArrowLeftRight.storyName = 'Arrow left right';
+IconArrowLeftRight.storyName = 'Arrow Left Right';
+
+export const IconAngleDown: Story = () => <AngleDown />;
+IconAngleDown.storyName = 'Angle Down';
+
+export const IconAngleUp: Story = () => <AngleUp />;
+IconAngleUp.storyName = 'Angle Up';
 
 export const IconAngleRight: Story = () => <AngleRight />;
-IconAngleRight.storyName = 'Angle right';
+IconAngleRight.storyName = 'Angle Right';
 
 export const IconAngleLeft: Story = () => <AngleLeft />;
-IconAngleLeft.storyName = 'Angle left';
-
-export const IconArrowDown: Story = () => <ArrowDown />;
-IconArrowDown.storyName = 'Arrow down';
-
-export const IconCross: Story = () => <Cross />;
-IconCross.storyName = 'Cross';
-
-export const IconCrossSmall: Story = () => <CrossSmall />;
-IconCrossSmall.storyName = 'Cross small';
-
-export const IconMagnifier: Story = () => <Magnifier />;
-IconMagnifier.storyName = 'Magnifier';
-
-export const IconMenuBurger: Story = () => <MenuBurger />;
-IconMenuBurger.storyName = 'MenuBurger';
-
-export const IconPlay: Story = () => <Play />;
-IconPlay.storyName = 'Play';
-
-export const IconStar: Story = () => <Star />;
-IconStar.storyName = 'Star';
-
-export const IconStarGhost: Story = () => <StarGhost />;
-IconStarGhost.storyName = 'Star ghost';
-
-export const IconPhone: Story = () => <Phone />;
-IconPhone.storyName = 'Phone';
-
-export const IconMail: Story = () => <Mail />;
-IconMail.storyName = 'Mail';
-
-export const IconRoute: Story = () => <Route />;
-IconRoute.storyName = 'Routing';
-
-export const IconFlyTo: Story = () => <FlyTo />;
-IconFlyTo.storyName = 'Fly to';
-
-export const IconExternal: Story = () => <External />;
-IconExternal.storyName = 'External';
-
-export const IconFacebook: Story = () => <Facebook />;
-IconFacebook.storyName = 'Facebook logo';
-
-export const IconInstagram: Story = () => <Instagram />;
-IconInstagram.storyName = 'Instagram logo';
-
-export const IconLinkedIn: Story = () => <LinkedIn />;
-IconLinkedIn.storyName = 'LinkedIn logo';
-
-export const IconTwitter: Story = () => <Twitter />;
-IconTwitter.storyName = 'Twitter logo';
-
-export const IconXing: Story = () => <Xing />;
-IconXing.storyName = 'Xing logo';
-
-export const IconYoutube: Story = () => <Youtube />;
-IconYoutube.storyName = 'Youtube logo';
-
-export const IconExclamationMark: Story = () => <ExclamationMark />;
-IconExclamationMark.storyName = 'ExclamationMark';
-
-export const IconDocument: Story = () => <Document />;
-IconDocument.storyName = 'Document';
+IconAngleLeft.storyName = 'Angle Left';
 
 export const IconExcel: Story = () => <Excel />;
 IconExcel.storyName = 'Excel';
@@ -189,8 +163,56 @@ IconWord.storyName = 'Word';
 export const IconZip: Story = () => <Zip />;
 IconZip.storyName = 'Zip';
 
+export const IconExternal: Story = () => <External />;
+IconExternal.storyName = 'External';
+
+export const IconComputer: Story = () => <Computer />;
+IconComputer.storyName = 'Computer';
+
+export const IconMail: Story = () => <Mail />;
+IconMail.storyName = 'Mail';
+
+export const IconPhone: Story = () => <Phone />;
+IconPhone.storyName = 'Phone';
+
+export const IconPlay: Story = () => <Play />;
+IconPlay.storyName = 'Play';
+
+export const IconMenuBurger: Story = () => <MenuBurger />;
+IconMenuBurger.storyName = 'MenuBurger';
+
+export const IconLanguage: Story = () => <Language />;
+IconLanguage.storyName = 'Language';
+
+export const IconCross: Story = () => <Cross />;
+IconCross.storyName = 'Cross';
+
+export const IconCrossSmall: Story = () => <CrossSmall />;
+IconCrossSmall.storyName = 'CrossSmall';
+
+export const IconCheck: Story = () => <Check />;
+IconCheck.storyName = 'Check';
+
+export const IconClock: Story = () => <Clock />;
+IconClock.storyName = 'Clock';
+
+export const IconExclamationMark: Story = () => <ExclamationMark />;
+IconExclamationMark.storyName = 'ExclamationMark';
+
+export const IconFlyTo: Story = () => <FlyTo />;
+IconFlyTo.storyName = 'FlyTo';
+
 export const IconLocationPin: Story = () => <LocationPin />;
 IconLocationPin.storyName = 'LocationPin';
 
-export const IconMap: Story = () => <Map />;
-IconMap.storyName = 'Map';
+export const IconRoute: Story = () => <Route />;
+IconRoute.storyName = 'Route';
+
+export const IconStar: Story = () => <Star />;
+IconStar.storyName = 'Star';
+
+export const IconMinus: Story = () => <Minus />;
+IconMinus.storyName = 'Minus';
+
+export const IconPlus: Story = () => <Plus />;
+IconPlus.storyName = 'Plus';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NavBlock from 'components/blocks/NavBlock';
-import Magnifier from 'components/base/icons/Magnifier';
+import Star from 'components/base/icons/Star';
 import ArrowRight from 'components/base/icons/ArrowRight';
 
 export default {
@@ -49,7 +49,7 @@ export const WithCustomIcon: Story = () => (
         title="Lorem Ipsum"
         link={{ href: '#0' }}
         text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa omnis, ad odio sint qui necessitatibus alias est culpa eaque fuga nesciunt laboriosam veritatis exercitationem doloribus nisi, quia corporis fugit? Reprehenderit."
-        customIcon={() => <Magnifier />}
+        customIcon={() => <Star />}
     />
 );
 
@@ -58,7 +58,7 @@ export const WithCustomTitleIcon: Story = () => (
         title="Lorem Ipsum"
         link={{ href: '#0' }}
         text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa omnis, ad odio sint qui necessitatibus alias est culpa eaque fuga nesciunt laboriosam veritatis exercitationem doloribus nisi, quia corporis fugit? Reprehenderit."
-        customIcon={() => <Magnifier />}
+        customIcon={() => <Star />}
         customTitleIcon={() => <ArrowRight />}
     />
 );

@@ -15,10 +15,10 @@ import { mq } from 'utils/styles';
 import MenuHeader from 'components/sections/navigation/partials/MenuHeader';
 import MenuFooter from 'components/sections/navigation/partials/MenuFooter';
 
-import FacebookIcon from 'components/base/icons/socials/Facebook';
-import LinkedInIcon from 'components/base/icons/socials/LinkedIn';
-import XingIcon from 'components/base/icons/socials/Xing';
-import TwitterIcon from 'components/base/icons/socials/Twitter';
+import Facebook from 'components/base/icons/socials/Facebook';
+import LinkedIn from 'components/base/icons/socials/LinkedIn';
+import Xing from 'components/base/icons/socials/Xing';
+import Twitter from 'components/base/icons/socials/Twitter';
 
 const NavBarButton = styled.span`
     display: inline-block;
@@ -394,10 +394,10 @@ export const WithExampleContent: Story = () => (
                         { label: 'FR', link: { href: '/fr' } },
                     ]}
                     socials={[
-                        { href: '#', icon: () => <FacebookIcon /> },
-                        { href: '#', icon: () => <LinkedInIcon /> },
-                        { href: '#', icon: () => <XingIcon /> },
-                        { href: '#', icon: () => <TwitterIcon /> },
+                        { href: '#', icon: () => <Facebook /> },
+                        { href: '#', icon: () => <LinkedIn /> },
+                        { href: '#', icon: () => <Xing /> },
+                        { href: '#', icon: () => <Twitter /> },
                     ]}
                 />
             ),

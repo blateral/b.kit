@@ -4,10 +4,10 @@ import { Meta, Story } from '@storybook/react';
 
 import SocialList from 'components/blocks/SocialList';
 
-import FacebookIcon from 'components/base/icons/socials/Facebook';
-import LinkedInIcon from 'components/base/icons/socials/LinkedIn';
-import XingIcon from 'components/base/icons/socials/Xing';
-import TwitterIcon from 'components/base/icons/socials/Twitter';
+import Facebook from 'components/base/icons/socials/Facebook';
+import LinkedIn from 'components/base/icons/socials/LinkedIn';
+import Xing from 'components/base/icons/socials/Xing';
+import Twitter from 'components/base/icons/socials/Twitter';
 
 export default {
     title: 'Blocks/SocialList',
@@ -22,10 +22,10 @@ export default {
 export const Default: Story = () => (
     <SocialList
         items={[
-            { href: '#', title: 'Facebook', icon: () => <FacebookIcon /> },
-            { href: '#', title: 'LinkedIn', icon: () => <LinkedInIcon /> },
-            { href: '#', title: 'Xing', icon: () => <XingIcon /> },
-            { href: '#', title: 'Twitter', icon: () => <TwitterIcon /> },
+            { href: '#', title: 'Facebook', icon: () => <Facebook /> },
+            { href: '#', title: 'LinkedIn', icon: () => <LinkedIn /> },
+            { href: '#', title: 'Xing', icon: () => <Xing /> },
+            { href: '#', title: 'Twitter', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -34,10 +34,10 @@ export const WithTitle: Story = () => (
     <SocialList
         title="Follow us"
         items={[
-            { href: '#', title: 'Facebook', icon: () => <FacebookIcon /> },
-            { href: '#', title: 'LinkedIn', icon: () => <LinkedInIcon /> },
-            { href: '#', title: 'Xing', icon: () => <XingIcon /> },
-            { href: '#', title: 'Twitter', icon: () => <TwitterIcon /> },
+            { href: '#', title: 'Facebook', icon: () => <Facebook /> },
+            { href: '#', title: 'LinkedIn', icon: () => <LinkedIn /> },
+            { href: '#', title: 'Xing', icon: () => <Xing /> },
+            { href: '#', title: 'Twitter', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -47,10 +47,10 @@ export const Inverted: Story = () => (
         isInverted
         title="Follow us"
         items={[
-            { href: '#', title: 'Facebook', icon: () => <FacebookIcon /> },
-            { href: '#', title: 'LinkedIn', icon: () => <LinkedInIcon /> },
-            { href: '#', title: 'Xing', icon: () => <XingIcon /> },
-            { href: '#', title: 'Twitter', icon: () => <TwitterIcon /> },
+            { href: '#', title: 'Facebook', icon: () => <Facebook /> },
+            { href: '#', title: 'LinkedIn', icon: () => <LinkedIn /> },
+            { href: '#', title: 'Xing', icon: () => <Xing /> },
+            { href: '#', title: 'Twitter', icon: () => <Twitter /> },
         ]}
     />
 );
