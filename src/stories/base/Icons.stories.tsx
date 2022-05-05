@@ -1,56 +1,56 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 /** Arrows **/
-import { default as ArrowUp } from 'components/base/icons/ArrowUp';
-import { default as ArrowDown } from 'components/base/icons/ArrowDown';
-import { default as ArrowRight } from 'components/base/icons/ArrowRight';
-import { default as ArrowRightGhost } from 'components/base/icons/ArrowRightGhost';
-import { default as ArrowLeft } from 'components/base/icons/ArrowLeft';
-import { default as ArrowLeftGhost } from 'components/base/icons/ArrowLeftGhost';
-import { default as ArrowLeftRight } from 'components/base/icons/ArrowLeftRight';
-import { default as AngleUp } from 'components/base/icons/AngleUp';
-import { default as AngleDown } from 'components/base/icons/AngleDown';
-import { default as AngleLeft } from 'components/base/icons/AngleLeft';
-import { default as AngleRight } from 'components/base/icons/AngleRight';
+import ArrowUp from 'components/base/icons/ArrowUp';
+import ArrowDown from 'components/base/icons/ArrowDown';
+import ArrowRight from 'components/base/icons/ArrowRight';
+import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
+import ArrowLeft from 'components/base/icons/ArrowLeft';
+import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
+import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
+import AngleUp from 'components/base/icons/AngleUp';
+import AngleDown from 'components/base/icons/AngleDown';
+import AngleLeft from 'components/base/icons/AngleLeft';
+import AngleRight from 'components/base/icons/AngleRight';
 
 /** Files **/
-import { default as Excel } from 'components/base/icons/files/Excel';
-import { default as Image } from 'components/base/icons/files/Image';
-import { default as Pdf } from 'components/base/icons/files/Pdf';
-import { default as PowerPoint } from 'components/base/icons/files/PowerPoint';
-import { default as Word } from 'components/base/icons/files/Word';
-import { default as Zip } from 'components/base/icons/files/Zip';
-import { default as External } from 'components/base/icons/External';
+import Excel from 'components/base/icons/files/Excel';
+import Image from 'components/base/icons/files/Image';
+import Pdf from 'components/base/icons/files/Pdf';
+import PowerPoint from 'components/base/icons/files/PowerPoint';
+import Word from 'components/base/icons/files/Word';
+import Zip from 'components/base/icons/files/Zip';
+import External from 'components/base/icons/External';
 
 /** Socials **/
-import { default as Facebook } from 'components/base/icons/socials/Facebook';
-import { default as Instagram } from 'components/base/icons/socials/Instagram';
-import { default as LinkedIn } from 'components/base/icons/socials/LinkedIn';
-import { default as Twitter } from 'components/base/icons/socials/Twitter';
-import { default as Xing } from 'components/base/icons/socials/Xing';
-import { default as Youtube } from 'components/base/icons/socials/Youtube';
+import Facebook from 'components/base/icons/socials/Facebook';
+import Instagram from 'components/base/icons/socials/Instagram';
+import LinkedIn from 'components/base/icons/socials/LinkedIn';
+import Twitter from 'components/base/icons/socials/Twitter';
+import Xing from 'components/base/icons/socials/Xing';
+import Youtube from 'components/base/icons/socials/Youtube';
 
 /** Media **/
-import { default as Mail } from 'components/base/icons/Mail';
-import { default as Phone } from 'components/base/icons/Phone';
-import { default as Play } from 'components/base/icons/Play';
+import Mail from 'components/base/icons/Mail';
+import Phone from 'components/base/icons/Phone';
+import Play from 'components/base/icons/Play';
 
 /** Menu **/
-import { default as MenuBurger } from 'components/base/icons/MenuBurger';
-import { default as Language } from 'components/base/icons/Language';
-import { default as Cross } from 'components/base/icons/Cross';
-import { default as CrossSmall } from 'components/base/icons/CrossSmall';
+import MenuBurger from 'components/base/icons/MenuBurger';
+import Language from 'components/base/icons/Language';
+import Cross from 'components/base/icons/Cross';
+import CrossSmall from 'components/base/icons/CrossSmall';
 
 /** Mixed **/
-import { default as Check } from 'components/base/icons/Check';
-import { default as Clock } from 'components/base/icons/Clock';
-import { default as Info } from 'components/base/icons/Info';
-import { default as FlyTo } from 'components/base/icons/FlyTo';
-import { default as LocationPin } from 'components/base/icons/LocationPin';
-import { default as Route } from 'components/base/icons/Route';
-import { default as Star } from 'components/base/icons/Star';
-import { default as Minus } from 'components/base/icons/Minus';
-import { default as Plus } from 'components/base/icons/Plus';
+import Check from 'components/base/icons/Check';
+import Clock from 'components/base/icons/Clock';
+import Info from 'components/base/icons/Info';
+import FlyTo from 'components/base/icons/FlyTo';
+import LocationPin from 'components/base/icons/LocationPin';
+import Route from 'components/base/icons/Route';
+import Star from 'components/base/icons/Star';
+import Minus from 'components/base/icons/Minus';
+import Plus from 'components/base/icons/Plus';
 
 export default {
     title: 'Base/Icons',
