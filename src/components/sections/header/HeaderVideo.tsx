@@ -1,24 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { useState, useEffect } from 'react';
 import Image from 'components/blocks/Image';
 import { useMediaQuery } from 'utils/useMediaQuery';
-
-interface HeaderVideoImageProps {
-    small: string;
-    medium?: string;
-    semilarge?: string;
-    large?: string;
-    xlarge?: string;
-    webp?: {
-        small: string;
-        medium?: string;
-        semilarge?: string;
-        large?: string;
-        xlarge?: string;
-    };
-}
+import { HeaderImage } from './Header';
 
 const PosterView = styled.div`
     position: relative;
@@ -64,12 +50,14 @@ const AutoplayVideo = styled.video<{ isVisible?: boolean }>`
 type HeaderVideoMq = 'small' | 'medium' | 'semilarge' | 'large' | 'xlarge';
 
 const HeaderVideo: React.FC<{
+    isInverted?: boolean;
     loadOnMobile?: boolean;
-    placeholderImg?: HeaderVideoImageProps;
+    placeholderImg?: HeaderImage;
     videoUrl?: string;
     className?: string;
     children?: React.ReactNode;
 }> = ({
+    isInverted,
     loadOnMobile = true,
     placeholderImg,
     videoUrl,
@@ -95,7 +83,12 @@ const HeaderVideo: React.FC<{
     return (
         <PosterView className={className}>
             {placeholderImg?.small && !isLoaded && (
-                <PlaceholderImg coverSpace {...placeholderImg} />
+                <PlaceholderImg
+                    {...placeholderImg}
+                    coverSpace
+                    ratios={undefined}
+                    isInverted={isInverted}
+                />
             )}
             {videoUrl && isVideoAllowed && (
                 <AutoplayVideo

@@ -1,368 +1,471 @@
-import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC } from 'react';
+import styled, { css } from 'styled-components';
 
 import { CalloutTag } from 'components/typography/Callout';
-import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
-import Grid from 'components/base/Grid';
-import Wrapper from 'components/base/Wrapper';
-import HeaderKenBurns, { HeaderKenBurnsImageProps } from './HeaderKenBurns';
+import { mq, spacings, getGlobals as global, withRange } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import HeaderKenBurns from './HeaderKenBurns';
 import HeaderPoster from './HeaderPoster';
 import Actions from 'components/blocks/Actions';
-import Callout from 'components/typography/Callout';
 import HeaderVideo from './HeaderVideo';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
-
-interface HeaderImageProps {
-    small: string;
-    medium?: string;
-    semilarge?: string;
-    large?: string;
-    xlarge?: string;
-    webp?: {
-        small: string;
-        medium?: string;
-        semilarge?: string;
-        large?: string;
-        xlarge?: string;
-    };
-}
-
-const View = styled.div`
-    position: relative;
-`;
-
-const HeaderWrapper = styled(Wrapper)`
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-`;
-
-const PosterContent = styled.div`
-    position: relative;
-    display: none;
-    width: 100%;
-    margin: auto;
-    z-index: 3;
-    text-align: center;
-    padding: 0 ${spacings.spacer}px;
-
-    @media ${mq.semilarge} {
-        display: block;
-        max-width: none;
-        margin-left: 0;
-        text-align: left;
-        padding-left: ${(1 / 28) * 100}%;
-    }
-
-    @media ${mq.xlarge} {
-        padding-left: ${(1 / 28) * spacings.wrapper}px;
-    }
-`;
-
-const PosterContentMobile = styled(PosterContent)`
-    display: block;
-    padding-top: ${spacings.spacer * 2}px;
-    ${withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-bottom')}
-
-    @media ${mq.semilarge} {
-        display: none;
-    }
-`;
-
-const Badge = styled.div<{ showOnMobile?: boolean }>`
-    display: ${({ showOnMobile }) => (showOnMobile ? 'block' : 'none')};
-    position: relative;
-    height: 234px;
-    width: 234px;
-    margin-left: auto;
-    margin-right: ${spacings.spacer}px;
-    margin-top: -173px;
-    z-index: 3;
-
-    @media ${mq.semilarge} {
-        display: block;
-        margin-right: ${spacings.spacer * 4}px;
-    }
-
-    @media ${mq.xlarge} {
-        width: 392px;
-        height: 392px;
-        margin-left: 0;
-        margin-top: -300px;
-
-        right: -50%;
-        transform: translate(
-            ${spacings.wrapper / 2 - (392 + spacings.spacer * 3)}px
-        );
-    }
-`;
+import Section, { mapToBgMode } from 'components/base/Section';
+import { ImageProps } from 'components/blocks/Image';
+import {
+    generateNavbarIdent as genIdent,
+    getFullNavbarHeights as getNavHeight,
+} from '../navigation/Navigation';
 
 const Poster: FC<{
+    isInverted?: boolean;
     videoUrl?: string;
-    images?: HeaderImageProps[];
+    images?: Omit<ImageProps, 'ratios' | 'coverSpace'>[];
     kenBurnsZoom?: number;
     kenBurnsZoomPoint?: [number, number];
     kenBurnsInterval?: number;
+    onImageChange?: (image?: Omit<ImageProps, 'ratios' | 'coverSpace'>) => void;
     className?: string;
     children?: React.ReactNode;
 }> = ({
+    isInverted,
     videoUrl,
     images,
     kenBurnsZoom,
     kenBurnsZoomPoint,
     kenBurnsInterval,
+    onImageChange,
     className,
     children,
 }) => {
-    if (!videoUrl) {
-        if (!images || images.length === 0) return <div>{children}</div>;
-        else if (images.length === 1)
+    switch (true) {
+        case !!videoUrl: {
             return (
-                <HeaderPoster bgImage={images[0]} className={className}>
+                <HeaderVideo
+                    isInverted={isInverted}
+                    videoUrl={videoUrl}
+                    placeholderImg={images?.[0]}
+                    className={className}
+                >
                     {children}
-                </HeaderPoster>
+                </HeaderVideo>
             );
-        else
+        }
+
+        case images && images.length > 1: {
             return (
                 <HeaderKenBurns
-                    images={images.map((img) => {
-                        return {
-                            ...img,
-                        } as HeaderKenBurnsImageProps;
-                    })}
+                    images={images || []}
                     zoom={kenBurnsZoom}
                     zoomPoint={kenBurnsZoomPoint}
                     interval={kenBurnsInterval}
+                    onImageChange={onImageChange}
                     className={className}
                 >
                     {children}
                 </HeaderKenBurns>
             );
-    } else {
-        return (
-            <HeaderVideo
-                videoUrl={videoUrl}
-                placeholderImg={images?.[0]}
-                className={className}
-            >
-                {children}
-            </HeaderVideo>
-        );
+        }
+
+        // single image
+        case images && images.length === 1: {
+            return (
+                <HeaderPoster
+                    isInverted={isInverted}
+                    bgImage={images?.[0]}
+                    className={className}
+                >
+                    {children}
+                </HeaderPoster>
+            );
+        }
+
+        default: {
+            return <div>{children}</div>;
+        }
     }
 };
 
-const StyledPoster = styled(Poster)<{
-    gradientBottom?: string;
-    size?: string;
+const HeaderSection = styled(Section)<{
+    height?: string;
 }>`
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-    height: ${({ size }) => size && size};
-    max-height: 1100px;
 
-    ${withRange([spacings.spacer * 7, spacings.spacer * 8], 'padding-top')};
-    ${withRange(
-        [spacings.spacer * 2, spacings.spacer * 4.5],
-        'padding-bottom'
-    )};
+    // Doing some crazy shit to calculate curent navbar height in CSS
+    ${({ theme, height }) => {
+        // navbar main only
+        const mainIdent = genIdent({
+            pageFlow: 'beforeContent',
+            hasMain: true,
+        });
 
-    @media ${mq.semilarge} {
-        &:after {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: ${({ gradientBottom }) =>
-                gradientBottom || undefined};
-            pointer-events: none;
-            z-index: 2;
+        // navbar main and top
+        const mainTopIdent = genIdent({
+            pageFlow: 'beforeContent',
+            hasMain: true,
+            hasTop: true,
+        });
 
-            *[data-type='overflow'] ~ ${View} & {
-                background-image: ${({ gradientBottom }) =>
-                    gradientBottom || undefined};
+        // navbar main and bottom
+        const mainBottomIdent = genIdent({
+            pageFlow: 'beforeContent',
+            hasMain: true,
+            hasBottom: true,
+        });
+
+        // full navbar with all bars
+        const fullIdent = genIdent({
+            pageFlow: 'beforeContent',
+            hasTop: true,
+            hasMain: true,
+            hasBottom: true,
+        });
+
+        const navMainHeight = getNavHeight(theme, mainIdent).large;
+        const navMainTopHeight = getNavHeight(theme, mainTopIdent).large;
+        const navMainBottomHeight = getNavHeight(theme, mainBottomIdent).large;
+        const navFullHeight = getNavHeight(theme, fullIdent).large;
+
+        const mapToSelector = (idents: string[]) => {
+            return idents.map((id) => `[data-navbar-ident*='${id}']`).join('');
+        };
+
+        const refHeight = height || '100vh';
+
+        return css`
+            & > ${StyledPoster} {
+                min-height: 500px;
+                height: ${refHeight};
             }
+
+            // with main navbar element
+            *${mapToSelector(mainIdent.split('-'))} + & {
+                & > ${StyledPoster} {
+                    height: calc(${refHeight} - ${navMainHeight[0]}px);
+                }
+            }
+
+            // with main and top navbar elements
+            *${mapToSelector(mainTopIdent.split('-'))} + & {
+                & > ${StyledPoster} {
+                    height: calc(${refHeight} - ${navMainTopHeight[0]}px);
+                }
+            }
+
+            // with main and bottom navbar elements
+            *${mapToSelector(mainBottomIdent.split('-'))} + & {
+                & > ${StyledPoster} {
+                    height: calc(${refHeight} - ${navMainBottomHeight[0]}px);
+                }
+            }
+
+            // with all navbar elements
+            *${mapToSelector(fullIdent.split('-'))} + & {
+                & > ${StyledPoster} {
+                    height: calc(${refHeight} - ${navFullHeight[0]}px);
+                }
+            }
+
+            @media ${mq.semilarge} {
+                // with main navbar element
+                *${mapToSelector(mainIdent.split('-'))} + & {
+                    & > ${StyledPoster} {
+                        height: calc(${refHeight} - ${navMainHeight[1]}px);
+                    }
+                }
+
+                // with main and top navbar elements
+                *${mapToSelector(mainTopIdent.split('-'))} + & {
+                    & > ${StyledPoster} {
+                        height: calc(${refHeight} - ${navMainTopHeight[1]}px);
+                    }
+                }
+
+                // with main and bottom navbar elements
+                *${mapToSelector(mainBottomIdent.split('-'))} + & {
+                    & > ${StyledPoster} {
+                        height: calc(
+                            ${refHeight} - ${navMainBottomHeight[1]}px
+                        );
+                    }
+                }
+
+                // with all navbar elements
+                *${mapToSelector(fullIdent.split('-'))} + & {
+                    & > ${StyledPoster} {
+                        height: calc(${refHeight} - ${navFullHeight[1]}px);
+                    }
+                }
+            }
+        `;
+    }}
+`;
+
+const StyledPoster = styled(Poster)`
+    position: relative;
+    height: 100vh;
+    max-height: 1300px;
+    max-width: ${spacings.wrapperLarge}px;
+    margin: 0 auto;
+`;
+
+const Overlay = styled.div<{ bgValue?: string }>`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: ${({ bgValue }) => bgValue && bgValue};
+    z-index: 1;
+`;
+
+const Content = styled.div<{ isCentered?: boolean }>`
+    display: none;
+    max-width: ${spacings.wrapper}px;
+    margin: 0 auto;
+
+    @media ${mq.medium} {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: ${({ isCentered }) => isCentered && 'center'};
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: ${spacings.spacer * 2}px;
+        z-index: 2;
+
+        & > * {
+            margin-top: ${spacings.spacer}px;
+            max-width: 880px;
         }
     }
-
-    /* required to align items at flex-end in ie11 */
-    &:before {
-        content: '';
-        min-height: 1px; // before: 200px
-        display: block;
-        flex: 1 0 0px;
-    }
 `;
 
-const StyledActions = styled(Actions)`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')};
-
-    @media ${mq.semilarge} {
-        max-width: 600px;
-    }
-`;
-
-const IntroBlock = styled.div<{ noTitle?: boolean }>`
-    margin-top: ${({ noTitle }) => noTitle && spacings.spacer}px;
+const ContentMobile = styled.div`
+    padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
+    ${({ theme }) => {
+        const padding = global(theme).sections.seperation.padding.default;
+        return withRange(padding, 'padding-bottom');
+    }};
 
     & > * + * {
         margin-top: ${spacings.spacer}px;
     }
+
+    @media ${mq.medium} {
+        display: none;
+    }
 `;
 
+const Title = styled(Heading)<{ isCentered?: boolean }>`
+    text-align: ${({ isCentered }) => isCentered && 'center'};
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+`;
+
+const Text = styled(Copy)<{ isCentered?: boolean }>`
+    text-align: ${({ isCentered }) => isCentered && 'center'};
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* number of lines to show */
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+`;
+
+const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
+    @media ${mq.medium} {
+        display: block;
+        text-align: ${({ isCentered }) => isCentered && 'center'};
+    }
+`;
+
+export type HeaderSize = 'full' | 'small';
+export type HeaderImage = Omit<ImageProps, 'ratios' | 'coverSpace'> & {
+    zoomPoint?: [number, number];
+    zoom?: number;
+};
+
 const Header: FC<{
-    size?: 'full' | 'small';
-    /** Optional explicit CSS height value */
-    height?: string;
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Header image height size (full=100vh, small=80vh) */
+    size?: HeaderSize;
+
+    /** Callback to customnize size heights */
+    height?: (size: HeaderSize) => string;
+
+    /** Center content */
+    isCentered?: boolean;
+
+    /** Header title on image */
     title?: string;
+
+    /** Header title HTML tag type (h2, h3, h4...) */
     titleAs?: CalloutTag;
 
-    intro?: {
-        text?: string;
-        title?: string;
-    };
+    /** Header text on image */
+    text?: string;
 
-    primaryCta?: (isInverted?: boolean) => React.ReactNode;
-    secondaryCta?: (isInverted?: boolean) => React.ReactNode;
+    /** Function to inject custom primary button */
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Function to inject custom secondary button */
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Array of image settings */
+    images?: HeaderImage[];
+
+    /** CSS value of custom image overlay to help seperate the text from the background */
+    customImgOverlay?: string;
+
+    /** URL to header video. First image in images array can be used as fallback */
     videoUrl?: string;
-    images?: HeaderImageProps[];
-    customBottomGradient?: string;
-    badge?: {
-        content: React.ReactNode;
-        showOnMobile?: boolean;
-    };
+
+    /** Ken burns effect zoom */
     kenBurnsZoom?: number;
-    /** Zoom point of ken burns effect. x and y values in the range from 0 - 1 */
+
+    /** Global zoom point for all images with ken burns effect. x and y values in the range from 0 - 1 */
     kenBurnsZoomPoint?: [number, number];
+
+    /** Time between each image in ken burns mode */
     kenBurnsInterval?: number;
+
+    /** Callback called on image change */
+    onImageChange?: (image?: Omit<ImageProps, 'ratios' | 'coverSpace'>) => void;
+
+    /** Section background */
+    bgMode?: 'full' | 'inverted';
 }> = ({
+    anchorId,
     size = 'full',
     height,
+    isCentered,
     title,
     titleAs,
-    intro,
-    primaryCta,
-    secondaryCta,
+    text,
+    primaryAction,
+    secondaryAction,
     videoUrl,
     images,
-    customBottomGradient,
-    badge,
+    customImgOverlay,
     kenBurnsZoom = 1.08,
     kenBurnsZoomPoint = [0.5, 0.5],
     kenBurnsInterval = 10000,
+    onImageChange,
+    bgMode,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { globals, colors } = useLibTheme();
+    const isInverted = bgMode === 'inverted';
+    const hasContent = title || text || primaryAction || secondaryAction;
 
-    const bottomGradient =
-        title || primaryCta || secondaryCta
-            ? customBottomGradient || global(theme).sections.imageTextGradient
-            : undefined;
+    const posterHeight = size === 'full' ? '100vh' : '80vh';
+    const overlay = hasContent
+        ? customImgOverlay || globals.sections.imageTextGradient
+        : undefined;
 
     return (
-        <View>
-            <HeaderWrapper clampWidth="large">
-                <StyledPoster
-                    videoUrl={videoUrl}
-                    images={images}
-                    gradientBottom={bottomGradient}
-                    size={
-                        !height ? (size === 'small' ? '80vh' : '100vh') : height
-                    }
-                    kenBurnsZoom={kenBurnsZoom}
-                    kenBurnsZoomPoint={kenBurnsZoomPoint}
-                    kenBurnsInterval={kenBurnsInterval}
-                >
-                    <Wrapper>
-                        <PosterContent>
-                            <Grid.Row gutter={0}>
-                                <Grid.Col
-                                    span={26 / 28}
-                                    large={{ span: 20 / 28 }}
-                                    xlarge={{ span: 15 / 28 }}
-                                >
-                                    {!intro?.title && title && (
-                                        <Callout
-                                            size="medium"
-                                            renderAs={titleAs}
-                                            hasShadow
-                                            textColor="#fff"
-                                            innerHTML={title}
-                                        />
-                                    )}
-                                    {/** #TODO: Title und Intro Logik zusammen mit Markus abklären (siehe auch b.kit-prismic slice)*/}
-                                    {intro && intro.title && (
-                                        <IntroBlock
-                                            noTitle={!intro.title && !!title}
-                                        >
-                                            {intro.title && (
-                                                <Heading
-                                                    renderAs="h1"
-                                                    size="heading-1"
-                                                    hasShadow
-                                                    textColor="#fff"
-                                                >
-                                                    {intro.title}
-                                                </Heading>
-                                            )}
-                                            {intro.text && (
-                                                <Copy
-                                                    textColor="#fff"
-                                                    innerHTML={intro.text}
-                                                />
-                                            )}
-                                        </IntroBlock>
-                                    )}
-                                    {(primaryCta || secondaryCta) && (
-                                        <StyledActions
-                                            primary={
-                                                primaryCta && primaryCta(true)
-                                            }
-                                            secondary={
-                                                secondaryCta &&
-                                                secondaryCta(true)
-                                            }
-                                        />
-                                    )}
-                                </Grid.Col>
-                            </Grid.Row>
-                        </PosterContent>
-                    </Wrapper>
-                </StyledPoster>
-                {badge && badge.content && (
-                    <Badge showOnMobile={badge.showOnMobile}>
-                        {badge.content}
-                    </Badge>
+        <HeaderSection
+            anchorId={anchorId}
+            // bgColor="image"
+            height={height ? height(size) : posterHeight}
+            bgColor={
+                isInverted
+                    ? colors.sectionBg.dark
+                    : bgMode
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
+            }
+            bgMode={mapToBgMode(bgMode, true)}
+        >
+            <StyledPoster
+                isInverted={isInverted}
+                images={images}
+                videoUrl={videoUrl}
+                kenBurnsInterval={kenBurnsInterval}
+                kenBurnsZoom={kenBurnsZoom}
+                kenBurnsZoomPoint={kenBurnsZoomPoint}
+                onImageChange={onImageChange}
+            >
+                {hasContent && (
+                    <React.Fragment>
+                        <Overlay bgValue={overlay} />
+                        <Content isCentered={isCentered}>
+                            {title && (
+                                <Title
+                                    isInverted
+                                    size="heading-1"
+                                    isCentered={isCentered}
+                                    renderAs={titleAs}
+                                    innerHTML={title}
+                                />
+                            )}
+                            {text && (
+                                <Text
+                                    isInverted
+                                    isCentered={isCentered}
+                                    type="copy-b"
+                                    size="big"
+                                    innerHTML={text}
+                                />
+                            )}
+                            {(primaryAction || secondaryAction) && (
+                                <StyledActions
+                                    isCentered={isCentered}
+                                    primary={
+                                        primaryAction && primaryAction(true)
+                                    }
+                                    secondary={
+                                        secondaryAction && secondaryAction(true)
+                                    }
+                                />
+                            )}
+                        </Content>
+                    </React.Fragment>
                 )}
-            </HeaderWrapper>
-            {(title || primaryCta || secondaryCta) && (
-                <PosterContentMobile>
-                    <Wrapper addWhitespace>
-                        {title && (
-                            <Heading
-                                hyphens
-                                size="heading-2"
-                                renderAs={titleAs}
-                                isInverted={false}
-                                innerHTML={title}
-                            />
-                        )}
-                        {(primaryCta || secondaryCta) && (
-                            <StyledActions
-                                primary={primaryCta && primaryCta(false)}
-                                secondary={secondaryCta && secondaryCta(false)}
-                            />
-                        )}
-                    </Wrapper>
-                </PosterContentMobile>
+            </StyledPoster>
+            {hasContent && (
+                <ContentMobile>
+                    {title && (
+                        <Title
+                            size="heading-1"
+                            isCentered={isCentered}
+                            renderAs={titleAs}
+                            innerHTML={title}
+                            isInverted={isInverted}
+                        />
+                    )}
+                    {text && (
+                        <Text
+                            type="copy-b"
+                            size="big"
+                            isCentered={isCentered}
+                            innerHTML={text}
+                            isInverted={isInverted}
+                        />
+                    )}
+                    {(primaryAction || secondaryAction) && (
+                        <StyledActions
+                            isCentered={isCentered}
+                            primary={primaryAction && primaryAction(isInverted)}
+                            secondary={
+                                secondaryAction && secondaryAction(isInverted)
+                            }
+                        />
+                    )}
+                </ContentMobile>
             )}
-        </View>
+        </HeaderSection>
     );
 };
 

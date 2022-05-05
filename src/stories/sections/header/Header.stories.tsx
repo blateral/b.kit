@@ -18,7 +18,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
@@ -32,13 +32,6 @@ export const SinglePoster: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
         ]}
     />
@@ -54,24 +47,15 @@ export const WithTitle: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
         ]}
     />
 );
 
-export const WithIntroText: Story = () => (
+export const WithText: Story = () => (
     <Header
         title="Lorem Ipsum Dolor Sit"
-        intro={{
-            text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-        }}
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -79,39 +63,6 @@ export const WithIntroText: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
-            },
-        ]}
-    />
-);
-
-export const WithIntroHeading: Story = () => (
-    <Header
-        title="Lorem Ipsum Dolor Sit"
-        intro={{
-            title: 'Lorem Ipsum Dolor Sit',
-            text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-        }}
-        images={[
-            {
-                small: 'https://unsplash.it/660/792?id=1',
-                medium: 'https://unsplash.it/1100/1320?id=1',
-                semilarge: 'https://unsplash.it/1100/700?id=1',
-                large: 'https://unsplash.it/1596/860?id=1',
-                xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
         ]}
     />
@@ -119,7 +70,8 @@ export const WithIntroHeading: Story = () => (
 
 export const WithActions: Story = () => (
     <Header
-        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -127,21 +79,14 @@ export const WithActions: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
         ]}
-        primaryCta={(isInverted) => (
+        primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryCta={(isInverted) => (
+        secondaryAction={(isInverted) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -149,9 +94,11 @@ export const WithActions: Story = () => (
     />
 );
 
-export const WithBadge: Story = () => (
+export const IsCentered: Story = () => (
     <Header
-        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        isCentered
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -159,81 +106,26 @@ export const WithBadge: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
         ]}
-        primaryCta={(isInverted) => (
+        primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryCta={(isInverted) => (
+        secondaryAction={(isInverted) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        badge={{
-            content: (
-                <img
-                    src="https://via.placeholder.com/392x392/?text=badge"
-                    style={{ height: '100%', width: '100%' }}
-                />
-            ),
-        }}
-    />
-);
-
-export const WithBadgeOnMobile: Story = () => (
-    <Header
-        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
-        images={[
-            {
-                small: 'https://unsplash.it/660/792?id=1',
-                medium: 'https://unsplash.it/1100/1320?id=1',
-                semilarge: 'https://unsplash.it/1100/700?id=1',
-                large: 'https://unsplash.it/1596/860?id=1',
-                xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
-            },
-        ]}
-        primaryCta={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryCta={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
-        badge={{
-            content: (
-                <img
-                    src="https://via.placeholder.com/392x392/?text=badge"
-                    style={{ height: '100%', width: '100%' }}
-                />
-            ),
-            showOnMobile: true,
-        }}
     />
 );
 
 export const SmallerHeaderSize: Story = () => (
     <Header
         size="small"
-        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -241,21 +133,14 @@ export const SmallerHeaderSize: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
         ]}
-        primaryCta={(isInverted) => (
+        primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryCta={(isInverted) => (
+        secondaryAction={(isInverted) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -266,8 +151,9 @@ export const SmallerHeaderSize: Story = () => (
 export const WithExplicitSizeScale: Story = () => (
     <Header
         size="small"
-        height="60vh" // is overriting size prop
-        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        height={(size) => (size === 'full' ? '100vh' : '50vh')}
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -275,21 +161,98 @@ export const WithExplicitSizeScale: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
         ]}
-        primaryCta={(isInverted) => (
+        primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryCta={(isInverted) => (
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+export const WithNavBarReservation: Story = () => (
+    <>
+        <div data-navbar-ident="top-main-bottom-beforeContent" />
+        <Header
+            size="small"
+            title="Lorem Ipsum Dolor Sit"
+            text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+            images={[
+                {
+                    small: 'https://unsplash.it/660/792?id=1',
+                    medium: 'https://unsplash.it/1100/1320?id=1',
+                    semilarge: 'https://unsplash.it/1100/700?id=1',
+                    large: 'https://unsplash.it/1596/860?id=1',
+                    xlarge: 'https://unsplash.it/2450/1320?id=1',
+                },
+            ]}
+            primaryAction={(isInverted) => (
+                <Button.View isInverted={isInverted}>
+                    <Button.Label>Primary</Button.Label>
+                </Button.View>
+            )}
+            secondaryAction={(isInverted) => (
+                <ButtonGhost.View isInverted={isInverted}>
+                    <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+                </ButtonGhost.View>
+            )}
+        />
+    </>
+);
+
+export const WithBackground: Story = () => (
+    <Header
+        bgMode="full"
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+        images={[
+            {
+                small: 'https://unsplash.it/660/792?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
+                large: 'https://unsplash.it/1596/860?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+            },
+        ]}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
+export const IsInverted: Story = () => (
+    <Header
+        bgMode="inverted"
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+        images={[
+            {
+                small: 'https://unsplash.it/660/792?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
+                large: 'https://unsplash.it/1596/860?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+            },
+        ]}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -299,7 +262,8 @@ export const WithExplicitSizeScale: Story = () => (
 
 export const WithKenBurnsEffect: Story = () => (
     <Header
-        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -307,13 +271,6 @@ export const WithKenBurnsEffect: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
             {
                 small: 'https://unsplash.it/660/792?id=2',
@@ -330,12 +287,13 @@ export const WithKenBurnsEffect: Story = () => (
                 xlarge: 'https://unsplash.it/2450/1320?id=3',
             },
         ]}
-        primaryCta={(isInverted) => (
+        onImageChange={console.log}
+        primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryCta={(isInverted) => (
+        secondaryAction={(isInverted) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -346,7 +304,8 @@ export const WithKenBurnsEffect: Story = () => (
 export const WithKenBurnsEffectSmallerSize: Story = () => (
     <Header
         size="small"
-        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         images={[
             {
                 small: 'https://unsplash.it/660/792?id=1',
@@ -354,13 +313,6 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
             {
                 small: 'https://unsplash.it/660/792?id=2',
@@ -377,12 +329,12 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
                 xlarge: 'https://unsplash.it/2450/1320?id=3',
             },
         ]}
-        primaryCta={(isInverted) => (
+        primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryCta={(isInverted) => (
+        secondaryAction={(isInverted) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -392,7 +344,8 @@ export const WithKenBurnsEffectSmallerSize: Story = () => (
 
 export const WithVideo: Story = () => (
     <Header
-        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         videoUrl="images/videos/alps_stockvideo.mp4"
         images={[
             {
@@ -401,21 +354,14 @@ export const WithVideo: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
         ]}
-        primaryCta={(isInverted) => (
+        primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryCta={(isInverted) => (
+        secondaryAction={(isInverted) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -426,7 +372,8 @@ export const WithVideo: Story = () => (
 export const WithVideoSmallerSize: Story = () => (
     <Header
         size="small"
-        title="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         videoUrl="images/videos/alps_stockvideo.mp4"
         images={[
             {
@@ -435,21 +382,14 @@ export const WithVideoSmallerSize: Story = () => (
                 semilarge: 'https://unsplash.it/1100/700?id=1',
                 large: 'https://unsplash.it/1596/860?id=1',
                 xlarge: 'https://unsplash.it/2450/1320?id=1',
-                webp: {
-                    small: 'https://unsplash.it/660/792.webp?id=1',
-                    medium: 'https://unsplash.it/1100/1320.webp?id=1',
-                    semilarge: 'https://unsplash.it/1100/700.webp?id=1',
-                    large: 'https://unsplash.it/1596/860.webp?id=1',
-                    xlarge: 'https://unsplash.it/2450/1320.webp?id=1',
-                },
             },
         ]}
-        primaryCta={(isInverted) => (
+        primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryCta={(isInverted) => (
+        secondaryAction={(isInverted) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>

@@ -135,6 +135,7 @@ const Back = styled.div<{
             : spacings.wrapper) + 'px'};
     background: ${({ bgColor }) => bgColor || undefined};
     margin: 0 auto;
+    z-index: -1;
 
     @media ${mq.semilarge} {
         background: ${({ bgColor, bgMode }) =>

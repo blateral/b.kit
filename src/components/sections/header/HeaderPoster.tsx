@@ -1,21 +1,7 @@
-import Image from 'components/blocks/Image';
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-interface HeaderPosterImageProps {
-    small: string;
-    medium?: string;
-    semilarge?: string;
-    large?: string;
-    xlarge?: string;
-    webp?: {
-        small: string;
-        medium?: string;
-        semilarge?: string;
-        large?: string;
-        xlarge?: string;
-    };
-}
+import Image, { ImageProps } from 'components/blocks/Image';
 
 const PosterView = styled.div`
     position: relative;
@@ -23,25 +9,30 @@ const PosterView = styled.div`
     height: 100%;
 `;
 
-const BackgroundImg = styled(Image)`
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
+const BgImage = styled(Image)`
     height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
+
+    img {
+        height: 100%;
+    }
 `;
 
 const HeaderPoster: React.FC<{
-    bgImage: HeaderPosterImageProps;
+    isInverted?: boolean;
+    bgImage?: Omit<ImageProps, 'ratios' | 'coverSpace'>;
     className?: string;
     children?: React.ReactNode;
-}> = ({ bgImage, className, children }) => {
+}> = ({ isInverted, bgImage, className, children }) => {
     return (
         <PosterView className={className}>
-            <BackgroundImg {...bgImage} alt="" />
+            {bgImage && (
+                <BgImage
+                    {...bgImage}
+                    coverSpace
+                    ratios={undefined}
+                    isInverted={isInverted}
+                />
+            )}
             {children}
         </PosterView>
     );

@@ -51,6 +51,26 @@ export const getNavbarState = (ident: string) => {
     };
 };
 
+/** Generate Navbar identifier */
+export const generateNavbarIdent = (props: {
+    hasTop?: boolean;
+    hasMain?: boolean;
+    hasBottom?: boolean;
+    pageFlow?: PageFlow;
+    isStickable?: boolean;
+}): string => {
+    if (!props) return '';
+    const stateArray: string[] = [];
+
+    if (props.hasTop) stateArray.push('top');
+    if (props.hasMain) stateArray.push('main');
+    if (props.hasBottom) stateArray.push('bottom');
+    if (props.isStickable) stateArray.push('stickable');
+    if (props.pageFlow) stateArray.push(props.pageFlow);
+
+    return stateArray.join('-');
+};
+
 /**
  * Get full navbar heights
  * @param theme Theme object
@@ -278,16 +298,15 @@ const Navigation: FC<NavigationProps> = ({
      * @returns Navbar ident string
      */
     const getNavBarIdent = (theme: DefaultTheme) => {
-        const identParts: string[] = [];
-        if (topBar !== null && hasTopBar(theme)) identParts.push('top');
-        if (mainBar !== null) identParts.push('main');
-        if (bottomBar !== null && hasBottomBar(theme))
-            identParts.push('bottom');
+        const ident = generateNavbarIdent({
+            hasTop: topBar !== null && hasTopBar(theme),
+            hasMain: mainBar !== null,
+            hasBottom: bottomBar !== null && hasBottomBar(theme),
+            isStickable: navBar?.isStickable,
+            pageFlow: navBar?.pageFlow,
+        });
 
-        if (navBar?.pageFlow) identParts.push(navBar?.pageFlow);
-        if (navBar?.isStickable) identParts.push('stickable');
-
-        return identParts.join('-');
+        return ident;
     };
 
     return (
