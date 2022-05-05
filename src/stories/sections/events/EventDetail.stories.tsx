@@ -5,7 +5,7 @@ import EventDetail, {
     EventDetailComponent,
 } from 'components/sections/events/EventDetail';
 import Star from 'components/base/icons/Star';
-import ExclamationMark from 'components/base/icons/ExclamationMark';
+import Info from 'components/base/icons/Info';
 import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
 
@@ -162,7 +162,7 @@ export const WithInfoList: Story = () => (
                         text: 'Eintritt frei',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -183,7 +183,7 @@ export const WithInfoList: Story = () => (
                         text: 'www.topevents.com',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -204,7 +204,7 @@ export const WithInfoList: Story = () => (
                         text: 'www.topevents.com',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -258,7 +258,7 @@ export const WithBackground: Story = () => (
                         text: 'Eintritt frei',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -279,7 +279,7 @@ export const WithBackground: Story = () => (
                         text: 'www.topevents.com',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -300,7 +300,7 @@ export const WithBackground: Story = () => (
                         text: 'www.topevents.com',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -354,7 +354,7 @@ export const IsInverted: Story = () => (
                         text: 'Eintritt frei',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -375,7 +375,7 @@ export const IsInverted: Story = () => (
                         text: 'www.topevents.com',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -396,7 +396,7 @@ export const IsInverted: Story = () => (
                         text: 'www.topevents.com',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -449,7 +449,7 @@ export const CustomTag: Story = () => (
                         text: 'Eintritt frei',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -470,7 +470,7 @@ export const CustomTag: Story = () => (
                         text: 'www.topevents.com',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],
@@ -491,7 +491,7 @@ export const CustomTag: Story = () => (
                         text: 'www.topevents.com',
                     },
                     {
-                        icon: () => <ExclamationMark />,
+                        icon: () => <Info />,
                         text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit',
                     },
                 ],

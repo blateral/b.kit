@@ -42,7 +42,7 @@ export { default as CrossSmall } from 'components/base/icons/CrossSmall';
 /** Mixed **/
 export { default as Check } from 'components/base/icons/Check';
 export { default as Clock } from 'components/base/icons/Clock';
-export { default as ExclamationMark } from 'components/base/icons/ExclamationMark';
+export { default as Info } from 'components/base/icons/Info';
 export { default as FlyTo } from 'components/base/icons/FlyTo';
 export { default as LocationPin } from 'components/base/icons/LocationPin';
 export { default as Route } from 'components/base/icons/Route';

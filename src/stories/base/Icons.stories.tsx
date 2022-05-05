@@ -44,7 +44,7 @@ import { default as CrossSmall } from 'components/base/icons/CrossSmall';
 /** Mixed **/
 import { default as Check } from 'components/base/icons/Check';
 import { default as Clock } from 'components/base/icons/Clock';
-import { default as ExclamationMark } from 'components/base/icons/ExclamationMark';
+import { default as Info } from 'components/base/icons/Info';
 import { default as FlyTo } from 'components/base/icons/FlyTo';
 import { default as LocationPin } from 'components/base/icons/LocationPin';
 import { default as Route } from 'components/base/icons/Route';
@@ -88,7 +88,7 @@ export default {
         CrossSmall,
         Check,
         Clock,
-        ExclamationMark,
+        Info,
         FlyTo,
         LocationPin,
         Minus,
@@ -191,8 +191,8 @@ IconCheck.storyName = 'Check';
 export const IconClock: Story = () => <Clock />;
 IconClock.storyName = 'Clock';
 
-export const IconExclamationMark: Story = () => <ExclamationMark />;
-IconExclamationMark.storyName = 'ExclamationMark';
+export const IconInfo: Story = () => <Info />;
+IconInfo.storyName = 'Info';
 
 export const IconFlyTo: Story = () => <FlyTo />;
 IconFlyTo.storyName = 'FlyTo';

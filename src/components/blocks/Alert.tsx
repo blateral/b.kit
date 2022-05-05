@@ -8,7 +8,7 @@ import {
     spacings,
 } from 'utils/styles';
 import StatusFormatter from '../../utils/statusFormatter';
-import ExclamationMark from '../base/icons/ExclamationMark';
+import Info from '../base/icons/Info';
 
 const View = styled.div<{ isInverted?: boolean }>`
     display: -ms-grid;
@@ -143,9 +143,7 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
 
     return (
         <View isInverted={isInverted} data-sheet="alert" className={className}>
-            <Icon>
-                {customIcon ? customIcon({ isInverted }) : <ExclamationMark />}
-            </Icon>
+            <Icon>{customIcon ? customIcon({ isInverted }) : <Info />}</Icon>
             <MainLabel>
                 {title && (
                     <Title textColor="inherit" size="medium" type="copy-b">
