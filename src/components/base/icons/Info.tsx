@@ -5,23 +5,23 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const Computer: React.FC<{ iconColor?: string; className?: string }> = ({
+const Info: React.FC<{ iconColor?: string; className?: string }> = ({
     iconColor = 'currentColor',
     className,
 }) => (
     <SVG
-        viewBox="0 0 24 16"
+        viewBox="0 0 24 24"
         width="24"
-        height="16"
+        height="24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={className}
     >
         <path
-            d="M20 14c1.1 0 1.99-.9 1.99-2L22 2c0-1.1-.9-2-2-2H4C2.9 0 2 .9 2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4ZM4 2h16v10H4V2Z"
+            d="M11 7h2v2h-2V7Zm0 4h2v6h-2v-6Zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Z"
             fill={iconColor}
         />
     </SVG>
 );
 
-export default Computer;
+export default Info;

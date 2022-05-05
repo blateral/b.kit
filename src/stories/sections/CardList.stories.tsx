@@ -3,7 +3,7 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import CardList, { CardListComponent } from 'components/sections/CardList';
 import AngleRight from 'components/base/icons/AngleRight';
-import Magnifier from 'components/base/icons/Magnifier';
+import Star from 'components/base/icons/Star';
 
 export default {
     title: 'Sections / CardList',
@@ -116,13 +116,13 @@ export const WithIcon: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -135,19 +135,19 @@ export const WithIcon: Story = () => (
             {
                 title: 'Museum',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -167,13 +167,13 @@ export const EqualItemAmount: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -185,19 +185,19 @@ export const EqualItemAmount: Story = () => (
             },
             {
                 title: 'Museum',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 image: {
                     small: 'https://unsplash.it/619/619',
@@ -210,7 +210,7 @@ export const EqualItemAmount: Story = () => (
             },
             {
                 title: 'Krankenhaus',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
@@ -225,13 +225,13 @@ export const WithBackground: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -243,19 +243,19 @@ export const WithBackground: Story = () => (
             },
             {
                 title: 'Museum',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 image: {
                     small: 'https://unsplash.it/619/619',
@@ -268,7 +268,7 @@ export const WithBackground: Story = () => (
             },
             {
                 title: 'Krankenhaus',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
@@ -283,13 +283,13 @@ export const IsInverted: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -301,19 +301,19 @@ export const IsInverted: Story = () => (
             },
             {
                 title: 'Museum',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 image: {
                     small: 'https://unsplash.it/619/619',
@@ -326,7 +326,7 @@ export const IsInverted: Story = () => (
             },
             {
                 title: 'Krankenhaus',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
@@ -341,13 +341,13 @@ export const WithDecorator: Story = () => (
             {
                 title: 'Musikschule',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 link: { href: '#0' },
             },
             {
                 title: 'Stadtbücherei',
                 subLabel: 'überlingen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 image: {
                     small: 'https://unsplash.it/619/619',
                     medium: 'https://unsplash.it/791/791',
@@ -359,19 +359,19 @@ export const WithDecorator: Story = () => (
             },
             {
                 title: 'Museum',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Feuerwehr',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },
             {
                 title: 'Soziale Einrichtungen',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 image: {
                     small: 'https://unsplash.it/619/619',
@@ -384,7 +384,7 @@ export const WithDecorator: Story = () => (
             },
             {
                 title: 'Krankenhaus',
-                customIcon: () => <Magnifier />,
+                customIcon: () => <Star />,
                 subLabel: 'überlingen',
                 link: { href: '#0' },
             },

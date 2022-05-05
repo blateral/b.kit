@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Alert from '../../components/blocks/Alert';
-import Magnifier from 'components/base/icons/Magnifier';
+import Star from 'components/base/icons/Star';
 
 export default {
     title: 'Blocks / Alert',
@@ -67,6 +67,6 @@ export const CustomIcon: Story = () => (
         date={new Date()}
         description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus suscipit voluptatem aliquid itaque eos ullam sit neque ipsam delectus molestiae."
         link={{ href: '#' }}
-        customIcon={() => <Magnifier />}
+        customIcon={() => <Star />}
     />
 );

@@ -5,7 +5,7 @@ import Pdf from 'components/base/icons/files/Pdf';
 import PowerPoint from 'components/base/icons/files/PowerPoint';
 import Word from 'components/base/icons/files/Word';
 import Zip from 'components/base/icons/files/Zip';
-import DefaultIcon from 'components/base/icons/files/Link';
+import DefaultIcon from 'components/base/icons/External';
 import React from 'react';
 import { css, DefaultTheme } from 'styled-components';
 

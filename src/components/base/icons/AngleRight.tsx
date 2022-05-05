@@ -11,18 +11,16 @@ const AngleRight: React.FC<{
     className?: string;
 }> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
     <SVG
-        width="8"
-        height="11"
-        viewBox="0 0 8 11"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
         fill="none"
-        className={className}
         xmlns="http://www.w3.org/2000/svg"
+        className={className}
         aria-hidden={ariaHidden}
     >
         <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M7.104 5.553 1.801.25.74 1.31l4.242 4.243L.74 9.796l1.06 1.06 5.304-5.303Z"
+            d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6Z"
             fill={iconColor}
         />
     </SVG>

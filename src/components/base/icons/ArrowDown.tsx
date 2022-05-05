@@ -10,19 +10,14 @@ const ArrowDown: React.FC<{ iconColor?: string; className?: string }> = ({
     className,
 }) => (
     <SVG
-        viewBox="0 0 9 15"
-        width="9"
-        height="15"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        className={className}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={className}
     >
-        <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M4 12.96V0h1v12.96l2.688-2.15.624.78L4.5 14.64.688 11.59l.624-.78L4 12.96Z"
-            fill={iconColor}
-        />
+        <path d="M13 16.01V4h-2v12.01H8L12 20l4-3.99h-3Z" fill={iconColor} />
     </SVG>
 );
 

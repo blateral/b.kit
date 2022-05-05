@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import PromotionCard from 'components/blocks/PromotionCard';
-import Magnifier from 'components/base/icons/Magnifier';
+import Star from 'components/base/icons/Star';
 
 export default {
     title: 'Blocks/PromotionCard',
@@ -89,6 +89,6 @@ export const WithIcon: Story = () => (
             medium: 'https://unsplash.it/722/541?image=409',
             large: 'https://unsplash.it/958/718?image=409',
         }}
-        icon={() => <Magnifier />}
+        icon={() => <Star />}
     />
 );
