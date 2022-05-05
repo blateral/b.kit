@@ -1,41 +1,49 @@
-import AngleDown from 'components/base/icons/AngleDown';
-import AngleUp from 'components/base/icons/AngleUp';
-import Copy from 'components/typography/Copy';
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
+
+import AngleDown from 'components/base/icons/AngleDown';
+import AngleUp from 'components/base/icons/AngleUp';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import { hexToRgba } from 'utils/hexRgbConverter';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     getColors as color,
+    getFonts as font,
     spacings,
     getGlobals as global,
 } from 'utils/styles';
-import FieldWrapper from './Field';
+import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
 
 const Select = styled.button<{
     hasError?: boolean;
     isActive?: boolean;
     isInverted?: boolean;
+    isSelected?: boolean;
 }>`
-    display: block;
-    outline: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    min-height: 50px;
+    min-height: 36px;
     box-shadow: none;
+    position: relative;
 
-    border-radius: 0px;
     -webkit-appearance: none;
+    outline: none;
 
     padding: ${spacings.nudge}px;
 
     border: 1px solid
-        ${({ theme, isInverted, hasError }) =>
-            hasError
-                ? color(theme).error
-                : isInverted
-                ? color(theme).elementBg.light
-                : color(theme).elementBg.dark};
+        ${({ theme, isInverted, hasError }) => {
+            if (isInverted) {
+                return hasError
+                    ? color(theme).errorInverted
+                    : color(theme).elementBg.light;
+            }
+            return hasError ? color(theme).error : color(theme).elementBg.dark;
+        }};
     border-radius: ${({ isActive, theme }) => {
         const edgeRadius = global(theme).sections.edgeRadius;
         const topLeft = edgeRadius;
@@ -48,39 +56,42 @@ const Select = styled.button<{
 
     background: transparent;
 
-    color: ${({ hasError, theme, isInverted }) =>
-        hasError
+    ${copyStyle('copy', 'small')}
+    color: ${({ theme, isInverted, hasError, isSelected }) => {
+        if (!isSelected) {
+            return isInverted
+                ? color(theme).text.subtileInverted
+                : color(theme).text.subtile;
+        }
+
+        if (isInverted) {
+            return hasError
+                ? color(theme).text.errorInverted
+                : font(theme).copy.small.colorInverted;
+        }
+        return hasError
             ? color(theme).text.error
-            : isInverted
-            ? color(theme).text.inverted
-            : color(theme).text.default};
-
-    outline: none;
-    width: 100%;
-    height: 50px;
-    max-height: 50px;
-
-    position: relative;
+            : font(theme).copy.small.color;
+    }};
 
     &:active {
-        border: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        border: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
     }
 
     &:focus {
-        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        outline: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
         outline-offset: 0;
     }
-
-    ${({ isActive, theme }) =>
-        isActive &&
-        css`
-            border: 2px solid ${hexToRgba(color(theme).elementBg.dark, 0.2)};
-        `}
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
 `;
 
 const SelectMain = styled.div`
@@ -249,18 +260,21 @@ const SelectDropdown: React.FC<
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectItems, activeItemIndex, value]);
 
+    if (isDisabled) {
+        errorMessage = '';
+    }
+
     const activeItem =
         activeItemIndex >= 0 && activeItemIndex < selectItems.length
             ? selectItems[activeItemIndex]
             : undefined;
 
     return (
-        <FieldWrapper.View>
+        <FieldWrapper.View isDisabled={isDisabled}>
             <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
                 isInverted={isInverted}
-                isDisabled={isDisabled}
             />
             <FieldWrapper.Content>
                 <Container>
@@ -271,6 +285,7 @@ const SelectDropdown: React.FC<
                         }
                         isActive={isOpen}
                         isInverted={isInverted}
+                        isSelected={!!activeItem}
                         hasError={!!errorMessage}
                         onClick={() => {
                             setIsOpen((prev) => !prev);
@@ -306,23 +321,7 @@ const SelectDropdown: React.FC<
                         }}
                     >
                         <SelectMain>
-                            {(placeholder || activeItem?.label) && (
-                                <Copy
-                                    textColor={
-                                        !activeItem
-                                            ? colors.elementBg.medium
-                                            : isDisabled
-                                            ? colors.elementBg.medium
-                                            : isInverted
-                                            ? colors.text.inverted
-                                            : colors.text.default
-                                    }
-                                    size="medium"
-                                    type="copy"
-                                >
-                                    {activeItem?.label || placeholder}
-                                </Copy>
-                            )}
+                            {activeItem?.label || placeholder}
                         </SelectMain>
                         {indicator &&
                             indicator({ isOpen, isDisabled: isDisabled })}

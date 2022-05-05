@@ -1,15 +1,16 @@
-import Copy from 'components/typography/Copy';
-import React, { FC, useEffect, useContext, useState, useRef } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import Copy, { copyStyle } from 'components/typography/Copy';
+import React, { FC, useEffect, useState, useRef } from 'react';
+import styled from 'styled-components';
 import {
     getColors as color,
+    getFonts as font,
     spacings,
     getGlobals as global,
 } from 'utils/styles';
-import FieldWrapper from './Field';
+import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
 
-const FieldMain = styled.div<{
+const FieldMain = styled.button<{
     isInverted?: boolean;
     hasError?: boolean;
     isDisabled?: boolean;
@@ -25,7 +26,7 @@ const FieldMain = styled.div<{
 
     outline: none;
     width: 100%;
-    min-height: 50px;
+    min-height: 36px;
     box-shadow: none;
 
     border-radius: 0px;
@@ -34,34 +35,44 @@ const FieldMain = styled.div<{
     padding: ${spacings.nudge}px;
 
     border: 1px solid
-        ${({ theme, isInverted, hasError }) =>
-            hasError
-                ? color(theme).error
-                : isInverted
-                ? color(theme).elementBg.light
-                : color(theme).elementBg.dark};
+        ${({ theme, isInverted, hasError }) => {
+            if (isInverted) {
+                return hasError
+                    ? color(theme).errorInverted
+                    : color(theme).elementBg.light;
+            }
+            return hasError ? color(theme).error : color(theme).elementBg.dark;
+        }};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     background: transparent;
 
-    font-weight: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    color: ${({ hasError, theme, isInverted }) =>
-        hasError
-            ? color(theme).text.error
-            : isInverted
-            ? color(theme).text.inverted
-            : color(theme).text.default};
-
-    pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
+    ${copyStyle('copy', 'small')}
+    color: ${({ theme, isInverted, hasError }) => {
+        if (isInverted) {
+            return hasError
+                ? color(theme).text.errorInverted
+                : color(theme).text.subtileInverted;
+        }
+        return hasError ? color(theme).text.error : color(theme).text.subtile;
+    }};
 
     &:active {
-        border: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        border: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
     }
 
     &:focus {
-        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        outline: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
         outline-offset: 0;
     }
 `;
@@ -83,22 +94,25 @@ const File = styled.div`
     }
 `;
 
-const Delete = styled.div`
+const Delete = styled.span<{ isInverted?: boolean }>`
     cursor: pointer;
 
-    & > * {
-        color: ${({ theme }) => color(theme).text.error};
-    }
+    color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).text.errorInverted : color(theme).text.error};
 
-    &:hover {
-        & > * {
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
             text-decoration: underline;
         }
     }
 `;
 
-const Icon = styled.div`
+const Icon = styled.div<{ isInverted?: boolean }>`
     height: 100%;
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme).copy.small.colorInverted
+            : font(theme).copy.small.color};
 
     & > * {
         height: 25px;
@@ -138,7 +152,7 @@ const FileUpload: FC<
         acceptedFormats?: string;
         uploadLabel?: string;
         removeUploadLabel?: string;
-        customIcon?: () => React.ReactNode;
+        customIcon?: (isInverted?: boolean) => React.ReactNode;
     }
 > = ({
     onUploadFiles,
@@ -153,11 +167,14 @@ const FileUpload: FC<
     removeUploadLabel,
     customIcon,
 }) => {
-    const theme = useContext(ThemeContext);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const [previews, setPreviews] = useState<Preview[]>([]);
+
+    if (isDisabled) {
+        errorMessage = '';
+    }
 
     useEffect(() => {
         if (selectedFiles) {
@@ -172,31 +189,30 @@ const FileUpload: FC<
     };
 
     return (
-        <FieldWrapper.View>
+        <FieldWrapper.View isDisabled={isDisabled}>
             <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
                 isInverted={isInverted}
-                isDisabled={isDisabled}
             />
             <FieldWrapper.Content>
                 <FieldMain
                     isInverted={isInverted}
                     isDisabled={isDisabled}
-                    onClick={() => handleClick}
+                    hasError={!!errorMessage}
+                    onClick={(ev) => {
+                        ev.preventDefault();
+                        handleClick && handleClick(ev);
+                    }}
                 >
-                    {previews.length <= 0 && (
-                        <Copy
-                            textColor={color(theme).elementBg.medium}
-                            size="medium"
-                            type="copy"
-                        >
-                            {uploadLabel}
-                        </Copy>
-                    )}
+                    {previews.length <= 0 && <span>{uploadLabel}</span>}
                     {previews.length > 0 && (
                         <Delete
-                            onClick={() => {
+                            isInverted={isInverted}
+                            onClick={(ev) => {
+                                ev.preventDefault();
+                                ev.stopPropagation();
+
                                 if (fileInputRef && fileInputRef.current) {
                                     fileInputRef.current.value = '';
                                     setSelectedFiles([]);
@@ -204,20 +220,14 @@ const FileUpload: FC<
                                 }
                             }}
                         >
-                            <Copy
-                                textColor={
-                                    isDisabled
-                                        ? color(theme).elementBg.medium
-                                        : undefined
-                                }
-                                size="medium"
-                                type="copy-b"
-                            >
-                                {removeUploadLabel || 'Clear selection'}
-                            </Copy>
+                            {removeUploadLabel || 'Clear selection'}
                         </Delete>
                     )}
-                    {customIcon && <Icon>{customIcon()}</Icon>}
+                    {customIcon && (
+                        <Icon isInverted={isInverted}>
+                            {customIcon(isInverted)}
+                        </Icon>
+                    )}
                 </FieldMain>
 
                 <Original

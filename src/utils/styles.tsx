@@ -98,10 +98,13 @@ export interface Colors {
         default: string;
         inverted: string;
         error: string;
+        errorInverted: string;
         heading: string;
         headingInverted: string;
         copy: string;
         copyInverted: string;
+        subtile: string;
+        subtileInverted: string;
     };
     sectionBg: {
         light: string;
@@ -119,6 +122,7 @@ export interface Colors {
     primary: ColorOptions;
     secondary: ColorOptions;
     error: string;
+    errorInverted: string;
 }
 
 export type ColorType = keyof Colors;
@@ -181,10 +185,13 @@ const defaultColors: Colors = {
         default: '#333333',
         inverted: '#FAFAFA',
         error: '#FF2D2D',
+        errorInverted: '#FF2D2D',
         heading: '#333333',
         headingInverted: '#FFFFFF',
         copy: '#333333',
         copyInverted: '#FFFFFF',
+        subtile: '#878787',
+        subtileInverted: '#878787',
     },
     sectionBg: {
         light: 'transparent',
@@ -212,6 +219,7 @@ const defaultColors: Colors = {
         invertedHover: '#BCB7C9',
     },
     error: '#FF2D2D',
+    errorInverted: '#FF2D2D',
 };
 
 /***** Fonts *****/

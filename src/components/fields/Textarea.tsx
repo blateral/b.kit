@@ -1,11 +1,13 @@
-import * as React from 'react';
+import { copyStyle } from 'components/typography/Copy';
+import React from 'react';
 import styled from 'styled-components';
 import {
     getColors as color,
+    getFonts as font,
     spacings,
     getGlobals as global,
 } from 'utils/styles';
-import FieldWrapper from './Field';
+import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
 
 const Area = styled.textarea<{
@@ -17,51 +19,64 @@ const Area = styled.textarea<{
     display: block;
     outline: none;
     width: 100%;
-    min-height: 60px;
+    min-height: 100px;
     box-shadow: none;
     border-radius: 0px;
     -webkit-appearance: none;
 
     resize: none;
-    width: 100%;
-    min-height: 100px;
 
     padding: ${spacings.nudge}px;
 
     border: 1px solid
-        ${({ theme, isInverted, hasError }) =>
-            hasError
-                ? color(theme).error
-                : isInverted
-                ? color(theme).elementBg.light
-                : color(theme).elementBg.dark};
+        ${({ theme, isInverted, hasError }) => {
+            if (isInverted) {
+                return hasError
+                    ? color(theme).errorInverted
+                    : color(theme).elementBg.light;
+            }
+            return hasError ? color(theme).error : color(theme).elementBg.dark;
+        }};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     background: transparent;
 
-    font-weight: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    color: ${({ hasError, theme, isInverted }) =>
-        hasError
+    ${copyStyle('copy', 'small')}
+    color: ${({ theme, isInverted, hasError }) => {
+        if (isInverted) {
+            return hasError
+                ? color(theme).text.errorInverted
+                : font(theme).copy.small.colorInverted;
+        }
+        return hasError
             ? color(theme).text.error
-            : isInverted
-            ? color(theme).text.inverted
-            : color(theme).text.default};
-
-    pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
+            : font(theme).copy.small.color;
+    }};
 
     &:active {
-        border: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        border: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
     }
 
     &:focus {
-        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        outline: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
         outline-offset: 0;
     }
 
     &::placeholder {
-        color: ${({ theme }) => color(theme).elementBg.medium};
+        color: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).text.subtileInverted
+                : color(theme).text.subtile};
     }
 `;
 
@@ -83,13 +98,16 @@ const Textarea: React.FC<
     onChange,
     onBlur,
 }) => {
+    if (isDisabled) {
+        errorMessage = '';
+    }
+
     return (
-        <FieldWrapper.View>
+        <FieldWrapper.View isDisabled={isDisabled}>
             <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
                 isInverted={isInverted}
-                isDisabled={isDisabled}
             />
             <FieldWrapper.Content>
                 <Area

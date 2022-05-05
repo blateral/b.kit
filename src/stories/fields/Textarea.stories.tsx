@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Textarea from 'components/fields/Textarea';
 import styled from 'styled-components';

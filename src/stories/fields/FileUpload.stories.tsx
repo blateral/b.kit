@@ -1,6 +1,7 @@
-import * as React from 'react';
-import { Meta, Story } from '@storybook/react';
+import React from 'react';
 import styled from 'styled-components';
+
+import { Meta, Story } from '@storybook/react';
 import FileUpload from 'components/fields/FileUpload';
 import Clock from 'components/base/icons/Clock';
 
@@ -20,7 +21,7 @@ export default {
             values: [{ name: 'gray', value: '#F0F0F0' }],
         },
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -35,12 +36,12 @@ const Helper = styled.div`
 export const Default: Story = () => <FileUpload />;
 
 export const WithLabel: Story = () => (
-    <FileUpload uploadLabel="Dateien auswählen" label="Label" />
+    <FileUpload uploadLabel="Dateien auswählen.." label="Label" />
 );
 
 export const WithInfoMessage: Story = () => (
     <FileUpload
-        uploadLabel="Dateien auswählen"
+        uploadLabel="Dateien auswählen.."
         label="Label"
         infoMessage="Optionale Info Message"
     />
@@ -48,7 +49,7 @@ export const WithInfoMessage: Story = () => (
 
 export const AsRequired: Story = () => (
     <FileUpload
-        uploadLabel="Dateien auswählen"
+        uploadLabel="Dateien auswählen.."
         label="Label"
         infoMessage="Optionale Info Message"
         isRequired
@@ -57,7 +58,7 @@ export const AsRequired: Story = () => (
 
 export const isDisabled: Story = () => (
     <FileUpload
-        uploadLabel="Dateien auswählen"
+        uploadLabel="Dateien auswählen.."
         label="Label"
         infoMessage="Optionale Info Message"
         isRequired
@@ -67,7 +68,7 @@ export const isDisabled: Story = () => (
 
 export const IsInverted: Story = () => (
     <FileUpload
-        uploadLabel="Dateien auswählen"
+        uploadLabel="Dateien auswählen.."
         label="Label"
         infoMessage="Optionale Info Message"
         isRequired
@@ -83,17 +84,7 @@ IsInverted.parameters = {
 
 export const HasError: Story = () => (
     <FileUpload
-        uploadLabel="Dateien auswählen"
-        label="Label"
-        infoMessage="Optionale Info Message"
-        isRequired
-        errorMessage="Error!"
-    />
-);
-
-export const WithCustomButton: Story = () => (
-    <FileUpload
-        uploadLabel="Dateien auswählen"
+        uploadLabel="Dateien auswählen.."
         label="Label"
         infoMessage="Optionale Info Message"
         isRequired
@@ -103,11 +94,10 @@ export const WithCustomButton: Story = () => (
 
 export const WithIcon: Story = () => (
     <FileUpload
-        uploadLabel="Dateien auswählen"
+        uploadLabel="Dateien auswählen.."
         label="Label"
         infoMessage="Optionale Info Message"
         isRequired
-        errorMessage="Error!"
         customIcon={() => <Clock />}
     />
 );

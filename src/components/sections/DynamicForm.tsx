@@ -17,7 +17,7 @@ import Textfield from 'components/fields/Textfield';
 import SelectDropdown from 'components/fields/SelectDropdown';
 import Copy from 'components/typography/Copy';
 import FileUpload from 'components/fields/FileUpload';
-import FieldWrapper from 'components/fields/Field';
+import FieldWrapper from 'components/fields/FormField';
 
 const StyledSection = styled(Section)`
     overflow: visible;

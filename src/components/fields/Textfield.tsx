@@ -1,21 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+
+import { copyStyle } from 'components/typography/Copy';
 import {
     getColors as color,
+    getFonts as font,
     spacings,
     getGlobals as global,
 } from 'utils/styles';
-import FieldWrapper, { FieldProps } from './Field';
+import FieldWrapper, { FieldProps } from './FormField';
 
 const InputField = styled.input<{
     isInverted?: boolean;
     hasError?: boolean;
-    isDisabled?: boolean;
 }>`
     display: block;
     outline: none;
     width: 100%;
-    min-height: 50px;
+    min-height: 36px;
     box-shadow: none;
 
     border-radius: 0px;
@@ -24,39 +26,54 @@ const InputField = styled.input<{
     padding: ${spacings.nudge}px;
 
     border: 1px solid
-        ${({ theme, isInverted, hasError }) =>
-            hasError
-                ? color(theme).error
-                : isInverted
-                ? color(theme).elementBg.light
-                : color(theme).elementBg.dark};
+        ${({ theme, isInverted, hasError }) => {
+            if (isInverted) {
+                return hasError
+                    ? color(theme).errorInverted
+                    : color(theme).elementBg.light;
+            }
+            return hasError ? color(theme).error : color(theme).elementBg.dark;
+        }};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     background: transparent;
 
-    font-weight: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    color: ${({ hasError, theme, isInverted }) =>
-        hasError
+    ${copyStyle('copy', 'small')}
+    color: ${({ theme, isInverted, hasError }) => {
+        if (isInverted) {
+            return hasError
+                ? color(theme).text.errorInverted
+                : font(theme).copy.small.colorInverted;
+        }
+        return hasError
             ? color(theme).text.error
-            : isInverted
-            ? color(theme).text.inverted
-            : color(theme).text.default};
-
-    pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
+            : font(theme).copy.small.color;
+    }};
 
     &:active {
-        border: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        border: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
     }
 
     &:focus {
-        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        outline: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
         outline-offset: 0;
     }
 
     &::placeholder {
-        color: ${({ theme }) => color(theme).elementBg.medium};
+        color: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).text.subtileInverted
+                : color(theme).text.subtile};
     }
 `;
 
@@ -87,13 +104,16 @@ const Textfield: React.FC<
     onChange,
     onBlur,
 }) => {
+    if (isDisabled) {
+        errorMessage = '';
+    }
+
     return (
-        <FieldWrapper.View>
+        <FieldWrapper.View isDisabled={isDisabled}>
             <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
                 isInverted={isInverted}
-                isDisabled={isDisabled}
             />
             <FieldWrapper.Content>
                 <InputField
@@ -101,7 +121,6 @@ const Textfield: React.FC<
                     hasError={!!errorMessage}
                     type={type}
                     isInverted={isInverted}
-                    isDisabled={isDisabled}
                     name={name}
                     value={value}
                     required={isRequired}

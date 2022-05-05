@@ -24,7 +24,7 @@ import Copy from 'components/typography/Copy';
 
 import ReactDatePicker from 'react-datepicker';
 import { hexToRgba } from 'utils/hexRgbConverter';
-import FieldWrapper from './Field';
+import FieldWrapper from './FormField';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
 const PickerView = styled.div`
@@ -391,12 +391,11 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
     ) => {
         const { colors } = useLibTheme();
         return (
-            <FieldWrapper.View>
+            <FieldWrapper.View isDisabled={isDisabled}>
                 <FieldWrapper.Head
                     label={label}
                     isRequired={isRequired}
                     isInverted={isInverted}
-                    isDisabled={isDisabled}
                 />
                 <FieldWrapper.Content>
                     <DatepickerButton

@@ -1,12 +1,17 @@
-import Copy from 'components/typography/Copy';
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
+
+import Copy from 'components/typography/Copy';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { spacings } from 'utils/styles';
 
-const View = styled(Copy)`
+const View = styled(Copy)<{ isDisabled?: boolean }>`
     display: block;
     text-align: left;
+
+    pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
+    user-select: ${({ isDisabled }) => isDisabled && 'none'};
+    opacity: ${({ isDisabled }) => (isDisabled ? 0.3 : 1)};
 `;
 
 const FieldHead = styled(Copy)`
@@ -30,12 +35,14 @@ export interface FieldProps {
     isInverted?: boolean;
 }
 
-const FieldWrapper: React.FC<{ children: React.ReactNode }> = ({
-    children,
-}) => {
+const FieldWrapper: React.FC<{
+    isDisabled?: boolean;
+    className?: string;
+    children: React.ReactNode;
+}> = ({ isDisabled, className, children }) => {
     return (
-        <View renderAs="label">
-            <span>{children}</span>
+        <View renderAs="label" isDisabled={isDisabled} className={className}>
+            {children}
         </View>
     );
 };
@@ -43,25 +50,20 @@ const FieldWrapper: React.FC<{ children: React.ReactNode }> = ({
 const Head: React.FC<{
     label?: string;
     isRequired?: boolean;
-    isDisabled?: boolean;
     isInverted?: boolean;
-}> = ({ label, isDisabled, isRequired, isInverted }) => {
-    const { colors } = useLibTheme();
-
+    className?: string;
+}> = ({ label, isRequired, isInverted, className }) => {
+    if (!label) return null;
     return (
-        <>
-            {label && (
-                <FieldHead
-                    renderAs="span"
-                    isInverted={isInverted}
-                    textColor={isDisabled ? colors.elementBg.medium : undefined}
-                    size="medium"
-                    type="copy-b"
-                >
-                    {`${label}${isRequired ? ' *' : ''}`}
-                </FieldHead>
-            )}
-        </>
+        <FieldHead
+            renderAs="span"
+            isInverted={isInverted}
+            size="small"
+            type="copy-b"
+            className={className}
+        >
+            {`${label}${isRequired ? ' *' : ''}`}
+        </FieldHead>
     );
 };
 
@@ -73,35 +75,37 @@ const Messages: React.FC<{
     const { colors } = useLibTheme();
 
     return (
-        <>
+        <React.Fragment>
             {infoMessage && (
-                <FieldMessage
-                    textColor={
-                        isInverted ? colors.text.inverted : colors.text.default
-                    }
-                    size="small"
-                    type="copy"
-                >
+                <FieldMessage size="small" type="copy" isInverted={isInverted}>
                     {infoMessage}
                 </FieldMessage>
             )}
             {errorMessage && (
                 <FieldMessage
-                    textColor={colors.text.error}
                     size="small"
                     type="copy"
+                    textColor={
+                        isInverted
+                            ? colors.text.errorInverted
+                            : colors.text.error
+                    }
                 >
                     {errorMessage
                         ? errorMessage
                         : 'Bitte geben Sie einen gültigen Text ein'}
                 </FieldMessage>
             )}
-        </>
+        </React.Fragment>
     );
 };
 
 const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return <span>{children}</span>;
+    const addWrapper =
+        typeof children === 'string' || children instanceof String;
+
+    if (addWrapper) return <span>{children}</span>;
+    return <React.Fragment>{children}</React.Fragment>;
 };
 
 export default {
