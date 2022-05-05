@@ -29,7 +29,6 @@ export { default as Xing } from 'components/base/icons/socials/Xing';
 export { default as Youtube } from 'components/base/icons/socials/Youtube';
 
 /** Media **/
-export { default as Computer } from 'components/base/icons/Computer';
 export { default as Mail } from 'components/base/icons/Mail';
 export { default as Phone } from 'components/base/icons/Phone';
 export { default as Play } from 'components/base/icons/Play';

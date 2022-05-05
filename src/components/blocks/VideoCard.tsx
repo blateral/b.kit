@@ -89,6 +89,8 @@ const VideoControls = styled.button`
     & > * {
         opacity: 0.8;
         transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+        height: 80px;
+        width: 80px;
 
         color: ${({ theme }) => color(theme).elementBg.dark};
     }

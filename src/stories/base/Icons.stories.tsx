@@ -31,7 +31,6 @@ import { default as Xing } from 'components/base/icons/socials/Xing';
 import { default as Youtube } from 'components/base/icons/socials/Youtube';
 
 /** Media **/
-import { default as Computer } from 'components/base/icons/Computer';
 import { default as Mail } from 'components/base/icons/Mail';
 import { default as Phone } from 'components/base/icons/Phone';
 import { default as Play } from 'components/base/icons/Play';
@@ -80,7 +79,6 @@ export default {
         Twitter,
         Xing,
         Youtube,
-        Computer,
         Mail,
         Phone,
         Play,
@@ -165,9 +163,6 @@ IconZip.storyName = 'Zip';
 
 export const IconExternal: Story = () => <External />;
 IconExternal.storyName = 'External';
-
-export const IconComputer: Story = () => <Computer />;
-IconComputer.storyName = 'Computer';
 
 export const IconMail: Story = () => <Mail />;
 IconMail.storyName = 'Mail';
