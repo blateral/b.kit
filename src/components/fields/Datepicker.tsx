@@ -50,8 +50,8 @@ const PickerView = styled.div`
         border: 1px solid
             ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.2)} !important;
         border-radius: ${({ theme }) =>
-            global(theme).sections.edgeRadius} !important;
-        padding: ${spacings.nudge * 3}px;
+            global(theme).sections.edgeRadius || '0px'} !important;
+        padding: ${spacings.nudge * 2}px;
         width: 100%;
 
         box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.15);

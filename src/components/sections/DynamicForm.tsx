@@ -193,7 +193,6 @@ export interface FieldGenerationProps<T extends FieldTypes> {
     value: FormDataTypes;
     error: string;
     info?: string;
-    customIcon?: () => React.ReactNode;
     isTouched: boolean;
     key: string;
     isInverted: boolean;
@@ -935,7 +934,6 @@ const generateDatepicker = ({
     setField,
     setTouched,
     validateField,
-    customIcon,
 }: FieldGenerationProps<Datepicker>) => {
     const dates = value as [Date | null, Date | null];
 
@@ -957,7 +955,7 @@ const generateDatepicker = ({
             infoMessage={field.info}
             errorMessage={error && isTouched ? error : undefined}
             name={key}
-            customIcon={customIcon}
+            customIcon={field.customIcon}
             isInverted={isInverted}
             minDate={field.minDate}
             maxDate={field.maxDate}
@@ -1014,7 +1012,6 @@ const generateUpload = ({
     isTouched,
     isInverted,
     setField,
-    customIcon,
 }: FieldGenerationProps<FileUpload>) => (
     <FileUpload
         key={key}
@@ -1028,7 +1025,7 @@ const generateUpload = ({
         onUploadFiles={(files) => {
             setField(key, files);
         }}
-        customIcon={customIcon}
+        customIcon={field.customIcon}
         isInverted={isInverted}
     />
 );
