@@ -1,8 +1,8 @@
-import React, { FC, useCallback, useContext } from 'react';
-import styled, { DefaultTheme, ThemeContext } from 'styled-components';
+import React, { FC, useCallback } from 'react';
+import styled, { DefaultTheme } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import { Field, FormikErrors, useFormik } from 'formik';
 import Wrapper from 'components/base/Wrapper';
@@ -222,6 +222,8 @@ export interface FieldGenerationProps<T extends FieldTypes> {
         (e: React.FocusEvent<any>): void;
         <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
     };
+    validateOnBlur?: boolean;
+    validateOnChange?: boolean;
 }
 
 const DynamicForm: FC<{
@@ -529,6 +531,8 @@ const DynamicForm: FC<{
         values,
         errors,
         dirty,
+        validateOnBlur,
+        validateOnChange,
     } = useFormik<FormData>({
         initialValues: {
             ...initalData,
@@ -545,11 +549,10 @@ const DynamicForm: FC<{
         },
         validateOnBlur: true,
         validateOnChange: true,
-        // validationSchema: schema,
         validate: validation,
     });
 
-    const theme = useContext(ThemeContext);
+    const { theme } = useLibTheme();
 
     // rewrite setFieldValue to prevent loadash feature of Formik: https://github.com/jaredpalmer/formik/issues/2262
     const setField = useCallback(
@@ -600,6 +603,8 @@ const DynamicForm: FC<{
                                     validateField: validateField,
                                     handleChange: handleChange,
                                     handleBlur: handleBlur,
+                                    validateOnBlur,
+                                    validateOnChange,
                                     theme: theme,
                                 } as FieldGenerationProps<any>;
 
@@ -676,6 +681,8 @@ const DynamicForm: FC<{
                                         validateField: validateField,
                                         handleChange: handleChange,
                                         handleBlur: handleBlur,
+                                        validateOnBlur,
+                                        validateOnChange,
                                         theme: theme,
                                     } as FieldGenerationProps<any>;
 
@@ -1065,6 +1072,8 @@ const generateSelect = ({
     setField,
     setTouched,
     validateField,
+    validateOnChange,
+    validateOnBlur,
 }: FieldGenerationProps<Select>) => (
     <SelectDropdown
         key={key}
@@ -1077,9 +1086,9 @@ const generateSelect = ({
         onChange={async (value) => {
             await setField(key, value);
             await setTouched(key, true);
-            validateField(key);
+            if (validateOnChange) validateField(key);
         }}
-        onBlur={() => setTouched(key, true, true)}
+        onBlur={() => setTouched(key, true, validateOnBlur)}
         icon={field.icon}
         isInverted={isInverted}
     />

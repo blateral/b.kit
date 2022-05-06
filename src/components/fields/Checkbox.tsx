@@ -25,6 +25,7 @@ const Label = styled(Copy)`
 `;
 
 const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
+    color: ${({ theme }) => color(theme).text.inverted};
     cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
     pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 

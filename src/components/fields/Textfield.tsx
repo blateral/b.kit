@@ -17,7 +17,7 @@ const InputField = styled.input<{
     display: block;
     outline: none;
     width: 100%;
-    min-height: 36px;
+    min-height: 40px;
     box-shadow: none;
 
     border-radius: 0px;

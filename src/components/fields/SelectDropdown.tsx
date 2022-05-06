@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 import AngleDown from 'components/base/icons/AngleDown';
 import AngleUp from 'components/base/icons/AngleUp';
 import Copy, { copyStyle } from 'components/typography/Copy';
-import { hexToRgba } from 'utils/hexRgbConverter';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     getColors as color,
@@ -17,7 +16,7 @@ import { FormProps } from './Textfield';
 
 const Select = styled.button<{
     hasError?: boolean;
-    isActive?: boolean;
+    isOpen?: boolean;
     isInverted?: boolean;
     isSelected?: boolean;
 }>`
@@ -26,17 +25,19 @@ const Select = styled.button<{
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    min-height: 36px;
+    min-height: 40px;
     box-shadow: none;
     position: relative;
 
     -webkit-appearance: none;
     outline: none;
+    cursor: pointer;
 
     padding: ${spacings.nudge}px;
 
     border: 1px solid
-        ${({ theme, isInverted, hasError }) => {
+        ${({ theme, isInverted, hasError, isOpen }) => {
+            if (isOpen) return 'transparent';
             if (isInverted) {
                 return hasError
                     ? color(theme).errorInverted
@@ -44,15 +45,7 @@ const Select = styled.button<{
             }
             return hasError ? color(theme).error : color(theme).elementBg.dark;
         }};
-    border-radius: ${({ isActive, theme }) => {
-        const edgeRadius = global(theme).sections.edgeRadius;
-        const topLeft = edgeRadius;
-        const topRight = edgeRadius;
-        const bottomRight = isActive ? '0px' : edgeRadius;
-        const bottomLeft = isActive ? '0px' : edgeRadius;
-
-        return `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
-    }};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     background: transparent;
 
@@ -75,18 +68,22 @@ const Select = styled.button<{
     }};
 
     &:active {
-        border: ${({ theme, isInverted }) =>
+        border: ${({ theme, isInverted, isOpen }) =>
             `1px solid ${
-                isInverted
+                isOpen
+                    ? 'transparent'
+                    : isInverted
                     ? color(theme).primary.inverted
                     : color(theme).primary.default
             }`};
     }
 
     &:focus {
-        outline: ${({ theme, isInverted }) =>
+        outline: ${({ theme, isInverted, isOpen }) =>
             `1px solid ${
-                isInverted
+                isOpen
+                    ? 'transparent'
+                    : isInverted
                     ? color(theme).primary.inverted
                     : color(theme).primary.default
             }`};
@@ -105,33 +102,42 @@ const SelectMain = styled.div`
     }
 `;
 
-const Flyout = styled.ul<{ isVisible?: boolean }>`
+const Indicator = styled.span`
+    display: block;
+    pointer-events: none;
+`;
+
+const Flyout = styled.ul<{ isVisible?: boolean; isInverted?: boolean }>`
     list-style: none;
     padding: 0 !important;
     margin: 0 !important;
 
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     z-index: 2;
 
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
     background: ${({ theme }) => color(theme).elementBg.light};
-    border: 2px solid
-        ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.2)};
-    border-radius: ${({ isVisible, theme }) => {
-        const edgeRadius = global(theme).sections.edgeRadius;
-        const topLeft = isVisible ? '0px' : edgeRadius;
-        const topRight = isVisible ? '0px' : edgeRadius;
-        const bottomRight = edgeRadius;
-        const bottomLeft = edgeRadius;
-
-        return `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
-    }};
-    border-top: none;
+    border: 1px solid
+        ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     max-height: 300px;
     overflow-y: auto;
     scrollbar-width: none;
+
+    outline: ${({ theme, isInverted }) =>
+        `1px solid ${
+            isInverted
+                ? color(theme).primary.inverted
+                : color(theme).primary.default
+        }`};
+    outline-offset: 0;
 
     ::-webkit-scrollbar {
         -webkit-appearance: none;
@@ -147,7 +153,7 @@ const Flyout = styled.ul<{ isVisible?: boolean }>`
 `;
 
 const ItemStyle = styled.li`
-    padding: ${spacings.nudge * 2}px;
+    padding: ${spacings.nudge}px;
     width: 100%;
     cursor: pointer;
     position: relative;
@@ -156,18 +162,20 @@ const ItemStyle = styled.li`
 const Item = styled(Copy)<{ isSelected?: boolean }>`
     z-index: 0;
 
-    ${ItemStyle}:hover & {
-        &:before {
-            content: '';
-            background: ${({ theme }) => color(theme).primary.hover};
-            opacity: 0.25;
-            display: block;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            z-index: -1;
+    @media (hover: hover) and (pointer: fine) {
+        ${ItemStyle}:hover & {
+            &:before {
+                content: '';
+                background: ${({ theme }) => color(theme).primary.hover};
+                opacity: 0.25;
+                display: block;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                z-index: -1;
+            }
         }
     }
 
@@ -280,10 +288,11 @@ const SelectDropdown: React.FC<
                 <Container>
                     <Select
                         ref={selectBtnRef}
+                        type="button"
                         aria-label={
                             activeItem?.label || placeholder || 'Select item'
                         }
-                        isActive={isOpen}
+                        isOpen={isOpen}
                         isInverted={isInverted}
                         isSelected={!!activeItem}
                         hasError={!!errorMessage}
@@ -323,26 +332,28 @@ const SelectDropdown: React.FC<
                         <SelectMain>
                             {activeItem?.label || placeholder}
                         </SelectMain>
-                        {indicator &&
-                            indicator({ isOpen, isDisabled: isDisabled })}
-                        {!indicator &&
-                            (isOpen ? (
-                                <AngleUp
-                                    iconColor={
-                                        isDisabled
-                                            ? colors.elementBg.medium
-                                            : colors.elementBg.dark
-                                    }
-                                />
-                            ) : (
-                                <AngleDown
-                                    iconColor={
-                                        isDisabled
-                                            ? colors.elementBg.medium
-                                            : colors.elementBg.dark
-                                    }
-                                />
-                            ))}
+                        <Indicator>
+                            {indicator &&
+                                indicator({ isOpen, isDisabled: isDisabled })}
+                            {!indicator &&
+                                (isOpen ? (
+                                    <AngleUp
+                                        iconColor={
+                                            isDisabled
+                                                ? colors.elementBg.medium
+                                                : colors.elementBg.dark
+                                        }
+                                    />
+                                ) : (
+                                    <AngleDown
+                                        iconColor={
+                                            isDisabled
+                                                ? colors.elementBg.medium
+                                                : colors.elementBg.dark
+                                        }
+                                    />
+                                ))}
+                        </Indicator>
                     </Select>
                     <Flyout isVisible={isOpen}>
                         {items.map((item, i) => {

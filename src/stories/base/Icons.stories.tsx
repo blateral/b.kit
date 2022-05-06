@@ -1,5 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
+
+/** Actions */
+import CalendarToday from 'components/base/icons/CalendarToday';
+
 /** Arrows **/
 import ArrowUp from 'components/base/icons/ArrowUp';
 import ArrowDown from 'components/base/icons/ArrowDown';
@@ -55,6 +59,7 @@ import Plus from 'components/base/icons/Plus';
 export default {
     title: 'Base/Icons',
     subcomponents: {
+        CalendarToday,
         ArrowDown,
         ArrowUp,
         ArrowRight,
@@ -109,6 +114,9 @@ export default {
         },
     },
 } as Meta;
+
+export const IconCalendarToday: Story = () => <CalendarToday />;
+IconCalendarToday.storyName = 'Calendar Today';
 
 export const IconArrowDown: Story = () => <ArrowDown />;
 IconArrowDown.storyName = 'Arrow Down';

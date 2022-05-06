@@ -26,7 +26,7 @@ const FieldMain = styled.button<{
 
     outline: none;
     width: 100%;
-    min-height: 36px;
+    min-height: 40px;
     box-shadow: none;
 
     border-radius: 0px;
@@ -114,6 +114,8 @@ const Icon = styled.div<{ isInverted?: boolean }>`
             ? font(theme).copy.small.colorInverted
             : font(theme).copy.small.color};
 
+    pointer-events: none;
+
     & > * {
         height: 25px;
         width: 30px;
@@ -121,14 +123,21 @@ const Icon = styled.div<{ isInverted?: boolean }>`
 `;
 
 interface Preview {
+    uid: string;
     type: string;
     url: string | null;
     isUploading?: boolean;
 }
 
-const readFileAsync = (file: File) =>
+interface SelectedFile {
+    uid: string;
+    data: File;
+}
+
+const readFileAsync = (file: File, uid: string) =>
     new Promise<Preview>((resolve) => {
         resolve({
+            uid: uid,
             type: file.type,
             url: file.name,
             isUploading: true,
@@ -138,6 +147,7 @@ const readFileAsync = (file: File) =>
 
         reader.onload = () => {
             resolve({
+                uid: uid,
                 type: file.type,
                 url: file.name,
                 isUploading: true,
@@ -167,7 +177,7 @@ const FileUpload: FC<
     removeUploadLabel,
     customIcon,
 }) => {
-    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([]);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const [previews, setPreviews] = useState<Preview[]>([]);
@@ -178,7 +188,7 @@ const FileUpload: FC<
 
     useEffect(() => {
         if (selectedFiles) {
-            onUploadFiles && onUploadFiles(selectedFiles);
+            onUploadFiles && onUploadFiles(selectedFiles.map((f) => f.data));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedFiles]);
@@ -233,17 +243,26 @@ const FileUpload: FC<
                 <Original
                     onChange={(e) => {
                         if (e.currentTarget.files) {
-                            const files = Array.from(e.currentTarget.files);
+                            const newFiles = Array.from(
+                                e.currentTarget.files
+                            ).map<SelectedFile>((f) => ({
+                                uid: new Date().getTime().toString(),
+                                data: f,
+                            }));
 
-                            const promises = files.map((file) => {
-                                return readFileAsync(file);
-                            });
+                            const promises = newFiles.map<Promise<Preview>>(
+                                (file) => {
+                                    return readFileAsync(file.data, file.uid);
+                                }
+                            );
 
                             Promise.all(promises).then((p) => {
                                 setPreviews((prev) => [...prev, ...p]);
                             });
 
-                            setSelectedFiles((prev) => [...prev, ...files]);
+                            console.log(newFiles);
+
+                            setSelectedFiles((prev) => [...prev, ...newFiles]);
                         }
                     }}
                     type="file"
