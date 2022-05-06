@@ -81,6 +81,12 @@ const FileItem = styled.div<{ isInverted?: boolean }>`
                     ? color(theme).elementBg.light
                     : color(theme).elementBg.dark};
     }
+
+    & > span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 `;
 
 const UploadItem = styled.button<{ isInverted?: boolean }>`
@@ -110,6 +116,12 @@ const UploadItem = styled.button<{ isInverted?: boolean }>`
                 isInverted
                     ? color(theme).elementBg.light
                     : color(theme).elementBg.dark};
+    }
+
+    & > span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &:focus {
