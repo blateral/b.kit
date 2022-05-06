@@ -1,4 +1,4 @@
-import Copy, { copyStyle } from 'components/typography/Copy';
+import { copyStyle } from 'components/typography/Copy';
 import React, { FC, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import {
@@ -9,20 +9,20 @@ import {
 } from 'utils/styles';
 import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
+import * as Icons from 'components/base/icons/Icons';
 
-const FieldMain = styled.button<{
+const FieldView = styled(FieldWrapper.View)`
+    pointer-events: none;
+`;
+
+const FieldMain = styled.div<{
     isInverted?: boolean;
     hasError?: boolean;
     isDisabled?: boolean;
 }>`
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    & > * + * {
-        margin-left: ${spacings.spacer}px;
-    }
+    flex-direction: column;
+    justify-content: center;
 
     outline: none;
     width: 100%;
@@ -31,8 +31,9 @@ const FieldMain = styled.button<{
 
     border-radius: 0px;
     -webkit-appearance: none;
+    background: none;
 
-    padding: ${spacings.nudge}px;
+    padding: 0 ${spacings.nudge}px;
 
     border: 1px solid
         ${({ theme, isInverted, hasError }) => {
@@ -45,28 +46,14 @@ const FieldMain = styled.button<{
         }};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
-    background: transparent;
-
     ${copyStyle('copy', 'small')}
-    color: ${({ theme, isInverted, hasError }) => {
-        if (isInverted) {
-            return hasError
-                ? color(theme).text.errorInverted
-                : color(theme).text.subtileInverted;
-        }
-        return hasError ? color(theme).text.error : color(theme).text.subtile;
-    }};
 
-    &:active {
-        border: ${({ theme, isInverted }) =>
-            `1px solid ${
-                isInverted
-                    ? color(theme).primary.inverted
-                    : color(theme).primary.default
-            }`};
-    }
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme).copy.small.colorInverted
+            : font(theme).copy.small.color};
 
-    &:focus {
+    &:focus-within {
         outline: ${({ theme, isInverted }) =>
             `1px solid ${
                 isInverted
@@ -77,38 +64,72 @@ const FieldMain = styled.button<{
     }
 `;
 
-const Original = styled.input`
-    display: none;
-`;
-
-const File = styled.div`
-    margin-top: ${spacings.nudge * 2}px;
-    margin-left: ${spacings.nudge * 3}px;
-
+const FileItem = styled.div<{ isInverted?: boolean }>`
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    ${copyStyle('copy', 'small')}
 
-    & > * + * {
-        margin-left: ${spacings.nudge * 3}px;
+    padding: ${spacings.nudge}px 0;
+    width: 100%;
+
+    * + & {
+        border-top: 1px dashed
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.dark};
     }
 `;
 
-const Delete = styled.span<{ isInverted?: boolean }>`
+const UploadItem = styled.button<{ isInverted?: boolean }>`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: ${spacings.nudge}px 0;
+    background: none;
+    outline: none;
+    border: none;
+
+    width: 100%;
     cursor: pointer;
+    pointer-events: all;
 
+    ${copyStyle('copy', 'small')}
     color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).text.errorInverted : color(theme).text.error};
+        isInverted
+            ? color(theme).text.subtileInverted
+            : color(theme).text.subtile};
 
-    @media (hover: hover) and (pointer: fine) {
-        &:hover {
-            text-decoration: underline;
-        }
+    * + & {
+        border-top: 1px dashed
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.dark};
+    }
+
+    &:focus {
+        text-decoration: underline;
+    }
+
+    &:focus:not(:focus-visible) {
+        text-decoration: none;
     }
 `;
 
-const Icon = styled.div<{ isInverted?: boolean }>`
+const Icon = styled.span<{ isInverted?: boolean }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     height: 100%;
+    min-width: 24px;
+    margin-left: auto;
+
     color: ${({ theme, isInverted }) =>
         isInverted
             ? font(theme).copy.small.colorInverted
@@ -117,9 +138,57 @@ const Icon = styled.div<{ isInverted?: boolean }>`
     pointer-events: none;
 
     & > * {
-        height: 25px;
-        width: 30px;
+        height: 20px;
     }
+`;
+
+const DeleteIcon = styled.button<{ isInverted?: boolean }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    min-width: 24px;
+    margin-left: auto;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    pointer-events: all;
+
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme).copy.small.colorInverted
+            : font(theme).copy.small.color};
+
+    transition: opacity 0.2s ease-in-out;
+
+    & > * {
+        height: 20px;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    &:focus {
+        outline: solid 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+`;
+
+const Original = styled.input`
+    display: none;
 `;
 
 interface Preview {
@@ -161,8 +230,8 @@ const FileUpload: FC<
         onUploadFiles?: (files: File[]) => void;
         acceptedFormats?: string;
         uploadLabel?: string;
-        removeUploadLabel?: string;
-        customIcon?: (isInverted?: boolean) => React.ReactNode;
+        customDeleteIcon?: (isInverted?: boolean) => React.ReactNode;
+        customUploadIcon?: (isInverted?: boolean) => React.ReactNode;
     }
 > = ({
     onUploadFiles,
@@ -174,8 +243,8 @@ const FileUpload: FC<
     errorMessage,
     acceptedFormats,
     uploadLabel,
-    removeUploadLabel,
-    customIcon,
+    customDeleteIcon,
+    customUploadIcon,
 }) => {
     const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([]);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -195,11 +264,62 @@ const FileUpload: FC<
 
     const handleClick = (ev: React.MouseEvent<HTMLButtonElement>) => {
         ev.preventDefault();
+
         fileInputRef.current?.click();
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.currentTarget.files) return;
+
+        const newFiles = Array.from(e.currentTarget.files).map<SelectedFile>(
+            (f, i) => ({
+                uid: `${new Date().getTime().toString()}_${i}`,
+                data: f,
+            })
+        );
+
+        const promises = newFiles.map<Promise<Preview>>((file) => {
+            return readFileAsync(file.data, file.uid);
+        });
+
+        Promise.all(promises).then((p) => {
+            setPreviews((prev) => [...prev, ...p]);
+        });
+
+        setSelectedFiles((prev) => [...prev, ...newFiles]);
+    };
+
+    const handleDelete =
+        (preview: Preview) => (ev: React.MouseEvent<HTMLButtonElement>) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+
+            if (!fileInputRef.current) return;
+            fileInputRef.current.value = '';
+
+            // remove element from previews
+            setPreviews((prev) => {
+                const index = prev.findIndex((p) => p.uid === preview.uid);
+                if (index < 0) return prev;
+
+                const copy = [...prev];
+                copy.splice(index, 1);
+                return copy;
+            });
+
+            // remove alement from selected files
+            setSelectedFiles((prev) => {
+                const index = prev.findIndex((p) => p.uid === preview.uid);
+                if (index < 0) return prev;
+
+                const copy = [...prev];
+                copy.splice(index, 1);
+                return copy;
+            });
+        };
+
     return (
-        <FieldWrapper.View isDisabled={isDisabled}>
+        <FieldView isDisabled={isDisabled}>
             <FieldWrapper.Head
                 label={label}
                 isRequired={isRequired}
@@ -210,83 +330,59 @@ const FileUpload: FC<
                     isInverted={isInverted}
                     isDisabled={isDisabled}
                     hasError={!!errorMessage}
-                    onClick={(ev) => {
-                        ev.preventDefault();
-                        handleClick && handleClick(ev);
-                    }}
                 >
-                    {previews.length <= 0 && <span>{uploadLabel}</span>}
-                    {previews.length > 0 && (
-                        <Delete
-                            isInverted={isInverted}
-                            onClick={(ev) => {
-                                ev.preventDefault();
-                                ev.stopPropagation();
-
-                                if (fileInputRef && fileInputRef.current) {
-                                    fileInputRef.current.value = '';
-                                    setSelectedFiles([]);
-                                    setPreviews([]);
-                                }
-                            }}
-                        >
-                            {removeUploadLabel || 'Clear selection'}
-                        </Delete>
-                    )}
-                    {customIcon && (
+                    {previews.map((file) => {
+                        const fileName =
+                            (file.url && file.url.split('/')) || [];
+                        return (
+                            <FileItem key={file.uid} isInverted={isInverted}>
+                                <span>{fileName}</span>
+                                <DeleteIcon
+                                    aria-label="remove file"
+                                    type="button"
+                                    isInverted={isInverted}
+                                    onClick={handleDelete(file)}
+                                >
+                                    {customDeleteIcon ? (
+                                        customDeleteIcon(isInverted)
+                                    ) : (
+                                        <Icons.DeleteForever />
+                                    )}
+                                </DeleteIcon>
+                            </FileItem>
+                        );
+                    })}
+                    <UploadItem
+                        type="button"
+                        isInverted={isInverted}
+                        onClick={handleClick}
+                    >
+                        {uploadLabel && <span>{uploadLabel}</span>}
                         <Icon isInverted={isInverted}>
-                            {customIcon(isInverted)}
+                            {customUploadIcon ? (
+                                customUploadIcon(isInverted)
+                            ) : (
+                                <Icons.UploadFile />
+                            )}
                         </Icon>
-                    )}
+                    </UploadItem>
                 </FieldMain>
-
                 <Original
-                    onChange={(e) => {
-                        if (e.currentTarget.files) {
-                            const newFiles = Array.from(
-                                e.currentTarget.files
-                            ).map<SelectedFile>((f) => ({
-                                uid: new Date().getTime().toString(),
-                                data: f,
-                            }));
-
-                            const promises = newFiles.map<Promise<Preview>>(
-                                (file) => {
-                                    return readFileAsync(file.data, file.uid);
-                                }
-                            );
-
-                            Promise.all(promises).then((p) => {
-                                setPreviews((prev) => [...prev, ...p]);
-                            });
-
-                            console.log(newFiles);
-
-                            setSelectedFiles((prev) => [...prev, ...newFiles]);
-                        }
-                    }}
                     type="file"
+                    onChange={handleChange}
                     ref={fileInputRef}
                     multiple
                     required={isRequired}
                     disabled={isDisabled}
                     accept={acceptedFormats}
                 />
-                {previews.map((file, i) => {
-                    const fileName = (file.url && file.url.split('/')) || [];
-                    return (
-                        <File key={i}>
-                            <Copy>{fileName}</Copy>
-                        </File>
-                    );
-                })}
             </FieldWrapper.Content>
             <FieldWrapper.Messages
                 infoMessage={infoMessage}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />
-        </FieldWrapper.View>
+        </FieldView>
     );
 };
 

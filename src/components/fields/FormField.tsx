@@ -37,11 +37,17 @@ export interface FieldProps {
 
 const FieldWrapper: React.FC<{
     isDisabled?: boolean;
+    onClick?: (ev: React.SyntheticEvent<HTMLLabelElement>) => void;
     className?: string;
     children: React.ReactNode;
-}> = ({ isDisabled, className, children }) => {
+}> = ({ isDisabled, onClick, className, children }) => {
     return (
-        <View renderAs="label" isDisabled={isDisabled} className={className}>
+        <View
+            renderAs="label"
+            onClick={onClick}
+            isDisabled={isDisabled}
+            className={className}
+        >
             {children}
         </View>
     );

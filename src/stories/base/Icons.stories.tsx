@@ -18,6 +18,7 @@ import AngleLeft from 'components/base/icons/AngleLeft';
 import AngleRight from 'components/base/icons/AngleRight';
 
 /** Files **/
+import UploadFile from 'components/base/icons/files/UploadFile';
 import Excel from 'components/base/icons/files/Excel';
 import Image from 'components/base/icons/files/Image';
 import Pdf from 'components/base/icons/files/Pdf';
@@ -55,6 +56,7 @@ import Route from 'components/base/icons/Route';
 import Star from 'components/base/icons/Star';
 import Minus from 'components/base/icons/Minus';
 import Plus from 'components/base/icons/Plus';
+import DeleteForever from 'components/base/icons/DeleteForever';
 
 export default {
     title: 'Base/Icons',
@@ -71,6 +73,7 @@ export default {
         AngleDown,
         AngleLeft,
         AngleRight,
+        UploadFile,
         Excel,
         Image,
         Pdf,
@@ -100,6 +103,7 @@ export default {
         Plus,
         Route,
         Star,
+        DeleteForever,
     },
     decorators: [
         (Story) => (
@@ -150,6 +154,9 @@ IconAngleRight.storyName = 'Angle Right';
 
 export const IconAngleLeft: Story = () => <AngleLeft />;
 IconAngleLeft.storyName = 'Angle Left';
+
+export const IconUploadFile: Story = () => <UploadFile />;
+IconUploadFile.storyName = 'Upload File';
 
 export const IconExcel: Story = () => <Excel />;
 IconExcel.storyName = 'Excel';
@@ -219,3 +226,6 @@ IconMinus.storyName = 'Minus';
 
 export const IconPlus: Story = () => <Plus />;
 IconPlus.storyName = 'Plus';
+
+export const IconDeleteForever: Story = () => <DeleteForever />;
+IconDeleteForever.storyName = 'Delete Forever';

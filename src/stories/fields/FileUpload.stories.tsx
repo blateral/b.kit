@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Meta, Story } from '@storybook/react';
 import FileUpload from 'components/fields/FileUpload';
-import Clock from 'components/base/icons/Clock';
+import * as Icons from 'components/base/icons/Icons';
 
 export default {
     title: 'fields/FileUpload',
@@ -92,12 +92,22 @@ export const HasError: Story = () => (
     />
 );
 
-export const WithIcon: Story = () => (
+export const WithCustomUploadIcon: Story = () => (
     <FileUpload
         uploadLabel="Dateien auswählen.."
         label="Label"
         infoMessage="Optionale Info Message"
         isRequired
-        customIcon={() => <Clock />}
+        customUploadIcon={() => <Icons.Word />}
+    />
+);
+
+export const WithCustomDeleteIcon: Story = () => (
+    <FileUpload
+        uploadLabel="Dateien auswählen.."
+        label="Label"
+        infoMessage="Optionale Info Message"
+        isRequired
+        customDeleteIcon={() => <Icons.Minus />}
     />
 );

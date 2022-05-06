@@ -15,6 +15,7 @@ export { default as AngleLeft } from 'components/base/icons/AngleLeft';
 export { default as AngleRight } from 'components/base/icons/AngleRight';
 
 /** Files **/
+export { default as UploadFile } from 'components/base/icons/files/UploadFile';
 export { default as Excel } from 'components/base/icons/files/Excel';
 export { default as Image } from 'components/base/icons/files/Image';
 export { default as Pdf } from 'components/base/icons/files/Pdf';
@@ -52,3 +53,4 @@ export { default as Route } from 'components/base/icons/Route';
 export { default as Star } from 'components/base/icons/Star';
 export { default as Plus } from 'components/base/icons/Plus';
 export { default as Minus } from 'components/base/icons/Minus';
+export { default as DeleteForever } from 'components/base/icons/DeleteForever';

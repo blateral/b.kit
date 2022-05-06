@@ -166,7 +166,8 @@ export interface FileUpload extends FormField {
     removeBtnLabel?: string;
     info?: string;
     acceptedFormats?: string;
-    customIcon: () => React.ReactNode;
+    customUploadIcon?: (isInverted?: boolean) => React.ReactNode;
+    customDeleteIcon?: (isInverted?: boolean) => React.ReactNode;
     validate?: (
         key: string,
         value: Array<File>,
@@ -1026,13 +1027,13 @@ const generateUpload = ({
         name={key}
         infoMessage={field.info}
         uploadLabel={field.addBtnLabel}
-        removeUploadLabel={field.removeBtnLabel}
         errorMessage={error && isTouched ? error : undefined}
         acceptedFormats={field.acceptedFormats}
         onUploadFiles={(files) => {
             setField(key, files);
         }}
-        customIcon={field.customIcon}
+        customUploadIcon={field.customUploadIcon}
+        customDeleteIcon={field.customDeleteIcon}
         isInverted={isInverted}
     />
 );
