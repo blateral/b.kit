@@ -86,13 +86,9 @@ const Poster: FC<{
     }
 };
 
-const HeaderSection = styled(Section)<{
-    height?: string;
-}>`
-    position: relative;
-
+const genHeightStyles = (isFull: boolean) => css`
     // Doing some crazy shit to calculate curent navbar height in CSS
-    ${({ theme, height }) => {
+    ${({ theme }) => {
         // navbar main only
         const mainIdent = genIdent({
             pageFlow: 'beforeContent',
@@ -130,7 +126,7 @@ const HeaderSection = styled(Section)<{
             return idents.map((id) => `[data-navbar-ident*='${id}']`).join('');
         };
 
-        const refHeight = height || '100vh';
+        const refHeight = isFull ? '100vh' : '80vh';
 
         return css`
             & > ${StyledPoster} {
@@ -139,28 +135,28 @@ const HeaderSection = styled(Section)<{
             }
 
             // with main navbar element
-            *${mapToSelector(mainIdent.split('-'))} + & {
+            header${mapToSelector(mainIdent.split('-'))} + & {
                 & > ${StyledPoster} {
                     height: calc(${refHeight} - ${navMainHeight[0]}px);
                 }
             }
 
             // with main and top navbar elements
-            *${mapToSelector(mainTopIdent.split('-'))} + & {
+            header${mapToSelector(mainTopIdent.split('-'))} + & {
                 & > ${StyledPoster} {
                     height: calc(${refHeight} - ${navMainTopHeight[0]}px);
                 }
             }
 
             // with main and bottom navbar elements
-            *${mapToSelector(mainBottomIdent.split('-'))} + & {
+            header${mapToSelector(mainBottomIdent.split('-'))} + & {
                 & > ${StyledPoster} {
                     height: calc(${refHeight} - ${navMainBottomHeight[0]}px);
                 }
             }
 
             // with all navbar elements
-            *${mapToSelector(fullIdent.split('-'))} + & {
+            header${mapToSelector(fullIdent.split('-'))} + & {
                 & > ${StyledPoster} {
                     height: calc(${refHeight} - ${navFullHeight[0]}px);
                 }
@@ -168,21 +164,21 @@ const HeaderSection = styled(Section)<{
 
             @media ${mq.semilarge} {
                 // with main navbar element
-                *${mapToSelector(mainIdent.split('-'))} + & {
+                header${mapToSelector(mainIdent.split('-'))} + & {
                     & > ${StyledPoster} {
                         height: calc(${refHeight} - ${navMainHeight[1]}px);
                     }
                 }
 
                 // with main and top navbar elements
-                *${mapToSelector(mainTopIdent.split('-'))} + & {
+                header${mapToSelector(mainTopIdent.split('-'))} + & {
                     & > ${StyledPoster} {
                         height: calc(${refHeight} - ${navMainTopHeight[1]}px);
                     }
                 }
 
                 // with main and bottom navbar elements
-                *${mapToSelector(mainBottomIdent.split('-'))} + & {
+                header${mapToSelector(mainBottomIdent.split('-'))} + & {
                     & > ${StyledPoster} {
                         height: calc(
                             ${refHeight} - ${navMainBottomHeight[1]}px
@@ -191,7 +187,7 @@ const HeaderSection = styled(Section)<{
                 }
 
                 // with all navbar elements
-                *${mapToSelector(fullIdent.split('-'))} + & {
+                header${mapToSelector(fullIdent.split('-'))} + & {
                     & > ${StyledPoster} {
                         height: calc(${refHeight} - ${navFullHeight[1]}px);
                     }
@@ -199,6 +195,16 @@ const HeaderSection = styled(Section)<{
             }
         `;
     }}
+`;
+
+const HeaderSection = styled(Section)`
+    position: relative;
+    ${genHeightStyles(true)}
+`;
+
+const HeaderSectionSmall = styled(Section)`
+    position: relative;
+    ${genHeightStyles(false)}
 `;
 
 const StyledPoster = styled(Poster)`
@@ -302,9 +308,6 @@ const Header: FC<{
     /** Header image height size (full=100vh, small=80vh) */
     size?: HeaderSize;
 
-    /** Callback to customnize size heights */
-    height?: (size: HeaderSize) => string;
-
     /** Center content */
     isCentered?: boolean;
 
@@ -349,7 +352,6 @@ const Header: FC<{
 }> = ({
     anchorId,
     size = 'full',
-    height,
     isCentered,
     title,
     titleAs,
@@ -369,16 +371,16 @@ const Header: FC<{
     const isInverted = bgMode === 'inverted';
     const hasContent = title || text || primaryAction || secondaryAction;
 
-    const posterHeight = size === 'full' ? '100vh' : '80vh';
     const overlay = hasContent
         ? customImgOverlay || globals.sections.imageTextGradient
         : undefined;
 
+    const Section = size === 'full' ? HeaderSection : HeaderSectionSmall;
+
     return (
-        <HeaderSection
+        <Section
             anchorId={anchorId}
             // bgColor="image"
-            height={height ? height(size) : posterHeight}
             bgColor={
                 isInverted
                     ? colors.sectionBg.dark
@@ -465,7 +467,7 @@ const Header: FC<{
                     )}
                 </ContentMobile>
             )}
-        </HeaderSection>
+        </Section>
     );
 };
 
