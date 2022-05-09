@@ -152,7 +152,7 @@ export {
     getFullNavbarHeights,
 } from 'components/sections/navigation/Navigation';
 export * as NavPartials from 'components/sections/navigation/partials/index';
-export * as NavSkeletons from 'components/sections/navigation/partials/index';
+export * as NavSkeletons from 'components/sections/navigation/skeletons/index';
 
 export { default as NavBarMainPartial } from 'components/sections/navigation/partials/NavBarMain';
 export { default as NavBarTopPartial } from 'components/sections/navigation/partials/NavBarTop';
