@@ -124,7 +124,10 @@ export interface Datepicker extends FormField {
     singleSelect?: boolean;
     icon?: { src: string; alt?: string };
     info?: string;
-    customIcon?: () => React.ReactNode;
+    customIcon?: (props: {
+        isInverted?: boolean;
+        singleSelect?: boolean;
+    }) => React.ReactNode;
 
     singleDateError?: string;
     multiDateError?: string;
@@ -963,7 +966,7 @@ const generateDatepicker = ({
             infoMessage={field.info}
             errorMessage={error && isTouched ? error : undefined}
             name={key}
-            customIcon={field.customIcon}
+            customIcon={field?.customIcon}
             isInverted={isInverted}
             minDate={field.minDate}
             maxDate={field.maxDate}

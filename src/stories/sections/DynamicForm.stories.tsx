@@ -40,7 +40,13 @@ export const Default: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -120,7 +126,13 @@ export const WithTwoColumns: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -205,7 +217,13 @@ export const WithCustomDatepickerButtons: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -294,7 +312,13 @@ export const WithBackground: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -375,7 +399,13 @@ export const Inverted: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -455,7 +485,13 @@ export const CustomSubmitButton: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -541,7 +577,13 @@ export const WithCustomErrorMessages: Story = () => (
                 errorMsg: 'Bitte geben Sie eine valide E-Mail an',
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -660,7 +702,13 @@ export const CustomValidation: Story = () => (
                 },
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -796,7 +844,13 @@ export const WithCustomFieldDefinition: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
@@ -876,7 +930,13 @@ export const WithCustomDatepicker: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
-                customIcon: () => <Icons.CalendarToday />,
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',

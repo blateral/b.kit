@@ -1,15 +1,15 @@
 import React, {
     useState,
     useEffect,
-    useContext,
     useRef,
     forwardRef,
     useCallback,
 } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 
 import {
     getColors as color,
+    getFonts as font,
     mq,
     spacings,
     getGlobals as global,
@@ -20,12 +20,14 @@ import de from 'date-fns/locale/de';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 import Button from 'components/buttons/Button';
 
-import Copy from 'components/typography/Copy';
+import { copyStyle } from 'components/typography/Copy';
 
 import ReactDatePicker from 'react-datepicker';
 import { hexToRgba } from 'utils/hexRgbConverter';
 import FieldWrapper from './FormField';
 import { useLibTheme } from 'utils/LibThemeProvider';
+
+import * as Icons from 'components/base/icons/Icons';
 
 const PickerView = styled.div`
     position: relative;
@@ -46,6 +48,8 @@ const PickerView = styled.div`
     }
 
     .react-datepicker {
+        display: flex;
+        flex-wrap: wrap;
         font-family: 'Roboto', sans-serif;
         border: 1px solid
             ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.2)} !important;
@@ -75,7 +79,7 @@ const PickerView = styled.div`
 
     @media ${mq.medium} {
         .react-datepicker__month-container {
-            width: auto;
+            max-width: 50%;
         }
     }
 
@@ -246,12 +250,16 @@ const PickerView = styled.div`
     }
 `;
 
-const Icon = styled.div`
+const Icon = styled.div<{ isInverted?: boolean }>`
     height: 100%;
+    min-width: 24px;
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme).copy.small.colorInverted
+            : font(theme).copy.small.color};
 
     & > * {
-        height: 25px;
-        width: 30px;
+        height: 20px;
     }
 `;
 
@@ -259,52 +267,76 @@ const DatepickerButton = styled.button<{
     hasError?: boolean;
     isActive?: boolean;
     isInverted?: boolean;
+    hasDateValue?: boolean;
 }>`
-    padding: ${spacings.nudge}px;
-
-    border: 1px solid
-        ${({ theme, isInverted, hasError }) =>
-            hasError
-                ? color(theme).error
-                : isInverted
-                ? color(theme).elementBg.light
-                : color(theme).elementBg.dark};
-    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-
-    background: none;
-
-    outline: none;
-    width: 100%;
-    min-height: 50px;
-    max-height: 50px;
-    pointer-events: ${({ isActive }) => (isActive ? 'none' : 'all')};
-
-    position: relative;
-
-    &:active {
-        border: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
-    }
-
-    &:focus {
-        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
-        outline-offset: 0;
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
-    }
-
-    ${({ isActive }) =>
-        isActive &&
-        css`
-            border: ${({ theme }) =>
-                `1px solid ${color(theme).primary.default}`};
-        `}
-
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    min-height: 40px;
+    padding: ${spacings.nudge}px;
+
+    border: 1px solid
+        ${({ theme, isInverted, hasError }) => {
+            if (isInverted) {
+                return hasError
+                    ? color(theme).errorInverted
+                    : color(theme).elementBg.light;
+            }
+            return hasError ? color(theme).error : color(theme).elementBg.dark;
+        }};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+
+    background: none;
+
+    ${copyStyle('copy', 'small')}
+    color: ${({ theme, isInverted, hasError, hasDateValue }) => {
+        if (isInverted) {
+            return hasError
+                ? color(theme).text.errorInverted
+                : !hasDateValue
+                ? color(theme).text.subtileInverted
+                : font(theme).copy.small.colorInverted;
+        }
+        return hasError
+            ? color(theme).text.error
+            : !hasDateValue
+            ? color(theme).text.subtile
+            : font(theme).copy.small.color;
+    }};
+
+    outline: none;
+    pointer-events: ${({ isActive }) => (isActive ? 'none' : 'all')};
+
+    position: relative;
+
+    border: ${({ theme, isInverted, isActive }) =>
+        isActive &&
+        `1px solid ${
+            isInverted
+                ? color(theme).primary.inverted
+                : color(theme).primary.default
+        }`};
+
+    &:active {
+        border: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
+    }
+
+    &:focus {
+        outline: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
+        outline-offset: 0;
+    }
 `;
 
 const DatepickerButtonMain = styled.div`
@@ -319,6 +351,7 @@ const DatepickerButtonMain = styled.div`
 
 const DatepickerFoot = styled.div`
     display: block;
+    width: 100%;
 
     /* margin-top: ${spacings.spacer * 14}px; */
 `;
@@ -328,6 +361,10 @@ const FootFlex = styled.div`
     display: flex;
     flex-direction: column;
 
+    & > * {
+        width: 100%;
+    }
+
     & > * + * {
         margin-top: ${spacings.spacer * 0.5}px;
     }
@@ -335,6 +372,10 @@ const FootFlex = styled.div`
     @media ${mq.medium} {
         align-items: center;
         flex-direction: row;
+
+        & > * {
+            width: auto;
+        }
 
         & > * + * {
             margin-top: 0;
@@ -365,7 +406,11 @@ interface PickerBtnProps {
     setFocused: React.Dispatch<React.SetStateAction<boolean>>;
     onClick?: (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     dateFormat?: string;
-    customIcon?: () => React.ReactNode;
+    customIcon?: (props: {
+        isInverted?: boolean;
+        singleSelect?: boolean;
+    }) => React.ReactNode;
+    singleSelect?: boolean;
 }
 
 const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
@@ -386,10 +431,10 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
             onClick,
             dateFormat = 'dd.MM.yyyy',
             customIcon,
+            singleSelect,
         },
         ref
     ) => {
-        const { colors } = useLibTheme();
         return (
             <FieldWrapper.View isDisabled={isDisabled}>
                 <FieldWrapper.Head
@@ -400,39 +445,35 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                 <FieldWrapper.Content>
                     <DatepickerButton
                         ref={ref}
+                        type="button"
                         onClick={(e) => {
                             setFocused && setFocused(true);
                             onClick && onClick(e);
                         }}
                         isActive={isFocused}
+                        hasDateValue={!!startDate}
                         isInverted={isInverted}
                         hasError={!!errorMessage}
                         className="myPickerButton"
                     >
                         <DatepickerButtonMain>
-                            <Copy
-                                type="copy"
-                                textColor={
-                                    !startDate
-                                        ? colors.elementBg.medium
-                                        : isInverted
-                                        ? colors.text.inverted
-                                        : colors.text.default
-                                }
-                            >
-                                {startDate
-                                    ? `${format(startDate, dateFormat)}${
-                                          endDate
-                                              ? ` – ${format(
-                                                    endDate,
-                                                    dateFormat
-                                                )}`
-                                              : ''
-                                      }`
-                                    : altText}
-                            </Copy>
+                            {startDate
+                                ? `${format(startDate, dateFormat)}${
+                                      endDate
+                                          ? ` – ${format(endDate, dateFormat)}`
+                                          : ''
+                                  }`
+                                : altText}
                         </DatepickerButtonMain>
-                        {customIcon && <Icon>{customIcon()}</Icon>}
+                        <Icon isInverted={isInverted}>
+                            {customIcon ? (
+                                customIcon({ isInverted, singleSelect })
+                            ) : singleSelect ? (
+                                <Icons.CalendarToday />
+                            ) : (
+                                <Icons.DateRange />
+                            )}
+                        </Icon>
                     </DatepickerButton>
                     {name && (
                         <>
@@ -577,7 +618,10 @@ const Datepicker: React.FC<{
             e: React.SyntheticEvent<HTMLButtonElement, Event>
         ) => void
     ) => React.ReactNode;
-    customIcon?: () => React.ReactNode;
+    customIcon?: (props: {
+        isInverted?: boolean;
+        singleSelect?: boolean;
+    }) => React.ReactNode;
     nextCtrlUrl?: React.ReactNode;
     prevCtrlUrl?: React.ReactNode;
 
@@ -605,9 +649,9 @@ const Datepicker: React.FC<{
     nextCtrlUrl,
     prevCtrlUrl,
 }) => {
-    const theme = useContext(ThemeContext);
-    const locale = global(theme).sections.datepickerLocaleKey;
-    const dateFormat = global(theme).sections.datepickerDateFormat;
+    const { globals } = useLibTheme();
+    const locale = globals.sections.datepickerLocaleKey;
+    const dateFormat = globals.sections.datepickerDateFormat;
 
     const pickerRef = useRef<ReactDatePicker | undefined>(null);
     const pickerBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -742,6 +786,7 @@ const Datepicker: React.FC<{
                         setFocused={setFocused}
                         dateFormat={dateFormat}
                         customIcon={customIcon}
+                        singleSelect={singleSelect}
                     />
                 }
                 showPopperArrow

@@ -1,5 +1,6 @@
 /** Actions */
 export { default as CalendarToday } from 'components/base/icons/CalendarToday';
+export { default as DateRange } from 'components/base/icons/DateRange';
 
 /** Arrows **/
 export { default as ArrowUp } from 'components/base/icons/ArrowUp';

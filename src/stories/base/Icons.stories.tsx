@@ -3,6 +3,7 @@ import { Meta, Story } from '@storybook/react';
 
 /** Actions */
 import CalendarToday from 'components/base/icons/CalendarToday';
+import DateRange from 'components/base/icons/DateRange';
 
 /** Arrows **/
 import ArrowUp from 'components/base/icons/ArrowUp';
@@ -62,6 +63,7 @@ export default {
     title: 'Base/Icons',
     subcomponents: {
         CalendarToday,
+        DateRange,
         ArrowDown,
         ArrowUp,
         ArrowRight,
@@ -229,3 +231,6 @@ IconPlus.storyName = 'Plus';
 
 export const IconDeleteForever: Story = () => <DeleteForever />;
 IconDeleteForever.storyName = 'Delete Forever';
+
+export const IconDateRange: Story = () => <DateRange />;
+IconDateRange.storyName = 'Date Range';
