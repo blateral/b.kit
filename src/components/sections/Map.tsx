@@ -1,14 +1,13 @@
-import React, { FC, useContext, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC, useState } from 'react';
+import styled from 'styled-components';
 
-import { mq, spacings, getColors as color, withRange } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { mq, spacings, getColors as color } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Grid from 'components/base/Grid';
 import Wrapper from 'components/base/Wrapper';
 
-import Actions from 'components/blocks/Actions';
 import IntroBlock from 'components/blocks/IntroBlock';
 import LeafletMap from 'components/blocks/LeafletMap';
 import Slider, { SliderContext } from 'components/blocks/Slider';
@@ -23,6 +22,7 @@ import Mail from 'components/base/icons/Mail';
 
 import { generateLocalBusiness } from 'utils/structuredData';
 import Link from 'components/typography/Link';
+import LocationPin from 'components/base/icons/LocationPin';
 
 interface Address {
     street: string;
@@ -43,9 +43,11 @@ const MapContainer = styled(LeafletMap)<{ isMirrored?: boolean }>`
     left: 0;
     bottom: 0;
     width: 100%;
-    min-height: 500px;
+    height: 100%;
+    min-height: 400px;
 
     @media ${mq.semilarge} {
+        min-height: auto;
         position: absolute;
         width: 50%;
         height: 100%;
@@ -73,45 +75,22 @@ const SliderWrapper = styled.div<{ isMirrored?: boolean }>`
     width: 100%;
     pointer-events: all;
 
-    padding: ${spacings.nudge * 3}px ${spacings.nudge * 3}px
-        ${spacings.spacer * 2}px ${spacings.nudge * 3}px;
+    padding-left: ${spacings.nudge * 2}px;
+    padding-right: ${spacings.nudge * 2}px;
 
-    @media ${mq.medium} {
-        padding: ${spacings.nudge * 3}px ${spacings.spacer}px
-            ${spacings.spacer * 2}px ${spacings.spacer}px;
-    }
+    padding-top: ${spacings.spacer}px;
+    padding-bottom: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
         flex-direction: row;
-        ${withRange([spacings.spacer * 3, spacings.spacer * 5], 'padding-top')};
-        ${withRange(
-            [spacings.spacer * 3, spacings.spacer * 5],
-            'padding-bottom'
-        )};
-        ${({ isMirrored }) =>
-            isMirrored
-                ? withRange(
-                      [spacings.spacer, spacings.spacer * 4],
-                      'padding-right'
-                  )
-                : `padding-right: ${spacings.spacer}px`};
-        ${({ isMirrored }) =>
-            !isMirrored
-                ? withRange(
-                      [spacings.spacer, spacings.spacer * 4],
-                      'padding-left'
-                  )
-                : `padding-left: ${(1 / 28) * 100}vw`};
-    }
 
-    @media ${mq.xlarge} {
-        ${({ isMirrored }) =>
-            !isMirrored
-                ? withRange(
-                      [spacings.spacer, spacings.spacer * 4],
-                      'padding-left'
-                  )
-                : `padding-left: ${(1 / 28) * spacings.wrapper}px`};
+        padding-left: ${({ isMirrored }) =>
+            isMirrored ? spacings.nudge * 2 : spacings.spacer}px;
+        padding-right: ${({ isMirrored }) =>
+            isMirrored ? spacings.spacer : spacings.nudge * 2}px;
+
+        padding-top: ${spacings.spacer * 2.5}px;
+        padding-bottom: ${spacings.spacer * 2.5}px;
     }
 
     .slick-slide div {
@@ -128,27 +107,12 @@ const InfoCardView = styled.div`
     pointer-events: all;
 
     & > * + * {
-        ${withRange(
-            [spacings.spacer * 1.5, spacings.spacer * 2.5],
-            'margin-top'
-        )}
+        margin-top: ${spacings.spacer}px;
     }
 `;
 
 const CardHeader = styled.div`
     display: flex;
-`;
-
-const StyledActions = styled(Actions)`
-    padding-left: ${spacings.nudge}px;
-    padding-right: ${spacings.nudge}px;
-    padding-bottom: ${spacings.nudge}px;
-
-    @media ${mq.medium} {
-        & > * + * {
-            max-width: calc(50% - ${spacings.spacer}px);
-        }
-    }
 `;
 
 const ContactList = styled.ul<{ isInverted?: boolean }>`
@@ -184,7 +148,7 @@ const ContactList = styled.ul<{ isInverted?: boolean }>`
 `;
 
 const ContactListLabel = styled(Copy)`
-    margin-left: ${spacings.nudge * 2.5}px;
+    margin-left: ${spacings.nudge * 1.5}px;
 
     * {
         margin: 0;
@@ -192,26 +156,50 @@ const ContactListLabel = styled(Copy)`
     }
 `;
 
+const AddressContainer = styled.div`
+    display: -ms-grid;
+    display: grid;
+
+    -ms-grid-columns: min-content 1fr;
+    grid-template-columns: min-content 1fr;
+    -ms-grid-rows: min-content 1fr;
+    grid-auto-rows: min-content 1fr;
+
+    & > * + * {
+        margin-left: ${spacings.nudge * 2}px;
+    }
+`;
+
 const CompanyInfo: FC<{
     isInverted?: boolean;
     companyName: string;
     address?: Address;
-}> = ({ isInverted, companyName, address }) => {
+    customIcon?: (isInverted?: boolean) => React.ReactNode;
+}> = ({ isInverted, companyName, address, customIcon }) => {
     return (
-        <div>
-            <Copy type="copy-b" size="big" isInverted={isInverted}>
-                {companyName}
-            </Copy>
-            {address && (
+        <AddressContainer>
+            {customIcon && <span> {customIcon()} </span>}
+            <div>
                 <Copy type="copy-b" size="big" isInverted={isInverted}>
-                    <div>{address.street}</div>
-                    <div>{`${address.postalCode} ${address.city}`}</div>
-                    <div>{address.country}</div>
+                    {companyName}
                 </Copy>
-            )}
-        </div>
+                {address && (
+                    <Copy type="copy-b" size="big" isInverted={isInverted}>
+                        <div>{address.street}</div>
+                        <div>{`${address.postalCode} ${address.city}`}</div>
+                        <div>{address.country}</div>
+                    </Copy>
+                )}
+            </div>
+        </AddressContainer>
     );
 };
+
+const Desc = styled(Copy)`
+    @media ${mq.semilarge} {
+        margin-top: ${spacings.spacer * 2.5}px;
+    }
+`;
 
 const LocationInfoCard: FC<{
     isInverted?: boolean;
@@ -221,14 +209,8 @@ const LocationInfoCard: FC<{
     const titleAs = location.titleAs || location.meta?.titleAs;
     const superTitle = location.superTitle || location.meta?.superTitle;
     const superTitleAs = location.superTitleAs || location.meta?.superTitleAs;
-    const primaryAction = location.primaryAction
-        ? location.primaryAction({ isInverted })
-        : location.meta?.primaryAction &&
-          location.meta.primaryAction(isInverted);
-    const secondaryAction = location.secondaryAction
-        ? location.secondaryAction({ isInverted })
-        : location.meta?.secondaryAction &&
-          location.meta.secondaryAction(isInverted);
+
+    const { colors } = useLibTheme();
 
     return (
         <InfoCardView>
@@ -245,6 +227,19 @@ const LocationInfoCard: FC<{
                 <CompanyInfo
                     companyName={location.companyName || ''}
                     address={location.address}
+                    customIcon={() =>
+                        location.addressIcon ? (
+                            location.addressIcon({ isInverted })
+                        ) : (
+                            <LocationPin
+                                iconColor={
+                                    isInverted
+                                        ? colors.text.inverted
+                                        : colors.text.default
+                                }
+                            />
+                        )
+                    }
                     isInverted={isInverted}
                 />
             )}
@@ -313,12 +308,7 @@ const LocationInfoCard: FC<{
                 />
             )}
 
-            <Copy isInverted={isInverted} innerHTML={location.description} />
-
-            <StyledActions
-                primary={primaryAction}
-                secondary={secondaryAction}
-            />
+            <Desc isInverted={isInverted} innerHTML={location.description} />
         </InfoCardView>
     );
 };
@@ -336,7 +326,7 @@ const Controls = styled.div`
         text-align: right;
 
         & > * + * {
-            margin-top: ${spacings.nudge * 3}px;
+            margin-top: ${spacings.nudge}px;
         }
     }
 `;
@@ -441,19 +431,16 @@ export interface MapLocation {
         superTitle?: string;
         superTitleAs?: HeadlineTag;
         contact?: string; // Rich Text
-        primaryAction?: (isInverted?: boolean) => React.ReactNode;
-        secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     };
 
     title?: string; // Rich Text
     titleAs?: HeadlineTag;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
-    primaryAction?: (props: { isInverted?: boolean }) => React.ReactNode;
-    secondaryAction?: (props: { isInverted?: boolean }) => React.ReactNode;
 
     companyName?: string;
     address?: Address;
+    addressIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
     contact?: {
         telephone?: {
             link?: string;
@@ -521,20 +508,17 @@ const Map: FC<{
     controlPrev,
     dot,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const [activeLocation, setActiveLocation] = useState<string>(
         initialLocation || ''
     );
-
     const isInverted = bgMode === 'inverted';
 
     return (
         <StyledSection
             anchorId={anchorId}
             bgColor={
-                isInverted
-                    ? color(theme).sectionBg.dark
-                    : color(theme).sectionBg.medium
+                isInverted ? colors.sectionBg.dark : colors.sectionBg.medium
             }
             bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
         >
@@ -606,17 +590,17 @@ const Map: FC<{
                 </SliderContext.Consumer>
 
                 <CardWrapper clampWidth="normal">
-                    <Grid.Row gutter={spacings.spacer}>
+                    <Grid.Row gutter={0}>
                         <Grid.Col
                             semilarge={{
-                                span: 14 / 28,
-                                move: (isMirrored ? 14 : 0) / 28,
+                                span: 6 / 12,
+                                move: (isMirrored ? 6 : 0) / 12,
                             }}
                         ></Grid.Col>
                         <Grid.Col
                             semilarge={{
-                                span: 14 / 28,
-                                move: (isMirrored ? -14 : 0) / 28,
+                                span: 6 / 12,
+                                move: (isMirrored ? -6 : 0) / 12,
                             }}
                         >
                             <SliderWrapper isMirrored={isMirrored}>
