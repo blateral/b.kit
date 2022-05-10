@@ -408,45 +408,46 @@ const Slide: FC<{
     );
 };
 
-const ControlView = styled.button``;
+const ControlView = styled.span``;
 
 const Control: FC<{
     type: 'next' | 'prev';
-    onClick?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
     className?: string;
-    children?: (isActive?: boolean) => React.ReactNode;
-}> = ({ type, onClick, children, className }) => {
-    return (
-        <SliderContext.Consumer>
-            {(values) => {
-                if (values.steps > 1) {
-                    return (
-                        <ControlView
-                            className={className + ' slider-control'}
-                            onClick={(ev) => {
-                                type === 'next'
-                                    ? values.nextStep()
-                                    : values.previousStep();
+    children?: (props: {
+        isActive?: boolean;
+        isDisabled?: boolean;
+        clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
+    }) => React.ReactNode;
+}> = ({ type, children, className }) => {
+    const ctx = useContext(SliderContext);
 
-                                onClick && onClick(ev);
-                            }}
-                            disabled={
-                                type === 'next'
-                                    ? values.isOnLastStep()
-                                    : values.isOnFirstStep()
-                            }
-                        >
-                            {children &&
-                                children(
-                                    type === 'next'
-                                        ? !values.isOnLastStep()
-                                        : !values.isOnFirstStep()
-                                )}
-                        </ControlView>
-                    );
-                } else return null;
-            }}
-        </SliderContext.Consumer>
+    const steps = ctx.steps;
+    const isActive =
+        type === 'next' ? !ctx.isOnLastStep() : !ctx.isOnFirstStep();
+    const isDisabled =
+        type === 'next' ? ctx.isOnLastStep() : ctx.isOnFirstStep();
+
+    const handleClick = () => {
+        if (type === 'next') {
+            ctx.nextStep();
+        } else {
+            ctx.previousStep();
+        }
+    };
+
+    return (
+        <React.Fragment>
+            {steps > 1 ? (
+                <ControlView className={className}>
+                    {children &&
+                        children({
+                            isActive,
+                            isDisabled,
+                            clickHandler: handleClick,
+                        })}
+                </ControlView>
+            ) : null}
+        </React.Fragment>
     );
 };
 

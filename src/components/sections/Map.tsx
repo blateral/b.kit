@@ -20,14 +20,14 @@ import Slider, { SliderContext } from 'components/blocks/Slider';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import { HeadlineTag } from 'components/typography/Heading';
 
-import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
-import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
 
 import { generateLocalBusiness } from 'utils/structuredData';
 import Link from 'components/typography/Link';
 import LocationPin from 'components/base/icons/LocationPin';
+import Control from 'components/buttons/Control';
+import * as Icons from 'components/base/icons/Icons';
 
 interface Address {
     street: string;
@@ -384,53 +384,6 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
             : 'transparent'};
 `;
 
-const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
-    display: none;
-    border: none;
-    outline: none;
-    background: none;
-    padding: 0;
-
-    color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).text.inverted : color(theme).text.default};
-    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-
-    &:enabled {
-        cursor: pointer;
-    }
-
-    &:disabled {
-        opacity: 0.5;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-        &:hover {
-            color: ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).primary.invertedHover
-                    : color(theme).primary.hover};
-        }
-    }
-
-    &:focus > * {
-        outline: dotted 2px
-            ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).primary.inverted
-                    : color(theme).primary.default};
-        outline-offset: 4px;
-
-        color: ${({ theme, isInverted }) =>
-            isInverted
-                ? color(theme).primary.invertedHover
-                : color(theme).primary.hover};
-    }
-
-    @media ${mq.semilarge} {
-        display: block;
-    }
-`;
-
 export interface LocationIcon {
     url: string;
     size: [number, number];
@@ -490,12 +443,16 @@ const Map: FC<{
     controlNext?: (props: {
         isInverted?: boolean;
         isActive?: boolean;
+        isDisabled?: boolean;
         name?: string;
+        clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
     controlPrev?: (props: {
         isInverted?: boolean;
         isActive?: boolean;
+        isDisabled?: boolean;
         name?: string;
+        clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
     dot?: (props: {
         isInverted?: boolean;
@@ -634,38 +591,68 @@ const Map: FC<{
                                             ))}
                                         </Slider.Slides>
                                         <Controls>
-                                            <StyledControl
-                                                type="next"
-                                                isInverted={isInverted}
-                                            >
-                                                {(isActive) =>
+                                            <Slider.Control type="next">
+                                                {({
+                                                    isActive,
+                                                    isDisabled,
+                                                    clickHandler,
+                                                }) =>
                                                     controlNext ? (
                                                         controlNext({
                                                             isInverted,
                                                             isActive,
+                                                            isDisabled,
+                                                            clickHandler,
                                                             name: 'control_next_head',
                                                         })
                                                     ) : (
-                                                        <ArrowRightGhost />
+                                                        <Control
+                                                            isInverted={
+                                                                isInverted
+                                                            }
+                                                            isDisabled={
+                                                                isDisabled
+                                                            }
+                                                            onClick={
+                                                                clickHandler
+                                                            }
+                                                        >
+                                                            <Icons.ArrowRightGhost />
+                                                        </Control>
                                                     )
                                                 }
-                                            </StyledControl>
-                                            <StyledControl
-                                                type="prev"
-                                                isInverted={isInverted}
-                                            >
-                                                {(isActive) =>
+                                            </Slider.Control>
+                                            <Slider.Control type="prev">
+                                                {({
+                                                    isActive,
+                                                    isDisabled,
+                                                    clickHandler,
+                                                }) =>
                                                     controlPrev ? (
                                                         controlPrev({
                                                             isInverted,
                                                             isActive,
+                                                            isDisabled,
+                                                            clickHandler,
                                                             name: 'control_prev_head',
                                                         })
                                                     ) : (
-                                                        <ArrowLeftGhost />
+                                                        <Control
+                                                            isInverted={
+                                                                isInverted
+                                                            }
+                                                            isDisabled={
+                                                                isDisabled
+                                                            }
+                                                            onClick={
+                                                                clickHandler
+                                                            }
+                                                        >
+                                                            <Icons.ArrowLeftGhost />
+                                                        </Control>
                                                     )
                                                 }
-                                            </StyledControl>
+                                            </Slider.Control>
                                             <StyledDotGroup>
                                                 {(i, isActive, onClick) => (
                                                     <DotWrapper

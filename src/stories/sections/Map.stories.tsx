@@ -213,8 +213,16 @@ export const WithCustomControls: Story = () => (
         flyToZoom={12}
         allMarkersOnInit
         fitBoundsPadding={[30, 30]}
-        controlNext={() => <ArrowRight />}
-        controlPrev={() => <ArrowRight />}
+        controlNext={({ isDisabled, clickHandler }) => (
+            <button disabled={isDisabled} onClick={clickHandler}>
+                next
+            </button>
+        )}
+        controlPrev={({ isDisabled, clickHandler }) => (
+            <button disabled={isDisabled} onClick={clickHandler}>
+                prev
+            </button>
+        )}
     />
 );
 

@@ -197,7 +197,7 @@ const CarouselBase: FC<
                     {React.Children.count(children) > 1 && (
                         <TopControls>
                             <StyledControl type="prev" isInverted={isInverted}>
-                                {(isActive) =>
+                                {({ isActive }) =>
                                     controlPrev ? (
                                         controlPrev({
                                             isInverted,
@@ -210,7 +210,7 @@ const CarouselBase: FC<
                                 }
                             </StyledControl>
                             <StyledControl type="next" isInverted={isInverted}>
-                                {(isActive) =>
+                                {({ isActive }) =>
                                     controlNext ? (
                                         controlNext({
                                             isInverted,
