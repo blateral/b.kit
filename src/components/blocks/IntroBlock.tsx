@@ -31,6 +31,8 @@ const Content = styled.div`
         margin-top: ${spacings.spacer}px;
     }
 
+    max-width: 100%;
+
     @media ${mq.semilarge} {
         flex: 1 0 66.66%;
     }

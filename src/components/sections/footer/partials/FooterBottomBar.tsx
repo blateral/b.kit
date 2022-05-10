@@ -15,7 +15,7 @@ const FooterBottomBar: FC<{
 }> = ({ isInverted, languages, links, brandIcon, languageIcon, className }) => {
     return (
         <FooterBottomGrid.View className={className}>
-            {languages && (
+            {languages ? (
                 <LanguageSwitcher
                     isInverted={isInverted}
                     langs={languages}
@@ -23,6 +23,8 @@ const FooterBottomBar: FC<{
                         languageIcon ? languageIcon : () => <Icons.Language />
                     }
                 />
+            ) : (
+                <span />
             )}
             {links && links.length > 0 && (
                 <FooterBottomGrid.LinkList

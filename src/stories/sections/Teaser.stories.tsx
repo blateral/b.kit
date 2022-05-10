@@ -260,6 +260,57 @@ export const Mirrored: Story = () => (
     />
 );
 
+export const MirroredVideo: Story = () => (
+    <Teaser
+        isMirrored
+        superTitle={'Lorem Ipsum Dolor'}
+        title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
+        video={{
+            urls: ['images/videos/alps_stockvideo.mp4'],
+        }}
+        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+        text={`
+            <p>
+                <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                sed diam voluptua.</b>
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                amet.
+            </p>
+            <ul>
+                <li>Lorem Ipsum</li>
+                <li>Lorem Ipsum</li>
+                <li>Lorem Ipsum</li>
+            </ul>
+            <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                voluptua.
+            </p>
+            <p>
+                <i>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                    sed diam voluptua.</i>
+            </p>    
+        `}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
 export const Inverted: Story = () => (
     <Teaser
         bgMode="inverted"
