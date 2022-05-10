@@ -1,7 +1,12 @@
 import React, { FC, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { mq, spacings, getColors as color } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    getColors as color,
+    getFonts as font,
+} from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -12,7 +17,7 @@ import IntroBlock from 'components/blocks/IntroBlock';
 import LeafletMap from 'components/blocks/LeafletMap';
 import Slider, { SliderContext } from 'components/blocks/Slider';
 
-import Copy from 'components/typography/Copy';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import { HeadlineTag } from 'components/typography/Heading';
 
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
@@ -136,10 +141,6 @@ const ContactList = styled.ul<{ isInverted?: boolean }>`
     color: ${({ theme, isInverted }) =>
         isInverted ? color(theme).text.inverted : color(theme).text.default};
 
-    a {
-        color: inherit;
-    }
-
     li {
         display: flex;
         flex-direction: row;
@@ -162,13 +163,15 @@ const ContactList = styled.ul<{ isInverted?: boolean }>`
     }
 `;
 
-const ContactListLabel = styled(Copy)`
+const ContactListLink = styled(Link)`
+    display: block;
     margin-left: ${spacings.nudge * 1.5}px;
 
-    * {
-        margin: 0;
-        padding: 0;
-    }
+    ${copyStyle('copy-b', 'big')}
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme)['copy-b'].big.colorInverted
+            : font(theme)['copy-b'].big.color};
 `;
 
 const AddressContainer = styled.div`
@@ -278,20 +281,15 @@ const LocationInfoCard: FC<
                                     <Phone />
                                 )}
                             </span>
-                            <ContactListLabel
+                            <ContactListLink
                                 isInverted={isInverted}
-                                type="copy-b"
-                                size="big"
+                                href={`tel:${
+                                    contact.telephone.link ||
+                                    contact.telephone.label
+                                }`}
                             >
-                                <Link
-                                    href={`tel:${
-                                        contact.telephone.link ||
-                                        contact.telephone.label
-                                    }`}
-                                >
-                                    {contact.telephone?.label}
-                                </Link>
-                            </ContactListLabel>
+                                {contact.telephone?.label}
+                            </ContactListLink>
                         </li>
                     )}
                     {contact.email && (
@@ -303,20 +301,14 @@ const LocationInfoCard: FC<
                                     <Mail />
                                 )}
                             </span>
-                            <ContactListLabel
+                            <ContactListLink
                                 isInverted={isInverted}
-                                type="copy-b"
-                                size="big"
+                                href={`mailto:${
+                                    contact?.email.link || contact.email.label
+                                }`}
                             >
-                                <Link
-                                    href={`mailto:${
-                                        contact?.email.link ||
-                                        contact.email.label
-                                    }`}
-                                >
-                                    {contact?.email.label}
-                                </Link>
-                            </ContactListLabel>
+                                {contact?.email.label}
+                            </ContactListLink>
                         </li>
                     )}
                 </ContactList>
@@ -409,6 +401,29 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
 
     &:disabled {
         opacity: 0.5;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            color: ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
+        }
+    }
+
+    &:focus > * {
+        outline: dotted 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+        outline-offset: 4px;
+
+        color: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).primary.invertedHover
+                : color(theme).primary.hover};
     }
 
     @media ${mq.semilarge} {
