@@ -1,12 +1,12 @@
 import React, { FC, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { mq, spacings, getColors as color } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 import Section, { mapToBgMode } from 'components/base/Section';
-import Grid from 'components/base/Grid';
-import Wrapper from 'components/base/Wrapper';
+import Grid, { getGridWidth, gridSettings } from 'components/base/Grid';
+import Wrapper, { wrapperWhitespace } from 'components/base/Wrapper';
 
 import IntroBlock from 'components/blocks/IntroBlock';
 import LeafletMap from 'components/blocks/LeafletMap';
@@ -31,7 +31,7 @@ interface Address {
     country: string;
 }
 
-const StyledSection = styled(Section)`
+const MapSection = styled(Section)`
     position: relative;
     min-height: 500px;
     z-index: 0;
@@ -43,24 +43,50 @@ const MapContainer = styled(LeafletMap)<{ isMirrored?: boolean }>`
     left: 0;
     bottom: 0;
     width: 100%;
+
     height: 100%;
     min-height: 400px;
 
     @media ${mq.semilarge} {
-        min-height: auto;
         position: absolute;
-        width: 50%;
-        height: 100%;
-        left: ${({ isMirrored }) => (isMirrored ? 'auto' : '50%')};
-        right: ${({ isMirrored }) => (isMirrored ? '50%' : 'auto')};
-
-        transform: translateX(
-            ${({ isMirrored }) => (isMirrored ? '100%' : '-100%')}
+        /** 
+            calculate width of 6 grid cols (grid width = viewport width without wrapper paddings)
+            and add left or right wrapper padding afterwards
+         */
+        width: calc(
+            ${getGridWidth({
+                    cols: 6,
+                    gridWidth: `100% - ${wrapperWhitespace * 2}px `,
+                })} + ${wrapperWhitespace}px
         );
+        left: ${({ isMirrored }) => (isMirrored ? 'auto' : '0')};
+        right: ${({ isMirrored }) => (isMirrored ? '0' : 'auto')};
     }
 
     @media ${mq.xlarge} {
-        max-width: ${spacings.wrapperLarge / 2}px;
+        width: calc(50% - ${gridSettings.gutter}px ${wrapperWhitespace}px);
+    }
+
+    @media ${mq.xxlarge} {
+        width: calc(
+            ${spacings.wrapperLarge / 2}px - ${gridSettings.gutter}px +
+                ${wrapperWhitespace}px
+        );
+
+        left: ${({ isMirrored }) => (isMirrored ? 'auto' : '50%')};
+        right: ${({ isMirrored }) => (isMirrored ? '50%' : 'auto')};
+
+        ${({ isMirrored }) =>
+            css`
+                transform: translateX(
+                    calc(
+                        ${isMirrored
+                                ? `(100% + ${gridSettings.gutter}px) - `
+                                : `(-100% - ${gridSettings.gutter}px) + `}
+                            (${wrapperWhitespace}px)
+                    )
+                );
+            `};
     }
 `;
 
@@ -75,19 +101,8 @@ const SliderWrapper = styled.div<{ isMirrored?: boolean }>`
     width: 100%;
     pointer-events: all;
 
-    padding-left: ${spacings.nudge * 2}px;
-    padding-right: ${spacings.nudge * 2}px;
-
-    padding-top: ${spacings.spacer}px;
-    padding-bottom: ${spacings.spacer}px;
-
     @media ${mq.semilarge} {
         flex-direction: row;
-
-        padding-left: ${({ isMirrored }) =>
-            isMirrored ? spacings.nudge * 2 : spacings.spacer}px;
-        padding-right: ${({ isMirrored }) =>
-            isMirrored ? spacings.spacer : spacings.nudge * 2}px;
 
         padding-top: ${spacings.spacer * 2.5}px;
         padding-bottom: ${spacings.spacer * 2.5}px;
@@ -201,15 +216,22 @@ const Desc = styled(Copy)`
     }
 `;
 
-const LocationInfoCard: FC<{
-    isInverted?: boolean;
-    location: MapLocation;
-}> = ({ isInverted, location }) => {
-    const title = location.title || location.meta?.title;
-    const titleAs = location.titleAs || location.meta?.titleAs;
-    const superTitle = location.superTitle || location.meta?.superTitle;
-    const superTitleAs = location.superTitleAs || location.meta?.superTitleAs;
-
+const LocationInfoCard: FC<
+    MapLocation & {
+        isInverted?: boolean;
+    }
+> = ({
+    isInverted,
+    title,
+    titleAs,
+    superTitle,
+    superTitleAs,
+    companyName,
+    address,
+    addressIcon,
+    contact,
+    description,
+}) => {
     const { colors } = useLibTheme();
 
     return (
@@ -223,13 +245,13 @@ const LocationInfoCard: FC<{
                     superTitleAs={superTitleAs}
                 />
             </CardHeader>
-            {location.companyName && (
+            {companyName && (
                 <CompanyInfo
-                    companyName={location.companyName || ''}
-                    address={location.address}
+                    companyName={companyName || ''}
+                    address={address}
                     customIcon={() =>
-                        location.addressIcon ? (
-                            location.addressIcon({ isInverted })
+                        addressIcon ? (
+                            addressIcon({ isInverted })
                         ) : (
                             <LocationPin
                                 iconColor={
@@ -243,13 +265,13 @@ const LocationInfoCard: FC<{
                     isInverted={isInverted}
                 />
             )}
-            {location.contact && (
+            {contact && (
                 <ContactList isInverted={isInverted}>
-                    {location.contact?.telephone && (
+                    {contact?.telephone && (
                         <li>
                             <span>
-                                {location?.contact?.telephone.icon ? (
-                                    location.contact.telephone.icon({
+                                {contact?.telephone.icon ? (
+                                    contact.telephone.icon({
                                         isInverted,
                                     })
                                 ) : (
@@ -263,20 +285,20 @@ const LocationInfoCard: FC<{
                             >
                                 <Link
                                     href={`tel:${
-                                        location?.contact.telephone.link ||
-                                        location?.contact.telephone.label
+                                        contact.telephone.link ||
+                                        contact.telephone.label
                                     }`}
                                 >
-                                    {location?.contact.telephone?.label}
+                                    {contact.telephone?.label}
                                 </Link>
                             </ContactListLabel>
                         </li>
                     )}
-                    {location.contact.email && (
+                    {contact.email && (
                         <li>
                             <span>
-                                {location?.contact?.email.icon ? (
-                                    location.contact.email.icon({ isInverted })
+                                {contact?.email.icon ? (
+                                    contact.email.icon({ isInverted })
                                 ) : (
                                     <Mail />
                                 )}
@@ -288,27 +310,19 @@ const LocationInfoCard: FC<{
                             >
                                 <Link
                                     href={`mailto:${
-                                        location?.contact?.email.link ||
-                                        location.contact.email.label
+                                        contact?.email.link ||
+                                        contact.email.label
                                     }`}
                                 >
-                                    {location?.contact?.email.label}
+                                    {contact?.email.label}
                                 </Link>
                             </ContactListLabel>
                         </li>
                     )}
                 </ContactList>
             )}
-            {location.meta?.contact && (
-                <Copy
-                    type="copy"
-                    size="medium"
-                    innerHTML={location.meta?.contact as string}
-                    isInverted={isInverted}
-                />
-            )}
 
-            <Desc isInverted={isInverted} innerHTML={location.description} />
+            <Desc isInverted={isInverted} innerHTML={description} />
         </InfoCardView>
     );
 };
@@ -383,7 +397,7 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
     border: none;
     outline: none;
     background: none;
-    padding: 0 ${spacings.nudge * 3}px;
+    padding: 0;
 
     color: ${({ theme, isInverted }) =>
         isInverted ? color(theme).text.inverted : color(theme).text.default};
@@ -391,14 +405,6 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
 
     &:enabled {
         cursor: pointer;
-    }
-
-    &:enabled:hover {
-        transform: scale(1.05);
-    }
-
-    &:enabled:active {
-        transform: scale(0.95);
     }
 
     &:disabled {
@@ -423,15 +429,6 @@ export interface MapLocation {
     id: string;
     position: [number, number];
     icon?: LocationIcon;
-
-    /** DEPRECATED: Used as fallback */
-    meta?: {
-        title?: string; // Rich Text
-        titleAs?: HeadlineTag;
-        superTitle?: string;
-        superTitleAs?: HeadlineTag;
-        contact?: string; // Rich Text
-    };
 
     title?: string; // Rich Text
     titleAs?: HeadlineTag;
@@ -512,15 +509,21 @@ const Map: FC<{
     const [activeLocation, setActiveLocation] = useState<string>(
         initialLocation || ''
     );
+
+    const hasBg = bgMode === 'full';
     const isInverted = bgMode === 'inverted';
 
     return (
-        <StyledSection
+        <MapSection
             anchorId={anchorId}
             bgColor={
-                isInverted ? colors.sectionBg.dark : colors.sectionBg.medium
+                isInverted
+                    ? colors.sectionBg.dark
+                    : hasBg
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
-            bgMode={bgMode === 'inverted' ? mapToBgMode(bgMode) : 'full'}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             {locations && generateLocalBusiness(locations)}
             <Slider.Provider
@@ -589,8 +592,8 @@ const Map: FC<{
                     )}
                 </SliderContext.Consumer>
 
-                <CardWrapper clampWidth="normal">
-                    <Grid.Row gutter={0}>
+                <CardWrapper addWhitespace clampWidth="normal">
+                    <Grid.Row>
                         <Grid.Col
                             semilarge={{
                                 span: 6 / 12,
@@ -610,8 +613,8 @@ const Map: FC<{
                                             {locations?.map((location, i) => (
                                                 <LocationInfoCard
                                                     key={i}
+                                                    {...location}
                                                     isInverted={isInverted}
-                                                    location={location}
                                                 />
                                             ))}
                                         </Slider.Slides>
@@ -678,8 +681,8 @@ const Map: FC<{
                                 )}
                                 {locations && locations.length === 1 && (
                                     <LocationInfoCard
+                                        {...locations[0]}
                                         isInverted={isInverted}
-                                        location={locations[0]}
                                     />
                                 )}
                             </SliderWrapper>
@@ -687,7 +690,7 @@ const Map: FC<{
                     </Grid.Row>
                 </CardWrapper>
             </Slider.Provider>
-        </StyledSection>
+        </MapSection>
     );
 };
 
