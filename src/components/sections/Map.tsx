@@ -270,7 +270,7 @@ const LocationInfoCard: FC<
             )}
             {contact && (
                 <ContactList isInverted={isInverted}>
-                    {contact?.telephone && (
+                    {contact?.telephone?.label && (
                         <li>
                             <span>
                                 {contact?.telephone.icon ? (
@@ -292,7 +292,7 @@ const LocationInfoCard: FC<
                             </ContactListLink>
                         </li>
                     )}
-                    {contact.email && (
+                    {contact?.email?.label && (
                         <li>
                             <span>
                                 {contact?.email.icon ? (
@@ -443,14 +443,12 @@ const Map: FC<{
     controlNext?: (props: {
         isInverted?: boolean;
         isActive?: boolean;
-        isDisabled?: boolean;
         name?: string;
         clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
     controlPrev?: (props: {
         isInverted?: boolean;
         isActive?: boolean;
-        isDisabled?: boolean;
         name?: string;
         clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
@@ -592,16 +590,11 @@ const Map: FC<{
                                         </Slider.Slides>
                                         <Controls>
                                             <Slider.Control type="next">
-                                                {({
-                                                    isActive,
-                                                    isDisabled,
-                                                    clickHandler,
-                                                }) =>
+                                                {({ isActive, clickHandler }) =>
                                                     controlNext ? (
                                                         controlNext({
                                                             isInverted,
                                                             isActive,
-                                                            isDisabled,
                                                             clickHandler,
                                                             name: 'control_next_head',
                                                         })
@@ -611,7 +604,7 @@ const Map: FC<{
                                                                 isInverted
                                                             }
                                                             isDisabled={
-                                                                isDisabled
+                                                                !isActive
                                                             }
                                                             onClick={
                                                                 clickHandler
@@ -623,16 +616,11 @@ const Map: FC<{
                                                 }
                                             </Slider.Control>
                                             <Slider.Control type="prev">
-                                                {({
-                                                    isActive,
-                                                    isDisabled,
-                                                    clickHandler,
-                                                }) =>
+                                                {({ isActive, clickHandler }) =>
                                                     controlPrev ? (
                                                         controlPrev({
                                                             isInverted,
                                                             isActive,
-                                                            isDisabled,
                                                             clickHandler,
                                                             name: 'control_prev_head',
                                                         })
@@ -642,7 +630,7 @@ const Map: FC<{
                                                                 isInverted
                                                             }
                                                             isDisabled={
-                                                                isDisabled
+                                                                !isActive
                                                             }
                                                             onClick={
                                                                 clickHandler
