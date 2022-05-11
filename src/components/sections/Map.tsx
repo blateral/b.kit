@@ -337,6 +337,14 @@ const Controls = styled.div`
     }
 `;
 
+const SlideControl = styled(Slider.Control)`
+    display: none;
+
+    @media ${mq.semilarge} {
+        display: block;
+    }
+`;
+
 const StyledDotGroup = styled(Slider.DotGroup)`
     display: flex;
     flex-direction: row;
@@ -499,6 +507,7 @@ const Map: FC<{
             <Slider.Provider
                 fade={true}
                 swipe={false}
+                infinite={true}
                 slidesToShow={1}
                 variableWidth={false}
                 sameHeight={true}
@@ -589,7 +598,7 @@ const Map: FC<{
                                             ))}
                                         </Slider.Slides>
                                         <Controls>
-                                            <Slider.Control type="next">
+                                            <SlideControl type="next">
                                                 {({ isActive, clickHandler }) =>
                                                     controlNext ? (
                                                         controlNext({
@@ -614,8 +623,8 @@ const Map: FC<{
                                                         </Control>
                                                     )
                                                 }
-                                            </Slider.Control>
-                                            <Slider.Control type="prev">
+                                            </SlideControl>
+                                            <SlideControl type="prev">
                                                 {({ isActive, clickHandler }) =>
                                                     controlPrev ? (
                                                         controlPrev({
@@ -640,7 +649,7 @@ const Map: FC<{
                                                         </Control>
                                                     )
                                                 }
-                                            </Slider.Control>
+                                            </SlideControl>
                                             <StyledDotGroup>
                                                 {(i, isActive, onClick) => (
                                                     <DotWrapper
