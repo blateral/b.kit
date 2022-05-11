@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 
 import { CalloutTag } from 'components/typography/Callout';
-import { mq, spacings, getGlobals as global, withRange } from 'utils/styles';
+import { mq, spacings, withRange } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import HeaderKenBurns from './HeaderKenBurns';
 import HeaderPoster from './HeaderPoster';
@@ -200,11 +200,21 @@ const genHeightStyles = (isFull: boolean) => css`
 const HeaderSection = styled(Section)`
     position: relative;
     ${genHeightStyles(true)}
+
+    header + & {
+        ${withRange([0], 'padding-top')}
+        ${withRange([0], 'margin-top')}
+    }
 `;
 
 const HeaderSectionSmall = styled(Section)`
     position: relative;
     ${genHeightStyles(false)}
+
+    header + & {
+        ${withRange([0], 'padding-top')}
+        ${withRange([0], 'margin-top')}
+    }
 `;
 
 const StyledPoster = styled(Poster)`
@@ -252,10 +262,6 @@ const Content = styled.div<{ isCentered?: boolean }>`
 
 const ContentMobile = styled.div`
     padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
-    ${({ theme }) => {
-        const padding = global(theme).sections.seperation.padding.default;
-        return withRange(padding, 'padding-bottom');
-    }};
 
     & > * + * {
         margin-top: ${spacings.spacer}px;
@@ -379,6 +385,7 @@ const Header: FC<{
 
     return (
         <Section
+            addSeperation
             anchorId={anchorId}
             // bgColor="image"
             bgColor={

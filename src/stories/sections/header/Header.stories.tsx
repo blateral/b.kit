@@ -150,7 +150,7 @@ export const SmallerHeaderSize: Story = () => (
 
 export const WithNavBarReservation: Story = () => (
     <>
-        <div data-navbar-ident="top-main-bottom-beforeContent" />
+        <header data-navbar-ident="top-main-bottom-beforeContent" />
         <Header
             size="small"
             title="Lorem Ipsum Dolor Sit"
