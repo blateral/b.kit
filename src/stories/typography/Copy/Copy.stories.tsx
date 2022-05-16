@@ -8,9 +8,10 @@ const CopyExample = () => (
         <h5>Lorem Ipsum</h5>
         <h2>Lorem Ipsum Dolor Sit</h2>
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere
-            doloremque, temporibus tempore error harum ea nostrum. Molestiae
-            tempora odio quo cumque ratione, velit veniam sint deserunt ex
+            <a href="mama.pdf">test PDF-Link</a> Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Facere doloremque, temporibus tempore
+            error harum ea nostrum. Molestiae tempora odio quo cumque ratione,
+            velit veniam sint deserunt ex <a href="mama.zip">test PDF-Link</a>{' '}
             eveniet magni perspiciatis.
         </p>
         <h3>Lorem Ipsum Dolor Sit</h3>
@@ -86,7 +87,7 @@ export default {
     component: Copy,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;

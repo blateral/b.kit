@@ -1,13 +1,10 @@
 /* eslint-disable react/display-name */
-import Excel from 'components/base/icons/files/Excel';
-import Image from 'components/base/icons/files/Image';
-import Pdf from 'components/base/icons/files/Pdf';
-import PowerPoint from 'components/base/icons/files/PowerPoint';
-import Word from 'components/base/icons/files/Word';
-import Zip from 'components/base/icons/files/Zip';
-import DefaultIcon from 'components/base/icons/External';
+import * as Icons from 'components/base/icons/Icons';
 import React from 'react';
+
 import { css, DefaultTheme } from 'styled-components';
+import { getSVGDataURL as getDataUrl } from 'utils/dataURI';
+import { XOR } from './types';
 
 export type MediaQueryType =
     | 'small'
@@ -359,10 +356,21 @@ export type NavBarHeights = {
     large: number;
 };
 
-export interface LinkIcon {
-    icon: (isInverted?: boolean) => React.ReactNode;
+interface LinkIcon {
     /** Patterns of Href value to show this icon (e.g. .svg, .png) */
-    patterns?: string[];
+    patterns: string[];
+}
+
+export interface LinkUrlIcon extends LinkIcon {
+    // icon (e.g. URL, base64 or icon font char)
+    iconUrl: (isInverted?: boolean) => string;
+}
+
+export interface LinkFontIcon extends LinkIcon {
+    /** Define font family for icon font */
+    iconFont: string;
+    iconFontSize: string;
+    iconChar: string;
 }
 
 export interface GlobalSettings {
@@ -450,10 +458,11 @@ export interface GlobalSettings {
     };
     icons: {
         /** Icon setup for link/download lists */
-        linkIcons: {
-            default: (isInverted?: boolean) => React.ReactNode;
-            variations: Array<LinkIcon>;
-        };
+        // linkIcons: {
+        //     default: (isInverted?: boolean) => React.ReactNode;
+        //     variations: Array<LinkIcon>;
+        // };
+        linkIcons: Array<XOR<LinkUrlIcon, LinkFontIcon>>;
     };
 }
 
@@ -517,35 +526,86 @@ const defaultGlobalSettings: GlobalSettings = {
         },
     },
     icons: {
-        linkIcons: {
-            default: () => <DefaultIcon />,
-            variations: [
-                {
-                    icon: () => <Pdf />,
-                    patterns: ['.pdf'],
-                },
-                {
-                    icon: () => <Word />,
-                    patterns: ['.docx'],
-                },
-                {
-                    icon: () => <Excel />,
-                    patterns: ['.xlsx'],
-                },
-                {
-                    icon: () => <PowerPoint />,
-                    patterns: ['.pptx'],
-                },
-                {
-                    icon: () => <Image />,
-                    patterns: ['.jpg', '.jpeg', '.png', '.svg'],
-                },
-                {
-                    icon: () => <Zip />,
-                    patterns: ['.zip'],
-                },
-            ],
-        },
+        linkIcons: [
+            {
+                iconUrl: (isInverted) =>
+                    getDataUrl(
+                        <Icons.Pdf
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: ['.pdf', '.jpg'],
+            },
+            {
+                iconUrl: (isInverted) =>
+                    getDataUrl(
+                        <Icons.Word
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: ['.docx'],
+            },
+            {
+                iconUrl: (isInverted) =>
+                    getDataUrl(
+                        <Icons.Excel
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: ['.xlsx'],
+            },
+            {
+                iconUrl: (isInverted) =>
+                    getDataUrl(
+                        <Icons.PowerPoint
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: ['.pptx'],
+            },
+            {
+                iconUrl: (isInverted) =>
+                    getDataUrl(
+                        <Icons.Image
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: ['.jpg', '.jpeg', '.png', '.svg'],
+            },
+            {
+                iconUrl: (isInverted) =>
+                    getDataUrl(
+                        <Icons.Zip
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: ['.zip', '.tar'],
+            },
+        ],
     },
 };
 

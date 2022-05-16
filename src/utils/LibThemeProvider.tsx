@@ -9,12 +9,7 @@ import {
     getGlobals,
     getTheme,
 } from 'utils/styles';
-
-export type RecursivePartial<T> = {
-    [P in keyof T]?: T[P] extends Array<infer I>
-        ? Array<RecursivePartial<I>>
-        : RecursivePartial<T[P]>;
-};
+import { RecursivePartial } from './types';
 
 export type ThemeMods = RecursivePartial<DefaultTheme>;
 

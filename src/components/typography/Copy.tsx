@@ -8,8 +8,11 @@ import {
     withRange,
     FontOptionType,
     getFonts as font,
+    getGlobals as global,
     styleTextColor,
     FontOptions,
+    LinkUrlIcon,
+    LinkFontIcon,
 } from 'utils/styles';
 import { headingStyle } from './Heading';
 
@@ -36,6 +39,8 @@ const base = css<{
     textGradient?: string;
     columns?: boolean;
     isInverted?: boolean;
+    copyType: CopyType;
+    size: FontOptionType;
 }>`
     h1,
     h2,
@@ -212,6 +217,41 @@ const base = css<{
     .icon-label--list + .icon-label--list {
         margin-top: ${spacings.nudge * 3}px;
     }
+
+    /** add icons to anchor tags with matching href value */
+    ${({ theme, isInverted }) => {
+        return global(theme).icons.linkIcons.map((item) => {
+            const iconChar = (item as LinkFontIcon).iconChar;
+            const iconFont = (item as LinkFontIcon).iconFont;
+            const iconFontSize = (item as LinkFontIcon).iconFontSize;
+            const iconUrl = (item as LinkUrlIcon).iconUrl?.(isInverted);
+            const patterns = item.patterns;
+
+            const selectors = patterns.map((p) => `a[href$='${p}']`).join(', ');
+            const pseudoSelectors = patterns
+                .map((p) => `a[href$='${p}']:after`)
+                .join(', ');
+
+            return iconChar || iconUrl
+                ? css`
+                      ${selectors} {
+                          display: inline-flex;
+                          position: relative;
+                      }
+
+                      ${pseudoSelectors} {
+                          content: ${iconChar || `url("${iconUrl}")`};
+                          display: block;
+                          font-family: ${iconFont || 'inherit'};
+                          font-size: ${iconFontSize || 'inherit'};
+                          height: 0;
+
+                          margin-left: ${spacings.nudge}px;
+                      }
+                  `
+                : '';
+        });
+    }}
 
     *:first-child {
         margin-top: 0;

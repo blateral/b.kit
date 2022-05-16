@@ -32,7 +32,7 @@ const StyledLink = styled(Link)`
     }
 `;
 
-const IconContainer = styled.span`
+const IconContainer = styled.img`
     display: inline-block;
 `;
 
@@ -45,16 +45,15 @@ export const getLinkIcon = (
     theme: DefaultTheme,
     href: string,
     isInverted?: boolean
-) => {
+): string => {
     const linkIcons = theme.globals.icons.linkIcons;
 
     const fileExtension = `.${href?.split('.').pop() || ''}`;
-
-    const result = linkIcons.variations.find((icon) => {
+    const result = linkIcons.find((icon) => {
         return icon.patterns?.find((pattern) => pattern.match(fileExtension));
     });
 
-    return result ? result.icon(isInverted) : linkIcons.default(isInverted);
+    return result?.iconChar || result?.iconUrl?.(isInverted) || '';
 };
 
 const LinkList: React.FC<LinkListProps> = ({ items, isInverted }) => {
@@ -77,7 +76,7 @@ const LinkList: React.FC<LinkListProps> = ({ items, isInverted }) => {
                             <StyledLink {...item.link} isInverted={isInverted}>
                                 <span>{item.label}</span>
                                 {linkIcon && (
-                                    <IconContainer>{linkIcon}</IconContainer>
+                                    <IconContainer src={linkIcon} alt="" />
                                 )}
                             </StyledLink>
                         </ListItem>

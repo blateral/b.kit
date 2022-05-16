@@ -40,6 +40,9 @@ const LinkListView = styled.ul`
 `;
 
 const BottomLinkItem = styled.li`
+    display: flex;
+    align-items: center;
+
     & + & {
         margin-left: ${spacings.nudge}px;
     }
