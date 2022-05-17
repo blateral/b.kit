@@ -235,7 +235,7 @@ const base = css<{
                           font-variant: normal;
                           text-transform: none;
                           text-decoration: none;
-                          vertical-align: ${isFontIcon ? 'middle' : 'top'};
+                          vertical-align: ${isFontIcon ? 'middle' : 'text-top'};
                           line-height: 1;
                           -webkit-font-smoothing: antialiased;
                           -moz-osx-font-smoothing: grayscale;
