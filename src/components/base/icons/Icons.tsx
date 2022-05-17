@@ -24,6 +24,7 @@ export { default as PowerPoint } from 'components/base/icons/files/PowerPoint';
 export { default as Word } from 'components/base/icons/files/Word';
 export { default as Zip } from 'components/base/icons/files/Zip';
 export { default as External } from 'components/base/icons/External';
+export { default as BoxArrowUpRight } from 'components/base/icons/BoxArrowUpRight';
 
 /** Socials **/
 export { default as Facebook } from 'components/base/icons/socials/Facebook';

@@ -548,6 +548,20 @@ const defaultGlobalSettings: GlobalSettings = {
             {
                 iconUrl: (isInverted) =>
                     getSVGData(
+                        <Icons.BoxArrowUpRight
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: [''], // default icon
+                scale: getLinkIconScale,
+            },
+            {
+                iconUrl: (isInverted) =>
+                    getSVGData(
                         <Icons.Pdf
                             iconColor={
                                 isInverted

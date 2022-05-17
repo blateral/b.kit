@@ -219,6 +219,14 @@ const base = css<{
         margin-top: ${spacings.nudge * 3}px;
     }
 
+    a {
+        display: inline-block;
+    }
+
+    a[href] + br + a[href] {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+
     /** add icons to anchor tags with matching href value */
     ${({ theme, isInverted, copyType, size }) => {
         return global(theme).icons.linkIcons.map((item) => {
@@ -231,9 +239,11 @@ const base = css<{
             );
             const patterns = item.patterns;
 
-            const selectors = patterns.map((p) => `a[href$='${p}']`).join(', ');
+            const selectors = patterns
+                .map((p) => (p ? `a[href$='${p}']` : `a[href]`))
+                .join(', ');
             const pseudoSelectors = patterns
-                .map((p) => `a[href$='${p}']:after`)
+                .map((p) => (p ? `a[href$='${p}']:after` : `a[href]:after`))
                 .join(', ');
 
             return iconChar || iconUrl

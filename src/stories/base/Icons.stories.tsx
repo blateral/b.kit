@@ -58,6 +58,7 @@ import Star from 'components/base/icons/Star';
 import Minus from 'components/base/icons/Minus';
 import Plus from 'components/base/icons/Plus';
 import DeleteForever from 'components/base/icons/DeleteForever';
+import BoxArrowUpRight from 'components/base/icons/BoxArrowUpRight';
 
 export default {
     title: 'Base/Icons',
@@ -106,6 +107,7 @@ export default {
         Route,
         Star,
         DeleteForever,
+        BoxArrowUpRight,
     },
     decorators: [
         (Story) => (
@@ -234,3 +236,6 @@ IconDeleteForever.storyName = 'Delete Forever';
 
 export const IconDateRange: Story = () => <DateRange />;
 IconDateRange.storyName = 'Date Range';
+
+export const IconBoxArrowUpRight: Story = () => <BoxArrowUpRight />;
+IconBoxArrowUpRight.storyName = 'Box Arrow Up Right';

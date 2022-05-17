@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
 import Copy from 'components/typography/Copy';
@@ -28,12 +28,12 @@ const CopyExample = () => (
             tempora odio quo cumque ratione, velit veniam sint deserunt ex
             eveniet magni perspiciatis.
         </p>
-        <p>
-            <a href="test.svg">icon list</a>
-        </p>
-        <p>
-            <a href="test.jpg">icon list</a>
-        </p>
+        <a href="test.svg">icon list</a>
+        <br />
+        <a href="test.jpg">icon list</a>
+        <br />
+        <a href="test.html">icon list</a>
+
         <h4>Lorem Ipsum Dolor Sit</h4>
         <h2>Lorem Ipsum Dolor Sit</h2>
         <p>
