@@ -3,7 +3,7 @@ import * as Icons from 'components/base/icons/Icons';
 import React from 'react';
 
 import { css, DefaultTheme } from 'styled-components';
-import { getSVGDataURL as getDataUrl } from 'utils/dataURI';
+import { getSVGDataImg as getSVGData } from 'utils/dataURI';
 import { XOR } from './types';
 
 export type MediaQueryType =
@@ -359,6 +359,8 @@ export type NavBarHeights = {
 interface LinkIcon {
     /** Patterns of Href value to show this icon (e.g. .svg, .png) */
     patterns: string[];
+    /** Icon scale factor. 1 is default */
+    scale?: (props: { type?: keyof Fonts; size?: FontOptionType }) => number;
 }
 
 export interface LinkUrlIcon extends LinkIcon {
@@ -369,7 +371,7 @@ export interface LinkUrlIcon extends LinkIcon {
 export interface LinkFontIcon extends LinkIcon {
     /** Define font family for icon font */
     iconFont: string;
-    iconFontSize: string;
+    /** Define icon font character */
     iconChar: string;
 }
 
@@ -466,6 +468,22 @@ export interface GlobalSettings {
     };
 }
 
+const getLinkIconScale = (props: {
+    type?: keyof Fonts;
+    size?: FontOptionType;
+}) => {
+    if (
+        props.type === 'copy' ||
+        props.type === 'copy-b' ||
+        props.type === 'copy-i'
+    ) {
+        if (props.size === 'medium') return 0.8;
+        if (props.size === 'small') return 0.7;
+        if (props.size === 'big') return 0.9;
+    }
+    return 0.8;
+};
+
 const defaultGlobalSettings: GlobalSettings = {
     sections: {
         seperation: {
@@ -529,7 +547,7 @@ const defaultGlobalSettings: GlobalSettings = {
         linkIcons: [
             {
                 iconUrl: (isInverted) =>
-                    getDataUrl(
+                    getSVGData(
                         <Icons.Pdf
                             iconColor={
                                 isInverted
@@ -538,11 +556,12 @@ const defaultGlobalSettings: GlobalSettings = {
                             }
                         />
                     ),
-                patterns: ['.pdf', '.jpg'],
+                patterns: ['.pdf'],
+                scale: getLinkIconScale,
             },
             {
                 iconUrl: (isInverted) =>
-                    getDataUrl(
+                    getSVGData(
                         <Icons.Word
                             iconColor={
                                 isInverted
@@ -552,10 +571,11 @@ const defaultGlobalSettings: GlobalSettings = {
                         />
                     ),
                 patterns: ['.docx'],
+                scale: getLinkIconScale,
             },
             {
                 iconUrl: (isInverted) =>
-                    getDataUrl(
+                    getSVGData(
                         <Icons.Excel
                             iconColor={
                                 isInverted
@@ -565,10 +585,11 @@ const defaultGlobalSettings: GlobalSettings = {
                         />
                     ),
                 patterns: ['.xlsx'],
+                scale: getLinkIconScale,
             },
             {
                 iconUrl: (isInverted) =>
-                    getDataUrl(
+                    getSVGData(
                         <Icons.PowerPoint
                             iconColor={
                                 isInverted
@@ -578,10 +599,11 @@ const defaultGlobalSettings: GlobalSettings = {
                         />
                     ),
                 patterns: ['.pptx'],
+                scale: getLinkIconScale,
             },
             {
                 iconUrl: (isInverted) =>
-                    getDataUrl(
+                    getSVGData(
                         <Icons.Image
                             iconColor={
                                 isInverted
@@ -591,10 +613,11 @@ const defaultGlobalSettings: GlobalSettings = {
                         />
                     ),
                 patterns: ['.jpg', '.jpeg', '.png', '.svg'],
+                scale: getLinkIconScale,
             },
             {
                 iconUrl: (isInverted) =>
-                    getDataUrl(
+                    getSVGData(
                         <Icons.Zip
                             iconColor={
                                 isInverted
@@ -604,6 +627,7 @@ const defaultGlobalSettings: GlobalSettings = {
                         />
                     ),
                 patterns: ['.zip', '.tar'],
+                scale: getLinkIconScale,
             },
         ],
     },

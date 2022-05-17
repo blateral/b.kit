@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-export const getSVGDataURL = (
+export const getSVGDataImg = (
     svg: React.ReactElement,
     encode = true
 ): string => {

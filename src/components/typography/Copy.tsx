@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
+import { clampValue } from 'utils/clamp';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     FontType,
@@ -219,12 +220,15 @@ const base = css<{
     }
 
     /** add icons to anchor tags with matching href value */
-    ${({ theme, isInverted }) => {
+    ${({ theme, isInverted, copyType, size }) => {
         return global(theme).icons.linkIcons.map((item) => {
             const iconChar = (item as LinkFontIcon).iconChar;
             const iconFont = (item as LinkFontIcon).iconFont;
-            const iconFontSize = (item as LinkFontIcon).iconFontSize;
             const iconUrl = (item as LinkUrlIcon).iconUrl?.(isInverted);
+            const iconScale = clampValue(
+                item.scale?.({ type: copyType, size }) || 1,
+                0
+            );
             const patterns = item.patterns;
 
             const selectors = patterns.map((p) => `a[href$='${p}']`).join(', ');
@@ -235,18 +239,33 @@ const base = css<{
             return iconChar || iconUrl
                 ? css`
                       ${selectors} {
-                          display: inline-flex;
+                          display: inline-block;
                           position: relative;
                       }
 
                       ${pseudoSelectors} {
-                          content: ${iconChar || `url("${iconUrl}")`};
-                          display: block;
-                          font-family: ${iconFont || 'inherit'};
-                          font-size: ${iconFontSize || 'inherit'};
-                          height: 0;
+                          content: ${iconChar
+                              ? `"\\${parseInt(iconChar).toString(16)}"`
+                              : `url("${iconUrl}")`};
+                          display: inline-block;
+                          font-family: ${iconFont || 'inherit'} !important;
+                          font-size: ${iconChar && `${iconScale}em`};
+                          font-style: normal;
+                          font-weight: normal !important;
+                          font-variant: normal;
+                          text-transform: none;
+                          text-decoration: none;
+                          vertical-align: middle;
+                          line-height: 1;
+                          -webkit-font-smoothing: antialiased;
+                          -moz-osx-font-smoothing: grayscale;
 
-                          margin-left: ${spacings.nudge}px;
+                          transform: ${!iconFont && iconUrl
+                              ? `scale(${iconScale})`
+                              : undefined};
+
+                          margin-left: 0.3em;
+                          margin-right: 0.1em;
                       }
                   `
                 : '';
