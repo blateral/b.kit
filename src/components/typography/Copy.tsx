@@ -187,6 +187,71 @@ const base = css<{
     }
 
     // classes for richtext
+    a {
+        display: inline-block;
+    }
+
+    a[href] + br + a[href] {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+
+    /** add icons to anchor tags with matching href value */
+    ${({ theme, isInverted, copyType, size }) => {
+        return global(theme).icons.linkIcons.map((item) => {
+            const iconChar = (item as LinkFontIcon).iconChar;
+            const iconFont = (item as LinkFontIcon).iconFont;
+            const iconUrl = (item as LinkUrlIcon).iconUrl?.(isInverted);
+            const iconScale = clampValue(
+                item.scale?.({ type: copyType, size }) || 1,
+                0
+            );
+            const patterns = item.patterns;
+            const isFontIcon = !!iconChar && !!iconFont;
+
+            const selectors = patterns
+                .map((p) => (p ? `a[href*='${p}']` : `a[href]`))
+                .join(', ');
+            const pseudoSelectors = patterns
+                .map((p) => (p ? `a[href*='${p}']:after` : `a[href]:after`))
+                .join(', ');
+
+            return iconChar || iconUrl
+                ? css`
+                      ${selectors} {
+                          display: inline-block;
+                          position: relative;
+                      }
+
+                      ${pseudoSelectors} {
+                          content: ${iconChar
+                              ? `"\\${parseInt(iconChar).toString(16)}"`
+                              : `url("${iconUrl}")`};
+
+                          display: inline-block;
+                          font-family: ${iconFont || 'inherit'} !important;
+                          font-size: ${isFontIcon && `${iconScale}em`};
+                          font-style: normal;
+                          font-weight: normal !important;
+                          font-variant: normal;
+                          text-transform: none;
+                          text-decoration: none;
+                          vertical-align: ${isFontIcon ? 'middle' : 'top'};
+                          line-height: 1;
+                          -webkit-font-smoothing: antialiased;
+                          -moz-osx-font-smoothing: grayscale;
+
+                          transform: ${!iconFont && iconUrl
+                              ? `scale(${iconScale})`
+                              : undefined};
+
+                          max-height: ${!isFontIcon && '1em'};
+                          margin-left: 0.3em;
+                          margin-right: 0.1em;
+                      }
+                  `
+                : '';
+        });
+    }}
 
     /** DOM element with icon and/or label */
     .icon-label {
@@ -197,6 +262,10 @@ const base = css<{
         padding-right: ${spacings.nudge}px;
         ${copyStyle('copy', 'big')}
         vertical-align: middle;
+
+        & > a:after {
+            content: none;
+        }
 
         & > * + * {
             margin-left: ${spacings.nudge * 2}px;
@@ -218,69 +287,6 @@ const base = css<{
     .icon-label--list + .icon-label--list {
         margin-top: ${spacings.nudge * 3}px;
     }
-
-    a {
-        display: inline-block;
-    }
-
-    a[href] + br + a[href] {
-        margin-top: ${spacings.nudge * 2}px;
-    }
-
-    /** add icons to anchor tags with matching href value */
-    ${({ theme, isInverted, copyType, size }) => {
-        return global(theme).icons.linkIcons.map((item) => {
-            const iconChar = (item as LinkFontIcon).iconChar;
-            const iconFont = (item as LinkFontIcon).iconFont;
-            const iconUrl = (item as LinkUrlIcon).iconUrl?.(isInverted);
-            const iconScale = clampValue(
-                item.scale?.({ type: copyType, size }) || 1,
-                0
-            );
-            const patterns = item.patterns;
-
-            const selectors = patterns
-                .map((p) => (p ? `a[href$='${p}']` : `a[href]`))
-                .join(', ');
-            const pseudoSelectors = patterns
-                .map((p) => (p ? `a[href$='${p}']:after` : `a[href]:after`))
-                .join(', ');
-
-            return iconChar || iconUrl
-                ? css`
-                      ${selectors} {
-                          display: inline-block;
-                          position: relative;
-                      }
-
-                      ${pseudoSelectors} {
-                          content: ${iconChar
-                              ? `"\\${parseInt(iconChar).toString(16)}"`
-                              : `url("${iconUrl}")`};
-                          display: inline-block;
-                          font-family: ${iconFont || 'inherit'} !important;
-                          font-size: ${iconChar && `${iconScale}em`};
-                          font-style: normal;
-                          font-weight: normal !important;
-                          font-variant: normal;
-                          text-transform: none;
-                          text-decoration: none;
-                          vertical-align: middle;
-                          line-height: 1;
-                          -webkit-font-smoothing: antialiased;
-                          -moz-osx-font-smoothing: grayscale;
-
-                          transform: ${!iconFont && iconUrl
-                              ? `scale(${iconScale})`
-                              : undefined};
-
-                          margin-left: 0.3em;
-                          margin-right: 0.1em;
-                      }
-                  `
-                : '';
-        });
-    }}
 
     *:first-child {
         margin-top: 0;

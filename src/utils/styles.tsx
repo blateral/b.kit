@@ -562,6 +562,34 @@ const defaultGlobalSettings: GlobalSettings = {
             {
                 iconUrl: (isInverted) =>
                     getSVGData(
+                        <Icons.Mail
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: ['mailto:'],
+                scale: getLinkIconScale,
+            },
+            {
+                iconUrl: (isInverted) =>
+                    getSVGData(
+                        <Icons.Phone
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: ['tel:'],
+                scale: getLinkIconScale,
+            },
+            {
+                iconUrl: (isInverted) =>
+                    getSVGData(
                         <Icons.Pdf
                             iconColor={
                                 isInverted

@@ -11,8 +11,8 @@ const Mail: React.FC<{ iconColor?: string; className?: string }> = ({
 }) => (
     <SVG
         viewBox="0 0 20 16"
-        width="20"
-        height="16"
+        width="21"
+        height="24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={className}
