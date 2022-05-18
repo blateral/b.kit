@@ -165,7 +165,7 @@ export default class StatusFormatter {
         return formattedTime;
     }
 
-    private areOnSameDay(first: Date, second: Date) {
+    public areOnSameDay(first: Date, second: Date) {
         return (
             first.getFullYear() === second.getFullYear() &&
             first.getMonth() === second.getMonth() &&
@@ -202,8 +202,6 @@ export default class StatusFormatter {
             );
 
             endTime = endTimeFormatter.getFormattedTime();
-
-            console.log(this.areOnSameDay(this.date, endDate));
         }
 
         // concatenate timespan string
