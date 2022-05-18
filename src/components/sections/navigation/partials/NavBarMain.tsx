@@ -4,13 +4,29 @@ import styled from 'styled-components';
 import MenuBurger from 'components/base/icons/MenuBurger';
 import { NavBarStates } from '../Navigation';
 import * as Skeletons from 'components/sections/navigation/skeletons/index';
-import { spacings } from 'utils/styles';
+import { spacings, mq } from 'utils/styles';
 import { LinkProps } from 'components/typography/Link';
 
 const LogoColumn = styled(Skeletons.Column)`
     display: flex;
     align-items: center;
     padding: ${spacings.nudge}px 0;
+`;
+
+const ActionsColumn = styled(Skeletons.Column)`
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+
+    @media ${mq.medium} {
+        & > * + * {
+            margin-left: ${spacings.nudge * 2}px;
+        }
+    }
 `;
 
 const NavBarMain: FC<{
@@ -65,20 +81,20 @@ const NavBarMain: FC<{
                     />
                 </LogoColumn>
             )}
-            <Skeletons.Column takeSpace vAlign="center">
-                {primaryAction
-                    ? primaryAction({
-                          isInverted,
-                          ...navStates,
-                      })
-                    : undefined}
+            <ActionsColumn takeSpace vAlign="center">
                 {secondaryAction
                     ? secondaryAction({
                           isInverted,
                           ...navStates,
                       })
                     : undefined}
-            </Skeletons.Column>
+                {primaryAction
+                    ? primaryAction({
+                          isInverted,
+                          ...navStates,
+                      })
+                    : undefined}
+            </ActionsColumn>
         </React.Fragment>
     );
 };
