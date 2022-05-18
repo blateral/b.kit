@@ -207,6 +207,7 @@ const base = css<{
             );
             const patterns = item.patterns;
             const isFontIcon = !!iconChar && !!iconFont;
+            const vAlign = item.vAlign || (isFontIcon ? 'text-top' : 'top');
 
             const selectors = patterns
                 .map((p) => (p ? `a[href*='${p}']` : `a[href]`))
@@ -235,7 +236,7 @@ const base = css<{
                           font-variant: normal;
                           text-transform: none;
                           text-decoration: none;
-                          vertical-align: ${isFontIcon ? 'text-top' : 'top'};
+                          vertical-align: ${vAlign};
                           line-height: 1;
                           -webkit-font-smoothing: antialiased;
                           -moz-osx-font-smoothing: grayscale;

@@ -361,6 +361,16 @@ interface LinkIcon {
     patterns: string[];
     /** Icon scale factor. 1 is default */
     scale?: (props: { type?: keyof Fonts; size?: FontOptionType }) => number;
+    /** Set vertical alignment of icon in text */
+    vAlign?:
+        | 'bottom'
+        | 'baseline'
+        | 'middle'
+        | 'top'
+        | 'text-top'
+        | 'text-bottom'
+        | 'super'
+        | 'sub';
 }
 
 export interface LinkUrlIcon extends LinkIcon {
