@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import Image from 'components/blocks/Image';
 import { useMediaQuery } from 'utils/useMediaQuery';
-import { HeaderImage } from './Header';
+import { HeaderFocus, HeaderImage } from './Header';
 
 const PosterView = styled.div`
     position: relative;
@@ -20,7 +20,7 @@ const PosterView = styled.div`
     }
 `;
 
-const PlaceholderImg = styled(Image)`
+const PlaceholderImg = styled(Image)<{ focus?: HeaderFocus }>`
     position: absolute;
     top: 0;
     right: 0;
@@ -28,9 +28,17 @@ const PlaceholderImg = styled(Image)`
     left: 0;
     height: 100%;
     z-index: 0;
+
+    img {
+        object-position: ${({ focus }) =>
+            `${focus?.[0] || 'center'} ${focus?.[1] || 'center'}`};
+    }
 `;
 
-const AutoplayVideo = styled.video<{ isVisible?: boolean }>`
+const AutoplayVideo = styled.video<{
+    isVisible?: boolean;
+    focus?: HeaderFocus;
+}>`
     position: absolute;
     top: 0;
     right: 0;
@@ -39,7 +47,8 @@ const AutoplayVideo = styled.video<{ isVisible?: boolean }>`
     height: 100%;
     width: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: ${({ focus }) =>
+        `${focus?.[0] || 'center'} ${focus?.[1] || 'center'}`};
     opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
     pointer-events: none;
     z-index: 1;
@@ -53,6 +62,7 @@ const HeaderVideo: React.FC<{
     isInverted?: boolean;
     loadOnMobile?: boolean;
     placeholderImg?: HeaderImage;
+    focus?: HeaderFocus;
     videoUrl?: string;
     className?: string;
     children?: React.ReactNode;
@@ -60,6 +70,7 @@ const HeaderVideo: React.FC<{
     isInverted,
     loadOnMobile = true,
     placeholderImg,
+    focus,
     videoUrl,
     className,
     children,
@@ -88,6 +99,7 @@ const HeaderVideo: React.FC<{
                     coverSpace
                     ratios={undefined}
                     isInverted={isInverted}
+                    focus={focus}
                 />
             )}
             {videoUrl && isVideoAllowed && (
@@ -98,6 +110,7 @@ const HeaderVideo: React.FC<{
                     autoPlay
                     loop
                     onCanPlayThrough={() => setLoaded(true)}
+                    focus={focus}
                 />
             )}
             {children}

@@ -21,6 +21,7 @@ const Poster: FC<{
     isInverted?: boolean;
     videoUrl?: string;
     images?: Omit<ImageProps, 'ratios' | 'coverSpace'>[];
+    focus?: HeaderFocus;
     kenBurnsZoom?: number;
     kenBurnsZoomPoint?: [number, number];
     kenBurnsInterval?: number;
@@ -31,6 +32,7 @@ const Poster: FC<{
     isInverted,
     videoUrl,
     images,
+    focus,
     kenBurnsZoom,
     kenBurnsZoomPoint,
     kenBurnsInterval,
@@ -73,6 +75,7 @@ const Poster: FC<{
                 <HeaderPoster
                     isInverted={isInverted}
                     bgImage={images?.[0]}
+                    focus={focus}
                     className={className}
                 >
                     {children}
@@ -306,6 +309,10 @@ export type HeaderImage = Omit<ImageProps, 'ratios' | 'coverSpace'> & {
     zoomPoint?: [number, number];
     zoom?: number;
 };
+export type HeaderFocus = [
+    'left' | 'center' | 'right',
+    'top' | 'center' | 'bottom'
+];
 
 const Header: FC<{
     /** ID value for targeting section with anchor hashes */
@@ -313,6 +320,9 @@ const Header: FC<{
 
     /** Header image height size (full=100vh, small=80vh) */
     size?: HeaderSize;
+
+    /** Focus point of header image / video  */
+    focusPoint?: HeaderFocus;
 
     /** Center content */
     isCentered?: boolean;
@@ -358,6 +368,7 @@ const Header: FC<{
 }> = ({
     anchorId,
     size = 'full',
+    focusPoint = ['center', 'center'],
     isCentered,
     title,
     titleAs,
@@ -405,6 +416,7 @@ const Header: FC<{
                 kenBurnsZoom={kenBurnsZoom}
                 kenBurnsZoomPoint={kenBurnsZoomPoint}
                 onImageChange={onImageChange}
+                focus={focusPoint}
             >
                 {hasContent && (
                     <React.Fragment>

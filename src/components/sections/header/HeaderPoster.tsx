@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Image, { ImageProps } from 'components/blocks/Image';
+import { HeaderFocus } from './Header';
 
 const PosterView = styled.div`
     position: relative;
@@ -9,20 +10,23 @@ const PosterView = styled.div`
     height: 100%;
 `;
 
-const BgImage = styled(Image)`
+const BgImage = styled(Image)<{ focus?: HeaderFocus }>`
     height: 100%;
 
     img {
         height: 100%;
+        object-position: ${({ focus }) =>
+            `${focus?.[0] || 'center'} ${focus?.[1] || 'center'}`};
     }
 `;
 
 const HeaderPoster: React.FC<{
     isInverted?: boolean;
     bgImage?: Omit<ImageProps, 'ratios' | 'coverSpace'>;
+    focus?: HeaderFocus;
     className?: string;
     children?: React.ReactNode;
-}> = ({ isInverted, bgImage, className, children }) => {
+}> = ({ isInverted, bgImage, focus, className, children }) => {
     return (
         <PosterView className={className}>
             {bgImage && (
@@ -31,6 +35,7 @@ const HeaderPoster: React.FC<{
                     coverSpace
                     ratios={undefined}
                     isInverted={isInverted}
+                    focus={focus}
                 />
             )}
             {children}
