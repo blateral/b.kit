@@ -24,6 +24,8 @@ export {
     mq,
 } from 'utils/styles';
 
+export { isEmptyArray, isValidArray } from 'utils/arrays';
+
 /***** Hooks *****/
 export { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 export {

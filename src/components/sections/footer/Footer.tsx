@@ -10,6 +10,7 @@ import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import FooterBottomBar from './partials/FooterBottomBar';
+import { isValidArray } from 'utils/arrays';
 
 const FooterSection = styled(Section)`
     ${withRange([0], 'padding-bottom')}
@@ -75,7 +76,8 @@ export interface SiteLinkGroup {
 export interface FooterState {
     isInverted?: boolean;
     siteLinks?: SiteLinkGroup[];
-    bottomLinks?: BottomLink[];
+    bottomLinksLeft?: BottomLink[];
+    bottomLinksRight?: BottomLink[];
     languages?: Language[];
 }
 
@@ -100,8 +102,11 @@ const Footer: React.FC<{
     /** Footnote text of main section (richtext) */
     footNote?: string;
 
-    /** Link list in bottom bar */
-    bottomLinks?: BottomLink[];
+    /** Link list in left bottom bar */
+    bottomLinksLeft?: BottomLink[];
+
+    /** Link list in right bottom bar */
+    bottomLinksRight?: BottomLink[];
 
     /** Language toggler settings */
     languages?: Language[];
@@ -114,7 +119,8 @@ const Footer: React.FC<{
     customColumn,
     footNote,
     bottomBar,
-    bottomLinks,
+    bottomLinksLeft,
+    bottomLinksRight,
     languages,
 }) => {
     const { colors } = useLibTheme();
@@ -122,15 +128,41 @@ const Footer: React.FC<{
 
     const customCol = useMemo(() => {
         return customColumn
-            ? customColumn({ isInverted, siteLinks, languages, bottomLinks })
+            ? customColumn({
+                  isInverted,
+                  siteLinks,
+                  languages,
+                  bottomLinksLeft,
+                  bottomLinksRight,
+              })
             : undefined;
-    }, [bottomLinks, customColumn, isInverted, languages, siteLinks]);
+    }, [
+        bottomLinksLeft,
+        bottomLinksRight,
+        customColumn,
+        isInverted,
+        languages,
+        siteLinks,
+    ]);
 
     const bottom = useMemo(() => {
         return bottomBar
-            ? bottomBar({ isInverted, siteLinks, languages, bottomLinks })
+            ? bottomBar({
+                  isInverted,
+                  siteLinks,
+                  languages,
+                  bottomLinksLeft,
+                  bottomLinksRight,
+              })
             : undefined;
-    }, [bottomBar, bottomLinks, isInverted, languages, siteLinks]);
+    }, [
+        bottomBar,
+        bottomLinksLeft,
+        bottomLinksRight,
+        isInverted,
+        languages,
+        siteLinks,
+    ]);
 
     const hasBottomBar = useMemo(() => {
         if (bottomBar === null) return false;
@@ -138,10 +170,11 @@ const Footer: React.FC<{
         if (bottom === null) return false;
 
         return (
-            (languages && languages.length > 0) ||
-            (bottomLinks && bottomLinks.length > 0)
+            isValidArray(languages, false) ||
+            isValidArray(bottomLinksLeft, false) ||
+            isValidArray(bottomLinksRight, false)
         );
-    }, [bottom, bottomBar, bottomLinks, languages]);
+    }, [bottom, bottomBar, bottomLinksLeft, bottomLinksRight, languages]);
 
     return (
         <FooterSection
@@ -209,7 +242,8 @@ const Footer: React.FC<{
                 ) : hasBottomBar ? (
                     <FooterBottomBar
                         isInverted={isInverted}
-                        links={bottomLinks}
+                        linksLeft={bottomLinksLeft}
+                        linksRight={bottomLinksRight}
                         languages={languages}
                     />
                 ) : null}

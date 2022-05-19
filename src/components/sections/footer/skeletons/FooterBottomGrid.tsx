@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import styled from 'styled-components';
 
 import Bdot from 'components/blocks/Bdot';
@@ -35,17 +35,18 @@ const LinkListView = styled.ul`
     list-style: none;
 
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
+
+    margin-left: -${spacings.nudge}px;
 `;
 
 const BottomLinkItem = styled.li`
     display: flex;
     align-items: center;
 
-    & + & {
-        margin-left: ${spacings.nudge}px;
-    }
+    padding-left: ${spacings.nudge}px;
 `;
 
 const StyledLink = styled(Link)<{ isInverted?: boolean }>`
@@ -60,9 +61,14 @@ const StyledLink = styled(Link)<{ isInverted?: boolean }>`
 const LinkList: FC<{
     isInverted?: boolean;
     links?: BottomLink[];
-    brandIcon?: (isInverted?: boolean) => React.ReactNode;
+    brandIcon?: (isInverted?: boolean) => React.ReactNode | null;
     className?: string;
 }> = ({ isInverted, links, brandIcon, className }) => {
+    const brand = useMemo(
+        () => brandIcon?.(isInverted),
+        [brandIcon, isInverted]
+    );
+
     return (
         <LinkListView className={className}>
             {links?.map((item, i) => (
@@ -72,9 +78,9 @@ const LinkList: FC<{
                     </StyledLink>
                 </BottomLinkItem>
             ))}
-            <BottomLinkItem>
-                {brandIcon ? brandIcon(isInverted) : <Bdot />}
-            </BottomLinkItem>
+            {brand !== null && (
+                <BottomLinkItem>{brand || <Bdot />}</BottomLinkItem>
+            )}
         </LinkListView>
     );
 };

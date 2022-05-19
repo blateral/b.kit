@@ -97,7 +97,12 @@ const exampleSocials = [
     { href: '#', icon: () => <Youtube /> },
 ];
 
-const exampleBottomLinks: BottomLink[] = [
+const exampleBottomLinksLeft: BottomLink[] = [
+    { link: { href: '/agb' }, label: 'AGB' },
+    { link: { href: '/datenschutz' }, label: 'Datenschutz' },
+];
+
+const exampleBottomLinksRight: BottomLink[] = [
     { link: { href: '/impressum' }, label: 'Impressum' },
     { link: { href: '/agb' }, label: 'AGB' },
     { link: { href: '/datenschutz' }, label: 'Datenschutz' },
@@ -174,7 +179,8 @@ export const WithBottomLinks: Story = () => (
             />
         )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
-        bottomLinks={exampleBottomLinks}
+        bottomLinksLeft={exampleBottomLinksLeft}
+        bottomLinksRight={exampleBottomLinksRight}
     />
 );
 
@@ -196,7 +202,8 @@ export const WithLanguageSwitcher: Story = () => (
             />
         )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
-        bottomLinks={exampleBottomLinks}
+        bottomLinksLeft={exampleBottomLinksLeft}
+        bottomLinksRight={exampleBottomLinksRight}
         languages={[
             { label: 'deutsch', link: { href: '/de' } },
             { label: 'englisch', link: { href: '/en' } },
@@ -224,7 +231,8 @@ export const WithBackground: Story = () => (
             />
         )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
-        bottomLinks={exampleBottomLinks}
+        bottomLinksLeft={exampleBottomLinksLeft}
+        bottomLinksRight={exampleBottomLinksRight}
         languages={[
             { label: 'deutsch', link: { href: '/de' } },
             { label: 'englisch', link: { href: '/en' } },
@@ -252,7 +260,8 @@ export const IsInverted: Story = () => (
             />
         )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
-        bottomLinks={exampleBottomLinks}
+        bottomLinksLeft={exampleBottomLinksLeft}
+        bottomLinksRight={exampleBottomLinksRight}
         languages={[
             { label: 'deutsch', link: { href: '/de' } },
             { label: 'englisch', link: { href: '/en' } },
@@ -279,7 +288,8 @@ export const SuppressBottom: Story = () => (
             />
         )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
-        bottomLinks={exampleBottomLinks}
+        bottomLinksLeft={exampleBottomLinksLeft}
+        bottomLinksRight={exampleBottomLinksRight}
         languages={[
             { label: 'deutsch', link: { href: '/de' } },
             { label: 'englisch', link: { href: '/en' } },
@@ -307,14 +317,17 @@ export const CustomBottom: Story = () => (
             />
         )}
         footNote={`<b>© Villa Wunschgarten</b> | Münsterstraße 157 | 88662 Überlingen | Tel: 07551 8112345 | info@villa-wunschgarten.de`}
-        bottomLinks={exampleBottomLinks}
+        bottomLinksLeft={exampleBottomLinksLeft}
+        bottomLinksRight={exampleBottomLinksRight}
         languages={[
             { label: 'deutsch', link: { href: '/de' } },
             { label: 'englisch', link: { href: '/en' } },
             { label: 'französisch', link: { href: '/fr' } },
         ]}
-        bottomBar={({ bottomLinks }) => (
-            <div>Bottom bar with {(bottomLinks?.length || 0) + 1} Links</div>
+        bottomBar={({ bottomLinksLeft }) => (
+            <div>
+                Bottom bar with {(bottomLinksLeft?.length || 0) + 1} Links
+            </div>
         )}
     />
 );
