@@ -24,8 +24,6 @@ export {
     mq,
 } from 'utils/styles';
 
-export { isEmptyArray, isValidArray } from 'utils/arrays';
-
 /***** Hooks *****/
 export { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 export {
@@ -48,6 +46,8 @@ export { getBgImage } from 'utils/backgroundImage';
 export { clampValue } from 'utils/clamp';
 export { importFonts } from 'utils/fontLoading';
 export { getCurrentNavItem, getCurrentNavPath } from 'utils/navigation';
+export { isEmptyArray, isValidArray } from 'utils/arrays';
+export { getLinkIcon } from 'utils/getLinkIcon';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
@@ -135,7 +135,6 @@ export { default as Actions } from 'components/blocks/Actions';
 export { default as Bdot } from 'components/blocks/Bdot';
 export { default as IntroBlock } from 'components/blocks/IntroBlock';
 export { default as Image } from 'components/blocks/Image';
-export { default as LinkList, getLinkIcon } from 'components/blocks/LinkList';
 export { default as LanguageSwitcher } from 'components/blocks/LanguageSwitcher';
 export { default as VideoBlock } from 'components/blocks/VideoBlock';
 export { default as EventBlock } from 'components/blocks/EventBlock';

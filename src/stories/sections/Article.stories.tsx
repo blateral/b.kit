@@ -465,28 +465,6 @@ export const WithLinkList: Story = () => (
             <li>Ipsum</li>
             </ol>
         `}
-        linkList={{
-            items: [
-                {
-                    label: 'Lorem Ipsum dolor sit',
-                    link: {
-                        href: 'https://www.lorem.pdf',
-                    },
-                },
-                {
-                    label: 'Lorem Ipsum dolor sit',
-                    link: {
-                        href: 'https://www.unsplash.it/400/400',
-                    },
-                },
-                {
-                    label: 'Lorem Ipsum dolor sit',
-                    link: {
-                        href: 'https://www.lorem.pdf',
-                    },
-                },
-            ],
-        }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
@@ -537,50 +515,6 @@ export const WithLinkListAside: Story = () => (
             <li>Ipsum</li>
             </ol>
         `}
-        linkList={{
-            items: [
-                {
-                    label: 'Lorem Ipsum dolor sit',
-                    link: {
-                        href: 'https://www.lorem.pdf',
-                    },
-                },
-                {
-                    label: 'Lorem Ipsum dolor sit',
-                    link: {
-                        href: 'https://www.unsplash.it/400/400',
-                    },
-                },
-                {
-                    label: 'Lorem Ipsum dolor sit',
-                    link: {
-                        href: 'https://www.lorem.pdf',
-                    },
-                },
-            ],
-        }}
-        linkListAside={{
-            items: [
-                {
-                    label: 'Lorem Ipsum dolor sit',
-                    link: {
-                        href: 'https://www.lorem.pdf',
-                    },
-                },
-                {
-                    label: 'Lorem Ipsum dolor sit',
-                    link: {
-                        href: 'https://www.unsplash.it/400/400',
-                    },
-                },
-                {
-                    label: 'Lorem Ipsum dolor sit',
-                    link: {
-                        href: 'https://www.lorem.pdf',
-                    },
-                },
-            ],
-        }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
