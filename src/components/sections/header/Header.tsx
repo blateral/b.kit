@@ -46,6 +46,7 @@ const Poster: FC<{
                 <HeaderVideo
                     isInverted={isInverted}
                     videoUrl={videoUrl}
+                    focus={focus}
                     placeholderImg={images?.[0]}
                     className={className}
                 >
