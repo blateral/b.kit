@@ -57,7 +57,7 @@ const FooterBottomBar: FC<{
                     />
                 )}
             </LeftWrapper>
-            {isValidArray(linksRight, false) && (
+            {isValidArray(linksRight) && (
                 <FooterBottomGrid.LinkList
                     links={linksRight}
                     isInverted={isInverted}
