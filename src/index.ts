@@ -48,6 +48,7 @@ export { importFonts } from 'utils/fontLoading';
 export { getCurrentNavItem, getCurrentNavPath } from 'utils/navigation';
 export { isEmptyArray, isValidArray } from 'utils/arrays';
 export { getLinkIcon } from 'utils/getLinkIcon';
+export { default as useLeafletMap } from 'utils/useLeafletMap';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
