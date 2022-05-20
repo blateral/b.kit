@@ -6,6 +6,8 @@ import {
     spacings,
     getColors as color,
     getFonts as font,
+    getGlobals as global,
+    withRange,
 } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
@@ -106,9 +108,18 @@ const CardContainer = styled.div<{ isMirrored?: boolean }>`
     width: 100%;
     pointer-events: all;
 
+    ${({ theme }) =>
+        withRange(
+            global(theme).sections.seperation.padding.default,
+            'padding-bottom'
+        )}
+
     @media ${mq.semilarge} {
-        padding-top: ${spacings.spacer * 2.5}px;
-        padding-bottom: ${spacings.spacer * 2.5}px;
+        ${({ theme }) =>
+            withRange(
+                global(theme).sections.seperation.padding.default,
+                'padding-top'
+            )}
     }
 `;
 

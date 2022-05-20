@@ -4,7 +4,10 @@ export const isEmptyArray = <T>(array?: Array<T>) => {
     return array.length <= 0;
 };
 
-export const isValidArray = <T>(array?: Array<T>, allowEmpty = true) => {
+export const isValidArray = <T>(
+    array?: Array<T>,
+    allowEmpty = true
+): array is Array<T> => {
     if (!array) return false;
     if (!Array.isArray(array)) return false;
     return allowEmpty ? true : array.length > 0;
