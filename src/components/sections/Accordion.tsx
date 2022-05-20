@@ -75,6 +75,10 @@ const AccordionHead = styled.summary<{
     }
 `;
 
+const Column = styled(Copy)`
+    flex: 1 1 0;
+`;
+
 const AccordionText = styled.div<{
     isInverted?: boolean;
     hasBg?: boolean;
@@ -160,8 +164,8 @@ const AccordionBlock: React.FC<
                 hasBg={hasBg}
                 hasAside={!!aside}
             >
-                {text && <Copy type="copy" innerHTML={text} />}
-                {aside && <Copy type="copy" innerHTML={aside} />}
+                {text && <Column type="copy" innerHTML={text} />}
+                {aside && <Column type="copy" innerHTML={aside} />}
             </AccordionText>
         </View>
     );
@@ -204,36 +208,34 @@ const Accordion: React.FC<{
                 <Grid.Row gutter={0}>
                     <Grid.Col>
                         <AccordionContainer aria-label="Accordion Control Group Buttons">
-                            {items &&
-                                items.map(({ label, text, aside }, i) => {
-                                    const isSelected =
-                                        currentItems.indexOf(i) !== -1;
-                                    return (
-                                        <AccordionBlock
-                                            key={`${label}_${i}`}
-                                            isSelected={isSelected}
-                                            label={label}
-                                            text={text}
-                                            aside={aside}
-                                            onClick={() => {
-                                                setCurrentItems((prev) => {
-                                                    const copy = [...prev];
-                                                    const index =
-                                                        copy.indexOf(i);
-                                                    if (index === -1) {
-                                                        copy.push(i);
-                                                    } else {
-                                                        copy.splice(index, 1);
-                                                    }
-                                                    return copy;
-                                                });
-                                            }}
-                                            isInverted={isInverted}
-                                            hasBg={hasBg}
-                                            itemIcon={itemIcon}
-                                        />
-                                    );
-                                })}
+                            {items?.map(({ label, text, aside }, i) => {
+                                const isSelected =
+                                    currentItems.indexOf(i) !== -1;
+                                return (
+                                    <AccordionBlock
+                                        key={`${label}_${i}`}
+                                        isSelected={isSelected}
+                                        label={label}
+                                        text={text}
+                                        aside={aside}
+                                        onClick={() => {
+                                            setCurrentItems((prev) => {
+                                                const copy = [...prev];
+                                                const index = copy.indexOf(i);
+                                                if (index === -1) {
+                                                    copy.push(i);
+                                                } else {
+                                                    copy.splice(index, 1);
+                                                }
+                                                return copy;
+                                            });
+                                        }}
+                                        isInverted={isInverted}
+                                        hasBg={hasBg}
+                                        itemIcon={itemIcon}
+                                    />
+                                );
+                            })}
                         </AccordionContainer>
                     </Grid.Col>
                 </Grid.Row>
