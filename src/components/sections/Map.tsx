@@ -27,6 +27,7 @@ import Link from 'components/typography/Link';
 import LocationPin from 'components/base/icons/LocationPin';
 import Control from 'components/buttons/Control';
 import * as Icons from 'components/base/icons/Icons';
+import { getSVGDataImg as getSVGData } from 'utils/dataURI';
 
 interface Address {
     street: string;
@@ -362,26 +363,51 @@ const Map: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
+    /** Section background */
     bgMode?: 'full' | 'inverted';
+
+    /** Switch horizontal order of map and location info text */
     isMirrored?: boolean;
+
+    /** Map tile provider */
     provider?: string;
+
+    /** Map attribution text (richtext) */
     attribution?: string;
+
+    /** Initial center of the map */
     center?: [number, number];
+
+    /** Initial map zoom */
     zoom?: number;
+
+    /** Zoom if map jumps to location */
     flyToZoom?: number;
+
+    /** Initial location */
     initialLocation?: string;
+
+    /** Array of location settings */
     locations?: Array<MapLocation>;
+
     /** Show all markers on first load */
     allMarkersOnInit?: boolean;
+
     /** Map container padding for show all markers */
     fitBoundsPadding?: [number, number];
+
+    /** Icon element for flight to the current active location */
     flyToControl?: React.ReactNode;
+
+    /** Injection function to replace default control button */
     controlNext?: (props: {
         isInverted?: boolean;
         isActive?: boolean;
         name?: string;
         clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
+
+    /** Injection function to replace default control button */
     controlPrev?: (props: {
         isInverted?: boolean;
         isActive?: boolean;
@@ -416,6 +442,14 @@ const Map: FC<{
 
     const hasBg = bgMode === 'full';
     const isInverted = bgMode === 'inverted';
+
+    const defaultMarker: LocationIcon = {
+        size: [28, 28],
+        anchor: [14, 28],
+        sizeActive: [70, 70],
+        anchorActive: [35, 70],
+        url: getSVGData(<LocationPin />),
+    };
 
     const goToNext = () => {
         setActiveLocationId((prev) => {
@@ -478,13 +512,11 @@ const Map: FC<{
                     goTo(flyToZoom);
                 }}
                 fitBoundsPadding={fitBoundsPadding}
-                markers={locations?.map(({ id, position, icon }) => {
-                    return {
-                        id,
-                        position,
-                        icon,
-                    };
-                })}
+                markers={locations?.map(({ id, position, icon }) => ({
+                    id,
+                    position,
+                    icon: icon || defaultMarker,
+                }))}
                 onActiveMarkerChanged={({ goTo }) => goTo()}
             />
 

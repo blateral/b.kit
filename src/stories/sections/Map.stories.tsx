@@ -65,14 +65,6 @@ const locations: MapLocation[] = [
         contact: {
             telephone: { label: '+49 123 1234567' },
         },
-
-        icon: {
-            size: [20, 28],
-            anchor: [10, 28],
-            sizeActive: [50, 70],
-            anchorActive: [25, 70],
-            url: marker,
-        },
     },
     {
         id: 'id3',
@@ -96,13 +88,6 @@ const locations: MapLocation[] = [
                     <ArrowRight iconColor={isInverted ? '#fff' : '#000'} />
                 ),
             },
-        },
-        icon: {
-            size: [20, 28],
-            anchor: [10, 28],
-            sizeActive: [50, 70],
-            anchorActive: [25, 70],
-            url: marker,
         },
     },
 ];
@@ -222,20 +207,6 @@ export const WithCustomControls: Story = () => (
             <button disabled={!isActive} onClick={clickHandler}>
                 prev
             </button>
-        )}
-    />
-);
-
-export const WithCustomDots: Story = () => (
-    <Map
-        initialLocation="id1"
-        locations={locations}
-        flyToControl={<FlyTo />}
-        flyToZoom={12}
-        allMarkersOnInit
-        fitBoundsPadding={[30, 30]}
-        dot={({ isActive }) => (
-            <ArrowRight iconColor={isActive ? 'red' : 'grey'} />
         )}
     />
 );
