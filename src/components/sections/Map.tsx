@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import {
@@ -15,7 +15,6 @@ import Wrapper, { wrapperWhitespace } from 'components/base/Wrapper';
 
 import IntroBlock from 'components/blocks/IntroBlock';
 import LeafletMap from 'components/blocks/LeafletMap';
-import Slider, { SliderContext } from 'components/blocks/Slider';
 
 import Copy, { copyStyle } from 'components/typography/Copy';
 import { HeadlineTag } from 'components/typography/Heading';
@@ -99,26 +98,16 @@ const CardWrapper = styled(Wrapper)`
     pointer-events: none;
 `;
 
-const SliderWrapper = styled.div<{ isMirrored?: boolean }>`
+const CardContainer = styled.div<{ isMirrored?: boolean }>`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     position: relative;
     width: 100%;
     pointer-events: all;
 
     @media ${mq.semilarge} {
-        flex-direction: row;
-
         padding-top: ${spacings.spacer * 2.5}px;
         padding-bottom: ${spacings.spacer * 2.5}px;
-    }
-
-    .slick-slide div {
-        outline: none;
-    }
-
-    .slick-initialized .slick-slide.slick-active {
-        z-index: 1;
     }
 `;
 
@@ -321,75 +310,14 @@ const LocationInfoCard: FC<
 
 const Controls = styled.div`
     display: flex;
-    flex-direction: row;
-    align-self: center;
-    text-align: center;
+    flex-direction: column;
+    align-self: flex-start;
+    margin-left: auto;
+    text-align: right;
 
-    @media ${mq.semilarge} {
-        flex-direction: column;
-        align-self: flex-start;
-        margin-left: auto;
-        text-align: right;
-
-        & > * + * {
-            margin-top: ${spacings.nudge}px;
-        }
+    & > * + * {
+        margin-top: ${spacings.nudge}px;
     }
-`;
-
-const SlideControl = styled(Slider.Control)`
-    display: none;
-
-    @media ${mq.semilarge} {
-        display: block;
-    }
-`;
-
-const StyledDotGroup = styled(Slider.DotGroup)`
-    display: flex;
-    flex-direction: row;
-    padding-top: ${spacings.spacer * 1.5}px;
-    padding-left: ${spacings.spacer * 1.5}px;
-    padding-right: ${spacings.spacer * 1.5}px;
-
-    @media ${mq.semilarge} {
-        display: none;
-        padding: 0;
-    }
-`;
-
-const DotWrapper = styled.button`
-    border: none;
-    outline: none;
-    background: none;
-    cursor: pointer;
-
-    padding: ${spacings.nudge * 2}px;
-    margin: -${spacings.nudge * 2}px;
-
-    & + & {
-        margin-left: ${spacings.nudge * 1.5}px;
-    }
-`;
-
-const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
-    height: 14px;
-    width: 14px;
-    border: solid 1px
-        ${({ theme, isInverted }) =>
-            isInverted
-                ? color(theme).text.inverted
-                : color(theme).text.default};
-    border-radius: 14px;
-
-    transition: background-color 0.2s ease-in-out;
-
-    background-color: ${({ isActive, isInverted, theme }) =>
-        isActive
-            ? isInverted
-                ? color(theme).text.inverted
-                : color(theme).text.default
-            : 'transparent'};
 `;
 
 export interface LocationIcon {
@@ -460,11 +388,6 @@ const Map: FC<{
         name?: string;
         clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
     }) => React.ReactNode;
-    dot?: (props: {
-        isInverted?: boolean;
-        isActive?: boolean;
-        index?: number;
-    }) => React.ReactNode;
 }> = ({
     anchorId,
     bgMode,
@@ -481,15 +404,47 @@ const Map: FC<{
     flyToControl,
     controlNext,
     controlPrev,
-    dot,
 }) => {
     const { colors } = useLibTheme();
-    const [activeLocation, setActiveLocation] = useState<string>(
+    const [activeLocationId, setActiveLocationId] = useState<string>(
         initialLocation || ''
+    );
+    const activeLocation = useMemo(
+        () => locations?.find((l) => l.id === activeLocationId),
+        [activeLocationId, locations]
     );
 
     const hasBg = bgMode === 'full';
     const isInverted = bgMode === 'inverted';
+
+    const goToNext = () => {
+        setActiveLocationId((prev) => {
+            if (!locations) return prev;
+            const currentIndex = locations.findIndex(
+                (l) => l.id === activeLocationId
+            );
+            if (currentIndex === -1) return prev;
+
+            // get new index
+            const newIndex = (currentIndex + 1) % locations.length;
+            return locations[newIndex].id;
+        });
+    };
+
+    const goToPrevious = () => {
+        setActiveLocationId((prev) => {
+            if (!locations) return prev;
+            const currentIndex = locations.findIndex(
+                (l) => l.id === activeLocationId
+            );
+            if (currentIndex === -1) return prev;
+
+            // get new index
+            const newIndex =
+                currentIndex - 1 < 0 ? locations.length - 1 : currentIndex - 1;
+            return locations[newIndex].id;
+        });
+    };
 
     return (
         <MapSection
@@ -504,191 +459,98 @@ const Map: FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             {locations && generateLocalBusiness(locations)}
-            <Slider.Provider
-                fade={true}
-                swipe={false}
-                infinite={true}
-                slidesToShow={1}
-                variableWidth={false}
-                sameHeight={true}
-                clickSideOffset={0}
-                responsive={[
-                    {
-                        breakpoint: 832,
-                        settings: {
-                            fade: false,
-                            swipe: true,
-                        },
-                    },
-                ]}
-                beforeChange={({ nextStep }) => {
-                    if (locations && locations[nextStep]) {
-                        setActiveLocation(locations[nextStep].id);
-                    }
+
+            <MapContainer
+                url={provider}
+                attribution={attribution}
+                onReady={({ showAll, goTo }) => {
+                    if (allMarkersOnInit) showAll();
+                    else goTo();
                 }}
-            >
-                <SliderContext.Consumer>
-                    {({ goToStep }) => (
-                        <MapContainer
-                            url={provider}
-                            attribution={attribution}
-                            onReady={({ showAll, goTo }) => {
-                                if (allMarkersOnInit) showAll();
-                                else goTo();
-                            }}
-                            center={center}
-                            zoom={zoom}
-                            isMirrored={isMirrored}
-                            activeMarkerId={activeLocation}
-                            onMarkerClick={(markerId) => {
-                                setActiveLocation(markerId);
+                center={center}
+                zoom={zoom}
+                isMirrored={isMirrored}
+                activeMarkerId={activeLocationId}
+                onMarkerClick={setActiveLocationId}
+                flyToControl={flyToControl}
+                onFlyToClick={(goTo) => {
+                    // pan and zoom to active location
+                    goTo(flyToZoom);
+                }}
+                fitBoundsPadding={fitBoundsPadding}
+                markers={locations?.map(({ id, position, icon }) => {
+                    return {
+                        id,
+                        position,
+                        icon,
+                    };
+                })}
+                onActiveMarkerChanged={({ goTo }) => goTo()}
+            />
 
-                                // move slider to step
-                                const locIndex = locations?.findIndex(
-                                    (loc) => loc.id === markerId
-                                );
-
-                                if (locIndex !== undefined && locIndex !== -1)
-                                    goToStep(locIndex);
-                            }}
-                            flyToControl={flyToControl}
-                            onFlyToClick={(goTo) => {
-                                // pan and zoom to active location
-                                goTo(flyToZoom);
-                            }}
-                            fitBoundsPadding={fitBoundsPadding}
-                            markers={locations?.map(
-                                ({ id, position, icon }) => {
-                                    return {
-                                        id,
-                                        position,
-                                        icon,
-                                    };
-                                }
+            <CardWrapper addWhitespace clampWidth="normal">
+                <Grid.Row>
+                    <Grid.Col
+                        semilarge={{
+                            span: 6 / 12,
+                            move: (isMirrored ? 6 : 0) / 12,
+                        }}
+                    ></Grid.Col>
+                    <Grid.Col
+                        semilarge={{
+                            span: 6 / 12,
+                            move: (isMirrored ? -6 : 0) / 12,
+                        }}
+                    >
+                        <CardContainer isMirrored={isMirrored}>
+                            {locations && (
+                                <>
+                                    {activeLocation && (
+                                        <LocationInfoCard
+                                            {...activeLocation}
+                                            isInverted={isInverted}
+                                        />
+                                    )}
+                                    <Controls>
+                                        {controlNext ? (
+                                            controlNext({
+                                                isInverted,
+                                                isActive: true,
+                                                clickHandler: goToNext,
+                                                name: 'control_next_head',
+                                            })
+                                        ) : (
+                                            <Control
+                                                isInverted={isInverted}
+                                                isDisabled={false}
+                                                onClick={goToNext}
+                                            >
+                                                <Icons.ArrowRightGhost />
+                                            </Control>
+                                        )}
+                                        {controlPrev ? (
+                                            controlPrev({
+                                                isInverted,
+                                                isActive: true,
+                                                clickHandler: goToPrevious,
+                                                name: 'control_prev_head',
+                                            })
+                                        ) : (
+                                            <Control
+                                                isInverted={isInverted}
+                                                isDisabled={false}
+                                                onClick={goToPrevious}
+                                            >
+                                                <Icons.ArrowLeftGhost />
+                                            </Control>
+                                        )}
+                                    </Controls>
+                                </>
                             )}
-                            onActiveMarkerChanged={({ goTo }) => goTo()}
-                        />
-                    )}
-                </SliderContext.Consumer>
-
-                <CardWrapper addWhitespace clampWidth="normal">
-                    <Grid.Row>
-                        <Grid.Col
-                            semilarge={{
-                                span: 6 / 12,
-                                move: (isMirrored ? 6 : 0) / 12,
-                            }}
-                        ></Grid.Col>
-                        <Grid.Col
-                            semilarge={{
-                                span: 6 / 12,
-                                move: (isMirrored ? -6 : 0) / 12,
-                            }}
-                        >
-                            <SliderWrapper isMirrored={isMirrored}>
-                                {locations && locations.length > 1 && (
-                                    <>
-                                        <Slider.Slides>
-                                            {locations?.map((location, i) => (
-                                                <LocationInfoCard
-                                                    key={i}
-                                                    {...location}
-                                                    isInverted={isInverted}
-                                                />
-                                            ))}
-                                        </Slider.Slides>
-                                        <Controls>
-                                            <SlideControl type="next">
-                                                {({ isActive, clickHandler }) =>
-                                                    controlNext ? (
-                                                        controlNext({
-                                                            isInverted,
-                                                            isActive,
-                                                            clickHandler,
-                                                            name: 'control_next_head',
-                                                        })
-                                                    ) : (
-                                                        <Control
-                                                            isInverted={
-                                                                isInverted
-                                                            }
-                                                            isDisabled={
-                                                                !isActive
-                                                            }
-                                                            onClick={
-                                                                clickHandler
-                                                            }
-                                                        >
-                                                            <Icons.ArrowRightGhost />
-                                                        </Control>
-                                                    )
-                                                }
-                                            </SlideControl>
-                                            <SlideControl type="prev">
-                                                {({ isActive, clickHandler }) =>
-                                                    controlPrev ? (
-                                                        controlPrev({
-                                                            isInverted,
-                                                            isActive,
-                                                            clickHandler,
-                                                            name: 'control_prev_head',
-                                                        })
-                                                    ) : (
-                                                        <Control
-                                                            isInverted={
-                                                                isInverted
-                                                            }
-                                                            isDisabled={
-                                                                !isActive
-                                                            }
-                                                            onClick={
-                                                                clickHandler
-                                                            }
-                                                        >
-                                                            <Icons.ArrowLeftGhost />
-                                                        </Control>
-                                                    )
-                                                }
-                                            </SlideControl>
-                                            <StyledDotGroup>
-                                                {(i, isActive, onClick) => (
-                                                    <DotWrapper
-                                                        key={i}
-                                                        onClick={onClick}
-                                                    >
-                                                        {dot ? (
-                                                            dot({
-                                                                isInverted,
-                                                                isActive,
-                                                                index: i,
-                                                            })
-                                                        ) : (
-                                                            <Dot
-                                                                isActive={
-                                                                    isActive
-                                                                }
-                                                                isInverted={
-                                                                    isInverted
-                                                                }
-                                                            />
-                                                        )}
-                                                    </DotWrapper>
-                                                )}
-                                            </StyledDotGroup>
-                                        </Controls>
-                                    </>
-                                )}
-                                {locations && locations.length === 1 && (
-                                    <LocationInfoCard
-                                        {...locations[0]}
-                                        isInverted={isInverted}
-                                    />
-                                )}
-                            </SliderWrapper>
-                        </Grid.Col>
-                    </Grid.Row>
-                </CardWrapper>
-            </Slider.Provider>
+                        </CardContainer>
+                    </Grid.Col>
+                </Grid.Row>
+            </CardWrapper>
         </MapSection>
     );
 };
