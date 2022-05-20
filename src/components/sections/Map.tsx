@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import {
@@ -16,7 +16,6 @@ import Grid, { getGridWidth, gridSettings } from 'components/base/Grid';
 import Wrapper, { wrapperWhitespace } from 'components/base/Wrapper';
 
 import IntroBlock from 'components/blocks/IntroBlock';
-import LeafletMap from 'components/blocks/LeafletMap';
 
 import Copy, { copyStyle } from 'components/typography/Copy';
 import { HeadlineTag } from 'components/typography/Heading';
@@ -30,6 +29,7 @@ import LocationPin from 'components/base/icons/LocationPin';
 import Control from 'components/buttons/Control';
 import * as Icons from 'components/base/icons/Icons';
 import { getSVGDataImg as getSVGData } from 'utils/dataURI';
+import useLeafletMap from 'utils/useLeafletMap';
 
 interface Address {
     street: string;
@@ -44,12 +44,13 @@ const MapSection = styled(Section)`
     z-index: 0;
 `;
 
-const MapContainer = styled(LeafletMap)<{ isMirrored?: boolean }>`
+const MapContainer = styled.div<{ isMirrored?: boolean }>`
     position: relative;
     top: 0;
     left: 0;
     bottom: 0;
     width: 100%;
+    z-index: 0;
 
     height: 100%;
     min-height: 400px;
@@ -332,6 +333,23 @@ const Controls = styled.div`
     }
 `;
 
+const FylToCtrlContainer = styled.button`
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+
+    margin-top: ${spacings.spacer}px;
+    margin-right: ${spacings.spacer}px;
+    color: ${({ theme }) => color(theme).elementBg.dark};
+
+    cursor: pointer;
+`;
+
 export interface LocationIcon {
     url: string;
     size: [number, number];
@@ -443,9 +461,11 @@ const Map: FC<{
     controlPrev,
 }) => {
     const { colors } = useLibTheme();
+
     const [activeLocationId, setActiveLocationId] = useState<string>(
         initialLocation || ''
     );
+    const [isDirty, setIsDirty] = useState<boolean>(false);
     const activeLocation = useMemo(
         () => locations?.find((l) => l.id === activeLocationId),
         [activeLocationId, locations]
@@ -461,6 +481,25 @@ const Map: FC<{
         anchorActive: [35, 70],
         url: getSVGData(<LocationPin />),
     };
+    const {
+        isLoaded,
+        setContainer: setMapContainer,
+        flyToActive,
+        showAllMarkers,
+    } = useLeafletMap({
+        url: provider,
+        attribution,
+        center,
+        zoom,
+        activeMarkerId: activeLocationId,
+        markers: locations?.map(({ id, position, icon }) => ({
+            id,
+            position,
+            icon: icon || defaultMarker,
+        })),
+        fitBoundsPadding,
+        onMarkerClick: setActiveLocationId,
+    });
 
     const goToNext = () => {
         setActiveLocationId((prev) => {
@@ -491,6 +530,27 @@ const Map: FC<{
         });
     };
 
+    useEffect(() => {
+        if (isLoaded && !isDirty) {
+            if (allMarkersOnInit) showAllMarkers();
+        } else {
+            flyToActive(flyToZoom);
+        }
+    }, [
+        activeLocationId,
+        allMarkersOnInit,
+        flyToActive,
+        flyToZoom,
+        initialLocation,
+        isDirty,
+        isLoaded,
+        showAllMarkers,
+    ]);
+
+    useEffect(() => {
+        if (!isDirty && activeLocationId !== initialLocation) setIsDirty(true);
+    }, [activeLocationId, initialLocation, isDirty]);
+
     return (
         <MapSection
             anchorId={anchorId}
@@ -504,32 +564,18 @@ const Map: FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             {locations && generateLocalBusiness(locations)}
-
-            <MapContainer
-                url={provider}
-                attribution={attribution}
-                onReady={({ showAll, goTo }) => {
-                    if (allMarkersOnInit) showAll();
-                    else goTo();
-                }}
-                center={center}
-                zoom={zoom}
-                isMirrored={isMirrored}
-                activeMarkerId={activeLocationId}
-                onMarkerClick={setActiveLocationId}
-                flyToControl={flyToControl}
-                onFlyToClick={(goTo) => {
-                    // pan and zoom to active location
-                    goTo(flyToZoom);
-                }}
-                fitBoundsPadding={fitBoundsPadding}
-                markers={locations?.map(({ id, position, icon }) => ({
-                    id,
-                    position,
-                    icon: icon || defaultMarker,
-                }))}
-                onActiveMarkerChanged={({ goTo }) => goTo()}
-            />
+            <MapContainer ref={setMapContainer} isMirrored={isMirrored}>
+                {flyToControl && (
+                    <FylToCtrlContainer
+                        onClick={(ev) => {
+                            ev.stopPropagation();
+                            flyToActive(flyToZoom);
+                        }}
+                    >
+                        {flyToControl}
+                    </FylToCtrlContainer>
+                )}
+            </MapContainer>
 
             <CardWrapper addWhitespace clampWidth="normal">
                 <Grid.Row>
