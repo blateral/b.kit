@@ -198,7 +198,7 @@ const base = css<{
     /** add icons to anchor tags with matching href value */
     ${({ theme, isInverted, copyType, size }) => {
         return global(theme).icons.linkIcons.map((item) => {
-            const iconChar = (item as LinkFontIcon).iconChar;
+            const iconChar = parseInt((item as LinkFontIcon).iconChar);
             const iconFont = (item as LinkFontIcon).iconFont;
             const iconUrl = (item as LinkUrlIcon).iconUrl?.(isInverted);
             const iconScale = clampValue(
@@ -207,6 +207,7 @@ const base = css<{
             );
             const patterns = item.patterns;
             const isFontIcon = !!iconChar && !!iconFont;
+            const isValidIconChar = iconChar && !isNaN(iconChar) ? true : false;
             const vAlign = item.vAlign || (isFontIcon ? 'text-top' : 'top');
 
             const selectors = patterns
@@ -224,8 +225,8 @@ const base = css<{
                       }
 
                       ${pseudoSelectors} {
-                          content: ${iconChar
-                              ? `"\\${parseInt(iconChar).toString(16)}"`
+                          content: ${isValidIconChar
+                              ? `"${String.fromCharCode(iconChar)}"`
                               : `url("${iconUrl}")`};
 
                           display: inline-block;
