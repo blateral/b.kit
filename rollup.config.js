@@ -31,7 +31,7 @@ export default {
         typescript({
             typescript: ttypescript,
             tsconfigOverride: {
-                exclude: ['src/stories'],
+                exclude: ['src/stories', 'src/tests'],
             },
         }),
         babel({ babelHelpers: 'bundled' }),
