@@ -165,7 +165,12 @@ const EventBlock: React.FC<EventProps> = ({
     return (
         <View>
             {image?.small && (
-                <StyledImage {...image} coverSpace isInverted={isInverted} />
+                <StyledImage
+                    {...image}
+                    coverSpace
+                    allowEdgeRadius
+                    isInverted={isInverted}
+                />
             )}
             <MainContent>
                 {tags && (

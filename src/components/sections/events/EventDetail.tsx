@@ -280,6 +280,7 @@ const EventDetail: React.FC<{
                     <StyledImage
                         {...event.image}
                         coverSpace
+                        allowEdgeRadius
                         isInverted={isInverted}
                     />
                 )}

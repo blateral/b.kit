@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    mq,
+    spacings,
+    getGlobals as global,
+} from 'utils/styles';
 
 import Instagram from 'components/base/icons/socials/Instagram';
 import Heading from 'components/typography/Heading';
@@ -57,6 +62,9 @@ const Card = styled(Link)<{ isInverted?: boolean }>`
         isInverted
             ? color(theme).primary.inverted
             : color(theme).primary.default};
+
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    overflow: hidden;
 
     &:before {
         content: '';

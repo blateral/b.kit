@@ -58,10 +58,12 @@ const aspectFallback = (ratio?: { w?: number; h?: number }) => css`
 const AspectContainer = styled.div<{
     ratios?: ImageAspectRatios;
     coverSpace?: boolean;
+    allowEdgeRadius?: boolean;
 }>`
     display: inline-block;
     position: relative;
-    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    border-radius: ${({ theme, allowEdgeRadius }) =>
+        allowEdgeRadius && global(theme).sections.edgeRadius};
     overflow: hidden;
 
     aspect-ratio: ${({ ratios }) =>
@@ -165,6 +167,7 @@ const Image: React.FC<
         className?: string;
         onClick?: () => void;
         isInverted?: boolean;
+        allowEdgeRadius?: boolean;
     } & ImageProps
 > = ({
     className,
@@ -179,11 +182,13 @@ const Image: React.FC<
     onClick,
     isInverted,
     showPlaceholder = true,
+    allowEdgeRadius,
 }) => {
     return (
         <AspectContainer
             ratios={ratios}
             coverSpace={coverSpace}
+            allowEdgeRadius={allowEdgeRadius}
             className={className}
         >
             <picture onClick={onClick}>

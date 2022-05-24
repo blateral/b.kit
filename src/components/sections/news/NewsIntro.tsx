@@ -195,7 +195,12 @@ const NewsIntro: React.FC<{
                         )}
                     </div>
                     {image?.small && (
-                        <Image {...image} coverSpace isInverted={isInverted} />
+                        <Image
+                            {...image}
+                            coverSpace
+                            allowEdgeRadius
+                            isInverted={isInverted}
+                        />
                     )}
                 </Content>
             </Wrapper>

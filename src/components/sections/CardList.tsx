@@ -18,7 +18,10 @@ const View = styled.div<{ isInverted?: boolean; cardColor?: string }>`
     padding-top: 30%;
 
     color: ${({ theme }) => color(theme).text.inverted};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     cursor: pointer;
+
+    overflow: hidden;
 
     @media ${mq.medium} {
         padding-top: 85%;
