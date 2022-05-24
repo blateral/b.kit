@@ -189,6 +189,7 @@ const IntroBlock: React.FC<{
                     <MobileImage
                         {...image}
                         coverSpace
+                        allowEdgeRadius
                         isCentered={isCentered}
                         isInverted={isInverted}
                     />
@@ -214,7 +215,12 @@ const IntroBlock: React.FC<{
                 )}
             </Content>
             {image?.small && !isCentered && (
-                <DesktopImage {...image} coverSpace isInverted={isInverted} />
+                <DesktopImage
+                    {...image}
+                    coverSpace
+                    allowEdgeRadius
+                    isInverted={isInverted}
+                />
             )}
         </View>
     );
