@@ -118,10 +118,6 @@ const VideoControls = styled.button`
     &:focus:not(:focus-visible) {
         outline: none;
         box-shadow: none;
-
-        & > * {
-            color: inherit;
-        }
     }
 `;
 

@@ -46,7 +46,6 @@ const View = styled.button<{ isInverted?: boolean; disabled?: boolean }>`
 
     &:focus:not(:focus-visible) {
         outline: none;
-        color: inherit;
     }
 `;
 

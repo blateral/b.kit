@@ -76,7 +76,6 @@ const AccordionHead = styled.summary<{
 
     &:focus:not(:focus-visible) {
         outline: none;
-        background: inherit;
     }
 `;
 

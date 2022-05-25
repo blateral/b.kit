@@ -211,7 +211,6 @@ const CardLink = styled(Link)<{ isInverted?: boolean }>`
 
     &:focus:not(:focus-visible) {
         outline: none;
-        color: inherit;
     }
 `;
 

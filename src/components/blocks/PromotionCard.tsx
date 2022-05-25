@@ -63,7 +63,6 @@ const View = styled(Link)<{
             &:focus:not(:focus-visible) {
                 outline: none;
                 box-shadow: none;
-                color: inherit;
             }
         `}
 `;
