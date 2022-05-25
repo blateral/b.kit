@@ -53,7 +53,7 @@ const MapContainer = styled.div<{ isMirrored?: boolean }>`
     z-index: 0;
 
     height: 100%;
-    min-height: 400px;
+    min-height: 230px;
 
     @media ${mq.semilarge} {
         position: absolute;
@@ -127,6 +127,9 @@ const CardContainer = styled.div<{ isMirrored?: boolean }>`
 const InfoCardView = styled.div`
     min-height: 100px;
     pointer-events: all;
+
+    flex: 1 0 80%;
+    max-width: 80%;
 
     & > * + * {
         margin-top: ${spacings.spacer}px;
@@ -322,6 +325,8 @@ const LocationInfoCard: FC<
 };
 
 const Controls = styled.div`
+    flex: 1 0 20%;
+    max-width: 20%;
     display: flex;
     flex-direction: column;
     align-self: flex-start;
