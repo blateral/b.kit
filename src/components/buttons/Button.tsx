@@ -106,6 +106,7 @@ const View = styled.a<{
             }
 
             &:focus:not(:focus-visible) {
+                text-decoration: none;
                 outline: none;
                 box-shadow: none;
             }
