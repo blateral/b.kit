@@ -16,6 +16,10 @@ const View = styled.div`
     &:focus {
         outline: 1px dashed ${({ theme }) => getColors(theme).primary.default};
     }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 const Caption = styled(Copy)`
@@ -32,6 +36,11 @@ const TableContainer = styled.div`
     &:focus {
         outline: none;
         border: 1px solid ${({ theme }) => getColors(theme).primary.default};
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+        border: none;
     }
 `;
 

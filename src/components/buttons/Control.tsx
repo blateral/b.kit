@@ -43,6 +43,11 @@ const View = styled.button<{ isInverted?: boolean; disabled?: boolean }>`
                 ? color(theme).primary.invertedHover
                 : color(theme).primary.hover};
     }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+        color: inherit;
+    }
 `;
 
 const Control: FC<{

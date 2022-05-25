@@ -17,6 +17,10 @@ const View = styled(Link)`
         outline: 2px solid ${({ theme }) => getColors(theme).primary.default};
         outline-offset: 1px;
     }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 const Logo = styled(Image)`

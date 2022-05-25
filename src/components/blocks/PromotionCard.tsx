@@ -59,6 +59,12 @@ const View = styled(Link)<{
                     ? color(theme).primary.invertedHover
                     : color(theme).primary.hover};
             }
+
+            &:focus:not(:focus-visible) {
+                outline: none;
+                box-shadow: none;
+                color: inherit;
+            }
         `}
 `;
 

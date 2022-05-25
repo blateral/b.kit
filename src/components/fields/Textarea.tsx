@@ -72,6 +72,10 @@ const Area = styled.textarea<{
         outline-offset: 0;
     }
 
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+
     &::placeholder {
         color: ${({ theme, isInverted }) =>
             isInverted

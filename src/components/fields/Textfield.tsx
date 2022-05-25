@@ -69,6 +69,10 @@ const InputField = styled.input<{
         outline-offset: 0;
     }
 
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+
     &::placeholder {
         color: ${({ theme, isInverted }) =>
             isInverted

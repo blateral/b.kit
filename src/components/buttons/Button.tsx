@@ -105,6 +105,11 @@ const View = styled.a<{
                         : 'rgba(0, 0, 0, 0.25)'};
             }
 
+            &:focus:not(:focus-visible) {
+                outline: none;
+                box-shadow: none;
+            }
+
             &:active {
                 box-shadow: 0px 2px 6px
                     ${inverted

@@ -40,9 +40,9 @@ const Toggle = styled.button<{ isInverted?: boolean }>`
                 : color(theme).primary.hover};
     }
 
-    /* &:focus:not(:focus-visible) > * {
+    &:focus:not(:focus-visible) > * {
         outline: none;
-    } */
+    }
 `;
 
 const BarMenuToggle: FC<{

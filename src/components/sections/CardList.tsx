@@ -208,6 +208,11 @@ const CardLink = styled(Link)<{ isInverted?: boolean }>`
                 ? color(theme).primary.invertedHover
                 : color(theme).primary.hover};
     }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+        color: inherit;
+    }
 `;
 
 export interface CardProps {

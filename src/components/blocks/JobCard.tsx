@@ -47,6 +47,11 @@ const View = styled.div<{
                         : 'rgba(0, 0, 0, 0.3)'};
             }
 
+            &:focus:not(:focus-visible) {
+                outline: none;
+                box-shadow: none;
+            }
+
             &:active {
                 box-shadow: 0px 2px 6px
                     ${isInverted

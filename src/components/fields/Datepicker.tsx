@@ -337,6 +337,10 @@ const DatepickerButton = styled.button<{
             }`};
         outline-offset: 0;
     }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 const DatepickerButtonMain = styled.div`

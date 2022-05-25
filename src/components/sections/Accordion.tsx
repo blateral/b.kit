@@ -73,6 +73,11 @@ const AccordionHead = styled.summary<{
                 ? color(theme).elementBg.lightHover
                 : color(theme).elementBg.mediumHover};
     }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+        background: inherit;
+    }
 `;
 
 const Column = styled(Copy)`

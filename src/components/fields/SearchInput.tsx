@@ -57,6 +57,10 @@ const InputField = styled.input<{
         outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
         outline-offset: 0;
     }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 const ControlBtn = styled.button<{ isInverted?: boolean }>`
@@ -83,6 +87,10 @@ const ControlBtn = styled.button<{ isInverted?: boolean }>`
     &:focus {
         text-decoration: underline;
         transform: scale(1.012);
+    }
+
+    &:focus:not(:focus-visible) {
+        text-decoration: none;
     }
 
     &:active {

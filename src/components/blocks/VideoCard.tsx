@@ -114,6 +114,15 @@ const VideoControls = styled.button`
             color: ${({ theme }) => color(theme).primary.default};
         }
     }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+        box-shadow: none;
+
+        & > * {
+            color: inherit;
+        }
+    }
 `;
 
 const Iframe = styled.iframe`

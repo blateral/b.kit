@@ -70,6 +70,11 @@ const View = styled(Link)<{
         outline-offset: -1px;
         text-decoration: underline;
     }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+        text-decoration: none;
+    }
 `;
 
 export interface TagProps {
