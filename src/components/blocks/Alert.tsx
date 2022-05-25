@@ -98,6 +98,20 @@ const ViewLink = styled(Link)`
     && {
         margin: 0;
     }
+
+    &:focus-within {
+        outline: dotted 2px
+            ${({ isInverted, theme }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+        outline-offset: 4px;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+        box-shadow: none;
+    }
 `;
 
 export interface AlertProps {
