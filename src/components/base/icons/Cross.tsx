@@ -11,8 +11,8 @@ const Cross: React.FC<{
     className?: string;
 }> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
     <SVG
-        width="35"
-        height="35"
+        width="40"
+        height="40"
         viewBox="0 0 24 24"
         aria-hidden={ariaHidden}
         fill="none"

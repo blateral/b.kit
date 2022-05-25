@@ -11,8 +11,8 @@ const MenuBurger: React.FC<{
     className?: string;
 }> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
     <SVG
-        width="24"
-        height="24"
+        width="30"
+        height="30"
         viewBox="0 0 24 24"
         className={className}
         fill="none"
