@@ -7,8 +7,10 @@ import {
     getFonts as font,
     spacings,
     getGlobals as global,
+    withRange,
 } from 'utils/styles';
 import FieldWrapper, { FieldProps } from './FormField';
+import { getFormFieldTextSize } from 'utils/formFieldText';
 
 const InputField = styled.input<{
     isInverted?: boolean;
@@ -39,6 +41,9 @@ const InputField = styled.input<{
     background: transparent;
 
     ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
+
     color: ${({ theme, isInverted, hasError }) => {
         if (isInverted) {
             return hasError

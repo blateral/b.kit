@@ -1,11 +1,13 @@
 import { copyStyle } from 'components/typography/Copy';
 import React from 'react';
 import styled from 'styled-components';
+import { getFormFieldTextSize } from 'utils/formFieldText';
 import {
     getColors as color,
     getFonts as font,
     spacings,
     getGlobals as global,
+    withRange,
 } from 'utils/styles';
 import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
@@ -42,6 +44,9 @@ const Area = styled.textarea<{
     background: transparent;
 
     ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
+    
     color: ${({ theme, isInverted, hasError }) => {
         if (isInverted) {
             return hasError

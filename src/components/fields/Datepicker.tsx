@@ -13,6 +13,7 @@ import {
     mq,
     spacings,
     getGlobals as global,
+    withRange,
 } from 'utils/styles';
 import { format, isBefore, isValid } from 'date-fns';
 import de from 'date-fns/locale/de';
@@ -28,6 +29,7 @@ import FieldWrapper from './FormField';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
 import * as Icons from 'components/base/icons/Icons';
+import { getFormFieldTextSize } from 'utils/formFieldText';
 
 const PickerView = styled.div`
     position: relative;
@@ -291,6 +293,9 @@ const DatepickerButton = styled.button<{
     background: none;
 
     ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
+    
     color: ${({ theme, isInverted, hasError, hasDateValue }) => {
         if (isInverted) {
             return hasError
