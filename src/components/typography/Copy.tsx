@@ -211,13 +211,22 @@ const base = css<{
             const vAlign = item.vAlign || (isFontIcon ? 'text-top' : 'top');
 
             const selectors = patterns
-                .map((p) => (p ? `a[href*='${p}']` : `a[href]`))
+                .filter((p) => p)
+                .map((p) => `a[href*='${p}']`)
                 .join(', ');
             const pseudoSelectors = patterns
-                .map((p) => (p ? `a[href*='${p}']:after` : `a[href]:after`))
+                .filter((p) => p)
+                .map((p) => `a[href*='${p}']:after`)
                 .join(', ');
 
-            return iconChar || iconUrl
+            let content = '';
+            if (iconChar || iconUrl) {
+                content = isValidIconChar
+                    ? `"${String.fromCharCode(iconChar)}"`
+                    : `url("${iconUrl}")`;
+            }
+
+            return selectors && pseudoSelectors
                 ? css`
                       ${selectors} {
                           display: inline-block;
@@ -225,9 +234,7 @@ const base = css<{
                       }
 
                       ${pseudoSelectors} {
-                          content: ${isValidIconChar
-                              ? `"${String.fromCharCode(iconChar)}"`
-                              : `url("${iconUrl}")`};
+                          content: ${content || undefined};
 
                           display: inline-block;
                           font-family: ${iconFont || 'inherit'} !important;

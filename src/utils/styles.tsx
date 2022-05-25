@@ -566,7 +566,7 @@ const defaultGlobalSettings: GlobalSettings = {
                             }
                         />
                     ),
-                patterns: [''], // default icon
+                patterns: ['http', 'www'], // default link icon
                 scale: getLinkIconScale,
             },
             {
