@@ -6,10 +6,12 @@ import {
     getFonts as font,
     spacings,
     getGlobals as global,
+    withRange,
 } from 'utils/styles';
 import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
 import * as Icons from 'components/base/icons/Icons';
+import { getFormFieldTextSize } from 'utils/formFieldText';
 
 const FieldView = styled(FieldWrapper.View)`
     pointer-events: none;
@@ -47,6 +49,8 @@ const FieldMain = styled.div<{
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
 
     color: ${({ theme, isInverted }) =>
         isInverted
@@ -70,6 +74,8 @@ const FileItem = styled.div<{ isInverted?: boolean }>`
     align-items: center;
     justify-content: space-between;
     ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
 
     padding: ${spacings.nudge}px 0;
     width: 100%;
@@ -105,6 +111,9 @@ const UploadItem = styled.button<{ isInverted?: boolean }>`
     pointer-events: all;
 
     ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
+    
     color: ${({ theme, isInverted }) =>
         isInverted
             ? color(theme).text.subtileInverted

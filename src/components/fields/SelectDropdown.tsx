@@ -10,9 +10,11 @@ import {
     getFonts as font,
     spacings,
     getGlobals as global,
+    withRange,
 } from 'utils/styles';
 import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
+import { getFormFieldTextSize } from 'utils/formFieldText';
 
 const Select = styled.button<{
     hasError?: boolean;
@@ -50,6 +52,9 @@ const Select = styled.button<{
     background: transparent;
 
     ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
+    
     color: ${({ theme, isInverted, hasError, isSelected }) => {
         if (!isSelected) {
             return isInverted
