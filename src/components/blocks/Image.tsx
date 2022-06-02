@@ -1,6 +1,13 @@
+import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { mq, getColors as color, getGlobals as global } from 'utils/styles';
+import { useLibTheme } from 'utils/LibThemeProvider';
+import {
+    mq,
+    getColors as color,
+    getGlobals as global,
+    spacings,
+} from 'utils/styles';
 
 export interface ImageAspectRatios {
     small: { w: number; h: number };
@@ -36,6 +43,7 @@ export interface ImageProps {
 
     /** Show image placeholder background */
     showPlaceholder?: boolean;
+    copyright?: string;
 }
 
 const getAspectRatio = (width?: number, height?: number) => {
@@ -162,6 +170,28 @@ const Img = styled.img<{ isInverted?: boolean; showPlaceholder?: boolean }>`
     }
 `;
 
+const Copyright = styled(Copy)`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    max-height: calc(100% - ${spacings.spacer * 2.5}px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    bottom: 8px;
+
+    padding: ${spacings.nudge}px ${spacings.nudge}px;
+
+    max-height: 155px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -ms-writing-mode: tb-rl;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+`;
+
 const Image: React.FC<
     {
         className?: string;
@@ -183,7 +213,9 @@ const Image: React.FC<
     isInverted,
     showPlaceholder = true,
     allowEdgeRadius,
+    copyright,
 }) => {
+    const { colors } = useLibTheme();
     return (
         <AspectContainer
             ratios={ratios}
@@ -213,6 +245,12 @@ const Image: React.FC<
                     }
                 />
             </picture>
+            {copyright && (
+                <Copyright
+                    textColor={colors.text.inverted}
+                    innerHTML={`&copy; ${copyright}`}
+                />
+            )}
         </AspectContainer>
     );
 };

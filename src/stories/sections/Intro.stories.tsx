@@ -72,6 +72,32 @@ export const WithImage: Story = () => (
     />
 );
 
+export const WithImageCopyright: Story = () => (
+    <Intro
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elitt"
+        superTitle="Lorem Ipsum"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        image={{
+            small: 'https://unsplash.it/500/500?image=703',
+            medium: 'https://unsplash.it/800/800?image=703',
+            ratios: {
+                small: { h: 1, w: 1 },
+            },
+            copyright: 'Maximilian Müller',
+        }}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
 export const Centered: Story = () => (
     <Intro
         isCentered

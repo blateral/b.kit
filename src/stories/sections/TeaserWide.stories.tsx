@@ -63,11 +63,60 @@ export const WithContent: Story = () => (
     />
 );
 
+export const WithCopyright: Story = () => (
+    <TeaserWide
+        superTitle={'Lorem Ipsum Dolor'}
+        title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
+        image={{
+            copyright: 'Lorem Ipsum Dolor',
+            small: 'https://unsplash.it/619/464',
+            medium: 'https://unsplash.it/977/734',
+            semilarge: 'https://unsplash.it/791/594',
+            large: 'https://unsplash.it/1082/876',
+            xlarge: 'https://unsplash.it/1200/971',
+            ratios: {
+                small: { w: 4, h: 3 },
+                semilarge: { w: 1, h: 1 },
+            },
+        }}
+        text={`
+            <p>
+                <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                sed diam voluptua.</b>
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                amet.
+            </p>
+            <ul>
+                <li>Lorem Ipsum</li>
+                <li>Lorem Ipsum</li>
+                <li>Lorem Ipsum</li>
+            </ul>
+            <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                voluptua.
+            </p>
+            <p>
+                <i>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                    sed diam voluptua.</i>
+            </p>    
+        `}
+    />
+);
+
 export const WithVideo: Story = () => (
     <TeaserWide
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
+            copyright: 'Lorem Ipsum Dolor',
             small: 'https://unsplash.it/619/464',
             medium: 'https://unsplash.it/977/734',
             semilarge: 'https://unsplash.it/791/594',
@@ -120,6 +169,7 @@ export const WithActions: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
+            copyright: 'Lorem Ipsum Dolor',
             small: 'https://unsplash.it/619/464',
             medium: 'https://unsplash.it/977/734',
             semilarge: 'https://unsplash.it/791/594',
@@ -174,6 +224,7 @@ export const Mirrored: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
+            copyright: 'Lorem Ipsum Dolor',
             small: 'https://unsplash.it/619/464',
             medium: 'https://unsplash.it/977/734',
             semilarge: 'https://unsplash.it/791/594',
@@ -228,6 +279,7 @@ export const MirroredVideo: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
+            copyright: 'Lorem Ipsum Dolor',
             small: 'https://unsplash.it/619/464',
             medium: 'https://unsplash.it/977/734',
             semilarge: 'https://unsplash.it/791/594',
@@ -291,6 +343,7 @@ export const Inverted: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
+            copyright: 'Lorem Ipsum Dolor',
             small: 'https://unsplash.it/619/464',
             medium: 'https://unsplash.it/977/734',
             semilarge: 'https://unsplash.it/791/594',
@@ -345,6 +398,7 @@ export const WithBackground: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
+            copyright: 'Lorem Ipsum Dolor',
             small: 'https://unsplash.it/619/464',
             medium: 'https://unsplash.it/977/734',
             semilarge: 'https://unsplash.it/791/594',
