@@ -43,11 +43,15 @@ export interface ImageProps {
 
     /** Show image placeholder background */
     showPlaceholder?: boolean;
+
+    /** Image copyright text (richtext)  */
     copyright?: string;
 }
 
 const getAspectRatio = (width?: number, height?: number) => {
     if (!width || !height) return undefined;
+    if (isNaN(width) || isNaN(height)) return undefined;
+
     return width / height;
 };
 
