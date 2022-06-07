@@ -6,6 +6,7 @@ import { NavMenuStates } from '../Navigation';
 
 import SocialList, { SocialItem } from 'components/blocks/SocialList';
 import LanguageSwitcher, { Language } from 'components/blocks/LanguageSwitcher';
+import { isValidArray } from 'utils/arrays';
 
 const Footer = styled.div`
     display: flex;
@@ -26,14 +27,21 @@ const MenuFooter: FC<{
     menuStates?: NavMenuStates;
 }> = ({ isInverted, langs, socials }) => {
     return (
-        <Footer>
-            {socials && socials.length > 0 && (
-                <SocialList isInverted={isInverted} items={socials} />
+        <React.Fragment>
+            {(isValidArray(socials, false) || isValidArray(langs, false)) && (
+                <Footer>
+                    {isValidArray(socials, false) && (
+                        <SocialList isInverted={isInverted} items={socials} />
+                    )}
+                    {isValidArray(langs, false) && (
+                        <LanguageSwitcher
+                            isInverted={isInverted}
+                            langs={langs}
+                        />
+                    )}
+                </Footer>
             )}
-            {langs && langs.length > 0 && (
-                <LanguageSwitcher isInverted={isInverted} langs={langs} />
-            )}
-        </Footer>
+        </React.Fragment>
     );
 };
 
