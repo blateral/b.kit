@@ -265,17 +265,6 @@ const Image: React.FC<
                     <source srcSet={semilarge} media={mq.semilarge} />
                 )}
                 {medium && <source srcSet={medium} media={mq.medium} />}
-                <noscript>
-                    <Img
-                        ref={imgRef}
-                        data-img-loaded="true"
-                        showPlaceholder={showPlaceholder}
-                        isInverted={isInverted}
-                        srcSet={small}
-                        alt={alt || ''}
-                        loading="lazy"
-                    />
-                </noscript>
                 <Img
                     ref={imgRef}
                     data-img-loaded="false"
