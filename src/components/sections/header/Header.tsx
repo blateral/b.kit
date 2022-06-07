@@ -230,6 +230,7 @@ const StyledPoster = styled(Poster)`
 `;
 
 const Overlay = styled.div<{ bgValue?: string }>`
+    display: none;
     position: absolute;
     top: 0;
     right: 0;
@@ -237,6 +238,10 @@ const Overlay = styled.div<{ bgValue?: string }>`
     left: 0;
     background: ${({ bgValue }) => bgValue && bgValue};
     z-index: 1;
+
+    @media ${mq.medium} {
+        display: block;
+    }
 `;
 
 const Content = styled.div<{ isCentered?: boolean }>`
