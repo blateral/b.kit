@@ -26,14 +26,17 @@ const MenuFooter: FC<{
     socials?: SocialItem[];
     menuStates?: NavMenuStates;
 }> = ({ isInverted, langs, socials }) => {
+    const hasSocials = isValidArray(socials, false);
+    const hasLangs = isValidArray(langs, false);
+
     return (
         <React.Fragment>
-            {(isValidArray(socials, false) || isValidArray(langs, false)) && (
+            {(hasSocials || hasLangs) && (
                 <Footer>
-                    {isValidArray(socials, false) && (
+                    {hasSocials && (
                         <SocialList isInverted={isInverted} items={socials} />
                     )}
-                    {isValidArray(langs, false) && (
+                    {hasLangs && (
                         <LanguageSwitcher
                             isInverted={isInverted}
                             langs={langs}
