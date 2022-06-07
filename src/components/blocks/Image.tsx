@@ -1,5 +1,6 @@
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import {
@@ -220,6 +221,36 @@ const Image: React.FC<
     copyright,
 }) => {
     const { colors } = useLibTheme();
+    const imgRef = useRef<HTMLImageElement>(null);
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (!imgRef.current) return;
+        const ref = imgRef.current;
+
+        const handleLoad = () => {
+            setIsLoaded(true);
+        };
+
+        if (!ref.complete) {
+            ref.addEventListener('load', handleLoad);
+        } else {
+            ref.removeEventListener('load', handleLoad);
+            handleLoad();
+        }
+
+        return () => {
+            ref.removeEventListener('load', handleLoad);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (imgRef.current && imgRef.current.complete) {
+            imgRef.current.setAttribute('data-img-loaded', 'true');
+        }
+    }),
+        [isLoaded];
+
     return (
         <AspectContainer
             ratios={ratios}
@@ -234,19 +265,25 @@ const Image: React.FC<
                     <source srcSet={semilarge} media={mq.semilarge} />
                 )}
                 {medium && <source srcSet={medium} media={mq.medium} />}
+                <noscript>
+                    <Img
+                        ref={imgRef}
+                        data-img-loaded="true"
+                        showPlaceholder={showPlaceholder}
+                        isInverted={isInverted}
+                        srcSet={small}
+                        alt={alt || ''}
+                        loading="lazy"
+                    />
+                </noscript>
                 <Img
+                    ref={imgRef}
                     data-img-loaded="false"
                     showPlaceholder={showPlaceholder}
                     isInverted={isInverted}
                     srcSet={small}
                     alt={alt || ''}
                     loading="lazy"
-                    onLoad={(ev) =>
-                        ev.currentTarget?.setAttribute(
-                            'data-img-loaded',
-                            'true'
-                        )
-                    }
                 />
             </picture>
             {copyright && (
