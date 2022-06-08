@@ -154,7 +154,6 @@ const Navigation: FC<NavigationProps> = ({
 
     /** Navigation bar states */
     const [isNavBarSticky, setIsNavBarSticky] = useState<boolean>(false);
-    const [isNavBarAnimated, setIsNavBarAnimated] = useState<boolean>(false);
     const [isNavBarOpen, setNavBarOpen] = useState<boolean>(true);
     const { isTop, scrollDirection, isInOffset, leftOffsetFromTop } =
         usePageScroll({
@@ -162,11 +161,6 @@ const Navigation: FC<NavigationProps> = ({
             offset: getFullHeight(theme, 'large')[
                 mediaQueries.semilarge ? 1 : 0
             ],
-            onLeftOffset: (dir) => {
-                if (isStickable) {
-                    setIsNavBarSticky(dir === PageScrollDirection.DOWN);
-                }
-            },
         });
 
     const navbarSize = useMemo<NavBarSize>(() => {
@@ -184,23 +178,16 @@ const Navigation: FC<NavigationProps> = ({
     }, [scrollDirection, isTop, isStickable, isInOffset, isCollapsible]);
 
     useEffect(() => {
-        if (isTop) setIsNavBarAnimated(false);
-        else if (
-            leftOffsetFromTop &&
-            scrollDirection === PageScrollDirection.UP
-        ) {
-            setIsNavBarAnimated(true);
-        }
-    }, [isTop, leftOffsetFromTop, scrollDirection]);
-
-    useEffect(() => {
         if (!isStickable) return;
-        if (leftOffsetFromTop || !isCollapsible) {
+        if (
+            !isCollapsible ||
+            (leftOffsetFromTop && scrollDirection === PageScrollDirection.UP)
+        ) {
             setIsNavBarSticky(true);
         } else if (isTop) {
             setIsNavBarSticky(false);
         }
-    }, [isCollapsible, isStickable, isTop, leftOffsetFromTop]);
+    }, [isCollapsible, isStickable, isTop, leftOffsetFromTop, scrollDirection]);
 
     /** Menu states */
     const { isMenuOpen, setIsMenuOpen, setRoot } = useMenuKeyboard(false, {});
@@ -315,7 +302,7 @@ const Navigation: FC<NavigationProps> = ({
                 <NavBar
                     isOpen={isNavBarOpen}
                     isSticky={isNavBarSticky}
-                    isAnimated={isNavBarAnimated}
+                    isAnimated
                     size={navbarSize}
                     clampWidth={clampWidth}
                     pageFlow={navBar?.pageFlow}

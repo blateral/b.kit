@@ -69,15 +69,19 @@ const View = styled.a<{
                 : color(theme).text.default};
     }
 
-    & > *:not(:first-child) {
+    & > * + * {
         margin-left: ${spacings.nudge}px;
     }
-
-    & > *[data-btn-desktop='true'] {
+    & > *[data-btn-desktop] + *[data-btn-mobile] {
+        margin-left: 0;
+    }
+    & > *[data-btn-mobile] + *[data-btn-desktop] {
+        margin-left: 0;
+    }
+    & > *[data-btn-desktop] {
         display: none;
     }
-
-    & > *:not([data-btn-desktop='true']) + * {
+    & > *:not([data-btn-desktop]) + * {
         margin-left: 0;
     }
 
@@ -123,11 +127,9 @@ const View = styled.a<{
         & > *[data-btn-desktop='true'] {
             display: inherit;
         }
-
         & > *[data-btn-mobile='true'] {
             display: none;
         }
-
         & > *:not([data-btn-mobile='true']) + * {
             margin-left: 0;
         }
@@ -217,7 +219,7 @@ Button.displayName = 'Button';
 const Icon = styled.div<{ iconColor?: string }>`
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     width: 35px;
     height: 35px;
