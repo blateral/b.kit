@@ -68,9 +68,9 @@ const FeatureList: React.FC<{
                         >
                             <Feature
                                 ref={cardRefs[i]}
+                                {...feature}
                                 isCentered={isCentered}
                                 isInverted={isInverted}
-                                {...feature}
                             />
                         </Grid.Col>
                     ))}
