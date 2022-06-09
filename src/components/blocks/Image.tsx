@@ -232,8 +232,13 @@ const Image: React.FC<
             setIsLoaded(true);
         };
 
+        const handleError = () => {
+            setIsLoaded(false);
+        };
+
         if (!ref.complete) {
             ref.addEventListener('load', handleLoad);
+            ref.addEventListener('error', handleError);
         } else {
             ref.removeEventListener('load', handleLoad);
             handleLoad();
@@ -241,15 +246,9 @@ const Image: React.FC<
 
         return () => {
             ref.removeEventListener('load', handleLoad);
+            ref.removeEventListener('error', handleError);
         };
     }, []);
-
-    useEffect(() => {
-        if (imgRef.current && imgRef.current.complete) {
-            imgRef.current.setAttribute('data-img-loaded', 'true');
-        }
-    }),
-        [isLoaded];
 
     return (
         <AspectContainer
@@ -267,7 +266,7 @@ const Image: React.FC<
                 {medium && <source srcSet={medium} media={mq.medium} />}
                 <Img
                     ref={imgRef}
-                    data-img-loaded="false"
+                    data-img-loaded={isLoaded}
                     showPlaceholder={showPlaceholder}
                     isInverted={isInverted}
                     srcSet={small}
