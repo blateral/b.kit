@@ -107,7 +107,7 @@ const Feature = forwardRef<
     ) => {
         return (
             <View ref={ref} isCentered={isCentered} className={className}>
-                {image && (
+                {image?.small && (
                     <ImageContainer isCentered={isCentered}>
                         <StyledImage
                             small={image.small}
