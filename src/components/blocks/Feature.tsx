@@ -63,7 +63,7 @@ export interface FeatureProps {
     isCentered?: boolean;
 
     /** Image on item's top */
-    image?: Omit<ImageProps, 'coverSpace'>;
+    image?: ImageProps;
 
     /** Item title text underneath the image */
     title?: string;
@@ -117,7 +117,11 @@ const Feature = forwardRef<
                             xlarge={image.xlarge}
                             alt={image.alt}
                             ratios={image.ratios}
-                            coverSpace
+                            coverSpace={
+                                image.coverSpace === undefined
+                                    ? true
+                                    : image.coverSpace
+                            }
                             isInverted={isInverted}
                         />
                     </ImageContainer>
