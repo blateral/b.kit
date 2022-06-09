@@ -67,7 +67,7 @@ const Fact = forwardRef<
     ) => {
         return (
             <View ref={ref} className={className}>
-                {image && (
+                {image?.small && (
                     <ImageContainer isCentered={isCentered}>
                         <StyledImage
                             isInverted={isInverted}
