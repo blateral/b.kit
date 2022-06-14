@@ -1,4 +1,4 @@
-![b.kit logo](./public/images/bkit-logo_small.png)
+![b.kit logo](./public/images/Kit_Logo.svg)
 
 # b.kit - React component library to b.uild awesome websites
 
