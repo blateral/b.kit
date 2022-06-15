@@ -110,7 +110,8 @@ const IndexList: React.FC<{
         const target = document.getElementById(href.split('#')?.[1] || href);
         if (target) {
             setTargetPos(
-                target.getBoundingClientRect().top -
+                target.getBoundingClientRect().top +
+                    window.scrollY -
                     (scrollToOffset || topOffset)
             );
         }
