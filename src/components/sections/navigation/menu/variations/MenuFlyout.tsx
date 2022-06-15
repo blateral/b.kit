@@ -142,6 +142,9 @@ const Header = styled.div<{ navBarSize?: NavBarSize }>`
     @media ${mq.semilarge} {
         height: ${({ theme, navBarSize }) =>
             getMenuHeaderHeights(theme, navBarSize)[1]}px;
+        flex: 0 0
+            ${({ theme, navBarSize }) =>
+                getMenuHeaderHeights(theme, navBarSize)[1]}px;
     }
 `;
 
