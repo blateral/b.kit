@@ -235,20 +235,21 @@ To publish all stories to Github Pages enter:
 
 > Before each commit to Github the Husky package takes care of the Storybook stories and deploys them automatically to Github Pages.
 
-## Local library testing
-
 ## Local Testing
 
-Inside library project:
+The bundled package can be tested locally with a npm package called [Yalc](https://github.com/wclr/yalc). `Yalc` acts as very simple local repository for locally developed packages to share them across a local environment.
 
--   Install yalc globally: `yarn global add yalc`
--   Run `yalc publish` to publish library into local yalc store.
--   Run `yalc push` to push changes to all installations
+### Workflow
 
-Inside project that should use the library:
+Install yalc globally: `yarn global add yalc`.
 
--   Run `yalc add <repository-name>` in target local repository to link library from yalc store.
--   Use `yalc update` or `yalc update <repository-name>` to update all linked packages.
--   use `yalc remove <repository-name>` to remove linked package.
+**Inside the library/package repository:**
 
-    Before each push to git `yalc check` performs a check to ensure that all linked packages are removed from package.json. To delete package linking from package.json but not from yalc.lock `yalc retreat [--all]` / `yalc restore`
+1. Run `yarn build` to bundle the package.
+2. Run `yalc push` to push it to local global store (~/.yalc).
+
+**Inside a repository that consumes the package:**
+
+1. To link local package run `yalc add <repository-name>` (e.g. yalc add @blateral/b.kit).
+2. Before committing to remote repository remove the local package links by running `yalc remove <repository-name>` or `yalc remove --all`.
+3. Use `yarn --check-files` to savely install the remote packages defined in package.json. In some repositories there is also a script `yarn lookup` that does the same.
