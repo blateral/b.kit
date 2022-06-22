@@ -40,7 +40,7 @@ export const withRange = (range: [number, number?], property: string) => {
     const max = range[1];
 
     if (max !== undefined) {
-        return css`
+        return `
             ${property}: ${min}px;
             ${property}: ${getSizeByRange(range as [number, number])};
 
@@ -49,7 +49,7 @@ export const withRange = (range: [number, number?], property: string) => {
             }
         `;
     } else {
-        return css`
+        return `
             ${property}: ${min}px;
         `;
     }
