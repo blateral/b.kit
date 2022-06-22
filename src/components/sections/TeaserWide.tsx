@@ -11,6 +11,7 @@ import Actions from 'components/blocks/Actions';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import IntroBlock from 'components/blocks/IntroBlock';
 import VideoBlock, { VideoAspectRatios } from 'components/blocks/VideoBlock';
+import { isValidArray } from 'utils/arrays';
 
 /**
  * calculate single grid col from relative content wrapper
@@ -260,7 +261,7 @@ const TeaserWide: FC<{
                     isInverted={isInverted}
                 />
             )}
-            {video?.urls && video.urls.length > 0 && (
+            {isValidArray(video?.urls, false) && (
                 <WideVideo
                     urls={video?.urls}
                     muted

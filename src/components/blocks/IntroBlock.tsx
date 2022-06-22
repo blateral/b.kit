@@ -95,7 +95,7 @@ const DesktopImage = styled(Image)`
 
     @media ${mq.semilarge} {
         display: block;
-        flex: 1 0 33.33%;
+        /* flex: 1 0 33.33%; */
     }
 `;
 

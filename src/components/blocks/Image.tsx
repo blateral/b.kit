@@ -194,6 +194,7 @@ const Copyright = styled(Copy)`
     text-overflow: ellipsis;
     -ms-writing-mode: tb-rl;
     writing-mode: vertical-rl;
+    text-orientation: sideways-right;
     transform: rotate(180deg);
 `;
 
@@ -276,6 +277,7 @@ const Image: React.FC<
             </picture>
             {copyright && (
                 <Copyright
+                    size="small"
                     textColor={colors.text.inverted}
                     innerHTML={`&copy; ${copyright}`}
                 />

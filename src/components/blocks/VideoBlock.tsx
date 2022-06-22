@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { getGlobals as global, mq } from 'utils/styles';
 
@@ -101,7 +101,7 @@ export interface VideoProps {
     autoPlay?: boolean;
     loop?: boolean;
     controls?: boolean;
-    onCanPlayThrough?: (ev: React.SyntheticEvent<HTMLVideoElement>) => void;
+    onCanPlayThrough?: () => void;
 }
 
 const VideoBlock: FC<VideoProps & { className?: string }> = ({
@@ -115,6 +115,14 @@ const VideoBlock: FC<VideoProps & { className?: string }> = ({
     onCanPlayThrough,
     className,
 }) => {
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        if (videoRef.current && videoRef.current.readyState > 3) {
+            onCanPlayThrough && onCanPlayThrough();
+        }
+    }, [onCanPlayThrough]);
+
     return (
         <AspectContainer
             ratios={ratios}
@@ -122,6 +130,7 @@ const VideoBlock: FC<VideoProps & { className?: string }> = ({
             className={className}
         >
             <Video
+                ref={videoRef}
                 muted={muted}
                 autoPlay={autoPlay}
                 loop={loop}

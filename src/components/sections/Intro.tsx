@@ -25,8 +25,8 @@ const Intro: React.FC<{
     /**  Intro text underneath the title (richtext) */
     text?: string;
 
-    /** Intro image */
-    image?: ImageProps;
+    /** Images for different screen sizes */
+    image?: Omit<ImageProps, 'coverSpace'>;
 
     /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
