@@ -118,7 +118,9 @@ const LocationField: React.FC<
         onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
         onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
         onLocationClick?: () => void;
-        locationIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+        customLocationIcon?: (props: {
+            isInverted?: boolean;
+        }) => React.ReactNode;
     }
 > = ({
     type = 'text',
@@ -134,7 +136,7 @@ const LocationField: React.FC<
     onChange,
     onBlur,
     onLocationClick,
-    locationIcon,
+    customLocationIcon,
 }) => {
     if (isDisabled) {
         errorMessage = '';
@@ -162,7 +164,11 @@ const LocationField: React.FC<
                     />
                 </FieldWrapper.Content>
                 <LocationFlyTo onClick={onLocationClick}>
-                    {locationIcon ? locationIcon({ isInverted }) : <FlyTo />}
+                    {customLocationIcon ? (
+                        customLocationIcon({ isInverted })
+                    ) : (
+                        <FlyTo />
+                    )}
                 </LocationFlyTo>
             </FieldView>
             <FieldWrapper.Messages
