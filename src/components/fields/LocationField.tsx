@@ -142,6 +142,36 @@ const LocationField: React.FC<
         errorMessage = '';
     }
 
+    const [coords, setCoords] = React.useState<GeolocationCoordinates>();
+
+    onLocationClick = () => {
+        if (!navigator.geolocation) {
+            errorMessage =
+                '<p>Geolokation wird von ihrem Browser nicht unterstützt</p>';
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            setCoords(position.coords);
+        });
+
+        const address =
+            'http://maps.googleapis.com/maps/api/staticmap?center=' +
+            coords?.latitude +
+            ',' +
+            coords?.longitude +
+            '&zoom=13&size=300x300&sensor=false';
+
+        console.log(
+            'Latitude is :',
+            coords?.latitude,
+            'Longitude is :',
+            coords?.longitude,
+            'Address: ',
+            address
+        );
+    };
+
     return (
         <FieldWrapper.View isDisabled={isDisabled}>
             <FieldWrapper.Head
