@@ -164,19 +164,9 @@ const LocationField: React.FC<
         speed: null,
     };
 
-    const defaultLocation = {
-        city: undefined,
-        street: undefined,
-        streetNumber: undefined,
-        postal: undefined,
-        country: undefined,
-        language: 'de',
-    };
-
     const [coords, setCoords] =
         React.useState<GeolocationCoordinates>(defaultCoords);
 
-    const [address] = React.useState<LocationProps>(defaultLocation);
     const [val, setVal] = React.useState(value);
 
     const getLocation = () => {
@@ -186,8 +176,6 @@ const LocationField: React.FC<
                 '<p>Geolokation wird von ihrem Browser nicht unterstützt</p>';
             return;
         }
-
-        // const locationTimeout = setTimeout('geolocFail()', 1000);
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -200,81 +188,7 @@ const LocationField: React.FC<
 
         const formattedCoordinates = `${coords.latitude},${coords.longitude}`;
 
-        // GEOCODING WITH react-geocode
-        // Geocode.setLanguage(defaultLocation.language);
-        // Geocode.setRegion(defaultLocation.language);
-        // Geocode.setLocationType('ROOFTOP');
-
-        // Geocode.fromLatLng(`${coords.latitude}`, `${coords.longitude}`).then(
-        //     (response) => {
-        //         let city, street, streetNumber, postal, country;
-        //         for (
-        //             let i = 0;
-        //             i < response.results[0].address_components.length;
-        //             i++
-        //         ) {
-        //             for (
-        //                 let j = 0;
-        //                 j <
-        //                 response.results[0].address_components[i].types.length;
-        //                 j++
-        //             ) {
-        //                 switch (
-        //                     response.results[0].address_components[i].types[j]
-        //                 ) {
-        //                     case 'locality':
-        //                         city =
-        //                             response.results[0].address_components[i]
-        //                                 .long_name;
-        //                         break;
-        //                     case 'route':
-        //                         street =
-        //                             response.results[0].address_components[i]
-        //                                 .long_name;
-        //                         break;
-        //                     case 'street_number':
-        //                         streetNumber =
-        //                             response.results[0].address_components[i]
-        //                                 .long_name;
-        //                         break;
-        //                     case 'country':
-        //                         country =
-        //                             response.results[0].address_components[i]
-        //                                 .long_name;
-        //                         break;
-        //                     case 'postal_code':
-        //                         postal =
-        //                             response.results[0].address_components[i]
-        //                                 .long_name;
-        //                         break;
-        //                 }
-        //             }
-        //         }
-        //         setAddress({
-        //             city: city,
-        //             street: street,
-        //             streetNumber: streetNumber,
-        //             postal: postal,
-        //             country: country,
-        //         });
-        //     }
-        // );
-
-        // Geocode.fromAddress(value).then((response) => {
-        //     const addressCoords = response.results[0].geometry.location;
-        //     setCoords(addressCoords);
-        // });
-
-        const hasFormattedAddress =
-            address.city !== undefined &&
-            address.street !== undefined &&
-            address.streetNumber !== undefined &&
-            address.postal !== undefined &&
-            address.country !== undefined;
-
-        const formattedAddress = `${address.street} ${address.streetNumber}, ${address.postal} ${address.city}, ${address.country}`;
-
-        setVal(hasFormattedAddress ? formattedAddress : formattedCoordinates);
+        setVal(formattedCoordinates);
 
         return val;
     };
