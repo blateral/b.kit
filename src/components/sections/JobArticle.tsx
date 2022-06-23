@@ -92,7 +92,7 @@ const JobArticle: React.FC<
         datePosted, // datePosted
     };
     return (
-        <Section>
+        <Section addSeperation>
             {generateJob(jsonLd)}
             <Wrapper addWhitespace>
                 <ArticleHead>
@@ -124,7 +124,7 @@ const JobArticle: React.FC<
                     )}
                 </ArticleHead>
                 {jobDesc && <Copy innerHTML={jobDesc} />}
-                {(primaryAction || secondaryAction) && (
+                {(primaryAction || secondaryAction) && directApply && (
                     <StyledActions
                         primary={primaryAction && primaryAction()}
                         secondary={secondaryAction && secondaryAction()}
