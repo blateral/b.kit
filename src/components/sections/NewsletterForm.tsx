@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useRef } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
@@ -130,6 +130,15 @@ const NewsletterForm: FC<{
     /** Function to inject custom field definition */
     customField?: (props: FieldGenerationProps) => React.ReactNode;
 
+    /** HTML form element action */
+    action?: string;
+
+    /** HTML form element method */
+    method?: string;
+
+    /** Form submission callback */
+    onSubmit?: (values: FormData, element: HTMLFormElement) => Promise<void>;
+
     /** Function to inject custom submit button */
     submitAction?: (props: {
         isInverted?: boolean;
@@ -139,8 +148,18 @@ const NewsletterForm: FC<{
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, bgMode, fields, customField, submitAction }) => {
+}> = ({
+    anchorId,
+    bgMode,
+    fields,
+    customField,
+    action,
+    method,
+    submitAction,
+    onSubmit,
+}) => {
     const { theme } = useLibTheme();
+    const formRef = useRef<HTMLFormElement>(null);
     const isInverted = bgMode === 'inverted';
 
     // generate initial data and setup yup validation definition
@@ -209,11 +228,11 @@ const NewsletterForm: FC<{
 
     // formik hook
     const {
-        // handleSubmit,
+        handleSubmit,
         handleChange,
         handleBlur,
         setFieldTouched,
-        // setSubmitting,
+        setSubmitting,
         validateField,
         submitForm,
         setValues,
@@ -230,14 +249,15 @@ const NewsletterForm: FC<{
         } as FormData,
 
         onSubmit: async (values) => {
-            // const valuesAndMails = {
-            //     ...values,
-            //     targetEmails: targetEmails || '',
-            //     subjectLine: subjectLine || '',
-            // };
-            // onSubmit && (await onSubmit(valuesAndMails));
-            // setSubmitting(false);
-            console.log(values);
+            if (!formRef.current) return;
+
+            if (action && method) {
+                formRef.current.submit();
+            } else {
+                onSubmit && (await onSubmit(values, formRef.current));
+            }
+
+            setSubmitting(false);
         },
         validateOnBlur: true,
         validateOnChange: true,
@@ -266,7 +286,12 @@ const NewsletterForm: FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <Form>
+                <Form
+                    ref={formRef}
+                    action={action}
+                    method={method}
+                    onSubmit={handleSubmit}
+                >
                     <FieldContainer>
                         {fields &&
                             Object.keys(fields).map((key, i) => {

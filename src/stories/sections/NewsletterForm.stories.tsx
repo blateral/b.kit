@@ -38,6 +38,37 @@ export const Default: Story = () => (
                 errorMsg: 'Enter a valid mail address!',
             },
         }}
+        onSubmit={async (values, el) => console.log(values, el)}
+    />
+);
+
+export const WithFormAction: Story = () => (
+    <NewsletterForm
+        action="google.com"
+        method="post"
+        fields={{
+            VORNAME: {
+                inputType: 'text',
+                label: 'Firstname',
+                placeholder: 'Vorname',
+                isRequired: true,
+                errorMsg: 'Enter your firstname!',
+            },
+            NACHNAHME: {
+                inputType: 'text',
+                label: 'Lastname',
+                placeholder: 'Nachname',
+                errorMsg: 'Enter your lastname!',
+            },
+            EMAIL: {
+                inputType: 'email',
+                label: 'E-Mail',
+                placeholder: 'E-Mail',
+                isRequired: true,
+                errorMsg: 'Enter a valid mail address!',
+            },
+        }}
+        onSubmit={async (values, el) => console.log(values, el)}
     />
 );
 
@@ -78,5 +109,6 @@ export const CustomField: Story = () => (
                 {error && isTouched && <span>{error}</span>}
             </React.Fragment>
         )}
+        onSubmit={async (values, el) => console.log(values, el)}
     />
 );
