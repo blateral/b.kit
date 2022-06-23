@@ -111,6 +111,13 @@ export type FormProps = FieldProps & {
     placeholder?: string;
 };
 
+export interface LocationProps {
+    city?: string;
+    street?: string;
+    postal?: string;
+    country?: string;
+}
+
 const LocationField: React.FC<
     FormProps & {
         type?: 'number' | 'text' | 'tel' | 'email' | 'password';
@@ -142,11 +149,34 @@ const LocationField: React.FC<
         errorMessage = '';
     }
 
-    const [coords, setCoords] = React.useState<GeolocationCoordinates>();
+    const defaultCoords = {
+        accuracy: 0,
+        altitude: null,
+        altitudeAccuracy: null,
+        heading: null,
+        latitude: 0,
+        longitude: 0,
+        speed: null,
+        location: {
+            city: undefined,
+            street: undefined,
+            postal: undefined,
+            country: undefined,
+        } as LocationProps,
+    };
+
+    const [coords, setCoords] =
+        React.useState<GeolocationCoordinates>(defaultCoords);
+
+    const [address, setAddress] = React.useState<LocationProps>(
+        defaultCoords.location
+    );
+    const [val, setVal] = React.useState(value);
 
     onLocationClick = () => {
         if (!navigator.geolocation) {
             errorMessage =
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 '<p>Geolokation wird von ihrem Browser nicht unterstützt</p>';
             return;
         }
@@ -155,21 +185,29 @@ const LocationField: React.FC<
             setCoords(position.coords);
         });
 
-        const address =
-            'http://maps.googleapis.com/maps/api/staticmap?center=' +
-            coords?.latitude +
-            ',' +
-            coords?.longitude +
-            '&zoom=13&size=300x300&sensor=false';
+        const formattedCoordinates = `${coords.latitude},${coords.longitude}`;
 
-        console.log(
-            'Latitude is :',
-            coords?.latitude,
-            'Longitude is :',
-            coords?.longitude,
-            'Address: ',
-            address
-        );
+        // const APIKEY = 'put the api key here';
+        // const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${formattedCoordinates}&key=${APIKEY}`;
+
+        const hasFormattedAddress =
+            address.city !== undefined &&
+            address.street !== undefined &&
+            address.postal !== undefined &&
+            address.country !== undefined;
+
+        const formattedAddress = `${address.street}, ${address.postal} ${address.city}, ${address.country}`;
+
+        setAddress({
+            city: 'Stadt',
+            street: 'Straße',
+            postal: 'PLZ',
+            country: 'Land',
+        });
+
+        setVal(hasFormattedAddress ? formattedAddress : formattedCoordinates);
+
+        return val;
     };
 
     return (
@@ -187,7 +225,7 @@ const LocationField: React.FC<
                         type={type}
                         isInverted={isInverted}
                         name={name}
-                        value={value}
+                        value={val}
                         required={isRequired}
                         onChange={onChange}
                         onBlur={onBlur}
