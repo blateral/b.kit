@@ -13,6 +13,11 @@ import FieldWrapper, { FieldProps } from './FormField';
 import { getFormFieldTextSize } from 'utils/formFieldText';
 import FlyTo from 'components/base/icons/FlyTo';
 
+import Geocode from 'react-geocode';
+
+const APIKEY = 'put the api key here';
+Geocode.setApiKey(APIKEY);
+
 const FieldView = styled.div`
     display: flex;
     flex-direction: row;
@@ -117,7 +122,6 @@ export interface LocationProps {
     streetNumber?: string;
     postal?: string;
     country?: string;
-    language?: string;
 }
 
 const LocationField: React.FC<
@@ -157,22 +161,22 @@ const LocationField: React.FC<
         latitude: 0,
         longitude: 0,
         speed: null,
-        location: {
-            city: undefined,
-            street: undefined,
-            streetNumber: undefined,
-            postal: undefined,
-            country: undefined,
-            language: 'DE',
-        } as LocationProps,
+    };
+
+    const defaultLocation = {
+        city: undefined,
+        street: undefined,
+        streetNumber: undefined,
+        postal: undefined,
+        country: undefined,
+        language: 'de',
     };
 
     const [coords, setCoords] =
         React.useState<GeolocationCoordinates>(defaultCoords);
 
-    const [address, setAddress] = React.useState<LocationProps>(
-        defaultCoords.location
-    );
+    const [address, setAddress] =
+        React.useState<LocationProps>(defaultLocation);
     const [val, setVal] = React.useState(value);
 
     const getLocation = () => {
@@ -189,8 +193,70 @@ const LocationField: React.FC<
 
         const formattedCoordinates = `${coords.latitude},${coords.longitude}`;
 
-        // const APIKEY = 'put the api key here';
-        // const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${formattedCoordinates}&location_type=ROOFTOP&result_type=street_address&key=${APIKEY}`;
+        // GEOCODING WITH react-geocode
+        Geocode.setLanguage(defaultLocation.language);
+        Geocode.setRegion(defaultLocation.language);
+        Geocode.setLocationType('ROOFTOP');
+
+        Geocode.fromLatLng(`${coords.latitude}`, `${coords.longitude}`).then(
+            (response) => {
+                let city, street, streetNumber, postal, country;
+                for (
+                    let i = 0;
+                    i < response.results[0].address_components.length;
+                    i++
+                ) {
+                    for (
+                        let j = 0;
+                        j <
+                        response.results[0].address_components[i].types.length;
+                        j++
+                    ) {
+                        switch (
+                            response.results[0].address_components[i].types[j]
+                        ) {
+                            case 'locality':
+                                city =
+                                    response.results[0].address_components[i]
+                                        .long_name;
+                                break;
+                            case 'route':
+                                street =
+                                    response.results[0].address_components[i]
+                                        .long_name;
+                                break;
+                            case 'street_number':
+                                streetNumber =
+                                    response.results[0].address_components[i]
+                                        .long_name;
+                                break;
+                            case 'country':
+                                country =
+                                    response.results[0].address_components[i]
+                                        .long_name;
+                                break;
+                            case 'postal_code':
+                                postal =
+                                    response.results[0].address_components[i]
+                                        .long_name;
+                                break;
+                        }
+                    }
+                }
+                setAddress({
+                    city: city,
+                    street: street,
+                    streetNumber: streetNumber,
+                    postal: postal,
+                    country: country,
+                });
+            }
+        );
+
+        Geocode.fromAddress(value).then((response) => {
+            const addressCoords = response.results[0].geometry.location;
+            setCoords(addressCoords);
+        });
 
         const hasFormattedAddress =
             address.city !== undefined &&
@@ -200,14 +266,6 @@ const LocationField: React.FC<
             address.country !== undefined;
 
         const formattedAddress = `${address.street} ${address.streetNumber}, ${address.postal} ${address.city}, ${address.country}`;
-
-        setAddress({
-            city: undefined,
-            street: undefined,
-            streetNumber: undefined,
-            postal: undefined,
-            country: undefined,
-        });
 
         if (coords.latitude !== 0 && coords.longitude !== 0) {
             setVal(
