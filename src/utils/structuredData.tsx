@@ -72,12 +72,11 @@ export const generateFAQ = (
 };
 export const generateJob = (job: {
     jobTitle: string;
-    timeModel?: string;
     jobDesc?: string;
     organization?: string;
     directApply?: boolean;
     location?: string;
-    employmentType?: ['FULL_TIME', 'PART_TIME', 'TEMPORARY', 'INTERN', 'OTHER'];
+    timeModel?: string;
     datePosted?: string;
 }) => {
     return (
@@ -88,7 +87,7 @@ export const generateJob = (job: {
                 title: job.jobTitle,
                 description: job.jobDesc,
                 datePosted: job.datePosted,
-                employmentType: job.employmentType,
+                employmentType: job.timeModel,
                 hiringOrganization: {
                     '@type': 'Organization',
                     name: job.organization,

@@ -65,13 +65,6 @@ const JobArticle: React.FC<
         jobDesc?: string;
         organization?: string;
         directApply?: boolean;
-        employmentType?: [
-            'FULL_TIME',
-            'PART_TIME',
-            'TEMPORARY',
-            'INTERN',
-            'OTHER'
-        ];
         datePosted?: string;
         primaryAction?: () => React.ReactNode;
         secondaryAction?: () => React.ReactNode;
@@ -85,7 +78,6 @@ const JobArticle: React.FC<
     jobDesc,
     organization,
     directApply,
-    employmentType,
     datePosted,
     primaryAction,
     secondaryAction,
@@ -96,7 +88,7 @@ const JobArticle: React.FC<
         jobDesc, // description
         organization, // hiringOrganization
         directApply, // directApply
-        employmentType, // employmentType
+        timeModel, // employmentType
         datePosted, // datePosted
     };
     return (
