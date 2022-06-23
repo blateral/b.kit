@@ -15,6 +15,7 @@ import FlyTo from 'components/base/icons/FlyTo';
 
 import Geocode from 'react-geocode';
 
+// TODO: API KEY
 const APIKEY = 'put the api key here';
 Geocode.setApiKey(APIKEY);
 
@@ -145,7 +146,7 @@ const LocationField: React.FC<
     placeholder,
     value = '',
     name,
-    // onChange,
+    onChange,
     onBlur,
     customLocationIcon,
 }) => {
@@ -187,9 +188,16 @@ const LocationField: React.FC<
             return;
         }
 
-        navigator.geolocation.getCurrentPosition((position) => {
-            setCoords(position.coords);
-        });
+        const locationTimeout = setTimeout('geolocFail()', 1000);
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                clearTimeout(locationTimeout);
+                setCoords(position.coords);
+            },
+            null,
+            { timeout: locationTimeout }
+        );
 
         const formattedCoordinates = `${coords.latitude},${coords.longitude}`;
 
@@ -267,15 +275,7 @@ const LocationField: React.FC<
 
         const formattedAddress = `${address.street} ${address.streetNumber}, ${address.postal} ${address.city}, ${address.country}`;
 
-        if (coords.latitude !== 0 && coords.longitude !== 0) {
-            setVal(
-                hasFormattedAddress ? formattedAddress : formattedCoordinates
-            );
-        } else {
-            if (hasFormattedAddress) {
-                setVal(formattedAddress);
-            }
-        }
+        setVal(hasFormattedAddress ? formattedAddress : formattedCoordinates);
 
         return val;
     };
@@ -295,9 +295,11 @@ const LocationField: React.FC<
                         type={type}
                         isInverted={isInverted}
                         name={name}
-                        value={val || value}
+                        value={val}
                         required={isRequired}
-                        onChange={getLocation}
+                        onChange={(ev) => {
+                            onChange && onChange(ev), getLocation();
+                        }}
                         onBlur={onBlur}
                     />
                 </FieldWrapper.Content>
