@@ -114,8 +114,10 @@ export type FormProps = FieldProps & {
 export interface LocationProps {
     city?: string;
     street?: string;
+    streetNumber?: string;
     postal?: string;
     country?: string;
+    language?: string;
 }
 
 const LocationField: React.FC<
@@ -124,7 +126,6 @@ const LocationField: React.FC<
         isInverted?: boolean;
         onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
         onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
-        onLocationClick?: () => void;
         customLocationIcon?: (props: {
             isInverted?: boolean;
         }) => React.ReactNode;
@@ -138,11 +139,10 @@ const LocationField: React.FC<
     isDisabled,
     isInverted,
     placeholder,
-    value,
+    value = '',
     name,
-    onChange,
+    // onChange,
     onBlur,
-    onLocationClick,
     customLocationIcon,
 }) => {
     if (isDisabled) {
@@ -160,8 +160,10 @@ const LocationField: React.FC<
         location: {
             city: undefined,
             street: undefined,
+            streetNumber: undefined,
             postal: undefined,
             country: undefined,
+            language: 'DE',
         } as LocationProps,
     };
 
@@ -173,7 +175,7 @@ const LocationField: React.FC<
     );
     const [val, setVal] = React.useState(value);
 
-    onLocationClick = () => {
+    const getLocation = () => {
         if (!navigator.geolocation) {
             errorMessage =
                 // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -188,24 +190,34 @@ const LocationField: React.FC<
         const formattedCoordinates = `${coords.latitude},${coords.longitude}`;
 
         // const APIKEY = 'put the api key here';
-        // const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${formattedCoordinates}&key=${APIKEY}`;
+        // const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${formattedCoordinates}&location_type=ROOFTOP&result_type=street_address&key=${APIKEY}`;
 
         const hasFormattedAddress =
             address.city !== undefined &&
             address.street !== undefined &&
+            address.streetNumber !== undefined &&
             address.postal !== undefined &&
             address.country !== undefined;
 
-        const formattedAddress = `${address.street}, ${address.postal} ${address.city}, ${address.country}`;
+        const formattedAddress = `${address.street} ${address.streetNumber}, ${address.postal} ${address.city}, ${address.country}`;
 
         setAddress({
-            city: 'Stadt',
-            street: 'Straße',
-            postal: 'PLZ',
-            country: 'Land',
+            city: undefined,
+            street: undefined,
+            streetNumber: undefined,
+            postal: undefined,
+            country: undefined,
         });
 
-        setVal(hasFormattedAddress ? formattedAddress : formattedCoordinates);
+        if (coords.latitude !== 0 && coords.longitude !== 0) {
+            setVal(
+                hasFormattedAddress ? formattedAddress : formattedCoordinates
+            );
+        } else {
+            if (hasFormattedAddress) {
+                setVal(formattedAddress);
+            }
+        }
 
         return val;
     };
@@ -225,13 +237,13 @@ const LocationField: React.FC<
                         type={type}
                         isInverted={isInverted}
                         name={name}
-                        value={val}
+                        value={val || value}
                         required={isRequired}
-                        onChange={onChange}
+                        onChange={getLocation}
                         onBlur={onBlur}
                     />
                 </FieldWrapper.Content>
-                <LocationFlyTo onClick={onLocationClick}>
+                <LocationFlyTo onClick={getLocation}>
                     {customLocationIcon ? (
                         customLocationIcon({ isInverted })
                     ) : (
