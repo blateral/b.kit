@@ -242,6 +242,8 @@ const DynamicForm: FC<{
     }) => React.ReactNode;
     targetEmails?: string;
     subjectLine?: string;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
     definitions?: {
         field?: (props: FieldGenerationProps<Field>) => React.ReactNode;
