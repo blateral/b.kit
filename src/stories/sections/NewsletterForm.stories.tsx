@@ -112,3 +112,58 @@ export const CustomField: Story = () => (
         onSubmit={async (values, el) => console.log(values, el)}
     />
 );
+
+export const CustomValidation: Story = () => (
+    <NewsletterForm
+        fields={{
+            VORNAME: {
+                inputType: 'text',
+                label: 'Firstname',
+                placeholder: 'Vorname',
+                validate: async (key, value) => {
+                    if (!value) return 'ERRRORRR!';
+                    else return '';
+                },
+            },
+            NACHNAHME: {
+                inputType: 'text',
+                label: 'Lastname',
+                placeholder: 'Nachname',
+            },
+            EMAIL: {
+                inputType: 'email',
+                label: 'E-Mail',
+                placeholder: 'E-Mail',
+            },
+        }}
+        onSubmit={async (values, el) => console.log(values, el)}
+    />
+);
+
+export const CustomSubmit: Story = () => (
+    <NewsletterForm
+        fields={{
+            VORNAME: {
+                inputType: 'text',
+                label: 'Firstname',
+                placeholder: 'Vorname',
+            },
+            NACHNAHME: {
+                inputType: 'text',
+                label: 'Lastname',
+                placeholder: 'Nachname',
+            },
+            EMAIL: {
+                inputType: 'email',
+                label: 'E-Mail',
+                placeholder: 'E-Mail',
+            },
+        }}
+        onSubmit={async (values, el) => console.log(values, el)}
+        submitAction={({ isDisabled, handleSubmit }) => (
+            <button onClick={handleSubmit} disabled={isDisabled}>
+                submit
+            </button>
+        )}
+    />
+);

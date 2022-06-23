@@ -51,12 +51,12 @@ const FieldContainer = styled.div`
 
 const ActionContainer = styled.div`
     width: 100%;
-    max-width: calc(590px * 2 + ${spacings.nudge * 2}px);
+    max-width: 590px;
 
     margin: 0 auto;
     margin-top: ${spacings.spacer * 2}px;
 
-    text-align: left;
+    text-align: center;
 `;
 
 export interface FieldGenerationProps {
