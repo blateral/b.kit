@@ -62,6 +62,7 @@ export { default as CardList } from 'components/sections/CardList';
 export { default as ComparisonSlider } from 'components/sections/ComparisonSlider';
 export { default as CrossPromotion } from 'components/sections/CrossPromotion';
 export { default as DynamicForm } from 'components/sections/DynamicForm';
+export { default as NewsletterForm } from 'components/sections/NewsletterForm';
 export { default as EventList } from 'components/sections/events/EventList';
 export { default as EventOverview } from 'components/sections/events/EventOverview';
 export { default as EventDetail } from 'components/sections/events/EventDetail';
