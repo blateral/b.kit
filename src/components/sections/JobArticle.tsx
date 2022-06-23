@@ -73,28 +73,25 @@ const JobArticle: React.FC<
             'OTHER'
         ];
         datePosted?: string;
-        /** Function to inject custom primary button */
         primaryAction?: () => React.ReactNode;
-
-        /** Function to inject custom secondary button */
         secondaryAction?: () => React.ReactNode;
     }
 > = ({
-    jobTitle, // title
+    jobTitle,
     timeModel,
-    location, // jobLocation
+    location,
     modelIcon,
     locationIcon,
-    jobDesc, // description
-    organization, // hiringOrganization
-    directApply, // directApply
-    employmentType, // employmentType
-    datePosted, // datePosted
+    jobDesc,
+    organization,
+    directApply,
+    employmentType,
+    datePosted,
     primaryAction,
     secondaryAction,
 }) => {
     const jsonLd = {
-        jobTitle: jobTitle, // title
+        jobTitle, // title
         location, // jobLocation
         jobDesc, // description
         organization, // hiringOrganization
