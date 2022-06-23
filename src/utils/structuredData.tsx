@@ -1,7 +1,7 @@
 import React from 'react';
 import { JsonLd } from 'react-schemaorg';
 import { MapLocation } from 'components/sections/Map';
-import { FAQPage, LocalBusiness } from 'schema-dts';
+import { FAQPage, JobPosting, LocalBusiness } from 'schema-dts';
 
 export const generateLocalBusiness = (locations: MapLocation[]) => {
     return locations?.map(
@@ -66,6 +66,40 @@ export const generateFAQ = (
                         },
                     };
                 }),
+            }}
+        />
+    );
+};
+export const generateJob = (job: {
+    jobTitle: string;
+    jobDesc?: string;
+    organization?: string;
+    directApply?: boolean;
+    location?: string;
+    timeModel?: string;
+    datePosted?: string;
+}) => {
+    return (
+        <JsonLd<JobPosting>
+            item={{
+                '@context': 'https://schema.org',
+                '@type': 'JobPosting',
+                title: job.jobTitle,
+                description: job.jobDesc,
+                datePosted: job.datePosted,
+                employmentType: job.timeModel,
+                hiringOrganization: {
+                    '@type': 'Organization',
+                    name: job.organization,
+                },
+                jobLocation: {
+                    '@type': 'Place',
+                    address: {
+                        '@type': 'PostalAddress',
+                        addressLocality: job.location,
+                    },
+                },
+                directApply: job.directApply,
             }}
         />
     );
