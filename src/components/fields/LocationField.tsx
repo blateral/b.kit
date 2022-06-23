@@ -8,16 +8,32 @@ import {
     spacings,
     getGlobals as global,
     withRange,
+    mq,
 } from 'utils/styles';
 import FieldWrapper, { FieldProps } from './FormField';
 import { getFormFieldTextSize } from 'utils/formFieldText';
 import FlyTo from 'components/base/icons/FlyTo';
+import useLeafletMap from 'utils/useLeafletMap';
 
-import Geocode from 'react-geocode';
+const MapContainer = styled.div`
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 0;
 
-// TODO: API KEY
-const APIKEY = 'put the api key here';
-Geocode.setApiKey(APIKEY);
+    height: 100%;
+    min-height: 230px;
+
+    @media ${mq.semilarge} {
+        position: absolute;
+        /** 
+            calculate width of 6 grid cols (grid width = viewport width without wrapper paddings)
+            and add left or right wrapper padding afterwards
+         */
+    }
+`;
 
 const FieldView = styled.div`
     display: flex;
@@ -169,6 +185,10 @@ const LocationField: React.FC<
 
     const [val, setVal] = React.useState(value);
 
+    const { setContainer: setMapContainer } = useLeafletMap({
+        markers: [{ id: '', position: [coords.latitude, coords.longitude] }],
+    });
+
     const getLocation = () => {
         if (!navigator.geolocation) {
             errorMessage =
@@ -203,43 +223,57 @@ const LocationField: React.FC<
     }, [value]);
 
     return (
-        <FieldWrapper.View isDisabled={isDisabled}>
-            <FieldWrapper.Head
-                label={label}
-                isRequired={isRequired}
-                isInverted={isInverted}
-            />
-            <FieldView>
-                <FieldWrapper.Content>
-                    <InputField
-                        placeholder={placeholder}
-                        hasError={!!errorMessage}
-                        type={type}
-                        isInverted={isInverted}
-                        name={name}
-                        value={val}
-                        required={isRequired}
-                        onChange={(ev) => {
-                            onChange && onChange(ev);
-                            setVal(ev.currentTarget.value);
+        <>
+            <MapContainer ref={setMapContainer}>
+                {/* {flyToControl && (
+                    <FylToCtrlContainer
+                        onClick={(ev) => {
+                            ev.stopPropagation();
+                            flyToActive(flyToZoom);
                         }}
-                        onBlur={onBlur}
-                    />
-                </FieldWrapper.Content>
-                <LocationFlyTo onClick={getLocation}>
-                    {customLocationIcon ? (
-                        customLocationIcon({ isInverted })
-                    ) : (
-                        <FlyTo />
-                    )}
-                </LocationFlyTo>
-            </FieldView>
-            <FieldWrapper.Messages
-                infoMessage={infoMessage}
-                errorMessage={errorMessage}
-                isInverted={isInverted}
-            />
-        </FieldWrapper.View>
+                    >
+                        {flyToControl}
+                    </FylToCtrlContainer>
+                )} */}
+            </MapContainer>
+            <FieldWrapper.View isDisabled={isDisabled}>
+                <FieldWrapper.Head
+                    label={label}
+                    isRequired={isRequired}
+                    isInverted={isInverted}
+                />
+                <FieldView>
+                    <FieldWrapper.Content>
+                        <InputField
+                            placeholder={placeholder}
+                            hasError={!!errorMessage}
+                            type={type}
+                            isInverted={isInverted}
+                            name={name}
+                            value={val}
+                            required={isRequired}
+                            onChange={(ev) => {
+                                onChange && onChange(ev);
+                                setVal(ev.currentTarget.value);
+                            }}
+                            onBlur={onBlur}
+                        />
+                    </FieldWrapper.Content>
+                    <LocationFlyTo onClick={getLocation}>
+                        {customLocationIcon ? (
+                            customLocationIcon({ isInverted })
+                        ) : (
+                            <FlyTo />
+                        )}
+                    </LocationFlyTo>
+                </FieldView>
+                <FieldWrapper.Messages
+                    infoMessage={infoMessage}
+                    errorMessage={errorMessage}
+                    isInverted={isInverted}
+                />
+            </FieldWrapper.View>
+        </>
     );
 };
 
