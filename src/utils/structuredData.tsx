@@ -99,6 +99,7 @@ export const generateJob = (job: {
                         addressLocality: job.location,
                     },
                 },
+                directApply: job.directApply,
             }}
         />
     );
