@@ -28,10 +28,6 @@ const MapContainer = styled.div`
 
     @media ${mq.semilarge} {
         position: absolute;
-        /** 
-            calculate width of 6 grid cols (grid width = viewport width without wrapper paddings)
-            and add left or right wrapper padding afterwards
-         */
     }
 `;
 
