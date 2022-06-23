@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { copyStyle } from 'components/typography/Copy';
@@ -176,8 +176,7 @@ const LocationField: React.FC<
     const [coords, setCoords] =
         React.useState<GeolocationCoordinates>(defaultCoords);
 
-    const [address, setAddress] =
-        React.useState<LocationProps>(defaultLocation);
+    const [address] = React.useState<LocationProps>(defaultLocation);
     const [val, setVal] = React.useState(value);
 
     const getLocation = () => {
@@ -188,83 +187,83 @@ const LocationField: React.FC<
             return;
         }
 
-        const locationTimeout = setTimeout('geolocFail()', 1000);
+        // const locationTimeout = setTimeout('geolocFail()', 1000);
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                clearTimeout(locationTimeout);
+                // clearTimeout(locationTimeout);
                 setCoords(position.coords);
             },
             null,
-            { timeout: locationTimeout }
+            { timeout: 10000 }
         );
 
         const formattedCoordinates = `${coords.latitude},${coords.longitude}`;
 
         // GEOCODING WITH react-geocode
-        Geocode.setLanguage(defaultLocation.language);
-        Geocode.setRegion(defaultLocation.language);
-        Geocode.setLocationType('ROOFTOP');
+        // Geocode.setLanguage(defaultLocation.language);
+        // Geocode.setRegion(defaultLocation.language);
+        // Geocode.setLocationType('ROOFTOP');
 
-        Geocode.fromLatLng(`${coords.latitude}`, `${coords.longitude}`).then(
-            (response) => {
-                let city, street, streetNumber, postal, country;
-                for (
-                    let i = 0;
-                    i < response.results[0].address_components.length;
-                    i++
-                ) {
-                    for (
-                        let j = 0;
-                        j <
-                        response.results[0].address_components[i].types.length;
-                        j++
-                    ) {
-                        switch (
-                            response.results[0].address_components[i].types[j]
-                        ) {
-                            case 'locality':
-                                city =
-                                    response.results[0].address_components[i]
-                                        .long_name;
-                                break;
-                            case 'route':
-                                street =
-                                    response.results[0].address_components[i]
-                                        .long_name;
-                                break;
-                            case 'street_number':
-                                streetNumber =
-                                    response.results[0].address_components[i]
-                                        .long_name;
-                                break;
-                            case 'country':
-                                country =
-                                    response.results[0].address_components[i]
-                                        .long_name;
-                                break;
-                            case 'postal_code':
-                                postal =
-                                    response.results[0].address_components[i]
-                                        .long_name;
-                                break;
-                        }
-                    }
-                }
-                setAddress({
-                    city: city,
-                    street: street,
-                    streetNumber: streetNumber,
-                    postal: postal,
-                    country: country,
-                });
-            }
-        );
+        // Geocode.fromLatLng(`${coords.latitude}`, `${coords.longitude}`).then(
+        //     (response) => {
+        //         let city, street, streetNumber, postal, country;
+        //         for (
+        //             let i = 0;
+        //             i < response.results[0].address_components.length;
+        //             i++
+        //         ) {
+        //             for (
+        //                 let j = 0;
+        //                 j <
+        //                 response.results[0].address_components[i].types.length;
+        //                 j++
+        //             ) {
+        //                 switch (
+        //                     response.results[0].address_components[i].types[j]
+        //                 ) {
+        //                     case 'locality':
+        //                         city =
+        //                             response.results[0].address_components[i]
+        //                                 .long_name;
+        //                         break;
+        //                     case 'route':
+        //                         street =
+        //                             response.results[0].address_components[i]
+        //                                 .long_name;
+        //                         break;
+        //                     case 'street_number':
+        //                         streetNumber =
+        //                             response.results[0].address_components[i]
+        //                                 .long_name;
+        //                         break;
+        //                     case 'country':
+        //                         country =
+        //                             response.results[0].address_components[i]
+        //                                 .long_name;
+        //                         break;
+        //                     case 'postal_code':
+        //                         postal =
+        //                             response.results[0].address_components[i]
+        //                                 .long_name;
+        //                         break;
+        //                 }
+        //             }
+        //         }
+        //         setAddress({
+        //             city: city,
+        //             street: street,
+        //             streetNumber: streetNumber,
+        //             postal: postal,
+        //             country: country,
+        //         });
+        //     }
+        // );
 
-        Geocode.fromAddress(value).then((response) => {
-            const addressCoords = response.results[0].geometry.location;
-            setCoords(addressCoords);
-        });
+        // Geocode.fromAddress(value).then((response) => {
+        //     const addressCoords = response.results[0].geometry.location;
+        //     setCoords(addressCoords);
+        // });
 
         const hasFormattedAddress =
             address.city !== undefined &&
@@ -279,6 +278,15 @@ const LocationField: React.FC<
 
         return val;
     };
+
+    useEffect(() => {
+        const formattedCoordinates = `${coords.latitude},${coords.longitude}`;
+        setVal(formattedCoordinates);
+    }, [coords]);
+
+    useEffect(() => {
+        setVal(value);
+    }, [value]);
 
     return (
         <FieldWrapper.View isDisabled={isDisabled}>
@@ -298,7 +306,8 @@ const LocationField: React.FC<
                         value={val}
                         required={isRequired}
                         onChange={(ev) => {
-                            onChange && onChange(ev), getLocation();
+                            onChange && onChange(ev);
+                            setVal(ev.currentTarget.value);
                         }}
                         onBlur={onBlur}
                     />
