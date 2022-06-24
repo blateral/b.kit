@@ -216,7 +216,10 @@ const LocationField: React.FC<
     };
 
     const { setContainer: setMapContainer, flyToPosition } = useLeafletMap({
-        center: [coords.latitude, coords.longitude],
+        center:
+            coords.latitude && coords.longitude
+                ? [coords.latitude, coords.longitude]
+                : [0, 0],
         activeMarkerId: 'location',
         markers: [
             {
