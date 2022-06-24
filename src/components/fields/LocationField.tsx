@@ -19,6 +19,10 @@ import { LocationIcon } from 'components/sections/Map';
 import Button from 'components/buttons/Button';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
+const MapWrapper = styled.div<{ isVisible?: boolean }>`
+    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+`;
+
 const MapContainer = styled.div`
     position: relative;
     width: 100%;
@@ -190,7 +194,7 @@ const LocationField: React.FC<
     const [coords, setCoords] =
         React.useState<GeolocationCoordinates>(defaultCoords);
 
-    const [asGeolocation, setAsGeolocation] = React.useState<boolean>(false);
+    const [asGeolocation, setAsGeolocation] = React.useState<boolean>(true);
 
     const [val, setVal] = React.useState(value);
 
@@ -215,6 +219,7 @@ const LocationField: React.FC<
         onClick: (ev) => {
             console.log(ev.latlng);
         },
+        fitBoundsPadding: [30, 30],
     });
 
     const getLocation = () => {
@@ -251,7 +256,9 @@ const LocationField: React.FC<
 
     return (
         <>
-            {asGeolocation && <MapContainer ref={setMapContainer} />}
+            <MapWrapper isVisible={asGeolocation}>
+                <MapContainer ref={setMapContainer} />
+            </MapWrapper>
             <FieldWrapper.View isDisabled={isDisabled}>
                 <FieldWrapper.Head
                     label={label}
