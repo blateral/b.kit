@@ -18,6 +18,7 @@ import { getSVGDataImg } from 'utils/dataURI';
 import { LocationIcon } from 'components/sections/Map';
 import Button from 'components/buttons/Button';
 import { useLibTheme } from 'utils/LibThemeProvider';
+import { LeafletMouseEvent } from 'leaflet';
 
 const MapWrapper = styled.div<{ isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
@@ -206,6 +207,14 @@ const LocationField: React.FC<
         url: getSVGDataImg(<LocationPin />),
     };
 
+    const onMapClick = (e: LeafletMouseEvent) => {
+        setCoords({
+            ...defaultCoords,
+            latitude: e.latlng.lat,
+            longitude: e.latlng.lng,
+        });
+    };
+
     const { setContainer: setMapContainer, flyToPosition } = useLeafletMap({
         center: [coords.latitude, coords.longitude],
         activeMarkerId: 'location',
@@ -217,14 +226,10 @@ const LocationField: React.FC<
             },
         ],
         onClick: (ev) => {
-            console.log(ev.latlng);
+            onMapClick(ev);
         },
         fitBoundsPadding: [30, 30],
     });
-
-    const onMapClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        return console.log(e.clientX, e.clientY);
-    };
 
     const getLocation = () => {
         if (!navigator.geolocation) {
@@ -261,10 +266,7 @@ const LocationField: React.FC<
     return (
         <>
             <MapWrapper isVisible={asGeolocation}>
-                <MapContainer
-                    onClick={(e) => onMapClick(e)}
-                    ref={setMapContainer}
-                />
+                <MapContainer ref={setMapContainer} />
             </MapWrapper>
             <FieldWrapper.View isDisabled={isDisabled}>
                 <FieldWrapper.Head
