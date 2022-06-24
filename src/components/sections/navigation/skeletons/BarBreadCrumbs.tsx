@@ -20,6 +20,10 @@ const List = styled.ul`
     padding: 0;
     min-width: inherit;
 
+    & > li:first-child {
+        flex: 1 0 auto;
+    }
+
     @media ${mq.semilarge} {
         & > li + li {
             margin-left: ${spacings.nudge}px;
@@ -59,6 +63,12 @@ const NavLink = styled(Link)<{
         isInverted ? color(theme).text.inverted : color(theme).text.default};
     text-decoration: underline;
 
+    & > * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
     & > * + * {
         margin-left: ${spacings.nudge}px;
     }
@@ -74,7 +84,7 @@ const NavLink = styled(Link)<{
 
     @media ${mq.semilarge} {
         display: ${({ showOnDesktop }) =>
-            showOnDesktop ? 'inline-flex' : 'none'};
+            showOnDesktop ? 'inline-block' : 'none'};
     }
 `;
 
@@ -97,13 +107,19 @@ const NavLabel = styled.span<{
         isInverted ? color(theme).text.inverted : color(theme).text.default};
     text-decoration: none;
 
+    & > * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
     & > * + * {
         margin-left: ${spacings.nudge}px;
     }
 
     @media ${mq.semilarge} {
         display: ${({ showOnDesktop }) =>
-            showOnDesktop ? 'inline-flex' : 'none'};
+            showOnDesktop ? 'inline-block' : 'none'};
     }
 `;
 
@@ -115,6 +131,10 @@ const Seperator = styled(Copy)`
     @media ${mq.semilarge} {
         display: inline-block;
     }
+`;
+
+const BackIconContainer = styled.span`
+    flex: 0 0 auto;
 `;
 
 const BreadcrumbItem: FC<
@@ -207,28 +227,16 @@ const BarBreadcrumbs: FC<{
                                             showOnMobile
                                             isInverted={isInverted}
                                         >
-                                            <span>
+                                            <BackIconContainer>
                                                 {back ? (
                                                     back({ isInverted })
                                                 ) : (
                                                     <AngleLeft />
                                                 )}
-                                            </span>
+                                            </BackIconContainer>
                                             <span>{prev.label}</span>
                                         </BreadcrumbItem>
                                     )}
-                                    {/* {prev && (
-                                        <BackLink
-                                            isInverted={isInverted}
-                                            {...prev.link}
-                                        >
-                                            {back ? (
-                                                back({ isInverted })
-                                            ) : (
-                                                <AngleLeft />
-                                            )}
-                                        </BackLink>
-                                    )} */}
                                     <BreadcrumbItem
                                         {...item}
                                         link={{}}
