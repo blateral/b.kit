@@ -216,6 +216,9 @@ const LocationField: React.FC<
                 icon: defaultMarker,
             },
         ],
+        onClick: (ev) => {
+            console.log(ev.latlng);
+        },
         fitBoundsPadding: [30, 30],
     });
 

@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FeatureGroup, Map, Marker, MarkerOptions } from 'leaflet';
+import {
+    FeatureGroup,
+    LeafletMouseEvent,
+    Map,
+    Marker,
+    MarkerOptions,
+} from 'leaflet';
 
 export interface LeafletMapSettings {
     center: [number, number];
@@ -15,6 +21,7 @@ export interface LeafletMapSettings {
     onMarkerClick?: (markerId: string) => void;
     onActiveMarkerChanged?: (props: { markerId: string }) => void;
     onReady?: () => void;
+    onClick?: (ev: LeafletMouseEvent) => void;
 }
 
 export interface LeafletMapMarker {
@@ -100,6 +107,10 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
                 }
             });
 
+            map.on('click', (ev) => {
+                mapSettings.onClick?.(ev as LeafletMouseEvent);
+            });
+
             // set map state
             setMap(map);
 
@@ -121,6 +132,7 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
     }, [
         L,
         container,
+        mapSettings,
         mapSettings.attribution,
         mapSettings.center,
         mapSettings.onlyScrollOnFocus,
