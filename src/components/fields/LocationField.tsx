@@ -8,27 +8,26 @@ import {
     spacings,
     getGlobals as global,
     withRange,
-    mq,
 } from 'utils/styles';
 import FieldWrapper, { FieldProps } from './FormField';
 import { getFormFieldTextSize } from 'utils/formFieldText';
 import FlyTo from 'components/base/icons/FlyTo';
 import useLeafletMap from 'utils/useLeafletMap';
+import LocationPin from 'components/base/icons/LocationPin';
+import { getSVGDataImg } from 'utils/dataURI';
+import { LocationIcon } from 'components/sections/Map';
+import Button from 'components/buttons/Button';
+import { useLibTheme } from 'utils/LibThemeProvider';
 
 const MapContainer = styled.div`
     position: relative;
-    top: 0;
-    left: 0;
-    bottom: 0;
     width: 100%;
     z-index: 0;
 
     height: 100%;
-    min-height: 230px;
+    min-height: 250px;
 
-    @media ${mq.semilarge} {
-        position: absolute;
-    }
+    margin-bottom: 10px;
 `;
 
 const FieldView = styled.div`
@@ -42,7 +41,7 @@ const FieldView = styled.div`
     }
 `;
 
-const LocationFlyTo = styled.div`
+const Icon = styled.div`
     & > * {
         max-width: 24px;
         max-height: 24px;
@@ -123,6 +122,10 @@ const InputField = styled.input<{
     }
 `;
 
+const ActionWrapper = styled.div`
+    margin-top: ${spacings.nudge * 2}px;
+`;
+
 export type FormProps = FieldProps & {
     value?: string;
     name?: string;
@@ -146,6 +149,10 @@ const LocationField: React.FC<
         customLocationIcon?: (props: {
             isInverted?: boolean;
         }) => React.ReactNode;
+        customAddressIcon?: (props: {
+            isInverted?: boolean;
+        }) => React.ReactNode;
+        locationButtonLabel?: string;
     }
 > = ({
     type = 'text',
@@ -161,10 +168,14 @@ const LocationField: React.FC<
     onChange,
     onBlur,
     customLocationIcon,
+    customAddressIcon,
+    locationButtonLabel,
 }) => {
     if (isDisabled) {
         errorMessage = '';
     }
+
+    const { colors } = useLibTheme();
 
     const defaultCoords = {
         accuracy: 0,
@@ -179,10 +190,27 @@ const LocationField: React.FC<
     const [coords, setCoords] =
         React.useState<GeolocationCoordinates>(defaultCoords);
 
+    const [asGeolocation, setAsGeolocation] = React.useState<boolean>(false);
+
     const [val, setVal] = React.useState(value);
 
+    const defaultMarker: LocationIcon = {
+        size: [28, 28],
+        anchor: [14, 28],
+        sizeActive: [70, 70],
+        anchorActive: [35, 70],
+        url: getSVGDataImg(<LocationPin />),
+    };
+
     const { setContainer: setMapContainer } = useLeafletMap({
-        markers: [{ id: '', position: [coords.latitude, coords.longitude] }],
+        center: [coords.latitude, coords.longitude],
+        markers: [
+            {
+                id: '',
+                position: [coords.latitude, coords.longitude],
+                icon: defaultMarker,
+            },
+        ],
     });
 
     const getLocation = () => {
@@ -195,7 +223,6 @@ const LocationField: React.FC<
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                // clearTimeout(locationTimeout);
                 setCoords(position.coords);
             },
             null,
@@ -220,18 +247,7 @@ const LocationField: React.FC<
 
     return (
         <>
-            <MapContainer ref={setMapContainer}>
-                {/* {flyToControl && (
-                    <FylToCtrlContainer
-                        onClick={(ev) => {
-                            ev.stopPropagation();
-                            flyToActive(flyToZoom);
-                        }}
-                    >
-                        {flyToControl}
-                    </FylToCtrlContainer>
-                )} */}
-            </MapContainer>
+            {asGeolocation && <MapContainer ref={setMapContainer} />}
             <FieldWrapper.View isDisabled={isDisabled}>
                 <FieldWrapper.Head
                     label={label}
@@ -255,13 +271,35 @@ const LocationField: React.FC<
                             onBlur={onBlur}
                         />
                     </FieldWrapper.Content>
-                    <LocationFlyTo onClick={getLocation}>
-                        {customLocationIcon ? (
-                            customLocationIcon({ isInverted })
-                        ) : (
-                            <FlyTo />
-                        )}
-                    </LocationFlyTo>
+                    {asGeolocation ? (
+                        <Icon onClick={getLocation}>
+                            {customLocationIcon ? (
+                                customLocationIcon({ isInverted })
+                            ) : (
+                                <FlyTo
+                                    iconColor={
+                                        isInverted
+                                            ? colors.text.inverted
+                                            : colors.text.default
+                                    }
+                                />
+                            )}
+                        </Icon>
+                    ) : (
+                        <Icon>
+                            {customAddressIcon ? (
+                                customAddressIcon({ isInverted })
+                            ) : (
+                                <LocationPin
+                                    iconColor={
+                                        isInverted
+                                            ? colors.text.inverted
+                                            : colors.text.default
+                                    }
+                                />
+                            )}
+                        </Icon>
+                    )}
                 </FieldView>
                 <FieldWrapper.Messages
                     infoMessage={infoMessage}
@@ -269,6 +307,24 @@ const LocationField: React.FC<
                     isInverted={isInverted}
                 />
             </FieldWrapper.View>
+            <ActionWrapper>
+                <Button.View
+                    as="button"
+                    onClick={() => setAsGeolocation(!asGeolocation)}
+                >
+                    <Button.Label>
+                        {`${
+                            locationButtonLabel
+                                ? locationButtonLabel
+                                : `Standorterkennung ${
+                                      asGeolocation
+                                          ? 'ausschalten'
+                                          : 'verwenden'
+                                  }`
+                        }`}
+                    </Button.Label>
+                </Button.View>
+            </ActionWrapper>
         </>
     );
 };
