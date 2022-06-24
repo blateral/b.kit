@@ -195,7 +195,7 @@ const LocationField: React.FC<
     const [coords, setCoords] =
         React.useState<GeolocationCoordinates>(defaultCoords);
 
-    const [asGeolocation, setAsGeolocation] = React.useState<boolean>(true);
+    const [asGeolocation, setAsGeolocation] = React.useState<boolean>(false);
 
     const [val, setVal] = React.useState(value);
 
