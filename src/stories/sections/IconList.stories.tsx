@@ -6,100 +6,124 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const Items = [
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
     {
-        src: '//placehold.it/200x70',
+        src: 'https://via.placeholder.com/200x70',
         alt: '',
+        link: { href: '#' },
     },
 ];
 

@@ -8,6 +8,7 @@ import Copy from 'components/typography/Copy';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Pointer from 'components/buttons/Pointer';
+import Link, { LinkProps } from 'components/typography/Link';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: 0 auto;
@@ -65,7 +66,8 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
     justify-content: center;
 
     flex-wrap: wrap;
-    margin-left: -20px;
+    margin-top: -${spacings.spacer}px;
+    margin-left: -${spacings.spacer}px;
 
     @media ${mq.medium} {
         align-items: ${({ isCentered }) =>
@@ -90,11 +92,14 @@ const StyledActions = styled(Actions)`
     }
 `;
 
+const ItemLink = styled(Link)`
+    display: block;
+    margin-top: ${spacings.spacer}px;
+    margin-left: ${spacings.spacer}px; ;
+`;
+
 const Item = styled.img<{ isVisible?: boolean; index: number }>`
     display: block;
-
-    padding-left: 20px;
-    padding-top: 20px;
 
     display: ${({ index, isVisible }) =>
         isVisible || index < 6 ? 'block' : 'none'};
@@ -119,7 +124,7 @@ const ListFooter = styled(Copy)<{ isCentered?: boolean }>`
 `;
 
 const IconList: React.FC<{
-    items: { src: string; alt?: string }[];
+    items: { src: string; alt?: string; link?: LinkProps }[];
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     showMoreText?: string;
@@ -156,50 +161,47 @@ const IconList: React.FC<{
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 <ListContainer>
-                    <Copy type="copy" size="medium" isInverted={isInverted}>
-                        <ItemContainer isCentered={isCentered}>
-                            <Items
-                                isVisible={!showMore ? true : showMore === true}
-                                isCentered={isCentered}
-                            >
-                                {items.map(({ src, alt }, i) => {
-                                    return (
+                    <ItemContainer isCentered={isCentered}>
+                        <Items
+                            isVisible={!showMore ? true : showMore === true}
+                            isCentered={isCentered}
+                        >
+                            {items.map(({ src, alt, link }, i) => {
+                                return (
+                                    <ItemLink key={i} {...link}>
                                         <Item
                                             isVisible={showMore}
                                             index={i}
-                                            key={i}
                                             src={src}
                                             alt={alt}
                                         />
-                                    );
-                                })}
-                            </Items>
-                        </ItemContainer>
-                        {enableToggle && (
-                            <ListFooter
-                                type="copy"
-                                size="medium"
-                                isInverted={isInverted}
-                                isCentered={isCentered}
+                                    </ItemLink>
+                                );
+                            })}
+                        </Items>
+                    </ItemContainer>
+                    {enableToggle && (
+                        <ListFooter
+                            type="copy"
+                            size="medium"
+                            isInverted={isInverted}
+                            isCentered={isCentered}
+                        >
+                            <ShowMore
+                                itemCount={items.length}
+                                onClick={() => setShowMore((prev) => !prev)}
                             >
-                                <ShowMore
-                                    itemCount={items.length}
-                                    onClick={() => setShowMore((prev) => !prev)}
+                                <Pointer.View
+                                    as="button"
+                                    isInverted={isInverted}
                                 >
-                                    <Pointer.View
-                                        as="button"
-                                        isInverted={isInverted}
-                                    >
-                                        <Pointer.Label>
-                                            {showMore
-                                                ? showLessText
-                                                : showMoreText}
-                                        </Pointer.Label>
-                                    </Pointer.View>
-                                </ShowMore>
-                            </ListFooter>
-                        )}
-                    </Copy>
+                                    <Pointer.Label>
+                                        {showMore ? showLessText : showMoreText}
+                                    </Pointer.Label>
+                                </Pointer.View>
+                            </ShowMore>
+                        </ListFooter>
+                    )}
                 </ListContainer>
 
                 {(primaryAction || secondaryAction) && (
