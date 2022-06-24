@@ -219,6 +219,10 @@ const LocationField: React.FC<
         fitBoundsPadding: [30, 30],
     });
 
+    const onMapClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        return console.log(e.clientX, e.clientY);
+    };
+
     const getLocation = () => {
         if (!navigator.geolocation) {
             errorMessage =
@@ -232,7 +236,7 @@ const LocationField: React.FC<
                 setCoords(position.coords);
                 flyToPosition(
                     [position.coords.latitude, position.coords.longitude],
-                    15
+                    5
                 );
             },
             null,
@@ -254,7 +258,10 @@ const LocationField: React.FC<
     return (
         <>
             <MapWrapper isVisible={asGeolocation}>
-                <MapContainer ref={setMapContainer} />
+                <MapContainer
+                    onClick={(e) => onMapClick(e)}
+                    ref={setMapContainer}
+                />
             </MapWrapper>
             <FieldWrapper.View isDisabled={isDisabled}>
                 <FieldWrapper.Head
