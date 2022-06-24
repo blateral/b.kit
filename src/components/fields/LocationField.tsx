@@ -194,7 +194,7 @@ const LocationField: React.FC<
     const [coords, setCoords] =
         React.useState<GeolocationCoordinates>(defaultCoords);
 
-    const [asGeolocation, setAsGeolocation] = React.useState<boolean>(false);
+    const [asGeolocation, setAsGeolocation] = React.useState<boolean>(true);
 
     const [val, setVal] = React.useState(value);
 
@@ -207,14 +207,18 @@ const LocationField: React.FC<
     };
 
     const { setContainer: setMapContainer } = useLeafletMap({
-        center: [coords.latitude, coords.longitude],
+        center:
+            coords.latitude && coords.longitude
+                ? [coords.latitude, coords.longitude]
+                : [0, 0],
         markers: [
             {
-                id: '',
+                id: 'LocField',
                 position: [coords.latitude, coords.longitude],
                 icon: defaultMarker,
             },
         ],
+        fitBoundsPadding: [30, 30],
     });
 
     const getLocation = () => {
