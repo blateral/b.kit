@@ -19,6 +19,10 @@ import { LocationIcon } from 'components/sections/Map';
 import Button from 'components/buttons/Button';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
+const MapWrapper = styled.div<{ isVisible?: boolean }>`
+    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+`;
+
 const MapContainer = styled.div`
     position: relative;
     width: 100%;
@@ -247,7 +251,9 @@ const LocationField: React.FC<
 
     return (
         <>
-            {asGeolocation && <MapContainer ref={setMapContainer} />}
+            <MapWrapper isVisible={asGeolocation}>
+                <MapContainer ref={setMapContainer} />
+            </MapWrapper>
             <FieldWrapper.View isDisabled={isDisabled}>
                 <FieldWrapper.Head
                     label={label}
