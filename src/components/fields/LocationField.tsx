@@ -202,11 +202,12 @@ const LocationField: React.FC<
         url: getSVGDataImg(<LocationPin />),
     };
 
-    const { setContainer: setMapContainer } = useLeafletMap({
+    const { setContainer: setMapContainer, flyToPosition } = useLeafletMap({
         center: [coords.latitude, coords.longitude],
+        activeMarkerId: 'location',
         markers: [
             {
-                id: '',
+                id: 'location',
                 position: [coords.latitude, coords.longitude],
                 icon: defaultMarker,
             },
@@ -224,14 +225,14 @@ const LocationField: React.FC<
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 setCoords(position.coords);
+                flyToPosition(
+                    [position.coords.latitude, position.coords.longitude],
+                    15
+                );
             },
             null,
             { timeout: 10000 }
         );
-
-        const formattedCoordinates = `${coords.latitude},${coords.longitude}`;
-
-        setVal(formattedCoordinates);
 
         return val;
     };
