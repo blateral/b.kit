@@ -35,3 +35,34 @@ export const Default: Story = () => (
         ]}
     />
 );
+
+export const LongNavLabels: Story = () => (
+    <BarBreadcrumbs
+        rootLink={{ href: '' }}
+        navItems={[
+            {
+                uid: 'itemA',
+                link: { href: '/services' },
+                label: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consete',
+            },
+            {
+                uid: 'itemB',
+                link: { href: '/news' },
+                label: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr',
+                subItems: [
+                    {
+                        uid: 'itemA1',
+                        link: { href: '/companynews' },
+                        label: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consete',
+                        isCurrent: true,
+                    },
+                ],
+            },
+            {
+                uid: 'itemC',
+                link: { href: '/impressum' },
+                label: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consete',
+            },
+        ]}
+    />
+);
