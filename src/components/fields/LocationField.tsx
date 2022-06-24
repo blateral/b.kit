@@ -334,10 +334,10 @@ const LocationField: React.FC<
                         {`${
                             locationButtonLabel
                                 ? locationButtonLabel
-                                : `Standorterkennung ${
+                                : `Standort ${
                                       asGeolocation
-                                          ? 'ausschalten'
-                                          : 'verwenden'
+                                          ? 'nicht ermitteln'
+                                          : 'ermittelm'
                                   }`
                         }`}
                     </Button.Label>
