@@ -242,6 +242,7 @@ const Image: React.FC<
             ref.addEventListener('error', handleError);
         } else {
             ref.removeEventListener('load', handleLoad);
+            ref.removeEventListener('error', handleError);
             handleLoad();
         }
 

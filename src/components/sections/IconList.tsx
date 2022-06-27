@@ -4,15 +4,11 @@ import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import {
-    mq,
-    spacings,
-    getColors as color,
-    getGlobals as global,
-} from 'utils/styles';
+import { mq, spacings, getColors as color } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Pointer from 'components/buttons/Pointer';
 import Link, { LinkProps } from 'components/typography/Link';
+import Image from 'components/blocks/Image';
 
 const StyledSection = styled(Section)<{ isCentered?: boolean }>`
     margin: 0 auto;
@@ -106,18 +102,6 @@ const ItemLink = styled(Link)<{ isInverted?: boolean }>`
             : color(theme).primary.default};
 `;
 
-const Image = styled.img<{ isInverted?: boolean }>`
-    display: block;
-    object-fit: contain;
-
-    &[data-img-loaded='false'] {
-        background: ${({ theme, isInverted }) =>
-            isInverted
-                ? global(theme).sections.imagePlaceholderBg.inverted
-                : global(theme).sections.imagePlaceholderBg.default};
-    }
-`;
-
 const ShowMore = styled.div<{ itemCount?: number; isCentered?: boolean }>`
     display: ${({ itemCount }) =>
         itemCount && itemCount > 6 ? 'block' : 'none'};
@@ -151,6 +135,7 @@ export interface IconListItem {
     alt?: string;
     link?: LinkProps;
     ratio?: { h: number; w: number };
+    showPlaceholder?: boolean;
 }
 
 const IconList: React.FC<{
@@ -230,30 +215,30 @@ const IconList: React.FC<{
                         isVisible={!showMore ? true : showMore === true}
                         isCentered={isCentered}
                     >
-                        {items?.map(({ src, link, alt, ratio }, i) => (
-                            <Item isVisible={showMore} index={i} key={i}>
-                                <ItemLink
-                                    {...link}
-                                    isInverted={isInverted}
-                                    ariaLabel={alt}
-                                >
-                                    <Image
-                                        data-img-loaded={false}
+                        {items?.map(
+                            ({ src, link, alt, ratio, showPlaceholder }, i) => (
+                                <Item isVisible={showMore} index={i} key={i}>
+                                    <ItemLink
+                                        {...link}
                                         isInverted={isInverted}
-                                        src={src}
-                                        alt={alt}
-                                        height={ratio?.h}
-                                        width={ratio?.w}
-                                        onLoad={(ev) =>
-                                            ev.currentTarget?.setAttribute(
-                                                'data-img-loaded',
-                                                'true'
-                                            )
-                                        }
-                                    />
-                                </ItemLink>
-                            </Item>
-                        ))}
+                                        ariaLabel={alt}
+                                    >
+                                        <Image
+                                            data-img-loaded={false}
+                                            isInverted={isInverted}
+                                            small={src}
+                                            alt={alt}
+                                            ratios={
+                                                ratio
+                                                    ? { small: ratio }
+                                                    : undefined
+                                            }
+                                            showPlaceholder={showPlaceholder}
+                                        />
+                                    </ItemLink>
+                                </Item>
+                            )
+                        )}
                     </Items>
                 </ItemContainer>
                 {enableToggle && (
