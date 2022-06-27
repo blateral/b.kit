@@ -105,6 +105,7 @@ export { default as Timeline } from 'components/sections/Timeline';
 export { default as Video } from 'components/sections/Video';
 export { default as VideoCarousel } from 'components/sections/carousel/VideoCarousel';
 export { default as JobList } from 'components/sections/jobs/JobList';
+export { default as JobArticle } from 'components/sections/jobs/JobArticle';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
