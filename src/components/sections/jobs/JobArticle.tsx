@@ -61,21 +61,35 @@ const StyledActions = styled(Actions)`
     margin-top: ${spacings.spacer}px;
 `;
 
+export interface OrganizationData {
+    name?: string;
+    url?: string;
+    logo?: string;
+    telephone?: string;
+    email?: string;
+    address?: {
+        streetAddress?: string;
+        addressLocality?: string;
+        postalCode?: string;
+        addressCountry?: string;
+    };
+}
+
 export type JobArticleProps = Omit<
     JobCardProps,
-    'isInverted' | 'hasBackground'
+    'isInverted' | 'hasBackground' | 'link'
 > & {
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** Text that describes the job (richtext) */
-    jobDesc?: string;
+    description?: string;
 
     /** The hiring organization (important for structured data) */
-    organization?: string;
+    organization?: OrganizationData;
 
     /** The date of posting the job tender (important for structured data) */
-    datePosted?: string;
+    datePosted?: Date;
 
     /** Function to inject primary action */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -95,7 +109,7 @@ const JobArticle: React.FC<JobArticleProps> = ({
     location,
     modelIcon,
     locationIcon,
-    jobDesc,
+    description,
     organization,
     datePosted,
     primaryAction,
@@ -107,8 +121,8 @@ const JobArticle: React.FC<JobArticleProps> = ({
     const jsonLd = {
         jobTitle, // title
         location, // jobLocation
-        jobDesc, // description
-        organization, // hiringOrganization
+        jobDesc: description, // description
+        organization: organization, // hiringOrganization
         directApply: primaryAction || secondaryAction ? true : false, // directApply
         timeModel, // employmentType
         datePosted, // datePosted
@@ -165,8 +179,8 @@ const JobArticle: React.FC<JobArticleProps> = ({
                         </JobInfos>
                     )}
                 </ArticleHead>
-                {jobDesc && (
-                    <Copy innerHTML={jobDesc} isInverted={isInverted} />
+                {description && (
+                    <Copy innerHTML={description} isInverted={isInverted} />
                 )}
                 {(primaryAction || secondaryAction) && (
                     <StyledActions

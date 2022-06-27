@@ -2,6 +2,7 @@ import React from 'react';
 import { JsonLd } from 'react-schemaorg';
 import { MapLocation } from 'components/sections/Map';
 import { FAQPage, JobPosting, LocalBusiness } from 'schema-dts';
+import { OrganizationData } from 'components/sections/jobs/JobArticle';
 
 export const generateLocalBusiness = (locations: MapLocation[]) => {
     return locations?.map(
@@ -71,36 +72,62 @@ export const generateFAQ = (
     );
 };
 
-export const generateJob = (job: {
+export const generateJob = ({
+    jobTitle,
+    jobDesc,
+    organization,
+    directApply,
+    location,
+    timeModel,
+    datePosted,
+}: {
     jobTitle: string;
     jobDesc?: string;
-    organization?: string;
+    organization?: OrganizationData;
     directApply?: boolean;
     location?: string;
     timeModel?: string;
-    datePosted?: string;
+    datePosted?: Date;
 }) => {
     return (
         <JsonLd<JobPosting>
             item={{
                 '@context': 'https://schema.org',
                 '@type': 'JobPosting',
-                title: job.jobTitle,
-                description: job.jobDesc,
-                datePosted: job.datePosted,
-                employmentType: job.timeModel,
+                title: jobTitle,
+                description: jobDesc,
+                datePosted: datePosted?.toISOString(),
+                employmentType: timeModel,
                 hiringOrganization: {
                     '@type': 'Organization',
-                    name: job.organization,
+                    name: organization?.name,
+                    url: organization?.url
+                        ? encodeURIComponent(organization?.url)
+                        : '',
+                    logo: organization?.logo,
+                    telephone: organization?.telephone,
+                    email: organization?.email,
+                    address: organization?.address?.streetAddress
+                        ? {
+                              '@type': 'PostalAddress',
+                              streetAddress:
+                                  organization?.address?.streetAddress,
+                              addressLocality:
+                                  organization?.address?.addressLocality,
+                              postalCode: organization?.address?.postalCode,
+                              addressCountry:
+                                  organization?.address?.addressCountry,
+                          }
+                        : undefined,
                 },
                 jobLocation: {
                     '@type': 'Place',
                     address: {
                         '@type': 'PostalAddress',
-                        addressLocality: job.location,
+                        addressLocality: location,
                     },
                 },
-                directApply: job.directApply,
+                directApply: directApply,
             }}
         />
     );
