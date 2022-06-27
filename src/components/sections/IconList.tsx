@@ -38,6 +38,7 @@ const ItemContainer = styled.div<{ isCentered?: boolean }>`
 
 const Items = styled.ul<{ isVisible?: boolean; isCentered?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'flex' : 'block')};
+    max-width: 100%;
     align-items: center;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
