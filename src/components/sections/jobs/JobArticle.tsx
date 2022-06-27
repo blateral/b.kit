@@ -1,6 +1,6 @@
 import Clock from 'components/base/icons/Clock';
 import LocationPin from 'components/base/icons/LocationPin';
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
 import { JobCardProps } from 'components/blocks/JobCard';
@@ -8,6 +8,7 @@ import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import React from 'react';
 import styled from 'styled-components';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { generateJob } from 'utils/structuredData';
 import { spacings } from 'utils/styles';
 
@@ -41,7 +42,7 @@ const Info = styled.div`
     }
 `;
 
-const Icon = styled.div`
+const Icon = styled.span`
     display: flex;
     align-items: center;
 
@@ -51,7 +52,7 @@ const Icon = styled.div`
     }
 `;
 
-const MainLabel = styled.div`
+const MainLabel = styled.span`
     display: flex;
     align-items: center;
 `;
@@ -60,16 +61,35 @@ const StyledActions = styled(Actions)`
     margin-top: ${spacings.spacer}px;
 `;
 
-const JobArticle: React.FC<
-    JobCardProps & {
-        jobDesc?: string;
-        organization?: string;
-        directApply?: boolean;
-        datePosted?: string;
-        primaryAction?: () => React.ReactNode;
-        secondaryAction?: () => React.ReactNode;
-    }
-> = ({
+export type JobArticleProps = Omit<
+    JobCardProps,
+    'isInverted' | 'hasBackground'
+> & {
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Text that describes the job (richtext) */
+    jobDesc?: string;
+
+    /** The hiring organization (important for structured data) */
+    organization?: string;
+
+    /** The date of posting the job tender (important for structured data) */
+    datePosted?: string;
+
+    /** Function to inject primary action */
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Function to inject secondary action */
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Section background */
+    bgMode?: 'full' | 'inverted';
+};
+
+const JobArticle: React.FC<JobArticleProps> = ({
+    anchorId,
+    bgMode,
     jobTitle,
     timeModel,
     location,
@@ -77,28 +97,50 @@ const JobArticle: React.FC<
     locationIcon,
     jobDesc,
     organization,
-    directApply,
     datePosted,
     primaryAction,
     secondaryAction,
 }) => {
+    const { colors } = useLibTheme();
+    const isInverted = bgMode === 'inverted';
+
     const jsonLd = {
         jobTitle, // title
         location, // jobLocation
         jobDesc, // description
         organization, // hiringOrganization
-        directApply, // directApply
+        directApply: primaryAction || secondaryAction ? true : false, // directApply
         timeModel, // employmentType
         datePosted, // datePosted
     };
+
     return (
-        <Section addSeperation>
+        <Section
+            addSeperation
+            anchorId={anchorId}
+            bgColor={
+                isInverted
+                    ? colors.sectionBg.dark
+                    : bgMode
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
+            }
+            bgMode={mapToBgMode(bgMode, true)}
+        >
             {generateJob(jsonLd)}
             <Wrapper addWhitespace>
                 <ArticleHead>
-                    <Heading size="heading-2" innerHTML={jobTitle} />
+                    <Heading
+                        size="heading-2"
+                        innerHTML={jobTitle}
+                        isInverted={isInverted}
+                    />
                     {(timeModel || location) && (
-                        <JobInfos type="copy-b" data-sheet="info">
+                        <JobInfos
+                            type="copy-b"
+                            data-sheet="info"
+                            isInverted={isInverted}
+                        >
                             {timeModel && (
                                 <Info>
                                     <Icon>
@@ -123,11 +165,15 @@ const JobArticle: React.FC<
                         </JobInfos>
                     )}
                 </ArticleHead>
-                {jobDesc && <Copy innerHTML={jobDesc} />}
-                {(primaryAction || secondaryAction) && directApply && (
+                {jobDesc && (
+                    <Copy innerHTML={jobDesc} isInverted={isInverted} />
+                )}
+                {(primaryAction || secondaryAction) && (
                     <StyledActions
-                        primary={primaryAction && primaryAction()}
-                        secondary={secondaryAction && secondaryAction()}
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
                     />
                 )}
             </Wrapper>
@@ -135,4 +181,5 @@ const JobArticle: React.FC<
     );
 };
 
-export default JobArticle;
+export const JobArticleComponent = JobArticle;
+export default withLibTheme(JobArticle);

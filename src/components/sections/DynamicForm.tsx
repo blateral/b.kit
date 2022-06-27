@@ -233,18 +233,30 @@ export interface FieldGenerationProps<T extends FieldTypes> {
 const DynamicForm: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
+
+    /** Field definitions */
     fields?: FormStructure;
+
+    /** Callback on form submit */
     onSubmit?: (values: FormData) => Promise<void>;
+
+    /** Function to inject custom submit button */
     submitAction?: (props: {
         isInverted?: boolean;
         handleSubmit?: () => Promise<any>;
         isDisabled?: boolean;
     }) => React.ReactNode;
+
+    /** Comma seperated list of target emails */
     targetEmails?: string;
+
+    /** E-Mail subject */
     subjectLine?: string;
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
+
+    /** Functions to inject custom field components (React nodes) */
     definitions?: {
         field?: (props: FieldGenerationProps<Field>) => React.ReactNode;
         area?: (props: FieldGenerationProps<Area>) => React.ReactNode;

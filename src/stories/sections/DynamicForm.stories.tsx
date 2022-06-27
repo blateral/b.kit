@@ -11,7 +11,7 @@ export default {
     component: DynamicFormComponent,
     parameters: {
         status: {
-            type: 'preview',
+            type: ['preview'],
         },
     },
 } as Meta;

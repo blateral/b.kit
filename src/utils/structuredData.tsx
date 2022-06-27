@@ -70,6 +70,7 @@ export const generateFAQ = (
         />
     );
 };
+
 export const generateJob = (job: {
     jobTitle: string;
     jobDesc?: string;

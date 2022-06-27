@@ -1,9 +1,9 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import JobList, { JobListComponent } from 'components/sections/JobList';
+import JobList, { JobListComponent } from 'components/sections/jobs/JobList';
 
 export default {
-    title: 'Sections / JobList',
+    title: 'Sections / Jobs /  JobList',
     component: JobListComponent,
     parameters: {
         status: {
