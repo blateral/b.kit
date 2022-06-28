@@ -1,4 +1,4 @@
-import Clock from 'components/base/icons/Clock';
+import ClockFilled from 'components/base/icons/ClockFilled';
 import LocationPin from 'components/base/icons/LocationPin';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
@@ -184,7 +184,7 @@ const JobCard = React.forwardRef<
                 />
                 <JobInfos type="copy-b" textColor="inherit" data-sheet="info">
                     <Info>
-                        <Icon>{modelIcon ? modelIcon() : <Clock />}</Icon>
+                        <Icon>{modelIcon ? modelIcon() : <ClockFilled />}</Icon>
                         <MainLabel>{timeModel}</MainLabel>
                     </Info>
 
