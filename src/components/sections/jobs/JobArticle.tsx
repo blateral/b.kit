@@ -1,4 +1,4 @@
-import Clock from 'components/base/icons/Clock';
+import ClockFilled from 'components/base/icons/ClockFilled';
 import LocationPin from 'components/base/icons/LocationPin';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -158,7 +158,11 @@ const JobArticle: React.FC<JobArticleProps> = ({
                             {timeModel && (
                                 <Info>
                                     <Icon>
-                                        {modelIcon ? modelIcon() : <Clock />}
+                                        {modelIcon ? (
+                                            modelIcon()
+                                        ) : (
+                                            <ClockFilled />
+                                        )}
                                     </Icon>
                                     <MainLabel>{timeModel}</MainLabel>
                                 </Info>
