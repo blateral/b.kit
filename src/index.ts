@@ -141,6 +141,7 @@ export { default as Image } from 'components/blocks/Image';
 export { default as LanguageSwitcher } from 'components/blocks/LanguageSwitcher';
 export { default as VideoBlock } from 'components/blocks/VideoBlock';
 export { default as EventBlock } from 'components/blocks/EventBlock';
+export { default as Tag } from 'components/blocks/Tag';
 
 export {
     default as CookieConsent,
