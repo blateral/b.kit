@@ -50,6 +50,7 @@ import CrossSmall from 'components/base/icons/CrossSmall';
 /** Mixed **/
 import Check from 'components/base/icons/Check';
 import Clock from 'components/base/icons/Clock';
+import ClockFilled from 'components/base/icons/ClockFilled';
 import Info from 'components/base/icons/Info';
 import FlyTo from 'components/base/icons/FlyTo';
 import LocationPin from 'components/base/icons/LocationPin';
@@ -99,6 +100,7 @@ export default {
         CrossSmall,
         Check,
         Clock,
+        ClockFilled,
         Info,
         FlyTo,
         LocationPin,
@@ -209,6 +211,9 @@ IconCheck.storyName = 'Check';
 
 export const IconClock: Story = () => <Clock />;
 IconClock.storyName = 'Clock';
+
+export const IconClockFilled: Story = () => <ClockFilled />;
+IconClockFilled.storyName = 'ClockFilled';
 
 export const IconInfo: Story = () => <Info />;
 IconInfo.storyName = 'Info';
