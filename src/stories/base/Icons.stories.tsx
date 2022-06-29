@@ -54,6 +54,10 @@ import ClockFilled from 'components/base/icons/ClockFilled';
 import Info from 'components/base/icons/Info';
 import FlyTo from 'components/base/icons/FlyTo';
 import LocationPin from 'components/base/icons/LocationPin';
+import Place from 'components/base/icons/Place';
+import Map from 'components/base/icons/Map';
+import Money from 'components/base/icons/Money';
+import Computer from 'components/base/icons/Computer';
 import Route from 'components/base/icons/Route';
 import Star from 'components/base/icons/Star';
 import Minus from 'components/base/icons/Minus';
@@ -104,6 +108,10 @@ export default {
         Info,
         FlyTo,
         LocationPin,
+        Place,
+        Map,
+        Money,
+        Computer,
         Minus,
         Plus,
         Route,
@@ -223,6 +231,18 @@ IconFlyTo.storyName = 'FlyTo';
 
 export const IconLocationPin: Story = () => <LocationPin />;
 IconLocationPin.storyName = 'LocationPin';
+
+export const IconPlace: Story = () => <Place />;
+IconPlace.storyName = 'Place';
+
+export const IconMap: Story = () => <Map />;
+IconMap.storyName = 'Map';
+
+export const IconMoney: Story = () => <Money />;
+IconMoney.storyName = 'Money';
+
+export const IconComputer: Story = () => <Computer />;
+IconComputer.storyName = 'Computer';
 
 export const IconRoute: Story = () => <Route />;
 IconRoute.storyName = 'Route';
