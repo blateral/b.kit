@@ -48,6 +48,7 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
         useState<FeatureGroup<any> | null>(null);
     const prevMarkerId = useRef<string | null>(null);
     const [isLoaded, setLoaded] = useState<boolean>(false);
+    const isRenderedRef = useRef<boolean>(false);
 
     const mapSettings: LeafletMapSettings = useMemo(() => {
         // removing undefined keys
@@ -76,7 +77,8 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
         if (!container) return;
 
         const init = async () => {
-            if (L || !container) return;
+            if (L || !container || isRenderedRef.current) return;
+            isRenderedRef.current = true;
 
             // init leaflet
             const leaflet = await import('leaflet');
@@ -238,6 +240,17 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
         [flyToActive, map, mapSettings.zoom]
     );
 
+    /**
+     * Pan to marker position on map
+     * @param position
+     */
+    const panToPosition = useCallback(
+        (position?: [number, number]) => {
+            if (position) map?.panTo(position);
+        },
+        [map]
+    );
+
     /** Recalculate map size */
     const recalculateMapSize = useCallback(() => {
         map?.invalidateSize();
@@ -251,6 +264,7 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
         setContainer,
         flyToActive,
         flyToPosition,
+        panToPosition,
         showAllMarkers,
         recalculateMapSize,
         getCurrentZoom,

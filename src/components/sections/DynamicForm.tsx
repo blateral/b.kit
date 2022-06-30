@@ -18,6 +18,7 @@ import SelectDropdown from 'components/fields/SelectDropdown';
 import Copy from 'components/typography/Copy';
 import FileUpload from 'components/fields/FileUpload';
 import FieldWrapper from 'components/fields/FormField';
+import LocationField, { LocationData } from 'components/fields/LocationField';
 
 const StyledSection = styled(Section)`
     overflow: visible;
@@ -73,7 +74,14 @@ const ActionContainer = styled.div<{ hasCols?: boolean }>`
 `;
 
 export interface FormStructure {
-    [key: string]: Field | Area | Select | Datepicker | FieldGroup | FileUpload;
+    [key: string]:
+        | Field
+        | Area
+        | Select
+        | Datepicker
+        | Location
+        | FieldGroup
+        | FileUpload;
 }
 
 export interface FormField {
@@ -150,6 +158,28 @@ export interface Datepicker extends FormField {
     ) => React.ReactNode;
 }
 
+export interface Location extends FormField {
+    type: 'Location';
+    initialValue?: LocationData;
+    placeholder?: string;
+    info?: string;
+    errorMsg?: string;
+    customLocationIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+    customAddressIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+    validate?: (
+        key: string,
+        value: LocationData,
+        config: Location
+    ) => Promise<string>;
+    toggleAction?: (props: {
+        isInverted?: boolean;
+        asGeolocation?: boolean;
+        handleClick?: (
+            e: React.SyntheticEvent<HTMLButtonElement, Event>
+        ) => void;
+    }) => React.ReactNode;
+}
+
 export interface FieldGroup extends FormField {
     type: 'FieldGroup';
     groupType: 'Radio' | 'Checkbox';
@@ -188,9 +218,17 @@ export type FormDataTypes =
     | boolean
     | Array<string>
     | [Date | null, Date | null]
-    | Array<File>;
+    | Array<File>
+    | LocationData;
 
-type FieldTypes = Field | Area | Select | Datepicker | FieldGroup | FileUpload;
+type FieldTypes =
+    | Field
+    | Area
+    | Select
+    | Datepicker
+    | Location
+    | FieldGroup
+    | FileUpload;
 
 export interface FieldGenerationProps<T extends FieldTypes> {
     field: T;
@@ -264,6 +302,7 @@ const DynamicForm: FC<{
         datepicker?: (
             props: FieldGenerationProps<Datepicker>
         ) => React.ReactNode;
+        location?: (props: FieldGenerationProps<Location>) => React.ReactNode;
         checkbox?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
         radio?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
         upload?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
@@ -300,6 +339,13 @@ const DynamicForm: FC<{
                     null,
                 ];
                 break;
+            case 'Location': {
+                initalData[key] = (fields[key] as Location).initialValue || {
+                    description: '',
+                    position: [0, 0],
+                };
+                break;
+            }
             case 'Upload':
                 initalData[key] = [];
                 break;
@@ -471,6 +517,26 @@ const DynamicForm: FC<{
                     }
                     break;
                 }
+
+                case 'Location': {
+                    const config = fields[key] as Location;
+                    const value = values[key] as LocationData;
+
+                    // default
+                    if (config.isRequired && !values[key]) {
+                        errors[key] =
+                            (fields[key] as Location).errorMsg ||
+                            'Please submit location info!';
+                    }
+
+                    // custom validation
+                    if (config.validate) {
+                        const error = await config.validate(key, value, config);
+                        if (error) errors[key] = error;
+                    }
+                    break;
+                }
+
                 case 'FieldGroup': {
                     const config = fields[key] as FieldGroup;
                     const type = config.groupType;
@@ -643,6 +709,12 @@ const DynamicForm: FC<{
                                             : generateDatepicker(
                                                   generationProps
                                               );
+                                    case 'Location':
+                                        return definitions?.location
+                                            ? definitions.location(
+                                                  generationProps
+                                              )
+                                            : generateLocation(generationProps);
                                     case 'FieldGroup': {
                                         if (
                                             (fields[label] as FieldGroup)
@@ -725,6 +797,14 @@ const DynamicForm: FC<{
                                                       generationProps
                                                   )
                                                 : generateDatepicker(
+                                                      generationProps
+                                                  );
+                                        case 'Location':
+                                            return definitions?.location
+                                                ? definitions.location(
+                                                      generationProps
+                                                  )
+                                                : generateLocation(
                                                       generationProps
                                                   );
                                         case 'FieldGroup': {
@@ -1002,6 +1082,43 @@ const generateDatepicker = ({
             }
             nextCtrlUrl={field.nextCtrlUrl}
             prevCtrlUrl={field.prevCtrlUrl}
+        />
+    );
+};
+
+const generateLocation = ({
+    field,
+    key,
+    value,
+    error,
+    isTouched,
+    isInverted,
+    setField,
+    setTouched,
+    validateField,
+}: FieldGenerationProps<Location>) => {
+    const locationData = value as LocationData;
+
+    const handleChange = async (location: LocationData) => {
+        await setField(key, location);
+        await setTouched(key, true);
+        validateField(key);
+    };
+
+    return (
+        <LocationField
+            key={key}
+            name={`['${key}']`}
+            label={`${key}${field.isRequired ? '*' : ''}`}
+            placeholder={field.placeholder}
+            isInverted={isInverted}
+            infoMessage={field.info}
+            errorMessage={error && isTouched ? error : undefined}
+            value={locationData}
+            onChange={handleChange}
+            toggleAction={field.toggleAction}
+            customAddressIcon={field.customAddressIcon}
+            customLocationIcon={field.customLocationIcon}
         />
     );
 };

@@ -5,7 +5,7 @@ import Copy from 'components/typography/Copy';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { spacings } from 'utils/styles';
 
-const View = styled(Copy)<{ isDisabled?: boolean }>`
+const View = styled.label<{ isDisabled?: boolean }>`
     display: block;
     text-align: left;
 
@@ -42,12 +42,7 @@ const FieldWrapper: React.FC<{
     children: React.ReactNode;
 }> = ({ isDisabled, onClick, className, children }) => {
     return (
-        <View
-            renderAs="label"
-            onClick={onClick}
-            isDisabled={isDisabled}
-            className={className}
-        >
+        <View onClick={onClick} isDisabled={isDisabled} className={className}>
             {children}
         </View>
     );

@@ -62,6 +62,11 @@ export const Default: Story = () => (
                     { text: 'mit Küche', initialChecked: true },
                 ],
             },
+            Standort: {
+                type: 'Location',
+                placeholder: 'Ort eingeben',
+                info: 'Bitte geben Sie einen Ort an',
+            },
             Personen: {
                 type: 'FieldGroup',
                 groupType: 'Radio',
