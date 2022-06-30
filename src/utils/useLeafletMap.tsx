@@ -21,7 +21,7 @@ export interface LeafletMapSettings {
     onMarkerClick?: (markerId: string) => void;
     onActiveMarkerChanged?: (props: { markerId: string }) => void;
     onReady?: () => void;
-    onClick?: (ev: LeafletMouseEvent) => void;
+    onClick?: (ev: LeafletMouseEvent, currentZoom: number) => void;
 }
 
 export interface LeafletMapMarker {
@@ -108,7 +108,7 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
             });
 
             map.on('click', (ev) => {
-                mapSettings.onClick?.(ev as LeafletMouseEvent);
+                mapSettings.onClick?.(ev as LeafletMouseEvent, map.getZoom());
             });
 
             // set map state
@@ -243,12 +243,17 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
         map?.invalidateSize();
     }, [map]);
 
+    const getCurrentZoom = useCallback(() => {
+        return map?.getZoom() || mapSettings.zoom;
+    }, [map, mapSettings.zoom]);
+
     return {
         setContainer,
         flyToActive,
         flyToPosition,
         showAllMarkers,
         recalculateMapSize,
+        getCurrentZoom,
         isLoaded,
     };
 };

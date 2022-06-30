@@ -162,6 +162,7 @@ const LocationField: FC<{
     placeholder?: string;
     value?: LocationData;
     marker?: LocationIcon;
+    zoom?: number;
     onChange?: (value: LocationData) => void;
     onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     customLocationIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
@@ -185,6 +186,7 @@ const LocationField: FC<{
     value,
     name,
     marker,
+    zoom = 10,
     onChange,
     onBlur,
     customLocationIcon,
@@ -216,9 +218,10 @@ const LocationField: FC<{
     };
 
     const onMapClick = (e: LeafletMouseEvent) => {
+        const newPos: [number, number] = [e.latlng.lat, e.latlng.lng];
         setValue((prev) => ({
             ...prev,
-            position: [e.latlng.lat, e.latlng.lng],
+            position: newPos,
         }));
     };
 
@@ -226,6 +229,7 @@ const LocationField: FC<{
         setContainer: setMapContainer,
         flyToPosition,
         recalculateMapSize,
+        getCurrentZoom,
     } = useLeafletMap({
         activeMarkerId: 'location',
         markers: [
@@ -249,18 +253,16 @@ const LocationField: FC<{
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
+                const newPos: [number, number] = [
+                    position.coords.latitude,
+                    position.coords.longitude,
+                ];
+
                 setValue((prev) => ({
                     ...prev,
-                    position: [
-                        position.coords.latitude,
-                        position.coords.longitude,
-                    ],
+                    position: newPos,
                 }));
 
-                flyToPosition(
-                    [position.coords.latitude, position.coords.longitude],
-                    5
-                );
                 setMapDirty(false);
             },
             null,
@@ -268,7 +270,7 @@ const LocationField: FC<{
         );
 
         return getValue;
-    }, [flyToPosition, geolocationErrorMsg, getValue]);
+    }, [geolocationErrorMsg, getValue]);
 
     useEffect(() => {
         setGeolocationSupport(!!navigator.geolocation);
@@ -299,6 +301,17 @@ const LocationField: FC<{
     useEffect(() => {
         onChange?.(getValue);
     }, [getValue, onChange]);
+
+    useEffect(() => {
+        let flyToZoom = zoom;
+        const currentZoom = getCurrentZoom();
+
+        if (currentZoom > flyToZoom) {
+            flyToZoom = currentZoom;
+        }
+
+        flyToPosition(getValue.position, flyToZoom);
+    }, [flyToPosition, getCurrentZoom, getValue.position, zoom]);
 
     const toggleClickHandler = (
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

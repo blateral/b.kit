@@ -32,7 +32,7 @@ export const Default: Story = () => (
 );
 
 export const WithLightBackground: Story = () => (
-    <LocationField name="field_a" />
+    <LocationField name="field_a" onChange={console.log} />
 );
 WithLightBackground.parameters = {
     backgrounds: {
@@ -42,11 +42,20 @@ WithLightBackground.parameters = {
 };
 
 export const WithPlaceholder: Story = () => (
-    <LocationField name="field_a" placeholder="Placeholder" />
+    <LocationField
+        name="field_a"
+        placeholder="Placeholder"
+        onChange={console.log}
+    />
 );
 
 export const WithLabel: Story = () => (
-    <LocationField name="field_a" label="Label" placeholder="Placeholder" />
+    <LocationField
+        name="field_a"
+        label="Label"
+        placeholder="Placeholder"
+        onChange={console.log}
+    />
 );
 
 export const WithInfoMessage: Story = () => (
@@ -55,6 +64,18 @@ export const WithInfoMessage: Story = () => (
         label="Label"
         placeholder="Placeholder"
         infoMessage="This is a LocationField"
+        onChange={console.log}
+    />
+);
+
+export const WithInitalData: Story = () => (
+    <LocationField
+        name="field_a"
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a LocationField"
+        value={{ description: 'the place to be', position: [50, 9.0] }}
+        onChange={console.log}
     />
 );
 
@@ -65,6 +86,7 @@ export const AsRequired: Story = () => (
         placeholder="Placeholder"
         infoMessage="This is a LocationField"
         isRequired
+        onChange={console.log}
     />
 );
 
@@ -75,6 +97,7 @@ export const IsDisabled: Story = () => (
         label="Label"
         placeholder="Placeholder"
         infoMessage="Das ist ein Textfeld"
+        onChange={console.log}
     />
 );
 
@@ -85,6 +108,7 @@ export const HasError: Story = () => (
         placeholder="Placeholder"
         infoMessage="Das ist ein Textfeld"
         errorMessage="Bitte geben Sie einen gültigen Wert ein!"
+        onChange={console.log}
     />
 );
 
@@ -95,6 +119,7 @@ export const IsInverted: Story = () => (
         placeholder="Placeholder"
         infoMessage="This is a LocationField"
         isInverted
+        onChange={console.log}
     />
 );
 IsInverted.parameters = {
