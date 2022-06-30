@@ -238,11 +238,17 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
         [flyToActive, map, mapSettings.zoom]
     );
 
+    /** Recalculate map size */
+    const recalculateMapSize = useCallback(() => {
+        map?.invalidateSize();
+    }, [map]);
+
     return {
         setContainer,
         flyToActive,
         flyToPosition,
         showAllMarkers,
+        recalculateMapSize,
         isLoaded,
     };
 };

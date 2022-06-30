@@ -27,7 +27,9 @@ const Helper = styled.div`
     padding: 20px;
 `;
 
-export const Default: Story = () => <LocationField name="field_a" />;
+export const Default: Story = () => (
+    <LocationField name="field_a" onChange={console.log} />
+);
 
 export const WithLightBackground: Story = () => (
     <LocationField name="field_a" />
