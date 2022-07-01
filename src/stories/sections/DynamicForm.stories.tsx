@@ -3,7 +3,7 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import DynamicForm, {
     DynamicFormComponent,
-} from 'components/sections/DynamicForm';
+} from 'components/sections/form/DynamicForm';
 import * as Icons from 'components/base/icons/Icons';
 
 export default {

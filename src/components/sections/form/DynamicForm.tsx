@@ -8,17 +8,20 @@ import { Field, FormikErrors, useFormik } from 'formik';
 import Wrapper from 'components/base/Wrapper';
 import Actions from 'components/blocks/Actions';
 import Button from 'components/buttons/Button';
-import ButtonGhost from 'components/buttons/ButtonGhost';
-import Datepicker from 'components/fields/Datepicker';
-import Checkbox from 'components/fields/Checkbox';
-import RadioButton from 'components/fields/Radio';
-import Textarea from 'components/fields/Textarea';
-import Textfield from 'components/fields/Textfield';
-import SelectDropdown from 'components/fields/SelectDropdown';
-import Copy from 'components/typography/Copy';
-import FileUpload from 'components/fields/FileUpload';
-import FieldWrapper from 'components/fields/FormField';
-import LocationField, { LocationData } from 'components/fields/LocationField';
+
+import { LocationData } from 'components/fields/LocationField';
+
+/** Field Renderer */
+import renderLocationField from './renderer/locationRenderer';
+import renderDatepickerField from './renderer/datepickerRenderer';
+import {
+    renderCheckboxGroupField,
+    renderRadioGroupField,
+} from './renderer/fieldGroupRenderer';
+import renderAreaField from './renderer/areaRenderer';
+import renderField from './renderer/fieldRenderer';
+import renderSelectField from './renderer/selectRenderer';
+import renderUploadField from './renderer/uploadRenderer';
 
 const StyledSection = styled(Section)`
     overflow: visible;
@@ -671,7 +674,7 @@ const DynamicForm: FC<{
                     <FieldContainer>
                         {fields &&
                             fieldKeys?.map((label, i) => {
-                                const generationProps = {
+                                const props = {
                                     index: i,
                                     field: fields[label],
                                     key: label,
@@ -690,62 +693,80 @@ const DynamicForm: FC<{
                                 } as FieldGenerationProps<any>;
 
                                 switch (fields[label].type) {
-                                    case 'Field':
-                                        return definitions?.field
-                                            ? definitions.field(generationProps)
-                                            : generateField(generationProps);
-                                    case 'Area':
-                                        return definitions?.area
-                                            ? definitions.area(generationProps)
-                                            : generateArea(generationProps);
-                                    case 'Datepicker':
-                                        return definitions?.datepicker
-                                            ? definitions.datepicker(
-                                                  generationProps
-                                              )
-                                            : generateDatepicker(
-                                                  generationProps
-                                              );
-                                    case 'Location':
-                                        return definitions?.location
-                                            ? definitions.location(
-                                                  generationProps
-                                              )
-                                            : generateLocation(generationProps);
+                                    case 'Field': {
+                                        if (definitions?.field) {
+                                            return definitions.field(props);
+                                        } else {
+                                            return renderField(props);
+                                        }
+                                    }
+
+                                    case 'Area': {
+                                        if (definitions?.area) {
+                                            return definitions.area(props);
+                                        } else {
+                                            return renderAreaField(props);
+                                        }
+                                    }
+
+                                    case 'Datepicker': {
+                                        if (definitions?.datepicker) {
+                                            return definitions.datepicker(
+                                                props
+                                            );
+                                        } else {
+                                            return renderDatepickerField(props);
+                                        }
+                                    }
+
+                                    case 'Location': {
+                                        if (definitions?.location) {
+                                            return definitions.location(props);
+                                        } else {
+                                            return renderLocationField(props);
+                                        }
+                                    }
+
                                     case 'FieldGroup': {
                                         if (
                                             (fields[label] as FieldGroup)
                                                 .groupType === 'Checkbox'
                                         ) {
-                                            return definitions?.checkbox
-                                                ? definitions.checkbox(
-                                                      generationProps
-                                                  )
-                                                : generateCheckboxGroup(
-                                                      generationProps
-                                                  );
+                                            if (definitions?.checkbox) {
+                                                return definitions.checkbox(
+                                                    props
+                                                );
+                                            } else {
+                                                return renderRadioGroupField(
+                                                    props
+                                                );
+                                            }
                                         } else {
-                                            return definitions?.radio
-                                                ? definitions.radio(
-                                                      generationProps
-                                                  )
-                                                : generateRadioGroup(
-                                                      generationProps
-                                                  );
+                                            if (definitions?.radio) {
+                                                return definitions.radio(props);
+                                            } else {
+                                                return renderCheckboxGroupField(
+                                                    props
+                                                );
+                                            }
                                         }
                                     }
-                                    case 'Select':
-                                        return definitions?.select
-                                            ? definitions.select(
-                                                  generationProps
-                                              )
-                                            : generateSelect(generationProps);
-                                    case 'Upload':
-                                        return definitions?.upload
-                                            ? definitions.upload(
-                                                  generationProps
-                                              )
-                                            : generateUpload(generationProps);
+
+                                    case 'Select': {
+                                        if (definitions?.select) {
+                                            return definitions.select(props);
+                                        } else {
+                                            return renderSelectField(props);
+                                        }
+                                    }
+
+                                    case 'Upload': {
+                                        if (definitions?.upload) {
+                                            return definitions.upload(props);
+                                        } else {
+                                            return renderUploadField(props);
+                                        }
+                                    }
                                     default:
                                         return null;
                                 }
@@ -783,347 +804,5 @@ const DynamicForm: FC<{
     );
 };
 
-const FieldSet = styled.fieldset`
-    display: block;
-    border: none;
-    background: none;
-    outline: none;
-    padding: 0;
-    margin-left: 0;
-    margin-right: 0;
-    text-align: left;
-`;
-
 export const DynamicFormComponent = DynamicForm;
 export default withLibTheme(DynamicForm);
-
-const Fields = styled.div`
-    & > * + * {
-        margin-top: ${spacings.nudge}px;
-    }
-`;
-
-const ErrorMessage = styled(Copy)`
-    text-align: left;
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
-`;
-
-const generateCheckboxGroup = ({
-    field,
-    key,
-    isInverted,
-    value,
-    isTouched,
-    error,
-    info,
-    setTouched,
-    validateField,
-    setField,
-}: FieldGenerationProps<FieldGroup>) => {
-    const group = field;
-    const groupData = value as string[];
-
-    return (
-        <FieldSet key={key}>
-            {key && (
-                <FieldWrapper.Head
-                    isInverted={isInverted}
-                    label={key}
-                    isRequired={field.isRequired}
-                />
-            )}
-
-            <Fields>
-                {group?.fields?.map((field, ci) => (
-                    <Checkbox
-                        key={ci}
-                        isInverted={isInverted}
-                        onChange={(ev) => {
-                            const value = ev.currentTarget.value;
-
-                            // add key to form data array if not exists. Otherwise remove it
-                            if (value) {
-                                const cIndex = groupData.indexOf(value);
-                                if (cIndex === -1) {
-                                    groupData.push(value);
-                                } else {
-                                    groupData.splice(cIndex, 1);
-                                }
-                                // set formik values
-                                setField(key, groupData);
-                                setTouched(key, true);
-                                validateField(key);
-                            }
-                        }}
-                        isSelected={
-                            field.text
-                                ? groupData.indexOf(field.text) !== -1
-                                : false
-                        }
-                        name={key}
-                        value={field.text}
-                        label={field.text}
-                    />
-                ))}
-            </Fields>
-            {isTouched && error && (
-                <FieldWrapper.Messages
-                    errorMessage={error}
-                    infoMessage={info}
-                />
-            )}
-        </FieldSet>
-    );
-};
-
-const generateRadioGroup = ({
-    field,
-    key,
-    value,
-    error,
-    isTouched,
-    isInverted,
-    setField,
-    theme,
-}: FieldGenerationProps<FieldGroup>) => {
-    const group = field;
-    const groupData = value as string;
-
-    return (
-        <FieldSet key={key}>
-            {key && (
-                <FieldWrapper.Head
-                    isInverted={isInverted}
-                    label={key}
-                    isRequired={field.isRequired}
-                />
-            )}
-            <Fields>
-                {group?.fields?.map((field, fi) => (
-                    <RadioButton
-                        key={fi}
-                        name={key}
-                        value={field.text}
-                        label={field.text}
-                        isInverted={isInverted}
-                        isSelected={
-                            field.text ? groupData === field.text : false
-                        }
-                        onChange={(e) => {
-                            if (field.text) {
-                                setField(key, e.currentTarget.value);
-                            }
-                        }}
-                    />
-                ))}
-            </Fields>
-            {error && isTouched && (
-                <ErrorMessage textColor={color(theme).text.error} size="small">
-                    {error}
-                </ErrorMessage>
-            )}
-        </FieldSet>
-    );
-};
-
-const generateDatepicker = ({
-    field,
-    key,
-    value,
-    error,
-    isTouched,
-    isInverted,
-    setField,
-    setTouched,
-    validateField,
-}: FieldGenerationProps<Datepicker>) => {
-    const dates = value as [Date | null, Date | null];
-
-    const handleSubmit = async (start?: Date | null, end?: Date | null) => {
-        await setField(key, [start || null, end || null]);
-        await setTouched(key, true);
-        validateField(key);
-    };
-
-    return (
-        <Datepicker
-            key={key}
-            onSubmit={handleSubmit}
-            onDataChange={handleSubmit}
-            values={[dates?.[0] as Date, dates?.[1] as Date]}
-            label={`${key}${field.isRequired ? ' *' : ''}`}
-            placeholder={field.placeholder}
-            singleSelect={field.singleSelect}
-            infoMessage={field.info}
-            errorMessage={error && isTouched ? error : undefined}
-            name={key}
-            customIcon={field?.customIcon}
-            isInverted={isInverted}
-            minDate={field.minDate}
-            maxDate={field.maxDate}
-            deleteAction={(handleReset) =>
-                field?.deleteAction ? (
-                    field.deleteAction(handleReset)
-                ) : (
-                    <ButtonGhost.View onClick={handleReset}>
-                        delete
-                    </ButtonGhost.View>
-                )
-            }
-            submitAction={(handleSubmit) =>
-                field?.submitAction ? (
-                    field.submitAction(handleSubmit)
-                ) : (
-                    <Button.View onClick={handleSubmit}>submit</Button.View>
-                )
-            }
-            nextCtrlUrl={field.nextCtrlUrl}
-            prevCtrlUrl={field.prevCtrlUrl}
-        />
-    );
-};
-
-const generateLocation = ({
-    field,
-    key,
-    value,
-    error,
-    isTouched,
-    isInverted,
-    setField,
-    setTouched,
-    validateField,
-}: FieldGenerationProps<Location>) => {
-    const locationData = value as LocationData;
-
-    const handleChange = async (location: LocationData) => {
-        await setField(key, location);
-        await setTouched(key, true);
-
-        validateField(key);
-    };
-
-    return (
-        <LocationField
-            key={key}
-            name={`['${key}']`}
-            label={`${key}${field.isRequired ? ' *' : ''}`}
-            placeholder={field.placeholder}
-            isInverted={isInverted}
-            infoMessage={field.info}
-            errorMessage={error && isTouched ? error : undefined}
-            value={locationData}
-            onChange={handleChange}
-            toggleAction={field.toggleAction}
-            customAddressIcon={field.customAddressIcon}
-            customLocationIcon={field.customLocationIcon}
-        />
-    );
-};
-
-const generateArea = ({
-    field,
-    key,
-    value,
-    error,
-    isTouched,
-    isInverted,
-    handleChange,
-    handleBlur,
-}: FieldGenerationProps<Area>) => (
-    <Textarea
-        key={key}
-        label={`${key}${field.isRequired ? ' *' : ''}`}
-        placeholder={field.placeholder}
-        name={`['${key}']`}
-        value={value as string}
-        isInverted={isInverted}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        infoMessage={field.info}
-        errorMessage={error && isTouched ? error : undefined}
-    />
-);
-
-const generateUpload = ({
-    field,
-    key,
-    error,
-    isTouched,
-    isInverted,
-    setField,
-}: FieldGenerationProps<FileUpload>) => (
-    <FileUpload
-        key={key}
-        label={`${key}${field.isRequired ? ' *' : ''}`}
-        name={key}
-        infoMessage={field.info}
-        uploadLabel={field.addBtnLabel}
-        errorMessage={error && isTouched ? error : undefined}
-        acceptedFormats={field.acceptedFormats}
-        onUploadFiles={(files) => {
-            setField(key, files);
-        }}
-        customUploadIcon={field.customUploadIcon}
-        customDeleteIcon={field.customDeleteIcon}
-        isInverted={isInverted}
-    />
-);
-
-const generateField = ({
-    field,
-    key,
-    value,
-    error,
-    isTouched,
-    handleChange,
-    handleBlur,
-    isInverted,
-}: FieldGenerationProps<Field>) => (
-    <Textfield
-        key={key}
-        label={`${key}${field.isRequired ? ' *' : ''}`}
-        placeholder={field.placeholder}
-        name={`['${key}']`}
-        type={field.inputType}
-        isInverted={isInverted}
-        value={value as string}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        infoMessage={field.info}
-        errorMessage={error && isTouched ? error : undefined}
-    />
-);
-
-const generateSelect = ({
-    field,
-    key,
-    value,
-    error,
-    isTouched,
-    isInverted,
-    setField,
-    setTouched,
-    validateField,
-    validateOnChange,
-    validateOnBlur,
-}: FieldGenerationProps<Select>) => (
-    <SelectDropdown
-        key={key}
-        label={`${key}${field.isRequired ? ' *' : ''}`}
-        name={key}
-        placeholder={field.placeholder}
-        errorMessage={error && isTouched ? error : undefined}
-        items={field.dropdownItems || []}
-        value={value as string}
-        onChange={async (value) => {
-            await setField(key, value);
-            await setTouched(key, true);
-            if (validateOnChange) validateField(key);
-        }}
-        onBlur={() => setTouched(key, true, validateOnBlur)}
-        icon={field.icon}
-        isInverted={isInverted}
-    />
-);
