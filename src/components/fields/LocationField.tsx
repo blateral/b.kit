@@ -17,11 +17,11 @@ import { getSVGDataImg } from 'utils/dataURI';
 import { LocationIcon } from 'components/sections/Map';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { LeafletMouseEvent } from 'leaflet';
-import { ButtonGhost } from 'index';
 import useLazyInput from 'utils/useLazyInput';
 import Place from 'components/base/icons/Place';
 import { MyLocation } from 'components/base/icons/Icons';
 import useMounted from 'utils/useMounted';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const MapWrapper = styled.div<{ isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
