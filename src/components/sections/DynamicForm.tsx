@@ -86,7 +86,6 @@ export interface FormStructure {
 
 export interface FormField {
     isRequired?: boolean;
-    column?: 'left' | 'right';
 }
 
 export interface Field extends FormField {
@@ -523,7 +522,12 @@ const DynamicForm: FC<{
                     const value = values[key] as LocationData;
 
                     // default
-                    if (config.isRequired && !values[key]) {
+                    if (
+                        config.isRequired &&
+                        !value.description &&
+                        !value.position?.[0] &&
+                        !value.position?.[1]
+                    ) {
                         errors[key] =
                             (fields[key] as Location).errorMsg ||
                             'Please submit location info!';
@@ -534,6 +538,7 @@ const DynamicForm: FC<{
                         const error = await config.validate(key, value, config);
                         if (error) errors[key] = error;
                     }
+
                     break;
                 }
 
@@ -646,15 +651,7 @@ const DynamicForm: FC<{
         [setValues, values]
     );
 
-    const leftColumn =
-        fields &&
-        Object.keys(fields).filter(
-            (l) => !fields[l].column || fields[l].column === 'left'
-        );
-
-    const rightColumn =
-        fields &&
-        Object.keys(fields).filter((l) => fields[l].column === 'right');
+    const fieldKeys = fields && Object.keys(fields);
 
     return (
         <StyledSection
@@ -673,7 +670,7 @@ const DynamicForm: FC<{
                 <Form noValidate onSubmit={handleSubmit}>
                     <FieldContainer>
                         {fields &&
-                            leftColumn?.map((label, i) => {
+                            fieldKeys?.map((label, i) => {
                                 const generationProps = {
                                     index: i,
                                     field: fields[label],
@@ -754,108 +751,9 @@ const DynamicForm: FC<{
                                 }
                             })}
                     </FieldContainer>
-                    {rightColumn && rightColumn.length > 0 && (
-                        <FieldContainer>
-                            {fields &&
-                                rightColumn?.map((label, i) => {
-                                    const generationProps = {
-                                        index: i,
-                                        field: fields[label],
-                                        key: label,
-                                        value: values[label],
-                                        error: errors[label],
-                                        isTouched: touched[label] || false,
-                                        isInverted: isInverted,
-                                        setField: setField,
-                                        setTouched: setFieldTouched,
-                                        validateField: validateField,
-                                        handleChange: handleChange,
-                                        handleBlur: handleBlur,
-                                        validateOnBlur,
-                                        validateOnChange,
-                                        theme: theme,
-                                    } as FieldGenerationProps<any>;
-
-                                    switch (fields[label].type) {
-                                        case 'Field':
-                                            return definitions?.field
-                                                ? definitions.field(
-                                                      generationProps
-                                                  )
-                                                : generateField(
-                                                      generationProps
-                                                  );
-                                        case 'Area':
-                                            return definitions?.area
-                                                ? definitions.area(
-                                                      generationProps
-                                                  )
-                                                : generateArea(generationProps);
-                                        case 'Datepicker':
-                                            return definitions?.datepicker
-                                                ? definitions.datepicker(
-                                                      generationProps
-                                                  )
-                                                : generateDatepicker(
-                                                      generationProps
-                                                  );
-                                        case 'Location':
-                                            return definitions?.location
-                                                ? definitions.location(
-                                                      generationProps
-                                                  )
-                                                : generateLocation(
-                                                      generationProps
-                                                  );
-                                        case 'FieldGroup': {
-                                            if (
-                                                (fields[label] as FieldGroup)
-                                                    .groupType === 'Checkbox'
-                                            ) {
-                                                return definitions?.checkbox
-                                                    ? definitions.checkbox(
-                                                          generationProps
-                                                      )
-                                                    : generateCheckboxGroup(
-                                                          generationProps
-                                                      );
-                                            } else {
-                                                return definitions?.radio
-                                                    ? definitions.radio(
-                                                          generationProps
-                                                      )
-                                                    : generateRadioGroup(
-                                                          generationProps
-                                                      );
-                                            }
-                                        }
-                                        case 'Select':
-                                            return definitions?.select
-                                                ? definitions.select(
-                                                      generationProps
-                                                  )
-                                                : generateSelect(
-                                                      generationProps
-                                                  );
-                                        case 'Upload':
-                                            return definitions?.upload
-                                                ? definitions.upload(
-                                                      generationProps
-                                                  )
-                                                : generateUpload(
-                                                      generationProps
-                                                  );
-                                        default:
-                                            return null;
-                                    }
-                                })}
-                        </FieldContainer>
-                    )}
                 </Form>
                 {fields && (
-                    <ActionContainer
-                        hasCols={rightColumn && rightColumn.length > 0}
-                    >
+                    <ActionContainer>
                         <Actions
                             primary={
                                 submitAction ? (
@@ -1054,7 +952,7 @@ const generateDatepicker = ({
             onSubmit={handleSubmit}
             onDataChange={handleSubmit}
             values={[dates?.[0] as Date, dates?.[1] as Date]}
-            label={`${key}${field.isRequired ? '*' : ''}`}
+            label={`${key}${field.isRequired ? ' *' : ''}`}
             placeholder={field.placeholder}
             singleSelect={field.singleSelect}
             infoMessage={field.info}
@@ -1102,6 +1000,7 @@ const generateLocation = ({
     const handleChange = async (location: LocationData) => {
         await setField(key, location);
         await setTouched(key, true);
+
         validateField(key);
     };
 
@@ -1109,7 +1008,7 @@ const generateLocation = ({
         <LocationField
             key={key}
             name={`['${key}']`}
-            label={`${key}${field.isRequired ? '*' : ''}`}
+            label={`${key}${field.isRequired ? ' *' : ''}`}
             placeholder={field.placeholder}
             isInverted={isInverted}
             infoMessage={field.info}
@@ -1135,7 +1034,7 @@ const generateArea = ({
 }: FieldGenerationProps<Area>) => (
     <Textarea
         key={key}
-        label={`${key}${field.isRequired ? '*' : ''}`}
+        label={`${key}${field.isRequired ? ' *' : ''}`}
         placeholder={field.placeholder}
         name={`['${key}']`}
         value={value as string}
@@ -1157,7 +1056,7 @@ const generateUpload = ({
 }: FieldGenerationProps<FileUpload>) => (
     <FileUpload
         key={key}
-        label={`${key}${field.isRequired ? '*' : ''}`}
+        label={`${key}${field.isRequired ? ' *' : ''}`}
         name={key}
         infoMessage={field.info}
         uploadLabel={field.addBtnLabel}
@@ -1184,7 +1083,7 @@ const generateField = ({
 }: FieldGenerationProps<Field>) => (
     <Textfield
         key={key}
-        label={`${key}${field.isRequired ? '*' : ''}`}
+        label={`${key}${field.isRequired ? ' *' : ''}`}
         placeholder={field.placeholder}
         name={`['${key}']`}
         type={field.inputType}
@@ -1212,7 +1111,7 @@ const generateSelect = ({
 }: FieldGenerationProps<Select>) => (
     <SelectDropdown
         key={key}
-        label={`${key}${field.isRequired ? '*' : ''}`}
+        label={`${key}${field.isRequired ? ' *' : ''}`}
         name={key}
         placeholder={field.placeholder}
         errorMessage={error && isTouched ? error : undefined}

@@ -11,7 +11,6 @@ import {
 } from 'utils/styles';
 import FieldWrapper from './FormField';
 import { getFormFieldTextSize } from 'utils/formFieldText';
-import FlyTo from 'components/base/icons/FlyTo';
 import useLeafletMap from 'utils/useLeafletMap';
 import LocationPin from 'components/base/icons/LocationPin';
 import { getSVGDataImg } from 'utils/dataURI';
@@ -19,6 +18,10 @@ import { LocationIcon } from 'components/sections/Map';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { LeafletMouseEvent } from 'leaflet';
 import { ButtonGhost } from 'index';
+import useLazyInput from 'utils/useLazyInput';
+import Place from 'components/base/icons/Place';
+import { MyLocation } from 'components/base/icons/Icons';
+import useMounted from 'utils/useMounted';
 
 const MapWrapper = styled.div<{ isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
@@ -31,6 +34,11 @@ const TrackLocationIcon = styled.div`
     right: ${spacings.nudge * 2}px;
 
     cursor: pointer;
+`;
+
+const StyledMyLocationIcon = styled(MyLocation)`
+    height: 35px;
+    width: 35px;
 `;
 
 const MapContainer = styled.div`
@@ -167,7 +175,7 @@ const LocationField: FC<{
     marker?: LocationIcon;
     zoom?: number;
     onChange?: (value: LocationData) => void;
-    onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
+    onBlur?: (value: LocationData) => void;
     customLocationIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
     customAddressIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
     toggleAction?: (props: {
@@ -211,6 +219,21 @@ const LocationField: FC<{
     const [getValue, setValue] = useState<LocationData>(
         value || { description: '', position: initialPosition || [0, 0] }
     );
+    const isMounted = useMounted();
+
+    const {
+        value: descValue,
+        setValue: setDescValue,
+        forceChange,
+    } = useLazyInput({
+        initialValue: value?.description || '',
+        onLazyChange: (value) => {
+            setValue((prev) => ({
+                ...prev,
+                description: value,
+            }));
+        },
+    });
     const [errorMsg, setErrorMsg] = useState<string>(errorMessage || '');
 
     const defaultMarker: LocationIcon = {
@@ -244,6 +267,7 @@ const LocationField: FC<{
                 icon: marker || defaultMarker,
             },
         ],
+        zoom: 2.5,
         onClick: (ev) => {
             onMapClick(ev);
             setMapDirty(true);
@@ -288,9 +312,7 @@ const LocationField: FC<{
     }, [value]);
 
     useEffect(() => {
-        if (errorMessage) {
-            setErrorMsg(errorMessage);
-        }
+        setErrorMsg(errorMessage || '');
     }, [errorMessage]);
 
     useEffect(() => {
@@ -304,7 +326,10 @@ const LocationField: FC<{
     }, [asGeolocation, getLocation, getValue, recalculateMapSize]);
 
     useEffect(() => {
-        onChange?.(getValue);
+        if (isMounted) {
+            onChange?.(getValue);
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getValue]);
 
@@ -358,7 +383,7 @@ const LocationField: FC<{
                             {customLocationIcon ? (
                                 customLocationIcon({ isInverted })
                             ) : (
-                                <FlyTo
+                                <StyledMyLocationIcon
                                     iconColor={
                                         isInverted
                                             ? colors.text.inverted
@@ -379,24 +404,23 @@ const LocationField: FC<{
                                     type="text"
                                     isInverted={isInverted}
                                     name={`${name}["description"]`}
-                                    value={getValue.description}
+                                    value={descValue}
                                     required={isRequired}
                                     onChange={(ev) => {
-                                        // onChange && onChange(ev);
                                         const value = ev.currentTarget.value;
-                                        setValue((prev) => ({
-                                            ...prev,
-                                            description: value,
-                                        }));
+                                        setDescValue(value);
                                     }}
-                                    onBlur={onBlur}
+                                    onBlur={() => {
+                                        forceChange();
+                                        onBlur?.(getValue);
+                                    }}
                                 />
                             </FieldWrapper.Content>
                             <Icon>
                                 {customAddressIcon ? (
                                     customAddressIcon({ isInverted })
                                 ) : (
-                                    <LocationPin
+                                    <Place
                                         iconColor={
                                             isInverted
                                                 ? colors.text.inverted
@@ -413,29 +437,29 @@ const LocationField: FC<{
                     errorMessage={errorMsg}
                     isInverted={isInverted}
                 />
-                <ActionWrapper>
-                    {toggleAction ? (
-                        toggleAction({
-                            isInverted,
-                            asGeolocation,
-                            handleClick: toggleClickHandler,
-                        })
-                    ) : (
-                        <ButtonGhost.View
-                            as="button"
-                            size="small"
-                            onClick={toggleClickHandler}
-                            {...{ type: 'button' }}
-                        >
-                            <ButtonGhost.Label>
-                                {asGeolocation
-                                    ? 'Describe Location'
-                                    : 'Find location'}
-                            </ButtonGhost.Label>
-                        </ButtonGhost.View>
-                    )}
-                </ActionWrapper>
             </FieldWrapper.View>
+            <ActionWrapper>
+                {toggleAction ? (
+                    toggleAction({
+                        isInverted,
+                        asGeolocation,
+                        handleClick: toggleClickHandler,
+                    })
+                ) : (
+                    <ButtonGhost.View
+                        as="button"
+                        size="small"
+                        onClick={toggleClickHandler}
+                        {...{ type: 'button' }}
+                    >
+                        <ButtonGhost.Label>
+                            {asGeolocation
+                                ? 'Describe Location'
+                                : 'Find location'}
+                        </ButtonGhost.Label>
+                    </ButtonGhost.View>
+                )}
+            </ActionWrapper>
         </React.Fragment>
     );
 };

@@ -15,6 +15,7 @@ import {
 import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
 import { getFormFieldTextSize } from 'utils/formFieldText';
+import useMounted from 'utils/useMounted';
 
 const Select = styled.button<{
     hasError?: boolean;
@@ -254,12 +255,8 @@ const SelectDropdown: React.FC<
     );
     const [selectItems, setSelectItems] = useState<SelectItem[]>(items || []);
     const selectBtnRef = useRef<HTMLButtonElement>(null);
-    const isMounted = useRef<boolean>(false);
+    const isMounted = useMounted();
     const itemHasBeenClicked = useRef<boolean>(false);
-
-    useEffect(() => {
-        isMounted.current = true;
-    }, []);
 
     useEffect(() => {
         const index = items?.findIndex((item) => item.value === value);

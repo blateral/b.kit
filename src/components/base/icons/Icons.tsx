@@ -52,6 +52,7 @@ export { default as Info } from 'components/base/icons/Info';
 export { default as FlyTo } from 'components/base/icons/FlyTo';
 export { default as LocationPin } from 'components/base/icons/LocationPin';
 export { default as Place } from 'components/base/icons/Place';
+export { default as MyLocation } from 'components/base/icons/MyLocation';
 export { default as Map } from 'components/base/icons/Map';
 export { default as Money } from 'components/base/icons/Money';
 export { default as Computer } from 'components/base/icons/Computer';

@@ -55,6 +55,7 @@ import Info from 'components/base/icons/Info';
 import FlyTo from 'components/base/icons/FlyTo';
 import LocationPin from 'components/base/icons/LocationPin';
 import Place from 'components/base/icons/Place';
+import MyLocation from 'components/base/icons/MyLocation';
 import Map from 'components/base/icons/Map';
 import Money from 'components/base/icons/Money';
 import Computer from 'components/base/icons/Computer';
@@ -109,6 +110,7 @@ export default {
         FlyTo,
         LocationPin,
         Place,
+        MyLocation,
         Map,
         Money,
         Computer,
@@ -234,6 +236,9 @@ IconLocationPin.storyName = 'LocationPin';
 
 export const IconPlace: Story = () => <Place />;
 IconPlace.storyName = 'Place';
+
+export const IconMyLocation: Story = () => <MyLocation />;
+IconMyLocation.storyName = 'MyLocation';
 
 export const IconMap: Story = () => <Map />;
 IconMap.storyName = 'Map';

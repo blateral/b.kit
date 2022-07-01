@@ -66,6 +66,7 @@ export const Default: Story = () => (
                 type: 'Location',
                 placeholder: 'Ort eingeben',
                 info: 'Bitte geben Sie einen Ort an',
+                isRequired: true,
             },
             Personen: {
                 type: 'FieldGroup',
@@ -98,97 +99,6 @@ export const Default: Story = () => (
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
                 acceptedFormats: 'image/png, image/jpg',
-            },
-        }}
-        onSubmit={async (values) => {
-            console.log(values);
-            return;
-        }}
-    />
-);
-
-export const WithTwoColumns: Story = () => (
-    <DynamicForm
-        fields={{
-            Nachname: {
-                type: 'Field',
-                placeholder: 'Nachname..',
-                isRequired: true,
-                info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
-            },
-            Nachricht: {
-                type: 'Area',
-                placeholder: 'Nachricht eingeben..',
-                info: 'Nachricht eingeben',
-                isRequired: true,
-            },
-            Email: {
-                type: 'Field',
-                placeholder: 'Email eingeben..',
-                info: 'Email eingeben',
-                isRequired: true,
-                inputType: 'email',
-            },
-            Reisezeitraum: {
-                customIcon: ({ singleSelect }) => {
-                    return singleSelect ? (
-                        <Icons.CalendarToday />
-                    ) : (
-                        <Icons.DateRange />
-                    );
-                },
-                type: 'Datepicker',
-                isRequired: true,
-                info: 'Reisezeitraum eingeben',
-                placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
-            },
-            Leistungen: {
-                type: 'FieldGroup',
-                groupType: 'Checkbox',
-                isRequired: true,
-                fields: [
-                    { text: 'mit Bad' },
-                    { text: 'mit Küche', initialChecked: true },
-                ],
-                column: 'right',
-            },
-            Personen: {
-                type: 'FieldGroup',
-                groupType: 'Radio',
-                isRequired: true,
-                fields: [{ text: '1' }, { text: '2', initialChecked: true }],
-                column: 'right',
-            },
-            Alter: {
-                type: 'Field',
-                placeholder: 'Alter eingeben',
-                info: 'Bitte geben Sie Ihr Alter an',
-                inputType: 'number',
-                column: 'right',
-            },
-            Land: {
-                placeholder: 'Select',
-                type: 'Select',
-                // initalValue: 'Germany',
-                isRequired: true,
-                dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
-                ],
-                icon: { src: 'http://placehold.it/25' },
-                column: 'right',
-            },
-            Upload: {
-                type: 'Upload',
-                customUploadIcon: () => <Icons.UploadFile />,
-                customDeleteIcon: () => <Icons.DeleteForever />,
-                isRequired: true,
-                addBtnLabel: 'Datei/en auswählen',
-                removeBtnLabel: 'Auswahl löschen',
-                acceptedFormats: 'image/png, image/jpg',
-                column: 'right',
             },
         }}
         onSubmit={async (values) => {
