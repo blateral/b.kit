@@ -22,6 +22,13 @@ import renderAreaField from './renderer/areaRenderer';
 import renderField from './renderer/fieldRenderer';
 import renderSelectField from './renderer/selectRenderer';
 import renderUploadField from './renderer/uploadRenderer';
+import fieldValidator from './validators/fieldValidator';
+import areaValidator from './validators/areaValidator';
+import selectValidator from './validators/selectValidator';
+import datepickerValidator from './validators/datepickerValidator';
+import locationValidator from './validators/locationValidator';
+import fieldGroupValidator from './validators/fieldGroupValidator';
+import uploadValidator from './validators/uploadValidator';
 
 const StyledSection = styled(Section)`
     overflow: visible;
@@ -384,139 +391,69 @@ const DynamicForm: FC<{
             switch (fields[key].type) {
                 case 'Field': {
                     const config = fields[key] as Field;
-                    const inputType = config.inputType;
-
-                    // default
-                    if (fields[key].isRequired && !values[key]) {
-                        errors[key] =
-                            (fields[key] as Field).errorMsg || 'Required field';
-                    }
+                    const value = values[key] as string;
 
                     // custom validation
                     if (config.validate) {
-                        const error = await config.validate(
-                            key,
-                            values[key] as string,
-                            config
-                        );
+                        const error = await config.validate(key, value, config);
                         if (error) errors[key] = error;
                         break;
                     }
 
-                    switch (inputType) {
-                        case 'email':
-                            if (
-                                values[key] &&
-                                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-                                    values[key] as string
-                                )
-                            ) {
-                                errors[key] =
-                                    (fields[key] as Field).errorMsg ||
-                                    'Invalid Mail format';
-                            }
-                            break;
-                        case 'tel':
-                            if (
-                                values[key] &&
-                                /[A-Z]/gi.test(values[key] as string)
-                            ) {
-                                errors[key] =
-                                    (fields[key] as Field).errorMsg ||
-                                    'Ungültige Telefonnummer';
-                            }
-                            break;
-                        case 'number':
-                            if (
-                                values[key] &&
-                                !/^[+]?\d+([.]\d+)?$/gm.test(
-                                    values[key] as string
-                                )
-                            ) {
-                                errors[key] =
-                                    (fields[key] as Field).errorMsg ||
-                                    'Zahlenformat ungültig';
-                            }
-                            break;
-                    }
+                    // default
+                    const error = await fieldValidator(key, value, config);
+                    if (error) errors[key] = error;
                     break;
                 }
+
                 case 'Area': {
                     const config = fields[key] as Area;
-
-                    // default
-                    if (config.isRequired && !values[key]) {
-                        errors[key] =
-                            (fields[key] as Area).errorMsg || 'Required field';
-                    }
+                    const value = values[key] as string;
 
                     // custom validation
                     if (config.validate) {
-                        const error = await config.validate(
-                            key,
-                            values[key] as string,
-                            config
-                        );
+                        const error = await config.validate(key, value, config);
                         if (error) errors[key] = error;
+                        break;
                     }
+
+                    // default
+                    const error = await areaValidator(key, value, config);
+                    if (error) errors[key] = error;
                     break;
                 }
+
                 case 'Select': {
                     const config = fields[key] as Select;
-
-                    // default
-                    if (config.isRequired && !values[key]) {
-                        errors[key] =
-                            (fields[key] as Select).errorMsg ||
-                            'Required field';
-                    }
+                    const value = values[key] as string;
 
                     // custom validation
                     if (config.validate) {
-                        const error = await config.validate(
-                            key,
-                            values[key] as string,
-                            config
-                        );
+                        const error = await config.validate(key, value, config);
                         if (error) errors[key] = error;
+                        break;
                     }
+
+                    // default
+                    const error = await selectValidator(key, value, config);
+                    if (error) errors[key] = error;
                     break;
                 }
+
                 case 'Datepicker': {
                     const config = fields[key] as Datepicker;
-                    const single = config.singleSelect;
                     const value = values[key] as [Date | null, Date | null];
-
-                    // default
-                    if (config.isRequired && !values[key]) {
-                        errors[key] = single
-                            ? (fields[key] as Datepicker).singleDateError ||
-                              'Please submit date!'
-                            : (fields[key] as Datepicker).multiDateError ||
-                              'Please submit start- and enddate!';
-                    } else if (config.isRequired && single && !value[0]) {
-                        errors[key] =
-                            (fields[key] as Datepicker).singleDateError ||
-                            'Please submit date!';
-                    } else if (
-                        config.isRequired &&
-                        !single &&
-                        (!value[0] || !value[1])
-                    ) {
-                        errors[key] =
-                            (fields[key] as Datepicker).multiDateError ||
-                            'Please submit start- and enddate!';
-                    }
 
                     // custom validation
                     if (config.validate) {
-                        const error = await config.validate(
-                            key,
-                            values[key] as [Date | null, Date | null],
-                            config
-                        );
+                        const error = await config.validate(key, value, config);
                         if (error) errors[key] = error;
+                        break;
                     }
+
+                    // default
+                    const error = await datepickerValidator(key, value, config);
+                    if (error) errors[key] = error;
                     break;
                 }
 
@@ -524,82 +461,50 @@ const DynamicForm: FC<{
                     const config = fields[key] as Location;
                     const value = values[key] as LocationData;
 
-                    // default
-                    if (
-                        config.isRequired &&
-                        !value.description &&
-                        !value.position?.[0] &&
-                        !value.position?.[1]
-                    ) {
-                        errors[key] =
-                            (fields[key] as Location).errorMsg ||
-                            'Please submit location info!';
-                    }
-
                     // custom validation
                     if (config.validate) {
                         const error = await config.validate(key, value, config);
                         if (error) errors[key] = error;
+                        break;
                     }
 
+                    // default
+                    const error = await locationValidator(key, value, config);
+                    if (error) errors[key] = error;
                     break;
                 }
 
                 case 'FieldGroup': {
                     const config = fields[key] as FieldGroup;
-                    const type = config.groupType;
-
-                    // default
-                    if (type === 'Checkbox') {
-                        const selectValues = values[key] as string[];
-                        if (
-                            config.isRequired &&
-                            (!selectValues || selectValues?.length < 1)
-                        ) {
-                            errors[key] =
-                                (fields[key] as FieldGroup).errorMsg ||
-                                'Please select at least one item!';
-                        }
-                    } else if (type === 'Radio') {
-                        const value = values[key] as string;
-                        if (config.isRequired && !value) {
-                            errors[key] =
-                                (fields[key] as FieldGroup).errorMsg ||
-                                'Selection required';
-                        }
-                    }
+                    const value = values[key] as Array<string> | string;
 
                     // custom validation
                     if (config.validate) {
-                        const error = await config.validate(
-                            key,
-                            values[key] as Array<string> | string,
-                            config
-                        );
+                        const error = await config.validate(key, value, config);
                         if (error) errors[key] = error;
+                        break;
                     }
+
+                    // default
+                    const error = await fieldGroupValidator(key, value, config);
+                    if (error) errors[key] = error;
                     break;
                 }
+
                 case 'Upload': {
                     const config = fields[key] as FileUpload;
                     const files = values[key] as File[];
 
-                    // default
-                    if (config.isRequired && (!files || files?.length < 1)) {
-                        errors[key] =
-                            (fields[key] as Field).errorMsg ||
-                            'Please submit at least one file!';
-                    }
-
                     // custom validation
                     if (config.validate) {
-                        const error = await config.validate(
-                            key,
-                            values[key] as Array<File>,
-                            config
-                        );
+                        const error = await config.validate(key, files, config);
                         if (error) errors[key] = error;
+                        break;
                     }
+
+                    // default
+                    const error = await uploadValidator(key, files, config);
+                    if (error) errors[key] = error;
                     break;
                 }
             }
@@ -737,7 +642,7 @@ const DynamicForm: FC<{
                                                     props
                                                 );
                                             } else {
-                                                return renderRadioGroupField(
+                                                return renderCheckboxGroupField(
                                                     props
                                                 );
                                             }
@@ -745,7 +650,7 @@ const DynamicForm: FC<{
                                             if (definitions?.radio) {
                                                 return definitions.radio(props);
                                             } else {
-                                                return renderCheckboxGroupField(
+                                                return renderRadioGroupField(
                                                     props
                                                 );
                                             }
