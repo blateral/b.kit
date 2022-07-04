@@ -24,7 +24,6 @@ export const Default: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -51,7 +50,6 @@ export const Default: Story = () => (
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -89,7 +87,6 @@ export const Default: Story = () => (
                     { label: 'Schweiz', value: 'Switzerland' },
                     { label: 'Deutschland', value: 'Germany' },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
@@ -116,7 +113,6 @@ export const WithCustomDatepickerButtons: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -143,7 +139,6 @@ export const WithCustomDatepickerButtons: Story = () => (
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
                 submitAction: (clickHandler) => (
                     <button onClick={clickHandler}>auswählen</button>
                 ),
@@ -183,7 +178,6 @@ export const WithCustomDatepickerButtons: Story = () => (
                     { label: 'Schweiz', value: 'Switzerland' },
                     { label: 'Deutschland', value: 'Germany' },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
@@ -211,7 +205,6 @@ export const WithBackground: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -238,7 +231,6 @@ export const WithBackground: Story = () => (
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -270,7 +262,6 @@ export const WithBackground: Story = () => (
                     { label: 'Schweiz', value: 'Switzerland' },
                     { label: 'Deutschland', value: 'Germany' },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
@@ -298,7 +289,6 @@ export const Inverted: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -325,7 +315,6 @@ export const Inverted: Story = () => (
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -357,7 +346,6 @@ export const Inverted: Story = () => (
                     { label: 'Schweiz', value: 'Switzerland' },
                     { label: 'Deutschland', value: 'Germany' },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
@@ -384,7 +372,6 @@ export const CustomSubmitButton: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -411,7 +398,6 @@ export const CustomSubmitButton: Story = () => (
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -443,7 +429,6 @@ export const CustomSubmitButton: Story = () => (
                     { label: 'Schweiz', value: 'Switzerland' },
                     { label: 'Deutschland', value: 'Germany' },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
@@ -473,7 +458,6 @@ export const WithCustomErrorMessages: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
                 errorMsg: 'Bitte geben Sie Ihren Nachnamen an',
             },
             Nachricht: {
@@ -503,7 +487,6 @@ export const WithCustomErrorMessages: Story = () => (
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
                 singleDateError: 'Bitte geben Sie ein Datum an',
                 multiDateError: 'Bitte geben Sie ein Start- und Enddatum an',
             },
@@ -540,7 +523,6 @@ export const WithCustomErrorMessages: Story = () => (
                     { label: 'Schweiz', value: 'Switzerland' },
                     { label: 'Deutschland', value: 'Germany' },
                 ],
-                icon: { src: 'http://placehold.it/25' },
                 errorMsg: 'Bitte wählen Sie ein Land',
             },
             Upload: {
@@ -569,7 +551,6 @@ export const CustomValidation: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
                 validate: async (key, value, config) => {
                     let error = '';
                     if (!value && config.isRequired)
@@ -628,7 +609,6 @@ export const CustomValidation: Story = () => (
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
                 validate: async (key, value, config) => {
                     let error = '';
                     if (config.isRequired && (!value?.[0] || !value?.[1]))
@@ -684,7 +664,6 @@ export const CustomValidation: Story = () => (
                     { label: 'Schweiz', value: 'Switzerland' },
                     { label: 'Deutschland', value: 'Germany' },
                 ],
-                icon: { src: 'http://placehold.it/25' },
                 validate: async (key, value, config) => {
                     let error = '';
                     if (!value && config.isRequired)
@@ -743,7 +722,6 @@ export const WithCustomFieldDefinition: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -770,7 +748,6 @@ export const WithCustomFieldDefinition: Story = () => (
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -802,7 +779,6 @@ export const WithCustomFieldDefinition: Story = () => (
                     { label: 'Schweiz', value: 'Switzerland' },
                     { label: 'Deutschland', value: 'Germany' },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
@@ -829,7 +805,6 @@ export const WithCustomDatepicker: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -856,7 +831,6 @@ export const WithCustomDatepicker: Story = () => (
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
                 deleteAction: (handleClick) => (
                     <button onClick={handleClick}>delete</button>
                 ),
@@ -896,7 +870,6 @@ export const WithCustomDatepicker: Story = () => (
                     { label: 'Schweiz', value: 'Switzerland' },
                     { label: 'Deutschland', value: 'Germany' },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
