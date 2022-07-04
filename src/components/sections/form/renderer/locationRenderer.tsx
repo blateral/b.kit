@@ -37,6 +37,8 @@ const renderLocationField = ({
             value={locationData}
             onChange={handleChange}
             customLocationIcon={field.customLocationIcon}
+            descriptionTabLabel={field.descriptionTabLabel}
+            mapTabLabel={field.mapTabLabel}
         />
     );
 };

@@ -231,6 +231,8 @@ const LocationField: FC<{
     onBlur?: (value: LocationData) => void;
     customLocationIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
     geolocationErrorMsg?: string;
+    descriptionTabLabel?: string;
+    mapTabLabel?: string;
 }> = ({
     label,
     errorMessage,
@@ -248,6 +250,8 @@ const LocationField: FC<{
     onBlur,
     customLocationIcon,
     geolocationErrorMsg = 'Your browser or device supports no geolocation!',
+    descriptionTabLabel = 'Address',
+    mapTabLabel = 'GPS Coordinates',
 }) => {
     if (isDisabled) {
         errorMessage = '';
@@ -435,14 +439,14 @@ const LocationField: FC<{
                         disabled={!asGeolocation}
                         onClick={() => setAsGeolocation(false)}
                     >
-                        Adresse
+                        {descriptionTabLabel}
                     </Tab>
                     <Tab
                         isInverted={isInverted}
                         disabled={asGeolocation}
                         onClick={() => setAsGeolocation(true)}
                     >
-                        GPS Koordinaten
+                        {mapTabLabel}
                     </Tab>
                 </ViewTabs>
                 <MapWrapper isVisible={asGeolocation}>

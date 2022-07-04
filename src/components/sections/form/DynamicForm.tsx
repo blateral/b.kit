@@ -180,6 +180,8 @@ export interface Location extends FormField {
         value: LocationData,
         config: Location
     ) => Promise<string>;
+    descriptionTabLabel?: string;
+    mapTabLabel?: string;
 }
 
 export interface FieldGroup extends FormField {
