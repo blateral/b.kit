@@ -271,16 +271,14 @@ const LocationField: FC<{
     const {
         value: descValue,
         setValue: setDescValue,
-        forceChange,
-    } = useLazyInput({
-        initialValue: value?.description || '',
-        onLazyChange: (value) => {
-            setValue((prev) => ({
-                ...prev,
-                description: value,
-            }));
-        },
-    });
+        forceUpdate,
+    } = useLazyInput((value) => {
+        setValue((prev) => ({
+            ...prev,
+            description: value,
+        }));
+    }, value?.description || '');
+
     const [errorMsg, setErrorMsg] = useState<string>(errorMessage || '');
 
     const defaultMarker: LocationIcon = {
@@ -449,7 +447,7 @@ const LocationField: FC<{
                         ref={setMapContainer}
                         tabIndex={0}
                         onClick={() => {
-                            forceChange();
+                            forceUpdate();
                             onBlur?.(getValue);
                         }}
                     />
@@ -485,7 +483,7 @@ const LocationField: FC<{
                                         setDescValue(value);
                                     }}
                                     onBlur={() => {
-                                        forceChange();
+                                        forceUpdate();
                                         onBlur?.(getValue);
                                     }}
                                 />
