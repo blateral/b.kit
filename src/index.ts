@@ -40,6 +40,8 @@ export { useScrollTo } from 'utils/useScrollTo';
 export { usePoster, canUseWebP } from 'utils/usePoster';
 export { default as useInterval } from 'utils/useInterval';
 export { default as useTouch } from 'utils/useTouch';
+export { default as useUpdateEffect } from 'utils/useUpdateEffect';
+export { default as useMounted } from 'utils/useMounted';
 export { useImgPreload } from 'utils/useImgPreload';
 export { hexToRgba } from 'utils/hexRgbConverter';
 export { getBgImage } from 'utils/backgroundImage';

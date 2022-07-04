@@ -19,7 +19,7 @@ import { useLibTheme } from 'utils/LibThemeProvider';
 import { LeafletMouseEvent } from 'leaflet';
 import useLazyInput from 'utils/useLazyInput';
 import { MyLocation } from 'components/base/icons/Icons';
-import useMounted from 'utils/useMounted';
+import useUpdateEffect from 'utils/useUpdateEffect';
 
 const ViewTabs = styled.div<{ isInverted?: boolean }>`
     display: flex;
@@ -267,7 +267,6 @@ const LocationField: FC<{
         value || { description: '', position: initialPosition || [0, 0] }
     );
     const lastPosRef = useRef<[number, number] | null>(null);
-    const isMounted = useMounted();
 
     const {
         value: descValue,
@@ -374,12 +373,8 @@ const LocationField: FC<{
         }
     }, [asGeolocation, getLocation, getValue, recalculateMapSize]);
 
-    useEffect(() => {
-        if (isMounted) {
-            onChange?.(getValue);
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    useUpdateEffect(() => {
+        onChange?.(getValue);
     }, [getValue]);
 
     useEffect(() => {
