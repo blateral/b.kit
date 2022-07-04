@@ -223,7 +223,6 @@ IsInverted.parameters = {
 
 export const WithIcon: Story = () => (
     <SelectDropdown
-        icon={{ src: 'http://placehold.it/25' }}
         label="Label"
         isRequired
         placeholder="Prompt Text"

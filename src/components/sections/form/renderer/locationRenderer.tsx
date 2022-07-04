@@ -36,8 +36,6 @@ const renderLocationField = ({
             errorMessage={error && isTouched ? error : undefined}
             value={locationData}
             onChange={handleChange}
-            toggleAction={field.toggleAction}
-            customAddressIcon={field.customAddressIcon}
             customLocationIcon={field.customLocationIcon}
         />
     );

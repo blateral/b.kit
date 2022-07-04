@@ -57,7 +57,7 @@ const FieldContainer = styled.div`
     }
 
     @media ${mq.semilarge} {
-        max-width: 590px;
+        max-width: 610px;
 
         & + & {
             margin-top: 0;
@@ -175,19 +175,11 @@ export interface Location extends FormField {
     info?: string;
     errorMsg?: string;
     customLocationIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-    customAddressIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
     validate?: (
         key: string,
         value: LocationData,
         config: Location
     ) => Promise<string>;
-    toggleAction?: (props: {
-        isInverted?: boolean;
-        asGeolocation?: boolean;
-        handleClick?: (
-            e: React.SyntheticEvent<HTMLButtonElement, Event>
-        ) => void;
-    }) => React.ReactNode;
 }
 
 export interface FieldGroup extends FormField {

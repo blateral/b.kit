@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { copyStyle } from 'components/typography/Copy';
@@ -18,14 +18,85 @@ import { LocationIcon } from 'components/sections/Map';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { LeafletMouseEvent } from 'leaflet';
 import useLazyInput from 'utils/useLazyInput';
-import Place from 'components/base/icons/Place';
 import { MyLocation } from 'components/base/icons/Icons';
 import useMounted from 'utils/useMounted';
-import ButtonGhost from 'components/buttons/ButtonGhost';
+
+const ViewTabs = styled.div<{ isInverted?: boolean }>`
+    display: flex;
+    border-bottom: solid 1px
+        ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
+
+    &:not(:last-child) {
+        margin-bottom: ${spacings.nudge}px;
+    }
+`;
+
+const Tab = styled.button<{ isInverted?: boolean }>`
+    position: relative;
+    padding: ${spacings.nudge}px;
+    background: none;
+    border: 0;
+    ${copyStyle('copy', 'small')}
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.dark};
+    cursor: pointer;
+    outline: none;
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 4px;
+        background-color: transparent;
+    }
+
+    &:disabled {
+        cursor: default;
+
+        &:after {
+            background-color: ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.dark};
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus {
+        outline: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+        outline-offset: -2px;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+`;
 
 const MapWrapper = styled.div<{ isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
     position: relative;
+`;
+
+const MapContainer = styled.div`
+    position: relative;
+    width: 100%;
+    height: 290px;
+    z-index: 0;
+    outline: none;
 `;
 
 const TrackLocationIcon = styled.div`
@@ -41,15 +112,6 @@ const StyledMyLocationIcon = styled(MyLocation)`
     width: 35px;
 `;
 
-const MapContainer = styled.div`
-    position: relative;
-    width: 100%;
-    height: 250px;
-    z-index: 0;
-
-    margin-bottom: 10px;
-`;
-
 const FieldView = styled.div`
     display: flex;
     flex-direction: row;
@@ -61,25 +123,21 @@ const FieldView = styled.div`
     }
 `;
 
-const Icon = styled.div`
-    & > * {
-        max-width: 24px;
-        max-height: 24px;
-    }
-`;
-
-const InputField = styled.input<{
+const Area = styled.textarea<{
     isInverted?: boolean;
     hasError?: boolean;
+    isDisabled?: boolean;
+    hasBack?: boolean;
 }>`
     display: block;
     outline: none;
     width: 100%;
-    min-height: 40px;
+    min-height: 100px;
     box-shadow: none;
-
     border-radius: 0px;
     -webkit-appearance: none;
+
+    resize: none;
 
     padding: ${spacings.nudge}px;
 
@@ -99,7 +157,7 @@ const InputField = styled.input<{
     ${copyStyle('copy', 'small')}
     /** Clamping min font size to 16px to prevent browser zooming */
     ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
-
+    
     color: ${({ theme, isInverted, hasError }) => {
         if (isInverted) {
             return hasError
@@ -142,11 +200,6 @@ const InputField = styled.input<{
     }
 `;
 
-const ActionWrapper = styled.div`
-    margin-top: ${spacings.nudge}px;
-    text-align: left;
-`;
-
 export interface LocationProps {
     city?: string;
     street?: string;
@@ -177,14 +230,6 @@ const LocationField: FC<{
     onChange?: (value: LocationData) => void;
     onBlur?: (value: LocationData) => void;
     customLocationIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-    customAddressIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-    toggleAction?: (props: {
-        isInverted?: boolean;
-        asGeolocation?: boolean;
-        handleClick?: (
-            e: React.SyntheticEvent<HTMLButtonElement, Event>
-        ) => void;
-    }) => React.ReactNode;
     geolocationErrorMsg?: string;
 }> = ({
     label,
@@ -202,8 +247,6 @@ const LocationField: FC<{
     onChange,
     onBlur,
     customLocationIcon,
-    customAddressIcon,
-    toggleAction,
     geolocationErrorMsg = 'Your browser or device supports no geolocation!',
 }) => {
     if (isDisabled) {
@@ -219,6 +262,7 @@ const LocationField: FC<{
     const [getValue, setValue] = useState<LocationData>(
         value || { description: '', position: initialPosition || [0, 0] }
     );
+    const lastPosRef = useRef<[number, number] | null>(null);
     const isMounted = useMounted();
 
     const {
@@ -306,11 +350,11 @@ const LocationField: FC<{
         setGeolocationSupport(!!navigator.geolocation);
     }, []);
 
-    useEffect(() => {
-        if (value) {
-            setValue(value);
-        }
-    }, [value]);
+    // useEffect(() => {
+    //     if (value) {
+    //         setValue(value);
+    //     }
+    // }, [value]);
 
     useEffect(() => {
         setErrorMsg(errorMessage || '');
@@ -342,7 +386,19 @@ const LocationField: FC<{
             flyToZoom = currentZoom;
         }
 
-        flyToPosition(getValue.position, flyToZoom);
+        if (lastPosRef.current === null) {
+            lastPosRef.current = getValue.position;
+            panToPosition(getValue.position);
+            return;
+        }
+
+        if (
+            lastPosRef.current[0] !== getValue.position[0] ||
+            lastPosRef.current[1] !== getValue.position[1]
+        ) {
+            lastPosRef.current = getValue.position;
+            flyToPosition(getValue.position, flyToZoom);
+        }
     }, [
         flyToPosition,
         getCurrentZoom,
@@ -351,13 +407,6 @@ const LocationField: FC<{
         panToPosition,
         zoom,
     ]);
-
-    const toggleClickHandler = (
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        ev: React.SyntheticEvent<HTMLButtonElement>
-    ) => {
-        setAsGeolocation(!asGeolocation);
-    };
 
     const showTrackLocationBtn = isGeolocationSupported && isMapDirty;
 
@@ -371,14 +420,40 @@ const LocationField: FC<{
                 />
             )}
 
-            <FieldWrapper.View isDisabled={isDisabled}>
+            <FieldWrapper.View
+                isDisabled={isDisabled}
+                onClick={(ev) => ev.preventDefault()}
+            >
                 <FieldWrapper.Head
                     label={label}
                     isRequired={isRequired}
                     isInverted={isInverted}
                 />
+                <ViewTabs isInverted={isInverted}>
+                    <Tab
+                        isInverted={isInverted}
+                        disabled={!asGeolocation}
+                        onClick={() => setAsGeolocation(false)}
+                    >
+                        Adresse
+                    </Tab>
+                    <Tab
+                        isInverted={isInverted}
+                        disabled={asGeolocation}
+                        onClick={() => setAsGeolocation(true)}
+                    >
+                        GPS Koordinaten
+                    </Tab>
+                </ViewTabs>
                 <MapWrapper isVisible={asGeolocation}>
-                    <MapContainer ref={setMapContainer} />
+                    <MapContainer
+                        ref={setMapContainer}
+                        tabIndex={0}
+                        onClick={() => {
+                            forceChange();
+                            onBlur?.(getValue);
+                        }}
+                    />
                     {showTrackLocationBtn && (
                         <TrackLocationIcon onClick={getLocation}>
                             {customLocationIcon ? (
@@ -399,10 +474,9 @@ const LocationField: FC<{
                     <React.Fragment>
                         <FieldView>
                             <FieldWrapper.Content>
-                                <InputField
+                                <Area
                                     placeholder={placeholder}
                                     hasError={!!errorMsg}
-                                    type="text"
                                     isInverted={isInverted}
                                     name={`${name}["description"]`}
                                     value={descValue}
@@ -417,19 +491,6 @@ const LocationField: FC<{
                                     }}
                                 />
                             </FieldWrapper.Content>
-                            <Icon>
-                                {customAddressIcon ? (
-                                    customAddressIcon({ isInverted })
-                                ) : (
-                                    <Place
-                                        iconColor={
-                                            isInverted
-                                                ? colors.text.inverted
-                                                : colors.text.default
-                                        }
-                                    />
-                                )}
-                            </Icon>
                         </FieldView>
                     </React.Fragment>
                 )}
@@ -439,28 +500,6 @@ const LocationField: FC<{
                     isInverted={isInverted}
                 />
             </FieldWrapper.View>
-            <ActionWrapper>
-                {toggleAction ? (
-                    toggleAction({
-                        isInverted,
-                        asGeolocation,
-                        handleClick: toggleClickHandler,
-                    })
-                ) : (
-                    <ButtonGhost.View
-                        as="button"
-                        size="small"
-                        onClick={toggleClickHandler}
-                        {...{ type: 'button' }}
-                    >
-                        <ButtonGhost.Label>
-                            {asGeolocation
-                                ? 'Describe Location'
-                                : 'Find location'}
-                        </ButtonGhost.Label>
-                    </ButtonGhost.View>
-                )}
-            </ActionWrapper>
         </React.Fragment>
     );
 };
