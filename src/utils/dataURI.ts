@@ -14,7 +14,12 @@ export const getSVGDataImg = (
         svgString = renderToString(svg);
     }
 
-    return encode
-        ? `data:image/svg+xml;base64,${btoa(svgString)}`
-        : `data:image/svg+xml;utf8,${svgString}`;
+    if (!encode) return `data:image/svg+xml;utf8,${svgString}`;
+
+    if (typeof window !== 'undefined') {
+        return `data:image/svg+xml;base64,${btoa(svgString)}`;
+    } else {
+        const baseString = Buffer.from(svgString).toString('base64');
+        return `data:image/svg+xml;base64,${baseString}`;
+    }
 };
