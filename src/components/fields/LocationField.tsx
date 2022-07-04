@@ -267,6 +267,7 @@ const LocationField: FC<{
                 icon: marker || defaultMarker,
             },
         ],
+        center: initialPosition,
         zoom: 2.5,
         onClick: (ev) => {
             onMapClick(ev);

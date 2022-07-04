@@ -104,7 +104,6 @@ export interface Field extends FormField {
     initialValue?: string;
     placeholder?: string;
     info?: string;
-    icon?: { src: string; alt?: string };
     validate?: (key: string, value: string, config: Field) => Promise<string>;
     errorMsg?: string;
 }
@@ -127,8 +126,11 @@ export interface Select extends FormField {
         label?: string;
     }[];
     info?: string;
-    icon?: { src: string; alt?: string };
     validate?: (key: string, value: string, config: Select) => Promise<string>;
+    indicator?: (props: {
+        isOpen: boolean;
+        isDisabled?: boolean;
+    }) => React.ReactNode;
     errorMsg?: string;
 }
 
@@ -139,7 +141,6 @@ export interface Datepicker extends FormField {
     minDate?: Date;
     maxDate?: Date;
     singleSelect?: boolean;
-    icon?: { src: string; alt?: string };
     info?: string;
     customIcon?: (props: {
         isInverted?: boolean;
@@ -169,7 +170,7 @@ export interface Datepicker extends FormField {
 
 export interface Location extends FormField {
     type: 'Location';
-    initialValue?: LocationData;
+    initialPosition?: [number, number];
     placeholder?: string;
     info?: string;
     errorMsg?: string;
@@ -349,7 +350,7 @@ const DynamicForm: FC<{
                 ];
                 break;
             case 'Location': {
-                initalData[key] = (fields[key] as Location).initialValue || {
+                initalData[key] = {
                     description: '',
                     position: [0, 0],
                 };

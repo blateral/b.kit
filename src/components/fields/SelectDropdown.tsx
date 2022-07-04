@@ -218,8 +218,6 @@ interface SelectItem {
 
 const SelectDropdown: React.FC<
     FormProps & {
-        icon?: { src: string; alt?: string };
-
         placeholder?: string;
         name?: string;
         value?: string;

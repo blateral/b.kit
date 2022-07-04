@@ -30,6 +30,7 @@ const renderLocationField = ({
             name={`['${key}']`}
             label={`${key}${field.isRequired ? ' *' : ''}`}
             placeholder={field.placeholder}
+            initialPosition={field.initialPosition}
             isInverted={isInverted}
             infoMessage={field.info}
             errorMessage={error && isTouched ? error : undefined}

@@ -30,7 +30,7 @@ const renderSelectField = ({
             if (validateOnChange) validateField(key);
         }}
         onBlur={() => setTouched(key, true, validateOnBlur)}
-        icon={field.icon}
+        indicator={field.indicator}
         isInverted={isInverted}
     />
 );
