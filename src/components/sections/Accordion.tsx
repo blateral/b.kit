@@ -180,7 +180,7 @@ const Accordion: React.FC<{
     anchorId?: string;
 
     /** Array of accordion items */
-    items: AccordionItem[];
+    items?: AccordionItem[];
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
@@ -207,7 +207,7 @@ const Accordion: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            {generateFAQ(items)}
+            {items && generateFAQ(items)}
             <Wrapper addWhitespace>
                 <Grid.Row gutter={0}>
                     <Grid.Col>
