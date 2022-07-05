@@ -142,7 +142,7 @@ const JobArticle: React.FC<JobArticleProps> = ({
             bgMode={mapToBgMode(bgMode, true)}
         >
             {generateJob(jsonLd)}
-            <Wrapper addWhitespace>
+            <Wrapper clampWidth="small" addWhitespace>
                 <ArticleHead>
                     <Heading
                         size="heading-2"
