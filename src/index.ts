@@ -45,6 +45,7 @@ export { default as useMounted } from 'utils/useMounted';
 export { default as useTimeout } from 'utils/useTimeout';
 export { default as useDebounce } from 'utils/useDebounce';
 export { default as useLazyInput } from 'utils/useLazyInput';
+export { default as useArray } from 'utils/useArray';
 export { useImgPreload } from 'utils/useImgPreload';
 export { hexToRgba } from 'utils/hexRgbConverter';
 export { getBgImage } from 'utils/backgroundImage';
