@@ -3,6 +3,7 @@ import useArray from 'utils/useArray';
 import Section from 'components/base/Section';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
+import Heading from 'components/typography/Heading';
 
 const ArrayHookExample: FC = () => {
     const { array, filter, pop, push, clear, remove, set, update } = useArray([
@@ -14,6 +15,7 @@ const ArrayHookExample: FC = () => {
     return (
         <Section addSeperation>
             <Wrapper addWhitespace>
+                <Heading>Array hook example</Heading>
                 <div>
                     <button onClick={() => filter((el) => el === 'Maja')}>
                         Maja filter
