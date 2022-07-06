@@ -182,19 +182,34 @@ const JobCard = React.forwardRef<
                     innerHTML={jobTitle}
                     hyphens
                 />
-                <JobInfos type="copy-b" textColor="inherit" data-sheet="info">
-                    <Info>
-                        <Icon>{modelIcon ? modelIcon() : <ClockFilled />}</Icon>
-                        <MainLabel>{timeModel}</MainLabel>
-                    </Info>
-
-                    <Info>
-                        <Icon>
-                            {locationIcon ? locationIcon() : <LocationPin />}
-                        </Icon>
-                        <MainLabel>{location}</MainLabel>
-                    </Info>
-                </JobInfos>
+                {(timeModel || location) && (
+                    <JobInfos
+                        type="copy-b"
+                        textColor="inherit"
+                        data-sheet="info"
+                    >
+                        {timeModel && (
+                            <Info>
+                                <Icon>
+                                    {modelIcon ? modelIcon() : <ClockFilled />}
+                                </Icon>
+                                <MainLabel>{timeModel}</MainLabel>
+                            </Info>
+                        )}
+                        {location && (
+                            <Info>
+                                <Icon>
+                                    {locationIcon ? (
+                                        locationIcon()
+                                    ) : (
+                                        <LocationPin />
+                                    )}
+                                </Icon>
+                                <MainLabel>{location}</MainLabel>
+                            </Info>
+                        )}
+                    </JobInfos>
+                )}
                 {link && (
                     <ViewLink
                         {...link}
