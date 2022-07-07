@@ -315,8 +315,6 @@ const LocationField: FC<{
         center: initialPosition,
         zoom: 2.5,
         onClick: (ev) => {
-            console.log(ev.originalEvent.detail);
-
             if (ev.originalEvent.detail === 1) {
                 mapSingleClickHandler(ev);
             }
