@@ -48,7 +48,12 @@ const Item = styled.li`
 
 export type JobItem = Omit<
     JobCardProps,
-    'isInverted' | 'hasBackground' | 'modelIcon' | 'locationIcon'
+    | 'isInverted'
+    | 'hasBackground'
+    | 'modelIcon'
+    | 'locationIcon'
+    | 'totalLocations'
+    | 'allLocationsLabel'
 >;
 
 const JobList: React.FC<{
@@ -58,6 +63,12 @@ const JobList: React.FC<{
     /** Array of job item settings */
     jobs?: JobItem[];
 
+    /** Total amount all locations */
+    totalJobLocations?: number;
+
+    /** Label to show if all location selected */
+    allJobLocationsLabel?: string;
+
     /** Section background */
     bgMode?: 'full' | 'inverted';
 
@@ -66,7 +77,15 @@ const JobList: React.FC<{
 
     /** Injection function for job location icon */
     locationIcon?: () => React.ReactNode;
-}> = ({ anchorId, jobs, bgMode, modelIcon, locationIcon }) => {
+}> = ({
+    anchorId,
+    jobs,
+    bgMode,
+    modelIcon,
+    locationIcon,
+    totalJobLocations,
+    allJobLocationsLabel,
+}) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -107,6 +126,8 @@ const JobList: React.FC<{
                                 hasBackground={hasBg}
                                 modelIcon={modelIcon}
                                 locationIcon={locationIcon}
+                                totalLocations={totalJobLocations}
+                                allLocationsLabel={allJobLocationsLabel}
                             />
                         </Item>
                     ))}

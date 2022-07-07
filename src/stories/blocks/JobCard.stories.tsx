@@ -44,3 +44,17 @@ export const MultipleLocations: Story = () => (
         link={{ href: '#0' }}
     />
 );
+
+export const WithAllLocationsLabel: Story = () => (
+    <JobCard
+        jobTitle="Jobtitle<br/>(m/w/d)"
+        employmentTypes={[{ name: 'Vollzeit', type: 'FULL_TIME' }]}
+        locations={[
+            { name: 'Tuttlingen', addressCountry: 'DE' },
+            { name: 'Sipplingen', addressCountry: 'DE' },
+        ]}
+        totalLocations={2}
+        allLocationsLabel="All locations"
+        link={{ href: '#0' }}
+    />
+);

@@ -152,8 +152,14 @@ export interface JobCardProps {
     /** Injection function for job time model icon */
     modelIcon?: () => React.ReactNode;
 
-    /** Label for job location */
+    /** List of job locations */
     locations?: JobLocation[];
+
+    /** Total amount all locations */
+    totalLocations?: number;
+
+    /** Label to show if all location selected */
+    allLocationsLabel?: string;
 
     /** Injection function for job location icon */
     locationIcon?: () => React.ReactNode;
@@ -175,6 +181,8 @@ const JobCard = React.forwardRef<
             jobTitle,
             employmentTypes,
             locations,
+            totalLocations,
+            allLocationsLabel,
             modelIcon,
             locationIcon,
             className,
@@ -183,7 +191,23 @@ const JobCard = React.forwardRef<
         ref
     ) => {
         const hasEmploymentType = isValidArray(employmentTypes, false);
-        const hasLocations = isValidArray(locations, false);
+        const validLocations = locations?.filter((loc) => loc.name);
+        const hasLocations = isValidArray(validLocations, false);
+
+        let locationText = '';
+
+        if (hasLocations) {
+            if (
+                totalLocations !== undefined &&
+                validLocations.length >= totalLocations
+            ) {
+                locationText = allLocationsLabel || '';
+            } else {
+                locationText = validLocations
+                    .map((loc) => loc.name)
+                    ?.join(', ');
+            }
+        }
 
         return (
             <View
@@ -228,12 +252,7 @@ const JobCard = React.forwardRef<
                                         <LocationPin />
                                     )}
                                 </Icon>
-                                <MainLabel>
-                                    {locations
-                                        ?.filter((loc) => loc.name)
-                                        .map((loc) => loc.name)
-                                        ?.join(', ')}
-                                </MainLabel>
+                                <MainLabel>{locationText}</MainLabel>
                             </Info>
                         )}
                     </JobInfos>

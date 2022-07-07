@@ -108,6 +108,8 @@ const JobArticle: React.FC<JobArticleProps> = ({
     jobTitle,
     employmentTypes,
     locations,
+    totalLocations,
+    allLocationsLabel,
     modelIcon,
     locationIcon,
     description,
@@ -119,7 +121,21 @@ const JobArticle: React.FC<JobArticleProps> = ({
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasEmploymentType = isValidArray(employmentTypes, false);
-    const hasLocations = isValidArray(locations, false);
+    const validLocations = locations?.filter((loc) => loc.name);
+    const hasLocations = isValidArray(validLocations, false);
+
+    let locationText = '';
+
+    if (hasLocations) {
+        if (
+            totalLocations !== undefined &&
+            validLocations.length >= totalLocations
+        ) {
+            locationText = allLocationsLabel || '';
+        } else {
+            locationText = validLocations.map((loc) => loc.name)?.join(', ');
+        }
+    }
 
     const jsonLd = {
         jobTitle, // title
@@ -188,12 +204,7 @@ const JobArticle: React.FC<JobArticleProps> = ({
                                             <LocationPin />
                                         )}
                                     </Icon>
-                                    <MainLabel>
-                                        {locations
-                                            ?.filter((loc) => loc.name)
-                                            ?.map((loc) => loc.name)
-                                            ?.join(', ')}
-                                    </MainLabel>
+                                    <MainLabel>{locationText}</MainLabel>
                                 </Info>
                             )}
                         </JobInfos>
