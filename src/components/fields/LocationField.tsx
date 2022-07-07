@@ -315,10 +315,38 @@ const LocationField: FC<{
         center: initialPosition,
         zoom: 2.5,
         onClick: (ev) => {
-            onMapClick(ev);
-            setMapDirty(true);
+            console.log(ev.originalEvent.detail);
+
+            if (ev.originalEvent.detail === 1) {
+                mapSingleClickHandler(ev);
+            }
+
+            if (ev.originalEvent.detail === 2) {
+                mapDoubleClickHandler();
+            }
         },
     });
+
+    const mapClickRef = React.useRef<boolean>();
+
+    let timer: any;
+
+    const mapSingleClickHandler = (ev: LeafletMouseEvent) => {
+        mapClickRef.current = false;
+        if (!mapClickRef.current) {
+            timer = setTimeout(() => {
+                onMapClick(ev);
+                setMapDirty(true);
+            }, 500);
+        }
+    };
+
+    const mapDoubleClickHandler = () => {
+        mapClickRef.current = true;
+        if (mapClickRef.current) {
+            clearTimeout(timer);
+        }
+    };
 
     const getLocation = useCallback(() => {
         if (!navigator.geolocation) {
