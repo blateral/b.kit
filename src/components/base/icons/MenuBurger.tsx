@@ -9,7 +9,7 @@ const MenuBurger: React.FC<{
     iconColor?: string;
     ariaHidden?: boolean;
     className?: string;
-}> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
+}> = ({ iconColor = 'currentColor', ariaHidden = true, className }) => (
     <SVG
         width="30"
         height="30"

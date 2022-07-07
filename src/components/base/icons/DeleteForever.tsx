@@ -9,7 +9,7 @@ const DeleteForever: React.FC<{
     iconColor?: string;
     ariaHidden?: boolean;
     className?: string;
-}> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
+}> = ({ iconColor = 'currentColor', ariaHidden = true, className }) => (
     <SVG
         viewBox="0 0 14 18"
         width="14"

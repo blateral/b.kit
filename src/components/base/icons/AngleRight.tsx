@@ -9,7 +9,7 @@ const AngleRight: React.FC<{
     iconColor?: string;
     ariaHidden?: boolean;
     className?: string;
-}> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
+}> = ({ iconColor = 'currentColor', ariaHidden = true, className }) => (
     <SVG
         width="24"
         height="24"

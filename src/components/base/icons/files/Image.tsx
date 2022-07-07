@@ -5,10 +5,11 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const Image: React.FC<{ className?: string; iconColor?: string }> = ({
-    className,
-    iconColor = 'currentColor',
-}) => (
+const Image: React.FC<{
+    className?: string;
+    iconColor?: string;
+    ariaHidden?: boolean;
+}> = ({ className, iconColor = 'currentColor', ariaHidden = true }) => (
     <SVG
         viewBox="0 0 21 24"
         className={className}
@@ -16,6 +17,7 @@ const Image: React.FC<{ className?: string; iconColor?: string }> = ({
         height="24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden={ariaHidden}
     >
         <g clipPath="url(#a)">
             <path

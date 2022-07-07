@@ -5,10 +5,11 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const BoxArrowUpRight: React.FC<{ iconColor?: string; className?: string }> = ({
-    iconColor = 'currentColor',
-    className,
-}) => (
+const BoxArrowUpRight: React.FC<{
+    iconColor?: string;
+    className?: string;
+    ariaHidden?: boolean;
+}> = ({ iconColor = 'currentColor', className, ariaHidden = true }) => (
     <SVG
         viewBox="0 0 14 16"
         width="21"
@@ -16,6 +17,7 @@ const BoxArrowUpRight: React.FC<{ iconColor?: string; className?: string }> = ({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={className}
+        aria-hidden={ariaHidden}
     >
         <path
             fillRule="evenodd"

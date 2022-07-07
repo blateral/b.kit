@@ -9,7 +9,7 @@ const Cross: React.FC<{
     iconColor?: string;
     ariaHidden?: boolean;
     className?: string;
-}> = ({ iconColor = 'currentColor', ariaHidden, className }) => (
+}> = ({ iconColor = 'currentColor', ariaHidden = true, className }) => (
     <SVG
         width="40"
         height="40"
