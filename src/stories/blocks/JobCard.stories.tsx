@@ -15,8 +15,32 @@ export default {
 export const Default: Story = () => (
     <JobCard
         jobTitle="Jobtitle<br/>(m/w/d)"
-        timeModel="Vollzeit"
-        location="Immenstaad / Ravensburg"
+        employmentTypes={[{ name: 'Vollzeit', type: 'FULL_TIME' }]}
+        locations={[{ name: 'Tuttlingen', addressCountry: 'DE' }]}
+        link={{ href: '#0' }}
+    />
+);
+
+export const MultipleEmploymentTypes: Story = () => (
+    <JobCard
+        jobTitle="Jobtitle<br/>(m/w/d)"
+        employmentTypes={[
+            { name: 'Vollzeit', type: 'FULL_TIME' },
+            { name: 'Teilzeit', type: 'PART_TIME' },
+        ]}
+        locations={[{ name: 'Tuttlingen', addressCountry: 'DE' }]}
+        link={{ href: '#0' }}
+    />
+);
+
+export const MultipleLocations: Story = () => (
+    <JobCard
+        jobTitle="Jobtitle<br/>(m/w/d)"
+        employmentTypes={[{ name: 'Vollzeit', type: 'FULL_TIME' }]}
+        locations={[
+            { name: 'Tuttlingen', addressCountry: 'DE' },
+            { name: 'Sipplingen', addressCountry: 'DE' },
+        ]}
         link={{ href: '#0' }}
     />
 );

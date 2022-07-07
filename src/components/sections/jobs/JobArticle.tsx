@@ -8,8 +8,9 @@ import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import React from 'react';
 import styled from 'styled-components';
+import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import { generateJob } from 'utils/structuredData';
+import { generateJob, StructuredEmploymentType } from 'utils/structuredData';
 import { spacings } from 'utils/styles';
 
 const ArticleHead = styled.div`
@@ -105,8 +106,8 @@ const JobArticle: React.FC<JobArticleProps> = ({
     anchorId,
     bgMode,
     jobTitle,
-    timeModel,
-    location,
+    employmentTypes,
+    locations,
     modelIcon,
     locationIcon,
     description,
@@ -117,14 +118,19 @@ const JobArticle: React.FC<JobArticleProps> = ({
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
+    const hasEmploymentType = isValidArray(employmentTypes, false);
+    const hasLocations = isValidArray(locations, false);
 
     const jsonLd = {
         jobTitle, // title
-        location, // jobLocation
+        locations, // jobLocation
         jobDesc: description, // description
         organization: organization, // hiringOrganization
         directApply: primaryAction || secondaryAction ? true : false, // directApply
-        timeModel, // employmentType
+        employmentTypes:
+            (employmentTypes
+                ?.filter((el) => el.type)
+                .map((el) => el.type) as StructuredEmploymentType[]) || [],
         datePosted, // datePosted
     };
 
@@ -149,13 +155,13 @@ const JobArticle: React.FC<JobArticleProps> = ({
                         innerHTML={jobTitle}
                         isInverted={isInverted}
                     />
-                    {(timeModel || location) && (
+                    {(hasEmploymentType || hasLocations) && (
                         <JobInfos
                             type="copy-b"
                             data-sheet="info"
                             isInverted={isInverted}
                         >
-                            {timeModel && (
+                            {hasEmploymentType && (
                                 <Info>
                                     <Icon>
                                         {modelIcon ? (
@@ -164,11 +170,16 @@ const JobArticle: React.FC<JobArticleProps> = ({
                                             <ClockFilled />
                                         )}
                                     </Icon>
-                                    <MainLabel>{timeModel}</MainLabel>
+                                    <MainLabel>
+                                        {employmentTypes
+                                            ?.filter((type) => type.name)
+                                            .map((type) => type.name)
+                                            ?.join(', ')}
+                                    </MainLabel>
                                 </Info>
                             )}
 
-                            {location && (
+                            {hasLocations && (
                                 <Info>
                                     <Icon>
                                         {locationIcon ? (
@@ -177,7 +188,12 @@ const JobArticle: React.FC<JobArticleProps> = ({
                                             <LocationPin />
                                         )}
                                     </Icon>
-                                    <MainLabel>{location}</MainLabel>
+                                    <MainLabel>
+                                        {locations
+                                            ?.filter((loc) => loc.name)
+                                            ?.map((loc) => loc.name)
+                                            ?.join(', ')}
+                                    </MainLabel>
                                 </Info>
                             )}
                         </JobInfos>

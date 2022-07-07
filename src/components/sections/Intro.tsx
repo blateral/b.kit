@@ -11,7 +11,7 @@ const Intro: React.FC<{
     anchorId?: string;
 
     /** Main title text */
-    title: string;
+    title?: string;
 
     /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;

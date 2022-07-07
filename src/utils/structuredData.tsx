@@ -1,8 +1,10 @@
 import React from 'react';
 import { JsonLd } from 'react-schemaorg';
 import { MapLocation } from 'components/sections/Map';
-import { FAQPage, JobPosting, LocalBusiness } from 'schema-dts';
+import { FAQPage, JobPosting, LocalBusiness, Place } from 'schema-dts';
 import { OrganizationData } from 'components/sections/jobs/JobArticle';
+import { distinct } from './filters';
+import { JobLocation } from 'components/blocks/JobCard';
 
 export const generateLocalBusiness = (locations: MapLocation[]) => {
     return locations?.map(
@@ -72,21 +74,31 @@ export const generateFAQ = (
     );
 };
 
+export type StructuredEmploymentType =
+    | 'FULL_TIME'
+    | 'PART_TIME'
+    | 'CONTRACTOR'
+    | 'TEMPORARY'
+    | 'INTERN'
+    | 'VOLUNTEER'
+    | 'PER_DIEM'
+    | 'OTHER';
+
 export const generateJob = ({
     jobTitle,
     jobDesc,
     organization,
     directApply,
-    location,
-    timeModel,
+    locations,
+    employmentTypes,
     datePosted,
 }: {
     jobTitle: string;
     jobDesc?: string;
     organization?: OrganizationData;
     directApply?: boolean;
-    location?: string;
-    timeModel?: string;
+    locations?: JobLocation[];
+    employmentTypes?: StructuredEmploymentType[];
     datePosted?: Date;
 }) => {
     return (
@@ -97,7 +109,7 @@ export const generateJob = ({
                 title: jobTitle,
                 description: jobDesc,
                 datePosted: datePosted?.toISOString(),
-                employmentType: timeModel,
+                employmentType: employmentTypes?.filter(distinct),
                 hiringOrganization: {
                     '@type': 'Organization',
                     name: organization?.name,
@@ -120,13 +132,17 @@ export const generateJob = ({
                           }
                         : undefined,
                 },
-                jobLocation: {
+                jobLocation: locations?.map<Place>((loc) => ({
                     '@type': 'Place',
                     address: {
                         '@type': 'PostalAddress',
-                        addressLocality: location,
+                        addressLocality: loc.addressLocality || loc.name,
+                        streetAddress: loc.streetAddress,
+                        addressRegion: loc.addressRegion,
+                        postalCode: loc.postalCode,
+                        addressCountry: loc.addressCountry,
                     },
-                },
+                })),
                 directApply: directApply,
             }}
         />

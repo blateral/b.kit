@@ -5,6 +5,8 @@ import Heading from 'components/typography/Heading';
 import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { isValidArray } from 'utils/arrays';
+import { StructuredEmploymentType } from 'utils/structuredData';
 import { getColors as color, getGlobals, mq, spacings } from 'utils/styles';
 
 const View = styled.div<{
@@ -121,6 +123,16 @@ const ViewLink = styled(Link)`
     }
 `;
 
+export interface JobLocation {
+    name?: string;
+    description?: string;
+    streetAddress?: string;
+    addressLocality?: string;
+    addressRegion?: string;
+    postalCode?: string;
+    addressCountry?: string;
+}
+
 export interface JobCardProps {
     /** Invert text and background color */
     isInverted?: boolean;
@@ -131,14 +143,17 @@ export interface JobCardProps {
     /** Job card title (richtext) */
     jobTitle: string;
 
-    /** Label job time model (e.g. fulltime) */
-    timeModel?: string;
+    /** The employment type (important for structured data) */
+    employmentTypes?: Array<{
+        name: string;
+        type: StructuredEmploymentType;
+    }>;
 
     /** Injection function for job time model icon */
     modelIcon?: () => React.ReactNode;
 
     /** Label for job location */
-    location?: string;
+    locations?: JobLocation[];
 
     /** Injection function for job location icon */
     locationIcon?: () => React.ReactNode;
@@ -158,8 +173,8 @@ const JobCard = React.forwardRef<
             isInverted,
             hasBackground,
             jobTitle,
-            timeModel,
-            location,
+            employmentTypes,
+            locations,
             modelIcon,
             locationIcon,
             className,
@@ -167,6 +182,9 @@ const JobCard = React.forwardRef<
         },
         ref
     ) => {
+        const hasEmploymentType = isValidArray(employmentTypes, false);
+        const hasLocations = isValidArray(locations, false);
+
         return (
             <View
                 ref={ref}
@@ -182,21 +200,26 @@ const JobCard = React.forwardRef<
                     innerHTML={jobTitle}
                     hyphens
                 />
-                {(timeModel || location) && (
+                {(hasEmploymentType || hasLocations) && (
                     <JobInfos
                         type="copy-b"
                         textColor="inherit"
                         data-sheet="info"
                     >
-                        {timeModel && (
+                        {hasEmploymentType && (
                             <Info>
                                 <Icon>
                                     {modelIcon ? modelIcon() : <ClockFilled />}
                                 </Icon>
-                                <MainLabel>{timeModel}</MainLabel>
+                                <MainLabel>
+                                    {employmentTypes
+                                        ?.filter((type) => type.name)
+                                        .map((type) => type.name)
+                                        ?.join(', ')}
+                                </MainLabel>
                             </Info>
                         )}
-                        {location && (
+                        {hasLocations && (
                             <Info>
                                 <Icon>
                                     {locationIcon ? (
@@ -205,7 +228,12 @@ const JobCard = React.forwardRef<
                                         <LocationPin />
                                     )}
                                 </Icon>
-                                <MainLabel>{location}</MainLabel>
+                                <MainLabel>
+                                    {locations
+                                        ?.filter((loc) => loc.name)
+                                        .map((loc) => loc.name)
+                                        ?.join(', ')}
+                                </MainLabel>
                             </Info>
                         )}
                     </JobInfos>
