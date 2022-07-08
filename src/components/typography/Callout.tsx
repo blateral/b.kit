@@ -65,6 +65,8 @@ const View = styled(BaseStyles)`
         font(theme).callout[size].letterSpacing};
     text-transform: ${({ theme, size }) =>
         font(theme).callout[size].textTransform};
+    text-decoration: ${({ theme, size }) =>
+        font(theme).callout[size].textDecoration};
 `;
 
 export type CalloutTag =

@@ -50,7 +50,6 @@ const IndexLink = styled(Link)<{ isInverted?: boolean }>`
     display: inline-flex;
     align-items: center;
     max-width: 100%;
-    text-decoration: underline;
     padding: ${spacings.nudge}px 0;
 
     ${copyStyle('copy', 'big')}

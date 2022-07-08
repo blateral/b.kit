@@ -33,6 +33,7 @@ export const copyStyle = (
     line-height: ${({ theme }) => font(theme)[type][size].lineHeight};
     letter-spacing: ${({ theme }) => font(theme)[type][size].letterSpacing};
     text-transform: ${({ theme }) => font(theme)[type][size].textTransform};
+    text-decoration: ${({ theme }) => font(theme)[type][size].textDecoration};
 `;
 
 const base = css<{

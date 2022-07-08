@@ -67,6 +67,8 @@ export const headingStyle = (type: HeadingType) => css`
         (font(theme)[type] as FontProps).letterSpacing};
     text-transform: ${({ theme }) =>
         (font(theme)[type] as FontProps).textTransform};
+    text-decoration: ${({ theme }) =>
+        (font(theme)[type] as FontProps).textDecoration};
 `;
 
 const View = styled.h1<{

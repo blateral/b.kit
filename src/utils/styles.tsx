@@ -133,6 +133,7 @@ export interface FontProps {
     letterSpacing?: string;
     size: [number, number?];
     textTransform?: string;
+    textDecoration?: string;
     color?: string;
     colorInverted?: string;
     colorGradient?: string;
