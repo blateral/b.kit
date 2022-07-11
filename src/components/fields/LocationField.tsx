@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+    FC,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
 import styled from 'styled-components';
 
 import { copyStyle } from 'components/typography/Copy';
@@ -11,7 +18,7 @@ import {
 } from 'utils/styles';
 import FieldWrapper from './FormField';
 import { getFormFieldTextSize } from 'utils/formFieldText';
-import useLeafletMap from 'utils/useLeafletMap';
+import useLeafletMap, { LeafletMapMarker } from 'utils/useLeafletMap';
 import LocationPin from 'components/base/icons/LocationPin';
 import { getSVGDataImg } from 'utils/dataURI';
 import { LocationIcon } from 'components/sections/Map';
@@ -210,7 +217,7 @@ export interface LocationProps {
 
 export interface LocationData {
     description: string;
-    position: [number, number];
+    position?: [number, number];
 }
 
 const LocationField: FC<{
@@ -224,7 +231,7 @@ const LocationField: FC<{
     placeholder?: string;
     value?: LocationData;
     /** Position of map if no value with position data is defined */
-    initialPosition?: [number, number];
+    initialMapCenter?: [number, number];
     marker?: LocationIcon;
     zoom?: number;
     onChange?: (value: LocationData) => void;
@@ -244,7 +251,7 @@ const LocationField: FC<{
     value,
     name,
     marker,
-    initialPosition,
+    initialMapCenter,
     zoom = 10,
     onChange,
     onBlur,
@@ -264,9 +271,19 @@ const LocationField: FC<{
     const [asGeolocation, setAsGeolocation] = useState<boolean>(false);
     const [isMapDirty, setMapDirty] = useState<boolean>(false);
     const [getValue, setValue] = useState<LocationData>(
-        value || { description: '', position: initialPosition || [0, 0] }
+        value || { description: '' }
     );
-    const lastPosRef = useRef<[number, number] | null>(null);
+    const prevValue = useRef<LocationData | null>(null);
+
+    const position = useMemo((): [number, number] | undefined => {
+        if (
+            getValue?.position?.[0] === undefined ||
+            getValue?.position?.[1] === undefined
+        ) {
+            return undefined;
+        }
+        return [getValue.position[0], getValue.position[1]];
+    }, [getValue?.position]);
 
     const {
         value: descValue,
@@ -281,21 +298,26 @@ const LocationField: FC<{
 
     const [errorMsg, setErrorMsg] = useState<string>(errorMessage || '');
 
-    const defaultMarker: LocationIcon = {
-        size: [28, 28],
-        anchor: [14, 28],
-        sizeActive: [70, 70],
-        anchorActive: [35, 70],
-        url: getSVGDataImg(<LocationPin />),
-    };
+    const markers = useMemo(() => {
+        /** Markers */
+        const defaultMarker: LocationIcon = {
+            size: [28, 28],
+            anchor: [14, 28],
+            sizeActive: [70, 70],
+            anchorActive: [35, 70],
+            url: getSVGDataImg(<LocationPin />),
+        };
+        const markerList: LeafletMapMarker[] = [];
 
-    const onMapClick = (e: LeafletMouseEvent) => {
-        const newPos: [number, number] = [e.latlng.lat, e.latlng.lng];
-        setValue((prev) => ({
-            ...prev,
-            position: newPos,
-        }));
-    };
+        if (position) {
+            markerList.push({
+                id: 'location',
+                position: position,
+                icon: marker || defaultMarker,
+            });
+        }
+        return markerList;
+    }, [position, marker]);
 
     const {
         setContainer: setMapContainer,
@@ -305,44 +327,36 @@ const LocationField: FC<{
         getCurrentZoom,
     } = useLeafletMap({
         activeMarkerId: 'location',
-        markers: [
-            {
-                id: 'location',
-                position: [getValue?.position?.[0], getValue?.position?.[1]],
-                icon: marker || defaultMarker,
-            },
-        ],
-        center: initialPosition,
+        markers: markers,
+        center: initialMapCenter,
         zoom: 2.5,
         onClick: (ev) => {
-            if (ev.originalEvent.detail === 1) {
-                mapSingleClickHandler(ev);
-            }
-
-            if (ev.originalEvent.detail === 2) {
-                mapDoubleClickHandler();
-            }
+            mapClickHandler(ev);
         },
     });
 
-    const mapClickRef = React.useRef<boolean>();
-
-    let timer: any;
-
-    const mapSingleClickHandler = (ev: LeafletMouseEvent) => {
-        mapClickRef.current = false;
-        if (!mapClickRef.current) {
-            timer = setTimeout(() => {
-                onMapClick(ev);
-                setMapDirty(true);
-            }, 500);
-        }
+    const onMapClick = (newPos: [number, number]) => {
+        setValue((prev) => ({
+            ...prev,
+            position: newPos,
+        }));
     };
 
-    const mapDoubleClickHandler = () => {
-        mapClickRef.current = true;
-        if (mapClickRef.current) {
-            clearTimeout(timer);
+    // double click fix
+    const doubleClickTimerRef = useRef<number | null>(null);
+
+    const mapClickHandler = (ev: LeafletMouseEvent) => {
+        const newPos: [number, number] = [ev.latlng.lat, ev.latlng.lng];
+
+        if (doubleClickTimerRef.current === null) {
+            doubleClickTimerRef.current = window.setTimeout(() => {
+                onMapClick(newPos);
+                setMapDirty(true);
+                doubleClickTimerRef.current = null;
+            }, 300);
+        } else {
+            window.clearTimeout(doubleClickTimerRef.current);
+            doubleClickTimerRef.current = null;
         }
     };
 
@@ -377,12 +391,6 @@ const LocationField: FC<{
         setGeolocationSupport(!!navigator.geolocation);
     }, []);
 
-    // useEffect(() => {
-    //     if (value) {
-    //         setValue(value);
-    //     }
-    // }, [value]);
-
     useEffect(() => {
         setErrorMsg(errorMessage || '');
     }, [errorMessage]);
@@ -391,14 +399,23 @@ const LocationField: FC<{
         if (asGeolocation) {
             recalculateMapSize();
 
-            if (!getValue?.position?.[0] || !getValue?.position?.[1]) {
+            if (!position) {
                 getLocation();
             }
         }
-    }, [asGeolocation, getLocation, getValue, recalculateMapSize]);
+    }, [asGeolocation, getLocation, getValue, position, recalculateMapSize]);
 
     useUpdateEffect(() => {
-        onChange?.(getValue);
+        const prev = prevValue.current;
+        if (
+            !prev ||
+            prev.description !== getValue.description ||
+            prev.position?.[0] !== getValue.position?.[0] ||
+            prev.position?.[1] !== getValue.position?.[1]
+        ) {
+            prevValue.current = getValue;
+            onChange?.(getValue);
+        }
     }, [getValue]);
 
     useEffect(() => {
@@ -409,17 +426,7 @@ const LocationField: FC<{
             flyToZoom = currentZoom;
         }
 
-        if (lastPosRef.current === null) {
-            lastPosRef.current = getValue.position;
-            panToPosition(getValue.position);
-            return;
-        }
-
-        if (
-            lastPosRef.current[0] !== getValue.position[0] ||
-            lastPosRef.current[1] !== getValue.position[1]
-        ) {
-            lastPosRef.current = getValue.position;
+        if (position) {
             flyToPosition(getValue.position, flyToZoom);
         }
     }, [
@@ -428,6 +435,7 @@ const LocationField: FC<{
         getValue.position,
         isMapDirty,
         panToPosition,
+        position,
         zoom,
     ]);
 

@@ -68,6 +68,17 @@ export const WithInfoMessage: Story = () => (
     />
 );
 
+export const WithInitalPosition: Story = () => (
+    <LocationField
+        name="field_a"
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a LocationField"
+        initialMapCenter={[48, 7]}
+        onChange={console.log}
+    />
+);
+
 export const WithInitalData: Story = () => (
     <LocationField
         name="field_a"
