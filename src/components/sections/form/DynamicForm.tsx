@@ -170,7 +170,8 @@ export interface Datepicker extends FormField {
 
 export interface Location extends FormField {
     type: 'Location';
-    initialPosition?: [number, number];
+    zoom?: number;
+    initialMapCenter?: [number, number];
     placeholder?: string;
     info?: string;
     errorMsg?: string;
