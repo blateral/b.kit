@@ -27,6 +27,7 @@ import { LeafletMouseEvent } from 'leaflet';
 import useLazyInput from 'utils/useLazyInput';
 import { MyLocation } from 'components/base/icons/Icons';
 import useUpdateEffect from 'utils/useUpdateEffect';
+import useGeolocation from 'utils/useGeolocation';
 
 const ViewTabs = styled.div<{ isInverted?: boolean }>`
     display: flex;
@@ -265,9 +266,6 @@ const LocationField: FC<{
     }
 
     const { colors } = useLibTheme();
-
-    const [isGeolocationSupported, setGeolocationSupport] =
-        useState<boolean>(false);
     const [asGeolocation, setAsGeolocation] = useState<boolean>(false);
     const [isMapDirty, setMapDirty] = useState<boolean>(false);
     const [getValue, setValue] = useState<LocationData>(
@@ -360,36 +358,46 @@ const LocationField: FC<{
         }
     };
 
-    const getLocation = useCallback(() => {
-        if (!navigator.geolocation) {
-            setErrorMsg(geolocationErrorMsg);
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const newPos: [number, number] = [
-                    position.coords.latitude,
-                    position.coords.longitude,
-                ];
-
-                setValue((prev) => ({
-                    ...prev,
-                    position: newPos,
-                }));
-
-                setMapDirty(false);
-            },
-            null,
-            { timeout: 10000 }
-        );
-
-        return getValue;
-    }, [geolocationErrorMsg, getValue]);
+    const {
+        isSupported: isGeolocationSupported,
+        location,
+        error,
+    } = useGeolocation();
 
     useEffect(() => {
-        setGeolocationSupport(!!navigator.geolocation);
-    }, []);
+        if (!isMapDirty && location && !error) {
+            const newPos: [number, number] = [
+                location.coords.latitude,
+                location.coords.longitude,
+            ];
+
+            setValue((prev) => ({
+                ...prev,
+                position: newPos,
+            }));
+        }
+    }, [error, isMapDirty, location]);
+
+    const getLocation = useCallback(() => {
+        if (error) {
+            console.log(error);
+            setErrorMsg(geolocationErrorMsg);
+        }
+
+        if (location?.coords) {
+            const newPos: [number, number] = [
+                location.coords.latitude,
+                location.coords.longitude,
+            ];
+
+            setValue((prev) => ({
+                ...prev,
+                position: newPos,
+            }));
+
+            setMapDirty(false);
+        }
+    }, [error, geolocationErrorMsg, location?.coords]);
 
     useEffect(() => {
         setErrorMsg(errorMessage || '');
