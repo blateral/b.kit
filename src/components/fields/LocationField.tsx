@@ -379,7 +379,7 @@ const LocationField: FC<{
     }, [error, isMapDirty, location]);
 
     const getLocation = useCallback(() => {
-        if (error) {
+        if (error && asGeolocation) {
             console.log(error);
             setErrorMsg(geolocationErrorMsg);
         }
@@ -397,7 +397,7 @@ const LocationField: FC<{
 
             setMapDirty(false);
         }
-    }, [error, geolocationErrorMsg, location?.coords]);
+    }, [asGeolocation, error, geolocationErrorMsg, location?.coords]);
 
     useEffect(() => {
         setErrorMsg(errorMessage || '');
