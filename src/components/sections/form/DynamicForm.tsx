@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
@@ -548,12 +548,13 @@ const DynamicForm: FC<{
     const { theme } = useLibTheme();
 
     // rewrite setFieldValue to prevent loadash feature of Formik: https://github.com/jaredpalmer/formik/issues/2262
-    const setField = useCallback(
-        async (key: string, value: any, shouldValidate?: boolean) => {
-            return setValues({ ...values, [key]: value }, shouldValidate);
-        },
-        [setValues, values]
-    );
+    const setField = async (
+        key: string,
+        value: any,
+        shouldValidate?: boolean
+    ) => {
+        return setValues({ ...values, [key]: value }, shouldValidate);
+    };
 
     const fieldKeys = fields && Object.keys(fields);
 

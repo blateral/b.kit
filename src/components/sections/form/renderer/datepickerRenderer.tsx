@@ -18,8 +18,8 @@ const renderDatepickerField = ({
     const dates = value as [Date | null, Date | null];
 
     const handleSubmit = async (start?: Date | null, end?: Date | null) => {
-        await setField(key, [start || null, end || null]);
         await setTouched(key, true);
+        await setField(key, [start || null, end || null]);
         validateField(key);
     };
 

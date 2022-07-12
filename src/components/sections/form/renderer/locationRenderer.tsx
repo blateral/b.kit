@@ -13,15 +13,19 @@ const renderLocationField = ({
     isInverted,
     setField,
     setTouched,
-    validateField,
 }: FieldGenerationProps<Location>) => {
     const locationData = value as LocationData;
+    const mappedData = {
+        ...locationData,
+        position:
+            !locationData?.position?.[0] && !locationData?.position?.[1]
+                ? undefined
+                : locationData.position,
+    };
 
-    const handleChange = async (location: LocationData) => {
-        await setField(key, location);
-        await setTouched(key, true);
-
-        validateField(key);
+    const handleChange = (location: LocationData) => {
+        setTouched(key, true, false);
+        setField(key, { ...location }, true);
     };
 
     return (
@@ -35,7 +39,7 @@ const renderLocationField = ({
             isInverted={isInverted}
             infoMessage={field.info}
             errorMessage={error && isTouched ? error : undefined}
-            value={locationData}
+            value={mappedData}
             onChange={handleChange}
             customLocationIcon={field.customLocationIcon}
             descriptionTabLabel={field.descriptionTabLabel}
