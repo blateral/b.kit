@@ -24,6 +24,7 @@ const renderLocationField = ({
     };
 
     const handleChange = (location: LocationData) => {
+        // https://github.com/jaredpalmer/formik/issues/2083
         setTouched(key, true, false);
         setField(key, { ...location }, true);
     };
