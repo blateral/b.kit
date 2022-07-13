@@ -26,15 +26,18 @@ export const concat = (
     return parts.join(delimeter);
 };
 
-export const printAnchorTag = (
-    href: string,
-    label?: string,
-    type?: 'mail' | 'phone'
-) => {
-    if (!href) return '';
+export const printAnchorTag = (props: {
+    href: string;
+    label?: string;
+    isExternal?: boolean;
+    type?: 'mail' | 'phone';
+}) => {
+    if (!props?.href) return '';
     let pre = '';
-    if (type === 'mail') pre = 'mailto:';
-    if (type === 'phone') pre = 'tel:';
+    if (props.type === 'mail') pre = 'mailto:';
+    if (props.type === 'phone') pre = 'tel:';
 
-    return `<a href="${pre}${href}">${label || href}</a>`;
+    return `<a ${
+        props.isExternal ? 'target="_blank" rel="noopener noreferrer" ' : ''
+    }href="${pre}${props.href}">${props.label || props.href}</a>`;
 };
