@@ -25,3 +25,16 @@ export const concat = (
 
     return parts.join(delimeter);
 };
+
+export const printAnchorTag = (
+    href: string,
+    label?: string,
+    type?: 'mail' | 'phone'
+) => {
+    if (!href) return '';
+    let pre = '';
+    if (type === 'mail') pre = 'mailto:';
+    if (type === 'phone') pre = 'tel:';
+
+    return `<a href="${pre}${href}">${label || href}</a>`;
+};
