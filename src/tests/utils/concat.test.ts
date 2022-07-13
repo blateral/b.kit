@@ -14,6 +14,12 @@ test('With more entries', () => {
     );
 });
 
+test('With number entries', () => {
+    expect(concat(['Hello', 'my', 'name', 'is', 'Uwe', 50], ' - ')).toBe(
+        'Hello - my - name - is - Uwe - 50'
+    );
+});
+
 test('With undefined values', () => {
     expect(concat(['Hello', 'my', '', undefined, 'Uwe'], ' - ')).toBe(
         'Hello - my - Uwe'

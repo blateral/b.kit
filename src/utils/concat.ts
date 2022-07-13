@@ -1,7 +1,7 @@
 import { isValidArray } from './arrays';
 
 export const concat = (
-    values: Array<string | undefined>,
+    values: Array<string | number | undefined>,
     delimeter = ', '
 ): string => {
     const parts: string[] = [];
@@ -11,8 +11,15 @@ export const concat = (
     }
 
     for (const value of values) {
-        if (value && typeof value === 'string') {
+        if (value === undefined || value === null) continue;
+        if (typeof value === 'string' && value !== '') {
             parts.push(value);
+            continue;
+        }
+
+        if (typeof value === 'number') {
+            parts.push(value.toString());
+            continue;
         }
     }
 
