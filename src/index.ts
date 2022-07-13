@@ -53,7 +53,7 @@ export { clampValue } from 'utils/clamp';
 export { importFonts } from 'utils/fontLoading';
 export { getCurrentNavItem, getCurrentNavPath } from 'utils/navigation';
 export { isEmptyArray, isValidArray } from 'utils/arrays';
-export { concat } from 'utils/concat';
+export { concat, printAnchorTag } from 'utils/concat';
 export { getLinkIcon } from 'utils/getLinkIcon';
 export { default as useLeafletMap } from 'utils/useLeafletMap';
 
