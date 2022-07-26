@@ -94,7 +94,7 @@ export type POILocation = {
     street: string;
     postalCode: string;
     city: string;
-    coordinates: { lat?: number; long?: number };
+    coordinates: { lat: number; long: number };
     mail: string;
     phone: string;
     web: string;
