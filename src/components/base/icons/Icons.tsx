@@ -61,3 +61,5 @@ export { default as Star } from 'components/base/icons/Star';
 export { default as Plus } from 'components/base/icons/Plus';
 export { default as Minus } from 'components/base/icons/Minus';
 export { default as DeleteForever } from 'components/base/icons/DeleteForever';
+export { default as Person } from 'components/base/icons/Person';
+export { default as Category } from 'components/base/icons/Category';

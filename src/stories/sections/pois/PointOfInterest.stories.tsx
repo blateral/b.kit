@@ -1,9 +1,9 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import PointOfInterest from 'components/sections/PointOfInterest';
+import PointOfInterest from 'components/sections/pois/PointOfInterest';
 
 export default {
-    title: 'Sections / PointOfInterest',
+    title: 'Sections / POIs / PointOfInterest',
     component: PointOfInterest,
 } as Meta;
 

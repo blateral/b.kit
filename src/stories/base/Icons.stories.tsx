@@ -65,6 +65,8 @@ import Minus from 'components/base/icons/Minus';
 import Plus from 'components/base/icons/Plus';
 import DeleteForever from 'components/base/icons/DeleteForever';
 import BoxArrowUpRight from 'components/base/icons/BoxArrowUpRight';
+import Person from 'components/base/icons/Person';
+import Category from 'components/base/icons/Category';
 
 export default {
     title: 'Base/Icons',
@@ -120,6 +122,8 @@ export default {
         Star,
         DeleteForever,
         BoxArrowUpRight,
+        Person,
+        Category,
     },
     decorators: [
         (Story) => (
@@ -269,3 +273,9 @@ IconDateRange.storyName = 'Date Range';
 
 export const IconBoxArrowUpRight: Story = () => <BoxArrowUpRight />;
 IconBoxArrowUpRight.storyName = 'Box Arrow Up Right';
+
+export const IconPerson: Story = () => <Person />;
+IconPerson.storyName = 'Person';
+
+export const IconCategory: Story = () => <Category />;
+IconCategory.storyName = 'Category';

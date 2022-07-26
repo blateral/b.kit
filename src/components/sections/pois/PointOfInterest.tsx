@@ -9,9 +9,9 @@ import Copy from 'components/typography/Copy';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { getSVGDataImg } from 'utils/dataURI';
-import { mq, POIBasics, POIContact, POILocation, spacings } from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 import useLeafletMap, { LeafletMapMarker } from 'utils/useLeafletMap';
-import { LocationIcon } from './Map';
+import { LocationIcon } from '../Map';
 
 const EventTitle = styled(Copy)`
     overflow: hidden;
@@ -113,6 +113,35 @@ const DetailBlock: React.FC<{
             })}
         </DetailBlockView>
     ) : null;
+};
+
+/***** POI Types *****/
+export type POIBasics = {
+    name: string;
+    description?: string;
+    shortDescription?: string;
+    typeAs: 'list' | 'map';
+};
+
+export type POILocation = {
+    address: string;
+    street: string;
+    postalCode: string;
+    city: string;
+    coordinates: { lat: number; long: number };
+    mail: string;
+    phone: string;
+    web: string;
+};
+
+export type POIContact = {
+    name: string;
+    position: string;
+    street: string;
+    postalCode: string;
+    city: string;
+    mail: string;
+    phone: string;
 };
 
 const PointOfInterest: React.FC<
