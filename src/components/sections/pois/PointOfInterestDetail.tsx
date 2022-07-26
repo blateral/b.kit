@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Copy from 'components/typography/Copy';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
-import { mq, spacings } from 'utils/styles';
+import { mq, spacings, getColors as color } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
+import Check from 'components/base/icons/Check';
 
 const StyledImage = styled(Image)`
     &:not(:last-child) {
@@ -16,9 +17,9 @@ const StyledImage = styled(Image)`
     }
 `;
 
-const TagContainer = styled.div`
+const FeatureContainer = styled.div`
     margin-top: -${spacings.nudge}px;
-    margin-left: -${spacings.nudge}px;
+    margin-left: -${spacings.nudge * 2}px;
 
     display: flex;
     flex-direction: row;
@@ -29,9 +30,21 @@ const TagContainer = styled.div`
     }
 `;
 
-const TagWrapper = styled.div`
+const FeatureWrapper = styled.div`
     padding-top: ${spacings.nudge}px;
-    padding-left: ${spacings.nudge}px;
+    padding-left: ${spacings.nudge * 2}px;
+`;
+
+const Feature = styled.span<{ isInverted?: boolean }>`
+    display: inline-flex;
+    align-items: center;
+    ${copyStyle('copy', 'medium')}
+    color: ${({ theme, isInverted }) =>
+        isInverted ? color(theme).text.copyInverted : color(theme).text.copy};
+
+    & > * + * {
+        margin-left: ${spacings.nudge * 0.5}px;
+    }
 `;
 
 const PoiTitle = styled(Heading)`
@@ -263,9 +276,9 @@ const PointOfInterestDetail: React.FC<{
                             </PoiTitle>
                         )}
                         {features && (
-                            <TagContainer>
+                            <FeatureContainer>
                                 {features.map((feature, i) => (
-                                    <TagWrapper key={'tag_' + i}>
+                                    <FeatureWrapper key={'tag_' + i}>
                                         {customFeature ? (
                                             customFeature({
                                                 key: `headtag-${i}`,
@@ -273,11 +286,14 @@ const PointOfInterestDetail: React.FC<{
                                                 isInverted: isInverted,
                                             })
                                         ) : (
-                                            <span>{feature}</span>
+                                            <Feature isInverted={isInverted}>
+                                                <Check />
+                                                <span>{feature}</span>
+                                            </Feature>
                                         )}
-                                    </TagWrapper>
+                                    </FeatureWrapper>
                                 ))}
-                            </TagContainer>
+                            </FeatureContainer>
                         )}
                         {text && (
                             <PoiText
