@@ -38,5 +38,14 @@ export const AsMap: Story = () => (
         mail="example@mail.de"
         phone="+49 123 456789"
         web=""
+        contact={{
+            name: 'MaxMustermann',
+            position: 'Vorgesetzter',
+            street: 'Example Address 1',
+            postalCode: '12345',
+            city: 'Example City',
+            mail: 'example@mail.de',
+            phone: '+49 123 456789',
+        }}
     />
 );

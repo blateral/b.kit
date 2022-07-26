@@ -6,15 +6,14 @@ import Phone from 'components/base/icons/Phone';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import Heading from 'components/typography/Heading';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { getSVGDataImg } from 'utils/dataURI';
-import { mq, POIBasics, POILocation, spacings } from 'utils/styles';
+import { mq, POIBasics, POIContact, POILocation, spacings } from 'utils/styles';
 import useLeafletMap, { LeafletMapMarker } from 'utils/useLeafletMap';
 import { LocationIcon } from './Map';
 
-const EventTitle = styled(Heading)`
+const EventTitle = styled(Copy)`
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -51,7 +50,7 @@ const MapContainer = styled.div<{ isList?: boolean }>`
 `;
 
 const TextContent = styled(Copy)`
-    & > * {
+    & + * {
         margin-bottom: ${spacings.nudge * 3}px;
     }
 
@@ -117,7 +116,12 @@ const DetailBlock: React.FC<{
 };
 
 const PointOfInterest: React.FC<
-    POILocation & POIBasics & { marker?: LocationIcon; isInverted?: boolean }
+    POILocation &
+        POIBasics & {
+            marker?: LocationIcon;
+            isInverted?: boolean;
+            contact?: POIContact;
+        }
 > = ({
     name,
     // description,
@@ -132,6 +136,8 @@ const PointOfInterest: React.FC<
     mail,
     phone,
     web,
+
+    contact,
 
     marker,
     isInverted,
@@ -213,16 +219,13 @@ const PointOfInterest: React.FC<
                             <TextContent>
                                 {name && (
                                     <EventTitle
-                                        size="heading-2"
+                                        type="copy-b"
                                         isInverted={isInverted}
                                     >
                                         {name}
                                     </EventTitle>
                                 )}
-                                <Copy
-                                    type="copy-b"
-                                    innerHTML={shortDescription}
-                                />
+                                <Copy innerHTML={shortDescription} />
                             </TextContent>
                         )}
                         <TextContent>
@@ -247,6 +250,29 @@ const PointOfInterest: React.FC<
                                     },
                                 ]}
                             />
+                            {contact && (
+                                <DetailBlock
+                                    title="Ansprechpartner"
+                                    items={[
+                                        {
+                                            icon: () => <LocationPin />,
+                                            text: `${contact.name}`,
+                                        },
+                                        {
+                                            icon: () => <LocationPin />,
+                                            text: `${contact.street}, ${contact.postalCode} ${contact.city}`,
+                                        },
+                                        {
+                                            icon: () => <Phone />,
+                                            text: `${contact.phone}`,
+                                        },
+                                        {
+                                            icon: () => <Mail />,
+                                            text: `${contact.mail}`,
+                                        },
+                                    ]}
+                                />
+                            )}
                         </TextContent>
                     </Grid.Col>
                 </Grid.Row>

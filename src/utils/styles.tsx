@@ -100,6 +100,16 @@ export type POILocation = {
     web: string;
 };
 
+export type POIContact = {
+    name: string;
+    position: string;
+    street: string;
+    postalCode: string;
+    city: string;
+    mail: string;
+    phone: string;
+};
+
 /***** Color Types *****/
 interface ColorOptions {
     default: string;
