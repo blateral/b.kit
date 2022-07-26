@@ -1,5 +1,8 @@
 import Grid from 'components/base/Grid';
+import External from 'components/base/icons/External';
 import LocationPin from 'components/base/icons/LocationPin';
+import Mail from 'components/base/icons/Mail';
+import Phone from 'components/base/icons/Phone';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
@@ -38,7 +41,7 @@ const MapContainer = styled.div`
     }
 `;
 
-const TextContent = styled.div`
+const TextContent = styled(Copy)`
     & > * {
         margin-bottom: ${spacings.nudge * 3}px;
     }
@@ -48,22 +51,78 @@ const TextContent = styled.div`
     }
 `;
 
+const DetailBlockView = styled.div`
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+`;
+
+const Icon = styled.div`
+    display: flex;
+    align-items: center;
+
+    & > * {
+        height: 20px;
+        width: 20px;
+    }
+`;
+
+const BlockWrapper = styled.div`
+    display: -ms-grid;
+    display: grid;
+
+    -ms-grid-columns: min-content 1fr;
+    grid-template-columns: min-content 1fr;
+    -ms-grid-rows: min-content 1fr;
+    grid-auto-rows: min-content 1fr;
+
+    & > * + * {
+        margin-left: ${spacings.nudge * 2}px;
+    }
+`;
+
+const DetailTitle = styled(Copy)``;
+
+const DetailBlock: React.FC<{
+    title?: string;
+    items: {
+        text?: string;
+        icon?: (isInverted?: boolean) => React.ReactNode;
+    }[];
+}> = ({ title, items }) => {
+    return items.length > 0 ? (
+        <DetailBlockView>
+            <DetailTitle type="copy-b">{title}</DetailTitle>
+            {items.map(({ text, icon }, i) => {
+                return items[i].text ? (
+                    <BlockWrapper key={i}>
+                        <Icon>{icon && icon()}</Icon>
+                        {text && (
+                            <div dangerouslySetInnerHTML={{ __html: text }} />
+                        )}
+                    </BlockWrapper>
+                ) : null;
+            })}
+        </DetailBlockView>
+    ) : null;
+};
+
 const PointOfInterest: React.FC<
     POILocation & POIBasics & { marker?: LocationIcon; isInverted?: boolean }
 > = ({
     name,
-    description,
+    // description,
     shortDescription,
     typeAs,
 
-    // address,
-    // street,
-    // postalCode,
-    // city,
+    address,
+    street,
+    postalCode,
+    city,
     coordinates,
-    // mail,
-    // phone,
-    // web,
+    mail,
+    phone,
+    web,
 
     marker,
     isInverted,
@@ -106,22 +165,6 @@ const PointOfInterest: React.FC<
     return (
         <Section addSeperation>
             <Wrapper addWhitespace>
-                {isMap && (
-                    <TextContent>
-                        {name && (
-                            <EventTitle
-                                size="heading-2"
-                                isInverted={isInverted}
-                            >
-                                {name}
-                            </EventTitle>
-                        )}
-                        <Copy type="copy-b" innerHTML={shortDescription} />
-                        {description && (
-                            <Copy type="copy" innerHTML={description} />
-                        )}
-                    </TextContent>
-                )}
                 <Grid.Row>
                     <Grid.Col
                         semilarge={
@@ -165,6 +208,29 @@ const PointOfInterest: React.FC<
                                 />
                             </TextContent>
                         )}
+                        <TextContent>
+                            <DetailBlock
+                                title="Standort"
+                                items={[
+                                    {
+                                        icon: () => <LocationPin />,
+                                        text: `${address}, ${street}, ${postalCode} ${city}`,
+                                    },
+                                    {
+                                        icon: () => <Mail />,
+                                        text: `${mail}`,
+                                    },
+                                    {
+                                        icon: () => <Phone />,
+                                        text: `${phone}`,
+                                    },
+                                    {
+                                        icon: () => <External />,
+                                        text: `${web}`,
+                                    },
+                                ]}
+                            />
+                        </TextContent>
                     </Grid.Col>
                 </Grid.Row>
             </Wrapper>
