@@ -4,13 +4,10 @@ import { Meta, Story } from '@storybook/react';
 import EventDetail, {
     PointOfInterestDetailComponent,
 } from 'components/sections/pois/PointOfInterestDetail';
-import Star from 'components/base/icons/Star';
-import Info from 'components/base/icons/Info';
 import Phone from 'components/base/icons/Phone';
 import Mail from 'components/base/icons/Mail';
 import Clock from 'components/base/icons/Clock';
 import Money from 'components/base/icons/Money';
-import LocationPin from 'components/base/icons/LocationPin';
 import Place from 'components/base/icons/Place';
 import Computer from 'components/base/icons/Computer';
 import Person from 'components/base/icons/Person';
