@@ -80,6 +80,26 @@ export const styleTextColor = (fallbackColor?: string, gradient?: string) => {
     }
 };
 
+/***** POI Types *****/
+
+export type POIBasics = {
+    name: string;
+    description?: string;
+    shortDescription?: string;
+    typeAs: 'list' | 'map';
+};
+
+export type POILocation = {
+    address: string;
+    street: string;
+    postalCode: string;
+    city: string;
+    coordinates: { lat?: number; long?: number };
+    mail: string;
+    phone: string;
+    web: string;
+};
+
 /***** Color Types *****/
 interface ColorOptions {
     default: string;
