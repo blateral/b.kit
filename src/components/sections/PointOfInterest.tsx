@@ -8,7 +8,7 @@ import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { getSVGDataImg } from 'utils/dataURI';
 import { mq, POIBasics, POILocation, spacings } from 'utils/styles';
 import useLeafletMap, { LeafletMapMarker } from 'utils/useLeafletMap';
@@ -27,12 +27,21 @@ const EventTitle = styled(Heading)`
     }
 `;
 
-const MapContainer = styled.div`
+const MapContainer = styled.div<{ isList?: boolean }>`
     position: relative;
     width: 100%;
     height: 290px;
     z-index: 0;
     outline: none;
+
+    ${({ isList }) =>
+        isList &&
+        css`
+            height: auto;
+            width: auto;
+            max-width: 300px;
+            aspect-ratio: 1 / 1;
+        `}
 
     @media ${mq.semilarge} {
         height: auto;
@@ -167,6 +176,8 @@ const PointOfInterest: React.FC<
             <Wrapper addWhitespace>
                 <Grid.Row>
                     <Grid.Col
+                        span={isList ? 1 / 3 : 12 / 12}
+                        move={isList ? 2 / 3 : 0}
                         semilarge={
                             isList
                                 ? { span: 1 / 3, move: 2 / 3 }
@@ -178,12 +189,18 @@ const PointOfInterest: React.FC<
                                 : { span: 1 / 3, move: 2 / 3 }
                         }
                     >
-                        <MapContainer ref={setMapContainer} tabIndex={0} />
+                        <MapContainer
+                            isList={isList}
+                            ref={setMapContainer}
+                            tabIndex={0}
+                        />
                     </Grid.Col>
                     <Grid.Col
+                        span={isList ? 2 / 3 : 12 / 12}
+                        move={isList ? -1 / 3 : 0}
                         semilarge={
                             isList
-                                ? { span: 1 / 3, move: 2 / 3 }
+                                ? { span: 2 / 3, move: -1 / 3 }
                                 : { span: 1 / 2, move: -1 / 2 }
                         }
                         large={
