@@ -114,6 +114,7 @@ export { default as VideoCarousel } from 'components/sections/carousel/VideoCaro
 export { default as JobList } from 'components/sections/jobs/JobList';
 export { default as JobArticle } from 'components/sections/jobs/JobArticle';
 export { default as PointOfInterestDetail } from 'components/sections/pois/PointOfInterestDetail';
+export { default as PointOfInterestOverview } from 'components/sections/pois/PointOfInterestOverview';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';

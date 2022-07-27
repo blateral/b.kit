@@ -3,7 +3,7 @@ import Wrapper from 'components/base/Wrapper';
 import POICard, { POICardProps } from 'components/blocks/POICard';
 import React from 'react';
 import styled from 'styled-components';
-import { useLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { mq, spacings } from 'utils/styles';
 
 const Content = styled.div`
@@ -18,14 +18,14 @@ const Content = styled.div`
     }
 `;
 
-export type PointOfInterestListItem = Omit<POICardProps, 'isInverted'>;
+export type PointOfInterestOverviewItem = Omit<POICardProps, 'isInverted'>;
 
-const PointOfInterestList: React.FC<{
+const PointOfInterestOverview: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** Array of POI card settings */
-    pois: PointOfInterestListItem[];
+    pois: PointOfInterestOverviewItem[];
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
@@ -61,4 +61,5 @@ const PointOfInterestList: React.FC<{
     );
 };
 
-export default PointOfInterestList;
+export const PointOfInterestOverviewComponent = PointOfInterestOverview;
+export default withLibTheme(PointOfInterestOverview);

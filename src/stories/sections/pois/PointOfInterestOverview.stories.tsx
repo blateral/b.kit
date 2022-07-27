@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import PointOfInterestList from 'components/sections/pois/PointOfInterestList';
+import PointOfInterestOverview from 'components/sections/pois/PointOfInterestOverview';
 import AngleRight from 'components/base/icons/AngleRight';
 import Pointer from 'components/buttons/Pointer';
 import LocationPin from 'components/base/icons/LocationPin';
@@ -10,8 +10,8 @@ import Computer from 'components/base/icons/Computer';
 import Map from 'components/base/icons/Map';
 
 export default {
-    title: 'Sections / POIs / PointOfInterestList',
-    component: PointOfInterestList,
+    title: 'Sections / POIs / PointOfInterestOverview',
+    component: PointOfInterestOverview,
     parameters: {
         status: {
             type: ['preview'],
@@ -20,7 +20,7 @@ export default {
 } as Meta;
 
 export const Default: Story = () => (
-    <PointOfInterestList
+    <PointOfInterestOverview
         pois={[
             {
                 name: 'Beispiel POI 1',
@@ -168,7 +168,7 @@ export const Default: Story = () => (
 );
 
 export const WithBackground: Story = () => (
-    <PointOfInterestList
+    <PointOfInterestOverview
         bgMode="full"
         pois={[
             {
@@ -317,7 +317,7 @@ export const WithBackground: Story = () => (
 );
 
 export const Inverted: Story = () => (
-    <PointOfInterestList
+    <PointOfInterestOverview
         bgMode="inverted"
         pois={[
             {
