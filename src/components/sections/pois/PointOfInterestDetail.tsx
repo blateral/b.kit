@@ -178,6 +178,7 @@ const InfoList: FC<{
                                             size="small"
                                             isInverted={isInverted}
                                             innerHTML={info.text}
+                                            allowLinkIcons={false}
                                         />
                                     )}
                                 </InfoContent>
