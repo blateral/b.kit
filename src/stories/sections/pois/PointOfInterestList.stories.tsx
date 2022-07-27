@@ -1,33 +1,53 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import PointOfInterestList from 'components/sections/pois/PointOfInteresList';
+import PointOfInterestList from 'components/sections/pois/PointOfInterestList';
 import AngleRight from 'components/base/icons/AngleRight';
 import Pointer from 'components/buttons/Pointer';
+import LocationPin from 'components/base/icons/LocationPin';
+import Phone from 'components/base/icons/Phone';
+import Mail from 'components/base/icons/Mail';
+import Computer from 'components/base/icons/Computer';
+import Map from 'components/base/icons/Map';
 
 export default {
     title: 'Sections / POIs / PointOfInterestList',
     component: PointOfInterestList,
+    parameters: {
+        status: {
+            type: ['preview'],
+        },
+    },
 } as Meta;
 
 export const Default: Story = () => (
     <PointOfInterestList
         pois={[
             {
-                id: 1,
-                location: {
-                    address: 'Altes Rathaus Mmünsterstraße',
-                    street: '1',
-                    postalCode: '12345',
-                    city: 'Example City',
-                    mail: 'max.mustermann@gmail.com',
-                    phone: '07551 / 888666',
-                    web: 'www.einrichtung.com',
-                },
-                basics: {
-                    name: 'Beispiel POI 1',
-                    shortDescription:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
-                },
+                name: 'Beispiel POI 1',
+                shortDescription:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                infos: [
+                    {
+                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        icon: () => <LocationPin />,
+                    },
+                    {
+                        text: `Auf Karte anzeigen`,
+                        icon: () => <Map />,
+                    },
+                    {
+                        text: `07551 / 888666`,
+                        icon: () => <Phone />,
+                    },
+                    {
+                        text: `max.mustermann@gmail.com`,
+                        icon: () => <Mail />,
+                    },
+                    {
+                        text: `www.einrichtung.com`,
+                        icon: () => <Computer />,
+                    },
+                ],
                 facts: [
                     'Feature 1',
                     'Feature 2',
@@ -50,21 +70,31 @@ export const Default: Story = () => (
                 ),
             },
             {
-                id: 2,
-                location: {
-                    address: 'Altes Rathaus Mmünsterstraße',
-                    street: '1',
-                    postalCode: '12345',
-                    city: 'Example City',
-                    mail: 'max.mustermann@gmail.com',
-                    phone: '07551 / 888666',
-                    web: 'www.einrichtung.com',
-                },
-                basics: {
-                    name: 'Beispiel POI 2',
-                    shortDescription:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
-                },
+                name: 'Beispiel POI 2',
+                shortDescription:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                infos: [
+                    {
+                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        icon: () => <LocationPin />,
+                    },
+                    {
+                        text: `Auf Karte anzeigen`,
+                        icon: () => <Map />,
+                    },
+                    {
+                        text: `07551 / 888666`,
+                        icon: () => <Phone />,
+                    },
+                    {
+                        text: `max.mustermann@gmail.com`,
+                        icon: () => <Mail />,
+                    },
+                    {
+                        text: `www.einrichtung.com`,
+                        icon: () => <Computer />,
+                    },
+                ],
                 facts: [
                     'Feature 1',
                     'Feature 2',
@@ -87,21 +117,31 @@ export const Default: Story = () => (
                 ),
             },
             {
-                id: 3,
-                location: {
-                    address: 'Altes Rathaus Mmünsterstraße',
-                    street: '1',
-                    postalCode: '12345',
-                    city: 'Example City',
-                    mail: 'max.mustermann@gmail.com',
-                    phone: '07551 / 888666',
-                    web: 'www.einrichtung.com',
-                },
-                basics: {
-                    name: 'Beispiel POI 3',
-                    shortDescription:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
-                },
+                name: 'Beispiel POI 3',
+                shortDescription:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                infos: [
+                    {
+                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        icon: () => <LocationPin />,
+                    },
+                    {
+                        text: `Auf Karte anzeigen`,
+                        icon: () => <Map />,
+                    },
+                    {
+                        text: `07551 / 888666`,
+                        icon: () => <Phone />,
+                    },
+                    {
+                        text: `max.mustermann@gmail.com`,
+                        icon: () => <Mail />,
+                    },
+                    {
+                        text: `www.einrichtung.com`,
+                        icon: () => <Computer />,
+                    },
+                ],
                 facts: [
                     'Feature 1',
                     'Feature 2',
@@ -127,145 +167,36 @@ export const Default: Story = () => (
     />
 );
 
-export const IsInverted: Story = () => (
-    <PointOfInterestList
-        bgMode="inverted"
-        pois={[
-            {
-                id: 1,
-                location: {
-                    address: 'Altes Rathaus Mmünsterstraße',
-                    street: '1',
-                    postalCode: '12345',
-                    city: 'Example City',
-                    mail: 'max.mustermann@gmail.com',
-                    phone: '07551 / 888666',
-                    web: 'www.einrichtung.com',
-                },
-                basics: {
-                    name: 'Beispiel POI 1',
-                    shortDescription:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
-                },
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
-                action: (isInverted) => (
-                    <Pointer.View
-                        as="a"
-                        href="#"
-                        isInverted={isInverted}
-                        onClick={console.log}
-                    >
-                        <Pointer.Label>Details</Pointer.Label>
-                        <Pointer.Icon>
-                            <AngleRight />
-                        </Pointer.Icon>
-                    </Pointer.View>
-                ),
-            },
-            {
-                id: 2,
-                location: {
-                    address: 'Altes Rathaus Mmünsterstraße',
-                    street: '1',
-                    postalCode: '12345',
-                    city: 'Example City',
-                    mail: 'max.mustermann@gmail.com',
-                    phone: '07551 / 888666',
-                    web: 'www.einrichtung.com',
-                },
-                basics: {
-                    name: 'Beispiel POI 2',
-                    shortDescription:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
-                },
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
-                action: (isInverted) => (
-                    <Pointer.View
-                        as="a"
-                        href="#"
-                        isInverted={isInverted}
-                        onClick={console.log}
-                    >
-                        <Pointer.Label>Details</Pointer.Label>
-                        <Pointer.Icon>
-                            <AngleRight />
-                        </Pointer.Icon>
-                    </Pointer.View>
-                ),
-            },
-            {
-                id: 3,
-                location: {
-                    address: 'Altes Rathaus Mmünsterstraße',
-                    street: '1',
-                    postalCode: '12345',
-                    city: 'Example City',
-                    mail: 'max.mustermann@gmail.com',
-                    phone: '07551 / 888666',
-                    web: 'www.einrichtung.com',
-                },
-                basics: {
-                    name: 'Beispiel POI 3',
-                    shortDescription:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
-                },
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
-                action: (isInverted) => (
-                    <Pointer.View
-                        as="a"
-                        href="#"
-                        isInverted={isInverted}
-                        onClick={console.log}
-                    >
-                        <Pointer.Label>Details</Pointer.Label>
-                        <Pointer.Icon>
-                            <AngleRight />
-                        </Pointer.Icon>
-                    </Pointer.View>
-                ),
-            },
-        ]}
-    />
-);
-
-export const HasBackground: Story = () => (
+export const WithBackground: Story = () => (
     <PointOfInterestList
         bgMode="full"
         pois={[
             {
-                id: 1,
-                location: {
-                    address: 'Altes Rathaus Mmünsterstraße',
-                    street: '1',
-                    postalCode: '12345',
-                    city: 'Example City',
-                    mail: 'max.mustermann@gmail.com',
-                    phone: '07551 / 888666',
-                    web: 'www.einrichtung.com',
-                },
-                basics: {
-                    name: 'Beispiel POI 1',
-                    shortDescription:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
-                },
+                name: 'Beispiel POI 1',
+                shortDescription:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                infos: [
+                    {
+                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        icon: () => <LocationPin />,
+                    },
+                    {
+                        text: `Auf Karte anzeigen`,
+                        icon: () => <Map />,
+                    },
+                    {
+                        text: `07551 / 888666`,
+                        icon: () => <Phone />,
+                    },
+                    {
+                        text: `max.mustermann@gmail.com`,
+                        icon: () => <Mail />,
+                    },
+                    {
+                        text: `www.einrichtung.com`,
+                        icon: () => <Computer />,
+                    },
+                ],
                 facts: [
                     'Feature 1',
                     'Feature 2',
@@ -288,21 +219,31 @@ export const HasBackground: Story = () => (
                 ),
             },
             {
-                id: 2,
-                location: {
-                    address: 'Altes Rathaus Mmünsterstraße',
-                    street: '1',
-                    postalCode: '12345',
-                    city: 'Example City',
-                    mail: 'max.mustermann@gmail.com',
-                    phone: '07551 / 888666',
-                    web: 'www.einrichtung.com',
-                },
-                basics: {
-                    name: 'Beispiel POI 2',
-                    shortDescription:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
-                },
+                name: 'Beispiel POI 2',
+                shortDescription:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                infos: [
+                    {
+                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        icon: () => <LocationPin />,
+                    },
+                    {
+                        text: `Auf Karte anzeigen`,
+                        icon: () => <Map />,
+                    },
+                    {
+                        text: `07551 / 888666`,
+                        icon: () => <Phone />,
+                    },
+                    {
+                        text: `max.mustermann@gmail.com`,
+                        icon: () => <Mail />,
+                    },
+                    {
+                        text: `www.einrichtung.com`,
+                        icon: () => <Computer />,
+                    },
+                ],
                 facts: [
                     'Feature 1',
                     'Feature 2',
@@ -325,21 +266,180 @@ export const HasBackground: Story = () => (
                 ),
             },
             {
-                id: 3,
-                location: {
-                    address: 'Altes Rathaus Mmünsterstraße',
-                    street: '1',
-                    postalCode: '12345',
-                    city: 'Example City',
-                    mail: 'max.mustermann@gmail.com',
-                    phone: '07551 / 888666',
-                    web: 'www.einrichtung.com',
-                },
-                basics: {
-                    name: 'Beispiel POI 3',
-                    shortDescription:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
-                },
+                name: 'Beispiel POI 3',
+                shortDescription:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                infos: [
+                    {
+                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        icon: () => <LocationPin />,
+                    },
+                    {
+                        text: `Auf Karte anzeigen`,
+                        icon: () => <Map />,
+                    },
+                    {
+                        text: `07551 / 888666`,
+                        icon: () => <Phone />,
+                    },
+                    {
+                        text: `max.mustermann@gmail.com`,
+                        icon: () => <Mail />,
+                    },
+                    {
+                        text: `www.einrichtung.com`,
+                        icon: () => <Computer />,
+                    },
+                ],
+                facts: [
+                    'Feature 1',
+                    'Feature 2',
+                    'Feature 3',
+                    'Feature 4',
+                    'Feature 5',
+                ],
+                action: (isInverted) => (
+                    <Pointer.View
+                        as="a"
+                        href="#"
+                        isInverted={isInverted}
+                        onClick={console.log}
+                    >
+                        <Pointer.Label>Details</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
+            },
+        ]}
+    />
+);
+
+export const Inverted: Story = () => (
+    <PointOfInterestList
+        bgMode="inverted"
+        pois={[
+            {
+                name: 'Beispiel POI 1',
+                shortDescription:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                infos: [
+                    {
+                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        icon: () => <LocationPin />,
+                    },
+                    {
+                        text: `Auf Karte anzeigen`,
+                        icon: () => <Map />,
+                    },
+                    {
+                        text: `07551 / 888666`,
+                        icon: () => <Phone />,
+                    },
+                    {
+                        text: `max.mustermann@gmail.com`,
+                        icon: () => <Mail />,
+                    },
+                    {
+                        text: `www.einrichtung.com`,
+                        icon: () => <Computer />,
+                    },
+                ],
+                facts: [
+                    'Feature 1',
+                    'Feature 2',
+                    'Feature 3',
+                    'Feature 4',
+                    'Feature 5',
+                ],
+                action: (isInverted) => (
+                    <Pointer.View
+                        as="a"
+                        href="#"
+                        isInverted={isInverted}
+                        onClick={console.log}
+                    >
+                        <Pointer.Label>Details</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
+            },
+            {
+                name: 'Beispiel POI 2',
+                shortDescription:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                infos: [
+                    {
+                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        icon: () => <LocationPin />,
+                    },
+                    {
+                        text: `Auf Karte anzeigen`,
+                        icon: () => <Map />,
+                    },
+                    {
+                        text: `07551 / 888666`,
+                        icon: () => <Phone />,
+                    },
+                    {
+                        text: `max.mustermann@gmail.com`,
+                        icon: () => <Mail />,
+                    },
+                    {
+                        text: `www.einrichtung.com`,
+                        icon: () => <Computer />,
+                    },
+                ],
+                facts: [
+                    'Feature 1',
+                    'Feature 2',
+                    'Feature 3',
+                    'Feature 4',
+                    'Feature 5',
+                ],
+                action: (isInverted) => (
+                    <Pointer.View
+                        as="a"
+                        href="#"
+                        isInverted={isInverted}
+                        onClick={console.log}
+                    >
+                        <Pointer.Label>Details</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
+            },
+            {
+                name: 'Beispiel POI 3',
+                shortDescription:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                infos: [
+                    {
+                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        icon: () => <LocationPin />,
+                    },
+                    {
+                        text: `Auf Karte anzeigen`,
+                        icon: () => <Map />,
+                    },
+                    {
+                        text: `07551 / 888666`,
+                        icon: () => <Phone />,
+                    },
+                    {
+                        text: `max.mustermann@gmail.com`,
+                        icon: () => <Mail />,
+                    },
+                    {
+                        text: `www.einrichtung.com`,
+                        icon: () => <Computer />,
+                    },
+                ],
                 facts: [
                     'Feature 1',
                     'Feature 2',

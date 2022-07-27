@@ -1,49 +1,20 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Copy, { copyStyle } from 'components/typography/Copy';
+import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
-import { mq, spacings, getColors as color } from 'utils/styles';
+import { spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
-import Check from 'components/base/icons/Check';
+import InfoList, { InfoGroup } from 'components/blocks/InfoList';
+import POIFacts from 'components/blocks/POIFacts';
 
 const StyledImage = styled(Image)`
     &:not(:last-child) {
         margin-bottom: ${spacings.spacer}px;
-    }
-`;
-
-const FeatureContainer = styled.div`
-    margin-top: -${spacings.nudge}px;
-    margin-left: -${spacings.nudge * 2}px;
-
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    &:not(:first-child) {
-        margin-top: ${spacings.nudge * 3}px;
-    }
-`;
-
-const FeatureWrapper = styled.div`
-    padding-top: ${spacings.nudge}px;
-    padding-left: ${spacings.nudge * 2}px;
-`;
-
-const Feature = styled.span<{ isInverted?: boolean }>`
-    display: inline-flex;
-    align-items: center;
-    ${copyStyle('copy', 'medium')}
-    color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).text.copyInverted : color(theme).text.copy};
-
-    & > * + * {
-        margin-left: ${spacings.nudge * 0.5}px;
     }
 `;
 
@@ -66,142 +37,6 @@ const PoiText = styled(Copy)`
     }
 `;
 
-const InfoListView = styled.ul`
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-
-        & > * {
-            flex: 0 0 33.33%;
-        }
-    }
-
-    @media ${mq.large} {
-        display: block;
-    }
-`;
-
-const InfoItem = styled.li`
-    & + & {
-        padding-top: ${spacings.nudge * 3}px;
-    }
-
-    @media ${mq.semilarge} {
-        & + & {
-            padding-top: 0;
-            padding-left: ${spacings.spacer}px;
-        }
-    }
-
-    @media ${mq.large} {
-        & + & {
-            padding-left: 0;
-            padding-top: ${spacings.nudge * 5}px;
-        }
-    }
-`;
-
-const InfoTitle = styled(Copy)`
-    display: block;
-    margin-bottom: ${spacings.nudge * 3}px;
-`;
-
-const Infos = styled.ul`
-    list-style: none;
-    margin: 0;
-    padding: 0;
-`;
-
-const InfoContent = styled.li`
-    display: -ms-grid;
-    display: grid;
-    margin: 0;
-
-    -ms-grid-columns: min-content 1fr;
-    grid-template-columns: min-content 1fr;
-    -ms-grid-rows: min-content 1fr;
-    grid-auto-rows: min-content 1fr;
-
-    & + & {
-        margin-top: ${spacings.nudge * 2}px;
-    }
-
-    & > * + * {
-        margin-left: ${spacings.nudge * 2}px;
-    }
-`;
-
-const Icon = styled(Copy)`
-    height: 20px;
-    width: 20px;
-
-    & > * {
-        height: 20px;
-        width: 20px;
-    }
-`;
-
-const InfoList: FC<{
-    isInverted?: boolean;
-    items?: PoiInfoGroup[];
-    className?: string;
-}> = ({ isInverted, items, className }) => {
-    return (
-        <InfoListView className={className}>
-            {items
-                ?.filter((e) => e.title)
-                .map((group, i) => (
-                    <InfoItem key={i}>
-                        <InfoTitle
-                            size="small"
-                            type="copy-b"
-                            renderAs="span"
-                            isInverted={isInverted}
-                        >
-                            {group.title}
-                        </InfoTitle>
-                        <Infos>
-                            {group?.items?.map((info, ii) => (
-                                <InfoContent key={ii}>
-                                    {info.icon && (
-                                        <Icon isInverted={isInverted}>
-                                            {info.icon(isInverted)}
-                                        </Icon>
-                                    )}
-                                    {info.text && (
-                                        <Copy
-                                            size="small"
-                                            isInverted={isInverted}
-                                            innerHTML={info.text}
-                                            allowLinkIcons={false}
-                                        />
-                                    )}
-                                </InfoContent>
-                            ))}
-                        </Infos>
-                    </InfoItem>
-                ))}
-        </InfoListView>
-    );
-};
-
-export interface PoiInfoGroup {
-    title?: string;
-    items: PoiInfo[];
-}
-
-export interface PoiInfo {
-    /** icon injection function */
-    icon?: (isInverted?: boolean) => React.ReactNode;
-    /** POI info text (richtText) */
-    text?: string;
-}
-
 const PointOfInterestDetail: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -215,31 +50,22 @@ const PointOfInterestDetail: React.FC<{
     /** POI text (richtext) */
     text?: string;
 
-    /** Array of POI features */
-    features?: string[];
+    /** Array of POI facts */
+    facts?: string[];
 
     /** Additional POI infos */
-    infos?: PoiInfoGroup[];
+    infos?: InfoGroup[];
 
     /** Section background */
     bgMode?: 'inverted' | 'full';
 
     /** Function to inject custom feature node */
-    customFeature?: (props: {
+    customFact?: (props: {
         key: React.Key;
         name: string;
         isInverted?: boolean;
     }) => React.ReactNode;
-}> = ({
-    anchorId,
-    image,
-    title,
-    text,
-    features,
-    infos,
-    bgMode,
-    customFeature,
-}) => {
+}> = ({ anchorId, image, title, text, facts, infos, bgMode, customFact }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -276,25 +102,12 @@ const PointOfInterestDetail: React.FC<{
                                 {title}
                             </PoiTitle>
                         )}
-                        {features && (
-                            <FeatureContainer>
-                                {features.map((feature, i) => (
-                                    <FeatureWrapper key={'tag_' + i}>
-                                        {customFeature ? (
-                                            customFeature({
-                                                key: `headtag-${i}`,
-                                                name: feature || '',
-                                                isInverted: isInverted,
-                                            })
-                                        ) : (
-                                            <Feature isInverted={isInverted}>
-                                                <Check />
-                                                <span>{feature}</span>
-                                            </Feature>
-                                        )}
-                                    </FeatureWrapper>
-                                ))}
-                            </FeatureContainer>
+                        {facts && (
+                            <POIFacts
+                                isInverted={isInverted}
+                                facts={facts}
+                                customFact={customFact}
+                            />
                         )}
                         {text && (
                             <PoiText

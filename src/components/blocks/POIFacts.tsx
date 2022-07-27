@@ -4,13 +4,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 
-const FactsContainer = styled.div`
-    margin-top: -${spacings.nudge}px;
-    margin-left: -${spacings.nudge * 2}px;
-
-    display: flex;
+const View = styled.div`
+    display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    margin-top: -${spacings.nudge}px;
+    margin-left: -${spacings.nudge * 2}px;
 
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
@@ -44,7 +44,7 @@ const POIFacts: React.FC<{
     isInverted?: boolean;
 }> = ({ facts, customFact, isInverted }) => {
     return (
-        <FactsContainer>
+        <View>
             {facts.map((fact, i) => (
                 <FactsWrapper key={'tag_' + i}>
                     {customFact ? (
@@ -61,7 +61,7 @@ const POIFacts: React.FC<{
                     )}
                 </FactsWrapper>
             ))}
-        </FactsContainer>
+        </View>
     );
 };
 

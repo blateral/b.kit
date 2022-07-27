@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -9,10 +9,11 @@ import Tag from 'components/blocks/Tag';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { LinkProps } from 'components/typography/Link';
-import { mq, spacings } from 'utils/styles';
+import { spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import StatusFormatter from 'utils/statusFormatter';
+import InfoList from 'components/blocks/InfoList';
 
 const StyledImage = styled(Image)`
     &:not(:last-child) {
@@ -76,130 +77,6 @@ const EventText = styled(Copy)`
         margin-top: ${spacings.nudge * 3}px;
     }
 `;
-
-const InfoListView = styled.ul`
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-
-        & > * {
-            flex: 0 0 33.33%;
-        }
-    }
-
-    @media ${mq.large} {
-        display: block;
-    }
-`;
-
-const InfoItem = styled.li`
-    & + & {
-        padding-top: ${spacings.nudge * 3}px;
-    }
-
-    @media ${mq.semilarge} {
-        & + & {
-            padding-top: 0;
-            padding-left: ${spacings.spacer}px;
-        }
-    }
-
-    @media ${mq.large} {
-        & + & {
-            padding-left: 0;
-            padding-top: ${spacings.nudge * 5}px;
-        }
-    }
-`;
-
-const InfoTitle = styled(Copy)`
-    display: block;
-    margin-bottom: ${spacings.nudge * 3}px;
-`;
-
-const Infos = styled.ul`
-    list-style: none;
-    margin: 0;
-    padding: 0;
-`;
-
-const InfoContent = styled.li`
-    display: -ms-grid;
-    display: grid;
-    margin: 0;
-
-    -ms-grid-columns: min-content 1fr;
-    grid-template-columns: min-content 1fr;
-    -ms-grid-rows: min-content 1fr;
-    grid-auto-rows: min-content 1fr;
-
-    & + & {
-        margin-top: ${spacings.nudge * 2}px;
-    }
-
-    & > * + * {
-        margin-left: ${spacings.nudge * 2}px;
-    }
-`;
-
-const Icon = styled(Copy)`
-    height: 20px;
-    width: 20px;
-
-    & > * {
-        height: 20px;
-        width: 20px;
-    }
-`;
-
-const InfoList: FC<{
-    isInverted?: boolean;
-    items?: EventInfoGroup[];
-    className?: string;
-}> = ({ isInverted, items, className }) => {
-    return (
-        <InfoListView className={className}>
-            {items
-                ?.filter((e) => e.title)
-                .map((group, i) => (
-                    <InfoItem key={i}>
-                        <InfoTitle
-                            size="small"
-                            type="copy-b"
-                            renderAs="span"
-                            isInverted={isInverted}
-                        >
-                            {group.title}
-                        </InfoTitle>
-                        <Infos>
-                            {group?.items?.map((info, ii) => (
-                                <InfoContent key={ii}>
-                                    {info.icon && (
-                                        <Icon isInverted={isInverted}>
-                                            {info.icon(isInverted)}
-                                        </Icon>
-                                    )}
-                                    {info.text && (
-                                        <Copy
-                                            size="small"
-                                            isInverted={isInverted}
-                                            innerHTML={info.text}
-                                            allowLinkIcons={false}
-                                        />
-                                    )}
-                                </InfoContent>
-                            ))}
-                        </Infos>
-                    </InfoItem>
-                ))}
-        </InfoListView>
-    );
-};
 
 export type DetailEventProps = Omit<
     EventProps,

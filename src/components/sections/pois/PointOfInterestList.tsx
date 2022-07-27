@@ -1,13 +1,10 @@
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
+import POICard, { POICardProps } from 'components/blocks/POICard';
 import React from 'react';
 import styled from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { mq, spacings } from 'utils/styles';
-import PointOfInterest, {
-    POIBasics,
-    POILocation,
-} from '../../blocks/pois/PointOfInterest';
 
 const Content = styled.div`
     & > * + * {
@@ -16,34 +13,32 @@ const Content = styled.div`
 
     @media ${mq.large} {
         & > * + * {
-            margin-top: ${spacings.spacer}px;
+            margin-top: ${spacings.nudge * 3}px;
         }
     }
 `;
 
-const PointOfInterestList: React.FC<{
-    pois: {
-        id: number;
+export type PointOfInterestListItem = Omit<POICardProps, 'isInverted'>;
 
-        facts?: string[];
-        customFacts?: (props: {
-            key: React.Key;
-            name: string;
-            isInverted?: boolean;
-        }) => React.ReactNode;
-        location: POILocation;
-        basics: POIBasics;
-        action?: (isInverted?: boolean) => React.ReactNode;
-    }[];
+const PointOfInterestList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Array of POI card settings */
+    pois: PointOfInterestListItem[];
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ pois, bgMode }) => {
+}> = ({ anchorId, bgMode, pois }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? colors.sectionBg.dark
@@ -57,11 +52,7 @@ const PointOfInterestList: React.FC<{
                 <Content>
                     {pois.map((poi, i) => {
                         return (
-                            <PointOfInterest
-                                key={i}
-                                {...poi}
-                                isInverted={isInverted}
-                            />
+                            <POICard key={i} {...poi} isInverted={isInverted} />
                         );
                     })}
                 </Content>
