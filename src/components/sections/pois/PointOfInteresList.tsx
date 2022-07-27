@@ -1,7 +1,8 @@
-import Section from 'components/base/Section';
+import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import React from 'react';
 import styled from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import { mq, spacings } from 'utils/styles';
 import PointOfInterest, {
     POIBasics,
@@ -34,10 +35,24 @@ const PointOfInterestList: React.FC<{
         basics: POIBasics;
         action?: (isInverted?: boolean) => React.ReactNode;
     }[];
-    isInverted?: boolean;
-}> = ({ pois, isInverted }) => {
+    bgMode?: 'full' | 'inverted';
+}> = ({ pois, bgMode }) => {
+    const { colors } = useLibTheme();
+
+    const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full';
     return (
-        <Section addSeperation>
+        <Section
+            addSeperation
+            bgColor={
+                isInverted
+                    ? colors.sectionBg.dark
+                    : hasBg
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
+            }
+            bgMode={mapToBgMode(bgMode, true)}
+        >
             <Wrapper addWhitespace>
                 <Content>
                     {pois.map((poi, i) => {
