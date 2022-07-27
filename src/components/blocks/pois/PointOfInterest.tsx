@@ -119,7 +119,6 @@ const TextContent = styled.div<{ isInverted?: boolean }>`
 const Row = styled.div`
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
 
     @media ${mq.semilarge} {
         margin-left: -${spacings.spacer}px;
@@ -136,6 +135,12 @@ const Col = styled.div<{ span?: number; largerSpan?: number }>`
         & + & {
             border-left: 1px solid
                 ${({ theme }) => getColors(theme).elementBg.medium};
+        }
+
+        &:first-of-type {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
     }
 
