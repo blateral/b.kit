@@ -1,6 +1,8 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import PointOfInterest from 'components/blocks/pois/PointOfInterest';
+import Pointer from 'components/buttons/Pointer';
+import AngleRight from 'components/base/icons/AngleRight';
 
 export default {
     title: 'Blocks / POIs / PointOfInterest',
@@ -31,5 +33,18 @@ export const Default: Story = () => (
             'Feature 4',
             'Feature 5',
         ]}
+        action={(isInverted) => (
+            <Pointer.View
+                as="a"
+                href="#"
+                isInverted={isInverted}
+                onClick={console.log}
+            >
+                <Pointer.Label>Details</Pointer.Label>
+                <Pointer.Icon>
+                    <AngleRight />
+                </Pointer.Icon>
+            </Pointer.View>
+        )}
     />
 );

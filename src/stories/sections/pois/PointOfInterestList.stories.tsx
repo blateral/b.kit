@@ -1,6 +1,8 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import PointOfInterestList from 'components/sections/pois/PointOfInteresList';
+import AngleRight from 'components/base/icons/AngleRight';
+import Pointer from 'components/buttons/Pointer';
 
 export default {
     title: 'Sections / POIs / PointOfInterestList',
@@ -33,6 +35,19 @@ export const Default: Story = () => (
                     'Feature 4',
                     'Feature 5',
                 ],
+                action: (isInverted) => (
+                    <Pointer.View
+                        as="a"
+                        href="#"
+                        isInverted={isInverted}
+                        onClick={console.log}
+                    >
+                        <Pointer.Label>Details</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
             },
             {
                 id: 2,
@@ -57,6 +72,19 @@ export const Default: Story = () => (
                     'Feature 4',
                     'Feature 5',
                 ],
+                action: (isInverted) => (
+                    <Pointer.View
+                        as="a"
+                        href="#"
+                        isInverted={isInverted}
+                        onClick={console.log}
+                    >
+                        <Pointer.Label>Details</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
             },
             {
                 id: 3,
@@ -81,6 +109,19 @@ export const Default: Story = () => (
                     'Feature 4',
                     'Feature 5',
                 ],
+                action: (isInverted) => (
+                    <Pointer.View
+                        as="a"
+                        href="#"
+                        isInverted={isInverted}
+                        onClick={console.log}
+                    >
+                        <Pointer.Label>Details</Pointer.Label>
+                        <Pointer.Icon>
+                            <AngleRight />
+                        </Pointer.Icon>
+                    </Pointer.View>
+                ),
             },
         ]}
     />

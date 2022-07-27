@@ -32,6 +32,7 @@ const PointOfInterestList: React.FC<{
         }) => React.ReactNode;
         location: POILocation;
         basics: POIBasics;
+        action?: (isInverted?: boolean) => React.ReactNode;
     }[];
     isInverted?: boolean;
 }> = ({ pois, isInverted }) => {

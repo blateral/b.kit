@@ -1,11 +1,9 @@
-import AngleRight from 'components/base/icons/AngleRight';
 import Computer from 'components/base/icons/Computer';
 import LocationPin from 'components/base/icons/LocationPin';
 import Mail from 'components/base/icons/Mail';
 import Map from 'components/base/icons/Map';
 import Phone from 'components/base/icons/Phone';
 import POIFacts from 'components/blocks/pois/POIFacts';
-import Pointer from 'components/buttons/Pointer';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import Link from 'components/typography/Link';
 import React from 'react';
@@ -142,6 +140,10 @@ const Col = styled.div<{ span?: number; largerSpan?: number }>`
     }
 `;
 
+const Action = styled.div`
+    margin-top: ${spacings.spacer}px;
+`;
+
 /***** POI Types *****/
 export type POIBasics = {
     name: string;
@@ -183,7 +185,8 @@ const PointOfInterest: React.FC<{
     }) => React.ReactNode;
     location: POILocation;
     basics: POIBasics;
-}> = ({ isInverted, facts, customFact, location, basics }) => {
+    action?: (isInverted?: boolean) => React.ReactNode;
+}> = ({ isInverted, facts, customFact, location, basics, action }) => {
     const currentMq = useMediaQuery([
         'small',
         'medium',
@@ -221,14 +224,7 @@ const PointOfInterest: React.FC<{
                         )}
                         <Copy innerHTML={basics.shortDescription} />
                     </TextContent>
-                    <div>
-                        <Pointer.View as="button" onClick={console.log}>
-                            <Pointer.Label>Details anzeigen</Pointer.Label>
-                            <Pointer.Icon>
-                                <AngleRight />
-                            </Pointer.Icon>
-                        </Pointer.View>
-                    </div>
+                    {action && <Action>{action(isInverted)}</Action>}
                 </Col>
                 {!isMobile && (
                     <Col span={40} largerSpan={33.33}>
