@@ -6,7 +6,12 @@ import Wrapper from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
-import { mq, spacings, getColors as color } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    getColors as color,
+    getFonts as font,
+} from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import Check from 'components/base/icons/Check';
@@ -146,6 +151,14 @@ const Icon = styled(Copy)`
     }
 `;
 
+const Text = styled.div<{ isInverted?: boolean }>`
+    ${copyStyle('copy', 'small')}
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme).copy.small.colorInverted
+            : font(theme).copy.small.color};
+`;
+
 const InfoList: FC<{
     isInverted?: boolean;
     items?: PoiInfoGroup[];
@@ -174,10 +187,13 @@ const InfoList: FC<{
                                         </Icon>
                                     )}
                                     {info.text && (
-                                        <Copy
-                                            size="small"
+                                        <Text
                                             isInverted={isInverted}
-                                            innerHTML={info.text}
+                                            dangerouslySetInnerHTML={
+                                                info.text
+                                                    ? { __html: info.text }
+                                                    : undefined
+                                            }
                                         />
                                     )}
                                 </InfoContent>
