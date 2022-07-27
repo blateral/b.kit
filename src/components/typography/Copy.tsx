@@ -43,6 +43,7 @@ const base = css<{
     isInverted?: boolean;
     copyType: CopyType;
     size: FontOptionType;
+    allowLinkIcons?: boolean;
 }>`
     h1,
     h2,
@@ -197,7 +198,8 @@ const base = css<{
     }
 
     /** add icons to anchor tags with matching href value */
-    ${({ theme, isInverted, copyType, size }) => {
+    ${({ theme, isInverted, copyType, size, allowLinkIcons }) => {
+        if (!allowLinkIcons) return '';
         return global(theme).icons.linkIcons.map((item) => {
             const iconChar = parseInt((item as LinkFontIcon).iconChar);
             const iconFont = (item as LinkFontIcon).iconFont;
@@ -314,6 +316,7 @@ const View = styled.div<{
     textGradient?: string;
     isInverted?: boolean;
     columns?: boolean;
+    allowLinkIcons?: boolean;
 }>`
     ${base}
     ${({ copyType, size }) => copyStyle(copyType, size)}
@@ -340,6 +343,7 @@ const Copy: React.FC<{
     size?: FontOptionType;
     columns?: boolean;
     innerHTML?: string;
+    allowLinkIcons?: boolean;
     onClick?: (ev: React.SyntheticEvent<HTMLElement>) => void;
     className?: string;
     children?: React.ReactNode;
@@ -352,6 +356,7 @@ const Copy: React.FC<{
     textGradient,
     columns = false,
     innerHTML,
+    allowLinkIcons = true,
     onClick,
     className,
     children,
@@ -379,6 +384,7 @@ const Copy: React.FC<{
             }
             isInverted={isInverted}
             columns={columns}
+            allowLinkIcons={allowLinkIcons}
             dangerouslySetInnerHTML={
                 innerHTML && !children ? { __html: innerHTML } : undefined
             }

@@ -6,10 +6,10 @@ import Wrapper from 'components/base/Wrapper';
 import { EventProps } from 'components/blocks/EventBlock';
 import Image from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
-import Copy, { copyStyle } from 'components/typography/Copy';
+import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { LinkProps } from 'components/typography/Link';
-import { mq, spacings, getFonts as font } from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import StatusFormatter from 'utils/statusFormatter';
@@ -157,14 +157,6 @@ const Icon = styled(Copy)`
     }
 `;
 
-const Text = styled.div<{ isInverted?: boolean }>`
-    ${copyStyle('copy', 'small')}
-    color: ${({ theme, isInverted }) =>
-        isInverted
-            ? font(theme).copy.small.colorInverted
-            : font(theme).copy.small.color};
-`;
-
 const InfoList: FC<{
     isInverted?: boolean;
     items?: EventInfoGroup[];
@@ -193,13 +185,11 @@ const InfoList: FC<{
                                         </Icon>
                                     )}
                                     {info.text && (
-                                        <Text
+                                        <Copy
+                                            size="small"
                                             isInverted={isInverted}
-                                            dangerouslySetInnerHTML={
-                                                info.text
-                                                    ? { __html: info.text }
-                                                    : undefined
-                                            }
+                                            innerHTML={info.text}
+                                            allowLinkIcons={false}
                                         />
                                     )}
                                 </InfoContent>
