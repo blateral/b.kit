@@ -1,6 +1,8 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import PointOfInterestOverview from 'components/sections/pois/PointOfInterestOverview';
+import PointOfInterestOverview, {
+    PointOfInterestOverviewComponent,
+} from 'components/sections/pois/PointOfInterestOverview';
 import AngleRight from 'components/base/icons/AngleRight';
 import Pointer from 'components/buttons/Pointer';
 import LocationPin from 'components/base/icons/LocationPin';
@@ -11,7 +13,7 @@ import Map from 'components/base/icons/Map';
 
 export default {
     title: 'Sections / POIs / PointOfInterestOverview',
-    component: PointOfInterestOverview,
+    component: PointOfInterestOverviewComponent,
     parameters: {
         status: {
             type: ['preview'],
