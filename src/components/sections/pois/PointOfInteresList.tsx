@@ -24,8 +24,8 @@ const PointOfInterestList: React.FC<{
     pois: {
         id: number;
 
-        features?: string[];
-        customFeature?: (props: {
+        facts?: string[];
+        customFacts?: (props: {
             key: React.Key;
             name: string;
             isInverted?: boolean;

@@ -26,7 +26,7 @@ export const Default: Story = () => (
                     shortDescription:
                         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
                 },
-                features: [
+                facts: [
                     'Feature 1',
                     'Feature 2',
                     'Feature 3',
@@ -50,7 +50,7 @@ export const Default: Story = () => (
                     shortDescription:
                         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
                 },
-                features: [
+                facts: [
                     'Feature 1',
                     'Feature 2',
                     'Feature 3',
@@ -74,7 +74,7 @@ export const Default: Story = () => (
                     shortDescription:
                         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
                 },
-                features: [
+                facts: [
                     'Feature 1',
                     'Feature 2',
                     'Feature 3',
