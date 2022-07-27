@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 
-const FeatureContainer = styled.div`
+const FactsContainer = styled.div`
     margin-top: -${spacings.nudge}px;
     margin-left: -${spacings.nudge * 2}px;
 
@@ -17,12 +17,12 @@ const FeatureContainer = styled.div`
     }
 `;
 
-const FeatureWrapper = styled.div`
+const FactsWrapper = styled.div`
     padding-top: ${spacings.nudge}px;
     padding-left: ${spacings.nudge * 2}px;
 `;
 
-const Feature = styled.span<{ isInverted?: boolean }>`
+const Fact = styled.span<{ isInverted?: boolean }>`
     display: inline-flex;
     align-items: center;
     ${copyStyle('copy', 'medium')}
@@ -35,33 +35,33 @@ const Feature = styled.span<{ isInverted?: boolean }>`
 `;
 
 const POIFacts: React.FC<{
-    features: string[];
-    customFeature?: (props: {
+    facts: string[];
+    customFact?: (props: {
         key: React.Key;
         name: string;
         isInverted?: boolean;
     }) => React.ReactNode;
     isInverted?: boolean;
-}> = ({ features, customFeature, isInverted }) => {
+}> = ({ facts, customFact, isInverted }) => {
     return (
-        <FeatureContainer>
-            {features.map((feature, i) => (
-                <FeatureWrapper key={'tag_' + i}>
-                    {customFeature ? (
-                        customFeature({
+        <FactsContainer>
+            {facts.map((fact, i) => (
+                <FactsWrapper key={'tag_' + i}>
+                    {customFact ? (
+                        customFact({
                             key: `headtag-${i}`,
-                            name: feature || '',
+                            name: fact || '',
                             isInverted: isInverted,
                         })
                     ) : (
-                        <Feature isInverted={isInverted}>
+                        <Fact isInverted={isInverted}>
                             <Check />
-                            <span>{feature}</span>
-                        </Feature>
+                            <span>{fact}</span>
+                        </Fact>
                     )}
-                </FeatureWrapper>
+                </FactsWrapper>
             ))}
-        </FeatureContainer>
+        </FactsContainer>
     );
 };
 

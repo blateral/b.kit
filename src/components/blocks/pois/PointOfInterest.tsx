@@ -175,15 +175,15 @@ type POImq = 'small' | 'medium' | 'semilarge' | 'large' | 'xlarge';
 const PointOfInterest: React.FC<{
     id: number;
     isInverted?: boolean;
-    features?: string[];
-    customFeature?: (props: {
+    facts?: string[];
+    customFact?: (props: {
         key: React.Key;
         name: string;
         isInverted?: boolean;
     }) => React.ReactNode;
     location: POILocation;
     basics: POIBasics;
-}> = ({ isInverted, features, customFeature, location, basics }) => {
+}> = ({ isInverted, facts, customFact, location, basics }) => {
     const currentMq = useMediaQuery([
         'small',
         'medium',
@@ -212,11 +212,11 @@ const PointOfInterest: React.FC<{
             <Row>
                 <Col span={60} largerSpan={66.66}>
                     <TextContent>
-                        {features && (
+                        {facts && (
                             <POIFacts
-                                features={features}
+                                facts={facts}
                                 isInverted={isInverted}
-                                customFeature={customFeature}
+                                customFact={customFact}
                             />
                         )}
                         <Copy innerHTML={basics.shortDescription} />
