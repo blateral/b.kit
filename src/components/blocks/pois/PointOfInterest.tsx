@@ -50,7 +50,8 @@ const DetailBlock: React.FC<{
         text?: string;
         icon?: (isInverted?: boolean) => React.ReactNode;
     }[];
-}> = ({ items }) => {
+    isInverted?: boolean;
+}> = ({ items, isInverted }) => {
     return items.length > 0 ? (
         <DetailBlockView>
             {items.map(({ text, icon }, i) => {
@@ -58,16 +59,20 @@ const DetailBlock: React.FC<{
                 const isWeb = items[i]?.text?.includes('www.');
                 return items[i].text ? (
                     <BlockWrapper key={i}>
-                        <Icon>{icon && icon()}</Icon>
+                        <Icon>{icon && icon(isInverted)}</Icon>
                         {text &&
                             (isWeb || isMail ? (
                                 <Link
+                                    isInverted={isInverted}
                                     href={isMail ? `mailto:${text}` : `${text}`}
                                 >
                                     {text}
                                 </Link>
                             ) : (
-                                <Copy innerHTML={text} />
+                                <Copy
+                                    isInverted={isInverted}
+                                    innerHTML={text}
+                                />
                             ))}
                     </BlockWrapper>
                 ) : null;
@@ -222,13 +227,16 @@ const PointOfInterest: React.FC<{
                                 customFact={customFact}
                             />
                         )}
-                        <Copy innerHTML={basics.shortDescription} />
+                        <Copy
+                            isInverted={isInverted}
+                            innerHTML={basics.shortDescription}
+                        />
                     </TextContent>
                     {action && <Action>{action(isInverted)}</Action>}
                 </Col>
                 {!isMobile && (
                     <Col span={40} largerSpan={33.33}>
-                        <TextContent>
+                        <TextContent isInverted={isInverted}>
                             <DetailBlock
                                 items={[
                                     {
@@ -252,6 +260,7 @@ const PointOfInterest: React.FC<{
                                         icon: () => <Computer />,
                                     },
                                 ]}
+                                isInverted={isInverted}
                             />
                         </TextContent>
                     </Col>
