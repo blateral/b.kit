@@ -25,7 +25,7 @@ const PointOfInterestOverview: React.FC<{
     anchorId?: string;
 
     /** Array of POI card settings */
-    pois: PointOfInterestOverviewItem[];
+    pois?: PointOfInterestOverviewItem[];
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
@@ -50,11 +50,14 @@ const PointOfInterestOverview: React.FC<{
         >
             <Wrapper addWhitespace>
                 <Content>
-                    {pois.map((poi, i) => {
-                        return (
-                            <POICard key={i} {...poi} isInverted={isInverted} />
-                        );
-                    })}
+                    {pois?.map((poi, i) => (
+                        <POICard
+                            key={i}
+                            {...poi}
+                            isInverted={isInverted}
+                            hasBackground={hasBg}
+                        />
+                    ))}
                 </Content>
             </Wrapper>
         </Section>

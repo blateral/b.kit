@@ -50,13 +50,7 @@ export const Default: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
+                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -97,13 +91,7 @@ export const Default: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
+                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -144,13 +132,7 @@ export const Default: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
+                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -199,13 +181,7 @@ export const WithBackground: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
+                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -246,13 +222,7 @@ export const WithBackground: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
+                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -293,13 +263,7 @@ export const WithBackground: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
+                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -348,13 +312,7 @@ export const Inverted: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
+                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -395,13 +353,7 @@ export const Inverted: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
+                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -442,13 +394,7 @@ export const Inverted: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Feature 1',
-                    'Feature 2',
-                    'Feature 3',
-                    'Feature 4',
-                    'Feature 5',
-                ],
+                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"

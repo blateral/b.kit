@@ -7,11 +7,13 @@ import { isValidArray } from 'utils/arrays';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import InfoList, { Info } from './InfoList';
 
-const View = styled.div<{ isInverted?: boolean }>`
+const View = styled.div<{ isInverted?: boolean; hasBackground?: boolean }>`
     border: 1px solid
-        ${({ theme, isInverted }) =>
+        ${({ theme, isInverted, hasBackground }) =>
             isInverted
                 ? color(theme).elementBg.light
+                : hasBackground
+                ? color(theme).elementBg.dark
                 : color(theme).elementBg.medium};
     padding: ${spacings.nudge * 2}px;
     border-radius: ${spacings.nudge}px;
@@ -38,15 +40,15 @@ const Description = styled(Copy)`
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 5; /* number of lines to show */
-    line-clamp: 5;
+    -webkit-line-clamp: 4; /* number of lines to show */
+    line-clamp: 4;
     -webkit-box-orient: vertical;
 `;
 
-const Body = styled.div<{ isInverted?: boolean }>`
+const Body = styled.div<{ isInverted?: boolean; hasBackground?: boolean }>`
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    /* align-items: flex-start; */
 
     @media ${mq.semilarge} {
         margin-left: -${spacings.spacer}px;
@@ -54,9 +56,11 @@ const Body = styled.div<{ isInverted?: boolean }>`
 
         & > * + * {
             border-left: 1px solid
-                ${({ theme, isInverted }) =>
+                ${({ theme, isInverted, hasBackground }) =>
                     isInverted
                         ? color(theme).elementBg.light
+                        : hasBackground
+                        ? color(theme).elementBg.dark
                         : color(theme).elementBg.medium};
         }
     }
@@ -81,6 +85,7 @@ const Col = styled.div`
 
 const InfoCol = styled(Col)`
     display: none;
+    margin-bottom: ${spacings.nudge * 2}px;
 
     @media ${mq.semilarge} {
         display: block;
@@ -122,6 +127,9 @@ export interface POICardProps {
     /** Invert text and background for use on dark sections */
     isInverted?: boolean;
 
+    /** For use on light backgrounds */
+    hasBackground?: boolean;
+
     /** POI name */
     name: string;
 
@@ -147,6 +155,7 @@ export interface POICardProps {
 
 const POICard: React.FC<POICardProps> = ({
     isInverted,
+    hasBackground,
     name,
     shortDescription,
     facts,
@@ -158,14 +167,14 @@ const POICard: React.FC<POICardProps> = ({
     const hasInfos = isValidArray(infos, false);
 
     return (
-        <View isInverted={isInverted}>
+        <View isInverted={isInverted} hasBackground={hasBackground}>
             {name && (
                 <Title type="copy-b" size="big" isInverted={isInverted}>
                     {name}
                 </Title>
             )}
             {(hasFacts || shortDescription || hasInfos || action) && (
-                <Body isInverted={isInverted}>
+                <Body isInverted={isInverted} hasBackground={hasBackground}>
                     <Col>
                         {isValidArray(facts, false) && (
                             <POIFacts
