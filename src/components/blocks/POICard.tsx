@@ -98,9 +98,7 @@ const InfoCol = styled(Col)`
     }
 `;
 
-const Action = styled.div`
-    margin-top: ${spacings.spacer}px;
-`;
+const Action = styled.div``;
 
 export type POILocation = {
     address: string;
