@@ -54,7 +54,7 @@ const InputField = styled.input<{
     }
 
     &:focus {
-        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
         outline-offset: 0;
     }
 

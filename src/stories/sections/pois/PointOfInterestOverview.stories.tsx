@@ -27,7 +27,7 @@ export const Default: Story = () => (
             {
                 name: 'Beispiel POI 1',
                 shortDescription:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non Poi 3 tempore fugit dolore numquam quidem adipisci cum fugiat a.',
                 infos: [
                     {
                         text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
@@ -50,7 +50,14 @@ export const Default: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
+                facts: [
+                    'Fact 1',
+                    'Fact 2',
+                    'Fact 3',
+                    'Fact 4',
+                    'Fact 5',
+                    'Fact 6',
+                ],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -68,10 +75,10 @@ export const Default: Story = () => (
             {
                 name: 'Beispiel POI 2',
                 shortDescription:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                    'Bavaria ipsum dolor sit amet hallelujah sog i, luja de Biagadn wea ko, dea ko da Kini mei des. Woaß Sauwedda hoam middn Edlweiss: Und da geh, woaß: Heid gfoids ma sagrisch guad Freibia vo de so schee ghupft wia gsprunga gschmeidig anbandeln ned woar. G’hupft wia gsprunga a ganze hallelujah sog i, luja wia. Baamwach af des is hoid aso, hi Schorsch. Obazda d’ Milli oa? No wann griagd ma nacha wos z’dringa jo mei nackata Weißwiaschd sodala hoid Gidarn. Wui gor dringma aweng no a Maß, ja, wo samma denn fias noch da Giasinga Heiwog: Gidarn auf der Oim, da gibt’s koa Sünd Biaschlegl schaugn, koa. Weida Biazelt blärrd af, Xaver do legst di nieda: Glei es Vergeltsgott a Prosit der Gmiadlichkeit des i moan scho aa Foidweg Heimatland san moand. Marei vui und sei obandeln Schuabladdla, g’hupft wia gsprunga.',
                 infos: [
                     {
-                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        text: `Neues Rathaus, Münsterstraße , 12345 Example City`,
                         icon: () => <LocationPin />,
                     },
                     {
@@ -109,7 +116,7 @@ export const Default: Story = () => (
             {
                 name: 'Beispiel POI 3',
                 shortDescription:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a. POI1 hallelujah',
                 infos: [
                     {
                         text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
@@ -158,7 +165,7 @@ export const WithBackground: Story = () => (
             {
                 name: 'Beispiel POI 1',
                 shortDescription:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas Poi 3 non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
                 infos: [
                     {
                         text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
@@ -181,7 +188,14 @@ export const WithBackground: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
+                facts: [
+                    'Fact 1',
+                    'Fact 2',
+                    'Fact 3',
+                    'Fact 4',
+                    'Fact 5',
+                    'Fact 6',
+                ],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -199,10 +213,10 @@ export const WithBackground: Story = () => (
             {
                 name: 'Beispiel POI 2',
                 shortDescription:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                    'Bavaria ipsum dolor sit amet hallelujah sog i, luja de Biagadn wea ko, dea ko da Kini mei des. Woaß Sauwedda hoam middn Edlweiss: Und da geh, woaß: Heid gfoids ma sagrisch guad Freibia vo de so schee ghupft wia gsprunga gschmeidig anbandeln ned woar. G’hupft wia gsprunga a ganze hallelujah sog i, luja wia. Baamwach af des is hoid aso, hi Schorsch. Obazda d’ Milli oa? No wann griagd ma nacha wos z’dringa jo mei nackata Weißwiaschd sodala hoid Gidarn. Wui gor dringma aweng no a Maß, ja, wo samma denn fias noch da Giasinga Heiwog: Gidarn auf der Oim, da gibt’s koa Sünd Biaschlegl schaugn, koa. Weida Biazelt blärrd af, Xaver do legst di nieda: Glei es Vergeltsgott a Prosit der Gmiadlichkeit des i moan scho aa Foidweg Heimatland san moand. Marei vui und sei obandeln Schuabladdla, g’hupft wia gsprunga.',
                 infos: [
                     {
-                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        text: `Neues Rathaus, Münsterstraße , 12345 Example City`,
                         icon: () => <LocationPin />,
                     },
                     {
@@ -240,7 +254,7 @@ export const WithBackground: Story = () => (
             {
                 name: 'Beispiel POI 3',
                 shortDescription:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a. POI1 hallelujah',
                 infos: [
                     {
                         text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
@@ -289,7 +303,7 @@ export const Inverted: Story = () => (
             {
                 name: 'Beispiel POI 1',
                 shortDescription:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore Poi 3 fugit dolore numquam quidem adipisci cum fugiat a.',
                 infos: [
                     {
                         text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
@@ -312,7 +326,14 @@ export const Inverted: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
+                facts: [
+                    'Fact 1',
+                    'Fact 2',
+                    'Fact 3',
+                    'Fact 4',
+                    'Fact 5',
+                    'Fact 6',
+                ],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -330,10 +351,10 @@ export const Inverted: Story = () => (
             {
                 name: 'Beispiel POI 2',
                 shortDescription:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                    'Bavaria ipsum dolor sit amet hallelujah sog i, luja de Biagadn wea ko, dea ko da Kini mei des. Woaß Sauwedda hoam middn Edlweiss: Und da geh, woaß: Heid gfoids ma sagrisch guad Freibia vo de so schee ghupft wia gsprunga gschmeidig anbandeln ned woar. G’hupft wia gsprunga a ganze hallelujah sog i, luja wia. Baamwach af des is hoid aso, hi Schorsch. Obazda d’ Milli oa? No wann griagd ma nacha wos z’dringa jo mei nackata Weißwiaschd sodala hoid Gidarn. Wui gor dringma aweng no a Maß, ja, wo samma denn fias noch da Giasinga Heiwog: Gidarn auf der Oim, da gibt’s koa Sünd Biaschlegl schaugn, koa. Weida Biazelt blärrd af, Xaver do legst di nieda: Glei es Vergeltsgott a Prosit der Gmiadlichkeit des i moan scho aa Foidweg Heimatland san moand. Marei vui und sei obandeln Schuabladdla, g’hupft wia gsprunga.',
                 infos: [
                     {
-                        text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                        text: `Neues Rathaus, Münsterstraße , 12345 Example City`,
                         icon: () => <LocationPin />,
                     },
                     {
@@ -371,7 +392,7 @@ export const Inverted: Story = () => (
             {
                 name: 'Beispiel POI 3',
                 shortDescription:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque voluptas non tempore fugit dolore numquam quidem adipisci cum fugiat a. POI1 hallelujah',
                 infos: [
                     {
                         text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
