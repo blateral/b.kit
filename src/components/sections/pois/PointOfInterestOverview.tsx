@@ -22,6 +22,9 @@ const Content = styled.div`
 `;
 
 const Filter = styled(FilterField)`
+    // margin to show prevent section overflow outline
+    margin-top: 2px;
+
     &:not(:last-child) {
         margin-bottom: ${spacings.nudge * 5}px;
     }
