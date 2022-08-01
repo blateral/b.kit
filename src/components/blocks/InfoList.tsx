@@ -5,7 +5,9 @@ import { isValidArray } from 'utils/arrays';
 
 import { mq, spacings } from 'utils/styles';
 
-const View = styled.ul`
+const View = styled.div``;
+
+const Container = styled.ul`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -90,45 +92,47 @@ const InfoList: FC<{
 }> = ({ isInverted, items, className }) => {
     return (
         <View className={className}>
-            {items?.map((group, i) => {
-                const hasItems = isValidArray(group?.items, false);
+            <Container>
+                {items?.map((group, i) => {
+                    const hasItems = isValidArray(group?.items, false);
 
-                return (
-                    <Item key={i}>
-                        {group.title && (
-                            <Title
-                                size="small"
-                                type="copy-b"
-                                renderAs="span"
-                                isInverted={isInverted}
-                            >
-                                {group.title}
-                            </Title>
-                        )}
-                        {hasItems && (
-                            <Infos>
-                                {group?.items?.map((info, ii) => (
-                                    <Content key={ii}>
-                                        {info.icon && (
-                                            <Icon isInverted={isInverted}>
-                                                {info.icon(isInverted)}
-                                            </Icon>
-                                        )}
-                                        {info.text && (
-                                            <Copy
-                                                size="small"
-                                                isInverted={isInverted}
-                                                innerHTML={info.text}
-                                                allowLinkIcons={false}
-                                            />
-                                        )}
-                                    </Content>
-                                ))}
-                            </Infos>
-                        )}
-                    </Item>
-                );
-            })}
+                    return (
+                        <Item key={i}>
+                            {group.title && (
+                                <Title
+                                    size="small"
+                                    type="copy-b"
+                                    renderAs="span"
+                                    isInverted={isInverted}
+                                >
+                                    {group.title}
+                                </Title>
+                            )}
+                            {hasItems && (
+                                <Infos>
+                                    {group?.items?.map((info, ii) => (
+                                        <Content key={ii}>
+                                            {info.icon && (
+                                                <Icon isInverted={isInverted}>
+                                                    {info.icon(isInverted)}
+                                                </Icon>
+                                            )}
+                                            {info.text && (
+                                                <Copy
+                                                    size="small"
+                                                    isInverted={isInverted}
+                                                    innerHTML={info.text}
+                                                    allowLinkIcons={false}
+                                                />
+                                            )}
+                                        </Content>
+                                    ))}
+                                </Infos>
+                            )}
+                        </Item>
+                    );
+                })}
+            </Container>
         </View>
     );
 };
