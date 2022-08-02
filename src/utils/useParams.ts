@@ -3,18 +3,31 @@ import { useCallback, useEffect, useState } from 'react';
 const isSupported =
     typeof window !== 'undefined' && 'URLSearchParams' in window;
 
+const getParamsObj = (params?: URLSearchParams) => {
+    const obj: Record<string, string> = {};
+
+    const paramsObj = Object.fromEntries(
+        params || new URLSearchParams(window.location.search)
+    );
+
+    for (const param in paramsObj) {
+        let value = paramsObj[param];
+        if (typeof value === 'string') {
+            value = decodeURIComponent(value);
+        }
+        obj[param] = value;
+    }
+
+    return obj;
+};
+
 const useParams = () => {
     const [params, setParams] = useState<Record<string, string>>({});
 
     useEffect(() => {
         if (!isSupported) return;
 
-        const params = Object.fromEntries(
-            new URLSearchParams(window.location.search)
-        );
-        if (params) {
-            setParams(params);
-        }
+        setParams(getParamsObj());
     }, []);
 
     const update = useCallback(
@@ -22,17 +35,14 @@ const useParams = () => {
             if (!isSupported) return;
 
             const newParams = { ...params };
-            newParams[key] = encodeURIComponent(value);
+            newParams[key] = value;
 
             const currentParams = new URLSearchParams(window.location.search);
             for (const param in newParams) {
-                currentParams.set(param, newParams[param]);
+                currentParams.set(param, encodeURIComponent(newParams[param]));
             }
 
-            const newParamObj = Object.fromEntries(currentParams);
-            if (newParamObj) {
-                setParams(newParamObj);
-            }
+            setParams(getParamsObj(currentParams));
 
             window.history.replaceState(
                 {},
