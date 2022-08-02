@@ -56,6 +56,7 @@ export { isEmptyArray, isValidArray } from 'utils/arrays';
 export { concat, printAnchorTag } from 'utils/concat';
 export { getLinkIcon } from 'utils/getLinkIcon';
 export { default as useLeafletMap } from 'utils/useLeafletMap';
+export { default as useParams } from 'utils/useParams';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';

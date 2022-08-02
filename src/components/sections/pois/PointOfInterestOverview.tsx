@@ -3,11 +3,13 @@ import Wrapper from 'components/base/Wrapper';
 import { Info } from 'components/blocks/InfoList';
 import POICard, { POICardProps } from 'components/blocks/POICard';
 import FilterField from 'components/fields/FilterField';
+import { useUpdateEffect } from 'index';
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { mq, spacings } from 'utils/styles';
+import useParams from 'utils/useParams';
 
 const Content = styled.div`
     & > * + * {
@@ -223,28 +225,16 @@ const PointOfInterestOverview: React.FC<{
         return prioList;
     }, [filterQuery, pois]);
 
-    useEffect(() => {
-        if (!enableFiltering || !('URLSearchParams' in window)) return;
-        const params = new URLSearchParams(window.location.search);
-        const filterParam = params.get('filter');
-
-        if (filterParam) {
-            setFilterQuery(decodeURIComponent(filterParam));
-        }
-    }, [enableFiltering]);
+    const { params, update } = useParams();
 
     useEffect(() => {
-        if (!enableFiltering || !('URLSearchParams' in window)) return;
+        setFilterQuery(params['filter'] || '');
+    }, [params]);
 
-        const params = new URLSearchParams(window.location.search);
-        params.set('filter', encodeURIComponent(filterQuery));
-
-        window.history.replaceState(
-            {},
-            '',
-            `${location.pathname}?${params.toString() + location.hash}`
-        );
-    }, [enableFiltering, filterQuery]);
+    useUpdateEffect(() => {
+        update('filter', filterQuery);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterQuery]);
 
     return (
         <Section
