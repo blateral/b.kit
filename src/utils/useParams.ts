@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const isSupported = 'URLSearchParams' in window;
+const isSupported =
+    typeof window !== 'undefined' && 'URLSearchParams' in window;
 
 const useParams = () => {
     const [params, setParams] = useState<Record<string, string>>({});
