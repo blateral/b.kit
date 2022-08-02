@@ -115,6 +115,7 @@ export { default as JobList } from 'components/sections/jobs/JobList';
 export { default as JobArticle } from 'components/sections/jobs/JobArticle';
 export { default as PointOfInterestDetail } from 'components/sections/pois/PointOfInterestDetail';
 export { default as PointOfInterestOverview } from 'components/sections/pois/PointOfInterestOverview';
+export { default as PointOfInterestMap } from 'components/sections/pois/PointOfInterestMap';
 
 /***** Buttons *****/
 export { default as Button } from 'components/buttons/Button';
