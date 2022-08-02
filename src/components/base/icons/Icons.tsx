@@ -63,3 +63,4 @@ export { default as Minus } from 'components/base/icons/Minus';
 export { default as DeleteForever } from 'components/base/icons/DeleteForever';
 export { default as Person } from 'components/base/icons/Person';
 export { default as Category } from 'components/base/icons/Category';
+export { default as CurrentLocation } from 'components/base/icons/CurrentLocation';

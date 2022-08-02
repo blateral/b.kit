@@ -501,6 +501,7 @@ const Map: FC<{
             id,
             position,
             icon: icon || defaultMarker,
+            isInteractive: true,
         })),
         fitBoundsPadding,
         onMarkerClick: setActiveLocationId,

@@ -72,8 +72,10 @@ const View = styled.a<{
         padding-right: ${spacings.nudge}px;
     }
 
-    &:hover {
-        opacity: 0.6;
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            opacity: 0.6;
+        }
     }
 
     &:focus {

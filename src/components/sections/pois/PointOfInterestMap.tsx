@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import Section, { mapToBgMode } from 'components/base/Section';
+import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import useLeafletMap from 'utils/useLeafletMap';
+import { withLibTheme } from 'utils/LibThemeProvider';
+import useLeafletMap, { LeafletMapMarker } from 'utils/useLeafletMap';
 import { mq, withRange, getColors as color, spacings } from 'utils/styles';
 import {
     generateNavbarIdent as genIdent,
@@ -16,6 +16,10 @@ import Copy from 'components/typography/Copy';
 import { isValidArray } from 'utils/arrays';
 import POIFacts from 'components/blocks/POIFacts';
 import InfoList, { Info } from 'components/blocks/InfoList';
+import useGeolocation from 'utils/useGeolocation';
+import CurrentLocation from 'components/base/icons/CurrentLocation';
+import Cross from 'components/base/icons/Cross';
+import MyLocation from 'components/base/icons/MyLocation';
 
 const genHeightStyles = () => css`
     // Doing some crazy shit to calculate curent navbar height in CSS
@@ -65,28 +69,28 @@ const genHeightStyles = () => css`
             }
 
             // with main navbar element
-            header${mapToSelector(mainIdent.split('-'))} + & {
+            header${mapToSelector(mainIdent.split('-'))} ~ & {
                 ${Map} {
                     height: calc(${refHeight} - ${navMainHeight[0]}px);
                 }
             }
 
             // with main and top navbar elements
-            header${mapToSelector(mainTopIdent.split('-'))} + & {
+            header${mapToSelector(mainTopIdent.split('-'))} ~ & {
                 ${Map} {
                     height: calc(${refHeight} - ${navMainTopHeight[0]}px);
                 }
             }
 
             // with main and bottom navbar elements
-            header${mapToSelector(mainBottomIdent.split('-'))} + & {
+            header${mapToSelector(mainBottomIdent.split('-'))} ~ & {
                 ${Map} {
                     height: calc(${refHeight} - ${navMainBottomHeight[0]}px);
                 }
             }
 
             // with all navbar elements
-            header${mapToSelector(fullIdent.split('-'))} + & {
+            header${mapToSelector(fullIdent.split('-'))} ~ & {
                 ${Map} {
                     height: calc(${refHeight} - ${navFullHeight[0]}px);
                 }
@@ -94,21 +98,21 @@ const genHeightStyles = () => css`
 
             @media ${mq.semilarge} {
                 // with main navbar element
-                header${mapToSelector(mainIdent.split('-'))} + & {
+                header${mapToSelector(mainIdent.split('-'))} ~ & {
                     ${Map} {
                         height: calc(${refHeight} - ${navMainHeight[1]}px);
                     }
                 }
 
                 // with main and top navbar elements
-                header${mapToSelector(mainTopIdent.split('-'))} + & {
+                header${mapToSelector(mainTopIdent.split('-'))} ~ & {
                     ${Map} {
                         height: calc(${refHeight} - ${navMainTopHeight[1]}px);
                     }
                 }
 
                 // with main and bottom navbar elements
-                header${mapToSelector(mainBottomIdent.split('-'))} + & {
+                header${mapToSelector(mainBottomIdent.split('-'))} ~ & {
                     ${Map} {
                         height: calc(
                             ${refHeight} - ${navMainBottomHeight[1]}px
@@ -117,7 +121,7 @@ const genHeightStyles = () => css`
                 }
 
                 // with all navbar elements
-                header${mapToSelector(fullIdent.split('-'))} + & {
+                header${mapToSelector(fullIdent.split('-'))} ~ & {
                     ${Map} {
                         height: calc(${refHeight} - ${navFullHeight[1]}px);
                     }
@@ -144,10 +148,49 @@ const MapContainer = styled.div`
 const Map = styled.div<{ isLarge?: boolean }>`
     min-height: 360px;
     height: 360px;
+    max-height: 1300px;
     z-index: 0;
 
     @media ${mq.medium} {
         height: 600px;
+        min-height: 600px;
+    }
+`;
+
+const RequestGeolocationBtn = styled.button`
+    position: absolute;
+    top: ${spacings.nudge * 2}px;
+    left: ${spacings.nudge * 2}px;
+
+    background-color: transparent;
+    border: none;
+    padding: ${spacings.nudge}px;
+    cursor: pointer;
+
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+
+    &:focus {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
+        transform: scale(1.012);
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    & > * {
+        width: 30px;
+        height: 30px;
     }
 `;
 
@@ -195,22 +238,79 @@ const MapCardView = styled.div`
     }
 `;
 
+const MapCardHeader = styled.header`
+    display: flex;
+    align-items: center;
+`;
+
+const CloseBtn = styled.button`
+    display: inline-block;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: auto;
+    padding: ${spacings.nudge}px;
+
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+
+    &:focus {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
+        transform: scale(1.012);
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+`;
+
 const MapCard: FC<{
     name?: string;
     facts?: string[];
     description?: string;
     infos?: Info[];
 
+    action?: React.ReactNode;
+    onClose?: () => void;
+    customFact?: (props: { key: React.Key; name: string }) => React.ReactNode;
+    customClose?: React.ReactNode;
+
     className?: string;
-}> = ({ name, facts, description, infos, className }) => {
+}> = ({
+    name,
+    facts,
+    description,
+    infos,
+    action,
+    customFact,
+    customClose,
+    onClose,
+    className,
+}) => {
     return (
         <MapCardView className={className}>
-            {name && (
-                <Copy type="copy-b" size="big">
-                    {name}
-                </Copy>
+            <MapCardHeader>
+                {name && (
+                    <Copy type="copy-b" size="big">
+                        {name}
+                    </Copy>
+                )}
+                <CloseBtn onClick={onClose}>
+                    {customClose || <Cross />}
+                </CloseBtn>
+            </MapCardHeader>
+            {isValidArray(facts, false) && (
+                <POIFacts facts={facts} customFact={customFact} />
             )}
-            {isValidArray(facts, false) && <POIFacts facts={facts} />}
             {description && (
                 <Copy type="copy" size="small" innerHTML={description} />
             )}
@@ -223,6 +323,7 @@ const MapCard: FC<{
                     ]}
                 />
             )}
+            {action && action}
         </MapCardView>
     );
 };
@@ -257,6 +358,9 @@ export interface MapPOI {
 
     /** Array of additional POI informations */
     infos?: Info[];
+
+    /** Function to inject custom action node */
+    action?: React.ReactNode;
 }
 
 const PointOfInterestMap: FC<{
@@ -268,6 +372,9 @@ const PointOfInterestMap: FC<{
 
     /** Array of POI card settings */
     pois?: MapPOI[];
+
+    /** Use geolocation for own position */
+    showOwnPosition?: boolean;
 
     /** Map tile provider */
     provider?: string;
@@ -281,6 +388,12 @@ const PointOfInterestMap: FC<{
     /** Initial map zoom */
     zoom?: number;
 
+    /** Min map zoom */
+    minZoom?: number;
+
+    /** Max map zoom */
+    maxZoom?: number;
+
     /** Zoom if map jumps to location */
     flyToZoom?: number;
 
@@ -290,16 +403,27 @@ const PointOfInterestMap: FC<{
     /** Show all markers on first load */
     allMarkersOnInit?: boolean;
 
+    /** Restrict map to bounds of markers area */
+    restrictToMarkersArea?: boolean;
+
     /** Map container padding for show all markers */
     fitBoundsPadding?: [number, number];
 
-    /** Section background */
-    bgMode?: 'full' | 'inverted';
+    /** Function to inject custom fact node into MapCard */
+    customFact?: (props: { key: React.Key; name: string }) => React.ReactNode;
+
+    /** Custom current position marker */
+    currentPosMarker?: LocationIcon;
+
+    /** Custom card close icon */
+    customCardClose?: React.ReactNode;
+
+    /** Custom icon for my location request button */
+    customLocationRequest?: React.ReactNode;
 }> = ({
     anchorId,
     size,
     pois,
-    bgMode,
     initialPointOfInterest = '',
     provider,
     attribution,
@@ -307,12 +431,15 @@ const PointOfInterestMap: FC<{
     zoom = 5,
     fitBoundsPadding,
     allMarkersOnInit = false,
+    restrictToMarkersArea = true,
+    showOwnPosition,
     flyToZoom,
+    customFact,
+    currentPosMarker,
+    customCardClose,
+    customLocationRequest,
 }) => {
-    const { colors } = useLibTheme();
-
-    const isInverted = bgMode === 'inverted';
-    const hasBg = bgMode === 'full';
+    const isLarge = size === 'large';
 
     const [activePoiId, setActivePoiId] = useState<string>(
         initialPointOfInterest || ''
@@ -322,33 +449,79 @@ const PointOfInterestMap: FC<{
         return pois?.find((poi) => poi.id === activePoiId);
     }, [activePoiId, pois]);
 
-    const defaultMarker: LocationIcon = {
-        size: [28, 28],
-        anchor: [14, 28],
-        sizeActive: [70, 70],
-        anchorActive: [35, 70],
-        url: getSVGData(<LocationPin />),
-    };
+    const {
+        isSupported: isGeolocationSupported,
+        location,
+        // error,
+    } = useGeolocation(true, !!showOwnPosition);
+
+    const mapMarkers = useMemo(() => {
+        const defaultMarker: LocationIcon = {
+            size: [28, 28],
+            anchor: [14, 28],
+            sizeActive: [70, 70],
+            anchorActive: [35, 70],
+            url: getSVGData(<LocationPin />),
+        };
+
+        // marker of own position
+        const defaultPosMarker: LocationIcon = {
+            size: [24, 24],
+            anchor: [12, 12],
+            sizeActive: [24, 24],
+            anchorActive: [12, 12],
+            url: getSVGData(<CurrentLocation iconColor="#5383EC" />),
+        };
+
+        const markers: LeafletMapMarker[] =
+            pois
+                ?.filter((poi) => poi.id !== undefined)
+                ?.map(({ id, position, icon }) => ({
+                    id,
+                    position,
+                    icon: icon || defaultMarker,
+                    isInteractive: true,
+                })) || [];
+
+        if (
+            isGeolocationSupported &&
+            location?.coords.latitude &&
+            location?.coords.longitude
+        ) {
+            markers.push({
+                id: 'my-current-position-123456789',
+                position: [location.coords.latitude, location.coords.longitude],
+                icon: currentPosMarker || defaultPosMarker,
+            });
+        }
+
+        return markers;
+    }, [
+        currentPosMarker,
+        isGeolocationSupported,
+        location?.coords.latitude,
+        location?.coords.longitude,
+        pois,
+    ]);
 
     const {
         isLoaded,
         setContainer: setMapContainer,
         flyToActive,
         showAllMarkers,
+        flyToPosition,
+        getCurrentZoom,
     } = useLeafletMap({
         url: provider,
         attribution,
         center,
         zoom,
         activeMarkerId: activePoiId,
-        markers: pois
-            ?.filter((poi) => poi.id !== undefined)
-            ?.map(({ id, position, icon }) => ({
-                id,
-                position,
-                icon: icon || defaultMarker,
-            })),
+        markers: mapMarkers,
         fitBoundsPadding,
+        restrictToMarkersArea,
+        showZoomControls: true,
+        zoomControlPosition: 'bottomleft',
         onMarkerClick: (markerId) => {
             setActivePoiId((prev) => {
                 if (prev === markerId) {
@@ -363,13 +536,20 @@ const PointOfInterestMap: FC<{
         if (isLoaded && !isDirty) {
             if (allMarkersOnInit) showAllMarkers();
         } else {
-            flyToActive(flyToZoom);
+            const currentZoom = getCurrentZoom();
+            let zoom = flyToZoom;
+            if (flyToZoom !== undefined && currentZoom > flyToZoom) {
+                zoom = currentZoom;
+            }
+
+            flyToActive(zoom);
         }
     }, [
         activePoiId,
         allMarkersOnInit,
         flyToActive,
         flyToZoom,
+        getCurrentZoom,
         initialPointOfInterest,
         isDirty,
         isLoaded,
@@ -382,28 +562,33 @@ const PointOfInterestMap: FC<{
         }
     }, [activePoiId, initialPointOfInterest, isDirty]);
 
+    const handleLocationRequest = () => {
+        if (location?.coords?.latitude && location?.coords?.longitude) {
+            flyToPosition(
+                [location.coords.latitude, location.coords.longitude],
+                flyToZoom
+            );
+        }
+    };
+
     return (
-        <PoiMapSection
-            addSeperation
-            anchorId={anchorId}
-            bgColor={
-                isInverted
-                    ? colors.sectionBg.dark
-                    : hasBg
-                    ? colors.sectionBg.medium
-                    : colors.sectionBg.light
-            }
-            bgMode={mapToBgMode(bgMode, true)}
-        >
-            <Wrapper
-                addWhitespace
-                clampWidth={size === 'large' ? 'large' : 'normal'}
-            >
+        <PoiMapSection anchorId={anchorId} bgColor="image" bgMode="full">
+            <Wrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <MapContainer>
                     <Map ref={setMapContainer} isLarge={size === 'large'} />
-                    {activePOI && (
-                        <CardStage onClick={() => setActivePoiId('')}>
-                            <MapCard {...activePOI} />
+                    {showOwnPosition && location && (
+                        <RequestGeolocationBtn onClick={handleLocationRequest}>
+                            {customLocationRequest || <MyLocation />}
+                        </RequestGeolocationBtn>
+                    )}
+                    {activePOI && activePOI.name && (
+                        <CardStage>
+                            <MapCard
+                                {...activePOI}
+                                onClose={() => setActivePoiId('')}
+                                customFact={customFact}
+                                customClose={customCardClose}
+                            />
                         </CardStage>
                     )}
                 </MapContainer>

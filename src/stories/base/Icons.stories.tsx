@@ -67,6 +67,7 @@ import DeleteForever from 'components/base/icons/DeleteForever';
 import BoxArrowUpRight from 'components/base/icons/BoxArrowUpRight';
 import Person from 'components/base/icons/Person';
 import Category from 'components/base/icons/Category';
+import CurrentLocation from 'components/base/icons/CurrentLocation';
 
 export default {
     title: 'Base/Icons',
@@ -124,6 +125,7 @@ export default {
         BoxArrowUpRight,
         Person,
         Category,
+        CurrentLocation,
     },
     decorators: [
         (Story) => (
@@ -279,3 +281,6 @@ IconPerson.storyName = 'Person';
 
 export const IconCategory: Story = () => <Category />;
 IconCategory.storyName = 'Category';
+
+export const IconCurrentLocation: Story = () => <CurrentLocation />;
+IconCurrentLocation.storyName = 'Current Location';

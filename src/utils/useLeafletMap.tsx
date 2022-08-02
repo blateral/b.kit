@@ -10,6 +10,8 @@ import {
 export interface LeafletMapSettings {
     center: [number, number];
     zoom: number;
+    minZoom?: number;
+    maxZoom?: number;
     touchZoom: boolean;
     scrollWheelZoom: boolean;
     onlyScrollOnFocus: boolean;
@@ -18,6 +20,10 @@ export interface LeafletMapSettings {
     markers: Array<LeafletMapMarker>;
     activeMarkerId?: string;
     fitBoundsPadding: [number, number];
+    restrictToMarkersArea?: boolean;
+    markerAreaBufferRatio?: number;
+    showZoomControls?: boolean;
+    zoomControlPosition?: 'bottomleft' | 'bottomright' | 'topleft' | 'topright';
     onMarkerClick?: (markerId: string) => void;
     onActiveMarkerChanged?: (props: { markerId: string }) => void;
     onReady?: () => void;
@@ -27,6 +33,7 @@ export interface LeafletMapSettings {
 export interface LeafletMapMarker {
     id: string;
     position: [number, number];
+    isInteractive?: boolean;
     icon?: {
         url: string;
         size: [number, number];
@@ -44,7 +51,7 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
     const [container, setContainer] = useState<HTMLElement | null>(null);
     const [L, setLeaflet] = useState<any>(null);
     const [map, setMap] = useState<Map | null>(null);
-    const [markersLayer, setMarkersLayer] =
+    const [markersLayerGroup, setMarkersLayerGroup] =
         useState<FeatureGroup<any> | null>(null);
     const prevMarkerId = useRef<string | null>(null);
     const [isLoaded, setLoaded] = useState<boolean>(false);
@@ -63,12 +70,15 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
             zoom: 2.5,
             touchZoom: false,
             scrollWheelZoom: false,
+            showZoomControls: true,
+            zoomControlPosition: 'topleft',
             onlyScrollOnFocus: true,
             url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             attribution:
                 '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             markers: [],
             fitBoundsPadding: [20, 20], // 0 = TopLeft, 1 = BottomRight
+            markerAreaBufferRatio: 0.2,
             ...settings,
         };
     }, [settings]);
@@ -93,7 +103,19 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
                 zoom: mapSettings.zoom,
                 touchZoom: mapSettings.touchZoom,
                 scrollWheelZoom: mapSettings.scrollWheelZoom,
+                maxBoundsViscosity: 0.8,
+                zoomControl: false,
+                minZoom: mapSettings.minZoom,
+                maxZoom: mapSettings.maxZoom,
             });
+
+            if (mapSettings.showZoomControls) {
+                leaflet.control
+                    .zoom({
+                        position: mapSettings.zoomControlPosition,
+                    })
+                    .addTo(map);
+            }
 
             // activate map scrolling on focus
             map.once('focus', () => {
@@ -124,10 +146,10 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
                 .addTo(map);
 
             // setup layer for markers
-            const markersLayer = new leaflet.FeatureGroup();
-            markersLayer.addTo(map);
+            const group = new leaflet.FeatureGroup();
+            group.addTo(map);
 
-            setMarkersLayer(markersLayer);
+            setMarkersLayerGroup(group);
         };
 
         init();
@@ -145,70 +167,116 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
     ]);
 
     useEffect(() => {
-        if (!markersLayer) return;
+        if (!map || !markersLayerGroup) return;
 
-        markersLayer.clearLayers();
-        mapSettings.markers?.forEach(({ position, icon, id }) => {
-            if (!icon?.url || !icon?.size || !position) return;
-            const isActive = id === mapSettings.activeMarkerId;
+        markersLayerGroup.clearLayers();
+        mapSettings.markers?.forEach(
+            ({ position, icon, id, isInteractive }) => {
+                if (!icon?.url || !icon?.size || !position) return;
+                const isActive = id === mapSettings.activeMarkerId;
 
-            const markerIcon = L.icon({
-                iconUrl: icon.url,
+                const markerIcon = L.icon({
+                    iconUrl: icon.url,
 
-                iconSize: isActive ? icon.sizeActive : icon.size, // size of the icon
-                // shadowSize: [50, 64], // size of the shadow
-                iconAnchor: isActive ? icon.anchorActive : icon?.anchor, // point of the icon which will correspond to marker's location
-                // shadowAnchor: [4, 62], // the same for the shadow
-                // popupAnchor: [0, -16], // point from which the popup should open relative to the iconAnchor
-            });
+                    iconSize: isActive ? icon.sizeActive : icon.size, // size of the icon
+                    // shadowSize: [50, 64], // size of the shadow
+                    iconAnchor: isActive ? icon.anchorActive : icon?.anchor, // point of the icon which will correspond to marker's location
+                    // shadowAnchor: [4, 62], // the same for the shadow
+                    // popupAnchor: [0, -16], // point from which the popup should open relative to the iconAnchor
+                });
 
-            const marker: Marker = L.marker(position, {
-                icon: markerIcon,
-                riseOnHover: true,
-            } as MarkerOptions).addTo(map);
+                const marker: Marker = L.marker(
+                    L.latLng(position[0], position[1]),
+                    {
+                        icon: markerIcon,
+                        riseOnHover: true,
+                        interactive: isInteractive,
+                    } as MarkerOptions
+                ).addTo(map);
 
-            marker.on('click', () => {
-                mapSettings.onMarkerClick?.(id);
-            });
+                if (isInteractive) {
+                    marker.on('click', () => {
+                        mapSettings.onMarkerClick?.(id);
+                    });
+                }
 
-            // add marker to markers layer
-            markersLayer.addLayer(marker);
+                // add marker to markers layer
+                markersLayerGroup.addLayer(marker);
 
-            if (L && map && markersLayer) {
-                if (!isLoaded) {
-                    // on first load
-                    mapSettings.onReady?.();
-                    setLoaded(true);
-                    if (mapSettings.activeMarkerId) {
-                        prevMarkerId.current = mapSettings.activeMarkerId;
-                    }
-                } else {
-                    // check if active marker changed
-                    if (
-                        mapSettings.activeMarkerId &&
-                        mapSettings.activeMarkerId !== prevMarkerId?.current
-                    ) {
-                        prevMarkerId.current = mapSettings.activeMarkerId;
+                if (L && map && markersLayerGroup) {
+                    if (!isLoaded) {
+                        // on first load
+                        mapSettings.onReady?.();
+                        setLoaded(true);
+                        if (mapSettings.activeMarkerId) {
+                            prevMarkerId.current = mapSettings.activeMarkerId;
+                        }
+                    } else {
+                        // check if active marker changed
+                        if (
+                            mapSettings.activeMarkerId &&
+                            mapSettings.activeMarkerId !== prevMarkerId?.current
+                        ) {
+                            prevMarkerId.current = mapSettings.activeMarkerId;
 
-                        mapSettings.onActiveMarkerChanged?.({
-                            markerId: mapSettings.activeMarkerId,
-                        });
+                            mapSettings.onActiveMarkerChanged?.({
+                                markerId: mapSettings.activeMarkerId,
+                            });
+                        }
                     }
                 }
             }
-        });
-    }, [L, isLoaded, map, mapSettings, mapSettings.markers, markersLayer]);
+        );
+
+        // if set restrict map movement to markers
+        if (mapSettings.restrictToMarkersArea) {
+            let markersBounds = markersLayerGroup.getBounds();
+
+            if (markersBounds.isValid()) {
+                if (mapSettings.markerAreaBufferRatio !== undefined) {
+                    markersBounds = markersBounds.pad(
+                        mapSettings.markerAreaBufferRatio
+                    );
+                }
+
+                map.setMaxBounds(markersBounds);
+            }
+        }
+    }, [L, isLoaded, map, mapSettings, mapSettings.markers, markersLayerGroup]);
 
     /**
      * Adjust zoom to show all markers
      */
     const showAllMarkers = useCallback(() => {
-        if (map && markersLayer) {
-            map.fitBounds(markersLayer.getBounds(), {
+        if (map && markersLayerGroup) {
+            map.fitBounds(markersLayerGroup.getBounds(), {
                 padding: L.point(mapSettings.fitBoundsPadding),
             });
         }
-    }, [L, map, mapSettings.fitBoundsPadding, markersLayer]);
+    }, [L, map, mapSettings.fitBoundsPadding, markersLayerGroup]);
+
+    /**
+     * Restrict map movement to the bounds of the area including all markers
+     */
+    const restrictMapToMarkers = useCallback(
+        (bufferRatio?: number) => {
+            if (!map || !markersLayerGroup) return;
+
+            let markersBounds = markersLayerGroup.getBounds();
+            if (!markersBounds.isValid()) return;
+
+            if (bufferRatio !== undefined) {
+                markersBounds = markersBounds.pad(bufferRatio);
+            } else if (mapSettings.markerAreaBufferRatio !== undefined) {
+                markersBounds = markersBounds.pad(
+                    mapSettings.markerAreaBufferRatio
+                );
+            }
+
+            map.setMaxBounds(markersBounds);
+        },
+        [map, mapSettings.markerAreaBufferRatio, markersLayerGroup]
+    );
 
     /**
      * Pan and zoom to active marker position on map
@@ -266,6 +334,7 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
         flyToPosition,
         panToPosition,
         showAllMarkers,
+        restrictMapToMarkers,
         recalculateMapSize,
         getCurrentZoom,
         isLoaded,

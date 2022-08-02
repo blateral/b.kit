@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-const useGeolocation = (enableHighAccuracy = true) => {
+const useGeolocation = (enableHighAccuracy = true, autostart = true) => {
     const [isSupported, setIsSupported] = useState<boolean>();
     const [location, setLocation] = useState<GeolocationPosition>();
     const [error, setError] = useState<GeolocationPositionError>();
@@ -11,7 +11,7 @@ const useGeolocation = (enableHighAccuracy = true) => {
     }, []);
 
     useEffect(() => {
-        if (!('geolocation' in navigator)) {
+        if (!autostart || !('geolocation' in navigator)) {
             return;
         }
 
@@ -28,6 +28,15 @@ const useGeolocation = (enableHighAccuracy = true) => {
                 navigator.geolocation.clearWatch(watch);
             }
         };
+    }, [autostart, enableHighAccuracy]);
+
+    const reset = useCallback(() => {
+        if (watchRef.current) {
+            navigator.geolocation.clearWatch(watchRef.current);
+        }
+        navigator.geolocation.watchPosition(handleSuccess, handleError, {
+            enableHighAccuracy,
+        });
     }, [enableHighAccuracy]);
 
     const handleSuccess = (position: GeolocationPosition) => {
@@ -38,7 +47,7 @@ const useGeolocation = (enableHighAccuracy = true) => {
         setError(error);
     };
 
-    return { isSupported, location, error };
+    return { isSupported, location, error, reset };
 };
 
 export default useGeolocation;

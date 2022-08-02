@@ -11,6 +11,9 @@ import Map from 'components/base/icons/Map';
 
 import marker from '../../../../public/images/Marker.svg';
 import LocationPin from 'components/base/icons/LocationPin';
+import Pointer from 'components/buttons/Pointer';
+import AngleRight from 'components/base/icons/AngleRight';
+import FlyTo from 'components/base/icons/FlyTo';
 
 export default {
     title: 'Sections / POIs / PointOfInterestMap',
@@ -59,6 +62,14 @@ const pois: MapPOI[] = [
             anchorActive: [25, 70],
             url: marker,
         },
+        action: (
+            <Pointer.View as="a" href="#" onClick={console.log}>
+                <Pointer.Label>Details</Pointer.Label>
+                <Pointer.Icon>
+                    <AngleRight />
+                </Pointer.Icon>
+            </Pointer.View>
+        ),
     },
     {
         id: 'id2',
@@ -86,6 +97,14 @@ const pois: MapPOI[] = [
                 icon: () => <Phone />,
             },
         ],
+        action: (
+            <Pointer.View as="a" href="#" onClick={console.log}>
+                <Pointer.Label>Details</Pointer.Label>
+                <Pointer.Icon>
+                    <AngleRight />
+                </Pointer.Icon>
+            </Pointer.View>
+        ),
     },
 ];
 
@@ -129,6 +148,56 @@ export const LargeWithHeader: Story = () => (
             flyToZoom={12}
             allMarkersOnInit
             fitBoundsPadding={[30, 30]}
+        />
+    </>
+);
+
+export const WithGeolocation: Story = () => (
+    <>
+        <header data-navbar-ident="top-main-bottom-beforeContent" />
+        <PointOfInterestMap
+            size="large"
+            pois={pois}
+            flyToZoom={12}
+            allMarkersOnInit
+            fitBoundsPadding={[30, 30]}
+            showOwnPosition
+        />
+    </>
+);
+
+export const CustomCurrentPosMarker: Story = () => (
+    <>
+        <header data-navbar-ident="top-main-bottom-beforeContent" />
+        <PointOfInterestMap
+            size="large"
+            pois={pois}
+            flyToZoom={12}
+            allMarkersOnInit
+            fitBoundsPadding={[30, 30]}
+            currentPosMarker={{
+                size: [20, 28],
+                anchor: [10, 28],
+                sizeActive: [50, 70],
+                anchorActive: [25, 70],
+                url: marker,
+            }}
+            showOwnPosition
+        />
+    </>
+);
+
+export const CustomLocationRequestIcon: Story = () => (
+    <>
+        <header data-navbar-ident="top-main-bottom-beforeContent" />
+        <PointOfInterestMap
+            size="large"
+            pois={pois}
+            flyToZoom={12}
+            allMarkersOnInit
+            fitBoundsPadding={[30, 30]}
+            customLocationRequest={<FlyTo />}
+            showOwnPosition
         />
     </>
 );
