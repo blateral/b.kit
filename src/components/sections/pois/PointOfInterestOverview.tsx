@@ -3,7 +3,7 @@ import Wrapper from 'components/base/Wrapper';
 import { Info } from 'components/blocks/InfoList';
 import POICard, { POICardProps } from 'components/blocks/POICard';
 import FilterField from 'components/fields/FilterField';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
@@ -30,81 +30,83 @@ const Filter = styled(FilterField)`
     }
 `;
 
-const poiExactNameFilter = (filterQuery: string) => (value: IndexedPOI) => {
-    const regex = new RegExp(filterQuery);
-    return regex.test(value.item.name);
-};
+const poiExactNameFilter =
+    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
+        const regex = new RegExp(filterQuery);
+        return regex.test(value.name);
+    };
 
-const poiSoftNameFilter = (filterQuery: string) => (value: IndexedPOI) => {
-    const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-    const preparedName = value.item.name.toLowerCase().replace(/\s/g, '');
+const poiSoftNameFilter =
+    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
+        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
+        const preparedName = value.name.toLowerCase().replace(/\s/g, '');
 
-    const regex = new RegExp(preparedQuery);
-    return regex.test(preparedName);
-};
+        const regex = new RegExp(preparedQuery);
+        return regex.test(preparedName);
+    };
 
-const poiFactFilter = (filterQuery: string) => (value: IndexedPOI) => {
-    if (!isValidArray(value.item.facts, false)) return false;
+const poiFactFilter =
+    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
+        if (!isValidArray(value.facts, false)) return false;
 
-    const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-    const regex = new RegExp(preparedQuery);
+        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
+        const regex = new RegExp(preparedQuery);
 
-    const result = value.item.facts.find((fact) => {
-        const preparedFact = fact.toLowerCase().replace(/\s/g, '');
-        return regex.test(preparedFact);
-    });
+        const result = value.facts.find((fact) => {
+            const preparedFact = fact.toLowerCase().replace(/\s/g, '');
+            return regex.test(preparedFact);
+        });
 
-    return !!result;
-};
+        return !!result;
+    };
 
-const poiInfoFilter = (filterQuery: string) => (value: IndexedPOI) => {
-    if (!isValidArray(value?.item?.infos, false)) return false;
+const poiInfoFilter =
+    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
+        if (!isValidArray(value?.infos, false)) return false;
 
-    const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-    const regex = new RegExp(preparedQuery);
+        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
+        const regex = new RegExp(preparedQuery);
 
-    return !!value.item.infos.find((info) => {
-        if (!info.text) return false;
-        const preparedText = info.text.toLowerCase().replace(/\s/g, '');
-        return regex.test(preparedText);
-    });
-};
+        return !!value.infos.find((info) => {
+            if (!info.text) return false;
+            const preparedText = info.text.toLowerCase().replace(/\s/g, '');
+            return regex.test(preparedText);
+        });
+    };
 
-const poiDescriptionFilter = (filterQuery: string) => (value: IndexedPOI) => {
-    if (!value.item.shortDescription) return false;
+const poiDescriptionFilter =
+    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
+        if (!value.shortDescription) return false;
 
-    const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-    const preparedDesc = value.item.shortDescription
-        .toLowerCase()
-        .replace(/\s/g, '');
+        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
+        const preparedDesc = value.shortDescription
+            .toLowerCase()
+            .replace(/\s/g, '');
 
-    const regex = new RegExp(preparedQuery);
-    return regex.test(preparedDesc);
-};
+        const regex = new RegExp(preparedQuery);
+        return regex.test(preparedDesc);
+    };
 
 const removeMatchIntersections = (
     array: FilterMatch[],
-    item?: IndexedPOI[]
+    item?: PointOfInterestOverviewItem[]
 ) => {
     if (!item) return [];
-    return item?.filter((m) => !array.find((prioItem) => prioItem.id === m.id));
+    return item?.filter(
+        (m) => !array.find((prioItem) => prioItem.item.id === m.id)
+    );
 };
 
 interface CardProps extends POICardProps {
+    id: string;
     infos?: Array<Info & { allowFiltering?: boolean }>;
 }
 
 export type PointOfInterestOverviewItem = Omit<CardProps, 'isInverted'>;
 
 interface FilterMatch {
-    id: number;
     item: PointOfInterestOverviewItem;
     priority: number;
-}
-
-interface IndexedPOI {
-    id: number;
-    item: PointOfInterestOverviewItem;
 }
 
 const PointOfInterestOverview: React.FC<{
@@ -114,12 +116,21 @@ const PointOfInterestOverview: React.FC<{
     /** Array of POI card settings */
     pois?: PointOfInterestOverviewItem[];
 
+    /** Enable/Disable filtering */
+    enableFiltering?: boolean;
+
     /** Placeholder for filter input */
     filterPlaceholder?: string;
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, bgMode, pois }) => {
+}> = ({
+    anchorId,
+    bgMode,
+    pois,
+    enableFiltering,
+    filterPlaceholder = 'Filter',
+}) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -129,22 +140,21 @@ const PointOfInterestOverview: React.FC<{
 
     const filteredPOIs: FilterMatch[] = useMemo(() => {
         const prioList: FilterMatch[] = [];
-        if (!isValidArray(pois, false)) return prioList;
-
-        const indexedPOIs: IndexedPOI[] = pois.map((poi, i) => ({
-            id: i,
-            item: poi,
-        }));
+        if (
+            !isValidArray(
+                pois?.filter((poi) => poi.id !== undefined),
+                false
+            )
+        ) {
+            return prioList;
+        }
 
         // PRIO 1 Filter: Exact name
-        const exactNameMatches = indexedPOIs?.filter(
-            poiExactNameFilter(filterQuery)
-        );
+        const exactNameMatches = pois?.filter(poiExactNameFilter(filterQuery));
         if (isValidArray(exactNameMatches, false)) {
             prioList.push(
                 ...exactNameMatches.map((match) => ({
-                    id: match.id,
-                    item: match.item,
+                    item: match,
                     priority: 1,
                 }))
             );
@@ -153,14 +163,13 @@ const PointOfInterestOverview: React.FC<{
         // PRIO 2 Filter: Name
         const nameMatches = removeMatchIntersections(
             prioList,
-            indexedPOIs?.filter(poiSoftNameFilter(filterQuery))
+            pois?.filter(poiSoftNameFilter(filterQuery))
         );
 
         if (isValidArray(nameMatches, false)) {
             prioList.push(
                 ...nameMatches.map((match) => ({
-                    id: match.id,
-                    item: match.item,
+                    item: match,
                     priority: 2,
                 }))
             );
@@ -169,14 +178,13 @@ const PointOfInterestOverview: React.FC<{
         // PRIO 3 Filter: Facts
         const factMatches = removeMatchIntersections(
             prioList,
-            indexedPOIs?.filter(poiFactFilter(filterQuery))
+            pois?.filter(poiFactFilter(filterQuery))
         );
 
         if (isValidArray(factMatches, false)) {
             prioList.push(
                 ...factMatches.map((match) => ({
-                    id: match.id,
-                    item: match.item,
+                    item: match,
                     priority: 3,
                 }))
             );
@@ -185,14 +193,13 @@ const PointOfInterestOverview: React.FC<{
         // PRIO 4 Filter: Description
         const infoMatches = removeMatchIntersections(
             prioList,
-            indexedPOIs?.filter(poiInfoFilter(filterQuery))
+            pois?.filter(poiInfoFilter(filterQuery))
         );
 
         if (isValidArray(infoMatches, false)) {
             prioList.push(
                 ...infoMatches.map((match) => ({
-                    id: match.id,
-                    item: match.item,
+                    item: match,
                     priority: 4,
                 }))
             );
@@ -201,14 +208,13 @@ const PointOfInterestOverview: React.FC<{
         // PRIO 5 Filter: Description
         const descMatches = removeMatchIntersections(
             prioList,
-            indexedPOIs?.filter(poiDescriptionFilter(filterQuery))
+            pois?.filter(poiDescriptionFilter(filterQuery))
         );
 
         if (isValidArray(descMatches, false)) {
             prioList.push(
                 ...descMatches.map((match) => ({
-                    id: match.id,
-                    item: match.item,
+                    item: match,
                     priority: 5,
                 }))
             );
@@ -216,6 +222,29 @@ const PointOfInterestOverview: React.FC<{
 
         return prioList;
     }, [filterQuery, pois]);
+
+    useEffect(() => {
+        if (!enableFiltering || !('URLSearchParams' in window)) return;
+        const params = new URLSearchParams(window.location.search);
+        const filterParam = params.get('filter');
+
+        if (filterParam) {
+            setFilterQuery(decodeURIComponent(filterParam));
+        }
+    }, [enableFiltering]);
+
+    useEffect(() => {
+        if (!enableFiltering || !('URLSearchParams' in window)) return;
+
+        const params = new URLSearchParams(window.location.search);
+        params.set('filter', encodeURIComponent(filterQuery));
+
+        window.history.replaceState(
+            {},
+            '',
+            `${location.pathname}?${params.toString() + location.hash}`
+        );
+    }, [enableFiltering, filterQuery]);
 
     return (
         <Section
@@ -231,7 +260,13 @@ const PointOfInterestOverview: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <Filter placeholder="Filter" onSubmit={setFilterQuery} />
+                {enableFiltering && (
+                    <Filter
+                        value={filterQuery}
+                        placeholder={filterPlaceholder}
+                        onSubmit={setFilterQuery}
+                    />
+                )}
                 <Content>
                     {filteredPOIs
                         ?.sort((a, b) => a.priority - b.priority)

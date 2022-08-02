@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { copyStyle } from 'components/typography/Copy';
@@ -91,7 +91,7 @@ const SubmitBtn = styled.button`
 
 const FilterField: FC<{
     isInverted?: boolean;
-    initialValue?: string;
+    value?: string;
     placeholder?: string;
     onSubmit?: (value: string) => void;
     onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
@@ -99,23 +99,33 @@ const FilterField: FC<{
     className?: string;
 }> = ({
     isInverted,
-    initialValue,
+    value,
     placeholder,
     onSubmit,
     onBlur,
     submitIcon,
     className,
 }) => {
-    const { setValue, value, forceUpdate } = useLazyInput((value) => {
+    const {
+        setValue,
+        value: getValue,
+        forceUpdate,
+    } = useLazyInput((value) => {
         onSubmit?.(value);
-    }, initialValue || '');
+    }, value || '');
+
+    useEffect(() => {
+        if (value !== undefined) {
+            setValue(value);
+        }
+    }, [setValue, value]);
 
     return (
         <View isInverted={isInverted} className={className}>
             <Field
                 type="text"
                 isInverted={isInverted}
-                value={value}
+                value={getValue}
                 placeholder={placeholder}
                 onChange={(ev) => {
                     const newValue = ev?.currentTarget?.value;
