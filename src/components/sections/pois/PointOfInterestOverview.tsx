@@ -3,7 +3,7 @@ import Wrapper from 'components/base/Wrapper';
 import { Info } from 'components/blocks/InfoList';
 import POICard, { POICardProps } from 'components/blocks/POICard';
 import FilterField from 'components/fields/FilterField';
-import { useUpdateEffect } from 'index';
+import useUpdateEffect from 'utils/useUpdateEffect';
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';

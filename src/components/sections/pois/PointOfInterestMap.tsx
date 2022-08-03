@@ -131,9 +131,9 @@ const genHeightStyles = () => css`
     }}
 `;
 
-const PoiMapSection = styled(Section)`
+const PoiMapSection = styled(Section)<{ isLarge?: boolean }>`
     position: relative;
-    ${genHeightStyles()}
+    ${({ isLarge }) => isLarge && genHeightStyles()}
 
     header + & {
         ${withRange([0], 'padding-top')}
@@ -406,6 +406,9 @@ const PointOfInterestMap: FC<{
     /** Restrict map to bounds of markers area */
     restrictToMarkersArea?: boolean;
 
+    /** Buffer ratio if map is restricted to marker area */
+    markerAreaBufferRatio?: number;
+
     /** Map container padding for show all markers */
     fitBoundsPadding?: [number, number];
 
@@ -432,6 +435,7 @@ const PointOfInterestMap: FC<{
     fitBoundsPadding,
     allMarkersOnInit = false,
     restrictToMarkersArea = true,
+    markerAreaBufferRatio,
     showOwnPosition,
     flyToZoom,
     customFact,
@@ -520,6 +524,7 @@ const PointOfInterestMap: FC<{
         markers: mapMarkers,
         fitBoundsPadding,
         restrictToMarkersArea,
+        markerAreaBufferRatio,
         showZoomControls: true,
         zoomControlPosition: 'bottomleft',
         onMarkerClick: (markerId) => {
@@ -564,15 +569,26 @@ const PointOfInterestMap: FC<{
 
     const handleLocationRequest = () => {
         if (location?.coords?.latitude && location?.coords?.longitude) {
+            const currentZoom = getCurrentZoom();
+            let zoom = flyToZoom;
+            if (flyToZoom !== undefined && currentZoom > flyToZoom) {
+                zoom = currentZoom;
+            }
+
             flyToPosition(
                 [location.coords.latitude, location.coords.longitude],
-                flyToZoom
+                zoom
             );
         }
     };
 
     return (
-        <PoiMapSection anchorId={anchorId} bgColor="image" bgMode="full">
+        <PoiMapSection
+            anchorId={anchorId}
+            bgColor="image"
+            bgMode="full"
+            isLarge={isLarge}
+        >
             <Wrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <MapContainer>
                     <Map ref={setMapContainer} isLarge={size === 'large'} />

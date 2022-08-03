@@ -21,6 +21,7 @@ export interface LeafletMapSettings {
     activeMarkerId?: string;
     fitBoundsPadding: [number, number];
     restrictToMarkersArea?: boolean;
+    maxBoundsViscosity?: number;
     markerAreaBufferRatio?: number;
     showZoomControls?: boolean;
     zoomControlPosition?: 'bottomleft' | 'bottomright' | 'topleft' | 'topright';
@@ -79,6 +80,7 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
             markers: [],
             fitBoundsPadding: [20, 20], // 0 = TopLeft, 1 = BottomRight
             markerAreaBufferRatio: 0.2,
+            maxBoundsViscosity: 1,
             ...settings,
         };
     }, [settings]);
@@ -103,7 +105,7 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
                 zoom: mapSettings.zoom,
                 touchZoom: mapSettings.touchZoom,
                 scrollWheelZoom: mapSettings.scrollWheelZoom,
-                maxBoundsViscosity: 0.8,
+                maxBoundsViscosity: mapSettings.maxBoundsViscosity,
                 zoomControl: false,
                 minZoom: mapSettings.minZoom,
                 maxZoom: mapSettings.maxZoom,
