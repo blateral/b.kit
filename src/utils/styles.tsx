@@ -168,6 +168,12 @@ export interface Fonts {
         textTransform?: string;
         textDecoration?: string;
     };
+    navigation: {
+        featured: FontProps;
+        main: FontProps;
+        sub: FontProps;
+        secondary: FontProps;
+    };
 }
 
 export type FontType = keyof Fonts;
@@ -348,6 +354,32 @@ const defaultFonts: Fonts = {
         colorHover: '#122278',
         colorInverted: '#fff',
         colorHoverInverted: '#C8C8C8',
+    },
+    navigation: {
+        featured: {
+            ...copyBase,
+            weight: '700',
+            lineHeight: '1.5',
+            size: [16],
+        },
+        main: {
+            ...copyBase,
+            weight: '700',
+            lineHeight: '1.5',
+            size: [16],
+        },
+        sub: {
+            ...copyBase,
+            weight: '700',
+            lineHeight: '1.5',
+            size: [16],
+        },
+        secondary: {
+            ...copyBase,
+            weight: '700',
+            lineHeight: '1.5',
+            size: [16],
+        },
     },
 };
 

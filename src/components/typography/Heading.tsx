@@ -10,7 +10,10 @@ import {
     FontProps,
 } from 'utils/styles';
 
-type HeadingType = Exclude<FontType, 'copy' | 'copy-i' | 'copy-b' | 'callout'>;
+type HeadingType = Extract<
+    FontType,
+    'heading-1' | 'heading-2' | 'heading-3' | 'heading-4' | 'super'
+>;
 
 const base = css<{
     hyphens?: boolean;

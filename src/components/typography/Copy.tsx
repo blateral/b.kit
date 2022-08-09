@@ -17,10 +17,7 @@ import {
 } from 'utils/styles';
 import { headingStyle } from './Heading';
 
-export type CopyType = Exclude<
-    FontType,
-    'heading-1' | 'heading-2' | 'heading-3' | 'heading-4' | 'callout' | 'super'
->;
+export type CopyType = Extract<FontType, 'copy-b' | 'copy-i' | 'copy'>;
 
 export const copyStyle = (
     type: CopyType,

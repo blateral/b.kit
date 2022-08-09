@@ -1,5 +1,4 @@
 import AngleRight from 'components/base/icons/AngleRight';
-import { copyStyle } from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import React, {
     FC,
@@ -20,10 +19,29 @@ import {
     getColors as color,
     getFonts as font,
     getGlobals as global,
+    withRange,
+    Fonts,
 } from 'utils/styles';
 import { NavBarSize } from '../../NavBar';
 import MenuHeader from '../../partials/MenuHeader';
 import { MenuBaseProps, NavItem } from '../Menu';
+import { css } from 'styled-components';
+
+type NavigationFontType = keyof Fonts['navigation'];
+
+const navigationStyle = (type: NavigationFontType) => css`
+    font-family: ${({ theme }) => font(theme).navigation[type].family};
+    font-weight: ${({ theme }) => font(theme).navigation[type].weight};
+    font-style: ${({ theme }) => font(theme).navigation[type].style};
+    ${({ theme }) => withRange(font(theme).navigation[type].size, 'font-size')}
+    line-height: ${({ theme }) => font(theme).navigation[type].lineHeight};
+    letter-spacing: ${({ theme }) =>
+        font(theme).navigation[type].letterSpacing};
+    text-transform: ${({ theme }) =>
+        font(theme).navigation[type].textTransform};
+    text-decoration: ${({ theme }) =>
+        font(theme).navigation[type].textDecoration};
+`;
 
 const Backdrop = styled.div<{ isOpen?: boolean }>`
     position: fixed;
@@ -168,7 +186,7 @@ const ScrollArea = styled.div`
     }
 
     & > *:last-child {
-        margin-bottom: ${spacings.nudge * 3}px;
+        margin-bottom: ${spacings.nudge * 10}px;
     }
 
     @media ${mq.medium} {
@@ -233,7 +251,10 @@ const NavItemView = styled.li<{ isActive?: boolean }>`
     }
 `;
 
-const NavItemContent = styled.span<{ isCurrent?: boolean }>`
+const NavItemContent = styled.span<{
+    isCurrent?: boolean;
+    isFeatured?: boolean;
+}>`
     display: flex;
     align-items: center;
     position: relative;
@@ -241,8 +262,11 @@ const NavItemContent = styled.span<{ isCurrent?: boolean }>`
 
     padding: 0 ${spacings.nudge * 2}px;
 
-    ${copyStyle('copy-b', 'medium')}
-    color: ${({ theme }) => font(theme)['copy-b'].medium.color};
+    ${({ isFeatured }) => navigationStyle(isFeatured ? 'featured' : 'main')}
+    color: ${({ theme, isFeatured }) =>
+        isFeatured
+            ? font(theme).navigation.featured.color
+            : font(theme).navigation.main.color};
     text-decoration: ${({ isCurrent }) => (isCurrent ? 'underline' : 'none')};
 `;
 
@@ -413,7 +437,7 @@ const NavigationItem = forwardRef<
                 isActive={isActive}
                 data-featured={isFeatured}
             >
-                <NavItemContent isCurrent={isCurrent}>
+                <NavItemContent isCurrent={isCurrent} isFeatured={isFeatured}>
                     {icon && <NavItemIcon>{icon}</NavItemIcon>}
                     {label && <NavItemLabel>{label}</NavItemLabel>}
                     {hasSubItems && (
@@ -479,8 +503,8 @@ const SubNavItem = styled.li<{ navBarSize?: NavBarSize }>`
     padding: 0;
     height: 56px;
 
-    ${copyStyle('copy-b', 'medium')}
-    color: ${({ theme }) => font(theme)['copy-b'].medium.color};
+    ${navigationStyle('main')}
+    color: ${({ theme }) => font(theme).navigation.sub.color};
 
     @media ${mq.semilarge} {
         &:first-child {
@@ -501,8 +525,8 @@ const SubNavLink = styled(Link)<{ isCurrent?: boolean }>`
     outline-color: ${({ theme }) => color(theme).primary.default};
     vertical-align: middle;
 
-    ${copyStyle('copy-b', 'medium')}
-    color: ${({ theme }) => font(theme)['copy-b'].medium.color};
+    ${navigationStyle('sub')}
+    color: ${({ theme }) => font(theme).navigation.sub.color};
     text-decoration: ${({ isCurrent }) => (isCurrent ? 'underline' : 'none')};
     white-space: nowrap;
     overflow: hidden;
@@ -575,8 +599,8 @@ const SecondaryNavLink = styled(Link)<{ isCurrent?: boolean }>`
     outline-color: ${({ theme }) => color(theme).primary.default};
     vertical-align: middle;
 
-    ${copyStyle('copy', 'medium')}
-    color: ${({ theme }) => font(theme)['copy-b'].medium.color};
+    ${navigationStyle('secondary')}
+    color: ${({ theme }) => font(theme).navigation.secondary.color};
     text-decoration: ${({ isCurrent }) => (isCurrent ? 'underline' : 'none')};
     white-space: nowrap;
     overflow: hidden;
