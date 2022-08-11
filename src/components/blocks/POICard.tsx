@@ -17,6 +17,7 @@ const View = styled.div<{ isInverted?: boolean; hasBackground?: boolean }>`
                 : color(theme).elementBg.medium};
     padding: ${spacings.nudge * 2}px;
     border-radius: ${spacings.nudge}px;
+    overflow: hidden;
 
     & > * + * {
         margin-top: ${spacings.nudge * 3}px;

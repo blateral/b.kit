@@ -112,11 +112,10 @@ const InfoList: FC<{
                                 <Infos>
                                     {group?.items?.map((info, ii) => (
                                         <Content key={ii}>
-                                            {info.icon && (
-                                                <Icon isInverted={isInverted}>
-                                                    {info.icon(isInverted)}
-                                                </Icon>
-                                            )}
+                                            <Icon isInverted={isInverted}>
+                                                {info.icon &&
+                                                    info.icon(isInverted)}
+                                            </Icon>
                                             {info.text && (
                                                 <Copy
                                                     size="small"
