@@ -209,16 +209,19 @@ const base = css<{
             const isFontIcon = !!iconChar && !!iconFont;
             const isValidIconChar = iconChar && !isNaN(iconChar) ? true : false;
             const vAlign = item.vAlign || (isFontIcon ? 'text-top' : 'top');
-            const externalFilter = item.externalOnly ? '[target="_blank"]' : '';
 
-            const selectors = patterns
-                .filter((p) => p)
-                .map((p) => `a[href*='${p}']${externalFilter}`)
-                .join(', ');
-            const pseudoSelectors = patterns
-                .filter((p) => p)
-                .map((p) => `a[href*='${p}']${externalFilter}:after`)
-                .join(', ');
+            const externalFilter = item.isExternal ? '[target="_blank"]' : '';
+
+            const selectors =
+                patterns
+                    .filter((p) => p)
+                    .map((p) => `a[href*='${p}']${externalFilter}`)
+                    .join(', ') || `a${externalFilter}`;
+            const pseudoSelectors =
+                patterns
+                    .filter((p) => p)
+                    .map((p) => `a[href*='${p}']${externalFilter}:after`)
+                    .join(', ') || `a${externalFilter}:after`;
 
             let content = '';
             if (iconChar || iconUrl) {

@@ -390,7 +390,7 @@ export type NavBarHeights = {
 };
 
 interface LinkIcon {
-    externalOnly?: boolean;
+    isExternal?: boolean;
     /** Patterns of Href value to show this icon (e.g. .svg, .png) */
     patterns: string[];
     /** Icon scale factor. 1 is default */
@@ -600,8 +600,8 @@ const defaultGlobalSettings: GlobalSettings = {
                             }
                         />
                     ),
-                patterns: ['http', 'www', 'https'], // default link icon
-                externalOnly: true,
+                patterns: [], // default link icon
+                isExternal: true,
                 scale: getLinkIconScale,
             },
             {
