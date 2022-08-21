@@ -227,9 +227,18 @@ const EventOverview: React.FC<{
         };
     }, [itemsPerRow, eventCount, visibleRows, observerSupported]);
 
+    const removePastFn = (item: EventItem) => {
+        if (!item.date) return false;
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        return item.date >= today;
+    };
+
     const sortFilterFn = (a: EventProps, b: EventProps) => {
         if (a.date && b.date) {
-            return b.date.getTime() - a.date.getTime();
+            return a.date.getTime() - b.date.getTime();
         } else return 0;
     };
 
@@ -246,6 +255,7 @@ const EventOverview: React.FC<{
         }
         return hasTags;
     };
+
     return (
         <Section
             addSeperation
@@ -305,6 +315,7 @@ const EventOverview: React.FC<{
                 <Events>
                     {events
                         ?.filter(tagFilterFn)
+                        .filter(removePastFn)
                         .sort(sortFilterFn)
                         .filter((_, i) => i < visibleRows * itemsPerRow)
                         .map((item, i) => (
