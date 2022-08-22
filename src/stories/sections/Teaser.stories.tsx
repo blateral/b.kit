@@ -19,7 +19,6 @@ export const WithContent: Story = () => (
         superTitle={'Lorem Ipsum Dolor'}
         title={'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'}
         image={{
-            copyright: 'Lorem Ipsum Dolor',
             small: 'https://unsplash.it/619/619',
             medium: 'https://unsplash.it/791/791',
             semilarge: 'https://unsplash.it/883/883',

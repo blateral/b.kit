@@ -176,19 +176,16 @@ const Img = styled.img<{ isInverted?: boolean; showPlaceholder?: boolean }>`
 `;
 
 const Copyright = styled(Copy)`
+    display: inline-block;
     position: absolute;
-    width: 100%;
-    height: 100%;
-    max-height: calc(100% - ${spacings.spacer * 2.5}px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    bottom: 8px;
+    max-height: 100%;
+    bottom: 0;
+    right: 0;
 
-    padding: ${spacings.nudge}px ${spacings.nudge}px;
+    padding: ${spacings.nudge * 2}px ${spacings.nudge}px;
 
-    max-height: 155px;
+    pointer-events: none;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -281,6 +278,7 @@ const Image: React.FC<
                     size="small"
                     textColor={colors.text.inverted}
                     innerHTML={`&copy; ${copyright}`}
+                    renderAs="span"
                 />
             )}
         </AspectContainer>
