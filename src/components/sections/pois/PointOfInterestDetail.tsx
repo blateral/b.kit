@@ -47,6 +47,9 @@ const PointOfInterestDetail: React.FC<{
     /** POI title */
     title?: string;
 
+    /** POI intro text */
+    intro?: string;
+
     /** POI text (richtext) */
     text?: string;
 
@@ -65,7 +68,17 @@ const PointOfInterestDetail: React.FC<{
         name: string;
         isInverted?: boolean;
     }) => React.ReactNode;
-}> = ({ anchorId, image, title, text, facts, infos, bgMode, customFact }) => {
+}> = ({
+    anchorId,
+    image,
+    title,
+    intro,
+    text,
+    facts,
+    infos,
+    bgMode,
+    customFact,
+}) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -107,6 +120,13 @@ const PointOfInterestDetail: React.FC<{
                                 isInverted={isInverted}
                                 facts={facts}
                                 customFact={customFact}
+                            />
+                        )}
+                        {intro && (
+                            <PoiText
+                                size="medium"
+                                isInverted={isInverted}
+                                innerHTML={intro}
                             />
                         )}
                         {text && (
