@@ -11,6 +11,7 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import InfoList, { InfoGroup } from 'components/blocks/InfoList';
 import POIFacts from 'components/blocks/POIFacts';
+import { isValidArray } from 'utils/arrays';
 
 const StyledImage = styled(Image)`
     &:not(:last-child) {
@@ -115,7 +116,7 @@ const PointOfInterestDetail: React.FC<{
                                 {title}
                             </PoiTitle>
                         )}
-                        {facts && (
+                        {isValidArray(facts, false) && (
                             <POIFacts
                                 isInverted={isInverted}
                                 facts={facts}
