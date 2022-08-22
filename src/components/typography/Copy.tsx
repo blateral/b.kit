@@ -173,6 +173,12 @@ const base = css<{
         padding-left: ${spacings.nudge * 3}px;
     }
 
+    li {
+        & > * {
+            vertical-align: top;
+        }
+    }
+
     ul ul li {
         list-style-type: disc;
     }
