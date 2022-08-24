@@ -4,7 +4,7 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import {
     spacings,
@@ -13,13 +13,16 @@ import {
     getGlobals as global,
 } from 'utils/styles';
 
-const View = styled.div<{ isInverted?: boolean; cardColor?: string }>`
+const View = styled.div<{
+    isInverted?: boolean;
+    cardColor?: string;
+    hasLink?: boolean;
+}>`
     position: relative;
     padding-top: 30%;
 
     color: ${({ theme }) => color(theme).text.inverted};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-    cursor: pointer;
 
     overflow: hidden;
 
@@ -38,37 +41,48 @@ const SolidView = styled(View)`
 
     transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
-    @media (hover: hover) and (pointer: fine) {
-        &:hover {
-            box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
-        }
-    }
+    ${({ hasLink }) =>
+        hasLink &&
+        css`
+            cursor: pointer;
+
+            @media (hover: hover) and (pointer: fine) {
+                &:hover {
+                    box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+                }
+            }
+        `}
 `;
 
 const ImageView = styled(View)`
     transition: box-shadow 0.2s ease-in-out;
-    cursor: pointer;
 
-    transition: box-shadow 0.2s ease-in-out;
+    ${({ hasLink }) =>
+        hasLink &&
+        css`
+            @media (hover: hover) and (pointer: fine) {
+                cursor: pointer;
 
-    @media (hover: hover) and (pointer: fine) {
-        img {
-            -webkit-backface-visibility: hidden;
-            -ms-transform: translateZ(0); /* IE 9 */
-            -webkit-transform: translateZ(0); /* Chrome, Safari, Opera */
-            transform: translateZ(0);
-            transform-origin: center;
-            transition: transform 0.2s ease-in-out;
-        }
+                img {
+                    -webkit-backface-visibility: hidden;
+                    -ms-transform: translateZ(0); /* IE 9 */
+                    -webkit-transform: translateZ(
+                        0
+                    ); /* Chrome, Safari, Opera */
+                    transform: translateZ(0);
+                    transform-origin: center;
+                    transition: transform 0.2s ease-in-out;
+                }
 
-        &:hover {
-            box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+                &:hover {
+                    box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
 
-            img {
-                transform: scale(1.03);
+                    img {
+                        transform: scale(1.03);
+                    }
+                }
             }
-        }
-    }
+        `}
 
     &:after {
         content: '';
@@ -239,7 +253,7 @@ const Card: React.FC<
     cardColor,
     customIcon,
 }) => {
-    const { colors } = useLibTheme();
+    const { colors, fonts } = useLibTheme();
     const CardView = image && image.small ? ImageView : SolidView;
     const defaultCardColor = isInverted
         ? colors.primary.inverted
@@ -249,6 +263,7 @@ const Card: React.FC<
         <CardView
             isInverted={isInverted}
             cardColor={cardColor || defaultCardColor}
+            hasLink={!!link?.href}
         >
             {image?.small && (
                 <StyledImage
@@ -263,19 +278,15 @@ const Card: React.FC<
             )}
             <Content hasIcon={!!customIcon}>
                 {customIcon ? <Icon>{customIcon({})}</Icon> : ''}
-                <TextContainer textColor="inherit">
+                <TextContainer textColor={fonts.copy.big.colorInverted}>
                     {title && (
-                        <Title textColor="inherit" size="big" type="copy">
+                        <Title size="big" type="copy">
                             {title}
                         </Title>
                     )}
                     {subLabel && (
                         <Footer>
-                            <SubLabel
-                                textColor="inherit"
-                                type="copy-b"
-                                size="big"
-                            >
+                            <SubLabel type="copy-b" size="big">
                                 {subLabel}
                             </SubLabel>
                             {decorator ? decorator({ isInverted }) : undefined}
@@ -283,7 +294,7 @@ const Card: React.FC<
                     )}
                 </TextContainer>
             </Content>
-            {link && (
+            {link?.href && (
                 <CardLink
                     isInverted={isInverted}
                     {...link}
