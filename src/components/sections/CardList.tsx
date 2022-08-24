@@ -148,7 +148,7 @@ const Content = styled.div<{ hasIcon?: boolean }>`
     }
 `;
 
-const TextContainer = styled(Copy)`
+const TextContainer = styled.div`
     width: 100%;
 
     & > * + * {
@@ -253,7 +253,7 @@ const Card: React.FC<
     cardColor,
     customIcon,
 }) => {
-    const { colors, fonts } = useLibTheme();
+    const { colors } = useLibTheme();
     const CardView = image && image.small ? ImageView : SolidView;
     const defaultCardColor = isInverted
         ? colors.primary.inverted
@@ -278,15 +278,15 @@ const Card: React.FC<
             )}
             <Content hasIcon={!!customIcon}>
                 {customIcon ? <Icon>{customIcon({})}</Icon> : ''}
-                <TextContainer textColor={fonts.copy.big.colorInverted}>
+                <TextContainer>
                     {title && (
-                        <Title size="big" type="copy">
+                        <Title size="big" type="copy" isInverted>
                             {title}
                         </Title>
                     )}
                     {subLabel && (
                         <Footer>
-                            <SubLabel type="copy-b" size="big">
+                            <SubLabel type="copy-b" size="big" isInverted>
                                 {subLabel}
                             </SubLabel>
                             {decorator ? decorator({ isInverted }) : undefined}
