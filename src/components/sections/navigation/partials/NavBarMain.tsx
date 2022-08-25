@@ -6,6 +6,14 @@ import { NavBarStates } from '../Navigation';
 import * as Skeletons from 'components/sections/navigation/skeletons/index';
 import { spacings, mq } from 'utils/styles';
 import { LinkProps } from 'components/typography/Link';
+import { isValidArray } from 'utils/arrays';
+import LanguageSwitcher, { Language } from 'components/blocks/LanguageSwitcher';
+
+const ToggleColumn = styled(Skeletons.Column)`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
 
 const LogoColumn = styled(Skeletons.Column)`
     display: flex;
@@ -29,6 +37,16 @@ const ActionsColumn = styled(Skeletons.Column)`
     }
 `;
 
+const LanguageWrapper = styled.div`
+    display: none;
+
+    @media ${mq.semilarge} {
+        display: block;
+        margin-left: ${spacings.nudge * 3}px;
+        margin-top: 2px;
+    }
+`;
+
 const NavBarMain: FC<{
     isInverted?: boolean;
     logo?: {
@@ -39,6 +57,7 @@ const NavBarMain: FC<{
         link?: Omit<LinkProps, 'coverSpace' | 'ratios'>;
     };
     customToggle?: (props: { isInverted?: boolean }) => React.ReactNode;
+    langs?: Language[];
     primaryAction?: (
         props: { isInverted?: boolean } & NavBarStates
     ) => React.ReactNode;
@@ -46,13 +65,20 @@ const NavBarMain: FC<{
         props: { isInverted?: boolean } & NavBarStates
     ) => React.ReactNode;
     navStates: NavBarStates;
-}> = ({ logo, navStates, customToggle, primaryAction, secondaryAction }) => {
+}> = ({
+    logo,
+    navStates,
+    customToggle,
+    langs,
+    primaryAction,
+    secondaryAction,
+}) => {
     const isInverted =
         navStates?.size === 'large' && navStates?.pageFlow === 'overContent';
 
     return (
         <React.Fragment>
-            <Skeletons.Column takeSpace vAlign="center" isInverted={isInverted}>
+            <ToggleColumn takeSpace vAlign="center" isInverted={isInverted}>
                 <Skeletons.MenuToggle
                     isInverted={isInverted}
                     isExpanded={navStates?.isMenuOpen}
@@ -64,7 +90,15 @@ const NavBarMain: FC<{
                         <MenuBurger ariaHidden={true} />
                     )}
                 </Skeletons.MenuToggle>
-            </Skeletons.Column>
+                {isValidArray(langs, false) && (
+                    <LanguageWrapper>
+                        <LanguageSwitcher
+                            isInverted={isInverted}
+                            langs={langs}
+                        />
+                    </LanguageWrapper>
+                )}
+            </ToggleColumn>
             {logo?.desktop?.src && (
                 <LogoColumn isInverted={isInverted}>
                     <Skeletons.Logo
