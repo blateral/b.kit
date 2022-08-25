@@ -36,10 +36,9 @@ const exampleFeaturesUneven = generateItemList<FeatureProps>(
     (item, i) => ({
         ...item,
         image: {
-            small: 'https://unsplash.it/599/450?image=70' + i,
-            medium: 'https://unsplash.it/789/789?image=70' + i,
-            large: 'https://unsplash.it/591/591?image=70' + i,
-            xlarge: 'https://unsplash.it/592/592?image=70' + i,
+            small: 'https://unsplash.it/640/640?image=70' + i,
+            medium: 'https://unsplash.it/832/832?image=70' + i,
+            semilarge: 'https://unsplash.it/500/500?image=70' + i,
         },
     })
 );
@@ -50,10 +49,9 @@ const exampleFeaturesEven = generateItemList<FeatureProps>(
     (item, i) => ({
         ...item,
         image: {
-            small: 'https://unsplash.it/599/450?image=70' + i,
-            medium: 'https://unsplash.it/789/789?image=70' + i,
-            large: 'https://unsplash.it/591/591?image=70' + i,
-            xlarge: 'https://unsplash.it/592/592?image=70' + i,
+            small: 'https://unsplash.it/640/640?image=70' + i,
+            medium: 'https://unsplash.it/832/832?image=70' + i,
+            semilarge: 'https://unsplash.it/500/500?image=70' + i,
         },
     })
 );
@@ -73,13 +71,11 @@ export const Default: Story = () => (
         features={exampleFeaturesUneven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/599/450?image=70' + i,
-                medium: 'https://unsplash.it/789/789?image=70' + i,
-                large: 'https://unsplash.it/591/591?image=70' + i,
-                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/500/500?image=70' + i,
                 ratios: {
-                    small: { w: 599, h: 450 },
-                    medium: { w: 789, h: 789 },
+                    small: { w: 640, h: 640 },
                 },
             },
         }))}
@@ -91,15 +87,11 @@ export const ImgRatioA: Story = () => (
         features={exampleFeaturesUneven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/599/450?image=70' + i,
-                medium: 'https://unsplash.it/688/593?image=70' + i,
-                large: 'https://unsplash.it/591/444?image=70' + i,
-                xlarge: 'https://unsplash.it/592/445?image=70' + i,
+                small: 'https://unsplash.it/640/480?image=70' + i,
+                medium: 'https://unsplash.it/832/624?image=70' + i,
+                semilarge: 'https://unsplash.it/500/375?image=70' + i,
                 ratios: {
-                    small: { w: 599, h: 450 },
-                    medium: { w: 688, h: 593 },
-                    large: { w: 591, h: 444 },
-                    xlarge: { w: 592, h: 445 },
+                    small: { w: 640, h: 480 },
                 },
             },
         }))}
@@ -112,15 +104,11 @@ export const ImgRatioB: Story = () => (
         features={exampleFeaturesUneven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/599/450?image=70' + i,
-                medium: 'https://unsplash.it/791/1070?image=70' + i,
-                large: 'https://unsplash.it/591/801?image=70' + i,
-                xlarge: 'https://unsplash.it/592/802?image=70' + i,
+                small: 'https://unsplash.it/640/854?image=70' + i,
+                medium: 'https://unsplash.it/832/1110?image=70' + i,
+                semilarge: 'https://unsplash.it/500/666?image=70' + i,
                 ratios: {
-                    small: { w: 599, h: 450 },
-                    medium: { w: 791, h: 1070 },
-                    large: { w: 591, h: 801 },
-                    xlarge: { w: 592, h: 802 },
+                    small: { w: 640, h: 854 },
                 },
             },
         }))}
@@ -133,13 +121,11 @@ export const EvenAmountOfFeatures: Story = () => (
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/599/450?image=70' + i,
-                medium: 'https://unsplash.it/789/789?image=70' + i,
-                large: 'https://unsplash.it/591/591?image=70' + i,
-                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/500/500?image=70' + i,
                 ratios: {
-                    small: { w: 599, h: 450 },
-                    medium: { w: 789, h: 789 },
+                    small: { w: 640, h: 640 },
                 },
             },
         }))}
@@ -152,13 +138,11 @@ export const WithCenteredItems: Story = () => (
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/599/450?image=70' + i,
-                medium: 'https://unsplash.it/789/789?image=70' + i,
-                large: 'https://unsplash.it/591/591?image=70' + i,
-                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/500/500?image=70' + i,
                 ratios: {
-                    small: { w: 599, h: 450 },
-                    medium: { w: 789, h: 789 },
+                    small: { w: 640, h: 640 },
                 },
             },
         }))}
@@ -171,13 +155,11 @@ export const WithBackground: Story = () => (
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/599/450?image=70' + i,
-                medium: 'https://unsplash.it/789/789?image=70' + i,
-                large: 'https://unsplash.it/591/591?image=70' + i,
-                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/500/500?image=70' + i,
                 ratios: {
-                    small: { w: 599, h: 450 },
-                    medium: { w: 789, h: 789 },
+                    small: { w: 640, h: 640 },
                 },
             },
         }))}
@@ -190,13 +172,11 @@ export const WithSplittedBackground: Story = () => (
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/599/450?image=70' + i,
-                medium: 'https://unsplash.it/789/789?image=70' + i,
-                large: 'https://unsplash.it/591/591?image=70' + i,
-                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/500/500?image=70' + i,
                 ratios: {
-                    small: { w: 599, h: 450 },
-                    medium: { w: 789, h: 789 },
+                    small: { w: 640, h: 640 },
                 },
             },
         }))}
@@ -209,13 +189,11 @@ export const Inverted: Story = () => (
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
-                small: 'https://unsplash.it/599/450?image=70' + i,
-                medium: 'https://unsplash.it/789/789?image=70' + i,
-                large: 'https://unsplash.it/591/591?image=70' + i,
-                xlarge: 'https://unsplash.it/592/592?image=70' + i,
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/500/500?image=70' + i,
                 ratios: {
-                    small: { w: 599, h: 450 },
-                    medium: { w: 789, h: 789 },
+                    small: { w: 640, h: 640 },
                 },
             },
         }))}
