@@ -164,7 +164,7 @@ const Title = styled(Copy)`
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     @media ${mq.medium} {
         -webkit-line-clamp: 2;
