@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Image from 'components/blocks/Image';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { HeaderFocus, HeaderImage } from './Header';
+import { mq, spacings } from 'utils/styles';
 
 const PosterView = styled.div`
     position: relative;
@@ -12,26 +13,49 @@ const PosterView = styled.div`
     height: 100%;
 
     /* required to align items at flex-end in ie11 */
-    &:before {
+    /* &:before {
         content: '';
         min-height: 200px;
         display: block;
         flex: 1 0 0px;
-    }
+    } */
 `;
 
 const PlaceholderImg = styled(Image)<{ focus?: HeaderFocus }>`
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    position: relative;
     height: 100%;
-    z-index: 0;
 
     img {
         object-position: ${({ focus }) =>
             `${focus?.[0] || 'center'} ${focus?.[1] || 'center'}`};
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        z-index: 0;
+    }
+
+    margin: 0 auto;
+
+    @media ${mq.medium} {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: ${spacings.spacer * 2}px;
+        z-index: 2;
+
+        & > * {
+            margin-top: ${spacings.spacer}px;
+            max-width: 880px;
+        }
     }
 `;
 
