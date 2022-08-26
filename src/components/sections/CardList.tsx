@@ -210,21 +210,13 @@ const CardLink = styled(Link)<{ isInverted?: boolean }>`
     outline-color: ${({ theme }) => color(theme).primary.default};
 
     &:focus {
-        outline: solid 2px
-            ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).primary.inverted
-                    : color(theme).primary.default};
+        border: 2px dotted ${({ theme }) => color(theme).primary.invertedHover};
         outline-offset: 4px;
 
         color: ${({ theme, isInverted }) =>
             isInverted
                 ? color(theme).primary.invertedHover
                 : color(theme).primary.hover};
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
     }
 `;
 

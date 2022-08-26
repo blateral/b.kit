@@ -28,6 +28,10 @@ export const linkStyles = (isInverted?: boolean) => css`
         }
     }
 
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+
     &:focus {
         outline: 1px dashed
             ${({ theme }) =>
@@ -35,10 +39,6 @@ export const linkStyles = (isInverted?: boolean) => css`
                     ? font(theme).link.colorInverted
                     : font(theme).link.color};
         outline-offset: 1px;
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
     }
 `;
 
