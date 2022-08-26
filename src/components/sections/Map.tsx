@@ -170,23 +170,28 @@ const ContactList = styled.ul<{ isInverted?: boolean }>`
 
 const ContactListLink = styled(Link)`
     display: block;
-    margin-left: ${spacings.nudge * 1.5}px;
 
     ${copyStyle('copy-b', 'big')}
     color: ${({ theme, isInverted }) =>
         isInverted
             ? font(theme)['copy-b'].big.colorInverted
             : font(theme)['copy-b'].big.color};
+
+    * + & {
+        margin-left: ${spacings.nudge * 1.5}px;
+    }
 `;
 
-const AddressContainer = styled.div`
+const AddressContainer = styled.div<{ hasIcon?: boolean }>`
     display: -ms-grid;
     display: grid;
 
-    -ms-grid-columns: min-content 1fr;
-    grid-template-columns: min-content 1fr;
-    -ms-grid-rows: min-content 1fr;
-    grid-auto-rows: min-content 1fr;
+    ${({ hasIcon }) => css`
+        -ms-grid-columns: ${hasIcon ? 'min-content' : ''} 1fr;
+        grid-template-columns: ${hasIcon ? 'min-content' : ''} 1fr;
+        -ms-grid-rows: ${hasIcon ? 'min-content' : ''} 1fr;
+        grid-auto-rows: ${hasIcon ? 'min-content' : ''} 1fr;
+    `}
 
     & > * + * {
         margin-left: ${spacings.nudge * 2}px;
@@ -200,7 +205,7 @@ const CompanyInfo: FC<{
     customIcon?: (isInverted?: boolean) => React.ReactNode;
 }> = ({ isInverted, companyName, address, customIcon }) => {
     return (
-        <AddressContainer>
+        <AddressContainer hasIcon={!!customIcon}>
             {customIcon && <span> {customIcon()} </span>}
             <div>
                 <Copy type="copy-b" size="big" isInverted={isInverted}>
@@ -242,6 +247,28 @@ const LocationInfoCard: FC<
 }) => {
     const { colors } = useLibTheme();
 
+    const addressIconContent = addressIcon ? (
+        addressIcon({ isInverted })
+    ) : (
+        <LocationPin
+            iconColor={isInverted ? colors.text.inverted : colors.text.default}
+        />
+    );
+
+    const phoneIconContent = contact?.telephone?.icon ? (
+        contact.telephone.icon({
+            isInverted,
+        })
+    ) : (
+        <Phone />
+    );
+
+    const mailIconContent = contact?.email?.icon ? (
+        contact.email.icon({ isInverted })
+    ) : (
+        <Mail />
+    );
+
     return (
         <InfoCardView>
             <CardHeader>
@@ -257,18 +284,10 @@ const LocationInfoCard: FC<
                 <CompanyInfo
                     companyName={companyName || ''}
                     address={address}
-                    customIcon={() =>
-                        addressIcon ? (
-                            addressIcon({ isInverted })
-                        ) : (
-                            <LocationPin
-                                iconColor={
-                                    isInverted
-                                        ? colors.text.inverted
-                                        : colors.text.default
-                                }
-                            />
-                        )
+                    customIcon={
+                        addressIconContent
+                            ? () => addressIconContent
+                            : undefined
                     }
                     isInverted={isInverted}
                 />
@@ -277,15 +296,9 @@ const LocationInfoCard: FC<
                 <ContactList isInverted={isInverted}>
                     {contact?.telephone?.label && (
                         <li>
-                            <span>
-                                {contact?.telephone.icon ? (
-                                    contact.telephone.icon({
-                                        isInverted,
-                                    })
-                                ) : (
-                                    <Phone />
-                                )}
-                            </span>
+                            {phoneIconContent && (
+                                <span>{phoneIconContent}</span>
+                            )}
                             <ContactListLink
                                 isInverted={isInverted}
                                 href={`tel:${
@@ -299,13 +312,7 @@ const LocationInfoCard: FC<
                     )}
                     {contact?.email?.label && (
                         <li>
-                            <span>
-                                {contact?.email.icon ? (
-                                    contact.email.icon({ isInverted })
-                                ) : (
-                                    <Mail />
-                                )}
-                            </span>
+                            {mailIconContent && <span>{mailIconContent}</span>}
                             <ContactListLink
                                 isInverted={isInverted}
                                 href={`mailto:${

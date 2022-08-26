@@ -223,3 +223,87 @@ export const WithCustomMapProvider: Story = () => (
         fitBoundsPadding={[30, 30]}
     />
 );
+
+export const WithoutIcons: Story = () => (
+    <Map
+        initialLocation="id1"
+        flyToControl={<FlyTo />}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
+        locations={[
+            {
+                id: 'id1',
+                position: [47.79678, 9.09737],
+
+                image: ['https://placehold.it/40'],
+                companyName: 'Example Company 1',
+                superTitle: 'Anfahrt & Kontakt',
+
+                address: {
+                    street: 'Example Street 1',
+                    postalCode: '12345',
+                    city: 'Example City',
+                    country: 'DE',
+                },
+
+                contact: {
+                    telephone: { label: '+49 123 1234567', icon: () => '' },
+                    email: { label: 'example@email.com', icon: () => '' },
+                },
+
+                description:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                icon: {
+                    size: [20, 28],
+                    anchor: [10, 28],
+                    sizeActive: [50, 70],
+                    anchorActive: [25, 70],
+                    url: marker,
+                },
+                addressIcon: () => '',
+            },
+            {
+                id: 'id2',
+                position: [48.864716, 2.349014],
+
+                companyName: 'Example Company 2',
+                superTitle: 'Anfahrt & Kontakt',
+                image: ['https://placehold.it/40'],
+                address: {
+                    street: 'Example Street 1',
+                    postalCode: '12345',
+                    city: 'Example City',
+                    country: 'FR',
+                },
+                contact: {
+                    telephone: { label: '+49 123 1234567', icon: () => '' },
+                },
+                addressIcon: () => '',
+            },
+            {
+                id: 'id3',
+                position: [53.551086, 9.993682],
+
+                title: 'Title',
+                companyName: 'Example Company 3',
+                superTitle: 'Anfahrt & Kontakt',
+
+                address: {
+                    street: 'Example Street 1',
+                    postalCode: '12345',
+                    city: 'Example City',
+                    country: 'DE',
+                },
+
+                contact: {
+                    telephone: {
+                        label: '+49 123 1234567',
+                        icon: () => '',
+                    },
+                },
+                addressIcon: () => '',
+            },
+        ]}
+    />
+);
