@@ -243,6 +243,7 @@ export interface FieldGenerationProps<T extends FieldTypes> {
     isTouched: boolean;
     key: string;
     isInverted: boolean;
+    hasBg: boolean;
     theme: DefaultTheme;
     setField: (
         field: string,
@@ -310,7 +311,7 @@ const DynamicForm: FC<{
         location?: (props: FieldGenerationProps<Location>) => React.ReactNode;
         checkbox?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
         radio?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
-        upload?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
+        upload?: (props: FieldGenerationProps<FileUpload>) => React.ReactNode;
     };
 }> = ({
     anchorId,
@@ -323,6 +324,7 @@ const DynamicForm: FC<{
     bgMode,
 }) => {
     const isInverted = bgMode === 'inverted';
+    const hasBg = bgMode === 'full' || isInverted;
 
     // generate initial data and setup yup validation definition
     const initalData: FormData = {};
@@ -584,6 +586,7 @@ const DynamicForm: FC<{
                                     error: errors[label],
                                     isTouched: touched[label] || false,
                                     isInverted: isInverted,
+                                    hasBg: hasBg,
                                     setField: setField,
                                     setTouched: setFieldTouched,
                                     validateField: validateField,

@@ -143,6 +143,7 @@ export { default as Link } from 'components/typography/Link';
 export { default as CompactForm } from 'components/fields/CompactForm';
 export { default as SearchInput } from 'components/fields/SearchInput';
 export { default as FilterField } from 'components/fields/FilterField';
+export { default as FormField } from 'components/fields/FormField';
 
 /***** Blocks *****/
 export { default as Title } from 'components/blocks/Title';
