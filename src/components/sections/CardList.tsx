@@ -188,7 +188,6 @@ const SubLabel = styled(Copy)`
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-transform: lowercase;
 `;
 
 const Icon = styled.div`
