@@ -9,7 +9,7 @@ import Tag from 'components/blocks/Tag';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { LinkProps } from 'components/typography/Link';
-import { spacings } from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import StatusFormatter from 'utils/statusFormatter';
@@ -36,15 +36,17 @@ const TagWrapper = styled.div`
 `;
 
 const EventTitle = styled(Heading)`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* number of lines to show */
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
+    }
+
+    @media ${mq.semilarge} {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
 `;
 
@@ -59,16 +61,18 @@ const EventDateTime = styled(Copy)`
 `;
 
 const EventAddress = styled(Copy)`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
     }
 
     ${EventDateTime} + & {
         margin-top: ${spacings.nudge}px;
+    }
+
+    @media ${mq.semilarge} {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 `;
 

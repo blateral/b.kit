@@ -132,7 +132,7 @@ export const WithInfoList: Story = () => (
                     large: { w: 1238, h: 454 },
                 },
             },
-            title: 'Lorem ipsum dolor sit amet',
+            title: 'Lorem ipsum dolor sit amet dolor sit amet dolor',
             date: new Date('December 17, 1995 03:24:00'),
             address: `Altes Rathaus | Münsterstraße 23 | 88662 Überlingen</p>`,
             duration: 21600,
