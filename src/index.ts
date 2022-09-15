@@ -57,6 +57,7 @@ export { concat, printAnchorTag } from 'utils/concat';
 export { getLinkIcon } from 'utils/getLinkIcon';
 export { default as useLeafletMap } from 'utils/useLeafletMap';
 export { default as useParams } from 'utils/useParams';
+export * from 'utils/urlParams';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';
