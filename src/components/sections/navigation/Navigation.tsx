@@ -129,6 +129,7 @@ export interface MenuSettings {
     subNavigation?: Array<NavItem>;
     header?: (props: NavMenuStates) => React.ReactNode;
     footer?: (props: NavMenuStates) => React.ReactNode;
+    navItemsHeader?: (props: NavMenuStates) => React.ReactNode;
     typeSettings: MenuTypeProps;
 
     theme?: ThemeMods;
@@ -280,6 +281,20 @@ const Navigation: FC<NavigationProps> = ({
           }
         : undefined;
 
+    const menuNavItemsHeader = menu?.navItemsHeader
+        ? (props: MenuStates) => {
+              if (!menu?.navItemsHeader) return '';
+              return menu?.navItemsHeader({
+                  ...props,
+                  openMenu,
+                  closeMenu,
+                  mainNavigation: menu?.mainNavigation,
+                  subNavigation: menu?.subNavigation,
+                  navBarSize: navbarSize,
+              });
+          }
+        : undefined;
+
     /**
      * Get ident string that shows if each navbar section is defined.
      * @returns Navbar ident string
@@ -326,6 +341,7 @@ const Navigation: FC<NavigationProps> = ({
                     navBarSize={navbarSize}
                     header={menuHeader}
                     footer={menuFooter}
+                    navItemsHeader={menuNavItemsHeader}
                     onClose={closeMenu}
                 />
             </LibThemeProvider>

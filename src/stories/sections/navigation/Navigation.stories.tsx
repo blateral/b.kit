@@ -628,6 +628,9 @@ export const WithExampleContent2: Story = () => (
                     ]}
                 />
             ),
+            navItemsHeader: (props) => (
+                <button onClick={() => props.closeMenu?.()}>search</button>
+            ),
         }}
     />
 );

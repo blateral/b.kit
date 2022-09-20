@@ -38,6 +38,7 @@ export interface MenuBaseProps {
     navBarSize?: NavBarSize;
     header?: (props: MenuStates) => React.ReactNode;
     footer?: (props: MenuStates) => React.ReactNode;
+    navItemsHeader?: (menuStates: MenuStates) => React.ReactNode;
     onClose?: () => void;
 }
 
@@ -52,6 +53,7 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
     navBarSize,
     header,
     footer,
+    navItemsHeader,
     onClose,
     typeSettings,
 }) => {
@@ -71,6 +73,7 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
         //             navBarSize={navBarSize}
         //             header={header}
         //             footer={footer}
+        //             navItemsHeader={navItemsHeader}
         //             onClose={onClose}
         //             {...(typeSettings as LargeMenuProps)}
         //         />
@@ -90,6 +93,7 @@ const Menu: FC<MenuBaseProps & { typeSettings?: MenuTypeProps }> = ({
                     header={header}
                     footer={footer}
                     onClose={onClose}
+                    navItemsHeader={navItemsHeader}
                     {...(typeSettings as FlyoutMenuProps)}
                 />
             );

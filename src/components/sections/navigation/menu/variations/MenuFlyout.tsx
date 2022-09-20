@@ -208,9 +208,7 @@ const NavList = styled.ul`
     list-style: none;
     margin: ${spacings.nudge * 2}px 0;
 
-    ${NavView}:not(:last-child) > & > li:last-child {
-        border-bottom: solid 2px ${({ theme }) => color(theme).elementBg.medium};
-    }
+    border-bottom: solid 2px ${({ theme }) => color(theme).elementBg.medium};
 `;
 
 // #endregion
@@ -674,6 +672,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     footer,
     onClose,
     collapseIcon,
+    navItemsHeader,
 }) => {
     const { theme } = useLibTheme();
     const flyoutRef = useRef<HTMLDivElement>(null);
@@ -784,6 +783,14 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
 
                     <ScrollContainer>
                         <ScrollArea>
+                            {navItemsHeader &&
+                                navItemsHeader({
+                                    isOpen,
+                                    mainNavigation: mainList,
+                                    subNavigation: subList,
+                                    isIndexPage,
+                                    navBarSize,
+                                })}
                             <MenuNav.View>
                                 {isValidArray(mainList, false) && (
                                     <MenuNav.List id="mainMenu">
