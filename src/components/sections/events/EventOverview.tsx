@@ -175,17 +175,19 @@ const EventOverview: React.FC<{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTags]);
 
-    const handleTagClick = (tag: TagProps) => {
+    const handleTagClick = (tag: TagProps, enableToggling = true) => {
         setSelectedTags((prev) => {
             const prevCopy = [...prev];
             const itemIndex = tag.name ? prev.indexOf(tag.name) : -1;
 
             if (itemIndex === -1 && tag.name) {
                 return [...prevCopy, tag.name];
-            } else {
+            }
+            if (enableToggling) {
                 prevCopy.splice(itemIndex, 1);
                 return prevCopy;
             }
+            return prev;
         });
     };
 
@@ -235,7 +237,7 @@ const EventOverview: React.FC<{
     };
 
     const tagFilterFn = (item: EventItem) => {
-        if (!selectedTags || selectedTags.length === 0) return true;
+        if (!isValidArray(selectedTags, false)) return true;
         if (!item.tags) return false;
 
         let hasTags = false;
@@ -326,7 +328,10 @@ const EventOverview: React.FC<{
                                         setNewPos(0);
                                         if (!onTagClick) {
                                             // if no callback is defined handle filtering on client side inside the component
-                                            handleTagClick({ name: tag.name });
+                                            handleTagClick(
+                                                { name: tag.name },
+                                                false
+                                            );
                                         } else {
                                             onTagClick(
                                                 { name: tag.name },
