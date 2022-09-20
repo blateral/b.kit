@@ -6,8 +6,10 @@ import Pointer from 'components/buttons/Pointer';
 import Copy from 'components/typography/Copy';
 import React from 'react';
 import styled from 'styled-components';
+import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, mq, spacings } from 'utils/styles';
+import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
 import { useObserverSupport } from 'utils/useObserverSupport';
 import { useScrollTo } from 'utils/useScrollTo';
 
@@ -116,6 +118,7 @@ const EventOverview: React.FC<{
     const hasBg = bgMode === 'full';
 
     const { colors } = useLibTheme();
+    const urlParamFilterName = 'eventFilter';
 
     const [selectedTags, setSelectedTags] = React.useState<string[]>(
         activeTags || []
@@ -130,24 +133,21 @@ const EventOverview: React.FC<{
 
     const setNewPos = useScrollTo(800);
 
-    const getFilterParams = () => {
+    const getFilters = () => {
         const tags: string[] = [];
 
-        if ('URLSearchParams' in window) {
-            const params = new URLSearchParams(window.location.search);
-            const paramTags = params
-                .get('eventFilter')
-                ?.split(',')
-                ?.map((t) => decodeURIComponent(t))
-                ?.filter((t) => t !== '');
-
-            if (paramTags) tags.push(...paramTags);
+        const filters = getUrlParams().eventFilter;
+        if (filters) {
+            const tagsFilter = filters?.split(',');
+            if (isValidArray(tagsFilter, false)) {
+                tags.push(...tagsFilter);
+            }
         }
         return tags;
     };
 
     React.useEffect(() => {
-        const paramTags = getFilterParams();
+        const paramTags = getFilters();
 
         if (paramTags.length > 0) {
             setSelectedTags(paramTags);
@@ -157,23 +157,15 @@ const EventOverview: React.FC<{
     }, [activeTags]);
 
     React.useEffect(() => {
-        if (
-            !onTagClick &&
-            selectedTags.length > 0 &&
-            'URLSearchParams' in window
-        ) {
-            const params = new URLSearchParams(window.location.search);
-            params.set(
-                'eventFilter',
-                selectedTags.map((t) => encodeURIComponent(t)).join(',')
-            );
+        if (onTagClick || !isValidArray(selectedTags)) return;
 
-            window.history.replaceState(
-                {},
-                '',
-                `${location.pathname}?${params.toString() + location.hash}`
-            );
+        // set filters to URL params
+        if (selectedTags.length > 0) {
+            setUrlParam(urlParamFilterName, selectedTags.join(','));
+        } else {
+            deleteUrlParam(urlParamFilterName);
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTags]);
 
