@@ -133,6 +133,7 @@ const HeaderVideo: React.FC<{
                     muted
                     autoPlay
                     loop
+                    playsInline
                     onCanPlayThrough={() => setLoaded(true)}
                     focus={focus}
                 />
