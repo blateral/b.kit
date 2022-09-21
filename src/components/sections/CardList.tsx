@@ -18,15 +18,18 @@ const View = styled.div<{
     cardColor?: string;
     hasLink?: boolean;
 }>`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     position: relative;
-    padding-top: 30%;
-
     color: ${({ theme }) => color(theme).text.inverted};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    min-height: 110px;
 
     overflow: hidden;
 
     @media ${mq.medium} {
+        display: block;
         padding-top: 85%;
     }
 `;
@@ -118,12 +121,6 @@ const StyledImage = styled(Image)`
 `;
 
 const Content = styled.div<{ hasIcon?: boolean }>`
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    overflow: hidden;
     z-index: 1;
 
     padding: ${spacings.nudge * 3}px;
@@ -137,6 +134,13 @@ const Content = styled.div<{ hasIcon?: boolean }>`
     }
 
     @media ${mq.medium} {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+
         display: flex;
         flex-direction: ${({ hasIcon }) => (hasIcon ? 'column' : 'row')};
         justify-content: space-between;
@@ -150,6 +154,7 @@ const Content = styled.div<{ hasIcon?: boolean }>`
 
 const TextContainer = styled.div`
     width: 100%;
+    overflow: hidden;
 
     & > * + * {
         margin-top: ${spacings.nudge / 2}px;
@@ -161,14 +166,10 @@ const Title = styled(Copy)`
     max-width: 100%;
 
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
     overflow: hidden;
-    /* text-transform: uppercase; */
-
-    @media ${mq.medium} {
-        -webkit-line-clamp: 2;
-    }
 `;
 
 const Footer = styled.div`
@@ -191,9 +192,25 @@ const SubLabel = styled(Copy)`
 `;
 
 const Icon = styled.div`
-    & > * {
-        height: 60px;
-        width: 60px;
+    height: 100%;
+    max-height: 60px;
+    min-height: 40px;
+    min-width: 40px;
+
+    * {
+        height: 100%;
+    }
+
+    svg,
+    img {
+        width: 100%;
+    }
+
+    @media ${mq.medium} {
+        svg,
+        img {
+            width: auto;
+        }
     }
 `;
 
