@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Tag, { TagProps } from './Tag';
@@ -8,6 +8,7 @@ import StatusFormatter from 'utils/statusFormatter';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import Image, { ImageProps } from './Image';
 import Link, { LinkProps } from 'components/typography/Link';
+import { isValidArray } from 'utils/arrays';
 
 const View = styled.div`
     text-decoration: none;
@@ -162,6 +163,10 @@ const EventBlock: React.FC<EventProps> = ({
               }
             : undefined;
 
+    const filteredTags = useMemo(() => {
+        return tags?.filter((tag) => tag.name);
+    }, [tags]);
+
     return (
         <View>
             {image?.small && (
@@ -173,9 +178,9 @@ const EventBlock: React.FC<EventProps> = ({
                 />
             )}
             <MainContent>
-                {tags && (
+                {isValidArray(filteredTags, false) && (
                     <TagContainer>
-                        {tags.map(
+                        {filteredTags.map(
                             (tag, i) =>
                                 tag && (
                                     <TagWrapper key={'tag_' + i}>
