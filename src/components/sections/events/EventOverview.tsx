@@ -4,7 +4,7 @@ import EventBlock, { EventProps } from 'components/blocks/EventBlock';
 import Tag, { TagProps } from 'components/blocks/Tag';
 import Pointer from 'components/buttons/Pointer';
 import Copy from 'components/typography/Copy';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
@@ -136,7 +136,7 @@ const EventOverview: React.FC<{
     const getFilters = () => {
         const tags: string[] = [];
 
-        const filters = getUrlParams().eventFilter;
+        const filters = getUrlParams()[urlParamFilterName];
         if (filters) {
             const tagsFilter = filters?.split(',');
             if (isValidArray(tagsFilter, false)) {
@@ -146,7 +146,7 @@ const EventOverview: React.FC<{
         return tags;
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         const paramTags = getFilters();
 
         if (paramTags.length > 0) {
@@ -156,7 +156,7 @@ const EventOverview: React.FC<{
         }
     }, [activeTags]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (onTagClick || !isValidArray(selectedTags)) return;
 
         // set filters to URL params
@@ -169,7 +169,7 @@ const EventOverview: React.FC<{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTags]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         // if new tag is selected reset list rows to three visible item rows
         setVisibleRows(3);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -191,7 +191,7 @@ const EventOverview: React.FC<{
         });
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         // cancel if intersection observers are not supported
         if (!observerSupported) return;
 
@@ -245,6 +245,10 @@ const EventOverview: React.FC<{
         return filtered;
     }, [events, itemsPerRow, selectedTags, visibleRows]);
 
+    const filteredTags = useMemo(() => {
+        return tags?.filter((tag) => tag);
+    }, [tags]);
+
     return (
         <Section
             addSeperation
@@ -259,9 +263,9 @@ const EventOverview: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {tags && (
+                {isValidArray(filteredTags, false) && (
                     <TagContainer>
-                        {tags.map((tag, i) => (
+                        {filteredTags.map((tag, i) => (
                             <TagWrapper key={i}>
                                 {customTag ? (
                                     customTag({
@@ -302,42 +306,34 @@ const EventOverview: React.FC<{
                     </TagContainer>
                 )}
                 <Events>
-                    {filteredEvents
-                        // ?.filter(tagFilterFn)
-                        // .filter(removePastFn)
-                        // .sort(sortFilterFn)
-                        // .filter((_, i) => i < visibleRows * itemsPerRow)
-                        .map((item, i) => (
-                            <EventItem
-                                key={`${i}_event_${item.title}`}
-                                hasBg={hasBg}
-                            >
-                                <EventBlock
-                                    {...item}
-                                    tags={item.tags?.map((tag) => ({
-                                        name: tag.name,
-                                    }))}
-                                    isInverted={isInverted}
-                                    onTagClick={(tag) => {
-                                        // scroll back to top
-                                        setNewPos(0);
-                                        if (!onTagClick) {
-                                            // if no callback is defined handle filtering on client side inside the component
-                                            handleTagClick(
-                                                { name: tag.name },
-                                                false
-                                            );
-                                        } else {
-                                            onTagClick(
-                                                { name: tag.name },
-                                                true
-                                            );
-                                        }
-                                    }}
-                                    customTag={customTag}
-                                />
-                            </EventItem>
-                        ))}
+                    {filteredEvents.map((item, i) => (
+                        <EventItem
+                            key={`${i}_event_${item.title}`}
+                            hasBg={hasBg}
+                        >
+                            <EventBlock
+                                {...item}
+                                tags={item.tags?.map((tag) => ({
+                                    name: tag.name,
+                                }))}
+                                isInverted={isInverted}
+                                onTagClick={(tag) => {
+                                    // scroll back to top
+                                    setNewPos(0);
+                                    if (!onTagClick) {
+                                        // if no callback is defined handle filtering on client side inside the component
+                                        handleTagClick(
+                                            { name: tag.name },
+                                            false
+                                        );
+                                    } else {
+                                        onTagClick({ name: tag.name }, true);
+                                    }
+                                }}
+                                customTag={customTag}
+                            />
+                        </EventItem>
+                    ))}
                 </Events>
                 <div ref={targetRef} />
                 {!observerSupported && (

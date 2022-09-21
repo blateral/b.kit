@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -14,6 +14,8 @@ import { useObserverSupport } from 'utils/useObserverSupport';
 import Copy from 'components/typography/Copy';
 import { useScrollTo } from 'utils/useScrollTo';
 import Pointer from 'components/buttons/Pointer';
+import { isValidArray } from 'utils/arrays';
+import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
 
 const TagContainer = styled.div`
     margin-top: -${spacings.nudge}px;
@@ -142,6 +144,7 @@ const NewsOverview: React.FC<{
     const currentMq = useMediaQuery(mqs) as NewsOverviewMq | undefined;
     const [itemsPerRow, setItemsPerRow] = useState(3);
     const [visibleRows, setVisibleRows] = useState(3);
+    const urlParamFilterName = 'newsFilter';
 
     const targetRef = useRef<HTMLDivElement>(null);
     const observerSupported = useObserverSupport();
@@ -186,24 +189,21 @@ const NewsOverview: React.FC<{
         }
     }, [currentMq, visibleRows]);
 
-    const getFilterParams = () => {
+    const getFilters = () => {
         const tags: string[] = [];
 
-        if ('URLSearchParams' in window) {
-            const params = new URLSearchParams(window.location.search);
-            const paramTags = params
-                .get('newsFilter')
-                ?.split(',')
-                ?.map((t) => decodeURIComponent(t))
-                ?.filter((t) => t !== '');
-
-            if (paramTags) tags.push(...paramTags);
+        const filters = getUrlParams()[urlParamFilterName];
+        if (filters) {
+            const tagsFilter = filters?.split(',');
+            if (isValidArray(tagsFilter, false)) {
+                tags.push(...tagsFilter);
+            }
         }
         return tags;
     };
 
     useEffect(() => {
-        const paramTags = getFilterParams();
+        const paramTags = getFilters();
 
         if (paramTags.length > 0) {
             setSelectedTags(paramTags);
@@ -213,23 +213,15 @@ const NewsOverview: React.FC<{
     }, [activeTags]);
 
     useEffect(() => {
-        if (
-            !onTagClick &&
-            selectedTags.length > 0 &&
-            'URLSearchParams' in window
-        ) {
-            const params = new URLSearchParams(window.location.search);
-            params.set(
-                'newsFilter',
-                selectedTags.map((t) => encodeURIComponent(t)).join(',')
-            );
+        if (onTagClick || !isValidArray(selectedTags)) return;
 
-            window.history.replaceState(
-                {},
-                '',
-                `${location.pathname}?${params.toString() + location.hash}`
-            );
+        // set filters to URL params
+        if (selectedTags.length > 0) {
+            setUrlParam(urlParamFilterName, selectedTags.join(','));
+        } else {
+            deleteUrlParam(urlParamFilterName);
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTags]);
 
@@ -240,17 +232,19 @@ const NewsOverview: React.FC<{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTags]);
 
-    const handleTagClick = (tag: TagProps) => {
+    const handleTagClick = (tag: TagProps, enableToggling = true) => {
         setSelectedTags((prev) => {
             const prevCopy = [...prev];
             const itemIndex = tag.name ? prev.indexOf(tag.name) : -1;
 
             if (itemIndex === -1 && tag.name) {
                 return [...prevCopy, tag.name];
-            } else {
+            }
+            if (enableToggling) {
                 prevCopy.splice(itemIndex, 1);
                 return prevCopy;
             }
+            return prev;
         });
     };
 
@@ -284,25 +278,33 @@ const NewsOverview: React.FC<{
         };
     }, [itemsPerRow, newsCount, visibleRows, observerSupported]);
 
-    const sortFilterFn = (a: NewsCardProps, b: NewsCardProps) => {
-        if (a.publishDate && b.publishDate) {
-            return b.publishDate.getTime() - a.publishDate.getTime();
-        } else return 0;
-    };
+    const filteredNews = useMemo(() => {
+        const tagFilterFn = (item: NewsItem) => {
+            if (!isValidArray(selectedTags, false)) return true;
+            if (!item.tags) return false;
 
-    const tagFilterFn = (item: NewsItem) => {
-        if (!selectedTags || selectedTags.length === 0) return true;
-        if (!item.tags) return false;
-
-        let hasTags = false;
-        for (let i = 0; i < item.tags.length; i++) {
-            if (selectedTags.indexOf(item.tags[i].name || '') !== -1) {
-                hasTags = true;
-                break;
+            let hasTags = false;
+            for (let i = 0; i < item.tags.length; i++) {
+                if (selectedTags.indexOf(item.tags[i].name || '') !== -1) {
+                    hasTags = true;
+                    break;
+                }
             }
-        }
-        return hasTags;
-    };
+            return hasTags;
+        };
+
+        let filtered = isValidArray(news) ? [...news] : [];
+
+        // adding filter
+        filtered = filtered?.filter(tagFilterFn);
+        filtered = filtered?.filter((_, i) => i < visibleRows * itemsPerRow);
+
+        return filtered;
+    }, [itemsPerRow, news, selectedTags, visibleRows]);
+
+    const filteredTags = useMemo(() => {
+        return tags?.filter((tag) => tag);
+    }, [tags]);
 
     return (
         <Section
@@ -318,9 +320,9 @@ const NewsOverview: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {tags && (
+                {isValidArray(filteredTags, false) && (
                     <TagContainer>
-                        {tags.map((tag, i) => (
+                        {filteredTags.map((tag, i) => (
                             <TagWrapper key={i}>
                                 {customTag ? (
                                     customTag({
@@ -361,36 +363,32 @@ const NewsOverview: React.FC<{
                     </TagContainer>
                 )}
                 <News>
-                    {news
-                        ?.filter(tagFilterFn)
-                        .sort(sortFilterFn)
-                        .filter((_, i) => i < visibleRows * itemsPerRow)
-                        .map((item, i) => (
-                            <NewsItem key={`${i}_news_${item.title}`}>
-                                <NewsCard
-                                    ref={cardRefs[i]}
-                                    {...item}
-                                    tags={item.tags?.map((tag) => ({
-                                        name: tag.name,
-                                    }))}
-                                    isInverted={isInverted}
-                                    onTagClick={(tag) => {
-                                        // scroll back to top
-                                        setNewPos(0);
-                                        if (!onTagClick) {
-                                            // if no callback is defined handle filtering on client side inside the component
-                                            handleTagClick({ name: tag.name });
-                                        } else {
-                                            onTagClick(
-                                                { name: tag.name },
-                                                true
-                                            );
-                                        }
-                                    }}
-                                    customTag={customTag}
-                                />
-                            </NewsItem>
-                        ))}
+                    {filteredNews.map((item, i) => (
+                        <NewsItem key={`${i}_news_${item.title}`}>
+                            <NewsCard
+                                ref={cardRefs[i]}
+                                {...item}
+                                tags={item.tags?.map((tag) => ({
+                                    name: tag.name,
+                                }))}
+                                isInverted={isInverted}
+                                onTagClick={(tag) => {
+                                    // scroll back to top
+                                    setNewPos(0);
+                                    if (!onTagClick) {
+                                        // if no callback is defined handle filtering on client side inside the component
+                                        handleTagClick(
+                                            { name: tag.name },
+                                            false
+                                        );
+                                    } else {
+                                        onTagClick({ name: tag.name }, true);
+                                    }
+                                }}
+                                customTag={customTag}
+                            />
+                        </NewsItem>
+                    ))}
                 </News>
                 <div ref={targetRef} />
                 {!observerSupported && (

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { spacings, getGlobals as global, getFonts as font } from 'utils/styles';
@@ -8,6 +8,7 @@ import Tag, { TagProps } from 'components/blocks/Tag';
 import StatusFormatter from 'utils/statusFormatter';
 import Link, { LinkProps } from 'components/typography/Link';
 import { useLibTheme } from 'utils/LibThemeProvider';
+import { isValidArray } from 'utils/arrays';
 
 const View = styled.div`
     position: relative;
@@ -179,6 +180,10 @@ const NewsCard = forwardRef<
                   }
                 : undefined;
 
+        const filteredTags = useMemo(() => {
+            return tags?.filter((tag) => tag.name);
+        }, [tags]);
+
         return (
             <View ref={ref} className={className}>
                 {image && (
@@ -191,30 +196,32 @@ const NewsCard = forwardRef<
                     </ImageLink>
                 )}
                 <Head data-sheet="head">
-                    <Tags>
-                        {tags?.map((tag, i) => {
-                            if (customTag) {
-                                return customTag({
-                                    key: i,
-                                    name: tag.name || '',
-                                    isInverted: isInverted,
-                                    isActive: false,
-                                    link: tag.link,
-                                    clickHandler: handleTagClick(tag),
-                                });
-                            } else {
-                                return (
-                                    <Tag
-                                        key={i}
-                                        isInverted={isInverted}
-                                        name={tag.name}
-                                        link={tag.link}
-                                        onClick={handleTagClick(tag)}
-                                    />
-                                );
-                            }
-                        })}
-                    </Tags>
+                    {isValidArray(filteredTags, false) && (
+                        <Tags>
+                            {filteredTags.map((tag, i) => {
+                                if (customTag) {
+                                    return customTag({
+                                        key: i,
+                                        name: tag.name || '',
+                                        isInverted: isInverted,
+                                        isActive: false,
+                                        link: tag.link,
+                                        clickHandler: handleTagClick(tag),
+                                    });
+                                } else {
+                                    return (
+                                        <Tag
+                                            key={i}
+                                            isInverted={isInverted}
+                                            name={tag.name}
+                                            link={tag.link}
+                                            onClick={handleTagClick(tag)}
+                                        />
+                                    );
+                                }
+                            })}
+                        </Tags>
+                    )}
                     {publishedAt && (
                         <PublishDate renderAs="div" isInverted={isInverted}>
                             {publishedAt}
