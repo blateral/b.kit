@@ -15,19 +15,31 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li<{ hasBg?: boolean }>`
-    border-top: 1px solid
-        ${({ theme, hasBg }) =>
-            hasBg
-                ? color(theme).elementBg.light
-                : color(theme).elementBg.medium};
-
-    border-bottom: 1px solid
-        ${({ theme, hasBg }) =>
-            hasBg
-                ? color(theme).elementBg.light
-                : color(theme).elementBg.medium};
-
     padding: ${spacings.nudge * 3}px 0;
+
+    & + & {
+        border-top: 1px solid
+            ${({ theme, hasBg }) =>
+                hasBg
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.medium};
+    }
+
+    &:first-of-type {
+        border-top: 1px solid
+            ${({ theme, hasBg }) =>
+                hasBg
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.medium};
+    }
+
+    &:last-of-type {
+        border-bottom: 1px solid
+            ${({ theme, hasBg }) =>
+                hasBg
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.medium};
+    }
 `;
 
 const EventList: React.FC<{
