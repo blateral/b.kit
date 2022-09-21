@@ -4,7 +4,7 @@ import EventBlock, { EventProps } from 'components/blocks/EventBlock';
 import Tag, { TagProps } from 'components/blocks/Tag';
 import Pointer from 'components/buttons/Pointer';
 import Copy from 'components/typography/Copy';
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
@@ -221,34 +221,29 @@ const EventOverview: React.FC<{
         };
     }, [itemsPerRow, eventCount, visibleRows, observerSupported]);
 
-    const removePastFn = (item: EventItem) => {
-        if (!item.date) return false;
+    const filteredEvents = useMemo(() => {
+        const tagFilterFn = (item: EventItem) => {
+            if (!isValidArray(selectedTags, false)) return true;
+            if (!item.tags) return false;
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        return item.date >= today;
-    };
-
-    const sortFilterFn = (a: EventProps, b: EventProps) => {
-        if (a.date && b.date) {
-            return a.date.getTime() - b.date.getTime();
-        } else return 0;
-    };
-
-    const tagFilterFn = (item: EventItem) => {
-        if (!isValidArray(selectedTags, false)) return true;
-        if (!item.tags) return false;
-
-        let hasTags = false;
-        for (let i = 0; i < item.tags.length; i++) {
-            if (selectedTags.indexOf(item.tags[i].name || '') !== -1) {
-                hasTags = true;
-                break;
+            let hasTags = false;
+            for (let i = 0; i < item.tags.length; i++) {
+                if (selectedTags.indexOf(item.tags[i].name || '') !== -1) {
+                    hasTags = true;
+                    break;
+                }
             }
-        }
-        return hasTags;
-    };
+            return hasTags;
+        };
+
+        let filtered = isValidArray(events) ? [...events] : [];
+
+        // adding filter
+        filtered = filtered?.filter(tagFilterFn);
+        filtered = filtered?.filter((_, i) => i < visibleRows * itemsPerRow);
+
+        return filtered;
+    }, [events, itemsPerRow, selectedTags, visibleRows]);
 
     return (
         <Section
@@ -307,11 +302,11 @@ const EventOverview: React.FC<{
                     </TagContainer>
                 )}
                 <Events>
-                    {events
-                        ?.filter(tagFilterFn)
-                        .filter(removePastFn)
-                        .sort(sortFilterFn)
-                        .filter((_, i) => i < visibleRows * itemsPerRow)
+                    {filteredEvents
+                        // ?.filter(tagFilterFn)
+                        // .filter(removePastFn)
+                        // .sort(sortFilterFn)
+                        // .filter((_, i) => i < visibleRows * itemsPerRow)
                         .map((item, i) => (
                             <EventItem
                                 key={`${i}_event_${item.title}`}
