@@ -8,16 +8,12 @@ import { getColors as color, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { LinkProps } from 'components/typography/Link';
 
-const List = styled.ul`
+const List = styled.ul<{ hasBg?: boolean }>`
     list-style: none;
     margin: 0;
     padding: 0;
-`;
 
-const ListItem = styled.li<{ hasBg?: boolean }>`
-    padding: ${spacings.nudge * 3}px 0;
-
-    & + & {
+    & > * + * {
         border-top: 1px solid
             ${({ theme, hasBg }) =>
                 hasBg
@@ -25,7 +21,7 @@ const ListItem = styled.li<{ hasBg?: boolean }>`
                     : color(theme).elementBg.medium};
     }
 
-    &:first-of-type {
+    & > *:first-of-type {
         border-top: 1px solid
             ${({ theme, hasBg }) =>
                 hasBg
@@ -33,13 +29,17 @@ const ListItem = styled.li<{ hasBg?: boolean }>`
                     : color(theme).elementBg.medium};
     }
 
-    &:last-of-type {
+    & > *:last-of-type {
         border-bottom: 1px solid
             ${({ theme, hasBg }) =>
                 hasBg
                     ? color(theme).elementBg.light
                     : color(theme).elementBg.medium};
     }
+`;
+
+const ListItem = styled.li`
+    padding: ${spacings.nudge * 3}px 0;
 `;
 
 const EventList: React.FC<{
@@ -79,9 +79,9 @@ const EventList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List>
+                <List hasBg={hasBg}>
                     {events?.map((event, i) => (
-                        <ListItem key={i} hasBg={hasBg}>
+                        <ListItem key={i}>
                             <EventBlock
                                 {...event}
                                 isInverted={isInverted}

@@ -36,15 +36,12 @@ const TagWrapper = styled.div`
     padding-left: ${spacings.nudge}px;
 `;
 
-const Events = styled.ul`
+const Events = styled.ul<{ hasBg?: boolean }>`
     list-style-type: none;
     margin: 0;
     padding: 0;
-`;
-const EventItem = styled.li<{ hasBg?: boolean }>`
-    padding: ${spacings.nudge * 3}px 0;
 
-    & + & {
+    & > * + * {
         border-top: 1px solid
             ${({ theme, hasBg }) =>
                 hasBg
@@ -52,7 +49,7 @@ const EventItem = styled.li<{ hasBg?: boolean }>`
                     : color(theme).elementBg.medium};
     }
 
-    &:first-of-type {
+    & > *:first-of-type {
         border-top: 1px solid
             ${({ theme, hasBg }) =>
                 hasBg
@@ -60,13 +57,16 @@ const EventItem = styled.li<{ hasBg?: boolean }>`
                     : color(theme).elementBg.medium};
     }
 
-    &:last-of-type {
+    & > *:last-of-type {
         border-bottom: 1px solid
             ${({ theme, hasBg }) =>
                 hasBg
                     ? color(theme).elementBg.light
                     : color(theme).elementBg.medium};
     }
+`;
+const EventItem = styled.li`
+    padding: ${spacings.nudge * 3}px 0;
 `;
 
 const ListFooter = styled.div`
@@ -317,12 +317,9 @@ const EventOverview: React.FC<{
                         ))}
                     </TagContainer>
                 )}
-                <Events>
+                <Events hasBg={hasBg}>
                     {filteredEvents.map((item, i) => (
-                        <EventItem
-                            key={`${i}_event_${item.title}`}
-                            hasBg={hasBg}
-                        >
+                        <EventItem key={`${i}_event_${item.title}`}>
                             <EventBlock
                                 {...item}
                                 tags={item.tags?.map((tag) => ({
