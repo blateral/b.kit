@@ -99,13 +99,20 @@ const Select = styled.button<{
     &:focus:not(:focus-visible) {
         outline: none;
     }
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
 `;
 
-const SelectMain = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+const SelectMain = styled.span`
+    display: block;
     user-select: none;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
 
     & > * + * {
         margin-left: ${spacings.nudge}px;
