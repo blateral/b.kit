@@ -18,6 +18,7 @@ const renderSelectField = ({
 }: FieldGenerationProps<Select>) => (
     <SelectDropdown
         key={key}
+        enableMemo
         label={`${key}${field.isRequired ? ' *' : ''}`}
         name={key}
         placeholder={field.placeholder}

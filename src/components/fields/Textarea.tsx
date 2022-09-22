@@ -89,12 +89,13 @@ const Area = styled.textarea<{
     }
 `;
 
-const Textarea: React.FC<
-    FormProps & {
-        onChange?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
-        onBlur?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
-    }
-> = ({
+export type TextareaProps = FormProps & {
+    enableMemo?: boolean;
+    onChange?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
+    onBlur?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
+};
+
+const Textarea: React.FC<TextareaProps> = ({
     label,
     isRequired,
     errorMessage,
@@ -140,4 +141,23 @@ const Textarea: React.FC<
     );
 };
 
-export default Textarea;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: TextareaProps, next: TextareaProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.value !== next.value) return false;
+    if (prev.errorMessage !== next.errorMessage) return false;
+    if (prev.infoMessage !== next.infoMessage) return false;
+    if (prev.label !== next.label) return false;
+    if (prev.placeholder !== next.placeholder) return false;
+
+    return true;
+};
+
+export default React.memo(Textarea, areEqual);

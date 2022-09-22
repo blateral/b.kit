@@ -15,6 +15,7 @@ const renderField = ({
 }: FieldGenerationProps<Field>) => (
     <Textfield
         key={key}
+        enableMemo
         label={`${key}${field.isRequired ? ' *' : ''}`}
         placeholder={field.placeholder}
         name={`['${key}']`}

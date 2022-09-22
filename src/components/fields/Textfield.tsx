@@ -92,14 +92,15 @@ export type FormProps = FieldProps & {
     placeholder?: string;
 };
 
-const Textfield: React.FC<
-    FormProps & {
-        type?: 'number' | 'text' | 'tel' | 'email' | 'password';
-        isInverted?: boolean;
-        onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
-        onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
-    }
-> = ({
+export type TextfieldProps = FormProps & {
+    enableMemo?: boolean;
+    type?: 'number' | 'text' | 'tel' | 'email' | 'password';
+    isInverted?: boolean;
+    onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
+    onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
+};
+
+const Textfield: React.FC<TextfieldProps> = ({
     type = 'text',
     label,
     errorMessage,
@@ -146,4 +147,23 @@ const Textfield: React.FC<
     );
 };
 
-export default Textfield;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: TextfieldProps, next: TextfieldProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.value !== next.value) return false;
+    if (prev.errorMessage !== next.errorMessage) return false;
+    if (prev.infoMessage !== next.infoMessage) return false;
+    if (prev.label !== next.label) return false;
+    if (prev.placeholder !== next.placeholder) return false;
+
+    return true;
+};
+
+export default React.memo(Textfield, areEqual);

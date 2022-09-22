@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import AngleDown from 'components/base/icons/AngleDown';
@@ -223,21 +223,23 @@ interface SelectItem {
     label?: string;
 }
 
-const SelectDropdown: React.FC<
-    FormProps & {
-        placeholder?: string;
-        name?: string;
-        value?: string;
-        items: SelectItem[];
+export type SelectDropdownProps = FormProps & {
+    enableMemo?: boolean;
+    placeholder?: string;
+    name?: string;
+    // selected option (label)
+    value?: string;
+    items: SelectItem[];
 
-        onChange?: (value: string) => void;
-        onBlur?: () => void;
-        indicator?: (props: {
-            isOpen: boolean;
-            isDisabled?: boolean;
-        }) => React.ReactNode;
-    }
-> = ({
+    onChange?: (value: string) => void;
+    onBlur?: () => void;
+    indicator?: (props: {
+        isOpen: boolean;
+        isDisabled?: boolean;
+    }) => React.ReactNode;
+};
+
+const SelectDropdown: React.FC<SelectDropdownProps> = ({
     label,
     isRequired,
     errorMessage,
@@ -256,7 +258,7 @@ const SelectDropdown: React.FC<
     const [isOpen, setIsOpen] = useState(false);
 
     const [activeItemIndex, setActiveItemIndex] = useState<number>(
-        items?.findIndex((item) => item.value === value) || -1
+        items?.findIndex((item) => item.label === value) || -1
     );
     const [selectItems, setSelectItems] = useState<SelectItem[]>(items || []);
     const selectBtnRef = useRef<HTMLButtonElement>(null);
@@ -264,7 +266,7 @@ const SelectDropdown: React.FC<
     const itemHasBeenClicked = useRef<boolean>(false);
 
     useEffect(() => {
-        const index = items?.findIndex((item) => item.value === value);
+        const index = items?.findIndex((item) => item.label === value);
         if (index !== -1) setActiveItemIndex(index);
 
         setSelectItems(items || []);
@@ -283,10 +285,11 @@ const SelectDropdown: React.FC<
         errorMessage = '';
     }
 
-    const activeItem =
-        activeItemIndex >= 0 && activeItemIndex < selectItems.length
+    const activeItem = useMemo(() => {
+        return activeItemIndex >= 0 && activeItemIndex < selectItems.length
             ? selectItems[activeItemIndex]
             : undefined;
+    }, [activeItemIndex, selectItems]);
 
     return (
         <FieldWrapper.View isDisabled={isDisabled}>
@@ -418,4 +421,34 @@ const SelectDropdown: React.FC<
     );
 };
 
-export default SelectDropdown;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: SelectDropdownProps, next: SelectDropdownProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.value !== next.value) return false;
+    if (prev.errorMessage !== next.errorMessage) return false;
+    if (prev.infoMessage !== next.infoMessage) return false;
+    if (prev.label !== next.label) return false;
+    if (prev.placeholder !== next.placeholder) return false;
+
+    // compare items
+    if (prev.items.length !== next.items.length) return false;
+    for (let i = 0; i < prev.items.length; i++) {
+        if (
+            prev.items[i].label !== next.items[i].label ||
+            prev.items[i].value !== next.items[i].value
+        ) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+export default React.memo(SelectDropdown, areEqual);
