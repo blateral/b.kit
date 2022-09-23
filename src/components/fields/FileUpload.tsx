@@ -246,15 +246,16 @@ const readFileAsync = (file: File, uid: string) =>
         reader.readAsDataURL(file);
     });
 
-const FileUpload: FC<
-    Omit<FormProps, 'value' | 'placeholder'> & {
-        onUploadFiles?: (files: File[]) => void;
-        acceptedFormats?: string;
-        uploadLabel?: string;
-        customDeleteIcon?: (isInverted?: boolean) => React.ReactNode;
-        customUploadIcon?: (isInverted?: boolean) => React.ReactNode;
-    }
-> = ({
+export type FileUploadProps = Omit<FormProps, 'value' | 'placeholder'> & {
+    enableMemo?: boolean;
+    onUploadFiles?: (files: File[]) => void;
+    acceptedFormats?: string;
+    uploadLabel?: string;
+    customDeleteIcon?: (isInverted?: boolean) => React.ReactNode;
+    customUploadIcon?: (isInverted?: boolean) => React.ReactNode;
+};
+
+const FileUpload: FC<FileUploadProps> = ({
     onUploadFiles,
     label,
     isInverted,
@@ -407,4 +408,21 @@ const FileUpload: FC<
     );
 };
 
-export default FileUpload;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: FileUploadProps, next: FileUploadProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.errorMessage !== next.errorMessage) return false;
+    if (prev.infoMessage !== next.infoMessage) return false;
+    if (prev.label !== next.label) return false;
+
+    return true;
+};
+
+export default React.memo(FileUpload, areEqual);

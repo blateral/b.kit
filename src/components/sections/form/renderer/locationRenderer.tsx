@@ -36,6 +36,7 @@ const renderLocationField = ({
     return (
         <LocationField
             key={key}
+            enableMemo
             name={`['${key}']`}
             label={`${key}${field.isRequired ? ' *' : ''}`}
             placeholder={field.placeholder}

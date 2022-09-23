@@ -221,7 +221,8 @@ export interface LocationData {
     position?: [number, number];
 }
 
-const LocationField: FC<{
+export interface LocationFieldProps {
+    enableMemo?: boolean;
     label?: string;
     errorMessage?: string;
     infoMessage?: string;
@@ -241,7 +242,9 @@ const LocationField: FC<{
     geolocationErrorMsg?: string;
     descriptionTabLabel?: string;
     mapTabLabel?: string;
-}> = ({
+}
+
+const LocationField: FC<LocationFieldProps> = ({
     label,
     errorMessage,
     infoMessage,
@@ -543,4 +546,32 @@ const LocationField: FC<{
     );
 };
 
-export default LocationField;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: LocationFieldProps, next: LocationFieldProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.descriptionTabLabel !== next.descriptionTabLabel) return false;
+    if (prev.errorMessage !== next.errorMessage) return false;
+    if (prev.infoMessage !== next.infoMessage) return false;
+    if (prev.geolocationErrorMsg !== next.geolocationErrorMsg) return false;
+    if (prev.label !== next.label) return false;
+    if (prev.mapTabLabel !== next.mapTabLabel) return false;
+    if (prev.placeholder !== next.placeholder) return false;
+    if (prev.value?.description !== next.value?.description) return false;
+    if (
+        prev.value?.position?.[0] !== next.value?.position?.[0] ||
+        prev.value?.position?.[1] !== next.value?.position?.[1]
+    ) {
+        return false;
+    }
+
+    return true;
+};
+
+export default React.memo(LocationField, areEqual);

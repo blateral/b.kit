@@ -1,7 +1,8 @@
 import Check from 'components/base/icons/Check';
 import Copy from 'components/typography/Copy';
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.label`
@@ -75,7 +76,8 @@ const StyledCheck = styled(Check)`
     transform: translate(-50%, -50%);
 `;
 
-const Checkbox: React.FC<{
+export interface CheckboxProps {
+    enableMemo?: boolean;
     label?: string;
 
     onChange?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
@@ -89,7 +91,9 @@ const Checkbox: React.FC<{
     isSelected?: boolean;
     isInverted?: boolean;
     isRequired?: boolean;
-}> = ({
+}
+
+const Checkbox: React.FC<CheckboxProps> = ({
     label,
     isDisabled,
     isSelected,
@@ -101,7 +105,7 @@ const Checkbox: React.FC<{
     value,
     isRequired,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     return (
         <View>
@@ -125,9 +129,7 @@ const Checkbox: React.FC<{
                     size="small"
                     type="copy-b"
                     isInverted={isInverted}
-                    textColor={
-                        isDisabled ? color(theme).text.inverted : undefined
-                    }
+                    textColor={isDisabled ? colors.text.inverted : undefined}
                     innerHTML={`${label}${isRequired ? '<span> *</span>' : ''}`}
                 />
             )}
@@ -135,4 +137,21 @@ const Checkbox: React.FC<{
     );
 };
 
-export default Checkbox;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: CheckboxProps, next: CheckboxProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.label !== next.label) return false;
+    if (prev.isSelected !== next.isSelected) return false;
+    if (prev.value !== next.value) return false;
+
+    return true;
+};
+
+export default React.memo(Checkbox, areEqual);

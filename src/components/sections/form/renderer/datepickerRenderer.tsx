@@ -29,6 +29,7 @@ const renderDatepickerField = ({
     return (
         <DatepickerCmp
             key={key}
+            enableMemo
             onSubmit={handleSubmit}
             onDataChange={handleSubmit}
             values={[dates?.[0] as Date, dates?.[1] as Date]}

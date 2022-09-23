@@ -30,6 +30,7 @@ import { useLibTheme } from 'utils/LibThemeProvider';
 
 import * as Icons from 'components/base/icons/Icons';
 import { getFormFieldTextSize } from 'utils/formFieldText';
+import { isEqual } from 'date-fns';
 
 const PickerView = styled.div`
     position: relative;
@@ -602,7 +603,8 @@ const getPickerHeader =
             </PickerHeader>
         );
 
-const Datepicker: React.FC<{
+export interface DatepickerProps {
+    enableMemo?: boolean;
     label?: string;
     errorMessage?: string;
     infoMessage?: string;
@@ -635,7 +637,9 @@ const Datepicker: React.FC<{
     prevCtrlUrl?: React.ReactNode;
 
     singleSelect?: boolean;
-}> = ({
+}
+
+const Datepicker: React.FC<DatepickerProps> = ({
     label,
     errorMessage,
     infoMessage,
@@ -841,4 +845,39 @@ const Datepicker: React.FC<{
     );
 };
 
-export default Datepicker;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: DatepickerProps, next: DatepickerProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.infoMessage !== next.infoMessage) return false;
+    if (prev.errorMessage !== next.errorMessage) return false;
+    if (prev.dateDeleteLabel !== next.dateDeleteLabel) return false;
+    if (prev.dateSubmitLabel !== next.dateSubmitLabel) return false;
+    if (prev.label !== next.label) return false;
+    if (prev.placeholder !== next.placeholder) return false;
+
+    // compare date values
+    const prevDateStart = prev.values?.[0];
+    const prevDateEnd = prev.values?.[1];
+    const nextDateStart = prev.values?.[0];
+    const nextDateEnd = prev.values?.[1];
+
+    if (
+        prevDateStart !== nextDateStart ||
+        !isEqual(prevDateStart || -1, nextDateStart || -1) ||
+        prevDateEnd !== nextDateEnd ||
+        !isEqual(prevDateEnd || -1, nextDateEnd || -1)
+    ) {
+        return false;
+    }
+
+    return true;
+};
+
+export default React.memo(Datepicker, areEqual);

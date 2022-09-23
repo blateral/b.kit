@@ -1,6 +1,7 @@
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from '../../utils/styles';
 
 const View = styled.label`
@@ -36,7 +37,7 @@ const StyledRadioButton = styled.span<{
     isSelected?: boolean;
     isInverted?: boolean;
 }>`
-    brackground: transparent;
+    background: transparent;
     border-radius: 50%;
 
     position: relative;
@@ -85,7 +86,8 @@ const Label = styled(Copy)`
     }
 `;
 
-const RadioButton: React.FC<{
+export interface RadioButtonProps {
+    enableMemo?: boolean;
     isSelected?: boolean;
     isDisabled?: boolean;
     isInverted?: boolean;
@@ -94,7 +96,9 @@ const RadioButton: React.FC<{
     id?: string;
     value?: string;
     label?: string;
-}> = ({
+}
+
+const RadioButton: React.FC<RadioButtonProps> = ({
     isDisabled,
     isSelected,
     isInverted,
@@ -104,7 +108,8 @@ const RadioButton: React.FC<{
     name,
     value,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
+
     return (
         <View>
             <RadioContainer isDisabled={isDisabled}>
@@ -128,10 +133,10 @@ const RadioButton: React.FC<{
                     type="copy-b"
                     textColor={
                         isDisabled
-                            ? color(theme).elementBg.medium
+                            ? colors.elementBg.medium
                             : isInverted
-                            ? color(theme).text.inverted
-                            : color(theme).text.default
+                            ? colors.text.inverted
+                            : colors.text.default
                     }
                     innerHTML={label}
                     isInverted={isInverted}
@@ -140,4 +145,22 @@ const RadioButton: React.FC<{
         </View>
     );
 };
-export default RadioButton;
+
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: RadioButtonProps, next: RadioButtonProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.isSelected !== next.isSelected) return false;
+    if (prev.label !== next.label) return false;
+    if (prev.value !== next.value) return false;
+
+    return true;
+};
+
+export default React.memo(RadioButton, areEqual);

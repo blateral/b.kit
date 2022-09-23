@@ -13,6 +13,7 @@ const renderUploadField = ({
 }: FieldGenerationProps<FileUpload>) => (
     <FileUploadCmp
         key={key}
+        enableMemo
         label={`${key}${field.isRequired ? ' *' : ''}`}
         name={key}
         infoMessage={field.info}

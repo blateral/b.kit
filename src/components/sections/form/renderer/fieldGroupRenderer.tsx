@@ -50,6 +50,7 @@ export const renderRadioGroupField = ({
                 {group?.fields?.map((field, fi) => (
                     <RadioButton
                         key={fi}
+                        enableMemo
                         name={key}
                         value={field.text}
                         label={field.text}
@@ -107,6 +108,7 @@ export const renderCheckboxGroupField = ({
                 {group?.fields?.map((field, ci) => (
                     <Checkbox
                         key={ci}
+                        enableMemo
                         isInverted={isInverted}
                         onChange={(ev) => {
                             const value = ev.currentTarget.value;
