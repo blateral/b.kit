@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
@@ -119,14 +119,18 @@ export interface Area extends FormField {
 
 export interface Select extends FormField {
     type: 'Select';
-    initialValue?: string;
+    initialOption?: string;
     placeholder?: string;
     dropdownItems: {
-        value?: string;
         label?: string;
+        value?: Record<string, string>;
     }[];
     info?: string;
-    validate?: (key: string, value: string, config: Select) => Promise<string>;
+    validate?: (
+        key: string,
+        selectedItem: string,
+        config: Select
+    ) => Promise<string>;
     indicator?: (props: {
         isOpen: boolean;
         isDisabled?: boolean;
@@ -221,6 +225,7 @@ export interface FormData {
 export type FormDataTypes =
     | string
     | boolean
+    | Record<string, string>
     | Array<string>
     | [Date | null, Date | null]
     | Array<File>
@@ -245,11 +250,11 @@ export interface FieldGenerationProps<T extends FieldTypes> {
     isInverted: boolean;
     hasBg: boolean;
     theme: DefaultTheme;
-    setField: (
-        field: string,
-        value: any,
-        shouldValidate?: boolean | undefined
-    ) => Promise<void> | Promise<FormikErrors<FormData>>;
+    setField: (props: {
+        key: string;
+        value: any;
+        shouldValidate?: boolean;
+    }) => Promise<void | FormikErrors<FormData>>;
     validateField: (
         name: string
     ) => Promise<string | undefined> | Promise<void>;
@@ -274,6 +279,11 @@ export interface FieldGenerationProps<T extends FieldTypes> {
     validateOnChange?: boolean;
 }
 
+export type FormValues = FormData & {
+    targetEmails: string[];
+    subjectLine: string;
+};
+
 const DynamicForm: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -282,7 +292,7 @@ const DynamicForm: FC<{
     fields?: FormStructure;
 
     /** Callback on form submit */
-    onSubmit?: (values: FormData) => Promise<void>;
+    onSubmit?: (values: FormValues) => Promise<void>;
 
     /** Function to inject custom submit button */
     submitAction?: (props: {
@@ -291,8 +301,8 @@ const DynamicForm: FC<{
         isDisabled?: boolean;
     }) => React.ReactNode;
 
-    /** Comma seperated list of target emails */
-    targetEmails?: string;
+    /** List of target emails */
+    targetEmails?: string[];
 
     /** E-Mail subject */
     subjectLine?: string;
@@ -338,7 +348,7 @@ const DynamicForm: FC<{
                 initalData[key] = (fields[key] as Area).initialValue || '';
                 break;
             case 'Select':
-                initalData[key] = (fields[key] as Select).initialValue || '';
+                initalData[key] = (fields[key] as Select).initialOption || '';
                 break;
             case 'Datepicker':
                 initalData[key] = (fields[key] as Datepicker).initialDates || [
@@ -536,7 +546,7 @@ const DynamicForm: FC<{
         onSubmit: async (values) => {
             const valuesAndMails = {
                 ...values,
-                targetEmails: targetEmails || '',
+                targetEmails: targetEmails || [],
                 subjectLine: subjectLine || '',
             };
             onSubmit && (await onSubmit(valuesAndMails));
@@ -547,18 +557,31 @@ const DynamicForm: FC<{
         validate: validation,
     });
 
+    // save last react state
+    const latestValuesRef = useRef<FormData>({ ...initalData } as FormData);
     const { theme } = useLibTheme();
 
     // rewrite setFieldValue to prevent loadash feature of Formik: https://github.com/jaredpalmer/formik/issues/2262
-    const setField = async (
-        key: string,
-        value: any,
-        shouldValidate?: boolean
-    ) => {
-        return setValues({ ...values, [key]: value }, shouldValidate);
-    };
+    const setField = useCallback(
+        (props: {
+            key: string;
+            value: any;
+            prevValues: FormData;
+            shouldValidate?: boolean;
+        }) => {
+            return setValues(
+                { ...latestValuesRef.current, [props.key]: props.value },
+                props.shouldValidate
+            );
+        },
+        [setValues]
+    );
 
     const fieldKeys = fields && Object.keys(fields);
+
+    useEffect(() => {
+        latestValuesRef.current = { ...values };
+    }, [values]);
 
     return (
         <StyledSection

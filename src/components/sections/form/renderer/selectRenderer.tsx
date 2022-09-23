@@ -15,25 +15,34 @@ const renderSelectField = ({
     validateField,
     validateOnChange,
     validateOnBlur,
-}: FieldGenerationProps<Select>) => (
-    <SelectDropdown
-        key={key}
-        enableMemo
-        label={`${key}${field.isRequired ? ' *' : ''}`}
-        name={key}
-        placeholder={field.placeholder}
-        errorMessage={error && isTouched ? error : undefined}
-        items={field.dropdownItems || []}
-        value={value as string}
-        onChange={async (value) => {
-            await setField(key, value);
-            await setTouched(key, true);
-            if (validateOnChange) validateField(key);
-        }}
-        onBlur={() => setTouched(key, true, validateOnBlur)}
-        indicator={field.indicator}
-        isInverted={isInverted}
-    />
-);
+}: FieldGenerationProps<Select>) => {
+    const selectedItem = value as string;
+
+    return (
+        <SelectDropdown
+            key={key}
+            enableMemo
+            label={`${key}${field.isRequired ? ' *' : ''}`}
+            name={key}
+            placeholder={field.placeholder}
+            errorMessage={error && isTouched ? error : undefined}
+            items={field.dropdownItems
+                ?.filter((item) => item.label)
+                ?.map((item) => ({
+                    label: item.label || '',
+                    value: item.value || {},
+                }))}
+            selectedItem={selectedItem}
+            onChange={async (selectedOption) => {
+                setField({ key, value: selectedOption });
+                await setTouched(key, true);
+                if (validateOnChange) validateField(key);
+            }}
+            onBlur={() => setTouched(key, true, validateOnBlur)}
+            indicator={field.indicator}
+            isInverted={isInverted}
+        />
+    );
+};
 
 export default renderSelectField;

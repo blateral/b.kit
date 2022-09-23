@@ -19,7 +19,10 @@ const renderDatepickerField = ({
 
     const handleSubmit = async (start?: Date | null, end?: Date | null) => {
         await setTouched(key, true);
-        await setField(key, [start || null, end || null]);
+        await setField({
+            key,
+            value: [start || null, end || null],
+        });
         validateField(key);
     };
 

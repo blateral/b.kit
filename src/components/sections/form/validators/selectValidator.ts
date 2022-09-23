@@ -1,9 +1,13 @@
 import { Select } from '../DynamicForm';
 
-const selectValidator = async (key: string, value: string, config: Select) => {
+const selectValidator = async (
+    key: string,
+    selectedItem: string,
+    config: Select
+) => {
     let error = '';
 
-    if (config.isRequired && !value) {
+    if (config.isRequired && !selectedItem) {
         error = config.errorMsg || 'Required field';
     }
 

@@ -36,23 +36,26 @@ export const Default: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -66,23 +69,26 @@ export const WithLabel: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -91,29 +97,32 @@ export const WithLabel: Story = () => (
 
 export const WithInitial: Story = () => (
     <SelectDropdown
-        value="2"
+        selectedItem="Item 2"
         label="Label"
         placeholder="Prompt Text"
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -128,23 +137,26 @@ export const AsRequired: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -160,23 +172,26 @@ export const IsDisabled: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -191,23 +206,26 @@ export const IsInverted: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -229,31 +247,26 @@ export const WithIcon: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
-            },
-            {
-                label: 'Item 6',
-                value: '6',
-            },
-            {
-                label: 'Item 7',
-                value: '7',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -269,23 +282,26 @@ export const HasError: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -301,31 +317,26 @@ export const WithCustomIndicator: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
-            },
-            {
-                label: 'Item 6',
-                value: '6',
-            },
-            {
-                label: 'Item 7',
-                value: '7',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         indicator={({ isOpen }) => <div>{isOpen ? 'close' : 'open'}</div>}

@@ -59,7 +59,10 @@ export const renderRadioGroupField = ({
                         }
                         onChange={(e) => {
                             if (field.text) {
-                                setField(key, e.currentTarget.value);
+                                setField({
+                                    key,
+                                    value: e.currentTarget.value,
+                                });
                             }
                         }}
                     />
@@ -117,7 +120,10 @@ export const renderCheckboxGroupField = ({
                                     groupData.splice(cIndex, 1);
                                 }
                                 // set formik values
-                                setField(key, groupData);
+                                setField({
+                                    key,
+                                    value: groupData,
+                                });
                                 setTouched(key, true);
                                 validateField(key);
                             }

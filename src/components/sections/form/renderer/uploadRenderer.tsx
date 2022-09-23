@@ -20,7 +20,7 @@ const renderUploadField = ({
         errorMessage={error && isTouched ? error : undefined}
         acceptedFormats={field.acceptedFormats}
         onUploadFiles={(files) => {
-            setField(key, files);
+            setField({ key, value: files });
         }}
         customUploadIcon={field.customUploadIcon}
         customDeleteIcon={field.customDeleteIcon}

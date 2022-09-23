@@ -81,11 +81,11 @@ export const Default: Story = () => (
             Land: {
                 placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
             },
             Upload: {
@@ -172,11 +172,11 @@ export const WithCustomDatepickerButtons: Story = () => (
             Land: {
                 placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
             },
             Upload: {
@@ -256,11 +256,11 @@ export const WithBackground: Story = () => (
             Land: {
                 placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
             },
             Upload: {
@@ -340,11 +340,11 @@ export const Inverted: Story = () => (
             Land: {
                 placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
             },
             Upload: {
@@ -423,11 +423,11 @@ export const CustomSubmitButton: Story = () => (
             Land: {
                 placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
             },
             Upload: {
@@ -517,11 +517,11 @@ export const WithCustomErrorMessages: Story = () => (
             Land: {
                 placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
                 errorMsg: 'Bitte wählen Sie ein Land',
             },
@@ -658,11 +658,11 @@ export const CustomValidation: Story = () => (
             Land: {
                 placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
                 validate: async (key, value, config) => {
                     let error = '';
@@ -773,11 +773,11 @@ export const WithCustomFieldDefinition: Story = () => (
             Land: {
                 placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
             },
             Upload: {
@@ -864,11 +864,11 @@ export const WithCustomDatepicker: Story = () => (
             Land: {
                 placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
             },
             Upload: {

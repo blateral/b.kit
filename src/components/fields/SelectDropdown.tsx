@@ -16,6 +16,7 @@ import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
 import { getFormFieldTextSize } from 'utils/formFieldText';
 import useMounted from 'utils/useMounted';
+import { isValidArray } from 'utils/arrays';
 
 const Select = styled.button<{
     hasError?: boolean;
@@ -213,25 +214,28 @@ const Item = styled(Copy)<{ isSelected?: boolean }>`
         `}
 `;
 
+const ClearItem = styled(Item)`
+    color: transparent;
+`;
+
 const Container = styled.div`
     position: relative;
     outline: none;
 `;
 
 interface SelectItem {
-    value?: string;
-    label?: string;
+    value: Record<string, string>;
+    label: string;
 }
 
-export type SelectDropdownProps = FormProps & {
+export type SelectDropdownProps = Omit<FormProps, 'value'> & {
     enableMemo?: boolean;
     placeholder?: string;
     name?: string;
-    // selected option (label)
-    value?: string;
+    selectedItem?: string;
     items: SelectItem[];
 
-    onChange?: (value: string) => void;
+    onChange?: (label: string, value: Record<string, string>) => void;
     onBlur?: () => void;
     indicator?: (props: {
         isOpen: boolean;
@@ -248,7 +252,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
     isInverted,
     items,
     name,
-    value,
+    selectedItem,
     placeholder,
     onChange,
     onBlur,
@@ -258,7 +262,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
     const [isOpen, setIsOpen] = useState(false);
 
     const [activeItemIndex, setActiveItemIndex] = useState<number>(
-        items?.findIndex((item) => item.label === value) || -1
+        items?.findIndex((item) => item.label === selectedItem) || -1
     );
     const [selectItems, setSelectItems] = useState<SelectItem[]>(items || []);
     const selectBtnRef = useRef<HTMLButtonElement>(null);
@@ -266,20 +270,20 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
     const itemHasBeenClicked = useRef<boolean>(false);
 
     useEffect(() => {
-        const index = items?.findIndex((item) => item.label === value);
+        const index = items?.findIndex((item) => item.label === selectedItem);
         if (index !== -1) setActiveItemIndex(index);
 
         setSelectItems(items || []);
-    }, [items, value]);
+    }, [items, selectedItem]);
 
     useEffect(() => {
         const newItem = selectItems[activeItemIndex];
 
-        if (newItem && isMounted) {
-            onChange && onChange(newItem.value || '');
+        if (isMounted) {
+            onChange && onChange(newItem?.label, newItem?.value);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectItems, activeItemIndex, value]);
+    }, [selectItems, activeItemIndex, selectedItem]);
 
     if (isDisabled) {
         errorMessage = '';
@@ -370,10 +374,35 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
                         </Indicator>
                     </Select>
                     <Flyout isVisible={isOpen}>
+                        {isValidArray(items, false) && (
+                            <ItemStyle
+                                key="key_0"
+                                onMouseDown={() => {
+                                    itemHasBeenClicked.current = true;
+                                }}
+                                onClick={(ev) => {
+                                    ev.preventDefault();
+
+                                    // set new item
+                                    setActiveItemIndex(-1);
+
+                                    // set focus back to toggle
+                                    selectBtnRef.current?.focus();
+
+                                    // close flyout
+                                    setIsOpen(false);
+                                    itemHasBeenClicked.current = false;
+                                }}
+                            >
+                                <ClearItem renderAs="span" size="small">
+                                    Clear
+                                </ClearItem>
+                            </ItemStyle>
+                        )}
                         {items.map((item, i) => {
                             return (
                                 <ItemStyle
-                                    key={i}
+                                    key={`key_${i + 1}`}
                                     onMouseDown={() => {
                                         itemHasBeenClicked.current = true;
                                     }}
@@ -409,7 +438,11 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
                     </Flyout>
                 </Container>
                 {activeItem && (
-                    <input type="hidden" name={name} value={activeItem.value} />
+                    <input
+                        type="hidden"
+                        name={name}
+                        value={JSON.stringify(activeItem.value)}
+                    />
                 )}
             </FieldWrapper.Content>
             <FieldWrapper.Messages
@@ -431,7 +464,7 @@ const areEqual = (prev: SelectDropdownProps, next: SelectDropdownProps) => {
     // only apply logic if memo functionality is enabled
     if (!prev.enableMemo) return false;
 
-    if (prev.value !== next.value) return false;
+    if (prev.selectedItem !== next.selectedItem) return false;
     if (prev.errorMessage !== next.errorMessage) return false;
     if (prev.infoMessage !== next.infoMessage) return false;
     if (prev.label !== next.label) return false;
