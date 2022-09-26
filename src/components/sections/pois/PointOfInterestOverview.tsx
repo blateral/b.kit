@@ -265,7 +265,6 @@ const PointOfInterestOverview: React.FC<{
                                 key={i}
                                 {...poi.item}
                                 isInverted={isInverted}
-                                hasBackground={hasBg}
                             />
                         ))}
                 </Content>

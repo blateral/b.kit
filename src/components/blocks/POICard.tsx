@@ -7,14 +7,12 @@ import { isValidArray } from 'utils/arrays';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import InfoList, { Info } from './InfoList';
 
-const View = styled.div<{ isInverted?: boolean; hasBackground?: boolean }>`
+const View = styled.div<{ isInverted?: boolean }>`
     border: 1px solid
-        ${({ theme, isInverted, hasBackground }) =>
+        ${({ theme, isInverted }) =>
             isInverted
                 ? color(theme).elementBg.light
-                : hasBackground
-                ? color(theme).elementBg.dark
-                : color(theme).elementBg.medium};
+                : color(theme).elementBg.dark};
     padding: ${spacings.nudge * 2}px;
     border-radius: ${spacings.nudge}px;
     overflow: hidden;
@@ -46,7 +44,7 @@ const Description = styled(Copy)`
     -webkit-box-orient: vertical;
 `;
 
-const Body = styled.div<{ isInverted?: boolean; hasBackground?: boolean }>`
+const Body = styled.div<{ isInverted?: boolean }>`
     display: flex;
     flex-direction: row;
     /* align-items: flex-start; */
@@ -57,12 +55,10 @@ const Body = styled.div<{ isInverted?: boolean; hasBackground?: boolean }>`
 
         & > * + * {
             border-left: 1px solid
-                ${({ theme, isInverted, hasBackground }) =>
+                ${({ theme, isInverted }) =>
                     isInverted
                         ? color(theme).elementBg.light
-                        : hasBackground
-                        ? color(theme).elementBg.dark
-                        : color(theme).elementBg.medium};
+                        : color(theme).elementBg.dark};
         }
     }
 `;
@@ -126,9 +122,6 @@ export interface POICardProps {
     /** Invert text and background for use on dark sections */
     isInverted?: boolean;
 
-    /** For use on light backgrounds */
-    hasBackground?: boolean;
-
     /** POI name */
     name: string;
 
@@ -154,7 +147,6 @@ export interface POICardProps {
 
 const POICard: React.FC<POICardProps> = ({
     isInverted,
-    hasBackground,
     name,
     shortDescription,
     facts,
@@ -166,14 +158,14 @@ const POICard: React.FC<POICardProps> = ({
     const hasInfos = isValidArray(infos, false);
 
     return (
-        <View isInverted={isInverted} hasBackground={hasBackground}>
+        <View isInverted={isInverted}>
             {name && (
                 <Title type="copy-b" size="big" isInverted={isInverted}>
                     {name}
                 </Title>
             )}
             {(hasFacts || shortDescription || hasInfos || action) && (
-                <Body isInverted={isInverted} hasBackground={hasBackground}>
+                <Body isInverted={isInverted}>
                     <Col>
                         {isValidArray(facts, false) && (
                             <POIFacts
