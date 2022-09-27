@@ -262,8 +262,7 @@ export interface LocationFieldProps {
         isInverted?: boolean;
         handleClick?: () => void;
     }) => React.ReactNode;
-    descriptionTabLabel?: string;
-    mapTabLabel?: string;
+    toggleLabel?: string;
     trackLocationLabel?: string;
 }
 
@@ -285,8 +284,7 @@ const LocationField: FC<LocationFieldProps> = ({
     customToggle,
     customLocationControl,
     customResetControl,
-    descriptionTabLabel = 'Address',
-    mapTabLabel = 'GPS Coordinates',
+    toggleLabel = 'Select location on map',
     trackLocationLabel = 'My location',
 }) => {
     if (isDisabled) {
@@ -500,7 +498,7 @@ const LocationField: FC<LocationFieldProps> = ({
                             <Icons.ToggleOff />
                         )}
                         <ToggleText size="small" renderAs="span">
-                            {!useMapView ? mapTabLabel : descriptionTabLabel}
+                            {toggleLabel}
                         </ToggleText>
                     </ViewToggle>
                 )}
@@ -603,11 +601,10 @@ const areEqual = (prev: LocationFieldProps, next: LocationFieldProps) => {
     // only apply logic if memo functionality is enabled
     if (!prev.enableMemo) return false;
 
-    if (prev.descriptionTabLabel !== next.descriptionTabLabel) return false;
     if (prev.errorMessage !== next.errorMessage) return false;
     if (prev.infoMessage !== next.infoMessage) return false;
     if (prev.label !== next.label) return false;
-    if (prev.mapTabLabel !== next.mapTabLabel) return false;
+    if (prev.toggleLabel !== next.toggleLabel) return false;
     if (prev.placeholder !== next.placeholder) return false;
     if (prev.value?.description !== next.value?.description) return false;
     if (

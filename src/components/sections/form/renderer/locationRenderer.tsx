@@ -50,8 +50,7 @@ const renderLocationField = ({
             customLocationControl={field.customLocationControl}
             customToggle={field.customToggle}
             customResetControl={field.customResetControl}
-            descriptionTabLabel={field.descriptionTabLabel}
-            mapTabLabel={field.mapTabLabel}
+            toggleLabel={field.toggleLabel}
             trackLocationLabel={field.trackLocationLabel}
         />
     );
