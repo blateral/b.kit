@@ -179,7 +179,19 @@ export interface Location extends FormField {
     placeholder?: string;
     info?: string;
     errorMsg?: string;
-    customLocationIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+    customToggle?: (props: {
+        isInverted?: boolean;
+        viewState?: 'desc' | 'map';
+        handleClick?: () => void;
+    }) => React.ReactNode;
+    customLocationControl?: (props: {
+        isInverted?: boolean;
+        handleClick?: () => void;
+    }) => React.ReactNode;
+    customResetControl?: (props: {
+        isInverted?: boolean;
+        handleClick?: () => void;
+    }) => React.ReactNode;
     validate?: (
         key: string,
         value: LocationData,
@@ -187,6 +199,7 @@ export interface Location extends FormField {
     ) => Promise<string>;
     descriptionTabLabel?: string;
     mapTabLabel?: string;
+    trackLocationLabel?: string;
 }
 
 export interface FieldGroup extends FormField {

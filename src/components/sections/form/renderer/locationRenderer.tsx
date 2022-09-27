@@ -47,9 +47,12 @@ const renderLocationField = ({
             errorMessage={error && isTouched ? error : undefined}
             value={mappedData}
             onChange={handleChange}
-            customLocationIcon={field.customLocationIcon}
+            customLocationControl={field.customLocationControl}
+            customToggle={field.customToggle}
+            customResetControl={field.customResetControl}
             descriptionTabLabel={field.descriptionTabLabel}
             mapTabLabel={field.mapTabLabel}
+            trackLocationLabel={field.trackLocationLabel}
         />
     );
 };
