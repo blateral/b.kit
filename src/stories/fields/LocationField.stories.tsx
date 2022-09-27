@@ -74,7 +74,8 @@ export const WithInitalPosition: Story = () => (
         label="Label"
         placeholder="Placeholder"
         infoMessage="This is a LocationField"
-        initialMapCenter={[48, 7]}
+        initialMapCenter={[47.768379, 9.15934]}
+        zoom={15}
         onChange={console.log}
     />
 );
@@ -87,6 +88,29 @@ export const WithInitalData: Story = () => (
         infoMessage="This is a LocationField"
         value={{ description: 'the place to be', position: [50, 9.0] }}
         onChange={console.log}
+    />
+);
+
+export const WithCustomControls: Story = () => (
+    <LocationField
+        name="field_a"
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a LocationField"
+        onChange={console.log}
+        customToggle={({ viewState, handleClick }) => (
+            <button onClick={handleClick}>
+                {viewState === 'map'
+                    ? 'describe place'
+                    : 'pick location on map'}
+            </button>
+        )}
+        customLocationControl={({ handleClick }) => (
+            <button onClick={handleClick}>My location</button>
+        )}
+        customResetControl={({ handleClick }) => (
+            <button onClick={handleClick}>reset</button>
+        )}
     />
 );
 

@@ -69,7 +69,7 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
         return {
             center: [0, 0],
             zoom: 2.5,
-            touchZoom: false,
+            touchZoom: true,
             scrollWheelZoom: false,
             showZoomControls: true,
             zoomControlPosition: 'topleft',

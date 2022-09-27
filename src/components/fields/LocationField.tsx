@@ -1,14 +1,7 @@
-import React, {
-    FC,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { copyStyle } from 'components/typography/Copy';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import {
     getColors as color,
     getFonts as font,
@@ -25,74 +18,9 @@ import { LocationIcon } from 'components/sections/Map';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { LeafletMouseEvent } from 'leaflet';
 import useLazyInput from 'utils/useLazyInput';
-import { MyLocation } from 'components/base/icons/Icons';
 import useUpdateEffect from 'utils/useUpdateEffect';
 import useGeolocation from 'utils/useGeolocation';
-
-const ViewTabs = styled.div<{ isInverted?: boolean }>`
-    display: flex;
-    border-bottom: solid 1px
-        ${({ theme, isInverted }) =>
-            isInverted
-                ? color(theme).elementBg.light
-                : color(theme).elementBg.dark};
-
-    &:not(:last-child) {
-        margin-bottom: ${spacings.nudge}px;
-    }
-`;
-
-const Tab = styled.button<{ isInverted?: boolean }>`
-    position: relative;
-    padding: ${spacings.nudge}px;
-    background: none;
-    border: 0;
-    ${copyStyle('copy', 'small')}
-    color: ${({ theme, isInverted }) =>
-        isInverted
-            ? color(theme).elementBg.light
-            : color(theme).elementBg.dark};
-    cursor: pointer;
-    outline: none;
-
-    &:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 4px;
-        background-color: transparent;
-    }
-
-    &:disabled {
-        cursor: default;
-
-        &:after {
-            background-color: ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).elementBg.light
-                    : color(theme).elementBg.dark};
-        }
-    }
-
-    &:focus {
-        outline: none;
-    }
-
-    &:focus {
-        outline: 2px solid
-            ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).primary.inverted
-                    : color(theme).primary.default};
-        outline-offset: -2px;
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
-    }
-`;
+import * as Icons from 'components/base/icons/Icons';
 
 const MapWrapper = styled.div<{ isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
@@ -107,17 +35,100 @@ const MapContainer = styled.div`
     outline: none;
 `;
 
-const TrackLocationIcon = styled.div`
-    position: absolute;
-    top: ${spacings.nudge * 2}px;
-    right: ${spacings.nudge * 2}px;
+const ViewToggle = styled.button`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: ${spacings.nudge}px 0;
+    padding-bottom: ${spacings.nudge * 2}px;
 
     cursor: pointer;
+
+    & > * + * {
+        margin-left: ${spacings.nudge * 2}px;
+    }
 `;
 
-const StyledMyLocationIcon = styled(MyLocation)`
-    height: 35px;
-    width: 35px;
+const ToggleText = styled(Copy)`
+    line-height: 1;
+`;
+
+const ResetMap = styled.div`
+    position: absolute;
+    top: ${spacings.nudge}px;
+    right: ${spacings.nudge}px;
+`;
+
+const ResetMapControl = styled.button`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 0;
+    padding: ${spacings.nudge}px;
+    margin-top: -${spacings.nudge}px;
+    margin-right: -${spacings.nudge}px;
+
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            color: ${({ theme }) => color(theme).primary.default};
+        }
+    }
+
+    &:focus {
+        outline: 1px solid ${({ theme }) => color(theme).primary.default};
+        outline-offset: 0;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+`;
+
+const TrackLocation = styled.div`
+    position: absolute;
+    bottom: ${spacings.nudge * 2}px;
+    right: ${spacings.nudge}px;
+`;
+
+const TrackLocationControl = styled.button`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: ${({ theme }) => color(theme).elementBg.dark};
+    border: none;
+    padding: 0.7em;
+    min-height: 40px;
+
+    ${copyStyle('copy', 'small')}
+    color: ${({ theme }) => font(theme).copy.small.colorInverted};
+    cursor: pointer;
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
+        }
+    }
+
+    &:focus {
+        text-decoration: underline;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    &:focus:not(:focus-visible) {
+        text-decoration: none;
+        outline: none;
+        box-shadow: none;
+    }
+
+    &:active {
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+    }
 `;
 
 const FieldView = styled.div`
@@ -238,10 +249,22 @@ export interface LocationFieldProps {
     zoom?: number;
     onChange?: (value: LocationData) => void;
     onBlur?: (value: LocationData) => void;
-    customLocationIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-    geolocationErrorMsg?: string;
+    customToggle?: (props: {
+        isInverted?: boolean;
+        viewState?: 'desc' | 'map';
+        handleClick?: () => void;
+    }) => React.ReactNode;
+    customLocationControl?: (props: {
+        isInverted?: boolean;
+        handleClick?: () => void;
+    }) => React.ReactNode;
+    customResetControl?: (props: {
+        isInverted?: boolean;
+        handleClick?: () => void;
+    }) => React.ReactNode;
     descriptionTabLabel?: string;
     mapTabLabel?: string;
+    trackLocationLabel?: string;
 }
 
 const LocationField: FC<LocationFieldProps> = ({
@@ -259,100 +282,118 @@ const LocationField: FC<LocationFieldProps> = ({
     zoom = 10,
     onChange,
     onBlur,
-    customLocationIcon,
-    geolocationErrorMsg = 'Your browser or device supports no geolocation!',
+    customToggle,
+    customLocationControl,
+    customResetControl,
     descriptionTabLabel = 'Address',
     mapTabLabel = 'GPS Coordinates',
+    trackLocationLabel = 'My location',
 }) => {
     if (isDisabled) {
         errorMessage = '';
     }
 
     const { colors } = useLibTheme();
-    const [asGeolocation, setAsGeolocation] = useState<boolean>(false);
-    const [isMapDirty, setMapDirty] = useState<boolean>(false);
+
+    const [useMapView, setUseMapView] = useState<boolean>(false);
     const [getValue, setValue] = useState<LocationData>(
         value || { description: '' }
     );
     const prevValue = useRef<LocationData | null>(null);
-
-    const position = useMemo((): [number, number] | undefined => {
-        if (
-            getValue?.position?.[0] === undefined ||
-            getValue?.position?.[1] === undefined
-        ) {
-            return undefined;
-        }
-        return [getValue.position[0], getValue.position[1]];
-    }, [getValue?.position]);
+    const [errorMsg, setErrorMsg] = useState<string>(errorMessage || '');
+    const [markers, setMarkers] = useState<LeafletMapMarker[]>([]);
 
     const {
         value: descValue,
         setValue: setDescValue,
         forceUpdate,
     } = useLazyInput((value) => {
-        setValue((prev) => ({
-            ...prev,
+        setValue({
             description: value,
-        }));
+            position: undefined,
+        });
     }, value?.description || '');
 
-    const [errorMsg, setErrorMsg] = useState<string>(errorMessage || '');
+    const getMarkersFromPositions = useCallback(
+        (positions: Array<[number, number]>) => {
+            /** Markers */
+            const defaultMarker: LocationIcon = {
+                size: [28, 28],
+                anchor: [14, 28],
+                sizeActive: [70, 70],
+                anchorActive: [35, 70],
+                url: getSVGDataImg(<LocationPin />),
+            };
+            const markerList: LeafletMapMarker[] = [];
 
-    const markers = useMemo(() => {
-        /** Markers */
-        const defaultMarker: LocationIcon = {
-            size: [28, 28],
-            anchor: [14, 28],
-            sizeActive: [70, 70],
-            anchorActive: [35, 70],
-            url: getSVGDataImg(<LocationPin />),
-        };
-        const markerList: LeafletMapMarker[] = [];
+            for (const position of positions) {
+                markerList.push({
+                    id: 'location',
+                    position: position,
+                    icon: marker || defaultMarker,
+                });
+            }
 
-        if (position) {
-            markerList.push({
-                id: 'location',
-                position: position,
-                icon: marker || defaultMarker,
-            });
-        }
-        return markerList;
-    }, [position, marker]);
+            return markerList;
+        },
+        [marker]
+    );
 
     const {
         setContainer: setMapContainer,
         flyToPosition,
-        panToPosition,
         recalculateMapSize,
-        getCurrentZoom,
     } = useLeafletMap({
         activeMarkerId: 'location',
         markers: markers,
         center: initialMapCenter,
-        zoom: 2.5,
+        zoom: zoom,
         onClick: (ev) => {
             mapClickHandler(ev);
         },
     });
 
-    const onMapClick = (newPos: [number, number]) => {
-        setValue((prev) => ({
-            ...prev,
-            position: newPos,
-        }));
-    };
-
     // double click fix
     const doubleClickTimerRef = useRef<number | null>(null);
+
+    const {
+        isSupported: isGeolocationSupported,
+        isEnabled,
+        location,
+        error,
+        reset: resetLocationTracking,
+        cancel: cancelGeolocation,
+    } = useGeolocation(true, false);
+
+    const setMapToInitial = useCallback(() => {
+        flyToPosition(initialMapCenter, zoom);
+        cancelGeolocation();
+    }, [cancelGeolocation, flyToPosition, initialMapCenter, zoom]);
+
+    const handleMapClick = (newPos: [number, number]) => {
+        cancelGeolocation();
+
+        // set marker
+        const markers = getMarkersFromPositions([newPos]);
+        setMarkers(markers);
+        setValue({
+            description: '',
+            position: newPos,
+        });
+    };
+
+    const handleTrackClick = () => {
+        // if we have old location set marker, map and value
+        setToCurrentLocation();
+        resetLocationTracking();
+    };
 
     const mapClickHandler = (ev: LeafletMouseEvent) => {
         const newPos: [number, number] = [ev.latlng.lat, ev.latlng.lng];
 
         if (doubleClickTimerRef.current === null) {
             doubleClickTimerRef.current = window.setTimeout(() => {
-                onMapClick(newPos);
-                setMapDirty(true);
+                handleMapClick(newPos);
                 doubleClickTimerRef.current = null;
             }, 300);
         } else {
@@ -361,60 +402,51 @@ const LocationField: FC<LocationFieldProps> = ({
         }
     };
 
-    const {
-        isSupported: isGeolocationSupported,
-        location,
-        error,
-    } = useGeolocation();
+    const setToCurrentLocation = useCallback(() => {
+        if (!location) return;
+
+        const newPos: [number, number] = [
+            location.coords.latitude,
+            location.coords.longitude,
+        ];
+
+        const marker = getMarkersFromPositions([newPos]);
+        setMarkers(marker);
+        flyToPosition(newPos, 14);
+
+        setValue({
+            description: '',
+            position: newPos,
+        });
+    }, [flyToPosition, getMarkersFromPositions, location]);
+
+    const toggleViewState = () => {
+        setUseMapView((prev) => !prev);
+    };
 
     useEffect(() => {
-        if (!isMapDirty && location && !error) {
-            const newPos: [number, number] = [
-                location.coords.latitude,
-                location.coords.longitude,
-            ];
-
-            setValue((prev) => ({
-                ...prev,
-                position: newPos,
-            }));
+        if (isEnabled && location && !error) {
+            setToCurrentLocation();
         }
-    }, [error, isMapDirty, location]);
-
-    const getLocation = useCallback(() => {
-        if (error && asGeolocation) {
-            console.log(error);
-            setErrorMsg(geolocationErrorMsg);
-        }
-
-        if (location?.coords) {
-            const newPos: [number, number] = [
-                location.coords.latitude,
-                location.coords.longitude,
-            ];
-
-            setValue((prev) => ({
-                ...prev,
-                position: newPos,
-            }));
-
-            setMapDirty(false);
-        }
-    }, [asGeolocation, error, geolocationErrorMsg, location?.coords]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [error, location, isEnabled]);
 
     useEffect(() => {
         setErrorMsg(errorMessage || '');
     }, [errorMessage]);
 
     useEffect(() => {
-        if (asGeolocation) {
-            recalculateMapSize();
+        setValue({ description: '', position: undefined });
 
-            if (!position) {
-                getLocation();
-            }
+        // recalculate map on view change
+        if (useMapView) {
+            recalculateMapSize();
+            setDescValue('');
+        } else {
+            setMarkers([]);
         }
-    }, [asGeolocation, getLocation, getValue, position, recalculateMapSize]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [useMapView, recalculateMapSize, descValue]);
 
     useUpdateEffect(() => {
         const prev = prevValue.current;
@@ -428,29 +460,6 @@ const LocationField: FC<LocationFieldProps> = ({
             onChange?.(getValue);
         }
     }, [getValue]);
-
-    useEffect(() => {
-        let flyToZoom = zoom;
-        const currentZoom = getCurrentZoom();
-
-        if (currentZoom > flyToZoom) {
-            flyToZoom = currentZoom;
-        }
-
-        if (position) {
-            flyToPosition(getValue.position, flyToZoom);
-        }
-    }, [
-        flyToPosition,
-        getCurrentZoom,
-        getValue.position,
-        isMapDirty,
-        panToPosition,
-        position,
-        zoom,
-    ]);
-
-    const showTrackLocationBtn = isGeolocationSupported && isMapDirty;
 
     return (
         <React.Fragment>
@@ -471,23 +480,32 @@ const LocationField: FC<LocationFieldProps> = ({
                     isRequired={isRequired}
                     isInverted={isInverted}
                 />
-                <ViewTabs isInverted={isInverted}>
-                    <Tab
-                        isInverted={isInverted}
-                        disabled={!asGeolocation}
-                        onClick={() => setAsGeolocation(false)}
-                    >
-                        {descriptionTabLabel}
-                    </Tab>
-                    <Tab
-                        isInverted={isInverted}
-                        disabled={asGeolocation}
-                        onClick={() => setAsGeolocation(true)}
-                    >
-                        {mapTabLabel}
-                    </Tab>
-                </ViewTabs>
-                <MapWrapper isVisible={asGeolocation}>
+                {customToggle ? (
+                    customToggle({
+                        isInverted,
+                        viewState: useMapView ? 'map' : 'desc',
+                        handleClick: toggleViewState,
+                    })
+                ) : (
+                    <ViewToggle type="button" onClick={toggleViewState}>
+                        {useMapView ? (
+                            <Icons.ToggleOn
+                                iconColor={
+                                    isInverted
+                                        ? colors.primary.inverted
+                                        : colors.primary.default
+                                }
+                            />
+                        ) : (
+                            <Icons.ToggleOff />
+                        )}
+                        <ToggleText size="small" renderAs="span">
+                            {!useMapView ? mapTabLabel : descriptionTabLabel}
+                        </ToggleText>
+                    </ViewToggle>
+                )}
+
+                <MapWrapper isVisible={useMapView}>
                     <MapContainer
                         ref={setMapContainer}
                         tabIndex={0}
@@ -496,7 +514,36 @@ const LocationField: FC<LocationFieldProps> = ({
                             onBlur?.(getValue);
                         }}
                     />
-                    {showTrackLocationBtn && (
+                    <ResetMap>
+                        {customResetControl ? (
+                            customResetControl({
+                                isInverted,
+                                handleClick: setMapToInitial,
+                            })
+                        ) : (
+                            <ResetMapControl onClick={setMapToInitial}>
+                                <Icons.LocationSearch />
+                            </ResetMapControl>
+                        )}
+                    </ResetMap>
+                    {isGeolocationSupported && (
+                        <TrackLocation>
+                            {customLocationControl ? (
+                                customLocationControl({
+                                    isInverted,
+                                    handleClick: handleTrackClick,
+                                })
+                            ) : (
+                                <TrackLocationControl
+                                    onClick={handleTrackClick}
+                                >
+                                    {trackLocationLabel}
+                                </TrackLocationControl>
+                            )}
+                        </TrackLocation>
+                    )}
+
+                    {/* {showTrackLocationBtn && (
                         <TrackLocationIcon onClick={getLocation}>
                             {customLocationIcon ? (
                                 customLocationIcon({ isInverted })
@@ -510,9 +557,9 @@ const LocationField: FC<LocationFieldProps> = ({
                                 />
                             )}
                         </TrackLocationIcon>
-                    )}
+                    )} */}
                 </MapWrapper>
-                {!asGeolocation && (
+                {!useMapView && (
                     <React.Fragment>
                         <FieldView>
                             <FieldWrapper.Content>
@@ -559,7 +606,6 @@ const areEqual = (prev: LocationFieldProps, next: LocationFieldProps) => {
     if (prev.descriptionTabLabel !== next.descriptionTabLabel) return false;
     if (prev.errorMessage !== next.errorMessage) return false;
     if (prev.infoMessage !== next.infoMessage) return false;
-    if (prev.geolocationErrorMsg !== next.geolocationErrorMsg) return false;
     if (prev.label !== next.label) return false;
     if (prev.mapTabLabel !== next.mapTabLabel) return false;
     if (prev.placeholder !== next.placeholder) return false;

@@ -68,6 +68,9 @@ import BoxArrowUpRight from 'components/base/icons/BoxArrowUpRight';
 import Person from 'components/base/icons/Person';
 import Category from 'components/base/icons/Category';
 import CurrentLocation from 'components/base/icons/CurrentLocation';
+import ToggleOn from 'components/base/icons/ToggleOn';
+import ToggleOff from 'components/base/icons/ToggleOff';
+import LocationSearch from 'components/base/icons/LocationSearch';
 
 export default {
     title: 'Base/Icons',
@@ -126,6 +129,9 @@ export default {
         Person,
         Category,
         CurrentLocation,
+        ToggleOn,
+        ToggleOff,
+        LocationSearch,
     },
     decorators: [
         (Story) => (
@@ -284,3 +290,12 @@ IconCategory.storyName = 'Category';
 
 export const IconCurrentLocation: Story = () => <CurrentLocation />;
 IconCurrentLocation.storyName = 'Current Location';
+
+export const IconToggleOn: Story = () => <ToggleOn />;
+IconToggleOn.storyName = 'Toggle On';
+
+export const IconToggleOff: Story = () => <ToggleOff />;
+IconToggleOff.storyName = 'Toggle Off';
+
+export const IconLocationSearch: Story = () => <LocationSearch />;
+IconLocationSearch.storyName = 'Location search';

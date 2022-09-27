@@ -64,3 +64,6 @@ export { default as DeleteForever } from 'components/base/icons/DeleteForever';
 export { default as Person } from 'components/base/icons/Person';
 export { default as Category } from 'components/base/icons/Category';
 export { default as CurrentLocation } from 'components/base/icons/CurrentLocation';
+export { default as ToggleOn } from 'components/base/icons/ToggleOn';
+export { default as ToggleOff } from 'components/base/icons/ToggleOff';
+export { default as LocationSearch } from 'components/base/icons/LocationSearch';
