@@ -12,7 +12,6 @@ const renderLocationField = ({
     isTouched,
     isInverted,
     setField,
-    setTouched,
 }: FieldGenerationProps<Location>) => {
     const locationData = value as LocationData;
     const mappedData = {
@@ -24,8 +23,6 @@ const renderLocationField = ({
     };
 
     const handleChange = (location: LocationData) => {
-        // https://github.com/jaredpalmer/formik/issues/2083
-        setTouched(key, true, false);
         setField({
             key,
             value: { ...location },

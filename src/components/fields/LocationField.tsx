@@ -298,7 +298,6 @@ const LocationField: FC<LocationFieldProps> = ({
         value || { description: '' }
     );
     const prevValue = useRef<LocationData | null>(null);
-    const [errorMsg, setErrorMsg] = useState<string>(errorMessage || '');
     const [markers, setMarkers] = useState<LeafletMapMarker[]>([]);
 
     const {
@@ -430,10 +429,6 @@ const LocationField: FC<LocationFieldProps> = ({
     }, [error, location, isEnabled]);
 
     useEffect(() => {
-        setErrorMsg(errorMessage || '');
-    }, [errorMessage]);
-
-    useEffect(() => {
         setValue({ description: '', position: undefined });
 
         // recalculate map on view change
@@ -563,7 +558,7 @@ const LocationField: FC<LocationFieldProps> = ({
                             <FieldWrapper.Content>
                                 <Area
                                     placeholder={placeholder}
-                                    hasError={!!errorMsg}
+                                    hasError={!!errorMessage}
                                     isInverted={isInverted}
                                     name={`${name}["description"]`}
                                     value={descValue}
@@ -583,7 +578,7 @@ const LocationField: FC<LocationFieldProps> = ({
                 )}
                 <FieldWrapper.Messages
                     infoMessage={infoMessage}
-                    errorMessage={errorMsg}
+                    errorMessage={errorMessage}
                     isInverted={isInverted}
                 />
             </FieldWrapper.View>
