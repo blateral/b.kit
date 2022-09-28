@@ -30,6 +30,7 @@ import Control from 'components/buttons/Control';
 import * as Icons from 'components/base/icons/Icons';
 import { getSVGDataImg as getSVGData } from 'utils/dataURI';
 import useLeafletMap from 'utils/useLeafletMap';
+import { isValidArray } from 'utils/arrays';
 
 interface Address {
     street: string;
@@ -605,49 +606,51 @@ const Map: FC<{
                         }}
                     >
                         <CardContainer isMirrored={isMirrored}>
-                            {locations && (
-                                <>
+                            {isValidArray(locations, false) && (
+                                <React.Fragment>
                                     {activeLocation && (
                                         <LocationInfoCard
                                             {...activeLocation}
                                             isInverted={isInverted}
                                         />
                                     )}
-                                    <Controls>
-                                        {controlNext ? (
-                                            controlNext({
-                                                isInverted,
-                                                isActive: true,
-                                                clickHandler: goToNext,
-                                                name: 'control_next_head',
-                                            })
-                                        ) : (
-                                            <Control
-                                                isInverted={isInverted}
-                                                isDisabled={false}
-                                                onClick={goToNext}
-                                            >
-                                                <Icons.ArrowRightGhost />
-                                            </Control>
-                                        )}
-                                        {controlPrev ? (
-                                            controlPrev({
-                                                isInverted,
-                                                isActive: true,
-                                                clickHandler: goToPrevious,
-                                                name: 'control_prev_head',
-                                            })
-                                        ) : (
-                                            <Control
-                                                isInverted={isInverted}
-                                                isDisabled={false}
-                                                onClick={goToPrevious}
-                                            >
-                                                <Icons.ArrowLeftGhost />
-                                            </Control>
-                                        )}
-                                    </Controls>
-                                </>
+                                    {locations.length > 1 && (
+                                        <Controls>
+                                            {controlNext ? (
+                                                controlNext({
+                                                    isInverted,
+                                                    isActive: true,
+                                                    clickHandler: goToNext,
+                                                    name: 'control_next_head',
+                                                })
+                                            ) : (
+                                                <Control
+                                                    isInverted={isInverted}
+                                                    isDisabled={false}
+                                                    onClick={goToNext}
+                                                >
+                                                    <Icons.ArrowRightGhost />
+                                                </Control>
+                                            )}
+                                            {controlPrev ? (
+                                                controlPrev({
+                                                    isInverted,
+                                                    isActive: true,
+                                                    clickHandler: goToPrevious,
+                                                    name: 'control_prev_head',
+                                                })
+                                            ) : (
+                                                <Control
+                                                    isInverted={isInverted}
+                                                    isDisabled={false}
+                                                    onClick={goToPrevious}
+                                                >
+                                                    <Icons.ArrowLeftGhost />
+                                                </Control>
+                                            )}
+                                        </Controls>
+                                    )}
+                                </React.Fragment>
                             )}
                         </CardContainer>
                     </Grid.Col>
