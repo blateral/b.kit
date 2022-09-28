@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { concat } from 'utils/concat';
 import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 
 export type BgMode = 'full' | 'larger-left' | 'larger-right' | 'inverted';
@@ -218,11 +219,15 @@ const Section: React.FC<{
             bgMode = undefined;
     }
 
-    const ident = bgColor && bgMode ? `${bgMode}__${bgColor}` : 'transparent';
+    const noPadIdent = addSeperation ? '' : 'nopad';
+    const ident =
+        bgColor && bgMode
+            ? concat([`${bgMode}__${bgColor}`, noPadIdent], '--')
+            : 'transparent';
 
     return (
         <View
-            id={anchorId}
+            id={anchorId || undefined}
             as={renderAs}
             data-bg-ident={ident}
             bgIdent={ident}
