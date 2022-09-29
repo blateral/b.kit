@@ -7,18 +7,12 @@ import FeatureList, {
 import Button from 'components/buttons/Button';
 import { FeatureProps } from 'components/blocks/Feature';
 import { generateItemList } from 'utils/storyHelpers';
-import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const actions = {
-    primaryAction: (isInverted?: boolean) => (
+    action: (isInverted?: boolean) => (
         <Button.View href="#test" isInverted={isInverted}>
             <Button.Label>Primary</Button.Label>
         </Button.View>
-    ),
-    secondaryAction: (isInverted?: boolean) => (
-        <ButtonGhost.View href="#test2" isInverted={isInverted}>
-            <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-        </ButtonGhost.View>
     ),
 };
 
