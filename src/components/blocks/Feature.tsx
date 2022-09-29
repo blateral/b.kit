@@ -1,10 +1,15 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
-import { mq, spacings, getGlobals as global } from 'utils/styles';
+import {
+    mq,
+    spacings,
+    getGlobals as global,
+    getFonts as font,
+} from 'utils/styles';
 
-import Copy from 'components/typography/Copy';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import Image, { ImageProps } from 'components/blocks/Image';
-import Actions from './Actions';
+import Link, { LinkProps } from 'components/typography/Link';
 
 const View = styled.div<{ isCentered?: boolean }>`
     min-width: 270px;
@@ -16,10 +21,22 @@ const View = styled.div<{ isCentered?: boolean }>`
     }
 `;
 
-const ImageContainer = styled.div<{ isCentered?: boolean }>`
+const TitleLink = styled(Link)`
+    display: inline-block;
+    ${copyStyle('copy-b', 'big')}
+
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme)['copy-b'].big.colorInverted
+            : font(theme)['copy-b'].big.color};
+    text-decoration: none;
+`;
+
+const ImageContainer = styled(Link)<{ isCentered?: boolean }>`
     display: flex;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
+    width: 100%;
 `;
 
 const StyledImage = styled(Image)`
@@ -43,16 +60,8 @@ const ArticleContent = styled.div<{ isCentered?: boolean }>`
     }
 `;
 
-const StyledActions = styled(Actions)`
-    @media ${mq.medium} {
-        width: 100%;
-
-        & > * {
-            /* max-width: 50%; */
-            min-width: 0 !important;
-            flex: 1;
-        }
-    }
+const Action = styled.div`
+    max-width: 100%;
 `;
 
 export interface FeatureProps {
@@ -77,11 +86,11 @@ export interface FeatureProps {
     /** Item's main text (richtext) */
     text?: string;
 
-    /** Function to inject custom primary button */
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    /** Item link settings */
+    link?: LinkProps;
 
-    /** Function to inject custom secondary button */
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    /** Function to inject custom primary button */
+    action?: (isInverted?: boolean) => React.ReactNode;
 }
 
 const Feature = forwardRef<
@@ -96,11 +105,11 @@ const Feature = forwardRef<
             description,
             intro,
             text,
+            link,
             image,
             isInverted = false,
             isCentered = false,
-            primaryAction,
-            secondaryAction,
+            action,
             className,
         },
         ref
@@ -108,7 +117,7 @@ const Feature = forwardRef<
         return (
             <View ref={ref} isCentered={isCentered} className={className}>
                 {image?.small && (
-                    <ImageContainer isCentered={isCentered}>
+                    <ImageContainer {...link} isCentered={isCentered}>
                         <StyledImage
                             small={image.small}
                             medium={image.medium}
@@ -127,14 +136,14 @@ const Feature = forwardRef<
                     </ImageContainer>
                 )}
                 {title && (
-                    <Copy
-                        type="copy-b"
-                        size="big"
+                    <TitleLink
+                        {...link}
                         isInverted={isInverted}
+                        ariaLabel={title}
                         data-sheet="title"
                     >
                         {title}
-                    </Copy>
+                    </TitleLink>
                 )}
                 {description && (
                     <Copy
@@ -165,14 +174,7 @@ const Feature = forwardRef<
                         )}
                     </ArticleContent>
                 )}
-                {(primaryAction || secondaryAction) && (
-                    <StyledActions
-                        primary={primaryAction && primaryAction(isInverted)}
-                        secondary={
-                            secondaryAction && secondaryAction(isInverted)
-                        }
-                    />
-                )}
+                {action && <Action>{action(isInverted)}</Action>}
             </View>
         );
     }

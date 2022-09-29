@@ -11,12 +11,12 @@ import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const actions = {
     primaryAction: (isInverted?: boolean) => (
-        <Button.View isInverted={isInverted}>
+        <Button.View href="#test" isInverted={isInverted}>
             <Button.Label>Primary</Button.Label>
         </Button.View>
     ),
     secondaryAction: (isInverted?: boolean) => (
-        <ButtonGhost.View isInverted={isInverted}>
+        <ButtonGhost.View href="#test2" isInverted={isInverted}>
             <ButtonGhost.Label>Secondary</ButtonGhost.Label>
         </ButtonGhost.View>
     ),
@@ -27,6 +27,7 @@ const exampleFeature: FeatureProps = {
     description: 'Name/ Place/Position/ Telefon/Date',
     intro: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
     text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+    link: { href: '#test' },
     ...actions,
 };
 
@@ -35,6 +36,7 @@ const exampleFeaturesUneven = generateItemList<FeatureProps>(
     5,
     (item, i) => ({
         ...item,
+        link: { href: '#card-' + i },
         image: {
             small: 'https://unsplash.it/640/640?image=70' + i,
             medium: 'https://unsplash.it/832/832?image=70' + i,
@@ -48,6 +50,7 @@ const exampleFeaturesEven = generateItemList<FeatureProps>(
     4,
     (item, i) => ({
         ...item,
+        link: { href: '#card-' + i },
         image: {
             small: 'https://unsplash.it/640/640?image=70' + i,
             medium: 'https://unsplash.it/832/832?image=70' + i,
