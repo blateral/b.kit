@@ -39,6 +39,13 @@ const ListItem = styled.li`
         flex: 0 0 33.33%;
         max-width: 33.33%;
     }
+
+    // print version
+    @media print {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding-top: ${spacings.spacer * 2}px;
+    }
 `;
 
 export type NavItem = Omit<

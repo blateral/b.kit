@@ -149,6 +149,11 @@ const View = styled.div<{
         background: ${({ bgGradient }) => bgGradient || ''};
         z-index: -1;
     }
+
+    // print version
+    @media print {
+        position: relative;
+    }
 `;
 
 const Header = styled.div<{ size?: NavBarSize; background?: string }>`
@@ -291,6 +296,11 @@ const BarSpacer = styled.div<{ hasHeader?: boolean; hasFooter?: boolean }>`
             return getFullHeight(theme, 'large', excludes)[1];
         }}px;
     }
+
+    // print version
+    @media print {
+        display: none;
+    }
 `;
 
 export type NavBarSize = 'small' | 'large';
@@ -376,7 +386,19 @@ const NavBar: FC<
                 isSticky,
                 pageFlow,
             }),
-        [topBar, isOpen, isSticky, pageFlow, size]
+        [isOpen, isSticky, pageFlow, size, topBar]
+    );
+
+    const mainBarContent = useMemo(
+        () =>
+            mainBar &&
+            mainBar({
+                size,
+                isOpen,
+                isSticky,
+                pageFlow,
+            }),
+        [isOpen, isSticky, mainBar, pageFlow, size]
     );
 
     const bottomBarContent = useMemo(
@@ -426,8 +448,8 @@ const NavBar: FC<
                 {mainBar !== null && (
                     <Main background={showBg ? mainBackground : undefined}>
                         <Content size={size} clamp={clampContent}>
-                            {mainBar ? (
-                                mainBar({ size, isOpen, isSticky, pageFlow })
+                            {mainBarContent ? (
+                                mainBarContent
                             ) : (
                                 <React.Fragment>
                                     <Skeletons.Column
