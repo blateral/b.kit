@@ -16,11 +16,6 @@ import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
 import { useObserverSupport } from 'utils/useObserverSupport';
 import { useScrollTo } from 'utils/useScrollTo';
 
-export type EventItem = Omit<
-    EventProps,
-    'customTag' | 'isInverted' | 'onTagClick' | 'text'
-> & { address?: string };
-
 const TagContainer = styled.div`
     margin-top: -${spacings.nudge}px;
     margin-left: -${spacings.nudge}px;
@@ -98,6 +93,11 @@ const ShowMore = styled.span<{ itemCount?: number }>`
     display: ${({ itemCount }) =>
         itemCount && itemCount > 2 ? 'block' : 'none'};
 `;
+
+export type EventItem = Omit<
+    EventProps,
+    'customTag' | 'isInverted' | 'onTagClick' | 'text'
+> & { address?: string };
 
 const EventOverview: React.FC<{
     /** ID value for targeting section with anchor hashes */

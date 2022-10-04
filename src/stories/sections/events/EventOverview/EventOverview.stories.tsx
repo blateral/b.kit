@@ -35,13 +35,10 @@ const exampleEventTag1 = generateItemList<EventItem>(
         ],
         publishDate: new Date(`July ${i + 1}, 2021 03:24:00`),
         image: {
-            small: 'https://unsplash.it/599/450?image=40' + i,
-            medium: 'https://unsplash.it/688/516?image=40' + i,
-            large: 'https://unsplash.it/591/444?image=40' + i,
-            xlarge: 'https://unsplash.it/592/445?image=40' + i,
-            ratios: {
-                small: { w: 4, h: 3 },
-            },
+            small: 'https://unsplash.it/640/320?image=40' + i,
+            medium: 'https://unsplash.it/832/306?image=40' + i,
+            semilarge: 'https://unsplash.it/1023/376?image=40' + i,
+            large: 'https://unsplash.it/591/394?image=40' + i,
         },
         text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     })
@@ -58,10 +55,10 @@ const exampleEventTag2 = generateItemList<EventItem>(
         ],
         publishDate: new Date(`May ${i + 1}, 2021 03:24:00`),
         image: {
-            small: 'https://unsplash.it/640/274' + i,
-            medium: 'https://unsplash.it/832/357' + i,
-            semilarge: 'https://unsplash.it/1024/439' + i,
-            large: 'https://unsplash.it/832/624' + i,
+            small: 'https://unsplash.it/640/320?image=30' + i,
+            medium: 'https://unsplash.it/832/306?image=30' + i,
+            semilarge: 'https://unsplash.it/1023/376?image=30' + i,
+            large: 'https://unsplash.it/591/394?image=30' + i,
         },
     })
 );
@@ -74,10 +71,10 @@ const exampleEventTag3 = generateItemList<EventItem>(
         tags: [{ name: 'Tag 3', link: { href: '#0' } }],
         publishDate: new Date(`November ${i + 1}, 2021 03:24:00`),
         image: {
-            small: 'https://unsplash.it/640/274' + i,
-            medium: 'https://unsplash.it/832/357' + i,
-            semilarge: 'https://unsplash.it/1024/439' + i,
-            large: 'https://unsplash.it/832/624' + i,
+            small: 'https://unsplash.it/640/320?image=50' + i,
+            medium: 'https://unsplash.it/832/306?image=50' + i,
+            semilarge: 'https://unsplash.it/1023/376?image=50' + i,
+            large: 'https://unsplash.it/591/394?image=50' + i,
         },
     })
 );

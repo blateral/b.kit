@@ -31,18 +31,19 @@ const View = styled.div`
 `;
 
 const StyledImage = styled(Image)`
-    flex: 1 0 40%;
+    flex: 0 1 30%;
+    margin-left: auto;
 `;
 
 const MainContent = styled.div`
-    flex: 1 0 60%;
+    flex: 0 1 70%;
 
     & > * + * {
         margin-top: ${spacings.nudge * 3}px;
     }
 
     @media ${mq.large} {
-        max-width: 60%;
+        max-width: 830px;
     }
 `;
 
@@ -92,7 +93,7 @@ export interface EventProps {
     activeTags?: string[];
 
     /** Event image */
-    image?: Omit<ImageProps, 'coverSpace'>;
+    image?: Omit<ImageProps, 'coverSpace' | 'ratios'>;
 
     /** Event title */
     title?: string;
@@ -175,6 +176,11 @@ const EventBlock: React.FC<EventProps> = ({
                     coverSpace
                     allowEdgeRadius
                     isInverted={isInverted}
+                    ratios={{
+                        small: { w: 640, h: 320 },
+                        medium: { w: 752, h: 276 },
+                        large: { w: 375, h: 250 },
+                    }}
                 />
             )}
             <MainContent>
