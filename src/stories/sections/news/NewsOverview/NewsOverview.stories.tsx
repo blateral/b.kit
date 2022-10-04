@@ -91,15 +91,6 @@ const exampleNewsTag3 = generateItemList<NewsItem>(
         ...item,
         tags: [{ name: 'Tag 3', link: { href: '#0' } }],
         publishDate: new Date(`November ${i + 1}, 2021 03:24:00`),
-        image: {
-            small: 'https://unsplash.it/599/450?image=30' + i,
-            medium: 'https://unsplash.it/688/516?image=30' + i,
-            large: 'https://unsplash.it/591/444?image=30' + i,
-            xlarge: 'https://unsplash.it/592/445?image=30' + i,
-            ratios: {
-                small: { w: 4, h: 3 },
-            },
-        },
     })
 );
 

@@ -1,7 +1,12 @@
 import React, { forwardRef, useMemo } from 'react';
 import styled from 'styled-components';
 
-import { spacings, getGlobals as global, getFonts as font } from 'utils/styles';
+import {
+    spacings,
+    getGlobals as global,
+    getFonts as font,
+    getColors,
+} from 'utils/styles';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Tag, { TagProps } from 'components/blocks/Tag';
@@ -25,6 +30,10 @@ const ImageLink = styled(Link)`
 const StyledImage = styled(Image)`
     overflow: hidden;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+`;
+
+const BorderPlaceholder = styled.div`
+    border-top: 1px solid ${({ theme }) => getColors(theme).elementBg.medium};
 `;
 
 const TitleLink = styled(Link)`
@@ -186,7 +195,7 @@ const NewsCard = forwardRef<
 
         return (
             <View ref={ref} className={className}>
-                {image && (
+                {image ? (
                     <ImageLink {...link} ariaLabel={title}>
                         <StyledImage
                             {...image}
@@ -194,6 +203,8 @@ const NewsCard = forwardRef<
                             isInverted={isInverted}
                         />
                     </ImageLink>
+                ) : (
+                    <BorderPlaceholder />
                 )}
                 <Head data-sheet="head">
                     {isValidArray(filteredTags, false) && (
@@ -223,7 +234,11 @@ const NewsCard = forwardRef<
                         </Tags>
                     )}
                     {publishedAt && (
-                        <PublishDate renderAs="div" isInverted={isInverted}>
+                        <PublishDate
+                            size="small"
+                            renderAs="div"
+                            isInverted={isInverted}
+                        >
                             {publishedAt}
                         </PublishDate>
                     )}
@@ -245,6 +260,7 @@ const NewsCard = forwardRef<
                             type="copy"
                             innerHTML={text}
                             data-sheet="text"
+                            size="medium"
                         />
                     )}
                 </Main>

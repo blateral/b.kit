@@ -1,3 +1,4 @@
+import Filter from 'components/base/icons/Filter';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import EventBlock, { EventProps } from 'components/blocks/EventBlock';
@@ -65,6 +66,19 @@ const Events = styled.ul<{ hasBg?: boolean }>`
                     : color(theme).elementBg.medium};
     }
 `;
+
+const FilterIcon = styled(Copy)`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: ${spacings.nudge / 2}px ${spacings.nudge}px 0 0;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+`;
+
 const EventItem = styled.li`
     padding: ${spacings.nudge * 3}px 0;
 `;
@@ -277,6 +291,10 @@ const EventOverview: React.FC<{
             <Wrapper addWhitespace>
                 {isValidArray(filteredTags, false) && (
                     <TagContainer>
+                        <FilterIcon size="small" type="copy">
+                            <Filter />
+                            <span>Filter</span>
+                        </FilterIcon>
                         {filteredTags.map((tag, i) => (
                             <TagWrapper key={i}>
                                 {customTag ? (

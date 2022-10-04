@@ -16,6 +16,7 @@ import { useScrollTo } from 'utils/useScrollTo';
 import Pointer from 'components/buttons/Pointer';
 import { isValidArray } from 'utils/arrays';
 import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
+import Filter from 'components/base/icons/Filter';
 
 const TagContainer = styled.div`
     margin-top: -${spacings.nudge}px;
@@ -78,6 +79,18 @@ const ListFooter = styled.div`
 const ShowMore = styled.span<{ itemCount?: number }>`
     display: ${({ itemCount }) =>
         itemCount && itemCount > 2 ? 'block' : 'none'};
+`;
+
+const FilterIcon = styled(Copy)`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: ${spacings.nudge / 2}px ${spacings.nudge}px 0 0;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
 `;
 
 type NewsOverviewMq = 'small' | 'semilarge' | 'large';
@@ -322,6 +335,14 @@ const NewsOverview: React.FC<{
             <Wrapper addWhitespace>
                 {isValidArray(filteredTags, false) && (
                     <TagContainer>
+                        <FilterIcon
+                            size="small"
+                            type="copy"
+                            isInverted={isInverted}
+                        >
+                            <Filter />
+                            <span>Filter</span>
+                        </FilterIcon>
                         {filteredTags.map((tag, i) => (
                             <TagWrapper key={i}>
                                 {customTag ? (
