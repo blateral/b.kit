@@ -49,15 +49,6 @@ const exampleNewsTag1 = generateItemList<NewsItem>(
             { name: 'Tag 2', link: { href: '#0' } },
         ],
         publishDate: new Date(`July ${i + 1}, 2021 03:24:00`),
-        image: {
-            small: 'https://unsplash.it/599/450?image=40' + i,
-            medium: 'https://unsplash.it/688/516?image=40' + i,
-            large: 'https://unsplash.it/591/444?image=40' + i,
-            xlarge: 'https://unsplash.it/592/445?image=40' + i,
-            ratios: {
-                small: { w: 4, h: 3 },
-            },
-        },
         text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     })
 );

@@ -32,8 +32,12 @@ const StyledImage = styled(Image)`
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 `;
 
-const BorderPlaceholder = styled.div`
-    border-top: 1px solid ${({ theme }) => getColors(theme).elementBg.medium};
+const BorderPlaceholder = styled.div<{ hasBg?: boolean }>`
+    border-top: 1px solid
+        ${({ theme, hasBg }) =>
+            hasBg
+                ? getColors(theme).elementBg.light
+                : getColors(theme).elementBg.medium};
 `;
 
 const TitleLink = styled(Link)`
@@ -138,6 +142,8 @@ export interface NewsCardProps {
         link?: LinkProps;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
     }) => React.ReactNode;
+
+    hasBg?: boolean;
 }
 
 const NewsCard = forwardRef<
@@ -159,6 +165,7 @@ const NewsCard = forwardRef<
             action,
             customTag,
             className,
+            hasBg,
         },
         ref
     ) => {
@@ -204,7 +211,7 @@ const NewsCard = forwardRef<
                         />
                     </ImageLink>
                 ) : (
-                    <BorderPlaceholder />
+                    <BorderPlaceholder hasBg={hasBg} />
                 )}
                 <Head data-sheet="head">
                     {isValidArray(filteredTags, false) && (

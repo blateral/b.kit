@@ -387,6 +387,7 @@ const NewsOverview: React.FC<{
                     {filteredNews.map((item, i) => (
                         <NewsItem key={`${i}_news_${item.title}`}>
                             <NewsCard
+                                hasBg={hasBg || isInverted}
                                 ref={cardRefs[i]}
                                 {...item}
                                 tags={item.tags?.map((tag) => ({
