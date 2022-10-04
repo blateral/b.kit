@@ -291,7 +291,11 @@ const EventOverview: React.FC<{
             <Wrapper addWhitespace>
                 {isValidArray(filteredTags, false) && (
                     <TagContainer>
-                        <FilterIcon size="small" type="copy">
+                        <FilterIcon
+                            size="small"
+                            type="copy"
+                            isInverted={isInverted}
+                        >
                             <Filter />
                             <span>Filter</span>
                         </FilterIcon>
