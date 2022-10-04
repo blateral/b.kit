@@ -140,11 +140,6 @@ export const WithImages: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -172,11 +167,6 @@ export const WithImages: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -204,11 +194,6 @@ export const WithImages: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -236,11 +221,6 @@ export const WithImages: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -268,11 +248,6 @@ export const WithImages: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -307,11 +282,6 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -339,11 +309,6 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -371,11 +336,6 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -403,11 +363,6 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -435,11 +390,6 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -475,11 +425,6 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -507,11 +452,6 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -539,11 +479,6 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -571,11 +506,6 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -603,11 +533,6 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -643,11 +568,6 @@ export const WithCustomTag: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -675,11 +595,6 @@ export const WithCustomTag: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -707,11 +622,6 @@ export const WithCustomTag: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -739,11 +649,6 @@ export const WithCustomTag: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
@@ -771,11 +676,6 @@ export const WithCustomTag: Story = () => (
                     medium: 'https://unsplash.it/832/306',
                     semilarge: 'https://unsplash.it/1023/376',
                     large: 'https://unsplash.it/591/394',
-                    ratios: {
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    },
                 },
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
