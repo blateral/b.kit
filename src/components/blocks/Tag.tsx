@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { copyStyle } from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
-import { getColors } from 'utils/styles';
+import { getColors, spacings } from 'utils/styles';
 
 const View = styled(Link)<{
     isInverted?: boolean;
@@ -13,9 +13,9 @@ const View = styled(Link)<{
     display: inline-block;
     border: 1px solid
         ${({ isInverted }) => (isInverted ? '#dddddd' : '#444444')};
-    border-radius: 15px;
+    border-radius: 8px;
 
-    padding: 4px 12px;
+    padding: 1px ${spacings.nudge}px;
     max-height: 28px;
     min-width: 60px;
     user-select: none;

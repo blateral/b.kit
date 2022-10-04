@@ -13,7 +13,7 @@ const View = styled.a<{
     disable?: boolean;
     textDecoration?: 'none' | 'underline';
 }>`
-    padding: 0.2em;
+    padding: 0.2em 0;
 
     display: inline-block;
     display: inline-flex;

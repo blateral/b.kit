@@ -8,7 +8,9 @@ import Copy from 'components/typography/Copy';
 import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
+import { concat } from 'utils/concat';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import StatusFormatter from 'utils/statusFormatter';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
 import { useObserverSupport } from 'utils/useObserverSupport';
@@ -16,8 +18,8 @@ import { useScrollTo } from 'utils/useScrollTo';
 
 export type EventItem = Omit<
     EventProps,
-    'customTag' | 'isInverted' | 'onTagClick'
->;
+    'customTag' | 'isInverted' | 'onTagClick' | 'text'
+> & { address?: string };
 
 const TagContainer = styled.div`
     margin-top: -${spacings.nudge}px;
@@ -143,7 +145,7 @@ const EventOverview: React.FC<{
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    const { colors } = useLibTheme();
+    const { colors, globals } = useLibTheme();
     const urlParamFilterName = 'eventFilter';
 
     const [selectedTags, setSelectedTags] = React.useState<string[]>(
@@ -340,31 +342,59 @@ const EventOverview: React.FC<{
                     </TagContainer>
                 )}
                 <Events hasBg={hasBg}>
-                    {filteredEvents.map((item, i) => (
-                        <EventItem key={`${i}_event_${item.title}`}>
-                            <EventBlock
-                                {...item}
-                                tags={item.tags?.map((tag) => ({
-                                    name: tag.name,
-                                }))}
-                                isInverted={isInverted}
-                                onTagClick={(tag) => {
-                                    // scroll back to top
-                                    setNewPos(0);
-                                    if (!onTagClick) {
-                                        // if no callback is defined handle filtering on client side inside the component
-                                        handleTagClick(
-                                            { name: tag.name },
-                                            false
-                                        );
-                                    } else {
-                                        onTagClick({ name: tag.name }, true);
-                                    }
-                                }}
-                                customTag={customTag}
-                            />
-                        </EventItem>
-                    ))}
+                    {filteredEvents.map((item, i) => {
+                        let timespan = '';
+
+                        if (item.date) {
+                            const formatter = new StatusFormatter(
+                                item.date.getTime(),
+                                '',
+                                globals.sections.eventDateFormat(item.date),
+                                globals.sections.eventTimeFormat(item.date),
+                                globals.sections.eventLocaleKey
+                            );
+
+                            timespan = formatter.getFormattedTimespan(
+                                globals.sections.eventTimespanFormat(
+                                    item.date,
+                                    item.duration
+                                ),
+                                item.duration
+                            );
+                        }
+
+                        const text = concat([timespan, item.address], ' | ');
+
+                        return (
+                            <EventItem key={`${i}_event_${item.title}`}>
+                                <EventBlock
+                                    {...item}
+                                    text={text}
+                                    tags={item.tags?.map((tag) => ({
+                                        name: tag.name,
+                                    }))}
+                                    isInverted={isInverted}
+                                    onTagClick={(tag) => {
+                                        // scroll back to top
+                                        setNewPos(0);
+                                        if (!onTagClick) {
+                                            // if no callback is defined handle filtering on client side inside the component
+                                            handleTagClick(
+                                                { name: tag.name },
+                                                false
+                                            );
+                                        } else {
+                                            onTagClick(
+                                                { name: tag.name },
+                                                true
+                                            );
+                                        }
+                                    }}
+                                    customTag={customTag}
+                                />
+                            </EventItem>
+                        );
+                    })}
                 </Events>
                 <div ref={targetRef} />
                 {!observerSupported && (

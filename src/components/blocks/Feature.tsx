@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import {
     mq,
     spacings,
@@ -21,7 +21,7 @@ const View = styled.div<{ isCentered?: boolean }>`
     }
 `;
 
-const TitleLink = styled(Link)`
+const TitleLink = styled(Link)<{ href?: string }>`
     display: inline-block;
     ${copyStyle('copy-b', 'big')}
 
@@ -30,6 +30,16 @@ const TitleLink = styled(Link)`
             ? font(theme)['copy-b'].big.colorInverted
             : font(theme)['copy-b'].big.color};
     text-decoration: none;
+
+    ${({ href, isInverted, theme }) =>
+        !href &&
+        css`
+            &:hover {
+                color: ${isInverted
+                    ? font(theme)['copy-b'].big.colorInverted
+                    : font(theme)['copy-b'].big.color};
+            }
+        `}
 `;
 
 const ImageContainer = styled(Link)<{ isCentered?: boolean }>`
