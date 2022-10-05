@@ -461,6 +461,7 @@ const Map: FC<{
                                 }
                             )}
                             onActiveMarkerChanged={({ goTo }) => goTo()}
+                            touchZoom
                         />
                     )}
                 </SliderContext.Consumer>
@@ -501,8 +502,7 @@ const Map: FC<{
                                                         controlNext({
                                                             isInverted,
                                                             isActive,
-                                                            name:
-                                                                'control_next_head',
+                                                            name: 'control_next_head',
                                                         })
                                                     ) : (
                                                         <ArrowRightGhost />
@@ -518,8 +518,7 @@ const Map: FC<{
                                                         controlPrev({
                                                             isInverted,
                                                             isActive,
-                                                            name:
-                                                                'control_prev_head',
+                                                            name: 'control_prev_head',
                                                         })
                                                     ) : (
                                                         <ArrowLeftGhost />

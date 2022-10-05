@@ -86,10 +86,11 @@ const LeafletMap: FC<{
     // leaflet ref
     const [L, setLeaflet] = useState<any>(null);
     const [map, setMap] = useState<Map | null>(null);
-    const [markersLayer, setMarkersLayer] = useState<FeatureGroup<any> | null>(
-        null
-    );
+    const [markersLayer, setMarkersLayer] =
+        useState<FeatureGroup<any> | null>(null);
     const [isLoaded, setLoaded] = useState<boolean>(false);
+
+    L.Browser.touchNative = true;
 
     useEffect(() => {
         const initLeaflet = async (cElement: HTMLDivElement) => {
