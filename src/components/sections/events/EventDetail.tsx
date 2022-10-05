@@ -51,9 +51,9 @@ const EventTitle = styled(Heading)`
 `;
 
 const EventDateTime = styled(Copy)`
-    overflow: hidden;
+    /* overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: nowrap; */
 
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
