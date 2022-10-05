@@ -12,13 +12,11 @@ export const Default: Story = () => (
         items={[
             {
                 label: 'Punkt 1',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.<ul><li>Lorem 1</li><li>Lorem 2</li><li>Lorem 3</li></ul>',
             },
             {
                 label: 'Punkt 2',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 3',
@@ -36,13 +34,11 @@ export const Default: Story = () => (
             },
             {
                 label: 'Punkt 4',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 5',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
         ]}
     />
@@ -53,14 +49,12 @@ export const WithColumns: Story = () => (
         items={[
             {
                 label: 'Punkt 1',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
                 hasColumns: true,
             },
             {
                 label: 'Punkt 2',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 3',
@@ -90,13 +84,11 @@ export const WithColumns: Story = () => (
             },
             {
                 label: 'Punkt 4',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 5',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
         ]}
     />
@@ -107,14 +99,12 @@ export const WithCustomBorderColor: Story = () => (
         items={[
             {
                 label: 'Punkt 1',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
                 hasColumns: true,
             },
             {
                 label: 'Punkt 2',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 3',
@@ -144,13 +134,11 @@ export const WithCustomBorderColor: Story = () => (
             },
             {
                 label: 'Punkt 4',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 5',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
         ]}
         borderColor="#000"
@@ -162,14 +150,12 @@ export const WithBackground: Story = () => (
         items={[
             {
                 label: 'Punkt 1',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
                 hasColumns: true,
             },
             {
                 label: 'Punkt 2',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 3',
@@ -199,13 +185,11 @@ export const WithBackground: Story = () => (
             },
             {
                 label: 'Punkt 4',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 5',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
         ]}
         bgMode="full"
@@ -217,14 +201,12 @@ export const isInverted: Story = () => (
         items={[
             {
                 label: 'Punkt 1',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
                 hasColumns: true,
             },
             {
                 label: 'Punkt 2',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 3',
@@ -254,13 +236,11 @@ export const isInverted: Story = () => (
             },
             {
                 label: 'Punkt 4',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
             {
                 label: 'Punkt 5',
-                text:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
+                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe suscipit cumque explicabo quod assumenda hic molestiae expedita debitis ipsum eligendi.',
             },
         ]}
         bgMode="inverted"

@@ -36,6 +36,10 @@ const AccordionBlock = styled.ul<{
 
 const AccordionItems = styled.li`
     cursor: pointer;
+
+    ul {
+        list-style-type: disc;
+    }
 `;
 
 const AccordionHead = styled.div`
