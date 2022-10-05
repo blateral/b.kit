@@ -68,6 +68,7 @@ const PosterContent = styled.div`
 const PosterContentMobile = styled(PosterContent)`
     display: block;
     padding: ${spacings.spacer}px;
+    ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')};
 
     @media ${mq.semilarge} {
         display: none;
@@ -325,7 +326,7 @@ const Header: FC<{
                 )}
             </HeaderWrapper>
             <PosterContentMobile>
-                <Wrapper addWhitespace>
+                <Wrapper>
                     {!intro?.title && title && (
                         <Callout
                             size="medium"
