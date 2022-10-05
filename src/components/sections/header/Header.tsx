@@ -67,8 +67,7 @@ const PosterContent = styled.div`
 
 const PosterContentMobile = styled(PosterContent)`
     display: block;
-    padding-top: ${spacings.spacer * 2}px;
-    ${withRange([spacings.spacer * 2, spacings.spacer * 4], 'padding-bottom')}
+    padding: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
         display: none;
@@ -325,26 +324,39 @@ const Header: FC<{
                     </Badge>
                 )}
             </HeaderWrapper>
-            {(title || primaryCta || secondaryCta) && (
-                <PosterContentMobile>
-                    <Wrapper addWhitespace>
-                        {title && (
-                            <Callout
-                                size="small"
-                                as={titleAs}
-                                isInverted={false}
-                                innerHTML={title}
-                            />
-                        )}
-                        {(primaryCta || secondaryCta) && (
-                            <StyledActions
-                                primary={primaryCta && primaryCta(false)}
-                                secondary={secondaryCta && secondaryCta(false)}
-                            />
-                        )}
-                    </Wrapper>
-                </PosterContentMobile>
-            )}
+            <PosterContentMobile>
+                <Wrapper addWhitespace>
+                    {!intro?.title && title && (
+                        <Callout
+                            size="medium"
+                            as={titleAs}
+                            textColor="#000"
+                            innerHTML={title}
+                        />
+                    )}
+                    {intro && intro.title && (
+                        <IntroBlock noTitle={!intro.title && !!title}>
+                            {intro.title && (
+                                <Heading
+                                    as="h1"
+                                    size="heading-1"
+                                    textColor="#000"
+                                    innerHTML={intro.title}
+                                />
+                            )}
+                            {intro.text && (
+                                <Copy textColor="#000" innerHTML={intro.text} />
+                            )}
+                        </IntroBlock>
+                    )}
+                    {(primaryCta || secondaryCta) && (
+                        <StyledActions
+                            primary={primaryCta && primaryCta(true)}
+                            secondary={secondaryCta && secondaryCta(true)}
+                        />
+                    )}
+                </Wrapper>
+            </PosterContentMobile>
         </View>
     );
 };

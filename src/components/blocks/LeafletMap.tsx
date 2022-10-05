@@ -90,8 +90,6 @@ const LeafletMap: FC<{
         useState<FeatureGroup<any> | null>(null);
     const [isLoaded, setLoaded] = useState<boolean>(false);
 
-    L.Browser.touchNative = true;
-
     useEffect(() => {
         const initLeaflet = async (cElement: HTMLDivElement) => {
             const leaflet = await import('leaflet');
