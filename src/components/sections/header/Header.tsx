@@ -346,27 +346,43 @@ const Header: FC<{
                     </Badge>
                 )}
             </HeaderWrapper>
-            {(title || primaryCta || secondaryCta) && (
-                <PosterContentMobile>
-                    <Wrapper addWhitespace>
-                        {title && (
-                            <Heading
-                                hyphens
-                                size="heading-2"
-                                renderAs={titleAs}
-                                isInverted={false}
-                                innerHTML={title}
-                            />
-                        )}
-                        {(primaryCta || secondaryCta) && (
-                            <StyledActions
-                                primary={primaryCta && primaryCta(false)}
-                                secondary={secondaryCta && secondaryCta(false)}
-                            />
-                        )}
-                    </Wrapper>
-                </PosterContentMobile>
-            )}
+            <PosterContentMobile>
+                <Wrapper addWhitespace>
+                    {!intro?.title && title && (
+                        <Callout
+                            hyphens
+                            size="medium"
+                            renderAs={titleAs}
+                            textColor="#000"
+                            innerHTML={title}
+                        />
+                    )}
+                    {/** #TODO: Title und Intro Logik zusammen mit Markus abklären (siehe auch b.kit-prismic slice)*/}
+                    {intro && intro.title && (
+                        <IntroBlock noTitle={!intro.title && !!title}>
+                            {intro.title && (
+                                <Heading
+                                    renderAs="h1"
+                                    size="heading-1"
+                                    textColor="#000"
+                                    hyphens
+                                >
+                                    {intro.title}
+                                </Heading>
+                            )}
+                            {intro.text && (
+                                <Copy textColor="#000">{intro.text}</Copy>
+                            )}
+                        </IntroBlock>
+                    )}
+                    {(primaryCta || secondaryCta) && (
+                        <StyledActions
+                            primary={primaryCta && primaryCta(true)}
+                            secondary={secondaryCta && secondaryCta(true)}
+                        />
+                    )}
+                </Wrapper>
+            </PosterContentMobile>
         </View>
     );
 };
