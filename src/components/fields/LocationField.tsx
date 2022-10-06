@@ -291,7 +291,7 @@ const LocationField: FC<LocationFieldProps> = ({
         errorMessage = '';
     }
 
-    const { colors } = useLibTheme();
+    const { colors, fonts } = useLibTheme();
 
     const [useMapView, setUseMapView] = useState<boolean>(false);
     const [getValue, setValue] = useState<LocationData>(
@@ -490,9 +490,19 @@ const LocationField: FC<LocationFieldProps> = ({
                                 }
                             />
                         ) : (
-                            <Icons.ToggleOff />
+                            <Icons.ToggleOff
+                                iconColor={
+                                    isInverted
+                                        ? fonts.copy.small.colorInverted
+                                        : fonts.copy.small.color
+                                }
+                            />
                         )}
-                        <ToggleText size="small" renderAs="span">
+                        <ToggleText
+                            size="small"
+                            renderAs="span"
+                            isInverted={isInverted}
+                        >
                             {toggleLabel}
                         </ToggleText>
                     </ViewToggle>
@@ -535,22 +545,6 @@ const LocationField: FC<LocationFieldProps> = ({
                             )}
                         </TrackLocation>
                     )}
-
-                    {/* {showTrackLocationBtn && (
-                        <TrackLocationIcon onClick={getLocation}>
-                            {customLocationIcon ? (
-                                customLocationIcon({ isInverted })
-                            ) : (
-                                <StyledMyLocationIcon
-                                    iconColor={
-                                        isInverted
-                                            ? colors.text.inverted
-                                            : colors.text.default
-                                    }
-                                />
-                            )}
-                        </TrackLocationIcon>
-                    )} */}
                 </MapWrapper>
                 {!useMapView && (
                     <React.Fragment>
