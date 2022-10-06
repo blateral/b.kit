@@ -202,13 +202,14 @@ const Navigation: FC<{ children?: React.ReactNode }> = ({ children }) => {
     return <NavView aria-label="menu">{children}</NavView>;
 };
 
-const NavList = styled.ul`
+const NavList = styled.ul<{ hasNonFeaturedItems?: boolean }>`
     margin: 0;
     padding: 0;
     list-style: none;
     margin: ${spacings.nudge * 2}px 0;
 
-    border-bottom: solid 2px ${({ theme }) => color(theme).elementBg.medium};
+    border-bottom: ${({ hasNonFeaturedItems, theme }) =>
+        hasNonFeaturedItems && `solid 2px ${color(theme).elementBg.medium}`};
 `;
 
 // #endregion
@@ -685,6 +686,11 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
         return [...featured, ...main].filter(menuFilter);
     }, [mainNavigation]);
 
+    const hasNonFeaturedItems = useMemo(() => {
+        const main = mainNavigation?.filter((n) => !n.isFeatured) || [];
+        return main && main.length > 0;
+    }, [mainNavigation]);
+
     const subList = useMemo(() => {
         return subNavigation?.filter(menuFilter);
     }, [subNavigation]);
@@ -793,7 +799,12 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                 })}
                             <MenuNav.View>
                                 {isValidArray(mainList, false) && (
-                                    <MenuNav.List id="mainMenu">
+                                    <MenuNav.List
+                                        id="mainMenu"
+                                        hasNonFeaturedItems={
+                                            hasNonFeaturedItems
+                                        }
+                                    >
                                         {mainList.map((item) => {
                                             const isActive =
                                                 activeItems.includes(item.uid);
