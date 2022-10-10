@@ -310,6 +310,7 @@ export const CallToAction: FC<{
                             superTitle={superTitle}
                             superTitleAs={superTitleAs}
                             text={text}
+                            textType="copy"
                         />
                     )}
                     {contact && (
