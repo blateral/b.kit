@@ -34,7 +34,12 @@ export {
 export { default as useIE } from 'utils/useIE';
 export { useItemHeight } from 'utils/useItemHeight';
 export { useFontsLoaded } from 'utils/useFontsLoaded';
-export { getMediaQuery, isBrowser, useMediaQuery } from 'utils/useMediaQuery';
+export {
+    getMediaQuery,
+    isBrowser,
+    useMediaQuery,
+    useMediaQueries,
+} from 'utils/useMediaQuery';
 export { useScroll, ScrollDirection } from 'utils/useScroll';
 export { useScrollTo } from 'utils/useScrollTo';
 export { usePoster, canUseWebP } from 'utils/usePoster';
@@ -175,6 +180,7 @@ export { default as Slider } from 'components/blocks/Slider';
 export {
     default as Navigation,
     getFullNavbarHeights,
+    getNavbarState,
 } from 'components/sections/navigation/Navigation';
 export * as NavPartials from 'components/sections/navigation/partials/index';
 export * as NavSkeletons from 'components/sections/navigation/skeletons/index';
