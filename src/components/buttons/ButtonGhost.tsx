@@ -16,8 +16,8 @@ const View = styled.a<{
     size?: 'default' | 'small';
 }>`
     min-height: 3em;
-    height: ${({ size }) => (size === 'default' ? '3.65em' : '3em')};
-    min-width: ${({ size }) => (size === 'default' ? '240px' : '120px')};
+    height: ${({ size }) => (size === 'default' ? '3.5em' : '3em')};
+    min-width: ${({ size }) => (size === 'default' ? '200px' : '120px')};
     padding: 0.1em 1.2em;
 
     display: inline-flex;

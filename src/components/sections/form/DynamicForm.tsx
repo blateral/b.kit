@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
@@ -29,6 +29,7 @@ import datepickerValidator from './validators/datepickerValidator';
 import locationValidator from './validators/locationValidator';
 import fieldGroupValidator from './validators/fieldGroupValidator';
 import uploadValidator from './validators/uploadValidator';
+import Copy from 'components/typography/Copy';
 
 const StyledSection = styled(Section)`
     overflow: visible;
@@ -58,29 +59,31 @@ const FieldContainer = styled.div`
 
     @media ${mq.semilarge} {
         max-width: 610px;
-
-        & + & {
-            margin-top: 0;
-        }
-
-        &:first-child {
-            padding-right: ${spacings.nudge * 3}px;
-        }
-
-        &:last-child {
-            padding-left: ${spacings.nudge * 3}px;
-        }
     }
 `;
 
-const ActionContainer = styled.div<{ hasCols?: boolean }>`
-    width: 100%;
-    max-width: calc(590px * 2 + ${spacings.nudge * 2}px);
+const FormFooter = styled.div`
+    margin-top: ${spacings.spacer}px;
+`;
 
+const Status = styled(Copy)`
+    text-align: left;
     margin: 0 auto;
-    margin-top: ${spacings.spacer * 2}px;
 
-    text-align: ${({ hasCols }) => (hasCols ? 'left' : 'center')};
+    @media ${mq.semilarge} {
+        max-width: 610px;
+    }
+`;
+
+const ActionContainer = styled.div`
+    width: 100%;
+    margin: 0 auto;
+    margin-top: ${spacings.spacer * 1.5}px;
+    text-align: right;
+
+    @media ${mq.semilarge} {
+        max-width: 610px;
+    }
 `;
 
 export interface FormStructure {
@@ -296,6 +299,11 @@ export type FormValues = FormData & {
     subjectLine: string;
 };
 
+export interface SubmitResponse {
+    message?: string;
+    isError?: boolean;
+}
+
 const DynamicForm: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -304,7 +312,7 @@ const DynamicForm: FC<{
     fields?: FormStructure;
 
     /** Callback on form submit */
-    onSubmit?: (values: FormValues) => Promise<void>;
+    onSubmit?: (values: FormValues) => Promise<SubmitResponse>;
 
     /** Function to inject custom submit button */
     submitAction?: (props: {
@@ -347,6 +355,8 @@ const DynamicForm: FC<{
 }) => {
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full' || isInverted;
+
+    const [submitReponse, setSubmitResponse] = useState<SubmitResponse>();
 
     // generate initial data and setup yup validation definition
     const initalData: FormData = {};
@@ -555,14 +565,25 @@ const DynamicForm: FC<{
             ...initalData,
         } as FormData,
 
-        onSubmit: async (values) => {
+        onSubmit: async (values, helpers) => {
             const valuesAndMails = {
                 ...values,
                 targetEmails: targetEmails || [],
                 subjectLine: subjectLine || '',
             };
-            onSubmit && (await onSubmit(valuesAndMails));
-            setSubmitting(false);
+
+            if (!onSubmit) {
+                setSubmitting(false);
+                return;
+            }
+
+            const response = await onSubmit(valuesAndMails);
+            helpers.resetForm({ values });
+            setSubmitResponse(response);
+
+            if (response.isError) {
+                setSubmitting(false);
+            }
         },
         validateOnBlur: true,
         validateOnChange: true,
@@ -713,31 +734,53 @@ const DynamicForm: FC<{
                             })}
                     </FieldContainer>
                 </Form>
-                {fields && (
-                    <ActionContainer>
-                        <Actions
-                            primary={
-                                submitAction ? (
-                                    submitAction({
-                                        isInverted,
-                                        isDisabled: isSubmitting || !dirty,
-                                        handleSubmit: submitForm,
-                                    })
-                                ) : (
-                                    <Button.View
-                                        as="button"
-                                        onClick={submitForm}
-                                        isDisabled={isSubmitting || !dirty}
-                                        {...{
-                                            type: 'submit',
-                                        }}
-                                    >
-                                        <Button.Label>send</Button.Label>
-                                    </Button.View>
-                                )
-                            }
-                        />
-                    </ActionContainer>
+                {(fields || submitReponse?.message) && (
+                    <FormFooter>
+                        {submitReponse?.message && !dirty && (
+                            <Status
+                                textColor={
+                                    submitReponse?.isError
+                                        ? color(theme).error
+                                        : isInverted
+                                        ? color(theme).text.copyInverted
+                                        : color(theme).text.copy
+                                }
+                            >
+                                {submitReponse.message || ''}
+                            </Status>
+                        )}
+                        {fields && (
+                            <ActionContainer>
+                                <Actions
+                                    primary={
+                                        submitAction ? (
+                                            submitAction({
+                                                isInverted,
+                                                isDisabled:
+                                                    isSubmitting || !dirty,
+                                                handleSubmit: submitForm,
+                                            })
+                                        ) : (
+                                            <Button.View
+                                                as="button"
+                                                onClick={submitForm}
+                                                isDisabled={
+                                                    isSubmitting || !dirty
+                                                }
+                                                {...{
+                                                    type: 'submit',
+                                                }}
+                                            >
+                                                <Button.Label>
+                                                    Send mail
+                                                </Button.Label>
+                                            </Button.View>
+                                        )
+                                    }
+                                />
+                            </ActionContainer>
+                        )}
+                    </FormFooter>
                 )}
             </Wrapper>
         </StyledSection>
