@@ -1,4 +1,9 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+} from 'react';
 import styled, { css } from 'styled-components';
 import { getGlobals as global, mq } from 'utils/styles';
 
@@ -104,44 +109,60 @@ export interface VideoProps {
     onCanPlayThrough?: () => void;
 }
 
-const VideoBlock: FC<VideoProps & { className?: string }> = ({
-    urls,
-    ratios,
-    isInverted,
-    muted = false,
-    autoPlay = false,
-    loop = false,
-    controls = false,
-    onCanPlayThrough,
-    className,
-}) => {
-    const videoRef = useRef<HTMLVideoElement>(null);
+const VideoBlock = forwardRef<
+    HTMLVideoElement,
+    VideoProps & { className?: string }
+>(
+    (
+        {
+            urls,
+            ratios,
+            isInverted,
+            muted = false,
+            autoPlay = false,
+            loop = false,
+            controls = false,
+            onCanPlayThrough,
+            className,
+        },
+        ref
+    ) => {
+        const videoRef = useRef<HTMLVideoElement | null>(null);
 
-    useEffect(() => {
-        if (videoRef.current && videoRef.current.readyState > 3) {
-            onCanPlayThrough && onCanPlayThrough();
-        }
-    }, [onCanPlayThrough]);
+        useImperativeHandle<HTMLVideoElement | null, HTMLVideoElement | null>(
+            ref,
+            () => videoRef.current
+        );
 
-    return (
-        <AspectContainer
-            ratios={ratios}
-            isInverted={isInverted}
-            className={className}
-        >
-            <Video
-                ref={videoRef}
-                muted={muted}
-                autoPlay={autoPlay}
-                loop={loop}
-                controls={controls}
-                onCanPlayThrough={onCanPlayThrough}
+        useEffect(() => {
+            if (videoRef.current && videoRef.current.readyState > 3) {
+                onCanPlayThrough?.();
+            }
+        }, [onCanPlayThrough]);
+
+        return (
+            <AspectContainer
+                ratios={ratios}
+                isInverted={isInverted}
+                className={className}
             >
-                {urls?.map((url, i) => (
-                    <source src={url} key={i} />
-                ))}
-            </Video>
-        </AspectContainer>
-    );
-};
+                <Video
+                    ref={videoRef}
+                    muted={muted}
+                    autoPlay={autoPlay}
+                    loop={loop}
+                    controls={controls}
+                    onCanPlayThrough={onCanPlayThrough}
+                >
+                    {urls?.map((url, i) => (
+                        <source src={url} key={i} />
+                    ))}
+                </Video>
+            </AspectContainer>
+        );
+    }
+);
+
+VideoBlock.displayName = 'VideoBlock';
+
 export default VideoBlock;

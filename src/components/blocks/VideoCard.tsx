@@ -134,7 +134,7 @@ const Iframe = styled.iframe`
 export interface VideoCardProps {
     bgImage: ImageProps;
     embedId: string;
-    playIcon?: React.ReactChild;
+    playIcon?: React.ReactNode;
 }
 
 const VideoCard: FC<VideoCardProps & { className?: string }> = ({

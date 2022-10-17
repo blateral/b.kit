@@ -13,7 +13,7 @@ const Video: React.FC<{
 
     bgImage: ImageProps;
     embedId: string;
-    playIcon?: React.ReactChild;
+    playIcon?: React.ReactNode;
     bgMode?: 'full' | 'inverted' | 'splitted';
 }> = ({ anchorId, bgMode, bgImage, embedId, playIcon }) => {
     const { colors } = useLibTheme();
