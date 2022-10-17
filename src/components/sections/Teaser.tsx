@@ -6,12 +6,18 @@ import { HeadlineTag } from 'components/typography/Heading';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
-import Section, { mapToBgMode } from 'components/base/Section';
-import { mq, spacings, getGlobals as global } from 'utils/styles';
+import Section, { BgMode } from 'components/base/Section';
+import {
+    mq,
+    spacings,
+    getGlobals as global,
+    getFonts as font,
+} from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import IntroBlock from 'components/blocks/IntroBlock';
 import VideoBlock, { VideoAspectRatios } from 'components/blocks/VideoBlock';
+import { isValidArray } from 'utils/arrays';
 
 const Figure = styled.figure`
     display: flex;
@@ -53,12 +59,28 @@ const Video = styled(VideoBlock)<{
     height: 100%;
 `;
 
-const Description = styled(Copy)`
+const Description = styled(Copy)<{
+    isInverted?: boolean;
+    isSplitted?: boolean;
+    isMirrored?: boolean;
+}>`
     display: block;
 
     @media ${mq.semilarge} {
         padding-left: ${spacings.nudge * 2}px;
         padding-right: ${spacings.nudge * 2}px;
+        margin-left: ${({ isMirrored }) => isMirrored && 'auto'};
+        margin-right: ${({ isMirrored }) => !isMirrored && 'auto'};
+        max-width: ${({ isSplitted }) => isSplitted && '81.5%'};
+
+        color: ${({ theme, isInverted, isSplitted }) =>
+            isInverted && !isSplitted
+                ? font(theme).copy.small.colorInverted
+                : font(theme).copy.small.color};
+    }
+
+    @media ${mq.xlarge} {
+        max-width: ${({ isSplitted }) => isSplitted && '69.5%'};
     }
 `;
 
@@ -106,7 +128,7 @@ const Teaser: FC<{
     text?: string;
 
     /** Section background */
-    bgMode?: 'full' | 'inverted' | 'splitted';
+    bgMode?: 'full' | 'inverted' | 'splitted' | 'inverted-splitted';
 
     /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -129,7 +151,8 @@ const Teaser: FC<{
     secondaryAction,
 }) => {
     const { colors } = useLibTheme();
-    const isInverted = bgMode === 'inverted';
+    const isInverted = bgMode === 'inverted' || bgMode === 'inverted-splitted';
+    const isSplitted = bgMode === 'splitted' || bgMode === 'inverted-splitted';
     const [isLoaded, setLoaded] = useState(false);
 
     return (
@@ -143,7 +166,7 @@ const Teaser: FC<{
                     ? colors.sectionBg.medium
                     : colors.sectionBg.light
             }
-            bgMode={mapToBgMode(bgMode, false, isMirrored)}
+            bgMode={mapToTeaserBgMode(bgMode, false, isMirrored)}
         >
             <Wrapper addWhitespace clampWidth="normal">
                 <Grid.Row valign="center">
@@ -157,23 +180,23 @@ const Teaser: FC<{
                             move: (isMirrored ? 5 : 0) / 12,
                         }}
                     >
-                        {(image || video) && (
+                        {(image?.small || isValidArray(video?.urls, false)) && (
                             <Figure>
-                                {image && (!video || !isLoaded) && (
+                                {image?.small && (!video || !isLoaded) && (
                                     <StyledImage
                                         {...image}
                                         isInverted={isInverted}
                                         coverSpace
                                     />
                                 )}
-                                {video?.urls && video.urls.length > 0 && (
+                                {isValidArray(video?.urls, false) && (
                                     <Video
-                                        urls={video.urls}
+                                        urls={video?.urls}
                                         muted
                                         autoPlay
                                         loop
                                         onCanPlayThrough={() => setLoaded(true)}
-                                        ratios={video.aspectRatios}
+                                        ratios={video?.aspectRatios}
                                         isVisible={isLoaded}
                                     />
                                 )}
@@ -182,6 +205,8 @@ const Teaser: FC<{
                                         size="small"
                                         renderAs="figcaption"
                                         isInverted={isInverted}
+                                        isSplitted={isSplitted}
+                                        isMirrored={isMirrored}
                                         innerHTML={description}
                                     />
                                 )}
@@ -223,6 +248,32 @@ const Teaser: FC<{
             </Wrapper>
         </Section>
     );
+};
+
+export const mapToTeaserBgMode = (
+    mode?: 'full' | 'splitted' | 'inverted' | 'inverted-splitted',
+    preventSplit = false,
+    isMirrored = false
+): BgMode | undefined => {
+    switch (mode) {
+        case 'full':
+            return 'full';
+        case 'inverted':
+            return 'inverted';
+        case 'splitted': {
+            if (!preventSplit)
+                return isMirrored ? 'larger-left' : 'larger-right';
+            else return undefined;
+        }
+        case 'inverted-splitted': {
+            if (!preventSplit)
+                return isMirrored ? 'larger-left' : 'larger-right';
+            else return undefined;
+        }
+
+        default:
+            return undefined;
+    }
 };
 
 export const TeaserComponent = Teaser;
