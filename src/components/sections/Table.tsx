@@ -42,6 +42,11 @@ const TableContainer = styled.div`
         outline: none;
         border: none;
     }
+
+    &::-webkit-scrollbar {
+        display: none;
+        scrollbar-width: none;
+    }
 `;
 
 const TableBody = styled.table`

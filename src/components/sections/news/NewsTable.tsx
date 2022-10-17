@@ -19,6 +19,11 @@ const TableContainer = styled.div`
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
+
+    &::-webkit-scrollbar {
+        display: none;
+        scrollbar-width: none;
+    }
 `;
 
 const TableBody = styled.table`
