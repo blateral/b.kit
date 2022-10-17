@@ -1,6 +1,7 @@
 import Image from 'components/blocks/Image';
 import * as React from 'react';
 import styled from 'styled-components';
+import { HeaderFocus } from './Header';
 
 interface HeaderPosterImageProps {
     small: string;
@@ -23,7 +24,7 @@ const PosterView = styled.div`
     height: 100%;
 `;
 
-const BackgroundImg = styled(Image)`
+const BackgroundImg = styled(Image)<{ focus?: HeaderFocus }>`
     display: block;
     position: absolute;
     top: 0;
@@ -31,16 +32,18 @@ const BackgroundImg = styled(Image)`
     height: 100%;
     width: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: ${({ focus }) =>
+        `${focus?.[0] || 'center'} ${focus?.[1] || 'center'}`};
 `;
 
 const HeaderPoster: React.FC<{
     bgImage: HeaderPosterImageProps;
     className?: string;
-}> = ({ bgImage, className, children }) => {
+    focus?: HeaderFocus;
+}> = ({ bgImage, className, children, focus }) => {
     return (
         <PosterView className={className}>
-            <BackgroundImg {...bgImage} alt="" />
+            <BackgroundImg {...bgImage} alt="" focus={focus} />
             {children}
         </PosterView>
     );

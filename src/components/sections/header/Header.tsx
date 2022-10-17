@@ -107,12 +107,17 @@ const Poster: FC<{
     videoUrl?: string;
     images?: HeaderImageProps[];
     className?: string;
-}> = ({ videoUrl, images, className, children }) => {
+    focus?: HeaderFocus;
+}> = ({ videoUrl, images, className, focus, children }) => {
     if (!videoUrl) {
         if (!images || images.length === 0) return <div>{children}</div>;
         else if (images.length === 1)
             return (
-                <HeaderPoster bgImage={images[0]} className={className}>
+                <HeaderPoster
+                    focus={focus}
+                    bgImage={images[0]}
+                    className={className}
+                >
                     {children}
                 </HeaderPoster>
             );
@@ -132,6 +137,7 @@ const Poster: FC<{
     } else {
         return (
             <HeaderVideo
+                focus={focus}
                 videoUrl={videoUrl}
                 placeholderImg={images?.[0]}
                 className={className}
@@ -197,12 +203,19 @@ const IntroBlock = styled.div<{ noTitle?: boolean }>`
     }
 `;
 
+export type HeaderFocus = [
+    'left' | 'center' | 'right',
+    'top' | 'center' | 'bottom'
+];
+
 const Header: FC<{
     size?: 'full' | 'small';
     /** Optional explicit height scale value: 100vh * [0...1] */
     sizeScale?: number;
     title?: string;
     titleAs?: CalloutTag;
+
+    focusPoint?: HeaderFocus;
 
     intro?: {
         text?: string;
@@ -234,6 +247,7 @@ const Header: FC<{
     customTopGradient,
     customBottomGradient,
     badge,
+    focusPoint = ['center', 'center'],
 }) => {
     const theme = useContext(ThemeContext);
     const topGradient = withTopGradient
@@ -263,6 +277,7 @@ const Header: FC<{
                                 : 1
                             : sizeScale
                     }
+                    focus={focusPoint}
                 >
                     <Wrapper>
                         <PosterContent>

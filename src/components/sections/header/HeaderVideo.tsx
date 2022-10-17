@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import Image from 'components/blocks/Image';
 import { useMediaQuery } from 'utils/useMediaQuery';
+import { HeaderFocus } from './Header';
 
 interface HeaderVideoImageProps {
     small: string;
@@ -34,7 +35,7 @@ const PosterView = styled.div`
     }
 `;
 
-const PlaceholderImg = styled(Image)`
+const PlaceholderImg = styled(Image)<{ focus?: HeaderFocus }>`
     position: absolute;
     top: 0;
     right: 0;
@@ -42,9 +43,15 @@ const PlaceholderImg = styled(Image)`
     left: 0;
     height: 100%;
     z-index: 0;
+
+    object-position: ${({ focus }) =>
+        `${focus?.[0] || 'center'} ${focus?.[1] || 'center'}`};
 `;
 
-const AutoplayVideo = styled.video<{ isVisible?: boolean }>`
+const AutoplayVideo = styled.video<{
+    isVisible?: boolean;
+    focus?: HeaderFocus;
+}>`
     position: absolute;
     top: 0;
     right: 0;
@@ -53,7 +60,8 @@ const AutoplayVideo = styled.video<{ isVisible?: boolean }>`
     height: 100%;
     width: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: ${({ focus }) =>
+        `${focus?.[0] || 'center'} ${focus?.[1] || 'center'}`};
     opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
     pointer-events: none;
     z-index: 1;
@@ -67,7 +75,8 @@ const HeaderVideo: React.FC<{
     placeholderImg?: HeaderVideoImageProps;
     videoUrl?: string;
     className?: string;
-}> = ({ placeholderImg, videoUrl, className, children }) => {
+    focus?: HeaderFocus;
+}> = ({ placeholderImg, videoUrl, className, children, focus }) => {
     const [isLoaded, setLoaded] = useState<boolean>(false);
     const currentMq = useMediaQuery([
         'small',
@@ -86,7 +95,7 @@ const HeaderVideo: React.FC<{
     return (
         <PosterView className={className}>
             {placeholderImg?.small && !isLoaded && (
-                <PlaceholderImg coverSpace {...placeholderImg} />
+                <PlaceholderImg coverSpace {...placeholderImg} focus={focus} />
             )}
             {videoUrl && !isMobile && (
                 <AutoplayVideo
@@ -96,6 +105,7 @@ const HeaderVideo: React.FC<{
                     autoPlay
                     loop
                     onCanPlayThrough={() => setLoaded(true)}
+                    focus={focus}
                 />
             )}
             {children}
