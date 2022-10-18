@@ -86,6 +86,8 @@ const VideoControls = styled.button`
     z-index: 1;
     padding: 0;
 
+    cursor: pointer;
+
     & > * {
         opacity: 0.8;
         transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;

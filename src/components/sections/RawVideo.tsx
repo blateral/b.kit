@@ -76,7 +76,7 @@ const VideoControls = styled.button`
     }
 `;
 
-const VideoRaw: React.FC<{
+const RawVideo: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
@@ -112,7 +112,7 @@ const VideoRaw: React.FC<{
             <Wrapper addWhitespace>
                 <VideoContainer
                     onClick={() => {
-                        if (videoRef?.current) {
+                        if (videoRef?.current && isVideoLoaded) {
                             setIsStarted(true);
                             videoRef?.current?.play();
                         }
@@ -141,5 +141,5 @@ const VideoRaw: React.FC<{
     );
 };
 
-export const VideoRawComponent = VideoRaw;
-export default withLibTheme(VideoRaw);
+export const RawVideoComponent = RawVideo;
+export default withLibTheme(RawVideo);
