@@ -19,6 +19,12 @@ const Overlay = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
+
+    background: linear-gradient(
+        358.19deg,
+        rgba(29, 34, 35, 0.52) 12.37%,
+        rgba(29, 34, 35, 0) 59.02%
+    );
 `;
 
 const VideoControls = styled.button`
@@ -125,7 +131,7 @@ const VideoRaw: React.FC<{
                     {isVideoLoaded && !isStarted && (
                         <Overlay>
                             <VideoControls>
-                                {playIcon || <Play />}
+                                {playIcon || <Play iconColor="#000" />}
                             </VideoControls>
                         </Overlay>
                     )}

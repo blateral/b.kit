@@ -152,7 +152,11 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
             isActive={isActive}
             className={className}
         >
-            {!isActive && <VideoControls>{playIcon || <Play />}</VideoControls>}
+            {!isActive && (
+                <VideoControls>
+                    {playIcon || <Play iconColor="#000" />}
+                </VideoControls>
+            )}
             {isActive && (
                 <Iframe
                     id="ytplayer"

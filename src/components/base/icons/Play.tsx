@@ -11,18 +11,24 @@ const Play: React.FC<{
     ariaHidden?: boolean;
 }> = ({ iconColor = 'currentColor', className, ariaHidden = true }) => (
     <SVG
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
+        viewBox="0 0 80 80"
+        width="80"
+        height="80"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={className}
         aria-hidden={ariaHidden}
+        className={className}
     >
-        <path
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm-2 14.5v-9l6 4.5-6 4.5Z"
-            fill={iconColor}
-        />
+        <g>
+            <path
+                d="M31.925 58.028 55.962 40 31.925 21.972v36.056ZM40 0c11.017 0 20.438 3.912 28.263 11.737C76.088 19.562 80 28.983 80 40c0 11.017-3.912 20.438-11.737 28.263C60.438 76.088 51.017 80 40 80c-11.017 0-20.438-3.912-28.263-11.737C3.912 60.438 0 51.017 0 40c0-11.017 3.912-20.438 11.737-28.263C19.562 3.912 28.983 0 40 0Z"
+                fill={iconColor}
+            />
+            <path
+                d="M31.925 58.028 55.962 40 31.925 21.972v36.056Z"
+                fill="#fff"
+            />
+        </g>
     </SVG>
 );
 
