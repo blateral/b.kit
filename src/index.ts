@@ -84,12 +84,10 @@ export { default as EventOverview } from 'components/sections/events/EventOvervi
 export { default as EventDetail } from 'components/sections/events/EventDetail';
 export { default as FactGrid } from 'components/sections/FactGrid';
 export { default as FactList } from 'components/sections/FactList';
-// export { default as FeatureCarousel } from 'components/sections/carousel/FeatureCarousel';
 export { default as FeatureList } from 'components/sections/FeatureList';
 export { default as Gallery } from 'components/sections/Gallery';
 export { default as Header } from 'components/sections/header/Header';
 export { default as IconList } from 'components/sections/IconList';
-// export { default as ImageCarousel } from 'components/sections/carousel/ImageCarousel';
 export { default as IndexList } from 'components/sections/IndexList';
 export { default as Intro } from 'components/sections/Intro';
 export { default as Map } from 'components/sections/Map';
@@ -108,7 +106,6 @@ export { default as ParallaxBackground } from 'components/sections/ParallaxBackg
 export { default as Poster } from 'components/sections/Poster';
 export { default as PriceList } from 'components/sections/PriceList';
 export { default as PriceTable } from 'components/sections/PriceTable';
-// export { default as PromotionCarousel } from 'components/sections/carousel/PromotionCarousel';
 export { default as QuickNav } from 'components/sections/Quicknav';
 export { default as Quote } from 'components/sections/Quote';
 export { default as SimpleImage } from 'components/sections/SimpleImage';
@@ -120,7 +117,6 @@ export { default as TeaserWide } from 'components/sections/TeaserWide';
 export { default as Timeline } from 'components/sections/Timeline';
 export { default as Video } from 'components/sections/Video';
 export { default as RawVideo } from 'components/sections/RawVideo';
-// export { default as VideoCarousel } from 'components/sections/carousel/VideoCarousel';
 export { default as JobList } from 'components/sections/jobs/JobList';
 export { default as JobArticle } from 'components/sections/jobs/JobArticle';
 export { default as PointOfInterestDetail } from 'components/sections/pois/PointOfInterestDetail';
