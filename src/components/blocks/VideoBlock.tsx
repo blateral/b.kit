@@ -153,6 +153,7 @@ const VideoBlock = forwardRef<
                     loop={loop}
                     controls={controls}
                     onCanPlayThrough={onCanPlayThrough}
+                    playsInline
                 >
                     {urls?.map((url, i) => (
                         <source src={url} key={i} />
