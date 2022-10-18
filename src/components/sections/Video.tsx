@@ -11,7 +11,7 @@ const Video: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
-    bgImage: ImageProps;
+    bgImage: Omit<ImageProps, 'ratios' | 'coverSpace'>;
     embedId: string;
     playIcon?: React.ReactNode;
     bgMode?: 'full' | 'inverted' | 'splitted';

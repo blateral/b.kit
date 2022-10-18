@@ -17,13 +17,43 @@ export const Default: Story = () => (
     <RawVideo videoUrls={['images/videos/alps_stockvideo.mp4']} />
 );
 
+export const WithPlaceholderImg: Story = () => (
+    <RawVideo
+        placeholderImg={{
+            small: 'https://unsplash.it/640/480',
+            medium: 'https://unsplash.it/1024/576',
+            large: 'https://unsplash.it/1440/810',
+            xlarge: 'https://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
+        }}
+        videoUrls={['images/videos/alps_stockvideo.mp4']}
+    />
+);
+
 export const WithBackground: Story = () => (
-    <RawVideo bgMode="full" videoUrls={['images/videos/alps_stockvideo.mp4']} />
+    <RawVideo
+        bgMode="full"
+        placeholderImg={{
+            small: 'https://unsplash.it/640/480',
+            medium: 'https://unsplash.it/1024/576',
+            large: 'https://unsplash.it/1440/810',
+            xlarge: 'https://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
+        }}
+        videoUrls={['images/videos/alps_stockvideo.mp4']}
+    />
 );
 
 export const SplittedBackground: Story = () => (
     <RawVideo
         bgMode="splitted"
+        placeholderImg={{
+            small: 'https://unsplash.it/640/480',
+            medium: 'https://unsplash.it/1024/576',
+            large: 'https://unsplash.it/1440/810',
+            xlarge: 'https://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
+        }}
         videoUrls={['images/videos/alps_stockvideo.mp4']}
     />
 );
@@ -31,6 +61,13 @@ export const SplittedBackground: Story = () => (
 export const Inverted: Story = () => (
     <RawVideo
         bgMode="inverted"
+        placeholderImg={{
+            small: 'https://unsplash.it/640/480',
+            medium: 'https://unsplash.it/1024/576',
+            large: 'https://unsplash.it/1440/810',
+            xlarge: 'https://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
+        }}
         videoUrls={['images/videos/alps_stockvideo.mp4']}
     />
 );
@@ -38,6 +75,13 @@ export const Inverted: Story = () => (
 export const CustomPlayIcon: Story = () => (
     <RawVideo
         videoUrls={['images/videos/alps_stockvideo.mp4']}
+        placeholderImg={{
+            small: 'https://unsplash.it/640/480',
+            medium: 'https://unsplash.it/1024/576',
+            large: 'https://unsplash.it/1440/810',
+            xlarge: 'https://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
+        }}
         playIcon={<Play iconColor="red" />}
     />
 );
@@ -45,6 +89,13 @@ export const CustomPlayIcon: Story = () => (
 export const InvalidVideo: Story = () => (
     <RawVideo
         bgMode="inverted"
+        placeholderImg={{
+            small: 'https://unsplash.it/640/480',
+            medium: 'https://unsplash.it/1024/576',
+            large: 'https://unsplash.it/1440/810',
+            xlarge: 'https://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
+        }}
         videoUrls={['images/videos/alps_stockvide.mp4']}
     />
 );
