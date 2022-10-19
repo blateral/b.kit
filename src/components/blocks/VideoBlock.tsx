@@ -106,6 +106,7 @@ export interface VideoProps {
     autoPlay?: boolean;
     loop?: boolean;
     controls?: boolean;
+    playsInline?: boolean;
     onCanPlayThrough?: () => void;
 }
 
@@ -122,6 +123,7 @@ const VideoBlock = forwardRef<
             autoPlay = false,
             loop = false,
             controls = false,
+            playsInline = true,
             onCanPlayThrough,
             className,
         },
@@ -153,7 +155,7 @@ const VideoBlock = forwardRef<
                     loop={loop}
                     controls={controls}
                     onCanPlayThrough={onCanPlayThrough}
-                    playsInline
+                    playsInline={playsInline}
                 >
                     {urls?.map((url, i) => (
                         <source src={url} key={i} />
