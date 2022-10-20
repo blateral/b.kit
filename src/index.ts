@@ -171,7 +171,6 @@ export {
     CookieText,
     CookieActions,
 } from 'components/blocks/CookieConsent';
-export { default as Slider } from 'components/blocks/Slider';
 
 /***** Navigation *****/
 export {
