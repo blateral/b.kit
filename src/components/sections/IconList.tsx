@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { mq, spacings, getColors as color, withRange } from 'utils/styles';
+import { mq, spacings, getColors as color } from 'utils/styles';
 import Actions from 'components/blocks/Actions';
 import Pointer from 'components/buttons/Pointer';
 import Link, { LinkProps } from 'components/typography/Link';
@@ -46,14 +46,14 @@ const Items = styled.ul<{ isVisible?: boolean; isCentered?: boolean }>`
     flex-wrap: wrap;
     padding: 0;
     margin: 0;
-    margin-top: -${spacings.nudge * 2}px;
-    margin-left: -${spacings.nudge * 2}px;
+    margin-top: -${spacings.spacer}px;
+    margin-left: -${spacings.spacer}px;
 
     list-style: none;
 
     @media ${mq.medium} {
-        margin-top: -${spacings.spacer}px;
-        margin-left: -${spacings.spacer}px;
+        margin-top: -${spacings.spacer * 2}px;
+        margin-left: -${spacings.spacer * 2}px;
 
         & > * {
             flex: 0 1 auto;
@@ -65,8 +65,8 @@ const Item = styled.li<{
     isVisible?: boolean;
     index: number;
 }>`
-    /* padding-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge * 2}px; */
+    padding-top: ${spacings.spacer}px;
+    padding-left: ${spacings.spacer}px;
 
     display: ${({ index, isVisible }) =>
         isVisible || index < 6 ? 'block' : 'none'};
@@ -75,10 +75,10 @@ const Item = styled.li<{
         width: 100%;
     }
 
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-left')}
-
     @media ${mq.medium} {
+        padding-top: ${spacings.spacer * 2}px;
+        padding-left: ${spacings.spacer * 2}px;
+
         & > img {
             width: auto;
         }
