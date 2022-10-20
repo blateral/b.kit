@@ -172,7 +172,7 @@ const RawVideo: React.FC<{
                     <Video
                         ref={videoRef}
                         isVisible={isStarted || !placeholderImg?.small}
-                        controls={isStarted}
+                        controls
                         ratios={{ small: 16 / 9 }}
                         urls={videoUrls}
                         isInverted={isInverted}
