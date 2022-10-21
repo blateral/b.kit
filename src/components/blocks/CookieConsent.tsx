@@ -83,6 +83,7 @@ export interface CookieConsentData {
 
 export const CookieConsent: FC<
     CookieConfig & {
+        onClose?: () => void;
         className?: string;
         children?: (props: RenderProps) => React.ReactElement;
     }
@@ -98,6 +99,7 @@ export const CookieConsent: FC<
     localeKey = 'de',
     zIndex,
     overlayOpacity = 0.4,
+    onClose,
     className,
     children,
 }) => {
@@ -161,6 +163,7 @@ export const CookieConsent: FC<
                                 days: lifetime,
                             });
                             setIsVisible(false);
+                            onClose && onClose();
                         },
                         handleAccept: () => {
                             console.log('accept');
@@ -174,6 +177,7 @@ export const CookieConsent: FC<
                             });
                             setIsVisible(false);
                             activateTrackingScripts();
+                            onClose && onClose();
                         },
                         additionalAcceptProps: {
                             ['data-gtm']: 'button-cookie-consent-accept',
