@@ -404,7 +404,6 @@ const Header: FC<{
         <Section
             addSeperation
             anchorId={anchorId}
-            // bgColor="image"
             bgColor={
                 isInverted
                     ? colors.sectionBg.dark

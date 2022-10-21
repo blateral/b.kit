@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import Grid, { getGridWidth } from 'components/base/Grid';
@@ -12,6 +12,8 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import IntroBlock from 'components/blocks/IntroBlock';
 import VideoBlock, { VideoAspectRatios } from 'components/blocks/VideoBlock';
 import { isValidArray } from 'utils/arrays';
+import { useObserverSupport } from 'utils/useObserverSupport';
+import useUpdateEffect from 'utils/useUpdateEffect';
 
 /**
  * calculate single grid col from relative content wrapper
@@ -238,11 +240,45 @@ const TeaserWide: FC<{
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+    const hasVideo = isValidArray(video?.urls, false);
 
-    const [isLoaded, setLoaded] = useState(false);
+    const viewRef = useRef<HTMLDivElement | null>(null);
+    const [isLoaded, setLoaded] = useState(!image?.small || false);
+    const [isVideoActive, setVideoActive] = useState<boolean>(false);
+    const isObserverSupported = useObserverSupport();
+
+    useUpdateEffect(() => {
+        if (!viewRef.current || !hasVideo) return;
+        if (!isObserverSupported) {
+            setVideoActive(true);
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries, observer) => {
+                const [entry] = entries;
+
+                if (entry.isIntersecting) {
+                    observer.unobserve(entry.target);
+                    setVideoActive(true);
+                }
+            },
+            {
+                rootMargin: '200px 0px 200px 0px',
+            }
+        );
+
+        const viewEl = viewRef.current;
+        observer.observe(viewEl);
+
+        return () => {
+            if (viewEl) observer.unobserve(viewEl);
+        };
+    }, [isObserverSupported]);
 
     return (
         <Section
+            ref={viewRef}
             anchorId={anchorId}
             bgColor={
                 isInverted
@@ -253,7 +289,7 @@ const TeaserWide: FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            {image && (!video || !isLoaded) && (
+            {image?.small && (!video || !isLoaded) && (
                 <WideImage
                     coverSpace
                     {...image}
@@ -261,9 +297,9 @@ const TeaserWide: FC<{
                     isInverted={isInverted}
                 />
             )}
-            {isValidArray(video?.urls, false) && (
+            {hasVideo && (
                 <WideVideo
-                    urls={video?.urls}
+                    urls={isVideoActive ? video?.urls : undefined}
                     muted
                     autoPlay
                     loop

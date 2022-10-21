@@ -125,20 +125,25 @@ const HeaderVideo: React.FC<{
     }, []);
 
     useUpdateEffect(() => {
-        if (!isVideoAllowed || !viewRef.current) return;
+        if (!isVideoAllowed || !videoUrl || !viewRef.current) return;
         if (!isObserverSupported) {
             setVideoActive(true);
             return;
         }
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            const [entry] = entries;
+        const observer = new IntersectionObserver(
+            (entries, observer) => {
+                const [entry] = entries;
 
-            if (entry.isIntersecting) {
-                observer.unobserve(entry.target);
-                setVideoActive(true);
+                if (entry.isIntersecting) {
+                    observer.unobserve(entry.target);
+                    setVideoActive(true);
+                }
+            },
+            {
+                rootMargin: '200px 0px 200px 0px',
             }
-        });
+        );
 
         const viewEl = viewRef.current;
         observer.observe(viewEl);

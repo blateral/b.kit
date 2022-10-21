@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { concat } from 'utils/concat';
 import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
@@ -171,7 +171,7 @@ const Back = styled.div<{
 
 export type SectionType = 'header' | 'footer' | 'div';
 
-const Section: React.FC<{
+export interface SectionProps {
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
@@ -189,63 +189,78 @@ const Section: React.FC<{
 
     /** Allow stack feature for reduced section spacing to following section */
     isStackable?: boolean;
+}
 
-    className?: string;
-    children?: React.ReactNode;
-}> = ({
-    anchorId,
-    renderAs,
-    bgColor,
-    bgMode,
-    addSeperation = false,
-    isStackable = false,
-    className,
-    children,
-}) => {
-    switch (bgMode) {
-        case 'larger-left':
-            bgMode = 'larger-left';
-            break;
-        case 'larger-right':
-            bgMode = 'larger-right';
-            break;
-        case 'inverted':
-            bgMode = 'inverted';
-            break;
-        case 'full':
-            bgMode = 'full';
-            break;
-        default:
-            bgMode = undefined;
+const Section = forwardRef<
+    HTMLElement,
+    SectionProps & {
+        className?: string;
+        children?: React.ReactNode;
     }
+>(
+    (
+        {
+            anchorId,
+            renderAs,
+            bgColor,
+            bgMode,
+            addSeperation = false,
+            isStackable = false,
+            className,
+            children,
+        },
+        ref
+    ) => {
+        switch (bgMode) {
+            case 'larger-left':
+                bgMode = 'larger-left';
+                break;
+            case 'larger-right':
+                bgMode = 'larger-right';
+                break;
+            case 'inverted':
+                bgMode = 'inverted';
+                break;
+            case 'full':
+                bgMode = 'full';
+                break;
+            default:
+                bgMode = undefined;
+        }
 
-    const noPadIdent = addSeperation ? '' : 'nopad';
-    const ident =
-        bgColor && bgMode
-            ? concat([`${bgMode}__${bgColor}`, noPadIdent], '--')
-            : 'transparent';
+        const noPadIdent = addSeperation ? '' : 'nopad';
+        const ident =
+            bgColor && bgMode
+                ? concat([`${bgMode}__${bgColor}`, noPadIdent], '--')
+                : 'transparent';
 
-    return (
-        <View
-            id={anchorId || undefined}
-            as={renderAs}
-            data-bg-ident={ident}
-            bgIdent={ident}
-            bgColor={bgColor || ''}
-            addSeperation={
-                !renderAs || (renderAs && renderAs !== 'div')
-                    ? addSeperation
-                    : false
-            }
-            isStackable={isStackable}
-            data-stack-ident={isStackable ? 'true' : 'false'}
-            className={className}
-        >
-            {bgColor && bgMode && <Back bgColor={bgColor} bgMode={bgMode} />}
-            {children}
-        </View>
-    );
-};
+        return (
+            <View
+                ref={ref}
+                id={anchorId || undefined}
+                as={renderAs}
+                data-bg-ident={ident}
+                bgIdent={ident}
+                bgColor={bgColor || ''}
+                addSeperation={
+                    !renderAs || (renderAs && renderAs !== 'div')
+                        ? addSeperation
+                        : false
+                }
+                isStackable={isStackable}
+                data-stack-ident={isStackable ? 'true' : 'false'}
+                className={className}
+            >
+                {bgColor && bgMode && (
+                    <Back bgColor={bgColor} bgMode={bgMode} />
+                )}
+                {children}
+            </View>
+        );
+    }
+);
+
+Section.displayName = 'Section';
 
 export default Section;
 

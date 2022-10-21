@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import Grid from 'components/base/Grid';
@@ -18,6 +18,8 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import IntroBlock from 'components/blocks/IntroBlock';
 import VideoBlock, { VideoAspectRatios } from 'components/blocks/VideoBlock';
 import { isValidArray } from 'utils/arrays';
+import { useObserverSupport } from 'utils/useObserverSupport';
+import useUpdateEffect from 'utils/useUpdateEffect';
 
 const Figure = styled.figure`
     display: flex;
@@ -153,7 +155,41 @@ const Teaser: FC<{
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted' || bgMode === 'inverted-splitted';
     const isSplitted = bgMode === 'splitted' || bgMode === 'inverted-splitted';
-    const [isLoaded, setLoaded] = useState(false);
+    const hasVideo = isValidArray(video?.urls, false);
+
+    const viewRef = useRef<HTMLDivElement | null>(null);
+    const [isLoaded, setLoaded] = useState(!image?.small || false);
+    const [isVideoActive, setVideoActive] = useState<boolean>(false);
+    const isObserverSupported = useObserverSupport();
+
+    useUpdateEffect(() => {
+        if (!viewRef.current || !hasVideo) return;
+        if (!isObserverSupported) {
+            setVideoActive(true);
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries, observer) => {
+                const [entry] = entries;
+
+                if (entry.isIntersecting) {
+                    observer.unobserve(entry.target);
+                    setVideoActive(true);
+                }
+            },
+            {
+                rootMargin: '200px 0px 200px 0px',
+            }
+        );
+
+        const viewEl = viewRef.current;
+        observer.observe(viewEl);
+
+        return () => {
+            if (viewEl) observer.unobserve(viewEl);
+        };
+    }, [isObserverSupported]);
 
     return (
         <Section
@@ -180,8 +216,8 @@ const Teaser: FC<{
                             move: (isMirrored ? 5 : 0) / 12,
                         }}
                     >
-                        {(image?.small || isValidArray(video?.urls, false)) && (
-                            <Figure>
+                        {(image?.small || hasVideo) && (
+                            <Figure ref={viewRef}>
                                 {image?.small && (!video || !isLoaded) && (
                                     <StyledImage
                                         {...image}
@@ -189,15 +225,20 @@ const Teaser: FC<{
                                         coverSpace
                                     />
                                 )}
-                                {isValidArray(video?.urls, false) && (
+                                {hasVideo && (
                                     <Video
-                                        urls={video?.urls}
+                                        urls={
+                                            isVideoActive
+                                                ? video?.urls
+                                                : undefined
+                                        }
                                         muted
                                         autoPlay
                                         loop
                                         onCanPlayThrough={() => setLoaded(true)}
                                         ratios={video?.aspectRatios}
                                         isVisible={isLoaded}
+                                        isInverted={isInverted}
                                     />
                                 )}
                                 {description && (
