@@ -237,7 +237,7 @@ const Overlay = styled.div<{ bgValue?: string }>`
     bottom: 0;
     left: 0;
     background: ${({ bgValue }) => bgValue && bgValue};
-    z-index: 1;
+    z-index: 2;
 
     @media ${mq.medium} {
         display: block;

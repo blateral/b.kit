@@ -63,6 +63,7 @@ export { getLinkIcon } from 'utils/getLinkIcon';
 export { default as useLeafletMap } from 'utils/useLeafletMap';
 export { default as useParams } from 'utils/useParams';
 export { default as useGeolocation } from 'utils/useGeolocation';
+export { useObserverSupport } from 'utils/useObserverSupport';
 export * from 'utils/urlParams';
 export * from 'utils/dataURI';
 
@@ -163,6 +164,9 @@ export { default as Tag } from 'components/blocks/Tag';
 export { default as POIFacts } from 'components/blocks/POIFacts';
 export { default as POICard } from 'components/blocks/POICard';
 export { default as InfoList } from 'components/blocks/InfoList';
+export { default as HeaderPoster } from 'components/sections/header/HeaderPoster';
+export { default as HeaderVideo } from 'components/sections/header/HeaderVideo';
+export { default as HeaderKenBurns } from 'components/sections/header/HeaderKenBurns';
 
 export {
     default as CookieConsent,
@@ -177,6 +181,7 @@ export {
     default as Navigation,
     getFullNavbarHeights,
     getNavbarState,
+    generateNavbarIdent,
 } from 'components/sections/navigation/Navigation';
 export * as NavPartials from 'components/sections/navigation/partials/index';
 export * as NavSkeletons from 'components/sections/navigation/skeletons/index';

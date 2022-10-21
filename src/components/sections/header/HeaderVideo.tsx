@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 import { useState, useEffect } from 'react';
@@ -6,19 +6,13 @@ import Image from 'components/blocks/Image';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { HeaderFocus, HeaderImage } from './Header';
 import { mq, spacings } from 'utils/styles';
+import { useObserverSupport } from 'utils/useObserverSupport';
+import useUpdateEffect from 'utils/useUpdateEffect';
 
 const PosterView = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-
-    /* required to align items at flex-end in ie11 */
-    /* &:before {
-        content: '';
-        min-height: 200px;
-        display: block;
-        flex: 1 0 0px;
-    } */
 `;
 
 const PlaceholderImg = styled(Image)<{ focus?: HeaderFocus }>`
@@ -99,7 +93,12 @@ const HeaderVideo: React.FC<{
     className,
     children,
 }) => {
-    const [isLoaded, setLoaded] = useState<boolean>(false);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+    const viewRef = useRef<HTMLDivElement | null>(null);
+    const [isLoaded, setLoaded] = useState<boolean>(
+        !placeholderImg?.small || false
+    );
+    const isObserverSupported = useObserverSupport();
     const currentMq = useMediaQuery([
         'small',
         'medium',
@@ -111,12 +110,46 @@ const HeaderVideo: React.FC<{
     const isMobile = currentMq === undefined || currentMq === 'small';
     const isVideoAllowed = loadOnMobile || !isMobile;
 
+    const [isVideoActive, setVideoActive] = useState<boolean>(false);
+
     useEffect(() => {
         if (!isVideoAllowed) setLoaded(false);
     }, [isMobile, isVideoAllowed, loadOnMobile]);
 
+    useEffect(() => {
+        if (!videoRef.current) return;
+
+        if (videoRef.current.readyState > 3) {
+            setLoaded(true);
+        }
+    }, []);
+
+    useUpdateEffect(() => {
+        if (!isVideoAllowed || !viewRef.current) return;
+        if (!isObserverSupported) {
+            setVideoActive(true);
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            const [entry] = entries;
+
+            if (entry.isIntersecting) {
+                observer.unobserve(entry.target);
+                setVideoActive(true);
+            }
+        });
+
+        const viewEl = viewRef.current;
+        observer.observe(viewEl);
+
+        return () => {
+            if (viewEl) observer.unobserve(viewEl);
+        };
+    }, [isObserverSupported, isVideoAllowed]);
+
     return (
-        <PosterView className={className}>
+        <PosterView ref={viewRef} className={className}>
             {placeholderImg?.small && !isLoaded && (
                 <PlaceholderImg
                     {...placeholderImg}
@@ -128,13 +161,16 @@ const HeaderVideo: React.FC<{
             )}
             {videoUrl && isVideoAllowed && (
                 <AutoplayVideo
+                    ref={videoRef}
                     isVisible={isLoaded}
-                    src={videoUrl}
+                    src={isVideoActive ? videoUrl : undefined}
                     muted
                     autoPlay
                     loop
                     playsInline
-                    onCanPlayThrough={() => setLoaded(true)}
+                    onCanPlayThrough={() => {
+                        setLoaded(true);
+                    }}
                     focus={focus}
                 />
             )}
