@@ -66,6 +66,7 @@ const View = styled(BaseStyles)`
     line-height: ${({ type, theme }) => font(theme)[type].lineHeight};
     letter-spacing: ${({ type, theme }) => font(theme)[type].letterSpacing};
     text-transform: ${({ type, theme }) => font(theme)[type].textTransform};
+    max-width: -webkit-fill-available;
 `;
 
 export type HeadlineTag =
