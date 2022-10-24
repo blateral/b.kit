@@ -39,6 +39,7 @@ const TopControls = styled.div`
         [spacings.spacer * 0.5, spacings.spacer * 1.5],
         'margin-bottom'
     )};
+    margin-top: ${spacings.nudge}px;
 
     @media ${mq.semilarge} {
         display: flex;
