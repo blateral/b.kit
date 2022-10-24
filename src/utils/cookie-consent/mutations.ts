@@ -26,10 +26,18 @@ export const bindConsentButtons = (callback: () => void) => {
     }
 };
 
-export const activateTrackingScripts = () => {
-    const scriptElements = document.querySelectorAll(
-        "script[type='text/consent_banner_script'], script[type='text/cookie-consent-script']"
-    );
+export const activateTrackingScripts = (scriptTypeSelectors: string[] = []) => {
+    // const scriptElements = document.querySelectorAll(
+    //     "script[type='text/consent_banner_script'], script[type='text/cookie-consent-script']"
+    // );
+    const scriptElements = scriptTypeSelectors
+        ? document.querySelectorAll(
+              scriptTypeSelectors
+                  .filter((selector) => selector)
+                  .map((selector) => `script[type='text/${selector}']`)
+                  .join(', ')
+          )
+        : [];
 
     let i = scriptElements.length;
     const newScriptElements: HTMLScriptElement[] = [];

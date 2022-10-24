@@ -25,7 +25,10 @@ const Label = styled(Copy)`
     }
 `;
 
-const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
+const CheckboxContainer = styled.div<{
+    isDisabled?: boolean;
+    isInverted?: boolean;
+}>`
     color: ${({ theme }) => color(theme).text.inverted};
     cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
     pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
@@ -33,7 +36,13 @@ const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
     border: 2px solid transparent;
 
     &:focus-within {
-        outline: 1px solid ${({ theme }) => color(theme).primary.default};
+        outline: 1px solid
+            ${({ theme, isInverted, isDisabled }) =>
+                isDisabled
+                    ? 'transparent'
+                    : isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
         outline-offset: 0;
     }
 `;
@@ -47,6 +56,7 @@ const Original = styled.input`
 const Box = styled.span<{
     isSelected?: boolean;
     isInverted?: boolean;
+    isDisabled?: boolean;
 }>`
     width: 20px;
     min-width: 20px;
@@ -55,15 +65,35 @@ const Box = styled.span<{
     position: relative;
 
     border: 2px solid
-        ${({ isInverted, theme, isSelected }) =>
-            isSelected
-                ? color(theme).primary.default
-                : isInverted
+        ${({ isSelected, isDisabled, isInverted, theme }) => {
+            if (isDisabled) {
+                return isInverted
+                    ? color(theme).text.subtileInverted
+                    : color(theme).text.subtile;
+            }
+            if (isSelected) {
+                return isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default;
+            }
+            return isInverted
                 ? color(theme).elementBg.light
-                : color(theme).elementBg.medium};
+                : color(theme).elementBg.medium;
+        }};
 
-    background-color: ${({ isSelected, theme }) =>
-        isSelected ? color(theme).primary.default : 'transparent'};
+    background-color: ${({ isSelected, isDisabled, isInverted, theme }) => {
+        if (isDisabled) {
+            return isInverted
+                ? color(theme).text.subtileInverted
+                : color(theme).text.subtile;
+        }
+        if (isSelected) {
+            return isInverted
+                ? color(theme).primary.inverted
+                : color(theme).primary.default;
+        }
+        return 'transparent';
+    }};
 `;
 
 const StyledCheck = styled(Check)`
@@ -109,8 +139,16 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
     return (
         <View>
-            <CheckboxContainer isDisabled={isDisabled} onClick={onClick}>
-                <Box isSelected={isSelected} isInverted={isInverted}>
+            <CheckboxContainer
+                isDisabled={isDisabled}
+                isInverted={isInverted}
+                onClick={onClick}
+            >
+                <Box
+                    isSelected={isSelected}
+                    isInverted={isInverted}
+                    isDisabled={isDisabled}
+                >
                     {isSelected && <StyledCheck />}
                 </Box>
                 <Original
@@ -129,7 +167,13 @@ const Checkbox: React.FC<CheckboxProps> = ({
                     size="small"
                     type="copy-b"
                     isInverted={isInverted}
-                    textColor={isDisabled ? colors.text.inverted : undefined}
+                    textColor={
+                        isDisabled
+                            ? isInverted
+                                ? colors.text.subtileInverted
+                                : colors.text.subtile
+                            : undefined
+                    }
                     innerHTML={`${label}${isRequired ? '<span> *</span>' : ''}`}
                 />
             )}
