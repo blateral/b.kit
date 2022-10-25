@@ -1,6 +1,6 @@
-import { CookieConsentData } from 'components/blocks/CookieConsent';
 import { Cookie } from './cookie';
 import StatusFormatter from '../statusFormatter';
+import { CookieConsentData } from './useCookieConsent';
 
 export const isUrlInWhitelist = (
     urlString: string,
@@ -30,13 +30,13 @@ export const activateTrackingScripts = (scriptTypeSelectors: string[] = []) => {
     // const scriptElements = document.querySelectorAll(
     //     "script[type='text/consent_banner_script'], script[type='text/cookie-consent-script']"
     // );
-    const scriptElements = scriptTypeSelectors
-        ? document.querySelectorAll(
-              scriptTypeSelectors
-                  .filter((selector) => selector)
-                  .map((selector) => `script[type='text/${selector}']`)
-                  .join(', ')
-          )
+    const selectors = scriptTypeSelectors
+        .filter((selector) => selector)
+        .map((selector) => `script[type='text/${selector}']`)
+        .join(', ');
+
+    const scriptElements = selectors
+        ? document.querySelectorAll(selectors)
         : [];
 
     let i = scriptElements.length;
@@ -99,5 +99,17 @@ export const updateConsentStatusElements = ({
 
     for (let i = 0, len = allConsentStatusElements.length; i < len; i++) {
         allConsentStatusElements[i].innerHTML = formatter.getFormattedStatus();
+    }
+};
+
+export const updateConsentStatus = (content: string) => {
+    if (!content) return;
+
+    const statusElements = document.querySelectorAll(
+        '[data-consent-status], .cookie-consent-status'
+    );
+
+    for (let i = 0, len = statusElements.length; i < len; i++) {
+        statusElements[i].innerHTML = content;
     }
 };

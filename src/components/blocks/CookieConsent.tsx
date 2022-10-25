@@ -1,17 +1,22 @@
+import Check from 'components/base/icons/Check';
+import Cross from 'components/base/icons/Cross';
 import Actions from 'components/blocks/Actions';
 import Checkbox from 'components/fields/Checkbox';
 import Copy from 'components/typography/Copy';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Cookie, getCookie, setCookie } from 'utils/cookie-consent/cookie';
 import {
-    activateTrackingScripts,
     bindConsentButtons,
     isUrlInWhitelist,
-    updateConsentStatusElements,
 } from 'utils/cookie-consent/mutations';
+import useCookieConsent, {
+    CookieConsentSettings,
+    CookieTypes,
+} from 'utils/cookie-consent/useCookieConsent';
 import { LibThemeProvider, ThemeMods } from 'utils/LibThemeProvider';
+import StatusFormatter from 'utils/statusFormatter';
 import { getColors as color, mq, spacings } from 'utils/styles';
+import useMounted from 'utils/useMounted';
 
 const Stage = styled.div<{ zIndex?: number; bgOpacity?: number }>`
     position: fixed;
@@ -25,10 +30,10 @@ const Stage = styled.div<{ zIndex?: number; bgOpacity?: number }>`
 
 const View = styled.div`
     box-sizing: border-box;
-    max-width: 850px;
+    max-width: 900px;
     width: 100vw;
     max-height: 100vh;
-    padding: ${spacings.spacer}px ${spacings.spacer * 1.5}px;
+    padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
     position: fixed;
     bottom: 0;
     left: 50%;
@@ -37,6 +42,7 @@ const View = styled.div`
 
     background-color: ${({ theme }) => color(theme).elementBg.light};
     box-shadow: 0 2px 44px rgba(0, 0, 0, 0.3);
+    overflow: auto;
 
     & > * + * {
         margin-top: ${spacings.spacer}px;
@@ -51,11 +57,30 @@ const View = styled.div`
     }
 `;
 
+const Status = styled(Copy)`
+    li > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+`;
+
+const AcceptIcon = styled(Check)`
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+`;
+
+const DeclineIcon = styled(Cross)`
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+`;
+
 type RenderProps = {
     types: CookieTypes;
-    handleAcceptAll: () => void;
-    handleAcceptSelection: () => void;
-    toggleTypeConsent: (typeName: keyof CookieTypes) => void;
+    acceptAll: () => void;
+    acceptSelected: () => void;
+    declineAll: () => void;
+    setConsent: (type: keyof CookieTypes, isAccepted?: boolean) => void;
     additionalDeclineProps: {
         ['data-gtm']: string;
     };
@@ -64,181 +89,104 @@ type RenderProps = {
     };
 };
 
-export interface CookieType {
-    label: string;
-    isAccepted: boolean;
-    isEditable: boolean;
-}
-
-export interface CookieTypes {
-    [key: string]: CookieType;
-}
-
-export interface CookieConsentData {
-    types: CookieTypes;
-    updatedAt: number;
-}
-
-export interface CookieConsentProps {
-    cookieName?: string;
-    initialCookieTypes?: CookieTypes;
-
-    /** URL's that should be excluded from consent */
-    urlWhitelist?: string[];
-    consentAcceptStatusMsg?: string;
-    consentDeclineStatusMsg?: string;
-    noCookieStatusMsg?: string;
-    dateFormat?: string;
-    timeFormat?: string;
-    lifetime?: number;
-    localeKey?: 'de' | 'en';
-    zIndex?: number;
-    overlayOpacity?: number;
-
-    onClose?: () => void;
-}
-
 export const CookieConsent: FC<
-    CookieConsentProps & {
+    CookieConsentSettings & {
+        /** URL's that should be excluded from consent */
+        urlWhitelist?: string[];
+        zIndex?: number;
+        overlayOpacity?: number;
+        consentStatusMsg?: string;
+        dateFormat?: string;
+        timeFormat?: string;
+        localeKey?: 'de' | 'en';
+        status?: (props: {
+            updatedAt: number;
+            state: CookieTypes;
+        }) => React.ReactElement;
         className?: string;
         children?: (props: RenderProps) => React.ReactElement;
         theme?: ThemeMods;
     }
 > = ({
-    cookieName = 'cookie-consent-v2',
-    initialCookieTypes,
-    urlWhitelist,
-    consentAcceptStatusMsg = 'Akzeptiert am <DATE> um <TIME> Uhr',
-    consentDeclineStatusMsg = 'Abgelehnt am <DATE> um <TIME> Uhr',
-    noCookieStatusMsg = '-',
-    dateFormat = 'dd.mm.yy',
-    timeFormat = 'hh:mm',
-    lifetime = 365,
-    localeKey = 'de',
+    /** URL's that should be excluded from consent */
+    urlWhitelist = [],
     zIndex,
     overlayOpacity = 0.4,
-    onClose,
+    consentStatusMsg = 'Cookie updated on <DATE> at <TIME>',
+    dateFormat = 'dd/mm/yy',
+    timeFormat = 'hh:mm AP',
+    localeKey = 'en',
+    status,
     className,
     children,
     theme,
+    ...rest
 }) => {
-    const [isVisible, setIsVisible] = useState(false);
+    const statusRenderer = useCallback(
+        (props: { updatedAt: number; state: CookieTypes }) => {
+            const formatter = new StatusFormatter(
+                props.updatedAt,
+                consentStatusMsg,
+                dateFormat,
+                timeFormat,
+                localeKey
+            );
+            const typeKeys: string[] = Object.keys(props.state);
+            const types: CookieTypes = props.state;
 
-    const types: CookieTypes = {
-        essentials: {
-            isEditable: false,
-            isAccepted: true,
-            label: 'Essentielle Funktionen',
+            return (
+                <Status renderAs="span">
+                    <span>{formatter.getFormattedStatus()}</span>
+                    <ul>
+                        {typeKeys?.map((type, i) => (
+                            <li key={i}>
+                                <span>{types[type].label}</span>
+                                {types[type].isAccepted ? (
+                                    <AcceptIcon />
+                                ) : (
+                                    <DeclineIcon />
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </Status>
+            );
         },
-        ...initialCookieTypes,
-    };
-    const [cookieTypes, setCookieTypes] = useState<CookieTypes>(types);
+        [consentStatusMsg, dateFormat, localeKey, timeFormat]
+    );
+
+    const [isVisible, setIsVisible] = useState(false);
+    const {
+        getCookieValue,
+        cookieTypes,
+        acceptAll,
+        acceptSelected,
+        declineAll,
+        setConsent,
+    } = useCookieConsent(
+        rest,
+        () => setIsVisible(false),
+        status || statusRenderer
+    );
+    const isMounted = useMounted();
 
     useEffect(() => {
+        if (isMounted) return;
+
+        // bind buttons to open consent
         bindConsentButtons(() => setIsVisible(true));
 
-        const cookie = getCookie(cookieName) as Cookie<CookieConsentData>;
+        // check if consent banner should be open
         const isInWhitelist = isUrlInWhitelist(
             window.location.pathname,
             urlWhitelist
         );
-
-        if (!isInWhitelist) setIsVisible(!cookie);
-        if (cookie && cookie.data.types) {
-            setCookieTypes(cookie.data.types);
-            handleScriptActivation(cookie.data.types);
-        }
-    }, [cookieName, urlWhitelist]);
+        if (!isInWhitelist) setIsVisible(!getCookieValue());
+    }, [getCookieValue, isMounted, urlWhitelist]);
 
     useEffect(() => {
-        const cookie = getCookie(cookieName) as Cookie<CookieConsentData>;
-
-        // const str = !cookie
-        //     ? noCookieStatusMsg
-        //     : cookie.data.consent
-        //     ? consentAcceptStatusMsg
-        //     : consentDeclineStatusMsg;
-
-        updateConsentStatusElements({
-            cookie,
-            status: '-',
-            dateFormat,
-            timeFormat,
-            localeKey,
-        });
-    }, [
-        consentAcceptStatusMsg,
-        consentDeclineStatusMsg,
-        cookieName,
-        dateFormat,
-        isVisible,
-        localeKey,
-        noCookieStatusMsg,
-        timeFormat,
-    ]);
-
-    const handleScriptActivation = (types: CookieTypes) => {
-        if (!types) return;
-
-        // activate scripts from cookie types
-        const acceptedKeys = Object.keys(types).filter(
-            (key) => types[key].isAccepted
-        );
-        activateTrackingScripts(
-            acceptedKeys.map((key) => `cookie-consent-script-${key}`)
-        );
-    };
-
-    const handleAcceptAll = () => {
-        console.log('Accept all');
-        setCookieTypes((prev) => {
-            const types = { ...prev };
-            for (const key in types) {
-                types[key].isAccepted = true;
-            }
-
-            setCookie<CookieConsentData>({
-                name: cookieName,
-                data: {
-                    types,
-                    updatedAt: new Date().getTime(),
-                },
-                days: lifetime,
-            });
-
-            handleScriptActivation(types);
-            return types;
-        });
-
-        setIsVisible(false);
-        onClose?.();
-    };
-
-    const handleAcceptSelection = () => {
-        console.log('Accept selection');
-        setCookie<CookieConsentData>({
-            name: cookieName,
-            data: {
-                types: cookieTypes,
-                updatedAt: new Date().getTime(),
-            },
-            days: lifetime,
-        });
-
-        handleScriptActivation(cookieTypes);
-        setIsVisible(false);
-        onClose?.();
-    };
-
-    const toggleTypeConsent = (typeName: keyof CookieTypes) => {
-        setCookieTypes((prev) => {
-            const type = { ...prev };
-            if (!type[typeName] || !type[typeName].isEditable) return type;
-            type[typeName].isAccepted = !type[typeName].isAccepted;
-
-            return type;
-        });
-    };
+        document.body.style.overflow = isVisible ? 'hidden' : 'visible';
+    }, [isVisible]);
 
     if (!isVisible) return null;
     return (
@@ -247,9 +195,10 @@ export const CookieConsent: FC<
                 <View className={className}>
                     {children?.({
                         types: cookieTypes,
-                        handleAcceptAll,
-                        handleAcceptSelection,
-                        toggleTypeConsent,
+                        acceptAll,
+                        acceptSelected,
+                        setConsent,
+                        declineAll,
                         additionalAcceptProps: {
                             ['data-gtm']: 'button-cookie-consent-accept',
                         },
@@ -270,22 +219,25 @@ export const CookieIcon = styled.img`
 `;
 
 /** Example Cookie title */
-const TitleView = styled(Copy)`
-    max-width: 670px;
-    margin-left: auto;
+const TitleView = styled(Copy)<{ isCentered?: boolean }>`
+    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+    margin-left: ${({ isCentered }) => (isCentered ? 'auto' : '0')};
     margin-right: auto;
+    max-width: 670px;
 `;
 
 export const CookieTitle: FC<{
+    isCentered?: boolean;
     innerHTML?: string;
     className?: string;
     children?: React.ReactNode;
-}> = ({ innerHTML, className, children }) => {
+}> = ({ isCentered, innerHTML, className, children }) => {
     return (
         <TitleView
             size="big"
             type="copy-b"
             innerHTML={innerHTML}
+            isCentered={isCentered}
             className={className}
         >
             {children}
@@ -294,26 +246,28 @@ export const CookieTitle: FC<{
 };
 
 /** Example Cookie title */
-const TextView = styled(Copy)`
-    max-width: 670px;
-    margin-left: auto;
-    margin-right: auto;
+const TextView = styled(Copy)<{ isCentered?: boolean }>`
+    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
 `;
 
 export const CookieText: FC<{
+    isCentered?: boolean;
     innerHTML?: string;
     className?: string;
     children?: React.ReactNode;
-}> = ({ innerHTML, className, children }) => {
+}> = ({ isCentered, innerHTML, className, children }) => {
     return (
-        <TextView innerHTML={innerHTML} className={className}>
+        <TextView
+            isCentered={isCentered}
+            innerHTML={innerHTML}
+            className={className}
+        >
             {children}
         </TextView>
     );
 };
 
 const SelectView = styled.div`
-    max-width: 670px;
     margin-left: auto;
     margin-right: auto;
 
@@ -324,8 +278,8 @@ const SelectView = styled.div`
 
 export const CookieTypeSelect: FC<{
     types: CookieTypes;
-    toggleTypeConsent: (typeName: keyof CookieTypes) => void;
-}> = ({ types, toggleTypeConsent }) => (
+    setConsent: (typeName: keyof CookieTypes, isAccepted?: boolean) => void;
+}> = ({ types, setConsent }) => (
     <SelectView>
         {types &&
             Object.keys(types).map((key) => (
@@ -334,7 +288,7 @@ export const CookieTypeSelect: FC<{
                     label={types[key].label}
                     isSelected={types[key].isAccepted}
                     isDisabled={!types[key].isEditable}
-                    onChange={() => toggleTypeConsent(key)}
+                    onChange={() => setConsent(key)}
                 />
             ))}
     </SelectView>
@@ -342,7 +296,6 @@ export const CookieTypeSelect: FC<{
 
 /** Example Cookie actions */
 export const CookieActions = styled(Actions)`
-    max-width: 670px;
     margin-top: ${spacings.spacer * 1.5}px;
 `;
 

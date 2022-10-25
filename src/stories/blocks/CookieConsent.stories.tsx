@@ -25,16 +25,13 @@ export default {
 
 export const WithIcon: Story = () => (
     <div>
-        <script type="text/cookie-consent-script">
-            {`console.log('b.ig brother is watching you! 👀');`}
-        </script>
         <button data-consent-button>Open consent banner</button>
         <div data-consent-status></div>
         <CookieConsent>
             {() => (
-                <>
+                <React.Fragment>
                     <CookieIcon src={cookieImg} alt="logo" />
-                </>
+                </React.Fragment>
             )}
         </CookieConsent>
     </div>
@@ -42,17 +39,17 @@ export const WithIcon: Story = () => (
 
 export const WithTitle: Story = () => (
     <div>
-        <script type="text/cookie-consent-script">
-            {`console.log('b.ig brother is watching you! 👀');`}
-        </script>
         <button data-consent-button>Open consent banner</button>
         <div data-consent-status></div>
         <CookieConsent>
             {() => (
-                <>
+                <React.Fragment>
                     <CookieIcon src={cookieImg} alt="logo" />
-                    <CookieTitle innerHTML="Verwendung von Cookies für Analysezwecke" />
-                </>
+                    <CookieTitle
+                        isCentered
+                        innerHTML="Verwendung von Cookies für Analysezwecke"
+                    />
+                </React.Fragment>
             )}
         </CookieConsent>
     </div>
@@ -60,41 +57,21 @@ export const WithTitle: Story = () => (
 
 export const WithText: Story = () => (
     <div>
-        <script type="text/cookie-consent-script">
-            {`console.log('b.ig brother is watching you! 👀');`}
-        </script>
         <button data-consent-button>Open consent banner</button>
         <div data-consent-status></div>
         <CookieConsent>
             {() => (
-                <>
+                <React.Fragment>
                     <CookieIcon src={cookieImg} alt="logo" />
-                    <CookieTitle innerHTML="Verwendung von Cookies für Analysezwecke" />
-                    <CookieText innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>' />
-                </>
-            )}
-        </CookieConsent>
-    </div>
-);
-
-export const WithSelect: Story = () => (
-    <div>
-        <script type="text/cookie-consent-script">
-            {`console.log('b.ig brother is watching you! 👀');`}
-        </script>
-        <button data-consent-button>Open consent banner</button>
-        <div data-consent-status></div>
-        <CookieConsent>
-            {({ types, toggleTypeConsent }) => (
-                <>
-                    <CookieIcon src={cookieImg} alt="logo" />
-                    <CookieTitle innerHTML="Verwendung von Cookies für Analysezwecke" />
-                    <CookieText innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>' />
-                    <CookieTypeSelect
-                        types={types}
-                        toggleTypeConsent={toggleTypeConsent}
+                    <CookieTitle
+                        isCentered
+                        innerHTML="Verwendung von Cookies für Analysezwecke"
                     />
-                </>
+                    <CookieText
+                        isCentered
+                        innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>'
+                    />
+                </React.Fragment>
             )}
         </CookieConsent>
     </div>
@@ -102,51 +79,47 @@ export const WithSelect: Story = () => (
 
 export const WithActions: Story = () => (
     <div>
-        <script type="text/cookie-consent-script">
-            {`console.log('b.ig brother is watching you! 👀');`}
-        </script>
         <button data-consent-button>Open consent banner</button>
         <div data-consent-status></div>
         <CookieConsent>
             {({
-                handleAcceptAll,
-                handleAcceptSelection,
+                acceptAll,
+                declineAll,
                 additionalAcceptProps,
                 additionalDeclineProps,
-                types,
-                toggleTypeConsent,
             }) => (
-                <>
+                <React.Fragment>
                     <CookieIcon src={cookieImg} alt="logo" />
-                    <CookieTitle innerHTML="Verwendung von Cookies für Analysezwecke" />
-                    <CookieText innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>' />
-                    <CookieTypeSelect
-                        types={types}
-                        toggleTypeConsent={toggleTypeConsent}
+                    <CookieTitle
+                        isCentered
+                        innerHTML="Verwendung von Cookies für Analysezwecke"
+                    />
+                    <CookieText
+                        isCentered
+                        innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>'
                     />
                     <CookieActions
+                        isMirrored
                         primary={
                             <Button.View
                                 {...additionalAcceptProps}
-                                onClick={handleAcceptAll}
+                                onClick={acceptAll}
                             >
-                                <Button.Label>
-                                    Alle Cookies erlauben
-                                </Button.Label>
+                                <Button.Label>Cookies zustimmen</Button.Label>
                             </Button.View>
                         }
                         secondary={
                             <ButtonGhost.View
                                 {...additionalDeclineProps}
-                                onClick={handleAcceptSelection}
+                                onClick={declineAll}
                             >
                                 <ButtonGhost.Label>
-                                    Auswahl übernehmen
+                                    Cookies ablehnen
                                 </ButtonGhost.Label>
                             </ButtonGhost.View>
                         }
                     />
-                </>
+                </React.Fragment>
             )}
         </CookieConsent>
     </div>
@@ -155,12 +128,84 @@ export const WithActions: Story = () => (
 export const WithCookieTypes: Story = () => (
     <div>
         <script type="text/cookie-consent-script-analytics">
-            {`console.log('b.ig brother is watching you! 👀');`}
+            {`console.log('b.ig brother is watching you!');`}
         </script>
         <button data-consent-button>Open consent banner</button>
         <div data-consent-status></div>
         <CookieConsent
             initialCookieTypes={{
+                essentials: {
+                    isAccepted: true,
+                    isEditable: false,
+                    label: 'Essentielle Funktionen',
+                },
+                analytics: {
+                    isAccepted: false,
+                    isEditable: true,
+                    label: 'Analyse & Marketing',
+                },
+            }}
+        >
+            {({
+                acceptAll,
+                declineAll,
+                additionalAcceptProps,
+                additionalDeclineProps,
+            }) => (
+                <React.Fragment>
+                    <CookieIcon src={cookieImg} alt="logo" />
+                    <CookieTitle
+                        isCentered
+                        innerHTML="Verwendung von Cookies für Analysezwecke"
+                    />
+                    <CookieText
+                        isCentered
+                        innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>'
+                    />
+                    <CookieActions
+                        isMirrored
+                        primary={
+                            <Button.View
+                                {...additionalAcceptProps}
+                                onClick={acceptAll}
+                            >
+                                <Button.Label>Cookies zustimmen</Button.Label>
+                            </Button.View>
+                        }
+                        secondary={
+                            <ButtonGhost.View
+                                {...additionalDeclineProps}
+                                onClick={declineAll}
+                            >
+                                <ButtonGhost.Label>
+                                    Cookies ablehnen
+                                </ButtonGhost.Label>
+                            </ButtonGhost.View>
+                        }
+                    />
+                </React.Fragment>
+            )}
+        </CookieConsent>
+    </div>
+);
+
+export const Advanced: Story = () => (
+    <div>
+        <script type="text/cookie-consent-script-analytics">
+            {`console.log('b.ig brother is watching you!');`}
+        </script>
+        <script type="text/cookie-consent-script-functionals">
+            {`console.log('b.unctional cookies enabled!');`}
+        </script>
+        <button data-consent-button>Open consent banner</button>
+        <div data-consent-status></div>
+        <CookieConsent
+            initialCookieTypes={{
+                essentials: {
+                    isAccepted: true,
+                    isEditable: false,
+                    label: 'Essentielle Funktionen',
+                },
                 analytics: {
                     isAccepted: false,
                     isEditable: true,
@@ -174,26 +219,28 @@ export const WithCookieTypes: Story = () => (
             }}
         >
             {({
-                handleAcceptAll,
-                handleAcceptSelection,
+                acceptAll,
+                acceptSelected,
                 additionalAcceptProps,
                 additionalDeclineProps,
                 types,
-                toggleTypeConsent,
+                setConsent,
             }) => (
-                <>
-                    <CookieIcon src={cookieImg} alt="logo" />
-                    <CookieTitle innerHTML="Verwendung von Cookies für Analysezwecke" />
-                    <CookieText innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>' />
-                    <CookieTypeSelect
-                        types={types}
-                        toggleTypeConsent={toggleTypeConsent}
+                <React.Fragment>
+                    <CookieTitle innerHTML="Verwendung von Cookies und Daten" />
+                    <CookieText innerHTML="Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind." />
+                    <CookieTypeSelect types={types} setConsent={setConsent} />
+                    <CookieText
+                        innerHTML={
+                            'Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>'
+                        }
                     />
                     <CookieActions
+                        isMirrored
                         primary={
                             <Button.View
                                 {...additionalAcceptProps}
-                                onClick={handleAcceptAll}
+                                onClick={acceptAll}
                             >
                                 <Button.Label>
                                     Alle Cookies erlauben
@@ -203,7 +250,7 @@ export const WithCookieTypes: Story = () => (
                         secondary={
                             <ButtonGhost.View
                                 {...additionalDeclineProps}
-                                onClick={handleAcceptSelection}
+                                onClick={acceptSelected}
                             >
                                 <ButtonGhost.Label>
                                     Auswahl übernehmen
@@ -211,7 +258,7 @@ export const WithCookieTypes: Story = () => (
                             </ButtonGhost.View>
                         }
                     />
-                </>
+                </React.Fragment>
             )}
         </CookieConsent>
     </div>
@@ -219,13 +266,21 @@ export const WithCookieTypes: Story = () => (
 
 export const CustomOverlayOpacity: Story = () => (
     <div>
-        <script type="text/cookie-consent-script">
-            {`console.log('b.ig brother is watching you! 👀');`}
+        <script type="text/cookie-consent-script-analytics">
+            {`console.log('b.ig brother is watching you!');`}
+        </script>
+        <script type="text/cookie-consent-script-functionals">
+            {`console.log('b.unctional cookies enabled!');`}
         </script>
         <button data-consent-button>Open consent banner</button>
         <div data-consent-status></div>
         <CookieConsent
             initialCookieTypes={{
+                essentials: {
+                    isAccepted: true,
+                    isEditable: false,
+                    label: 'Essentielle Funktionen',
+                },
                 analytics: {
                     isAccepted: false,
                     isEditable: true,
@@ -240,26 +295,28 @@ export const CustomOverlayOpacity: Story = () => (
             overlayOpacity={0.8}
         >
             {({
-                handleAcceptAll,
-                handleAcceptSelection,
+                acceptAll,
+                acceptSelected,
                 additionalAcceptProps,
                 additionalDeclineProps,
                 types,
-                toggleTypeConsent,
+                setConsent,
             }) => (
-                <>
-                    <CookieIcon src={cookieImg} alt="logo" />
-                    <CookieTitle innerHTML="Verwendung von Cookies für Analysezwecke" />
-                    <CookieText innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>' />
-                    <CookieTypeSelect
-                        types={types}
-                        toggleTypeConsent={toggleTypeConsent}
+                <React.Fragment>
+                    <CookieTitle innerHTML="Verwendung von Cookies und Daten" />
+                    <CookieText innerHTML="Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind." />
+                    <CookieTypeSelect types={types} setConsent={setConsent} />
+                    <CookieText
+                        innerHTML={
+                            'Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>'
+                        }
                     />
                     <CookieActions
+                        isMirrored
                         primary={
                             <Button.View
                                 {...additionalAcceptProps}
-                                onClick={handleAcceptAll}
+                                onClick={acceptAll}
                             >
                                 <Button.Label>
                                     Alle Cookies erlauben
@@ -269,7 +326,7 @@ export const CustomOverlayOpacity: Story = () => (
                         secondary={
                             <ButtonGhost.View
                                 {...additionalDeclineProps}
-                                onClick={handleAcceptSelection}
+                                onClick={acceptSelected}
                             >
                                 <ButtonGhost.Label>
                                     Auswahl übernehmen
@@ -277,7 +334,7 @@ export const CustomOverlayOpacity: Story = () => (
                             </ButtonGhost.View>
                         }
                     />
-                </>
+                </React.Fragment>
             )}
         </CookieConsent>
     </div>
@@ -285,13 +342,21 @@ export const CustomOverlayOpacity: Story = () => (
 
 export const WithWhitelist: Story = () => (
     <div>
-        <script type="text/cookie-consent-script">
-            {`console.log('b.ig brother is watching you! 👀');`}
+        <script type="text/cookie-consent-script-analytics">
+            {`console.log('b.ig brother is watching you!');`}
+        </script>
+        <script type="text/cookie-consent-script-functionals">
+            {`console.log('b.unctional cookies enabled!');`}
         </script>
         <button data-consent-button>Open consent banner</button>
         <div data-consent-status></div>
         <CookieConsent
             initialCookieTypes={{
+                essentials: {
+                    isAccepted: true,
+                    isEditable: false,
+                    label: 'Essentielle Funktionen',
+                },
                 analytics: {
                     isAccepted: false,
                     isEditable: true,
@@ -306,26 +371,28 @@ export const WithWhitelist: Story = () => (
             urlWhitelist={['/impressum', '/datenschutz']}
         >
             {({
-                handleAcceptAll,
-                handleAcceptSelection,
+                acceptAll,
+                acceptSelected,
                 additionalAcceptProps,
                 additionalDeclineProps,
                 types,
-                toggleTypeConsent,
+                setConsent,
             }) => (
-                <>
-                    <CookieIcon src={cookieImg} alt="logo" />
-                    <CookieTitle innerHTML="Verwendung von Cookies für Analysezwecke" />
-                    <CookieText innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>' />
-                    <CookieTypeSelect
-                        types={types}
-                        toggleTypeConsent={toggleTypeConsent}
+                <React.Fragment>
+                    <CookieTitle innerHTML="Verwendung von Cookies und Daten" />
+                    <CookieText innerHTML="Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind." />
+                    <CookieTypeSelect types={types} setConsent={setConsent} />
+                    <CookieText
+                        innerHTML={
+                            'Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>'
+                        }
                     />
                     <CookieActions
+                        isMirrored
                         primary={
                             <Button.View
                                 {...additionalAcceptProps}
-                                onClick={handleAcceptAll}
+                                onClick={acceptAll}
                             >
                                 <Button.Label>
                                     Alle Cookies erlauben
@@ -335,7 +402,7 @@ export const WithWhitelist: Story = () => (
                         secondary={
                             <ButtonGhost.View
                                 {...additionalDeclineProps}
-                                onClick={handleAcceptSelection}
+                                onClick={acceptSelected}
                             >
                                 <ButtonGhost.Label>
                                     Auswahl übernehmen
@@ -343,21 +410,29 @@ export const WithWhitelist: Story = () => (
                             </ButtonGhost.View>
                         }
                     />
-                </>
+                </React.Fragment>
             )}
         </CookieConsent>
     </div>
 );
 
-export const CustomStatusText: Story = () => (
+export const CustomStatusFormats: Story = () => (
     <div>
-        <script type="text/cookie-consent-script">
-            {`console.log('b.ig brother is watching you! 👀');`}
+        <script type="text/cookie-consent-script-analytics">
+            {`console.log('b.ig brother is watching you!');`}
+        </script>
+        <script type="text/cookie-consent-script-functionals">
+            {`console.log('b.unctional cookies enabled!');`}
         </script>
         <button data-consent-button>Open consent banner</button>
         <div data-consent-status></div>
         <CookieConsent
             initialCookieTypes={{
+                essentials: {
+                    isAccepted: true,
+                    isEditable: false,
+                    label: 'Essentielle Funktionen',
+                },
                 analytics: {
                     isAccepted: false,
                     isEditable: true,
@@ -369,33 +444,34 @@ export const CustomStatusText: Story = () => (
                     label: 'Funktionelle Erweiterungen',
                 },
             }}
-            consentAcceptStatusMsg="Accepted on %DATE% at %TIME%"
-            consentDeclineStatusMsg="Declined on %DATE% at %TIME%"
-            dateFormat="mm.dd.yy"
+            consentStatusMsg="Cookie aktualisiert am <DATE> um <TIME> Uhr"
+            dateFormat="dd.mm.yy"
             timeFormat="hh:mm"
-            localeKey="en"
+            localeKey="de"
         >
             {({
-                handleAcceptAll,
-                handleAcceptSelection,
+                acceptAll,
+                acceptSelected,
                 additionalAcceptProps,
                 additionalDeclineProps,
                 types,
-                toggleTypeConsent,
+                setConsent,
             }) => (
-                <>
-                    <CookieIcon src={cookieImg} alt="logo" />
-                    <CookieTitle innerHTML="Verwendung von Cookies für Analysezwecke" />
-                    <CookieText innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>' />
-                    <CookieTypeSelect
-                        types={types}
-                        toggleTypeConsent={toggleTypeConsent}
+                <React.Fragment>
+                    <CookieTitle innerHTML="Verwendung von Cookies und Daten" />
+                    <CookieText innerHTML="Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind." />
+                    <CookieTypeSelect types={types} setConsent={setConsent} />
+                    <CookieText
+                        innerHTML={
+                            'Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>'
+                        }
                     />
                     <CookieActions
+                        isMirrored
                         primary={
                             <Button.View
                                 {...additionalAcceptProps}
-                                onClick={handleAcceptAll}
+                                onClick={acceptAll}
                             >
                                 <Button.Label>
                                     Alle Cookies erlauben
@@ -405,7 +481,7 @@ export const CustomStatusText: Story = () => (
                         secondary={
                             <ButtonGhost.View
                                 {...additionalDeclineProps}
-                                onClick={handleAcceptSelection}
+                                onClick={acceptSelected}
                             >
                                 <ButtonGhost.Label>
                                     Auswahl übernehmen
@@ -413,7 +489,88 @@ export const CustomStatusText: Story = () => (
                             </ButtonGhost.View>
                         }
                     />
-                </>
+                </React.Fragment>
+            )}
+        </CookieConsent>
+    </div>
+);
+
+export const CustomStatus: Story = () => (
+    <div>
+        <script type="text/cookie-consent-script-analytics">
+            {`console.log('b.ig brother is watching you!');`}
+        </script>
+        <script type="text/cookie-consent-script-functionals">
+            {`console.log('b.unctional cookies enabled!');`}
+        </script>
+        <button data-consent-button>Open consent banner</button>
+        <div data-consent-status></div>
+        <CookieConsent
+            initialCookieTypes={{
+                essentials: {
+                    isAccepted: true,
+                    isEditable: false,
+                    label: 'Essentielle Funktionen',
+                },
+                analytics: {
+                    isAccepted: false,
+                    isEditable: true,
+                    label: 'Analyse & Marketing',
+                },
+                functionals: {
+                    isAccepted: false,
+                    isEditable: true,
+                    label: 'Funktionelle Erweiterungen',
+                },
+            }}
+            status={({ updatedAt }) => (
+                <div>
+                    Updated at:{' '}
+                    {updatedAt ? new Date(updatedAt).toISOString() : ''}
+                </div>
+            )}
+        >
+            {({
+                acceptAll,
+                acceptSelected,
+                additionalAcceptProps,
+                additionalDeclineProps,
+                types,
+                setConsent,
+            }) => (
+                <React.Fragment>
+                    <CookieTitle innerHTML="Verwendung von Cookies und Daten" />
+                    <CookieText innerHTML="Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind." />
+                    <CookieTypeSelect types={types} setConsent={setConsent} />
+                    <CookieText
+                        innerHTML={
+                            'Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>'
+                        }
+                    />
+                    <CookieActions
+                        isMirrored
+                        primary={
+                            <Button.View
+                                {...additionalAcceptProps}
+                                onClick={acceptAll}
+                            >
+                                <Button.Label>
+                                    Alle Cookies erlauben
+                                </Button.Label>
+                            </Button.View>
+                        }
+                        secondary={
+                            <ButtonGhost.View
+                                {...additionalDeclineProps}
+                                onClick={acceptSelected}
+                            >
+                                <ButtonGhost.Label>
+                                    Auswahl übernehmen
+                                </ButtonGhost.Label>
+                            </ButtonGhost.View>
+                        }
+                    />
+                </React.Fragment>
             )}
         </CookieConsent>
     </div>
