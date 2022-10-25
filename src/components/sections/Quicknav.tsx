@@ -4,6 +4,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
+import Copy from 'components/typography/Copy';
 
 const StyledSection = styled(Section)`
     padding-top: 55px;
@@ -38,7 +39,7 @@ const NavItem = styled.li`
     cursor: pointer;
 `;
 
-const NavItemContainer = styled.div`
+const NavItemContainer = styled(Copy)`
     display: inline-block;
     padding: ${spacings.nudge * 3}px;
 `;
@@ -71,7 +72,9 @@ const Quicknav: React.FC<{
     onNavClick?: (index: number, label: string) => void;
     className?: string;
 }> = ({ navItems, activeNavItem, onNavClick, className }) => {
-    const [isActiveItem, setIsActiveItem] = React.useState<number>(
+    const parentRef = React.useRef<HTMLUListElement>(null);
+    const itemRef = React.useRef<HTMLLIElement>(null);
+    const [activeItem, setActiveItem] = React.useState<number>(
         activeNavItem
             ? navItems?.findIndex(
                   (item) =>
@@ -81,12 +84,8 @@ const Quicknav: React.FC<{
             : -1
     );
 
-    const parentRef = React.useRef(null);
-
-    const itemRef = React.useRef<any>();
-
     React.useEffect(() => {
-        setIsActiveItem(
+        setActiveItem(
             navItems.findIndex(
                 (item) =>
                     item.label === activeNavItem ||
@@ -95,11 +94,37 @@ const Quicknav: React.FC<{
         );
     }, [activeNavItem, navItems]);
 
-    React.useEffect(() => {
-        if (itemRef && itemRef.current && isActiveItem) {
-            itemRef.current.scrollIntoView();
+    const updateNavItemScroll = React.useCallback(() => {
+        const element = document.querySelector(
+            `[data-index=tabnav-${activeItem}]`
+        );
+
+        const parent = parentRef.current;
+
+        if (element && parent) {
+            const elWidth = element.getBoundingClientRect().width;
+            const leftOffset = (element as HTMLElement).offsetLeft;
+
+            // scroll to active item
+            parent?.scrollTo({ left: leftOffset - elWidth / 2 });
         }
-    }, [isActiveItem]);
+    }, [activeItem]);
+
+    React.useEffect(() => {
+        updateNavItemScroll();
+    }, [activeItem, updateNavItemScroll]);
+
+    React.useEffect(() => {
+        const handleResize = () => {
+            updateNavItemScroll();
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [updateNavItemScroll]);
 
     return (
         <StyledSection addSeperation className={className}>
@@ -113,7 +138,7 @@ const Quicknav: React.FC<{
                                 key={i}
                                 onClick={() => {
                                     if (!onNavClick) {
-                                        setIsActiveItem(i);
+                                        setActiveItem(i);
                                     } else {
                                         onNavClick(i, item.label);
                                     }
@@ -123,10 +148,10 @@ const Quicknav: React.FC<{
                                     <QuicknavButton
                                         label={item.label}
                                         link={item.link}
-                                        isActive={isActiveItem === i}
+                                        isActive={activeItem === i}
                                     />
                                     <SliderContainer>
-                                        <Slider isActive={isActiveItem === i} />
+                                        <Slider isActive={activeItem === i} />
                                     </SliderContainer>
                                 </NavItemContainer>
                             </NavItem>
