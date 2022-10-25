@@ -71,6 +71,10 @@ const StyledImage = styled(Image)`
     width: 100%;
     height: 100%;
     min-height: 300px;
+
+    img {
+        height: 100%;
+    }
 `;
 
 const IntroContainer = styled.div`
