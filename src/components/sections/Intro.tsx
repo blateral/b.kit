@@ -63,6 +63,13 @@ const Intro: React.FC<{
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
+    // set default ratio settings
+    if (image && !image?.ratios) {
+        image.ratios = {
+            small: { h: 1, w: 1 },
+        };
+    }
+
     return (
         <Section
             addSeperation
