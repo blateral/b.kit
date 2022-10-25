@@ -43,19 +43,26 @@ const NavItemContainer = styled.div`
     padding: ${spacings.nudge * 3}px;
 `;
 
-const Test = styled.div`
+const SliderTrack = styled.div`
     width: 100%;
     height: 1px;
 
     background: rgba(0, 0, 0, 0.1);
 `;
 
+const SliderContainer = styled.div`
+    padding-top: 35px;
+`;
+
 const Slider = styled.div<{ isActive?: boolean }>`
-    /* display: ${({ isActive }) => (isActive ? 'block' : 'block')}; */
-    height: 4px;
+    height: ${({ isActive }) => (isActive ? '4px' : '0')};
     position: absolute;
     bottom: 0;
+    left: 0;
+    right: 0;
     background-color: ${({ theme }) => color(theme).primary.light};
+
+    width: 100%;
 `;
 
 const Quicknav: React.FC<{
@@ -74,8 +81,6 @@ const Quicknav: React.FC<{
             : -1
     );
 
-    const [pos, setPos] = React.useState(0);
-    const [width, setWidth] = React.useState(0);
     const parentRef = React.useRef(null);
 
     const itemRef = React.useRef<any>();
@@ -89,27 +94,6 @@ const Quicknav: React.FC<{
             )
         );
     }, [activeNavItem, navItems]);
-
-    React.useEffect(() => {
-        const element = document.querySelector(
-            `[data-index=tabnav-${isActiveItem}]`
-        );
-
-        const parent = parentRef.current;
-
-        if (element && parent) {
-            const Box = element.getBoundingClientRect();
-            const ParentBox = (parent as Element).getBoundingClientRect();
-
-            setWidth(Box.width - spacings.spacer * 1.5);
-            setPos(
-                Box.left -
-                    ParentBox.left +
-                    (parent as HTMLElement).scrollLeft +
-                    spacings.nudge * 3
-            );
-        }
-    }, [isActiveItem]);
 
     React.useEffect(() => {
         if (itemRef && itemRef.current && isActiveItem) {
@@ -141,26 +125,16 @@ const Quicknav: React.FC<{
                                         link={item.link}
                                         isActive={isActiveItem === i}
                                     />
+                                    <SliderContainer>
+                                        <Slider isActive={isActiveItem === i} />
+                                    </SliderContainer>
                                 </NavItemContainer>
                             </NavItem>
                         );
                     })}
-                    <div
-                        style={{
-                            paddingTop: '35px',
-                        }}
-                    >
-                        <Slider
-                            style={{
-                                transform: `translateX(${pos}px)`,
-                                transition: `.2s ease-in-out`,
-                                width: `${width}px`,
-                            }}
-                        />
-                    </div>
                 </NavList>
             </Wrapper>
-            <Test />
+            <SliderTrack />
         </StyledSection>
     );
 };
