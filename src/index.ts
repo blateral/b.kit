@@ -107,7 +107,6 @@ export { default as ParallaxBackground } from 'components/sections/ParallaxBackg
 export { default as Poster } from 'components/sections/Poster';
 export { default as PriceList } from 'components/sections/PriceList';
 export { default as PriceTable } from 'components/sections/PriceTable';
-export { default as QuickNav } from 'components/sections/Quicknav';
 export { default as Quote } from 'components/sections/Quote';
 export { default as SimpleImage } from 'components/sections/SimpleImage';
 export { default as SocialNav } from 'components/sections/SocialNav';
