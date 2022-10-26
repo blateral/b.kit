@@ -66,7 +66,10 @@ export { default as useGeolocation } from 'utils/useGeolocation';
 export { useObserverSupport } from 'utils/useObserverSupport';
 export * from 'utils/urlParams';
 export * from 'utils/dataURI';
-export { default as useCookieConsent } from 'utils/cookie-consent/useCookieConsent';
+export {
+    default as useCookieConsent,
+    selectors,
+} from 'utils/cookie-consent/useCookieConsent';
 
 /***** Component exports *****/
 export * from 'utils/LibThemeProvider';

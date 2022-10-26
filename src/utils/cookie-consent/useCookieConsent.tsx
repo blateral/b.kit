@@ -25,6 +25,18 @@ export interface CookieConsentSettings {
     lifetime?: number;
 }
 
+export const selectors = {
+    buttons: {
+        class: 'cookie-consent-button',
+        attribute: 'data-consent-button',
+    },
+    status: {
+        class: 'cookie-consent-status',
+        attribute: 'data-consent-status',
+    },
+    script: (key: string) => `cookie-consent-script-${key}`,
+};
+
 const useCookieConsent = (
     props: CookieConsentSettings,
     onSubmit?: () => void,
@@ -64,7 +76,10 @@ const useCookieConsent = (
         });
         if (!statusHtml) return;
 
-        updateConsentStatus(ReactDOMServer.renderToStaticMarkup(statusHtml));
+        updateConsentStatus(ReactDOMServer.renderToStaticMarkup(statusHtml), [
+            `[${selectors.status.attribute}]`,
+            `.${selectors.status.class}`,
+        ]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [settings.cookieName]);
 
@@ -186,7 +201,7 @@ const useCookieConsent = (
             (key) => types[key].isAccepted
         );
         activateTrackingScripts(
-            acceptedKeys.map((key) => `cookie-consent-script-${key}`)
+            acceptedKeys.map((key) => selectors.script(key))
         );
     };
 

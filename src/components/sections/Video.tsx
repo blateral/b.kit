@@ -13,9 +13,24 @@ const Video: React.FC<{
 
     bgImage: Omit<ImageProps, 'ratios' | 'coverSpace'>;
     embedId: string;
+
+    consentText?: string;
+    consentAction?: (props: {
+        handleClick?: () => void;
+        consentProps: Record<string, string>;
+    }) => React.ReactNode;
+
     playIcon?: React.ReactNode;
     bgMode?: 'full' | 'inverted' | 'splitted';
-}> = ({ anchorId, bgMode, bgImage, embedId, playIcon }) => {
+}> = ({
+    anchorId,
+    bgMode,
+    bgImage,
+    embedId,
+    playIcon,
+    consentText,
+    consentAction,
+}) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
@@ -37,6 +52,8 @@ const Video: React.FC<{
                     bgImage={bgImage}
                     embedId={embedId}
                     playIcon={playIcon}
+                    consentText={consentText}
+                    consentAction={consentAction}
                 />
             </Wrapper>
         </Section>

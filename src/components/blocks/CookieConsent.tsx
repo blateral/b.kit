@@ -10,10 +10,14 @@ import {
     isUrlInWhitelist,
 } from 'utils/cookie-consent/mutations';
 import useCookieConsent, {
-    CookieConsentSettings,
     CookieTypes,
+    selectors,
 } from 'utils/cookie-consent/useCookieConsent';
-import { LibThemeProvider, ThemeMods } from 'utils/LibThemeProvider';
+import {
+    LibThemeProvider,
+    ThemeMods,
+    useLibTheme,
+} from 'utils/LibThemeProvider';
 import StatusFormatter from 'utils/statusFormatter';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import useMounted from 'utils/useMounted';
@@ -89,47 +93,40 @@ type RenderProps = {
     };
 };
 
-export const CookieConsent: FC<
-    CookieConsentSettings & {
-        /** URL's that should be excluded from consent */
-        urlWhitelist?: string[];
-        zIndex?: number;
-        overlayOpacity?: number;
-        consentStatusMsg?: string;
-        dateFormat?: string;
-        timeFormat?: string;
-        localeKey?: 'de' | 'en';
-        status?: (props: {
-            updatedAt: number;
-            state: CookieTypes;
-        }) => React.ReactElement;
-        className?: string;
-        children?: (props: RenderProps) => React.ReactElement;
-        theme?: ThemeMods;
-    }
-> = ({
+export const CookieConsent: FC<{
+    /** URL's that should be excluded from consent */
+    urlWhitelist?: string[];
+    zIndex?: number;
+    overlayOpacity?: number;
+    status?: (props: {
+        updatedAt: number;
+        state: CookieTypes;
+    }) => React.ReactElement;
+    className?: string;
+    children?: (props: RenderProps) => React.ReactElement;
+    theme?: ThemeMods;
+}> = ({
     /** URL's that should be excluded from consent */
     urlWhitelist = [],
     zIndex,
     overlayOpacity = 0.4,
-    consentStatusMsg = 'Cookie updated on <DATE> at <TIME>',
-    dateFormat = 'dd/mm/yy',
-    timeFormat = 'hh:mm AP',
-    localeKey = 'en',
     status,
     className,
     children,
     theme,
-    ...rest
 }) => {
+    const { globals } = useLibTheme();
+
     const statusRenderer = useCallback(
         (props: { updatedAt: number; state: CookieTypes }) => {
+            const updatedDate = new Date(props.updatedAt);
+
             const formatter = new StatusFormatter(
                 props.updatedAt,
-                consentStatusMsg,
-                dateFormat,
-                timeFormat,
-                localeKey
+                globals.cookie.consentStatusFormat,
+                globals.cookie.consentDateFormat(updatedDate),
+                globals.cookie.consentTimeFormat(updatedDate),
+                globals.cookie.consentLocaleKey
             );
             const typeKeys: string[] = Object.keys(props.state);
             const types: CookieTypes = props.state;
@@ -152,7 +149,7 @@ export const CookieConsent: FC<
                 </Status>
             );
         },
-        [consentStatusMsg, dateFormat, localeKey, timeFormat]
+        [globals.cookie]
     );
 
     const [isVisible, setIsVisible] = useState(false);
@@ -164,7 +161,11 @@ export const CookieConsent: FC<
         declineAll,
         setConsent,
     } = useCookieConsent(
-        rest,
+        {
+            cookieName: globals.cookie.name,
+            initialCookieTypes: globals.cookie.types,
+            lifetime: globals.cookie.lifetime,
+        },
         () => setIsVisible(false),
         status || statusRenderer
     );
@@ -174,7 +175,10 @@ export const CookieConsent: FC<
         if (isMounted) return;
 
         // bind buttons to open consent
-        bindConsentButtons(() => setIsVisible(true));
+        bindConsentButtons(
+            () => setIsVisible(true),
+            [`[${selectors.buttons.attribute}]`, `.${selectors.buttons.class}`]
+        );
 
         // check if consent banner should be open
         const isInWhitelist = isUrlInWhitelist(

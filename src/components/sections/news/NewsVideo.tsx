@@ -19,7 +19,13 @@ const NewsVideo: React.FC<{
 
     bgImage?: ImageProps;
     embedId?: string;
-    playIcon?: React.ReactChild;
+    playIcon?: React.ReactNode;
+
+    consentText?: string;
+    consentAction?: (props: {
+        handleClick?: () => void;
+        consentProps: Record<string, string>;
+    }) => React.ReactNode;
 
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -30,6 +36,8 @@ const NewsVideo: React.FC<{
     bgImage,
     embedId,
     playIcon,
+    consentText,
+    consentAction,
     primaryAction,
     secondaryAction,
     bgMode,
@@ -59,6 +67,8 @@ const NewsVideo: React.FC<{
                             bgImage={bgImage}
                             embedId={embedId}
                             playIcon={playIcon}
+                            consentText={consentText}
+                            consentAction={consentAction}
                         />
                     )}
                 </div>
