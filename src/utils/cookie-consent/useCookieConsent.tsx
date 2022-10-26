@@ -70,13 +70,19 @@ const useCookieConsent = (
             settings.cookieName
         ) as Cookie<CookieConsentData>;
 
-        const statusHtml = statusRenderer?.({
-            updatedAt: cookie.data.updatedAt,
-            state: cookieTypes,
-        });
-        if (!statusHtml) return;
+        let statusMsg = '-';
 
-        updateConsentStatus(ReactDOMServer.renderToStaticMarkup(statusHtml), [
+        if (cookie && cookie.data) {
+            const statusHtml = statusRenderer?.({
+                updatedAt: cookie.data.updatedAt,
+                state: cookieTypes,
+            });
+            if (statusHtml) {
+                statusMsg = ReactDOMServer.renderToStaticMarkup(statusHtml);
+            }
+        }
+
+        updateConsentStatus(statusMsg, [
             `[${selectors.status.attribute}]`,
             `.${selectors.status.class}`,
         ]);
@@ -88,7 +94,7 @@ const useCookieConsent = (
             settings.cookieName
         ) as Cookie<CookieConsentData>;
 
-        if (cookie && cookie.data.types) {
+        if (cookie && cookie.data?.types) {
             setCookieTypes((prev) => {
                 const cPrev = { ...prev };
                 for (const key in cPrev) {
@@ -96,12 +102,12 @@ const useCookieConsent = (
                     cPrev[key].isAccepted = cookie.data.types[key];
                 }
 
-                updateStatus();
                 handleScriptActivation(cPrev);
 
                 return cPrev;
             });
         }
+        updateStatus();
     }, [settings, settings.cookieName, updateStatus]);
 
     const mapToCookieData = (types: CookieTypes): Record<string, boolean> => {
