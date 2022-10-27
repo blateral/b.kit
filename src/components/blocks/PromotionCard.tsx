@@ -91,6 +91,10 @@ const IntroContainer = styled.div`
     @media ${mq.xlarge} {
         padding-left: ${(1 / 28) * spacings.wrapper}px;
     }
+
+    h3 {
+        ${withRange([22, 25], 'font-size')}
+    }
 `;
 
 export interface PromotionCardProps {
@@ -99,8 +103,8 @@ export interface PromotionCardProps {
     superTitle?: string;
     text?: string;
     href?: string;
-    primaryAction?: React.ReactNode;
-    secondaryAction?: React.ReactNode;
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
     onClick?: () => void;
 }
 
@@ -125,8 +129,8 @@ const PromotionCard: FC<PromotionCardProps> = ({
                         title={title}
                         superTitle={superTitle}
                         text={text}
-                        secondaryAction={() => secondaryAction}
-                        primaryAction={() => primaryAction}
+                        secondaryAction={secondaryAction}
+                        primaryAction={primaryAction}
                         clampText={text !== undefined}
                     />
                 </IntroContainer>

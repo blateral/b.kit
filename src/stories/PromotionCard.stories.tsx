@@ -44,16 +44,16 @@ export const WithActions: Story = () => (
             medium: 'https://unsplash.it/722/541?image=409',
             large: 'https://unsplash.it/958/718?image=409',
         }}
-        primaryAction={
+        primaryAction={() => (
             <Button.View isInverted>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryAction={
+        )}
+        secondaryAction={() => (
             <ButtonGhost.View isInverted>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
-        }
+        )}
     />
 );
 
@@ -67,16 +67,16 @@ export const WithLink: Story = () => (
             medium: 'https://unsplash.it/722/541?image=409',
             large: 'https://unsplash.it/958/718?image=409',
         }}
-        primaryAction={
+        primaryAction={() => (
             <Button.View isInverted>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryAction={
+        )}
+        secondaryAction={() => (
             <ButtonGhost.View isInverted>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
-        }
+        )}
         href="#0"
     />
 );
@@ -91,16 +91,16 @@ export const WithClickHandler: Story = () => (
             medium: 'https://unsplash.it/722/541?image=409',
             large: 'https://unsplash.it/958/718?image=409',
         }}
-        primaryAction={
+        primaryAction={() => (
             <Button.View isInverted>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
-        }
-        secondaryAction={
+        )}
+        secondaryAction={() => (
             <ButtonGhost.View isInverted>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
-        }
+        )}
         onClick={() => console.log('click')}
     />
 );

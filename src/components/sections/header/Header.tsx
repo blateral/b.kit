@@ -45,11 +45,11 @@ const HeaderWrapper = styled(Wrapper)`
 
 const PosterContent = styled.div`
     position: relative;
-    display: none;
+    display: block;
     width: 100%;
     margin: auto;
     z-index: 3;
-    text-align: center;
+    text-align: left;
     padding: 0 ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
@@ -65,15 +65,15 @@ const PosterContent = styled.div`
     }
 `;
 
-const PosterContentMobile = styled(PosterContent)`
-    display: block;
-    padding: ${spacings.spacer}px;
-    ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')};
+// const PosterContentMobile = styled(PosterContent)`
+//     display: block;
+//     padding: ${spacings.spacer}px;
+//     ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')};
 
-    @media ${mq.semilarge} {
-        display: none;
-    }
-`;
+//     @media ${mq.semilarge} {
+//         display: none;
+//     }
+// `;
 
 const Badge = styled.div<{ showOnMobile?: boolean }>`
     display: ${({ showOnMobile }) => (showOnMobile ? 'block' : 'none')};
@@ -163,19 +163,17 @@ const StyledPoster = styled(Poster)<{ gradient?: string; size?: number }>`
         'padding-bottom'
     )};
 
-    @media ${mq.semilarge} {
-        &:after {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: ${({ gradient }) => gradient || undefined};
-            pointer-events: none;
-            z-index: 2;
-        }
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: ${({ gradient }) => gradient || undefined};
+        pointer-events: none;
+        z-index: 2;
     }
 
     /* required to align items at flex-end in ie11 */
@@ -340,7 +338,7 @@ const Header: FC<{
                     </Badge>
                 )}
             </HeaderWrapper>
-            <PosterContentMobile>
+            {/* <PosterContentMobile>
                 <Wrapper>
                     {!intro?.title && title && (
                         <Callout
@@ -372,7 +370,7 @@ const Header: FC<{
                         />
                     )}
                 </Wrapper>
-            </PosterContentMobile>
+            </PosterContentMobile> */}
         </View>
     );
 };

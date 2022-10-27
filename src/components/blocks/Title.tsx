@@ -48,7 +48,7 @@ const Title: FC<{
                 <div>
                     <Heading
                         as={titleAs || 'h3'}
-                        size="heading-2"
+                        size={'heading-2'}
                         textColor={colorMode === 'onImage' ? '#fff' : undefined}
                         isInverted={colorMode === 'inverted'}
                         innerHTML={title}
