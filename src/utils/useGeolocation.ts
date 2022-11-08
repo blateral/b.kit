@@ -39,12 +39,24 @@ const useGeolocation = (enableHighAccuracy = true, autostart = true) => {
     }, [autostart, cancel, enableHighAccuracy]);
 
     const reset = useCallback(() => {
-        cancel();
-        setIsEnabled(false);
-        navigator.geolocation.watchPosition(handleSuccess, handleError, {
-            enableHighAccuracy,
+        return new Promise<GeolocationPosition>((resolve, reject) => {
+            cancel();
+            setIsEnabled(false);
+            navigator.geolocation.watchPosition(
+                (position) => {
+                    handleSuccess(position);
+                    resolve(position);
+                },
+                (err) => {
+                    handleError(err);
+                    reject(err);
+                },
+                {
+                    enableHighAccuracy,
+                }
+            );
+            setIsEnabled(true);
         });
-        setIsEnabled(true);
     }, [cancel, enableHighAccuracy]);
 
     const handleSuccess = (position: GeolocationPosition) => {

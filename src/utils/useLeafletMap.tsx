@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
     FeatureGroup,
+    LatLng,
     LeafletMouseEvent,
     Map,
     Marker,
@@ -21,8 +22,6 @@ export interface LeafletMapSettings {
     activeMarkerId?: string;
     fitBoundsPadding: [number, number];
     restrictToMarkersArea?: boolean;
-    maxBoundsViscosity?: number;
-    markerAreaBufferRatio?: number;
     showZoomControls?: boolean;
     zoomControlPosition?: 'bottomleft' | 'bottomright' | 'topleft' | 'topright';
     onMarkerClick?: (markerId: string) => void;
@@ -58,6 +57,8 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
     const [isLoaded, setLoaded] = useState<boolean>(false);
     const isRenderedRef = useRef<boolean>(false);
 
+    const lastValidCenter = useRef<LatLng | null>(null);
+
     const mapSettings: LeafletMapSettings = useMemo(() => {
         // removing undefined keys
         Object.keys(settings).forEach((key) => {
@@ -79,8 +80,6 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
                 '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             markers: [],
             fitBoundsPadding: [20, 20], // 0 = TopLeft, 1 = BottomRight
-            markerAreaBufferRatio: 0.2,
-            maxBoundsViscosity: 1,
             ...settings,
         };
     }, [settings]);
@@ -105,7 +104,6 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
                 zoom: mapSettings.zoom,
                 touchZoom: mapSettings.touchZoom,
                 scrollWheelZoom: mapSettings.scrollWheelZoom,
-                maxBoundsViscosity: mapSettings.maxBoundsViscosity,
                 zoomControl: false,
                 minZoom: mapSettings.minZoom,
                 maxZoom: mapSettings.maxZoom,
@@ -230,20 +228,61 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
             }
         );
 
+        const handleMapMove = () => {
+            if (!map) return;
+            if (!mapSettings.restrictToMarkersArea) return;
+
+            const markersBounds = markersLayerGroup?.getBounds()?.pad(0.3);
+            if (!markersBounds || !markersBounds.isValid()) return;
+
+            const northEdge = markersBounds.getNorth();
+            const eastEdge = markersBounds.getEast();
+            const southEdge = markersBounds.getSouth();
+            const westEdge = markersBounds.getWest();
+
+            const center = map.getCenter();
+            let newLat: number | null = null;
+            let newLng: number | null = null;
+
+            // on latitude overshoot
+            if (
+                (center.lat < southEdge || center.lat > northEdge) &&
+                lastValidCenter.current
+            ) {
+                newLat = lastValidCenter.current?.lat;
+            }
+
+            // on longitude overshoot
+            if (
+                (center.lng < westEdge || center.lng > eastEdge) &&
+                lastValidCenter.current
+            ) {
+                newLng = lastValidCenter.current?.lng;
+            }
+
+            if (newLng !== null || newLat !== null) {
+                if (newLng !== null) center.lng = newLng;
+                if (newLat !== null) center.lat = newLat;
+
+                map.panTo(center, { animate: false });
+            }
+
+            lastValidCenter.current = center;
+        };
+
         // if set restrict map movement to markers
         if (mapSettings.restrictToMarkersArea) {
-            let markersBounds = markersLayerGroup.getBounds();
+            const markersBounds = markersLayerGroup?.getBounds();
 
             if (markersBounds.isValid()) {
-                if (mapSettings.markerAreaBufferRatio !== undefined) {
-                    markersBounds = markersBounds.pad(
-                        mapSettings.markerAreaBufferRatio
-                    );
-                }
-
-                map.setMaxBounds(markersBounds);
+                map.on('drag', handleMapMove);
             }
         }
+
+        return () => {
+            lastValidCenter.current = null;
+            map?.off('drag', handleMapMove);
+        };
     }, [L, isLoaded, map, mapSettings, mapSettings.markers, markersLayerGroup]);
 
     /**
@@ -256,29 +295,6 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
             });
         }
     }, [L, map, mapSettings.fitBoundsPadding, markersLayerGroup]);
-
-    /**
-     * Restrict map movement to the bounds of the area including all markers
-     */
-    const restrictMapToMarkers = useCallback(
-        (bufferRatio?: number) => {
-            if (!map || !markersLayerGroup) return;
-
-            let markersBounds = markersLayerGroup.getBounds();
-            if (!markersBounds.isValid()) return;
-
-            if (bufferRatio !== undefined) {
-                markersBounds = markersBounds.pad(bufferRatio);
-            } else if (mapSettings.markerAreaBufferRatio !== undefined) {
-                markersBounds = markersBounds.pad(
-                    mapSettings.markerAreaBufferRatio
-                );
-            }
-
-            map.setMaxBounds(markersBounds);
-        },
-        [map, mapSettings.markerAreaBufferRatio, markersLayerGroup]
-    );
 
     /**
      * Pan and zoom to active marker position on map
@@ -336,7 +352,6 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
         flyToPosition,
         panToPosition,
         showAllMarkers,
-        restrictMapToMarkers,
         recalculateMapSize,
         getCurrentZoom,
         isLoaded,

@@ -200,6 +200,7 @@ const CardStage = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: 10;
 
     display: flex;
     align-items: flex-end;
@@ -406,9 +407,6 @@ const PointOfInterestMap: FC<{
     /** Restrict map to bounds of markers area */
     restrictToMarkersArea?: boolean;
 
-    /** Buffer ratio if map is restricted to marker area */
-    markerAreaBufferRatio?: number;
-
     /** Map container padding for show all markers */
     fitBoundsPadding?: [number, number];
 
@@ -435,7 +433,6 @@ const PointOfInterestMap: FC<{
     fitBoundsPadding,
     allMarkersOnInit = false,
     restrictToMarkersArea = true,
-    markerAreaBufferRatio,
     showOwnPosition,
     flyToZoom,
     customFact,
@@ -456,8 +453,9 @@ const PointOfInterestMap: FC<{
     const {
         isSupported: isGeolocationSupported,
         location,
+        reset: resetGeolocation,
         // error,
-    } = useGeolocation(true, !!showOwnPosition);
+    } = useGeolocation(true, false);
 
     const mapMarkers = useMemo(() => {
         const defaultMarker: LocationIcon = {
@@ -524,7 +522,6 @@ const PointOfInterestMap: FC<{
         markers: mapMarkers,
         fitBoundsPadding,
         restrictToMarkersArea,
-        markerAreaBufferRatio,
         showZoomControls: true,
         zoomControlPosition: 'bottomleft',
         onMarkerClick: (markerId) => {
@@ -567,7 +564,7 @@ const PointOfInterestMap: FC<{
         }
     }, [activePoiId, initialPointOfInterest, isDirty]);
 
-    const handleLocationRequest = () => {
+    const handleLocationRequest = async () => {
         if (location?.coords?.latitude && location?.coords?.longitude) {
             const currentZoom = getCurrentZoom();
             let zoom = flyToZoom;
@@ -579,6 +576,13 @@ const PointOfInterestMap: FC<{
                 [location.coords.latitude, location.coords.longitude],
                 zoom
             );
+        } else {
+            try {
+                const position = await resetGeolocation();
+                if (position) showAllMarkers();
+            } catch (err) {
+                // console.log(err);
+            }
         }
     };
 
@@ -592,13 +596,18 @@ const PointOfInterestMap: FC<{
             <Wrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <MapContainer>
                     <Map ref={setMapContainer} isLarge={size === 'large'} />
-                    {showOwnPosition && location && (
+                    {showOwnPosition && (
                         <RequestGeolocationBtn onClick={handleLocationRequest}>
                             {customLocationRequest || <MyLocation />}
                         </RequestGeolocationBtn>
                     )}
                     {activePOI && activePOI.name && (
-                        <CardStage>
+                        <CardStage
+                            onClick={(ev) => {
+                                if (ev.target !== ev.currentTarget) return;
+                                setActivePoiId('');
+                            }}
+                        >
                             <MapCard
                                 {...activePOI}
                                 onClose={() => setActivePoiId('')}
