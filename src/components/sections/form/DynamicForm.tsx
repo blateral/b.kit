@@ -318,7 +318,7 @@ const DynamicForm: FC<{
     submitAction?: (props: {
         isInverted?: boolean;
         handleSubmit?: () => Promise<any>;
-        isDisabled?: boolean;
+        isSubmitting?: boolean;
     }) => React.ReactNode;
 
     /** List of target emails */
@@ -756,17 +756,13 @@ const DynamicForm: FC<{
                                         submitAction ? (
                                             submitAction({
                                                 isInverted,
-                                                isDisabled:
-                                                    isSubmitting || !dirty,
+                                                isSubmitting,
                                                 handleSubmit: submitForm,
                                             })
                                         ) : (
                                             <Button.View
                                                 as="button"
                                                 onClick={submitForm}
-                                                isDisabled={
-                                                    isSubmitting || !dirty
-                                                }
                                                 {...{
                                                     type: 'submit',
                                                 }}

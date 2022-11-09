@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import useLeafletMap, { LeafletMapMarker } from 'utils/useLeafletMap';
 import { mq, withRange, getColors as color, spacings } from 'utils/styles';
 import {
@@ -297,6 +297,8 @@ const MapCard: FC<{
     onClose,
     className,
 }) => {
+    const { colors } = useLibTheme();
+
     return (
         <MapCardView className={className}>
             <MapCardHeader>
@@ -306,7 +308,7 @@ const MapCard: FC<{
                     </Copy>
                 )}
                 <CloseBtn onClick={onClose}>
-                    {customClose || <Cross />}
+                    {customClose || <Cross iconColor={colors.text.default} />}
                 </CloseBtn>
             </MapCardHeader>
             {isValidArray(facts, false) && (
@@ -441,6 +443,7 @@ const PointOfInterestMap: FC<{
     customLocationRequest,
 }) => {
     const isLarge = size === 'large';
+    const { colors } = useLibTheme();
 
     const [activePoiId, setActivePoiId] = useState<string>(
         initialPointOfInterest || ''
@@ -598,7 +601,9 @@ const PointOfInterestMap: FC<{
                     <Map ref={setMapContainer} isLarge={size === 'large'} />
                     {showOwnPosition && (
                         <RequestGeolocationBtn onClick={handleLocationRequest}>
-                            {customLocationRequest || <MyLocation />}
+                            {customLocationRequest || (
+                                <MyLocation iconColor={colors.text.default} />
+                            )}
                         </RequestGeolocationBtn>
                     )}
                     {activePOI && activePOI.name && (
