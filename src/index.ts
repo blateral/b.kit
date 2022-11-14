@@ -85,7 +85,11 @@ export { default as CrossPromotion } from 'components/sections/CrossPromotion';
 export { default as DynamicForm } from 'components/sections/form/DynamicForm';
 export { default as NewsletterForm } from 'components/sections/NewsletterForm';
 export { default as EventList } from 'components/sections/events/EventList';
-export { default as EventOverview } from 'components/sections/events/EventOverview';
+export {
+    default as EventOverview,
+    urlEventParamFilterName,
+    getEventFilterParams,
+} from 'components/sections/events/EventOverview';
 export { default as EventDetail } from 'components/sections/events/EventDetail';
 export { default as FactGrid } from 'components/sections/FactGrid';
 export { default as FactList } from 'components/sections/FactList';

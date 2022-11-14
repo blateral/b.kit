@@ -94,6 +94,28 @@ const ShowMore = styled.span<{ itemCount?: number }>`
         itemCount && itemCount > 2 ? 'block' : 'none'};
 `;
 
+export const urlEventParamFilterName = 'eventFilter';
+
+export const getEventFilterParams = (url: string, tags: string[] = []) => {
+    if (!url) return '';
+    if (!isValidArray(tags, false)) return url;
+
+    try {
+        const validUrl = new URL(url);
+        const newParams = new URLSearchParams(validUrl.search);
+        newParams.set(
+            urlEventParamFilterName,
+            encodeURIComponent(tags.join(','))
+        );
+
+        return `${url}?${newParams.toString()}`;
+    } catch (err) {
+        return `${url}?${urlEventParamFilterName}=${encodeURIComponent(
+            tags.join(',')
+        )}`;
+    }
+};
+
 export type EventItem = Omit<
     EventProps,
     'customTag' | 'isInverted' | 'onTagClick' | 'text'
@@ -146,7 +168,6 @@ const EventOverview: React.FC<{
     const hasBg = bgMode === 'full';
 
     const { colors, globals } = useLibTheme();
-    const urlParamFilterName = 'eventFilter';
 
     const [selectedTags, setSelectedTags] = React.useState<string[]>(
         activeTags || []
@@ -164,7 +185,7 @@ const EventOverview: React.FC<{
     const getFilters = () => {
         const tags: string[] = [];
 
-        const filters = getUrlParams()[urlParamFilterName];
+        const filters = getUrlParams()[urlEventParamFilterName];
         if (filters) {
             const tagsFilter = filters?.split(',');
             if (isValidArray(tagsFilter, false)) {
@@ -189,9 +210,9 @@ const EventOverview: React.FC<{
 
         // set filters to URL params
         if (selectedTags.length > 0) {
-            setUrlParam(urlParamFilterName, selectedTags.join(','));
+            setUrlParam(urlEventParamFilterName, selectedTags.join(','));
         } else {
-            deleteUrlParam(urlParamFilterName);
+            deleteUrlParam(urlEventParamFilterName);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
