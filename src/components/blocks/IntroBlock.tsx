@@ -72,7 +72,7 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
     }
 `;
 
-const MobileImage = styled(Image)<{ isCentered?: boolean }>`
+const MobileImageContainer = styled.div<{ isCentered?: boolean }>`
     width: 100%;
     height: 100%;
     max-width: 400px;
@@ -85,17 +85,16 @@ const MobileImage = styled(Image)<{ isCentered?: boolean }>`
         display: ${({ isCentered }) => (isCentered ? 'block' : 'none')};
     }
 `;
-const DesktopImage = styled(Image)`
+
+const DesktopImageContainer = styled.div`
     display: none;
     width: 100%;
-    height: 100%;
-
-    max-width: 400px;
-    max-height: 400px;
 
     @media ${mq.semilarge} {
         display: block;
         /* flex: 1 0 33.33%; */
+
+        max-width: 400px;
     }
 `;
 
@@ -186,13 +185,14 @@ const IntroBlock: React.FC<{
                     />
                 )}
                 {image?.small && (
-                    <MobileImage
-                        {...image}
-                        coverSpace
-                        allowEdgeRadius
-                        isCentered={isCentered}
-                        isInverted={isInverted}
-                    />
+                    <MobileImageContainer isCentered={isCentered}>
+                        <Image
+                            {...image}
+                            coverSpace
+                            allowEdgeRadius
+                            isInverted={isInverted}
+                        />
+                    </MobileImageContainer>
                 )}
                 {text && (
                     <ContentBlock
@@ -214,13 +214,16 @@ const IntroBlock: React.FC<{
                     />
                 )}
             </Content>
+
             {image?.small && !isCentered && (
-                <DesktopImage
-                    {...image}
-                    coverSpace
-                    allowEdgeRadius
-                    isInverted={isInverted}
-                />
+                <DesktopImageContainer>
+                    <Image
+                        {...image}
+                        coverSpace
+                        allowEdgeRadius
+                        isInverted={isInverted}
+                    />
+                </DesktopImageContainer>
             )}
         </View>
     );
