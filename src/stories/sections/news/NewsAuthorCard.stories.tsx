@@ -9,7 +9,7 @@ export default {
     component: NewsAuthorCardComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
 } as Meta;

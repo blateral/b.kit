@@ -85,11 +85,7 @@ export { default as CrossPromotion } from 'components/sections/CrossPromotion';
 export { default as DynamicForm } from 'components/sections/form/DynamicForm';
 export { default as NewsletterForm } from 'components/sections/NewsletterForm';
 export { default as EventList } from 'components/sections/events/EventList';
-export {
-    default as EventOverview,
-    urlEventParamFilterName,
-    getEventFilterParams,
-} from 'components/sections/events/EventOverview';
+export { default as EventOverview } from 'components/sections/events/EventOverview';
 export { default as EventDetail } from 'components/sections/events/EventDetail';
 export { default as FactGrid } from 'components/sections/FactGrid';
 export { default as FactList } from 'components/sections/FactList';
@@ -167,6 +163,7 @@ export { default as Image } from 'components/blocks/Image';
 export { default as LanguageSwitcher } from 'components/blocks/LanguageSwitcher';
 export { default as VideoBlock } from 'components/blocks/VideoBlock';
 export { default as EventBlock } from 'components/blocks/EventBlock';
+export { default as TableBlock } from 'components/blocks/TableBlock';
 export { default as Tag } from 'components/blocks/Tag';
 export { default as POIFacts } from 'components/blocks/POIFacts';
 export { default as POICard } from 'components/blocks/POICard';

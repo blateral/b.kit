@@ -11,6 +11,7 @@ import { mq, spacings } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { LinkProps } from 'components/typography/Link';
+import { getNewsFilterParams } from './NewsOverview';
 
 const Content = styled.div`
     & > * + * {
@@ -120,7 +121,7 @@ const NewsIntro: React.FC<{
         link?: LinkProps;
     }) => React.ReactNode;
 }> = ({ anchorId, tags, meta, title, text, image, bgMode, customTag }) => {
-    const { globals, colors } = useLibTheme();
+    const { globals, colors, theme } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
@@ -153,26 +154,41 @@ const NewsIntro: React.FC<{
                 <Content>
                     <IntroHead isInverted={isInverted}>
                         <Tags>
-                            {tags?.map((tag, i) => (
-                                <TagWrapper key={`headtag-${i}`}>
-                                    {customTag ? (
-                                        customTag({
-                                            key: `headtag-${i}`,
-                                            name: tag.name || '',
-                                            isInverted: isInverted,
-                                            isActive: false,
-                                            link: tag.link,
-                                        })
-                                    ) : (
-                                        <Tag
-                                            link={tag.link}
-                                            isInverted={isInverted}
-                                        >
-                                            {tag.name}
-                                        </Tag>
-                                    )}
-                                </TagWrapper>
-                            ))}
+                            {tags?.map((tag, i) => {
+                                let tagLink: LinkProps | undefined = undefined;
+
+                                if (tag.name && tag.link?.href) {
+                                    tagLink = {
+                                        ...tag.link,
+                                        href: getNewsFilterParams(
+                                            tag.link.href,
+                                            theme,
+                                            [tag.name]
+                                        ),
+                                    };
+                                }
+
+                                return (
+                                    <TagWrapper key={`headtag-${i}`}>
+                                        {customTag ? (
+                                            customTag({
+                                                key: `headtag-${i}`,
+                                                name: tag.name || '',
+                                                isInverted: isInverted,
+                                                isActive: false,
+                                                link: tagLink,
+                                            })
+                                        ) : (
+                                            <Tag
+                                                link={tagLink}
+                                                isInverted={isInverted}
+                                            >
+                                                {tag.name}
+                                            </Tag>
+                                        )}
+                                    </TagWrapper>
+                                );
+                            })}
                         </Tags>
                         {(publishedAt || meta?.author) && (
                             <MetaBlock>

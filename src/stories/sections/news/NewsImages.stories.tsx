@@ -3,15 +3,13 @@ import { Meta, Story } from '@storybook/react';
 import NewsImages, {
     NewsImagesComponent,
 } from 'components/sections/news/NewsImages';
-import Button from 'components/buttons/Button';
-import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/News/NewsImages',
     component: NewsImagesComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
 } as Meta;
@@ -22,6 +20,9 @@ export const Default: Story = () => (
             {
                 small: 'https://unsplash.it/619/305?image=400',
                 medium: 'https://unsplash.it/983/483?image=400',
+                ratios: {
+                    small: { w: 983, h: 483 },
+                },
             },
         ]}
     />
@@ -34,6 +35,9 @@ export const SingleImageHalf: Story = () => (
                 small: 'https://unsplash.it/619/465?image=400',
                 medium: 'https://unsplash.it/376/282?image=400',
                 large: 'https://unsplash.it/452/339?image=400',
+                ratios: {
+                    small: { w: 452, h: 339 },
+                },
             },
         ]}
         imageStyle="half"
@@ -47,47 +51,28 @@ export const MultipleHalfImages: Story = () => (
                 small: 'https://unsplash.it/619/465?image=400',
                 medium: 'https://unsplash.it/376/282?image=400',
                 large: 'https://unsplash.it/452/339?image=400',
+                ratios: {
+                    small: { w: 452, h: 339 },
+                },
             },
             {
                 small: 'https://unsplash.it/619/465?image=401',
                 medium: 'https://unsplash.it/376/282?image=401',
                 large: 'https://unsplash.it/452/339?image=401',
+                ratios: {
+                    small: { w: 452, h: 339 },
+                },
             },
             {
                 small: 'https://unsplash.it/619/465?image=402',
                 medium: 'https://unsplash.it/376/282?image=402',
                 large: 'https://unsplash.it/452/339?image=402',
+                ratios: {
+                    small: { w: 452, h: 339 },
+                },
             },
         ]}
         imageStyle="half"
-    />
-);
-
-export const WithActions: Story = () => (
-    <NewsImages
-        images={[
-            {
-                small: 'https://unsplash.it/619/465?image=400',
-                medium: 'https://unsplash.it/376/282?image=400',
-                large: 'https://unsplash.it/452/339?image=400',
-            },
-            {
-                small: 'https://unsplash.it/619/465?image=401',
-                medium: 'https://unsplash.it/376/282?image=401',
-                large: 'https://unsplash.it/452/339?image=401',
-            },
-        ]}
-        imageStyle="half"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -99,24 +84,20 @@ export const WithBackground: Story = () => (
                 small: 'https://unsplash.it/619/465?image=400',
                 medium: 'https://unsplash.it/376/282?image=400',
                 large: 'https://unsplash.it/452/339?image=400',
+                ratios: {
+                    small: { w: 452, h: 339 },
+                },
             },
             {
                 small: 'https://unsplash.it/619/465?image=401',
                 medium: 'https://unsplash.it/376/282?image=401',
                 large: 'https://unsplash.it/452/339?image=401',
+                ratios: {
+                    small: { w: 452, h: 339 },
+                },
             },
         ]}
         imageStyle="half"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -127,24 +108,20 @@ export const Inverted: Story = () => (
                 small: 'https://unsplash.it/619/465?image=400',
                 medium: 'https://unsplash.it/376/282?image=400',
                 large: 'https://unsplash.it/452/339?image=400',
+                ratios: {
+                    small: { w: 452, h: 339 },
+                },
             },
             {
                 small: 'https://unsplash.it/619/465?image=401',
                 medium: 'https://unsplash.it/376/282?image=401',
                 large: 'https://unsplash.it/452/339?image=401',
+                ratios: {
+                    small: { w: 452, h: 339 },
+                },
             },
         ]}
         imageStyle="half"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         bgMode="inverted"
     />
 );

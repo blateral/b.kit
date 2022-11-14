@@ -1,5 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
+import styled, { DefaultTheme } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -93,6 +99,28 @@ const FilterIcon = styled(Copy)`
     }
 `;
 
+export const getNewsFilterParams = (
+    url: string,
+    theme: DefaultTheme,
+    tags: string[] = []
+) => {
+    if (!url) return '';
+    if (!isValidArray(tags, false)) return url;
+
+    const filterName = theme.globals.sections.newsFilterName;
+    if (!filterName) return url;
+
+    try {
+        const validUrl = new URL(url);
+        const newParams = new URLSearchParams(validUrl.search);
+        newParams.set(filterName, encodeURIComponent(tags.join(',')));
+
+        return `${url}?${newParams.toString()}`;
+    } catch (err) {
+        return `${url}?${filterName}=${encodeURIComponent(tags.join(','))}`;
+    }
+};
+
 type NewsOverviewMq = 'small' | 'semilarge' | 'large';
 
 export type NewsItem = Omit<
@@ -144,7 +172,8 @@ const NewsOverview: React.FC<{
     onTagClick,
     customTag,
 }) => {
-    const { colors } = useLibTheme();
+    const { colors, globals } = useLibTheme();
+    const filterName = globals.sections.newsFilterName;
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -157,7 +186,6 @@ const NewsOverview: React.FC<{
     const currentMq = useMediaQuery(mqs) as NewsOverviewMq | undefined;
     const [itemsPerRow, setItemsPerRow] = useState(3);
     const [visibleRows, setVisibleRows] = useState(3);
-    const urlParamFilterName = 'newsFilter';
 
     const targetRef = useRef<HTMLDivElement>(null);
     const observerSupported = useObserverSupport();
@@ -202,10 +230,10 @@ const NewsOverview: React.FC<{
         }
     }, [currentMq, visibleRows]);
 
-    const getFilters = () => {
+    const getFilters = useCallback(() => {
         const tags: string[] = [];
 
-        const filters = getUrlParams()[urlParamFilterName];
+        const filters = getUrlParams()[filterName];
         if (filters) {
             const tagsFilter = filters?.split(',');
             if (isValidArray(tagsFilter, false)) {
@@ -213,7 +241,7 @@ const NewsOverview: React.FC<{
             }
         }
         return tags;
-    };
+    }, [filterName]);
 
     useEffect(() => {
         const paramTags = getFilters();
@@ -223,16 +251,16 @@ const NewsOverview: React.FC<{
         } else {
             setSelectedTags(activeTags || []);
         }
-    }, [activeTags]);
+    }, [activeTags, getFilters]);
 
     useEffect(() => {
         if (onTagClick || !isValidArray(selectedTags)) return;
 
         // set filters to URL params
         if (selectedTags.length > 0) {
-            setUrlParam(urlParamFilterName, selectedTags.join(','));
+            setUrlParam(filterName, selectedTags.join(','));
         } else {
-            deleteUrlParam(urlParamFilterName);
+            deleteUrlParam(filterName);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

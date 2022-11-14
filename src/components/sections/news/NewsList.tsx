@@ -9,6 +9,7 @@ import { mq, spacings } from 'utils/styles';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { LinkProps } from 'components/typography/Link';
+import { getNewsFilterParams } from './NewsOverview';
 
 const News = styled.ul`
     list-style: none;
@@ -69,7 +70,7 @@ const NewsList: React.FC<{
         link?: LinkProps;
     }) => React.ReactNode;
 }> = ({ anchorId, mode = 'short', news, bgMode, customTag }) => {
-    const { colors } = useLibTheme();
+    const { colors, theme } = useLibTheme();
 
     const items = useMemo<NewsCardProps[]>(() => {
         if (!news) return [];
@@ -118,6 +119,27 @@ const NewsList: React.FC<{
                                 ref={cardRefs[i]}
                                 {...item}
                                 isInverted={isInverted}
+                                tags={item.tags?.map((tag) => {
+                                    let tagHref: string | undefined = undefined;
+
+                                    if (tag.name && tag.link?.href) {
+                                        tagHref = getNewsFilterParams(
+                                            tag.link.href,
+                                            theme,
+                                            [tag.name]
+                                        );
+                                    }
+
+                                    return {
+                                        name: tag.name,
+                                        link: tag.link?.href
+                                            ? {
+                                                  ...tag.link,
+                                                  href: tagHref,
+                                              }
+                                            : undefined,
+                                    };
+                                })}
                                 customTag={customTag}
                             />
                         </NewsItem>

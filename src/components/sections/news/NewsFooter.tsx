@@ -8,6 +8,7 @@ import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import { LinkProps } from 'components/typography/Link';
+import { getNewsFilterParams } from './NewsOverview';
 
 type NewsFooterMq = 'small' | 'semilarge';
 
@@ -35,7 +36,7 @@ const NewsFooter: React.FC<{
         link?: LinkProps;
     }) => React.ReactNode;
 }> = ({ anchorId, news, bgMode, customTag }) => {
-    const { colors } = useLibTheme();
+    const { colors, theme } = useLibTheme();
     const newsCount = news?.length || 0;
 
     const isInverted = bgMode === 'inverted';
@@ -104,6 +105,28 @@ const NewsFooter: React.FC<{
                                     key={i}
                                     ref={cardRefs[i]}
                                     {...item}
+                                    tags={item.tags?.map((tag) => {
+                                        let tagHref: string | undefined =
+                                            undefined;
+
+                                        if (tag.name && tag.link?.href) {
+                                            tagHref = getNewsFilterParams(
+                                                tag.link.href,
+                                                theme,
+                                                [tag.name]
+                                            );
+                                        }
+
+                                        return {
+                                            name: tag.name,
+                                            link: tag.link?.href
+                                                ? {
+                                                      ...tag.link,
+                                                      href: tagHref,
+                                                  }
+                                                : undefined,
+                                        };
+                                    })}
                                     isInverted={isInverted}
                                     customTag={customTag}
                                 />

@@ -54,10 +54,16 @@ const StyledCopy = styled(Copy)`
 `;
 
 const NewsAuthorCard: React.FC<{
+    /** Text above author name */
     label?: string;
+
+    /** Article's author name */
     author?: string;
+
+    /** Author avatar image */
     avatar?: { src: string; alt?: string };
 
+    /** Section background */
     bgMode?: 'full' | 'inverted';
 }> = ({ label, author, avatar, bgMode }) => {
     const { colors } = useLibTheme();
@@ -78,7 +84,7 @@ const NewsAuthorCard: React.FC<{
         >
             <Wrapper clampWidth="small" addWhitespace>
                 {author && (
-                    <>
+                    <React.Fragment>
                         <Seperator isTop isInverted={isInverted} />
                         <AuthorContainer>
                             {avatar && (
@@ -101,7 +107,7 @@ const NewsAuthorCard: React.FC<{
                                 </Heading>
                             </Author>
                         </AuthorContainer>
-                    </>
+                    </React.Fragment>
                 )}
                 <Seperator isInverted={isInverted} />
             </Wrapper>

@@ -5,8 +5,8 @@ import EventBlock, { EventProps } from 'components/blocks/EventBlock';
 import Tag, { TagProps } from 'components/blocks/Tag';
 import Pointer from 'components/buttons/Pointer';
 import Copy from 'components/typography/Copy';
-import React, { useEffect, useMemo } from 'react';
-import styled from 'styled-components';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import styled, { DefaultTheme } from 'styled-components';
 import { isValidArray } from 'utils/arrays';
 import { concat } from 'utils/concat';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
@@ -94,25 +94,25 @@ const ShowMore = styled.span<{ itemCount?: number }>`
         itemCount && itemCount > 2 ? 'block' : 'none'};
 `;
 
-export const urlEventParamFilterName = 'eventFilter';
-
-export const getEventFilterParams = (url: string, tags: string[] = []) => {
-    if (!url) return '';
+export const getEventFilterParams = (
+    url: string,
+    theme: DefaultTheme,
+    tags: string[] = []
+) => {
+    if (!url || !theme) return '';
     if (!isValidArray(tags, false)) return url;
+
+    const filterName = theme.globals.sections.eventFilterName;
+    if (!filterName) return url;
 
     try {
         const validUrl = new URL(url);
         const newParams = new URLSearchParams(validUrl.search);
-        newParams.set(
-            urlEventParamFilterName,
-            encodeURIComponent(tags.join(','))
-        );
+        newParams.set(filterName, encodeURIComponent(tags.join(',')));
 
         return `${url}?${newParams.toString()}`;
     } catch (err) {
-        return `${url}?${urlEventParamFilterName}=${encodeURIComponent(
-            tags.join(',')
-        )}`;
+        return `${url}?${filterName}=${encodeURIComponent(tags.join(','))}`;
     }
 };
 
@@ -168,6 +168,7 @@ const EventOverview: React.FC<{
     const hasBg = bgMode === 'full';
 
     const { colors, globals } = useLibTheme();
+    const filterName = globals.sections.eventFilterName;
 
     const [selectedTags, setSelectedTags] = React.useState<string[]>(
         activeTags || []
@@ -179,13 +180,12 @@ const EventOverview: React.FC<{
     const observerSupported = useObserverSupport();
 
     const eventCount = events?.length || 0;
-
     const setNewPos = useScrollTo(800);
 
-    const getFilters = () => {
+    const getFilters = useCallback(() => {
         const tags: string[] = [];
 
-        const filters = getUrlParams()[urlEventParamFilterName];
+        const filters = getUrlParams()[filterName];
         if (filters) {
             const tagsFilter = filters?.split(',');
             if (isValidArray(tagsFilter, false)) {
@@ -193,7 +193,7 @@ const EventOverview: React.FC<{
             }
         }
         return tags;
-    };
+    }, [filterName]);
 
     useEffect(() => {
         const paramTags = getFilters();
@@ -203,16 +203,16 @@ const EventOverview: React.FC<{
         } else {
             setSelectedTags(activeTags || []);
         }
-    }, [activeTags]);
+    }, [activeTags, getFilters]);
 
     useEffect(() => {
         if (onTagClick || !isValidArray(selectedTags)) return;
 
         // set filters to URL params
         if (selectedTags.length > 0) {
-            setUrlParam(urlEventParamFilterName, selectedTags.join(','));
+            setUrlParam(filterName, selectedTags.join(','));
         } else {
-            deleteUrlParam(urlEventParamFilterName);
+            deleteUrlParam(filterName);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -9,6 +9,7 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { LinkProps } from 'components/typography/Link';
 import StatusFormatter from 'utils/statusFormatter';
 import { concat } from 'utils/concat';
+import { getEventFilterParams } from './EventOverview';
 
 const List = styled.ul<{ hasBg?: boolean }>`
     list-style: none;
@@ -68,7 +69,7 @@ const EventList: React.FC<{
         link?: LinkProps;
     }) => React.ReactNode;
 }> = ({ anchorId, events, bgMode, customTag }) => {
-    const { colors, globals } = useLibTheme();
+    const { colors, globals, theme } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
@@ -114,6 +115,28 @@ const EventList: React.FC<{
                             <ListItem key={i}>
                                 <EventBlock
                                     {...event}
+                                    tags={event.tags?.map((tag) => {
+                                        let tagHref: string | undefined =
+                                            undefined;
+
+                                        if (tag.name && tag.link?.href) {
+                                            tagHref = getEventFilterParams(
+                                                tag.link.href,
+                                                theme,
+                                                [tag.name]
+                                            );
+                                        }
+
+                                        return {
+                                            name: tag.name,
+                                            link: tag.link?.href
+                                                ? {
+                                                      ...tag.link,
+                                                      href: tagHref,
+                                                  }
+                                                : undefined,
+                                        };
+                                    })}
                                     isInverted={isInverted}
                                     text={text}
                                     customTag={customTag}

@@ -14,7 +14,7 @@ export default {
     component: NewsListComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
 } as Meta;

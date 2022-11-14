@@ -461,6 +461,10 @@ export interface GlobalSettings {
         /** Date and Time Formats for Datepickers */
         datepickerLocaleKey: 'de' | 'en';
         datepickerDateFormat: string;
+
+        /** Filters */
+        newsFilterName: string;
+        eventFilterName: string;
     };
     cookie: {
         name: string;
@@ -578,6 +582,9 @@ const defaultGlobalSettings: GlobalSettings = {
         eventLocaleKey: 'de',
         datepickerLocaleKey: 'de',
         datepickerDateFormat: 'dd.MM.yyyy',
+
+        newsFilterName: 'newsFilter',
+        eventFilterName: 'eventFilter',
     },
     cookie: {
         name: 'cookie-consent-v2',

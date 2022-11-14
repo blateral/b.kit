@@ -14,7 +14,7 @@ export default {
     component: NewsVideo,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
     decorators: [
@@ -91,16 +91,6 @@ export const WithActions: Story = () => (
             alt: 'Placeholder Image',
         }}
         embedId="pVE92TNDwUk"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -114,16 +104,6 @@ export const CustomConsentText: Story = () => (
             alt: 'Placeholder Image',
         }}
         embedId="pVE92TNDwUk"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         consentText="Cookie Consent"
     />
 );
@@ -138,16 +118,6 @@ export const CustomConsentAction: Story = () => (
             alt: 'Placeholder Image',
         }}
         embedId="pVE92TNDwUk"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         consentAction={({ handleClick, consentProps }) => (
             <button onClick={handleClick} {...consentProps}>
                 open cookie consent
@@ -167,16 +137,6 @@ export const WithBackground: Story = () => (
             alt: 'Placeholder Image',
         }}
         embedId="pVE92TNDwUk"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
     />
 );
 
@@ -190,16 +150,6 @@ export const isInverted: Story = () => (
             alt: 'Placeholder Image',
         }}
         embedId="pVE92TNDwUk"
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
-        )}
         bgMode="inverted"
     />
 );

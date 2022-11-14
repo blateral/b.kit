@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { spacings, getGlobals as global } from 'utils/styles';
+import { getGlobals as global } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import Actions from 'components/blocks/Actions';
 import Grid from 'components/base/Grid';
 
 const StyledImage = styled(Image)`
@@ -14,29 +13,19 @@ const StyledImage = styled(Image)`
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 `;
 
-const StyledActions = styled(Actions)`
-    margin-top: ${spacings.spacer}px;
-`;
-
 const NewsImages: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
+    /** List of gallery images */
     images?: Omit<ImageProps, 'coverSpace'>[];
+
+    /** Image style */
     imageStyle?: 'full' | 'half';
 
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({
-    anchorId,
-    images,
-    imageStyle = 'full',
-    primaryAction,
-    secondaryAction,
-    bgMode,
-}) => {
+}> = ({ anchorId, images, imageStyle = 'full', bgMode }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -62,7 +51,11 @@ const NewsImages: React.FC<{
                             return (
                                 <Grid.Col medium={{ span: 6 / 12 }} key={i}>
                                     <div>
-                                        <StyledImage coverSpace {...img} />
+                                        <StyledImage
+                                            {...img}
+                                            coverSpace
+                                            isInverted={isInverted}
+                                        />
                                     </div>
                                 </Grid.Col>
                             );
@@ -73,20 +66,16 @@ const NewsImages: React.FC<{
                         <div>
                             {images.map((img, i) => {
                                 return (
-                                    <StyledImage coverSpace {...img} key={i} />
+                                    <StyledImage
+                                        key={i}
+                                        {...img}
+                                        coverSpace
+                                        isInverted={isInverted}
+                                    />
                                 );
                             })}
                         </div>
                     )
-                )}
-
-                {(primaryAction || secondaryAction) && (
-                    <StyledActions
-                        primary={primaryAction && primaryAction(isInverted)}
-                        secondary={
-                            secondaryAction && secondaryAction(isInverted)
-                        }
-                    />
                 )}
             </Wrapper>
         </Section>

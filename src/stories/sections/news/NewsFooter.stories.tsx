@@ -9,7 +9,7 @@ export default {
     component: NewsFooterComponent,
     parameters: {
         status: {
-            type: 'preview',
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
 } as Meta;
@@ -30,8 +30,7 @@ export const Default: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=400',
                     semilarge: 'https://unsplash.it/462/347?image=400',
                     ratios: {
-                        small: { w: 629, h: 464 },
-                        medium: { w: 791, h: 594 },
+                        small: { w: 4, h: 3 },
                     },
                 },
                 link: { href: '#0' },
@@ -46,8 +45,7 @@ export const Default: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=401',
                     semilarge: 'https://unsplash.it/462/347?image=401',
                     ratios: {
-                        small: { w: 629, h: 464 },
-                        medium: { w: 791, h: 594 },
+                        small: { w: 4, h: 3 },
                     },
                 },
                 link: { href: '#0' },
@@ -73,8 +71,7 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=400',
                     semilarge: 'https://unsplash.it/462/347?image=400',
                     ratios: {
-                        small: { w: 629, h: 464 },
-                        medium: { w: 791, h: 594 },
+                        small: { w: 4, h: 3 },
                     },
                 },
                 link: { href: '#0' },
@@ -89,8 +86,7 @@ export const WithBackground: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=401',
                     semilarge: 'https://unsplash.it/462/347?image=401',
                     ratios: {
-                        small: { w: 629, h: 464 },
-                        medium: { w: 791, h: 594 },
+                        small: { w: 4, h: 3 },
                     },
                 },
                 link: { href: '#0' },
@@ -115,8 +111,7 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=400',
                     semilarge: 'https://unsplash.it/462/347?image=400',
                     ratios: {
-                        small: { w: 629, h: 464 },
-                        medium: { w: 791, h: 594 },
+                        small: { w: 4, h: 3 },
                     },
                 },
                 link: { href: '#0' },
@@ -131,8 +126,7 @@ export const IsInverted: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=401',
                     semilarge: 'https://unsplash.it/462/347?image=401',
                     ratios: {
-                        small: { w: 629, h: 464 },
-                        medium: { w: 791, h: 594 },
+                        small: { w: 4, h: 3 },
                     },
                 },
                 link: { href: '#0' },
@@ -167,8 +161,7 @@ export const WithHandler: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=400',
                     semilarge: 'https://unsplash.it/462/347?image=400',
                     ratios: {
-                        small: { w: 629, h: 464 },
-                        medium: { w: 791, h: 594 },
+                        small: { w: 4, h: 3 },
                     },
                 },
                 link: { href: '#0' },
@@ -183,8 +176,7 @@ export const WithHandler: Story = () => (
                     medium: 'https://unsplash.it/791/594?image=401',
                     semilarge: 'https://unsplash.it/462/347?image=401',
                     ratios: {
-                        small: { w: 629, h: 464 },
-                        medium: { w: 791, h: 594 },
+                        small: { w: 4, h: 3 },
                     },
                 },
                 link: { href: '#0' },

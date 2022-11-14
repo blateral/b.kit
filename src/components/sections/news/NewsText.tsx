@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
-import Actions from 'components/blocks/Actions';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
 import { spacings } from 'utils/styles';
@@ -22,20 +21,16 @@ const ContentBlock = styled(Copy)<{
     }
 `;
 
-const StyledActions = styled(Actions)`
-    margin-top: ${spacings.spacer}px;
-`;
-
 const NewsText: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
+    /** Main text (RichText) */
     text: string;
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, text, primaryAction, secondaryAction, bgMode }) => {
+}> = ({ anchorId, text, bgMode }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -59,14 +54,6 @@ const NewsText: React.FC<{
                         isInverted={isInverted}
                         type="copy"
                         innerHTML={text}
-                    />
-                )}
-                {(primaryAction || secondaryAction) && (
-                    <StyledActions
-                        primary={primaryAction && primaryAction(isInverted)}
-                        secondary={
-                            secondaryAction && secondaryAction(isInverted)
-                        }
                     />
                 )}
             </Wrapper>
