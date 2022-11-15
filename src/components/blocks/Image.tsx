@@ -38,7 +38,7 @@ export interface ImageProps {
 
     /**
      * Image ratios for each breakpoint to avoid layout shifting.
-     * Only works if coverSpace!
+     * Only works if coverSpace = true!
      * */
     ratios?: ImageAspectRatios;
 
@@ -198,8 +198,14 @@ const Copyright = styled(Copy)`
 const Image: React.FC<
     {
         className?: string;
+
+        /** Click handler */
         onClick?: () => void;
+
+        /** Show inverted image placeholder background */
         isInverted?: boolean;
+
+        /** Allow edge radius defined by theme settings */
         allowEdgeRadius?: boolean;
     } & ImageProps
 > = ({

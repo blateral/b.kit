@@ -72,6 +72,31 @@ export const WithImage: Story = () => (
     />
 );
 
+export const ImageWithOriginalSize: Story = () => (
+    <Intro
+        title="Lorem ipsum dolor sit amet consectetur adipiscing elitt"
+        superTitle="Lorem Ipsum"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        image={{
+            small: 'https://unsplash.it/250/250?image=703',
+            coverSpace: false,
+            ratios: {
+                small: { h: 250, w: 250 },
+            },
+        }}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
 export const WithImageCopyright: Story = () => (
     <Intro
         title="Lorem ipsum dolor sit amet consectetur adipiscing elitt"

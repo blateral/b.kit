@@ -77,6 +77,7 @@ const MobileImageContainer = styled.div<{ isCentered?: boolean }>`
     height: 100%;
     max-width: 400px;
     max-height: 400px;
+    text-align: center;
 
     margin: 0 auto;
     margin-top: ${spacings.spacer}px;
@@ -120,8 +121,8 @@ const IntroBlock: React.FC<{
     /** Intro text underneath the title (richtext) */
     text?: string;
 
-    /** Intro image */
-    image?: Omit<ImageProps, 'coverSpace'>;
+    /** Intro image. coverSpace defaults to true */
+    image?: ImageProps;
 
     /** Copy type of intro text (limits richtext capabilites on textType == copy-b or copy-i) */
     textType?: CopyType;
@@ -168,6 +169,7 @@ const IntroBlock: React.FC<{
     image,
 }) => {
     const isInverted = colorMode === 'inverted' || colorMode === 'onImage';
+    const coverSpace = image?.coverSpace === false ? false : true;
 
     return (
         <View as={renderAs} isCentered={isCentered} className={className}>
@@ -188,7 +190,7 @@ const IntroBlock: React.FC<{
                     <MobileImageContainer isCentered={isCentered}>
                         <Image
                             {...image}
-                            coverSpace
+                            coverSpace={coverSpace}
                             allowEdgeRadius
                             isInverted={isInverted}
                         />
@@ -219,7 +221,7 @@ const IntroBlock: React.FC<{
                 <DesktopImageContainer>
                     <Image
                         {...image}
-                        coverSpace
+                        coverSpace={coverSpace}
                         allowEdgeRadius
                         isInverted={isInverted}
                     />
