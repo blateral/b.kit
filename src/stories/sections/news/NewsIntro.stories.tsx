@@ -92,7 +92,7 @@ export const WithImage: Story = () => (
         image={{
             small: 'https://unsplash.it/619/348?image=400',
             medium: 'https://unsplash.it/791/445?image=400',
-            semilarge: 'https://unsplash.it/944/531?image=400',
+            semilarge: 'https://unsplash.it/968/545?image=400',
             ratios: {
                 small: { w: 619, h: 348 },
             },
@@ -126,7 +126,7 @@ export const WithBackground: Story = () => (
         image={{
             small: 'https://unsplash.it/619/348?image=400',
             medium: 'https://unsplash.it/791/445?image=400',
-            semilarge: 'https://unsplash.it/944/531?image=400',
+            semilarge: 'https://unsplash.it/968/545?image=400',
             ratios: {
                 small: { w: 619, h: 348 },
             },
@@ -159,7 +159,7 @@ export const IsInverted: Story = () => (
         image={{
             small: 'https://unsplash.it/619/348?image=400',
             medium: 'https://unsplash.it/791/445?image=400',
-            semilarge: 'https://unsplash.it/944/531?image=400',
+            semilarge: 'https://unsplash.it/968/545?image=400',
             ratios: {
                 small: { w: 619, h: 348 },
             },
@@ -193,7 +193,7 @@ export const WithCustomTags: Story = () => (
         image={{
             small: 'https://unsplash.it/619/348?image=400',
             medium: 'https://unsplash.it/791/445?image=400',
-            semilarge: 'https://unsplash.it/944/531?image=400',
+            semilarge: 'https://unsplash.it/968/545?image=400',
             ratios: {
                 small: { w: 619, h: 348 },
             },
