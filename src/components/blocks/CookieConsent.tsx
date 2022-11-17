@@ -37,7 +37,7 @@ const View = styled.div`
     max-width: 900px;
     width: 100vw;
 
-    max-height: 85%;
+    max-height: 80%;
     overflow-y: scroll;
     padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
     position: fixed;
