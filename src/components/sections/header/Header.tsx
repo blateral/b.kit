@@ -284,12 +284,14 @@ const ContentMobile = styled.div`
 const Title = styled(Heading)<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => isCentered && 'center'};
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* number of lines to show */
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
+    @media ${mq.medium} {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* number of lines to show */
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
 `;
 
 const Text = styled(Copy)<{ isCentered?: boolean }>`
