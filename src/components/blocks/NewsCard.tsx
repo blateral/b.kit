@@ -101,6 +101,15 @@ const Main = styled.div`
     }
 `;
 
+const Text = styled(Copy)`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 6; /* number of lines to show */
+    line-clamp: 6;
+    -webkit-box-orient: vertical;
+`;
+
 const Action = styled.div`
     margin-top: ${spacings.nudge * 3}px;
 `;
@@ -183,11 +192,6 @@ const NewsCard = forwardRef<
             publishedAt = formatter.getFormattedDate();
         }
 
-        // settings max text length to 300 chars
-        if (text && text.length > 300) {
-            text = text.slice(0, 301) + '...';
-        }
-
         const handleTagClick = (tag: TagProps) =>
             onTagClick
                 ? (ev?: React.SyntheticEvent<HTMLAnchorElement>) => {
@@ -262,7 +266,7 @@ const NewsCard = forwardRef<
                         </TitleLink>
                     )}
                     {text && (
-                        <Copy
+                        <Text
                             isInverted={isInverted}
                             type="copy"
                             innerHTML={text}
