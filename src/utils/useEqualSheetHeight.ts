@@ -109,7 +109,8 @@ export const useEqualSheetHeight = <T extends HTMLElement>(props: {
                     if (element) {
                         element.removeAttribute('style');
 
-                        const newHeight = element.scrollHeight;
+                        const newHeight =
+                            element.getBoundingClientRect().height;
 
                         const prevHeights = identifierSizes.get(id);
                         if (prevHeights) {
