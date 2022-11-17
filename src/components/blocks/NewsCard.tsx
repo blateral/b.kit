@@ -108,6 +108,20 @@ const Text = styled(Copy)`
     -webkit-line-clamp: 6; /* number of lines to show */
     line-clamp: 6;
     -webkit-box-orient: vertical;
+
+    & > * {
+        margin: 0 !important;
+    }
+
+    & > p:not(:first-of-type) {
+        display: none;
+    }
+
+    & > ul,
+    & > ol,
+    & > table {
+        display: none;
+    }
 `;
 
 const Action = styled.div`
