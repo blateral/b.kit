@@ -36,7 +36,9 @@ const View = styled.div`
     box-sizing: border-box;
     max-width: 900px;
     width: 100vw;
-    max-height: 100vh;
+
+    max-height: 85%;
+    overflow-y: scroll;
     padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
     position: fixed;
     bottom: 0;
@@ -46,7 +48,6 @@ const View = styled.div`
 
     background-color: ${({ theme }) => color(theme).elementBg.light};
     box-shadow: 0 2px 44px rgba(0, 0, 0, 0.3);
-    overflow: auto;
 
     & > * + * {
         margin-top: ${spacings.spacer}px;
@@ -58,6 +59,8 @@ const View = styled.div`
 
     @media ${mq.semilarge} {
         bottom: ${spacings.spacer * 1.5}px;
+        max-height: 100vh;
+        overflow: auto;
     }
 `;
 
