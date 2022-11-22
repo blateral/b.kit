@@ -260,9 +260,8 @@ export const CookieTitle: FC<{
 /** Example Cookie title */
 const TextView = styled.div``;
 
-const Text = styled(Copy)<{ isCentered?: boolean; isClamped?: boolean }>`
+const ClampWrapper = styled.div<{ isClamped?: boolean }>`
     position: relative;
-    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
     max-height: ${({ isClamped }) => isClamped && '80px'};
     overflow: hidden;
 
@@ -277,11 +276,15 @@ const Text = styled(Copy)<{ isCentered?: boolean; isClamped?: boolean }>`
         background: linear-gradient(
             0deg,
             rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 0.3575805322128851) 35%,
+            rgba(255, 255, 255, 0.9) 25%,
             rgba(255, 255, 255, 0) 100%
         );
         pointer-events: none;
     }
+`;
+
+const Text = styled(Copy)<{ isCentered?: boolean }>`
+    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
 `;
 
 const TextToggle = styled.button`
@@ -310,18 +313,18 @@ export const CookieText: FC<{
     className,
     children,
 }) => {
-    const [isClamped, setIsClamped] = useState<boolean>(false);
+    const [isClamped, setIsClamped] = useState<boolean>(true);
     const canClamp = useRef<boolean>(!!allowClamping);
     const cRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!canClamp.current || isClamped || !allowClamping) return;
+        if (!canClamp.current) return;
 
-        const height = cRef.current?.getBoundingClientRect().height;
+        const height = cRef.current?.scrollHeight;
         if (height === undefined) return;
 
         setIsClamped(height > 130);
-    }, [allowClamping, isClamped]);
+    }, [allowClamping]);
 
     const handleToggleClick = () => {
         setIsClamped(false);
@@ -330,16 +333,15 @@ export const CookieText: FC<{
 
     return (
         <TextView>
-            <div ref={cRef}>
+            <ClampWrapper ref={cRef} isClamped={isClamped}>
                 <Text
-                    isClamped={isClamped}
                     isCentered={isCentered}
                     innerHTML={innerHTML}
                     className={className}
                 >
                     {children}
                 </Text>
-            </div>
+            </ClampWrapper>
             {isClamped &&
                 (toggle ? (
                     toggle(handleToggleClick)
