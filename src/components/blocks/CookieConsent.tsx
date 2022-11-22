@@ -294,8 +294,7 @@ const TextToggle = styled.button`
     border: none;
     cursor: pointer;
 
-    padding: ${spacings.nudge}px ${spacings.nudge * 2}px ${spacings.nudge * 2}px
-        ${spacings.nudge * 2}px;
+    padding: ${spacings.nudge}px ${spacings.nudge * 2}px;
 `;
 
 export const CookieText: FC<{
