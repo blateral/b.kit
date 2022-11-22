@@ -14,6 +14,7 @@ export { default as AngleUp } from 'components/base/icons/AngleUp';
 export { default as AngleDown } from 'components/base/icons/AngleDown';
 export { default as AngleLeft } from 'components/base/icons/AngleLeft';
 export { default as AngleRight } from 'components/base/icons/AngleRight';
+export { default as UnfoldMore } from 'components/base/icons/UnfoldMore';
 
 /** Files **/
 export { default as UploadFile } from 'components/base/icons/files/UploadFile';

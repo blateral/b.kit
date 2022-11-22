@@ -17,6 +17,7 @@ import AngleUp from 'components/base/icons/AngleUp';
 import AngleDown from 'components/base/icons/AngleDown';
 import AngleLeft from 'components/base/icons/AngleLeft';
 import AngleRight from 'components/base/icons/AngleRight';
+import UnfoldMore from 'components/base/icons/UnfoldMore';
 
 /** Files **/
 import UploadFile from 'components/base/icons/files/UploadFile';
@@ -132,6 +133,7 @@ export default {
         ToggleOn,
         ToggleOff,
         LocationSearch,
+        UnfoldMore,
     },
     decorators: [
         (Story) => (
@@ -299,3 +301,6 @@ IconToggleOff.storyName = 'Toggle Off';
 
 export const IconLocationSearch: Story = () => <LocationSearch />;
 IconLocationSearch.storyName = 'Location search';
+
+export const IconUnfoldMore: Story = () => <UnfoldMore />;
+IconUnfoldMore.storyName = 'Unfold more';

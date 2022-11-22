@@ -1,9 +1,10 @@
 import Check from 'components/base/icons/Check';
 import Cross from 'components/base/icons/Cross';
+import UnfoldMore from 'components/base/icons/UnfoldMore';
 import Actions from 'components/blocks/Actions';
 import Checkbox from 'components/fields/Checkbox';
 import Copy from 'components/typography/Copy';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import {
     bindConsentButtons,
@@ -37,7 +38,7 @@ const View = styled.div`
     max-width: 900px;
     width: 100vw;
 
-    max-height: 80%;
+    max-height: 85%;
     overflow-y: scroll;
     padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
     position: fixed;
@@ -50,11 +51,15 @@ const View = styled.div`
     box-shadow: 0 2px 44px rgba(0, 0, 0, 0.3);
 
     & > * + * {
-        margin-top: ${spacings.spacer}px;
+        margin-top: ${spacings.nudge * 2}px;
     }
 
     @media ${mq.medium} {
         padding: ${spacings.nudge * 5}px;
+
+        & > * + * {
+            margin-top: ${spacings.nudge * 3}px;
+        }
     }
 
     @media ${mq.semilarge} {
@@ -253,23 +258,96 @@ export const CookieTitle: FC<{
 };
 
 /** Example Cookie title */
-const TextView = styled(Copy)<{ isCentered?: boolean }>`
+const TextView = styled.div``;
+
+const Text = styled(Copy)<{ isCentered?: boolean; isClamped?: boolean }>`
+    position: relative;
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+    max-height: ${({ isClamped }) => isClamped && '80px'};
+    overflow: hidden;
+
+    &:after {
+        content: ${({ isClamped }) => isClamped && "''"};
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+        background: linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0.3575805322128851) 35%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        pointer-events: none;
+    }
+`;
+
+const TextToggle = styled.button`
+    background: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+
+    padding: ${spacings.nudge}px ${spacings.nudge * 2}px ${spacings.nudge * 2}px
+        ${spacings.nudge * 2}px;
 `;
 
 export const CookieText: FC<{
     isCentered?: boolean;
     innerHTML?: string;
+    allowClamping?: boolean;
     className?: string;
     children?: React.ReactNode;
-}> = ({ isCentered, innerHTML, className, children }) => {
+    toggle?: (handleClick: () => void) => React.ReactNode;
+}> = ({
+    isCentered,
+    innerHTML,
+    allowClamping = true,
+    toggle,
+    className,
+    children,
+}) => {
+    const [isClamped, setIsClamped] = useState<boolean>(false);
+    const canClamp = useRef<boolean>(!!allowClamping);
+    const cRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!canClamp.current || isClamped || !allowClamping) return;
+
+        const height = cRef.current?.getBoundingClientRect().height;
+        if (height === undefined) return;
+
+        setIsClamped(height > 130);
+    }, [allowClamping, isClamped]);
+
+    const handleToggleClick = () => {
+        setIsClamped(false);
+        canClamp.current = false;
+    };
+
     return (
-        <TextView
-            isCentered={isCentered}
-            innerHTML={innerHTML}
-            className={className}
-        >
-            {children}
+        <TextView>
+            <div ref={cRef}>
+                <Text
+                    isClamped={isClamped}
+                    isCentered={isCentered}
+                    innerHTML={innerHTML}
+                    className={className}
+                >
+                    {children}
+                </Text>
+            </div>
+            {isClamped &&
+                (toggle ? (
+                    toggle(handleToggleClick)
+                ) : (
+                    <TextToggle onClick={handleToggleClick}>
+                        <UnfoldMore />
+                    </TextToggle>
+                ))}
         </TextView>
     );
 };
@@ -303,7 +381,11 @@ export const CookieTypeSelect: FC<{
 
 /** Example Cookie actions */
 export const CookieActions = styled(Actions)`
-    margin-top: ${spacings.spacer * 1.5}px;
+    margin-top: ${spacings.spacer}px;
+
+    @media ${mq.medium} {
+        margin-top: ${spacings.nudge * 5}px;
+    }
 `;
 
 export default CookieConsent;

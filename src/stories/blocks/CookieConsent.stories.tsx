@@ -146,13 +146,8 @@ export const Advanced: Story = () => (
             }) => (
                 <React.Fragment>
                     <CookieTitle innerHTML="Verwendung von Cookies und Daten" />
-                    <CookieText innerHTML="Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind." />
+                    <CookieText innerHTML='Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind. <br /><br /> Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>' />
                     <CookieTypeSelect types={types} setConsent={setConsent} />
-                    <CookieText
-                        innerHTML={
-                            'Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>'
-                        }
-                    />
                     <CookieActions
                         isMirrored
                         primary={
@@ -203,13 +198,9 @@ export const CustomOverlayOpacity: Story = () => (
             }) => (
                 <React.Fragment>
                     <CookieTitle innerHTML="Verwendung von Cookies und Daten" />
-                    <CookieText innerHTML="Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind." />
+                    <CookieText innerHTML='Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind. <br /><br /> Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>' />
                     <CookieTypeSelect types={types} setConsent={setConsent} />
-                    <CookieText
-                        innerHTML={
-                            'Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>'
-                        }
-                    />
+
                     <CookieActions
                         isMirrored
                         primary={
@@ -260,13 +251,8 @@ export const WithWhitelist: Story = () => (
             }) => (
                 <React.Fragment>
                     <CookieTitle innerHTML="Verwendung von Cookies und Daten" />
-                    <CookieText innerHTML="Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind." />
+                    <CookieText innerHTML='Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind. <br /><br /> Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>' />
                     <CookieTypeSelect types={types} setConsent={setConsent} />
-                    <CookieText
-                        innerHTML={
-                            'Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>'
-                        }
-                    />
                     <CookieActions
                         isMirrored
                         primary={
@@ -324,13 +310,8 @@ export const CustomStatus: Story = () => (
             }) => (
                 <React.Fragment>
                     <CookieTitle innerHTML="Verwendung von Cookies und Daten" />
-                    <CookieText innerHTML="Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind." />
+                    <CookieText innerHTML='Diese Webseite verwendet Cookies und ähnliche Technologien. Um zusätzliche Funktionen und Informationen anbieten zu können, werden Services von Drittanbietern genutzt. Dabei kann ein Datenaustausch mit Drittanbietern stattfinden. Wenn Sie der Verwendung nicht zustimmen, werden ausschließlich Cookies und Daten genutzt, die technisch notwendig sind. <br /><br /> Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>' />
                     <CookieTypeSelect types={types} setConsent={setConsent} />
-                    <CookieText
-                        innerHTML={
-                            'Weitere Informationen sowie Details zu den Kategorien finden Sie unter <a href="#">Datenschutz</a> und <a href="#1">Impressum.</a>'
-                        }
-                    />
                     <CookieActions
                         isMirrored
                         primary={
