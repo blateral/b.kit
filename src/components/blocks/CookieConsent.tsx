@@ -362,11 +362,21 @@ const SelectView = styled.div`
     }
 `;
 
+const SelectTitle = styled(Copy)`
+    text-align: left;
+
+    &:not(:last-child) {
+        margin-bottom: ${spacings.nudge * 2}px;
+    }
+`;
+
 export const CookieTypeSelect: FC<{
+    title?: string;
     types: CookieTypes;
     setConsent: (typeName: keyof CookieTypes, isAccepted?: boolean) => void;
-}> = ({ types, setConsent }) => (
+}> = ({ title, types, setConsent }) => (
     <SelectView>
+        {title && <SelectTitle type="copy-b" innerHTML={title} />}
         {types &&
             Object.keys(types).map((key) => (
                 <Checkbox
