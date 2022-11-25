@@ -266,6 +266,7 @@ const Teaser: FC<{
                         }}
                     >
                         <IntroBlock
+                            titleHyphens
                             title={title}
                             titleAs={titleAs}
                             superTitle={superTitle}

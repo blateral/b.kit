@@ -67,6 +67,10 @@ const Title: FC<{
 
     /** Center texts */
     isCentered?: boolean;
+
+    /** Enable titel text hypens */
+    titleHyphens?: boolean;
+
     className?: string;
 }> = ({
     colorMode = 'default',
@@ -76,6 +80,7 @@ const Title: FC<{
     titleAs,
     maxLines,
     isCentered = false,
+    titleHyphens,
     className,
 }) => {
     const { colors } = useLibTheme();
@@ -99,6 +104,7 @@ const Title: FC<{
                 <MainTitle
                     renderAs={titleAs || 'h2'}
                     size="heading-2"
+                    hyphens={titleHyphens}
                     textColor={
                         colorMode === 'onImage'
                             ? colors.text.inverted

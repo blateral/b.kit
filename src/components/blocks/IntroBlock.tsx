@@ -148,6 +148,9 @@ const IntroBlock: React.FC<{
     /** Limit lines of text. Cut of with elipsis */
     maxTextLines?: number;
 
+    /** Main title hyphens */
+    titleHyphens?: boolean;
+
     className?: string;
 }> = ({
     renderAs = 'div',
@@ -166,6 +169,7 @@ const IntroBlock: React.FC<{
     clampText = false,
     maxTextLines,
     className,
+    titleHyphens,
     image,
 }) => {
     const isInverted = colorMode === 'inverted' || colorMode === 'onImage';
@@ -184,6 +188,7 @@ const IntroBlock: React.FC<{
                         isCentered={isCentered}
                         clamp={clampTitle}
                         maxLines={maxTitleLines}
+                        titleHyphens={titleHyphens}
                     />
                 )}
                 {image?.small && (

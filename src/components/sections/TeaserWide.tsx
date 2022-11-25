@@ -334,6 +334,7 @@ const TeaserWide: FC<{
                     >
                         <Content>
                             <IntroBlock
+                                titleHyphens
                                 title={title}
                                 titleAs={titleAs}
                                 superTitle={superTitle}
