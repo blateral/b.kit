@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 
 import Heading, { HeadlineTag } from 'components/typography/Heading';
-import { spacings } from 'utils/styles';
+import { FontType, spacings } from 'utils/styles';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
 const View = styled.div<{ isCentered?: boolean }>`
@@ -43,6 +43,8 @@ const MainTitle = styled(Heading)<{ maxLines?: number }>`
         `}
 `;
 
+export type TitleSize = Extract<FontType, 'heading-1' | 'heading-2'>;
+
 const Title: FC<{
     /**
      * Text color mode mostly background dependent.
@@ -62,6 +64,9 @@ const Title: FC<{
     /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
 
+    /** Style type of main title */
+    titleSize?: TitleSize;
+
     /** Clamp lines of text to specific number */
     maxLines?: number;
 
@@ -78,6 +83,7 @@ const Title: FC<{
     superTitleAs,
     title,
     titleAs,
+    titleSize = 'heading-2',
     maxLines,
     isCentered = false,
     titleHyphens,
@@ -103,7 +109,7 @@ const Title: FC<{
             {title && (
                 <MainTitle
                     renderAs={titleAs || 'h2'}
-                    size="heading-2"
+                    size={titleSize === 'heading-1' ? 'heading-1' : 'heading-2'}
                     hyphens={titleHyphens}
                     textColor={
                         colorMode === 'onImage'

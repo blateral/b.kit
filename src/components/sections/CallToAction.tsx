@@ -2,6 +2,7 @@ import React, { FC, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import {
+    FontOptions,
     getColors as color,
     getGlobals as global,
     mq,
@@ -15,6 +16,7 @@ import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import { gridSettings, getGridWidth } from 'components/base/Grid';
+import { TitleSize } from 'components/blocks/Title';
 
 const ContactView = styled.div`
     display: flex;
@@ -192,12 +194,16 @@ export const CallToAction: FC<{
     title?: string;
     /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
+    /** Main title size */
+    titleSize?: TitleSize;
     /** Superior title that stands above main title */
     superTitle?: string;
     /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
     /** Bold text underneath the title (limited richtext capabilites) */
     text?: string;
+    /** Main text size */
+    textSize?: keyof FontOptions;
     /** Props for contact area */
     contact?: ContactBoxProps;
     /** Show Newsletter defined by inject function newsFormMain. Only visible if React node is defined! */
@@ -218,9 +224,11 @@ export const CallToAction: FC<{
     anchorId,
     title,
     titleAs = 'h2',
+    titleSize = 'heading-2',
     superTitle,
     superTitleAs,
     text,
+    textSize = 'medium',
     contact,
     badge,
     primaryAction,
@@ -250,10 +258,12 @@ export const CallToAction: FC<{
                         colorMode={isInverted ? 'inverted' : 'default'}
                         title={title}
                         titleAs={titleAs}
+                        titleSize={titleSize}
                         superTitle={superTitle}
                         superTitleAs={superTitleAs}
                         hasDecorator={!!badge}
                         text={text}
+                        textSize={textSize}
                     />
                 )}
 

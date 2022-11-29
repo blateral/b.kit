@@ -45,6 +45,38 @@ export const Default: Story = () => (
     />
 );
 
+export const WithLargeTitle: Story = () => (
+    <Article
+        titleSize="heading-1"
+        title="Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+        superTitle="Cum sociis natoque"
+        text={`
+            <b>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. </b>
+            <br/>
+            <br/>
+            <br/>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+            <br/>
+            <br/>
+            <b>Duis autem vel eum iriure dolor in hendrerit in vulputate</b>
+            <br/>
+            <br/>
+            <a href="#0">Link</a>
+            Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+            `}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
 export const WithInnerHTML: Story = () => (
     <Article
         text={`

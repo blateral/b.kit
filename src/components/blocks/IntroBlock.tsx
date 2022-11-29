@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { spacings, mq } from 'utils/styles';
+import { spacings, mq, FontOptions } from 'utils/styles';
 
-import Title from 'components/blocks/Title';
+import Title, { TitleSize } from 'components/blocks/Title';
 import Copy, { CopyType } from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 import { HeadlineTag } from 'components/typography/Heading';
@@ -112,6 +112,9 @@ const IntroBlock: React.FC<{
     /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
 
+    /** Main title size */
+    titleSize?: TitleSize;
+
     /** Superior title that stands above main title */
     superTitle?: string;
 
@@ -126,6 +129,9 @@ const IntroBlock: React.FC<{
 
     /** Copy type of intro text (limits richtext capabilites on textType == copy-b or copy-i) */
     textType?: CopyType;
+
+    /** Copy size of intro text */
+    textSize?: keyof FontOptions;
 
     /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
@@ -157,10 +163,12 @@ const IntroBlock: React.FC<{
     colorMode = 'default',
     title,
     titleAs,
+    titleSize = 'heading-2',
     superTitle,
     superTitleAs,
     text,
     textType = 'copy',
+    textSize = 'medium',
     primaryAction,
     secondaryAction,
     isCentered = false,
@@ -183,6 +191,7 @@ const IntroBlock: React.FC<{
                         colorMode={colorMode}
                         title={title}
                         titleAs={titleAs}
+                        titleSize={titleSize}
                         superTitle={superTitle}
                         superTitleAs={superTitleAs}
                         isCentered={isCentered}
@@ -204,6 +213,7 @@ const IntroBlock: React.FC<{
                 {text && (
                     <ContentBlock
                         type={textType}
+                        size={textSize}
                         textColor={colorMode === 'onImage' ? '#fff' : undefined}
                         isInverted={isInverted}
                         isCentered={isCentered}

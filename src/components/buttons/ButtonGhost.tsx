@@ -25,6 +25,7 @@ const View = styled.a<{
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+    white-space: nowrap;
 
     vertical-align: middle;
 

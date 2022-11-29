@@ -5,6 +5,8 @@ import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { ImageProps } from 'components/blocks/Image';
+import { FontOptions } from 'utils/styles';
+import { TitleSize } from 'components/blocks/Title';
 
 const Intro: React.FC<{
     /** ID value for targeting section with anchor hashes */
@@ -16,14 +18,20 @@ const Intro: React.FC<{
     /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
 
+    /** Main title style */
+    titleSize?: TitleSize;
+
     /** Superior title that stands above main title */
     superTitle?: string;
 
     /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
 
-    /**  Intro text underneath the title (richtext) */
+    /**  Main text (richtext) */
     text?: string;
+
+    /** Main text size */
+    textSize?: keyof FontOptions;
 
     /** Images for different screen sizes. coverSpace defaults to true */
     image?: ImageProps;
@@ -50,9 +58,11 @@ const Intro: React.FC<{
     anchorId,
     title,
     titleAs,
+    titleSize = 'heading-2',
     superTitle,
     superTitleAs,
     text,
+    textSize = 'medium',
     primaryAction,
     secondaryAction,
     isCentered = false,
@@ -88,9 +98,11 @@ const Intro: React.FC<{
                 <IntroBlock
                     title={title}
                     titleAs={titleAs}
+                    titleSize={titleSize}
                     superTitle={superTitle}
                     superTitleAs={superTitleAs}
                     text={text}
+                    textSize={textSize}
                     colorMode={isInverted ? 'inverted' : 'default'}
                     secondaryAction={secondaryAction}
                     primaryAction={primaryAction}

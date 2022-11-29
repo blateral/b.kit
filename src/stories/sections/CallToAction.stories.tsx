@@ -25,6 +25,14 @@ export const WithSuperTitle: Story = () => (
     <CallToAction title="Lorem ipsum dolor sit amet" superTitle="Lorem Ipsum" />
 );
 
+export const WithLargeTitle: Story = () => (
+    <CallToAction
+        title="Lorem ipsum dolor sit amet"
+        titleSize="heading-1"
+        superTitle="Lorem Ipsum"
+    />
+);
+
 export const WithIntroText: Story = () => (
     <CallToAction
         title="Lorem ipsum dolor sit amet"

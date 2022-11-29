@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
-import Title from 'components/blocks/Title';
+import Title, { TitleSize } from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
 import { spacings, mq } from 'utils/styles';
@@ -36,6 +36,8 @@ const Article: React.FC<{
     title?: string;
     /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
+    /** Main title size */
+    titleSize?: TitleSize;
     /** Superior title that stands above main title */
     superTitle?: string;
     /** Superior title HTML tag type (h3, h4 ...) */
@@ -60,6 +62,7 @@ const Article: React.FC<{
     anchorId,
     title,
     titleAs = 'h2',
+    titleSize = 'heading-2',
     superTitle,
     superTitleAs,
     intro,
@@ -94,6 +97,7 @@ const Article: React.FC<{
                     <StyledTitle
                         title={title}
                         titleAs={titleAs}
+                        titleSize={titleSize}
                         superTitle={superTitle}
                         superTitleAs={superTitleAs}
                         colorMode={isInverted ? 'inverted' : 'default'}
