@@ -1,10 +1,12 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import SimpleImage from 'components/sections/SimpleImage';
+import SimpleImage, {
+    SimpleImageComponent,
+} from 'components/sections/SimpleImage';
 
 export default {
     title: 'Sections/SimpleImage',
-    component: SimpleImage,
+    component: SimpleImageComponent,
     parameters: {
         status: {
             type: 'releaseCandidate',

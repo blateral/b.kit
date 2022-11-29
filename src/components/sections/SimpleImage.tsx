@@ -5,6 +5,7 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Wrapper from 'components/base/Wrapper';
 import { getColors } from 'utils/styles';
+import { withLibTheme } from 'utils/LibThemeProvider';
 
 const StyledImage = styled(Image)<{ hAlign?: 'left' | 'center' | 'right' }>`
     margin-right: ${({ hAlign }) =>
@@ -45,4 +46,5 @@ const SimpleImage: FC<{
     );
 };
 
-export default SimpleImage;
+export const SimpleImageComponent = SimpleImage;
+export default withLibTheme(SimpleImage);
