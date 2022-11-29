@@ -113,7 +113,6 @@ export { default as PriceList } from 'components/sections/PriceList';
 export { default as PriceTable } from 'components/sections/PriceTable';
 export { default as Quote } from 'components/sections/Quote';
 export { default as SimpleImage } from 'components/sections/SimpleImage';
-export { default as SocialNav } from 'components/sections/SocialNav';
 export { default as SocialWall } from 'components/sections/SocialWall';
 export { default as Table } from 'components/sections/Table';
 export { default as Teaser } from 'components/sections/Teaser';
