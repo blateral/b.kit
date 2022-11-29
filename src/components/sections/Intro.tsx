@@ -5,7 +5,6 @@ import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { ImageProps } from 'components/blocks/Image';
-import { FontOptions } from 'utils/styles';
 import { TitleSize } from 'components/blocks/Title';
 
 const Intro: React.FC<{
@@ -27,11 +26,11 @@ const Intro: React.FC<{
     /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
 
+    /** Intro text under headline (richtext) */
+    abstract?: string;
+
     /**  Main text (richtext) */
     text?: string;
-
-    /** Main text size */
-    textSize?: keyof FontOptions;
 
     /** Images for different screen sizes. coverSpace defaults to true */
     image?: ImageProps;
@@ -61,8 +60,8 @@ const Intro: React.FC<{
     titleSize = 'heading-2',
     superTitle,
     superTitleAs,
+    abstract,
     text,
-    textSize = 'medium',
     primaryAction,
     secondaryAction,
     isCentered = false,
@@ -101,14 +100,15 @@ const Intro: React.FC<{
                     titleSize={titleSize}
                     superTitle={superTitle}
                     superTitleAs={superTitleAs}
+                    abstract={abstract}
                     text={text}
-                    textSize={textSize}
                     colorMode={isInverted ? 'inverted' : 'default'}
                     secondaryAction={secondaryAction}
                     primaryAction={primaryAction}
                     isCentered={isCentered}
                     image={image}
                     clampTitle
+                    clampAbstract
                     clampText
                 />
             </Wrapper>

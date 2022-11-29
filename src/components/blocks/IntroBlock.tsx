@@ -63,6 +63,10 @@ const ContentBlock = styled(Copy)<{
             line-clamp: ${maxLines};
             -webkit-box-orient: vertical;
         `}
+
+    & + & {
+        margin-top: ${spacings.nudge * 3}px;
+    }
 `;
 
 const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
@@ -122,6 +126,9 @@ const IntroBlock: React.FC<{
     superTitleAs?: HeadlineTag;
 
     /** Intro text underneath the title (richtext) */
+    abstract?: string;
+
+    /** Main intro text (richtext) */
     text?: string;
 
     /** Intro image. coverSpace defaults to true */
@@ -151,8 +158,14 @@ const IntroBlock: React.FC<{
     /** Clamp text to max width of 880px */
     clampText?: boolean;
 
+    /** Clamp abstract to max width of 880px */
+    clampAbstract?: boolean;
+
     /** Limit lines of text. Cut of with elipsis */
     maxTextLines?: number;
+
+    /** Limit lines of abstract text. Cut of with elipsis */
+    maxAbstractLines?: number;
 
     /** Main title hyphens */
     titleHyphens?: boolean;
@@ -166,6 +179,7 @@ const IntroBlock: React.FC<{
     titleSize = 'heading-2',
     superTitle,
     superTitleAs,
+    abstract,
     text,
     textType = 'copy',
     textSize = 'medium',
@@ -173,7 +187,9 @@ const IntroBlock: React.FC<{
     secondaryAction,
     isCentered = false,
     clampTitle = false,
+    clampAbstract = false,
     maxTitleLines,
+    maxAbstractLines,
     clampText = false,
     maxTextLines,
     className,
@@ -209,6 +225,18 @@ const IntroBlock: React.FC<{
                             isInverted={isInverted}
                         />
                     </MobileImageContainer>
+                )}
+                {abstract && (
+                    <ContentBlock
+                        type="copy"
+                        size="big"
+                        textColor={colorMode === 'onImage' ? '#fff' : undefined}
+                        isInverted={isInverted}
+                        isCentered={isCentered}
+                        innerHTML={abstract}
+                        clamp={clampAbstract}
+                        maxLines={maxAbstractLines}
+                    />
                 )}
                 {text && (
                     <ContentBlock
