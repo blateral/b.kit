@@ -104,7 +104,7 @@ const EventDetail: React.FC<{
     anchorId?: string;
 
     /** Array of event item settings */
-    event: DetailEventProps & { address?: string };
+    event: DetailEventProps & { address?: string; abstract?: string };
 
     /** Additional event infos */
     infos?: EventInfoGroup[];
@@ -216,6 +216,15 @@ const EventDetail: React.FC<{
                                 type="copy"
                                 innerHTML={event.address}
                             />
+                        )}
+                        {event.abstract && (
+                            <EventText
+                                size="medium"
+                                type="copy-b"
+                                isInverted={isInverted}
+                            >
+                                {event.abstract}
+                            </EventText>
                         )}
                         {event.text && (
                             <EventText

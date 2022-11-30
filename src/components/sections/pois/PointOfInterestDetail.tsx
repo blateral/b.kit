@@ -126,6 +126,7 @@ const PointOfInterestDetail: React.FC<{
                         {intro && (
                             <PoiText
                                 size="medium"
+                                type="copy-b"
                                 isInverted={isInverted}
                                 innerHTML={intro}
                             />

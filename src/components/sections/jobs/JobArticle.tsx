@@ -9,6 +9,7 @@ import Heading from 'components/typography/Heading';
 import React from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
+import { concat } from 'utils/concat';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { generateJob, StructuredEmploymentType } from 'utils/structuredData';
 import { spacings } from 'utils/styles';
@@ -58,6 +59,12 @@ const MainLabel = styled.span`
     align-items: center;
 `;
 
+const Text = styled(Copy)`
+    & + & {
+        margin-top: ${spacings.nudge * 3}px;
+    }
+`;
+
 const StyledActions = styled(Actions)`
     margin-top: ${spacings.spacer}px;
 `;
@@ -82,6 +89,9 @@ export type JobArticleProps = Omit<
 > & {
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
+
+    /** Abstract text which summarizes the job */
+    abstract?: string;
 
     /** Text that describes the job (richtext) */
     description?: string;
@@ -112,6 +122,7 @@ const JobArticle: React.FC<JobArticleProps> = ({
     allLocationsLabel,
     modelIcon,
     locationIcon,
+    abstract,
     description,
     organization,
     datePosted,
@@ -140,7 +151,7 @@ const JobArticle: React.FC<JobArticleProps> = ({
     const jsonLd = {
         jobTitle, // title
         locations, // jobLocation
-        jobDesc: description, // description
+        jobDesc: concat([abstract, description], ' - '), // description
         organization: organization, // hiringOrganization
         directApply: primaryAction || secondaryAction ? true : false, // directApply
         employmentTypes:
@@ -210,8 +221,13 @@ const JobArticle: React.FC<JobArticleProps> = ({
                         </JobInfos>
                     )}
                 </ArticleHead>
+                {abstract && (
+                    <Text type="copy-b" isInverted={isInverted}>
+                        {abstract}
+                    </Text>
+                )}
                 {description && (
-                    <Copy innerHTML={description} isInverted={isInverted} />
+                    <Text innerHTML={description} isInverted={isInverted} />
                 )}
                 {(primaryAction || secondaryAction) && (
                     <StyledActions
