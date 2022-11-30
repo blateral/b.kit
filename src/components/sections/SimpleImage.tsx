@@ -7,11 +7,18 @@ import Wrapper from 'components/base/Wrapper';
 import { getColors } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
-const StyledImage = styled(Image)<{ hAlign?: 'left' | 'center' | 'right' }>`
-    margin-right: ${({ hAlign }) =>
-        hAlign === 'left' || hAlign === 'center' ? 'auto' : 0};
-    margin-left: ${({ hAlign }) =>
-        hAlign === 'right' || hAlign === 'center' ? 'auto' : 0};
+const ImageWrapper = styled(Wrapper)<{ hAlign?: 'left' | 'center' | 'right' }>`
+    display: flex;
+    justify-content: ${({ hAlign }) => {
+        switch (hAlign) {
+            case 'center':
+                return 'center';
+            case 'right':
+                return 'flex-end';
+            default:
+                return 'flex-start';
+        }
+    }};
 `;
 
 const SimpleImage: FC<{
@@ -39,9 +46,9 @@ const SimpleImage: FC<{
             }
             bgMode={mapToBgMode(bgMode)}
         >
-            <Wrapper>
-                {image && <StyledImage hAlign={hAlign} {...image} />}
-            </Wrapper>
+            <ImageWrapper hAlign={hAlign}>
+                {image && <Image {...image} />}
+            </ImageWrapper>
         </Section>
     );
 };

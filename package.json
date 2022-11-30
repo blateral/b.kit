@@ -28,7 +28,7 @@
         "url": "git+https://github.com/blateral/b.kit.git"
     },
     "keywords": [],
-    "author": "Lukas Wochner <lukas.wochner@blateral.com>",
+    "author": "Lukas Wochner <lukas.wochner@blateral.com>, Maja Merk <maja.merk@blateral.com>",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/blateral/b.kit/issues"
