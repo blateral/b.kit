@@ -167,7 +167,7 @@ export const WithInfoList: Story = () => (
                     },
                     {
                         icon: () => <Star />,
-                        text: 'Eintritt frei',
+                        // text: 'Eintritt frei',
                     },
                     {
                         icon: () => <Info />,
