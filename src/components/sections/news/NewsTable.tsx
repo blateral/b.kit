@@ -40,7 +40,7 @@ const NewsTable: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            <TableWrapper addWhitespace clampWidth="small">
+            <TableWrapper clampWidth="small">
                 {tableItems.map((item, i) => {
                     return (
                         <TableBlock

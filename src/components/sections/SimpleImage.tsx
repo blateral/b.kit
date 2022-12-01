@@ -25,10 +25,18 @@ const SimpleImage: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
+    /** Image settings */
     image?: ImageProps;
+
+    /** Horizontal alignment of the image */
     hAlign?: 'left' | 'center' | 'right';
+
+    /** Allow reduced section spacing to next section */
+    isStackable?: boolean;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, image, hAlign = 'left', bgMode }) => {
+}> = ({ anchorId, image, hAlign = 'left', bgMode, isStackable }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -37,6 +45,7 @@ const SimpleImage: FC<{
         <Section
             addSeperation
             anchorId={anchorId}
+            isStackable={isStackable}
             bgColor={
                 isInverted
                     ? getColors(theme).sectionBg.dark

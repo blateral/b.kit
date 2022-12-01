@@ -9,23 +9,31 @@ import Wrapper from 'components/base/Wrapper';
 import Grid from 'components/base/Grid';
 
 const StyledImage = styled(Image)`
-    overflow: hidden;
+    width: 100%;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    overflow: hidden;
+
+    picture > img {
+        width: 100%;
+        height: 100%;
+    }
 `;
+
+type ImageType = Omit<ImageProps, 'coverSpace'> & { isFull?: boolean };
 
 const NewsImages: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** List of gallery images */
-    images?: Omit<ImageProps, 'coverSpace'>[];
+    images?: ImageType[];
 
     /** Image style */
-    imageStyle?: 'full' | 'half';
+    isFull?: boolean;
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, images, imageStyle = 'full', bgMode }) => {
+}> = ({ anchorId, images, bgMode }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -45,7 +53,25 @@ const NewsImages: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="small" addWhitespace>
-                {images && (imageStyle === 'half' || images.length >= 2) ? (
+                <Grid.Row>
+                    {images
+                        ?.filter((img) => img.small)
+                        ?.map((img, i) => (
+                            <Grid.Col
+                                key={i}
+                                semilarge={{
+                                    span: img.isFull ? 12 / 12 : 6 / 12,
+                                }}
+                            >
+                                <StyledImage
+                                    {...img}
+                                    coverSpace
+                                    isInverted={isInverted}
+                                />
+                            </Grid.Col>
+                        ))}
+                </Grid.Row>
+                {/* {images && (imageStyle === 'half' || images.length >= 2) ? (
                     <Grid.Row>
                         {images.map((img, i) => {
                             return (
@@ -76,7 +102,7 @@ const NewsImages: React.FC<{
                             })}
                         </div>
                     )
-                )}
+                )} */}
             </Wrapper>
         </Section>
     );
