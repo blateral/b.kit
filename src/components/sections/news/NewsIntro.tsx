@@ -32,6 +32,7 @@ const IntroHead = styled(Copy)`
 
     @media ${mq.medium} {
         flex-direction: row;
+        align-items: center;
 
         & > * + * {
             margin-top: 0;
