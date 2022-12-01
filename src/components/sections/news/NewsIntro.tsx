@@ -56,7 +56,7 @@ const TagWrapper = styled.span`
 `;
 
 const MetaBlock = styled.div`
-    flex: 1 1 auto;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
