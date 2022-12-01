@@ -94,7 +94,9 @@ const InfoList: FC<{
         <View className={className}>
             <Container>
                 {items?.map((group, i) => {
-                    const hasItems = isValidArray(group?.items, false);
+                    const groupItems =
+                        group?.items?.filter((item) => item.text) || [];
+                    const hasItems = isValidArray(groupItems, false);
 
                     return (
                         <Item key={i}>
@@ -110,36 +112,22 @@ const InfoList: FC<{
                             )}
                             {hasItems && (
                                 <Infos>
-                                    {group?.items?.map((info, ii) => {
-                                        return (
-                                            info.text && (
-                                                <Content key={ii}>
-                                                    <Icon
-                                                        isInverted={isInverted}
-                                                    >
-                                                        {info.icon &&
-                                                            info.icon(
-                                                                isInverted
-                                                            )}
-                                                    </Icon>
-                                                    {info.text && (
-                                                        <Copy
-                                                            size="small"
-                                                            isInverted={
-                                                                isInverted
-                                                            }
-                                                            innerHTML={
-                                                                info.text
-                                                            }
-                                                            allowLinkIcons={
-                                                                false
-                                                            }
-                                                        />
-                                                    )}
-                                                </Content>
-                                            )
-                                        );
-                                    })}
+                                    {groupItems.map((info, ii) => (
+                                        <Content key={ii}>
+                                            <Icon isInverted={isInverted}>
+                                                {info.icon &&
+                                                    info.icon(isInverted)}
+                                            </Icon>
+                                            {info.text && (
+                                                <Copy
+                                                    size="small"
+                                                    isInverted={isInverted}
+                                                    innerHTML={info.text}
+                                                    allowLinkIcons={false}
+                                                />
+                                            )}
+                                        </Content>
+                                    ))}
                                 </Infos>
                             )}
                         </Item>
