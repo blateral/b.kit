@@ -28,7 +28,6 @@ const View = styled.a<{
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    white-space: nowrap;
 
     vertical-align: middle;
 
@@ -240,8 +239,8 @@ const Label = styled.span`
     display: inline-block;
 
     max-width: 100%;
-    overflow: hidden;
 
+    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 `;
