@@ -24,11 +24,11 @@ const Content = styled.div<{
     margin-left: -${spacings.spacer}px;
 
     &&& > * {
-        flex: 1 1 ${({ isCovered }) => (isCovered ? '100%' : '0px')};
+        /* flex: 1 1 ${({ isCovered }) => (isCovered ? '100%' : '0px')}; */
         margin-top: ${spacings.nudge * 2}px;
         margin-left: ${spacings.spacer}px;
 
-        min-width: ${({ isCovered }) => isCovered && '0px'};
+        /* min-width: ${({ isCovered }) => isCovered && '0px'}; */
     }
 
     @media ${mq.medium} {
