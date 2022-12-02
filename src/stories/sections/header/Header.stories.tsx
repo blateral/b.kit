@@ -109,6 +109,33 @@ export const WithActions: Story = () => (
     />
 );
 
+export const ForceTextOnImage: Story = () => (
+    <Header
+        title="Lorem Ipsum Dolor Sit"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+        textOnImage
+        images={[
+            {
+                small: 'https://unsplash.it/660/792?id=1',
+                medium: 'https://unsplash.it/1100/1320?id=1',
+                semilarge: 'https://unsplash.it/1100/700?id=1',
+                large: 'https://unsplash.it/1596/860?id=1',
+                xlarge: 'https://unsplash.it/2450/1320?id=1',
+            },
+        ]}
+        primaryAction={(isInverted) => (
+            <Button.View isInverted={isInverted}>
+                <Button.Label>Primary</Button.Label>
+            </Button.View>
+        )}
+        secondaryAction={(isInverted) => (
+            <ButtonGhost.View isInverted={isInverted}>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
+            </ButtonGhost.View>
+        )}
+    />
+);
+
 export const IsCentered: Story = () => (
     <Header
         isCentered

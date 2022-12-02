@@ -365,6 +365,9 @@ const Header: FC<{
     /** Header text on image */
     text?: string;
 
+    /** Force text on image on all screen widths  */
+    textOnImage?: boolean;
+
     /** Function to inject custom primary button */
     primaryAction?: (isInverted?: boolean) => React.ReactNode;
 
@@ -394,7 +397,6 @@ const Header: FC<{
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-    textOnImage?: boolean;
 }> = ({
     anchorId,
     size = 'full',
