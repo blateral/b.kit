@@ -43,7 +43,7 @@ const navigationStyle = (type: NavigationFontType) => css`
         font(theme).navigation[type].textDecoration};
 `;
 
-const Backdrop = styled.div<{ isOpen?: boolean }>`
+const Backdrop = styled.div<{ isOpen?: boolean; filter?: string }>`
     position: fixed;
     top: 0;
     left: 0;
@@ -57,7 +57,7 @@ const Backdrop = styled.div<{ isOpen?: boolean }>`
     transition: opacity 0.3s ease-in-out;
 
     @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-        backdrop-filter: grayscale(1);
+        backdrop-filter: ${({ filter }) => filter};
     }
 `;
 
@@ -656,6 +656,7 @@ export interface FlyoutMenuProps {
     type: 'flyout';
     collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
     subNavTitle?: string;
+    backdropFilter?: string;
 }
 
 const menuFilter = (item: NavItem) =>
@@ -669,6 +670,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
     subNavigation,
     navBarSize,
     subNavTitle,
+    backdropFilter = 'grayscale(1)',
     header,
     footer,
     onClose,
@@ -760,7 +762,11 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
 
     return (
         <React.Fragment>
-            <Backdrop isOpen={isOpen} onClick={onClose} />
+            <Backdrop
+                isOpen={isOpen}
+                filter={backdropFilter}
+                onClick={onClose}
+            />
             <Stage isOpen={isOpen} clampWidth={clampWidth}>
                 <Flyout ref={flyoutRef} isOpen={isOpen}>
                     {hasHeader && (
