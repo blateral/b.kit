@@ -2,7 +2,7 @@ import Copy from 'components/typography/Copy';
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.div`
     &:focus {
@@ -41,7 +41,7 @@ const TableContainer = styled.div`
     }
 `;
 
-const TableBody = styled.table<{ isNewsTable?: boolean }>`
+const TableBody = styled.table`
     width: 100%;
     max-width: 100%;
 
@@ -49,11 +49,6 @@ const TableBody = styled.table<{ isNewsTable?: boolean }>`
     border-spacing: 0 ${spacings.nudge * 0.5}px;
 
     padding: 0 ${spacings.nudge * 2}px;
-
-    @media ${mq.large} {
-        padding: ${({ isNewsTable }) =>
-            isNewsTable ? `0` : `0 ${spacings.nudge * 2}px`};
-    }
 `;
 
 const TableHead = styled(Copy)<{
@@ -104,7 +99,6 @@ export interface TableProps {
     isInverted?: boolean;
     hasBack?: boolean;
     lastCol?: 'left' | 'right';
-    isNewsTable?: boolean;
 }
 
 const TableBlock = forwardRef<HTMLDivElement, TableProps>(
@@ -116,14 +110,13 @@ const TableBlock = forwardRef<HTMLDivElement, TableProps>(
             isInverted = false,
             hasBack = false,
             lastCol = 'left',
-            isNewsTable,
         },
         ref
     ) => {
         return (
             <View ref={ref}>
                 <TableContainer tabIndex={1}>
-                    <TableBody isNewsTable={isNewsTable}>
+                    <TableBody>
                         {tableTitle && (
                             <Caption
                                 renderAs="caption"
