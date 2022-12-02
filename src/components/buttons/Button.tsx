@@ -21,6 +21,8 @@ const View = styled.a<{
     min-width: ${({ size }) => (size === 'default' ? '200px' : '120px')};
     padding: 0.1em 1.2em;
 
+    max-width: 100%;
+
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -236,6 +238,12 @@ const Icon = styled.div<{ iconColor?: string }>`
 
 const Label = styled.span`
     display: inline-block;
+
+    max-width: 100%;
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
 
 export default { View: Button, Label: Label, Icon: Icon };
