@@ -229,8 +229,8 @@ const StyledPoster = styled(Poster)`
     margin: 0 auto;
 `;
 
-const Overlay = styled.div<{ bgValue?: string }>`
-    display: none;
+const Overlay = styled.div<{ bgValue?: string; textOnImage?: boolean }>`
+    display: ${({ textOnImage }) => (textOnImage ? 'block' : 'none')};
     position: absolute;
     top: 0;
     right: 0;
@@ -244,10 +244,31 @@ const Overlay = styled.div<{ bgValue?: string }>`
     }
 `;
 
-const Content = styled.div<{ isCentered?: boolean }>`
+const Content = styled.div<{ isCentered?: boolean; textOnImage?: boolean }>`
     display: none;
     max-width: ${spacings.wrapper}px;
     margin: 0 auto;
+
+    ${({ textOnImage, isCentered }) =>
+        textOnImage &&
+        css`
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: ${isCentered && 'center'};
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: ${spacings.spacer * 2}px;
+            z-index: 2;
+
+            & > * {
+                margin-top: ${spacings.spacer}px;
+                max-width: 880px;
+            }
+        `}
 
     @media ${mq.medium} {
         display: flex;
@@ -373,6 +394,7 @@ const Header: FC<{
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
+    textOnImage?: boolean;
 }> = ({
     anchorId,
     size = 'full',
@@ -391,6 +413,7 @@ const Header: FC<{
     kenBurnsInterval = 10000,
     onImageChange,
     bgMode,
+    textOnImage,
 }) => {
     const { globals, colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
@@ -427,8 +450,11 @@ const Header: FC<{
             >
                 {hasContent && (
                     <React.Fragment>
-                        <Overlay bgValue={overlay} />
-                        <Content isCentered={isCentered}>
+                        <Overlay bgValue={overlay} textOnImage={textOnImage} />
+                        <Content
+                            isCentered={isCentered}
+                            textOnImage={textOnImage}
+                        >
                             {title && (
                                 <Title
                                     isInverted
@@ -462,7 +488,7 @@ const Header: FC<{
                     </React.Fragment>
                 )}
             </StyledPoster>
-            {hasContent && (
+            {hasContent && !textOnImage && (
                 <ContentMobile>
                     {title && (
                         <Title
