@@ -36,6 +36,8 @@ const TagWrapper = styled.div`
 `;
 
 const EventTitle = styled(Heading)`
+    max-width: 880px;
+
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
     }

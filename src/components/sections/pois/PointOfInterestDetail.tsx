@@ -20,6 +20,8 @@ const StyledImage = styled(Image)`
 `;
 
 const PoiTitle = styled(Heading)`
+    max-width: 880px;
+
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
