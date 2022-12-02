@@ -147,6 +147,8 @@ const View = styled.div<{
         bottom: 0;
         left: 0;
         background: ${({ bgGradient }) => bgGradient || ''};
+        margin: 0 auto;
+        max-width: ${spacings.wrapperLarge}px;
         z-index: -1;
     }
 
