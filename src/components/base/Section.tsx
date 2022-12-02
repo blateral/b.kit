@@ -123,6 +123,7 @@ const View = styled.section<{
 const Back = styled.div<{
     bgColor?: string;
     bgMode?: BgMode;
+    clampSolidBg?: boolean;
 }>`
     display: ${({ bgColor, bgMode }) => (bgColor && bgMode ? 'block' : 'none')};
     position: absolute;
@@ -130,10 +131,13 @@ const Back = styled.div<{
     right: 0;
     bottom: 0;
     left: 0;
-    max-width: ${({ bgMode }) =>
-        (bgMode === 'full' || bgMode === 'inverted'
-            ? spacings.wrapperLarge
-            : spacings.wrapper) + 'px'};
+    max-width: ${({ bgMode, clampSolidBg }) => {
+        if (bgMode === 'full' || bgMode === 'inverted') {
+            return clampSolidBg ? `${spacings.wrapperLarge}px` : undefined;
+        } else {
+            return `${spacings.wrapper}px`;
+        }
+    }};
     background: ${({ bgColor }) => bgColor || undefined};
     margin: 0 auto;
     z-index: -1;
@@ -184,6 +188,9 @@ export interface SectionProps {
     /** Background mode */
     bgMode?: BgMode;
 
+    /** Clamp solid backgrounds (full, inverted) to large wrapper width */
+    clampSolidBg?: boolean;
+
     /** Enable section seperation spacing */
     addSeperation?: boolean;
 
@@ -204,6 +211,7 @@ const Section = forwardRef<
             renderAs,
             bgColor,
             bgMode,
+            clampSolidBg = true,
             addSeperation = false,
             isStackable = false,
             className,
@@ -252,7 +260,11 @@ const Section = forwardRef<
                 className={className}
             >
                 {bgColor && bgMode && (
-                    <Back bgColor={bgColor} bgMode={bgMode} />
+                    <Back
+                        bgColor={bgColor}
+                        bgMode={bgMode}
+                        clampSolidBg={clampSolidBg}
+                    />
                 )}
                 {children}
             </View>

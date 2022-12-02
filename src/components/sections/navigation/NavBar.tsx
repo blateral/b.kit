@@ -129,7 +129,7 @@ const View = styled.div<{
     transform: ${({ isOpen }) => !isOpen && 'translate3d(0, -101%, 0)'};
 
     margin: 0 auto;
-    max-width: ${spacings.wrapperLarge}px;
+    /* max-width: ${spacings.wrapperLarge}px; */
     z-index: 100;
 
     ${({ isAnimated }) => `transition: ${

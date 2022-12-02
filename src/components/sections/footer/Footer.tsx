@@ -180,6 +180,7 @@ const Footer: React.FC<{
         <FooterSection
             addSeperation
             renderAs="footer"
+            clampSolidBg={false}
             bgMode={mapToBgMode(bgMode, true)}
             bgColor={
                 isInverted
