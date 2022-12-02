@@ -48,7 +48,6 @@ const NewsTable: React.FC<{
                             key={i}
                             hasBack={hasBg}
                             isInverted={isInverted}
-                            isNewsTable
                         />
                     );
                 })}
