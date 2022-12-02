@@ -40,7 +40,7 @@ const NewsTable: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            <TableWrapper>
+            <TableWrapper clampWidth="small">
                 {tableItems.map((item, i) => {
                     return (
                         <TableBlock
@@ -48,6 +48,7 @@ const NewsTable: React.FC<{
                             key={i}
                             hasBack={hasBg}
                             isInverted={isInverted}
+                            isNewsTable
                         />
                     );
                 })}
