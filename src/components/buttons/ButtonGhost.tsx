@@ -20,7 +20,7 @@ const View = styled.a<{
     min-width: ${({ size }) => (size === 'default' ? '200px' : '120px')};
     padding: 0.1em 1.2em;
 
-    max-width: 100%;
+    max-width: calc(100% - ${spacings.spacer}px);
 
     display: inline-flex;
     flex-direction: row;
