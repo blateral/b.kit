@@ -261,7 +261,7 @@ const Content = styled.div<{ isCentered?: boolean; textOnImage?: boolean }>`
             right: 0;
             bottom: 0;
             left: 0;
-            padding: ${spacings.spacer * 2}px;
+            padding: ${spacings.spacer}px;
             z-index: 2;
 
             & > * {
