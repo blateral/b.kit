@@ -2,7 +2,7 @@ import Copy from 'components/typography/Copy';
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, mq, spacings } from 'utils/styles';
 
 const View = styled.div`
     &:focus {
@@ -48,8 +48,12 @@ const TableBody = styled.table<{ isNewsTable?: boolean }>`
     border-collapse: separate;
     border-spacing: 0 ${spacings.nudge * 0.5}px;
 
-    padding: ${({ isNewsTable }) =>
-        isNewsTable ? `0` : `0 ${spacings.nudge * 2}px`};
+    padding: 0 ${spacings.nudge * 2}px;
+
+    @media ${mq.large} {
+        padding: ${({ isNewsTable }) =>
+            isNewsTable ? `0` : `0 ${spacings.nudge * 2}px`};
+    }
 `;
 
 const TableHead = styled(Copy)<{
