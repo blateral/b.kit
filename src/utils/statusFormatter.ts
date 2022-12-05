@@ -276,27 +276,27 @@ interface MonthNames {
 const weekDays: WeekDays = {
     de: {
         long: [
+            'Sonntag',
             'Montag',
             'Dienstag',
             'Mittwoch',
             'Donnerstag',
             'Freitag',
             'Samstag',
-            'Sonntag',
         ],
-        short: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+        short: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
     },
     en: {
         long: [
+            'Sunday',
             'Monday',
             'Tuesday',
             'Wednesday',
             'Thursday',
             'Friday',
             'Saturday',
-            'Sunday',
         ],
-        short: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     },
 };
 
