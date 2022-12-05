@@ -8,7 +8,9 @@ export interface ColPropsSettings {
     span?: number;
     /** Normalisierte Werte zwischen -1 und 1: z.B. -12 von 28 Spalten (-12 / 28) */
     move?: number;
+    /** Vertical alignment of column content */
     valign?: VerticalAlign;
+    /** Text alignment of column content  */
     textAlign?: TextAlign;
 }
 
@@ -21,6 +23,10 @@ interface ColProps extends ColPropsSettings {
     semilarge?: ColPropsSettings;
     large?: ColPropsSettings;
     xlarge?: ColPropsSettings;
+    /** force column to the right */
+    toRight?: boolean;
+    /** force column to the left */
+    toLeft?: boolean;
 }
 
 export const gridSettings = {
@@ -366,6 +372,16 @@ const StyledCol = styled.div<GridProps & ColProps>`
 
     ${getTextAlign}
     ${getVerticalAlign(true)}
+    ${({ toRight }) =>
+        toRight &&
+        css`
+            margin-left: auto;
+        `}
+        ${({ toLeft }) =>
+        toLeft &&
+        css`
+            margin-right: auto;
+        `}
 `;
 
 const Col: React.FC<ColProps & { children?: React.ReactNode }> = (props) => {

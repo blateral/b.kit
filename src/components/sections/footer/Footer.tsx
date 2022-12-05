@@ -226,7 +226,7 @@ const Footer: React.FC<{
                             );
                         })}
                         {customCol && (
-                            <Grid.Col large={{ span: 3 / 12 }}>
+                            <Grid.Col large={{ span: 3 / 12 }} toRight>
                                 <CustomCol>{customCol}</CustomCol>
                             </Grid.Col>
                         )}
