@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -19,6 +19,10 @@ const StyledImage = styled(Image)`
     }
 `;
 
+const Facts = styled(POIFacts)`
+    max-width: 880px;
+`;
+
 const PoiTitle = styled(Heading)`
     max-width: 880px;
 
@@ -35,6 +39,8 @@ const PoiTitle = styled(Heading)`
 `;
 
 const PoiText = styled(Copy)`
+    max-width: 880px;
+
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
     }
@@ -85,6 +91,12 @@ const PointOfInterestDetail: React.FC<{
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+    const hasInfos = useMemo(() => {
+        return isValidArray(
+            infos?.filter((info) => isValidArray(info.items, false)),
+            false
+        );
+    }, [infos]);
 
     return (
         <Section
@@ -110,16 +122,16 @@ const PointOfInterestDetail: React.FC<{
                 )}
                 <Grid.Row
                     gutter={spacings.nudge * 5}
-                    large={{ gutter: spacings.spacer }}
+                    semilarge={{ gutter: spacings.spacer }}
                 >
-                    <Grid.Col large={{ span: 9 / 12 }}>
+                    <Grid.Col semilarge={{ span: hasInfos ? 5.7 / 8 : 1 }}>
                         {title && (
                             <PoiTitle size="heading-2" isInverted={isInverted}>
                                 {title}
                             </PoiTitle>
                         )}
                         {isValidArray(facts, false) && (
-                            <POIFacts
+                            <Facts
                                 isInverted={isInverted}
                                 facts={facts}
                                 customFact={customFact}
@@ -141,8 +153,8 @@ const PointOfInterestDetail: React.FC<{
                             />
                         )}
                     </Grid.Col>
-                    {infos && infos.length > 0 && (
-                        <Grid.Col large={{ span: 3 / 12 }}>
+                    {hasInfos && (
+                        <Grid.Col semilarge={{ span: 2.3 / 8 }}>
                             <InfoList isInverted={isInverted} items={infos} />
                         </Grid.Col>
                     )}

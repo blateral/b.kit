@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -14,6 +14,7 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import StatusFormatter from 'utils/statusFormatter';
 import InfoList from 'components/blocks/InfoList';
+import { isValidArray } from 'utils/arrays';
 
 const StyledImage = styled(Image)`
     &:not(:last-child) {
@@ -22,6 +23,7 @@ const StyledImage = styled(Image)`
 `;
 
 const TagContainer = styled.div`
+    max-width: 880px;
     margin-top: -${spacings.nudge}px;
     margin-left: -${spacings.nudge}px;
 
@@ -53,6 +55,7 @@ const EventTitle = styled(Heading)`
 `;
 
 const EventDateTime = styled(Copy)`
+    max-width: 880px;
     /* overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; */
@@ -63,6 +66,8 @@ const EventDateTime = styled(Copy)`
 `;
 
 const EventAddress = styled(Copy)`
+    max-width: 880px;
+
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
     }
@@ -79,6 +84,8 @@ const EventAddress = styled(Copy)`
 `;
 
 const EventText = styled(Copy)`
+    max-width: 880px;
+
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
     }
@@ -126,6 +133,12 @@ const EventDetail: React.FC<{
     const { colors, globals } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+    const hasInfos = useMemo(() => {
+        return isValidArray(
+            infos?.filter((info) => isValidArray(info.items, false)),
+            false
+        );
+    }, [infos]);
 
     let publishedAt = '';
     let timespan = '';
@@ -170,9 +183,9 @@ const EventDetail: React.FC<{
                 )}
                 <Grid.Row
                     gutter={spacings.nudge * 5}
-                    large={{ gutter: spacings.spacer }}
+                    semilarge={{ gutter: spacings.spacer }}
                 >
-                    <Grid.Col large={{ span: 9 / 12 }}>
+                    <Grid.Col semilarge={{ span: hasInfos ? 5.7 / 8 : 1 }}>
                         {event.tags && (
                             <TagContainer>
                                 {event.tags.map((tag, i) => (
@@ -236,8 +249,8 @@ const EventDetail: React.FC<{
                             />
                         )}
                     </Grid.Col>
-                    {infos && infos.length > 0 && (
-                        <Grid.Col large={{ span: 3 / 12 }}>
+                    {hasInfos && (
+                        <Grid.Col semilarge={{ span: 2.3 / 8 }}>
                             <InfoList isInverted={isInverted} items={infos} />
                         </Grid.Col>
                     )}
