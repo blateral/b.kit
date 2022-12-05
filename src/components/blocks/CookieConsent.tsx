@@ -14,6 +14,7 @@ import useCookieConsent, {
     CookieTypes,
     selectors,
 } from 'utils/cookie-consent/useCookieConsent';
+import { hexToRgba } from 'utils/hexRgbConverter';
 import {
     LibThemeProvider,
     ThemeMods,
@@ -275,9 +276,9 @@ const ClampWrapper = styled.div<{ isClamped?: boolean }>`
         height: 100%;
         background: linear-gradient(
             0deg,
-            rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 0.9) 25%,
-            rgba(255, 255, 255, 0) 100%
+            ${({ theme }) => color(theme).elementBg.light} 0%,
+            ${({ theme }) => hexToRgba(color(theme).elementBg.light, 0.9)} 25%,
+            ${({ theme }) => hexToRgba(color(theme).elementBg.light, 0)} 100%
         );
         pointer-events: none;
     }
