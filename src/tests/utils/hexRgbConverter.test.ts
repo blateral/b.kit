@@ -9,7 +9,11 @@ test('Non hex string parameter', () => {
 });
 
 test('Valid hex color', () => {
-    expect(hexToRgba('#ffffff', 0.5)).toBe('rgba(255,255,255,0.5)');
+    expect(hexToRgba('#f46235', 0.5)).toBe('rgba(244,98,53,0.5)');
+});
+
+test('Valid short hex color', () => {
+    expect(hexToRgba('#f46', 0.5)).toBe('rgba(255,68,102,0.5)');
 });
 
 test('Negative alpha value', () => {
