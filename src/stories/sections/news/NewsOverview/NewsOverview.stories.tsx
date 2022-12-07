@@ -112,8 +112,8 @@ export const Default: Story = () => (
 export const WithInitialValues: Story = () => (
     <NewsOverview
         initial={{
-            tags: ['Tag 3', 'Tag 5'],
-            rows: 7,
+            activeTags: ['Tag 3', 'Tag 5'],
+            visibleRows: 7,
         }}
         tags={[
             'Tag 1',

@@ -13,8 +13,10 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import StatusFormatter from 'utils/statusFormatter';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
+import useMounted from 'utils/useMounted';
 import { useObserverSupport } from 'utils/useObserverSupport';
 import { useScrollTo } from 'utils/useScrollTo';
+import useUpdateEffect from 'utils/useUpdateEffect';
 
 const TagContainer = styled.div`
     margin-top: -${spacings.nudge}px;
@@ -131,8 +133,11 @@ const EventOverview: React.FC<{
     /** Tags for events filtering */
     tags?: string[];
 
-    /** Initial active tags in filter */
-    activeTags?: string[];
+    /** Initial data. If not defined the component tries to collect this from URL params */
+    initial?: {
+        activeTags?: string[];
+        visibleRows?: number;
+    };
 
     /** Text for load more toggle. Only visible if browser doesn't support IntersectionObserver. */
     showMoreText?: string;
@@ -159,7 +164,7 @@ const EventOverview: React.FC<{
     events,
     bgMode,
     anchorId,
-    activeTags,
+    initial,
     showMoreText,
     onTagClick,
     customTag,
@@ -171,13 +176,16 @@ const EventOverview: React.FC<{
     const filterName = globals.sections.eventFilterName;
 
     const [selectedTags, setSelectedTags] = React.useState<string[]>(
-        activeTags || []
+        initial?.activeTags || []
     );
     const [itemsPerRow] = React.useState(1);
-    const [visibleRows, setVisibleRows] = React.useState(3);
+    const [visibleRows, setVisibleRows] = React.useState(
+        initial?.visibleRows || 3
+    );
 
     const targetRef = React.useRef<HTMLDivElement>(null);
     const observerSupported = useObserverSupport();
+    const isMounted = useMounted();
 
     const eventCount = events?.length || 0;
     const setNewPos = useScrollTo(800);
@@ -196,16 +204,37 @@ const EventOverview: React.FC<{
     }, [filterName]);
 
     useEffect(() => {
+        // if initial data is defined exit hook
+        if (initial) return;
+
+        // if no initial data provied try to find needed params in URL
         const paramTags = getFilters();
 
-        if (paramTags.length > 0) {
+        if (isValidArray(paramTags, false)) {
             setSelectedTags(paramTags);
-        } else {
-            setSelectedTags(activeTags || []);
         }
-    }, [activeTags, getFilters]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getFilters, initial]);
 
     useEffect(() => {
+        if (!initial || isMounted) return;
+
+        // set inital data into URL
+        setUrlParam('rows', initial?.visibleRows || 3);
+
+        if (isValidArray(initial?.activeTags, false)) {
+            setUrlParam(filterName, initial?.activeTags?.join(','));
+        } else {
+            deleteUrlParam(filterName);
+        }
+    }, [filterName, initial, isMounted]);
+
+    useUpdateEffect(() => {
+        setUrlParam('rows', visibleRows);
+    }, [visibleRows]);
+
+    useUpdateEffect(() => {
         if (onTagClick || !isValidArray(selectedTags)) return;
 
         // set filters to URL params
@@ -214,14 +243,6 @@ const EventOverview: React.FC<{
         } else {
             deleteUrlParam(filterName);
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedTags]);
-
-    useEffect(() => {
-        // if new tag is selected reset list rows to three visible item rows
-        setVisibleRows(3);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTags]);
 
     const handleTagClick = (tag: TagProps, enableToggling = true) => {
@@ -238,37 +259,8 @@ const EventOverview: React.FC<{
             }
             return prev;
         });
+        setVisibleRows(3);
     };
-
-    useEffect(() => {
-        // cancel if intersection observers are not supported
-        if (!observerSupported) return;
-
-        const element = targetRef.current;
-        let observer: IntersectionObserver;
-
-        if (element) {
-            const options = {
-                rootMargin: '0px 0px 100px 0px',
-                threshold: 0,
-            };
-
-            observer = new IntersectionObserver((entries) => {
-                const entry = entries[0];
-                if (entry?.isIntersecting) {
-                    // on bottom of the wrapper load more events
-                    if (visibleRows < Math.ceil(eventCount / itemsPerRow)) {
-                        setVisibleRows((prev) => prev + 1);
-                    }
-                }
-            }, options);
-            observer.observe(element);
-        }
-
-        return () => {
-            if (observer) observer.disconnect();
-        };
-    }, [itemsPerRow, eventCount, visibleRows, observerSupported]);
 
     const filteredEvents = useMemo(() => {
         const tagFilterFn = (item: EventItem) => {
@@ -289,10 +281,55 @@ const EventOverview: React.FC<{
 
         // adding filter
         filtered = filtered?.filter(tagFilterFn);
-        filtered = filtered?.filter((_, i) => i < visibleRows * itemsPerRow);
 
         return filtered;
-    }, [events, itemsPerRow, selectedTags, visibleRows]);
+    }, [events, selectedTags]);
+
+    const visibleEvents = useMemo(() => {
+        return (
+            filteredEvents?.filter((_, i) => i < visibleRows * itemsPerRow) ||
+            []
+        );
+    }, [filteredEvents, itemsPerRow, visibleRows]);
+
+    useEffect(() => {
+        // cancel if intersection observers are not supported
+        if (!observerSupported) return;
+
+        const element = targetRef.current;
+        let observer: IntersectionObserver;
+
+        if (element) {
+            const options = {
+                rootMargin: '0px 0px 100px 0px',
+                threshold: 0,
+            };
+
+            observer = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                if (entry?.isIntersecting) {
+                    // on bottom of the wrapper load more events
+                    if (
+                        visibleRows <
+                        Math.ceil(filteredEvents.length / itemsPerRow)
+                    ) {
+                        setVisibleRows((prev) => prev + 1);
+                    }
+                }
+            }, options);
+            observer.observe(element);
+        }
+
+        return () => {
+            if (observer) observer.disconnect();
+        };
+    }, [
+        itemsPerRow,
+        eventCount,
+        visibleRows,
+        observerSupported,
+        filteredEvents.length,
+    ]);
 
     const filteredTags = useMemo(() => {
         return tags?.filter((tag) => tag);
@@ -363,7 +400,7 @@ const EventOverview: React.FC<{
                     </TagContainer>
                 )}
                 <Events hasBg={hasBg}>
-                    {filteredEvents.map((item, i) => {
+                    {visibleEvents.map((item, i) => {
                         let timespan = '';
 
                         if (item.date) {
@@ -432,13 +469,17 @@ const EventOverview: React.FC<{
                                         ev.preventDefault();
                                         if (
                                             visibleRows <
-                                            Math.ceil(eventCount / itemsPerRow)
+                                            Math.ceil(
+                                                filteredEvents.length /
+                                                    itemsPerRow
+                                            )
                                         ) {
                                             setVisibleRows((prev) => prev + 1);
                                         }
                                     }}
                                 >
-                                    {visibleRows < eventCount / itemsPerRow && (
+                                    {visibleRows <
+                                        filteredEvents.length / itemsPerRow && (
                                         <Pointer.View
                                             as="button"
                                             isInverted={isInverted}

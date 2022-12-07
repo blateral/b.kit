@@ -142,8 +142,8 @@ const NewsOverview: React.FC<{
 
     /** Initial data. If not defined the component tries to collect this from URL params */
     initial?: {
-        tags?: string[];
-        rows?: number;
+        activeTags?: string[];
+        visibleRows?: number;
     };
 
     /** Text for load more toggle. Only visible if browser doesn't support IntersectionObserver. */
@@ -184,13 +184,13 @@ const NewsOverview: React.FC<{
     const hasBg = bgMode === 'full';
 
     const [selectedTags, setSelectedTags] = useState<string[]>(
-        initial?.tags || []
+        initial?.activeTags || []
     );
 
     const mqs: NewsOverviewMq[] = ['small', 'semilarge', 'large'];
     const currentMq = useMediaQuery(mqs) as NewsOverviewMq | undefined;
     const [itemsPerRow, setItemsPerRow] = useState(3);
-    const [visibleRows, setVisibleRows] = useState(initial?.rows || 3);
+    const [visibleRows, setVisibleRows] = useState(initial?.visibleRows || 3);
     const isMounted = useMounted();
 
     const targetRef = useRef<HTMLDivElement>(null);
@@ -253,10 +253,10 @@ const NewsOverview: React.FC<{
         if (!initial || isMounted) return;
 
         // set inital data into URL
-        setUrlParam('rows', initial?.rows || 3);
+        setUrlParam('rows', initial?.visibleRows || 3);
 
-        if (isValidArray(initial?.tags, false)) {
-            setUrlParam(filterName, initial?.tags?.join(','));
+        if (isValidArray(initial?.activeTags, false)) {
+            setUrlParam(filterName, initial?.activeTags?.join(','));
         } else {
             deleteUrlParam(filterName);
         }
