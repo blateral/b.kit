@@ -139,13 +139,13 @@ export const useEqualSheetHeight = <T extends HTMLElement>(props: {
         };
     }, [sheetRefs, currentMq, props.identifiers, setHeights, fontsLoaded]);
 
-    const triggerCalculation = () => {
+    const triggerCalculation = useCallback(() => {
         setSheetRefs((prev) =>
             Array(props.listLength)
                 .fill(null)
                 .map((_, i) => prev[i] || createRef())
         );
-    };
+    }, [props.listLength]);
 
     useEffect(() => {
         setSheetRefs((prev) =>

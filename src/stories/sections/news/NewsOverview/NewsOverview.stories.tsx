@@ -109,9 +109,12 @@ export const Default: Story = () => (
     />
 );
 
-export const WithActiveTags: Story = () => (
+export const WithInitialValues: Story = () => (
     <NewsOverview
-        activeTags={['Tag 3', 'Tag 5']}
+        initial={{
+            tags: ['Tag 3', 'Tag 5'],
+            rows: 7,
+        }}
         tags={[
             'Tag 1',
             'Tag 2',
@@ -136,7 +139,6 @@ export const WithActiveTags: Story = () => (
 
 export const WithTagClickHandler: Story = () => (
     <NewsOverview
-        activeTags={['Tag 3']}
         tags={[
             'Tag 1',
             'Tag 2',
@@ -162,7 +164,6 @@ export const WithTagClickHandler: Story = () => (
 
 export const WithBackground: Story = () => (
     <NewsOverview
-        activeTags={['Tag 3']}
         tags={[
             'Tag 1',
             'Tag 2',
@@ -188,7 +189,6 @@ export const WithBackground: Story = () => (
 
 export const IsInverted: Story = () => (
     <NewsOverview
-        activeTags={['Tag 3']}
         tags={[
             'Tag 1',
             'Tag 2',
@@ -214,7 +214,6 @@ export const IsInverted: Story = () => (
 
 export const WithCustomTag: Story = () => (
     <NewsOverview
-        activeTags={['Tag 3']}
         tags={[
             'Tag 1',
             'Tag 2',

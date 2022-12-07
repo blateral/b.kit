@@ -23,6 +23,8 @@ import Pointer from 'components/buttons/Pointer';
 import { isValidArray } from 'utils/arrays';
 import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
 import Filter from 'components/base/icons/Filter';
+import useUpdateEffect from 'utils/useUpdateEffect';
+import useMounted from 'utils/useMounted';
 
 const TagContainer = styled.div`
     margin-top: -${spacings.nudge}px;
@@ -138,8 +140,11 @@ const NewsOverview: React.FC<{
     /** Tags for news filtering */
     tags?: string[];
 
-    /** Initial active tags in filter */
-    activeTags?: string[];
+    /** Initial data. If not defined the component tries to collect this from URL params */
+    initial?: {
+        tags?: string[];
+        rows?: number;
+    };
 
     /** Text for load more toggle. Only visible if browser doesn't support IntersectionObserver. */
     showMoreText?: string;
@@ -165,7 +170,7 @@ const NewsOverview: React.FC<{
     anchorId,
     news,
     tags,
-    activeTags,
+    initial,
     showMoreText,
     bgMode,
 
@@ -179,13 +184,14 @@ const NewsOverview: React.FC<{
     const hasBg = bgMode === 'full';
 
     const [selectedTags, setSelectedTags] = useState<string[]>(
-        activeTags || []
+        initial?.tags || []
     );
 
     const mqs: NewsOverviewMq[] = ['small', 'semilarge', 'large'];
     const currentMq = useMediaQuery(mqs) as NewsOverviewMq | undefined;
     const [itemsPerRow, setItemsPerRow] = useState(3);
-    const [visibleRows, setVisibleRows] = useState(3);
+    const [visibleRows, setVisibleRows] = useState(initial?.rows || 3);
+    const isMounted = useMounted();
 
     const targetRef = useRef<HTMLDivElement>(null);
     const observerSupported = useObserverSupport();
@@ -210,6 +216,67 @@ const NewsOverview: React.FC<{
             },
         });
 
+    const getFilters = useCallback(() => {
+        const tags: string[] = [];
+
+        const filters = getUrlParams()[filterName];
+        if (filters) {
+            const tagsFilter = filters?.split(',');
+            if (isValidArray(tagsFilter, false)) {
+                tags.push(...tagsFilter);
+            }
+        }
+        return tags;
+    }, [filterName]);
+
+    useEffect(() => {
+        // if initial data is defined exit hook
+        if (initial) return;
+
+        // if no initial data provied try to find needed params in URL
+        const paramTags = getFilters();
+        const paramRows = parseInt(getUrlParams()['rows']);
+
+        setVisibleRows(paramRows || 3);
+
+        if (isValidArray(paramTags, false)) {
+            setSelectedTags(paramTags);
+        }
+
+        // trigger equal sheet height recalculation
+        triggerCalculation();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getFilters, initial]);
+
+    useEffect(() => {
+        if (!initial || isMounted) return;
+
+        // set inital data into URL
+        setUrlParam('rows', initial?.rows || 3);
+
+        if (isValidArray(initial?.tags, false)) {
+            setUrlParam(filterName, initial?.tags?.join(','));
+        } else {
+            deleteUrlParam(filterName);
+        }
+    }, [filterName, initial, isMounted]);
+
+    useUpdateEffect(() => {
+        setUrlParam('rows', visibleRows);
+    }, [visibleRows]);
+
+    useUpdateEffect(() => {
+        if (onTagClick || !isValidArray(selectedTags)) return;
+
+        // set filters to URL params
+        if (selectedTags.length > 0) {
+            setUrlParam(filterName, selectedTags.join(','));
+        } else {
+            deleteUrlParam(filterName);
+        }
+    }, [selectedTags]);
+
     useEffect(() => {
         switch (currentMq) {
             case 'large':
@@ -230,49 +297,6 @@ const NewsOverview: React.FC<{
         }
     }, [currentMq, visibleRows]);
 
-    const getFilters = useCallback(() => {
-        const tags: string[] = [];
-
-        const filters = getUrlParams()[filterName];
-        if (filters) {
-            const tagsFilter = filters?.split(',');
-            if (isValidArray(tagsFilter, false)) {
-                tags.push(...tagsFilter);
-            }
-        }
-        return tags;
-    }, [filterName]);
-
-    useEffect(() => {
-        const paramTags = getFilters();
-
-        if (paramTags.length > 0) {
-            setSelectedTags(paramTags);
-        } else {
-            setSelectedTags(activeTags || []);
-        }
-    }, [activeTags, getFilters]);
-
-    useEffect(() => {
-        if (onTagClick || !isValidArray(selectedTags)) return;
-
-        // set filters to URL params
-        if (selectedTags.length > 0) {
-            setUrlParam(filterName, selectedTags.join(','));
-        } else {
-            deleteUrlParam(filterName);
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedTags]);
-
-    useEffect(() => {
-        // if new tag is selected reset list rows to three visible item rows
-        setVisibleRows(3);
-        triggerCalculation();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedTags]);
-
     const handleTagClick = (tag: TagProps, enableToggling = true) => {
         setSelectedTags((prev) => {
             const prevCopy = [...prev];
@@ -287,37 +311,10 @@ const NewsOverview: React.FC<{
             }
             return prev;
         });
+        // trigger equal sheet height recalculation
+        triggerCalculation();
+        setVisibleRows(3);
     };
-
-    useEffect(() => {
-        // cancel if intersection observers are not supported
-        if (!observerSupported) return;
-
-        const element = targetRef.current;
-        let observer: IntersectionObserver;
-
-        if (element) {
-            const options = {
-                rootMargin: '0px 0px 100px 0px',
-                threshold: 0,
-            };
-
-            observer = new IntersectionObserver((entries) => {
-                const entry = entries[0];
-                if (entry?.isIntersecting) {
-                    // on bottom of the wrapper load more news
-                    if (visibleRows < Math.ceil(newsCount / itemsPerRow)) {
-                        setVisibleRows((prev) => prev + 1);
-                    }
-                }
-            }, options);
-            observer.observe(element);
-        }
-
-        return () => {
-            if (observer) observer.disconnect();
-        };
-    }, [itemsPerRow, newsCount, visibleRows, observerSupported]);
 
     const filteredNews = useMemo(() => {
         const tagFilterFn = (item: NewsItem) => {
@@ -338,10 +335,54 @@ const NewsOverview: React.FC<{
 
         // adding filter
         filtered = filtered?.filter(tagFilterFn);
-        filtered = filtered?.filter((_, i) => i < visibleRows * itemsPerRow);
 
         return filtered;
-    }, [itemsPerRow, news, selectedTags, visibleRows]);
+    }, [news, selectedTags]);
+
+    const visibleNews: NewsItem[] = useMemo(() => {
+        return (
+            filteredNews?.filter((_, i) => i < visibleRows * itemsPerRow) || []
+        );
+    }, [filteredNews, itemsPerRow, visibleRows]);
+
+    useEffect(() => {
+        // cancel if intersection observers are not supported
+        if (!observerSupported) return;
+
+        const element = targetRef.current;
+        let observer: IntersectionObserver;
+
+        if (element) {
+            const options = {
+                rootMargin: '0px 0px 100px 0px',
+                threshold: 0,
+            };
+
+            observer = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                if (entry?.isIntersecting) {
+                    // on bottom of the wrapper load more news
+                    if (
+                        visibleRows <
+                        Math.ceil(filteredNews.length / itemsPerRow)
+                    ) {
+                        setVisibleRows((prev) => prev + 1);
+                    }
+                }
+            }, options);
+            observer.observe(element);
+        }
+
+        return () => {
+            if (observer) observer.disconnect();
+        };
+    }, [
+        itemsPerRow,
+        newsCount,
+        visibleRows,
+        observerSupported,
+        filteredNews.length,
+    ]);
 
     const filteredTags = useMemo(() => {
         return tags?.filter((tag) => tag);
@@ -412,7 +453,7 @@ const NewsOverview: React.FC<{
                     </TagContainer>
                 )}
                 <News>
-                    {filteredNews.map((item, i) => (
+                    {visibleNews.map((item, i) => (
                         <NewsItem key={`${i}_news_${item.title}`}>
                             <NewsCard
                                 hasBg={hasBg || isInverted}
@@ -455,13 +496,17 @@ const NewsOverview: React.FC<{
                                         ev.preventDefault();
                                         if (
                                             visibleRows <
-                                            Math.ceil(newsCount / itemsPerRow)
+                                            Math.ceil(
+                                                filteredNews.length /
+                                                    itemsPerRow
+                                            )
                                         ) {
                                             setVisibleRows((prev) => prev + 1);
                                         }
                                     }}
                                 >
-                                    {visibleRows < newsCount / itemsPerRow && (
+                                    {visibleRows <
+                                        filteredNews.length / itemsPerRow && (
                                         <Pointer.View
                                             as="button"
                                             isInverted={isInverted}

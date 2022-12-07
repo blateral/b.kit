@@ -22,11 +22,16 @@ export const getUrlParams = () => {
     return obj;
 };
 
-export const setUrlParam = (key: string, value: string) => {
-    if (!isSupported) return;
-    const params = getUrlParams();
+export const setUrlParam = (key: string, value: string | number) => {
+    if (
+        !isSupported ||
+        (typeof value !== 'string' && typeof value !== 'number')
+    ) {
+        return;
+    }
 
-    params[key] = value;
+    const params = getUrlParams();
+    params[key] = value.toString();
 
     const currentParams = new URLSearchParams(window.location.search);
     for (const param in params) {
