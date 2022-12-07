@@ -66,6 +66,7 @@ const NavBarMain: FC<{
     ) => React.ReactNode;
     navStates: NavBarStates;
 }> = ({
+    isInverted,
     logo,
     navStates,
     customToggle,
@@ -73,41 +74,41 @@ const NavBarMain: FC<{
     primaryAction,
     secondaryAction,
 }) => {
-    const isInverted =
-        navStates?.size === 'large' && navStates?.pageFlow === 'overContent';
+    const inverted =
+        isInverted !== undefined
+            ? isInverted
+            : navStates?.size === 'large' &&
+              navStates?.pageFlow === 'overContent';
 
     return (
         <React.Fragment>
-            <ToggleColumn takeSpace vAlign="center" isInverted={isInverted}>
+            <ToggleColumn takeSpace vAlign="center" isInverted={inverted}>
                 <Skeletons.MenuToggle
-                    isInverted={isInverted}
+                    isInverted={inverted}
                     isExpanded={navStates?.isMenuOpen}
                     onClick={navStates?.openMenu}
                 >
                     {customToggle ? (
-                        customToggle({ isInverted })
+                        customToggle({ isInverted: inverted })
                     ) : (
                         <MenuBurger ariaHidden={true} />
                     )}
                 </Skeletons.MenuToggle>
                 {isValidArray(langs, false) && (
                     <LanguageWrapper>
-                        <LanguageSwitcher
-                            isInverted={isInverted}
-                            langs={langs}
-                        />
+                        <LanguageSwitcher isInverted={inverted} langs={langs} />
                     </LanguageWrapper>
                 )}
             </ToggleColumn>
             {logo?.desktop?.src && (
-                <LogoColumn isInverted={isInverted}>
+                <LogoColumn isInverted={inverted}>
                     <Skeletons.Logo
                         link={logo.link}
                         logo={{
-                            small: isInverted
+                            small: inverted
                                 ? logo?.mobileInverted?.src || ''
                                 : logo?.mobile?.src || '',
-                            semilarge: isInverted
+                            semilarge: inverted
                                 ? logo?.desktopInverted?.src || ''
                                 : logo?.desktop?.src || '',
                             alt: logo?.desktop?.alt,
@@ -118,13 +119,13 @@ const NavBarMain: FC<{
             <ActionsColumn takeSpace vAlign="center">
                 {secondaryAction
                     ? secondaryAction({
-                          isInverted,
+                          isInverted: inverted,
                           ...navStates,
                       })
                     : undefined}
                 {primaryAction
                     ? primaryAction({
-                          isInverted,
+                          isInverted: inverted,
                           ...navStates,
                       })
                     : undefined}

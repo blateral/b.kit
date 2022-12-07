@@ -1,3 +1,5 @@
+import { concat } from './concat';
+
 const isSupported =
     typeof window !== 'undefined' && 'URLSearchParams' in window;
 
@@ -31,11 +33,7 @@ export const setUrlParam = (key: string, value: string) => {
         currentParams.set(param, encodeURIComponent(params[param]));
     }
 
-    window.history.replaceState(
-        {},
-        '',
-        `${location.pathname}?${currentParams.toString() + location.hash}`
-    );
+    updateUrl(currentParams);
 };
 
 export const deleteUrlParam = (key: string) => {
@@ -43,9 +41,16 @@ export const deleteUrlParam = (key: string) => {
     const currentParams = new URLSearchParams(window.location.search);
     currentParams.delete(key);
 
-    window.history.replaceState(
-        {},
-        '',
-        `${location.pathname}?${currentParams.toString() + location.hash}`
-    );
+    updateUrl(currentParams);
+};
+
+const updateUrl = (params: URLSearchParams) => {
+    if (!params) return;
+
+    const queries = params.toString();
+    const url = queries
+        ? concat([location.pathname, queries + location.hash], '?')
+        : location.pathname + location.hash;
+
+    window.history.replaceState({}, '', url);
 };
