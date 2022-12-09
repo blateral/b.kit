@@ -1,0 +1,45 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+<Meta
+    title="Optional Packages"
+    parameters={{
+        status: {
+            type: '',
+        },
+    }}
+/>
+
+# Optional packages
+
+## Map
+
+> The Map component is made up with `leaflet`. Therefore the NPM Leaflet package must be installed to properly use all map features.
+
+To diplaying the map in the right way you should also import the leaflet CSS styles:
+
+As imports (e.g. in Nextjs `_app.tsx`):
+
+```jsx
+import 'leaflet/dist/leaflet.css';
+```
+
+As CDN link (e.g. in Storybook `preview-head.html` or NextJs's `_document.tsx`):
+
+```jsx
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+/>
+```
+
+## Datepicker
+
+To display datepickers inside forms you need to install the `react-datepicker` package from npm.
+
+To diplaying the datepicker in the right way you should also import the react-datepicker CSS styles:
+
+As imports (e.g. in Nextjs `_app.tsx`):
+
+```jsx
+import 'react-datepicker/dist/react-datepicker.css';
+```

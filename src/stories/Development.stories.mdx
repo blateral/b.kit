@@ -1,0 +1,54 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+<Meta
+    title="Development"
+    parameters={{
+        status: {
+            type: '',
+        },
+    }}
+/>
+
+# Developement
+
+The react component library is compiled with typescript and bundled with [Rollup](https://www.npmjs.com/package/rollup).
+
+## Project architecture
+
+The library project is splitted into three pieces.
+
+-   The source component folder `src`
+-   The Storybook folder `stories`
+-   The build folder `lib` (it contains the bundled library content that is shipped to npm)
+
+## Script commands
+
+To build and bundle the library with Rollup into the lib folder enter the script:
+
+`yarn build`
+
+To start a local storybook watch task enter:
+
+`yarn storybook`
+
+To publish all stories to Github Pages enter:
+
+`yarn deploy-storybook`
+
+> Before each commit to Github the Husky package takes care of the Storybook stories and deploys them automatically to Github Pages.
+
+## Local Testing
+
+Inside library project:
+
+-   Install yalc globally: `yarn global add yalc`
+-   Run `yalc publish` to publish library into local yalc store.
+-   Run `yalc push` to push changes to all installations
+
+Inside project that should use the library:
+
+-   Run `yalc add <repository-name>` in target local repository to link library from yalc store.
+-   Use `yalc update` or `yalc update <repository-name>` to update all linked packages.
+-   use `yalc remove <repository-name>` to remove linked package.
+
+    Before each push to git `yalc check` performs a check to ensure that all linked packages are removed from package.json. To delete package linking from package.json but not from yalc.lock `yalc retreat [--all]` / `yalc restore`

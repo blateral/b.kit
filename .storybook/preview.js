@@ -99,7 +99,13 @@ export const parameters = {
         //     } else return 0;
         // },
         storySort: {
-            order: ['Introduction', 'Getting Started', 'Accessibility'],
+            order: [
+                'Introduction',
+                'Theming',
+                'Optional Packages',
+                'Accessibility',
+                'Development',
+            ],
         },
     },
 };
