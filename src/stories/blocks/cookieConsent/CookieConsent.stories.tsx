@@ -9,12 +9,12 @@ import CookieConsent, {
     CookieTitle,
 } from 'components/blocks/CookieConsent';
 
-import cookieImg from '../../../public/images/Cookie.png';
+import cookieImg from '../../../../public/images/Cookie.png';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
-    title: 'Blocks/CookieConsent',
+    title: 'Blocks/Cookie Consent',
     component: CookieConsent,
     parameters: {
         status: {
