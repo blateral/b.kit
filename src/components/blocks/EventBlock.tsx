@@ -30,7 +30,7 @@ const View = styled.div`
     }
 `;
 
-const StyledImage = styled(Image)`
+const ImageContainer = styled.div`
     flex: 0 1 30%;
     margin-left: auto;
 `;
@@ -171,17 +171,19 @@ const EventBlock: React.FC<EventProps> = ({
     return (
         <View>
             {image?.small && (
-                <StyledImage
-                    {...image}
-                    coverSpace
-                    allowEdgeRadius
-                    isInverted={isInverted}
-                    ratios={{
-                        small: { w: 640, h: 320 },
-                        medium: { w: 752, h: 276 },
-                        large: { w: 375, h: 250 },
-                    }}
-                />
+                <ImageContainer>
+                    <Image
+                        {...image}
+                        coverSpace
+                        allowEdgeRadius
+                        isInverted={isInverted}
+                        ratios={{
+                            small: { w: 640, h: 320 },
+                            medium: { w: 752, h: 276 },
+                            large: { w: 375, h: 250 },
+                        }}
+                    />
+                </ImageContainer>
             )}
             <MainContent>
                 {isValidArray(filteredTags, false) && (
