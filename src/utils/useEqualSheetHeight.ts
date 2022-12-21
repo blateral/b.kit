@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { useMediaQuery } from './useMediaQuery';
 import { useFontsLoaded } from 'utils/useFontsLoaded';
+import useResizeThrottle from './useResizeThrottle';
 
 interface ItemsPerRow {
     small?: number;
@@ -26,6 +27,8 @@ export const useEqualSheetHeight = <T extends HTMLElement>(props: {
     listLength: number;
     identifiers: string[];
     responsive?: ItemsPerRow;
+    /** Throttle timeout for resize events. Default: 400ms */
+    resizeThrottleTimeout?: number;
 }) => {
     const defaultResponsive = {
         small: 1,
@@ -91,6 +94,13 @@ export const useEqualSheetHeight = <T extends HTMLElement>(props: {
         [itemsPerRow]
     );
 
+    // Throttle viewport resize event for performance
+    const resizeState = useResizeThrottle(
+        props.resizeThrottleTimeout !== undefined
+            ? props.resizeThrottleTimeout
+            : 400
+    );
+
     useEffect(() => {
         const resize = (refs: MutableRefObject<T>[]) => () => {
             const identifierSizes = new Map<string, Array<number | null>>();
@@ -131,13 +141,7 @@ export const useEqualSheetHeight = <T extends HTMLElement>(props: {
 
         const resizeHandler = resize(sheetRefs);
         resizeHandler();
-
-        window.addEventListener('resize', resizeHandler);
-
-        return () => {
-            window.removeEventListener('resize', resizeHandler);
-        };
-    }, [sheetRefs, currentMq, props.identifiers, setHeights, fontsLoaded]);
+    }, [props.identifiers, resizeState, setHeights, sheetRefs, fontsLoaded]);
 
     const triggerCalculation = useCallback(() => {
         setSheetRefs((prev) =>

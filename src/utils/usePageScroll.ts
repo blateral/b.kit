@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import useScrollThrottle from './useScrollThrottle';
 
 export enum PageScrollDirection {
     UP,
@@ -15,6 +16,8 @@ interface ScrollSettings {
     offset?: number;
     /** On leave top offset callback */
     onLeftOffset?: (dir: PageScrollDirection) => void;
+    /** Throttle timeout of resize event. Default: 200ms */
+    resizeThrottleTimeout?: number;
 }
 
 const usePageScroll = (settings?: ScrollSettings) => {
@@ -32,74 +35,74 @@ const usePageScroll = (settings?: ScrollSettings) => {
     const directionDownOffset = settings?.directionOffset?.down || 0;
     const directionUpOffset = settings?.directionOffset?.up || 0;
 
+    // Throttle scroll event for perfomance
+    const scrollState = useScrollThrottle(
+        settings?.resizeThrottleTimeout !== undefined
+            ? settings.resizeThrottleTimeout
+            : 200
+    );
+
     useEffect(() => {
-        const handleScroll = () => {
-            if (typeof window === 'undefined') return;
-            const scrollY = window.pageYOffset;
-            const isTop = scrollY <= 0;
+        if (!scrollState) return;
+        if (typeof window === 'undefined') return;
 
-            // check if page is scroll on top
-            setIsTop(isTop);
+        const scrollY = scrollState.scrollY;
+        const isTop = scrollY <= 0;
 
-            // check offset
-            if (settings?.offset && scrollY <= settings.offset) {
-                setIsInOffset(true);
-            } else {
-                setIsInOffset((prev) => {
-                    if (prev) {
-                        settings?.onLeftOffset?.(scrollDirection);
-                        setLeftOffsetFromTop(true);
-                    }
-                    return false;
-                });
-            }
+        // check if page is scroll on top
+        setIsTop(isTop);
 
-            /**
-             * calculate direction changes
-             */
+        // check offset
+        if (settings?.offset && scrollY <= settings.offset) {
+            setIsInOffset(true);
+        } else {
+            setIsInOffset((prev) => {
+                if (prev) {
+                    settings?.onLeftOffset?.(scrollDirection);
+                    setLeftOffsetFromTop(true);
+                }
+                return false;
+            });
+        }
 
-            // get difference between current and last scrollY position
-            const diff = scrollY - lastScrollPos.current;
-            // get accumulated pixels since last direction change
-            let absAccPx = Math.abs(pxSinceLastSwitch.current);
+        /**
+         * calculate direction changes
+         */
 
-            // check if direction changed. if not iterate accumulated pixels value
-            if (diff < 0 && pxSinceLastSwitch.current > 0) {
-                pxSinceLastSwitch.current = 0;
-            } else if (diff > 0 && pxSinceLastSwitch.current < 0) {
-                pxSinceLastSwitch.current = 0;
-            } else {
-                pxSinceLastSwitch.current += diff;
-            }
+        // get difference between current and last scrollY position
+        const diff = scrollY - lastScrollPos.current;
+        // get accumulated pixels since last direction change
+        let absAccPx = Math.abs(pxSinceLastSwitch.current);
 
-            // set current accumulated value
-            absAccPx = Math.abs(pxSinceLastSwitch.current);
+        // check if direction changed. if not iterate accumulated pixels value
+        if (diff < 0 && pxSinceLastSwitch.current > 0) {
+            pxSinceLastSwitch.current = 0;
+        } else if (diff > 0 && pxSinceLastSwitch.current < 0) {
+            pxSinceLastSwitch.current = 0;
+        } else {
+            pxSinceLastSwitch.current += diff;
+        }
 
-            // set direction states
-            if (isTop) {
-                setScrollDirection(PageScrollDirection.DOWN);
-            } else if (diff < 0 && absAccPx >= directionUpOffset) {
-                setScrollDirection(PageScrollDirection.UP);
-            } else if (diff > 0 && absAccPx >= directionDownOffset) {
-                setScrollDirection(PageScrollDirection.DOWN);
-            }
+        // set current accumulated value
+        absAccPx = Math.abs(pxSinceLastSwitch.current);
 
-            // save last scroll position
-            lastScrollPos.current = scrollY;
-        };
+        // set direction states
+        if (isTop) {
+            setScrollDirection(PageScrollDirection.DOWN);
+        } else if (diff < 0 && absAccPx >= directionUpOffset) {
+            setScrollDirection(PageScrollDirection.UP);
+        } else if (diff > 0 && absAccPx >= directionDownOffset) {
+            setScrollDirection(PageScrollDirection.DOWN);
+        }
 
-        handleScroll();
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
+        // save last scroll position
+        lastScrollPos.current = scrollY;
     }, [
         directionDownOffset,
         directionUpOffset,
         scrollDirection,
+        scrollState,
         settings,
-        settings?.offset,
     ]);
 
     useEffect(() => {
