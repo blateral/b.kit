@@ -18,14 +18,23 @@ const FeatureList: React.FC<{
     features?: FeatureProps[];
 
     /** If not defined the component falls back to legacy logic: Uneven items = max 3 per row, even items = max 2 per row */
-    maxItemsPerRow?: 2 | 3;
+    columns?: 2 | 3;
 
     /** Section background */
     bgMode?: 'full' | 'splitted' | 'inverted';
-}> = ({ anchorId, features, bgMode, isCentered = false, maxItemsPerRow }) => {
+}> = ({ anchorId, features, bgMode, isCentered = false, columns }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
+
+    const isHalf = useMemo(() => {
+        if (columns) {
+            return columns === 2;
+        }
+
+        // legacy logic
+        return features && features.length % 2 === 0;
+    }, [features, columns]);
 
     const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
         listLength: featureCount,
@@ -39,19 +48,10 @@ const FeatureList: React.FC<{
             small: 1,
             medium: 1,
             semilarge: 2,
-            large: featureCount % 2 === 0 ? 2 : 3,
-            xlarge: featureCount % 2 === 0 ? 2 : 3,
+            large: isHalf ? 2 : 3,
+            xlarge: isHalf ? 2 : 3,
         },
     });
-
-    const isHalf = useMemo(() => {
-        if (maxItemsPerRow) {
-            return maxItemsPerRow === 2;
-        }
-
-        // legacy logic
-        return features && features.length % 2 === 0;
-    }, [features, maxItemsPerRow]);
 
     return (
         <Section

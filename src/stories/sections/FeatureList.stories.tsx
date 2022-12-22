@@ -131,7 +131,7 @@ export const EvenAmountOfFeatures: Story = () => (
 
 export const DefinedItemsPerRow: Story = () => (
     <FeatureList
-        maxItemsPerRow={3}
+        columns={3}
         features={exampleFeaturesEven.map((item, i) => ({
             ...item,
             image: {
@@ -148,7 +148,7 @@ export const DefinedItemsPerRow: Story = () => (
 
 export const ThreeItemsGridWithOneItem: Story = () => (
     <FeatureList
-        maxItemsPerRow={3}
+        columns={3}
         features={exampleFeaturesEven.slice(0, 1).map((item, i) => ({
             ...item,
             image: {
@@ -165,7 +165,7 @@ export const ThreeItemsGridWithOneItem: Story = () => (
 
 export const ThreeItemsGridWithTwoItems: Story = () => (
     <FeatureList
-        maxItemsPerRow={3}
+        columns={3}
         features={exampleFeaturesEven.slice(0, 2).map((item, i) => ({
             ...item,
             image: {
@@ -182,7 +182,7 @@ export const ThreeItemsGridWithTwoItems: Story = () => (
 
 export const TwoItemsGridWithOneItem: Story = () => (
     <FeatureList
-        maxItemsPerRow={2}
+        columns={2}
         features={exampleFeaturesEven.slice(0, 1).map((item, i) => ({
             ...item,
             image: {
@@ -199,7 +199,7 @@ export const TwoItemsGridWithOneItem: Story = () => (
 
 export const TwoItemsGridWithTwoItems: Story = () => (
     <FeatureList
-        maxItemsPerRow={2}
+        columns={2}
         features={exampleFeaturesEven.slice(0, 2).map((item, i) => ({
             ...item,
             image: {
