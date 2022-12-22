@@ -53,7 +53,7 @@ const StyledLink = styled(Link)<{ isInverted?: boolean }>`
     display: block;
     text-decoration: none;
 
-    ${copyStyle('copy', 'medium')}
+    ${copyStyle('copy', 'small')}
     color: ${({ theme, isInverted }) =>
         isInverted ? color(theme).text.inverted : color(theme).text.default};
 `;

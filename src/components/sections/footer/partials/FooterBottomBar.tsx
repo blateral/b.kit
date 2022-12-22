@@ -47,6 +47,7 @@ const FooterBottomBar: FC<{
                                 ? languageIcon
                                 : () => <Icons.Language />
                         }
+                        textSize="small"
                     />
                 )}
                 {isValidArray(linksLeft, false) && (

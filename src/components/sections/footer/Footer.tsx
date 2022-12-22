@@ -233,6 +233,7 @@ const Footer: React.FC<{
                     </Grid.Row>
                     {footNote && (
                         <FootNote
+                            size="small"
                             isInverted={isInverted}
                             innerHTML={footNote}
                         />

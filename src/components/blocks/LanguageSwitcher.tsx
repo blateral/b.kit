@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import Link, { LinkProps } from 'components/typography/Link';
-import { spacings, getColors as color } from 'utils/styles';
+import { spacings, getColors as color, FontOptions } from 'utils/styles';
 import { copyStyle } from 'components/typography/Copy';
 
 const View = styled.div`
@@ -48,12 +48,16 @@ const SelectView = styled.div<{ isInverted?: boolean }>`
     }
 `;
 
-const LanguageLink = styled(Link)<{ isInverted?: boolean; isActive?: boolean }>`
+const LanguageLink = styled(Link)<{
+    isInverted?: boolean;
+    isActive?: boolean;
+    size?: keyof FontOptions;
+}>`
     display: inline-block;
     position: relative;
     padding: 0 ${spacings.nudge}px;
 
-    ${copyStyle('copy', 'medium')}
+    ${({ size }) => copyStyle('copy', size || 'medium')}
     font-weight: ${({ isActive }) => isActive && '700'};
 
     color: ${({ isInverted, theme }) =>
@@ -81,7 +85,8 @@ const LanguageSwitcher: FC<{
     langs?: Language[];
     isInverted?: boolean;
     languageIcon?: (isInverted?: boolean) => React.ReactNode;
-}> = ({ langs, isInverted, languageIcon }) => {
+    textSize?: keyof FontOptions;
+}> = ({ langs, isInverted, languageIcon, textSize = 'medium' }) => {
     return (
         <View>
             {languageIcon && (
@@ -94,6 +99,7 @@ const LanguageSwitcher: FC<{
                         {...lang.link}
                         isInverted={isInverted}
                         isActive={lang.isActive}
+                        size={textSize}
                     >
                         {lang.label}
                     </LanguageLink>
