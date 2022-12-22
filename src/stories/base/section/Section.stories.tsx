@@ -90,14 +90,14 @@ export const WithSeperation: Story = () => (
             <ExampleContent>
                 <b>Section A</b>
                 <br />
-                <b>bgMode:</b> full, <b>bgColor:</b> transparent
+                <b>bgMode:</b> full, <b>bgColor:</b> light
             </ExampleContent>
         </Section>
         <Section addSeperation>
             <ExampleContent>
                 <b>Section B</b>
                 <br />
-                <b>bgMode:</b> full, <b>bgColor:</b> transparent
+                <b>bgMode:</b> full, <b>bgColor:</b> light
             </ExampleContent>
         </Section>
         <Section addSeperation bgColor="blueviolet" bgMode="full">
@@ -118,7 +118,7 @@ export const WithSeperation: Story = () => (
             <ExampleContent>
                 <b>Section E</b>
                 <br />
-                <b>bgMode:</b> full, <b>bgColor:</b> transparent
+                <b>bgMode:</b> full, <b>bgColor:</b> light
             </ExampleContent>
         </Section>
         <Section addSeperation bgColor="blueviolet" bgMode="larger-right">
@@ -160,7 +160,7 @@ export const WithSeperation: Story = () => (
             <ExampleContent>
                 <b>Section K</b>
                 <br />
-                <b>bgMode:</b> full, <b>bgColor:</b> transparent
+                <b>bgMode:</b> full, <b>bgColor:</b> light
             </ExampleContent>
         </Section>
     </>

@@ -5,7 +5,7 @@ import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 
 export type BgMode = 'full' | 'larger-left' | 'larger-right' | 'inverted';
 
-const getBackground = (mode: BgMode, bgColor: string) => {
+const getBackground = (bgColor: string, mode?: BgMode) => {
     let bgValue = undefined;
 
     switch (mode) {
@@ -23,6 +23,10 @@ const getBackground = (mode: BgMode, bgColor: string) => {
 
         case 'larger-right':
             bgValue = `linear-gradient(to right, transparent 40%, ${bgColor} 40%)`;
+            break;
+
+        default:
+            bgValue = bgColor;
             break;
     }
     return bgValue;
@@ -81,18 +85,18 @@ const View = styled.section<{
 
         if (addSeperation) {
             return css`
-                *:not([data-bg-ident='transparent'])
+                *:not([data-bg-ident='light'])
                     + &[data-bg-ident='larger-left${bgColorPart}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
-                *:not([data-bg-ident='transparent'])
+                *:not([data-bg-ident='light'])
                     + &[data-bg-ident='larger-right${bgColorPart}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
                 section[data-bg-ident='larger-left${bgColorPart}']
-                    + &:not([data-bg-ident='transparent']) {
+                    + &:not([data-bg-ident='light']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
                         'margin-top'
@@ -100,7 +104,7 @@ const View = styled.section<{
                 }
 
                 section[data-bg-ident='larger-right${bgColorPart}']
-                    + &:not([data-bg-ident='transparent']) {
+                    + &:not([data-bg-ident='light']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
                         'margin-top'
@@ -125,14 +129,14 @@ const Back = styled.div<{
     bgMode?: BgMode;
     clampSolidBg?: boolean;
 }>`
-    display: ${({ bgColor, bgMode }) => (bgColor && bgMode ? 'block' : 'none')};
+    display: ${({ bgColor }) => (bgColor ? 'block' : 'none')};
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     max-width: ${({ bgMode, clampSolidBg }) => {
-        if (bgMode === 'full' || bgMode === 'inverted') {
+        if (bgMode !== 'larger-left' && bgMode !== 'larger-right') {
             return clampSolidBg ? `${spacings.wrapperLarge}px` : undefined;
         } else {
             return `${spacings.wrapper}px`;
@@ -144,7 +148,7 @@ const Back = styled.div<{
 
     @media ${mq.semilarge} {
         background: ${({ bgColor, bgMode }) =>
-            bgColor && bgMode ? getBackground(bgMode, bgColor) : undefined};
+            bgColor && bgMode ? getBackground(bgColor, bgMode) : undefined};
     }
 
     @media ${mq.xlarge} {
@@ -240,7 +244,7 @@ const Section = forwardRef<
         const ident =
             bgColor && bgMode
                 ? concat([`${bgMode}__${bgColor}`, noPadIdent], '--')
-                : 'transparent';
+                : 'light';
 
         return (
             <View
@@ -259,7 +263,7 @@ const Section = forwardRef<
                 data-stack-ident={isStackable ? 'true' : 'false'}
                 className={className}
             >
-                {bgColor && bgMode && (
+                {bgColor && (
                     <Back
                         bgColor={bgColor}
                         bgMode={bgMode}
