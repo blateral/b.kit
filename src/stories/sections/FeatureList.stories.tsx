@@ -34,7 +34,7 @@ const exampleFeaturesUneven = generateItemList<FeatureProps>(
         image: {
             small: 'https://unsplash.it/640/640?image=70' + i,
             medium: 'https://unsplash.it/832/832?image=70' + i,
-            semilarge: 'https://unsplash.it/500/500?image=70' + i,
+            semilarge: 'https://unsplash.it/600/600?image=70' + i,
         },
     })
 );
@@ -48,7 +48,7 @@ const exampleFeaturesEven = generateItemList<FeatureProps>(
         image: {
             small: 'https://unsplash.it/640/640?image=70' + i,
             medium: 'https://unsplash.it/832/832?image=70' + i,
-            semilarge: 'https://unsplash.it/500/500?image=70' + i,
+            semilarge: 'https://unsplash.it/600/600?image=70' + i,
         },
     })
 );
@@ -58,7 +58,7 @@ export default {
     component: FeatureListComponent,
     parameters: {
         status: {
-            type: 'preview',
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
 } as Meta;
@@ -70,7 +70,7 @@ export const Default: Story = () => (
             image: {
                 small: 'https://unsplash.it/640/640?image=70' + i,
                 medium: 'https://unsplash.it/832/832?image=70' + i,
-                semilarge: 'https://unsplash.it/500/500?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
                 ratios: {
                     small: { w: 640, h: 640 },
                 },
@@ -86,7 +86,7 @@ export const ImgRatioA: Story = () => (
             image: {
                 small: 'https://unsplash.it/640/480?image=70' + i,
                 medium: 'https://unsplash.it/832/624?image=70' + i,
-                semilarge: 'https://unsplash.it/500/375?image=70' + i,
+                semilarge: 'https://unsplash.it/600/450?image=70' + i,
                 ratios: {
                     small: { w: 640, h: 480 },
                 },
@@ -103,7 +103,7 @@ export const ImgRatioB: Story = () => (
             image: {
                 small: 'https://unsplash.it/640/854?image=70' + i,
                 medium: 'https://unsplash.it/832/1110?image=70' + i,
-                semilarge: 'https://unsplash.it/500/666?image=70' + i,
+                semilarge: 'https://unsplash.it/600/801?image=70' + i,
                 ratios: {
                     small: { w: 640, h: 854 },
                 },
@@ -120,7 +120,92 @@ export const EvenAmountOfFeatures: Story = () => (
             image: {
                 small: 'https://unsplash.it/640/640?image=70' + i,
                 medium: 'https://unsplash.it/832/832?image=70' + i,
-                semilarge: 'https://unsplash.it/500/500?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
+                ratios: {
+                    small: { w: 640, h: 640 },
+                },
+            },
+        }))}
+    />
+);
+
+export const DefinedItemsPerRow: Story = () => (
+    <FeatureList
+        maxItemsPerRow={3}
+        features={exampleFeaturesEven.map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
+                ratios: {
+                    small: { w: 640, h: 640 },
+                },
+            },
+        }))}
+    />
+);
+
+export const ThreeItemsGridWithOneItem: Story = () => (
+    <FeatureList
+        maxItemsPerRow={3}
+        features={exampleFeaturesEven.slice(0, 1).map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
+                ratios: {
+                    small: { w: 640, h: 640 },
+                },
+            },
+        }))}
+    />
+);
+
+export const ThreeItemsGridWithTwoItems: Story = () => (
+    <FeatureList
+        maxItemsPerRow={3}
+        features={exampleFeaturesEven.slice(0, 2).map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
+                ratios: {
+                    small: { w: 640, h: 640 },
+                },
+            },
+        }))}
+    />
+);
+
+export const TwoItemsGridWithOneItem: Story = () => (
+    <FeatureList
+        maxItemsPerRow={2}
+        features={exampleFeaturesEven.slice(0, 1).map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
+                ratios: {
+                    small: { w: 640, h: 640 },
+                },
+            },
+        }))}
+    />
+);
+
+export const TwoItemsGridWithTwoItems: Story = () => (
+    <FeatureList
+        maxItemsPerRow={2}
+        features={exampleFeaturesEven.slice(0, 2).map((item, i) => ({
+            ...item,
+            image: {
+                small: 'https://unsplash.it/640/640?image=70' + i,
+                medium: 'https://unsplash.it/832/832?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
                 ratios: {
                     small: { w: 640, h: 640 },
                 },
@@ -137,7 +222,7 @@ export const WithCenteredItems: Story = () => (
             image: {
                 small: 'https://unsplash.it/640/640?image=70' + i,
                 medium: 'https://unsplash.it/832/832?image=70' + i,
-                semilarge: 'https://unsplash.it/500/500?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
                 ratios: {
                     small: { w: 640, h: 640 },
                 },
@@ -154,7 +239,7 @@ export const WithBackground: Story = () => (
             image: {
                 small: 'https://unsplash.it/640/640?image=70' + i,
                 medium: 'https://unsplash.it/832/832?image=70' + i,
-                semilarge: 'https://unsplash.it/500/500?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
                 ratios: {
                     small: { w: 640, h: 640 },
                 },
@@ -171,7 +256,7 @@ export const WithSplittedBackground: Story = () => (
             image: {
                 small: 'https://unsplash.it/640/640?image=70' + i,
                 medium: 'https://unsplash.it/832/832?image=70' + i,
-                semilarge: 'https://unsplash.it/500/500?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
                 ratios: {
                     small: { w: 640, h: 640 },
                 },
@@ -188,7 +273,7 @@ export const Inverted: Story = () => (
             image: {
                 small: 'https://unsplash.it/640/640?image=70' + i,
                 medium: 'https://unsplash.it/832/832?image=70' + i,
-                semilarge: 'https://unsplash.it/500/500?image=70' + i,
+                semilarge: 'https://unsplash.it/600/600?image=70' + i,
                 ratios: {
                     small: { w: 640, h: 640 },
                 },

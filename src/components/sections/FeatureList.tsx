@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -17,9 +17,12 @@ const FeatureList: React.FC<{
     /** Array with feature item content */
     features?: FeatureProps[];
 
+    /** If not defined the component falls back to legacy logic: Uneven items = max 3 per row, even items = max 2 per row */
+    maxItemsPerRow?: 2 | 3;
+
     /** Section background */
     bgMode?: 'full' | 'splitted' | 'inverted';
-}> = ({ anchorId, features, bgMode, isCentered = false }) => {
+}> = ({ anchorId, features, bgMode, isCentered = false, maxItemsPerRow }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
@@ -40,7 +43,15 @@ const FeatureList: React.FC<{
             xlarge: featureCount % 2 === 0 ? 2 : 3,
         },
     });
-    const isHalf = features && features.length % 2 === 0;
+
+    const isHalf = useMemo(() => {
+        if (maxItemsPerRow) {
+            return maxItemsPerRow === 2;
+        }
+
+        // legacy logic
+        return features && features.length % 2 === 0;
+    }, [features, maxItemsPerRow]);
 
     return (
         <Section
@@ -56,13 +67,14 @@ const FeatureList: React.FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace clampWidth="normal">
-                <Grid.Row>
+                <Grid.Row
+                    halign={isHalf || featureCount <= 2 ? 'center' : 'left'}
+                >
                     {features?.map((feature, i) => (
                         <Grid.Col
                             semilarge={{ span: 6 / 12 }}
                             large={{
                                 span: isHalf ? 5 / 12 : 4 / 12,
-                                move: isHalf ? 1 / 12 : 0,
                             }}
                             key={i}
                         >
