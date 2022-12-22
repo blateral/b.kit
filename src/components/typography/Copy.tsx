@@ -277,9 +277,7 @@ const base = css<{
         display: inline-flex;
         align-items: center;
         margin: 0;
-        padding-left: ${spacings.nudge}px;
-        padding-right: ${spacings.nudge}px;
-        ${copyStyle('copy', 'big')}
+        ${copyStyle('copy', 'medium')}
         vertical-align: middle;
 
         & > a:after {
@@ -294,6 +292,10 @@ const base = css<{
             max-width: 30px;
             fill: currentColor;
         }
+    }
+
+    .icon-label--big {
+        ${copyStyle('copy', 'big')}
     }
 
     .icon-label--list {
