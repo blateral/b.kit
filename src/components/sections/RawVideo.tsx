@@ -184,7 +184,7 @@ const RawVideo: React.FC<{
                     {isStarted && (
                         <Video
                             isVisible={isStarted || !placeholderImg?.small}
-                            controls
+                            controls={!autoplay}
                             autoPlay
                             loop={loop}
                             muted={autoplay}
