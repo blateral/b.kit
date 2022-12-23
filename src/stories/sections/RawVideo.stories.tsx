@@ -30,6 +30,18 @@ export const WithPlaceholderImg: Story = () => (
     />
 );
 
+export const Autoplay: Story = () => (
+    <RawVideo autoplay videoUrls={['images/videos/alps_stockvideo.mp4']} />
+);
+
+export const Loop: Story = () => (
+    <RawVideo loop videoUrls={['images/videos/alps_stockvideo.mp4']} />
+);
+
+export const AutoplayWithLoop: Story = () => (
+    <RawVideo autoplay loop videoUrls={['images/videos/alps_stockvideo.mp4']} />
+);
+
 export const WithBackground: Story = () => (
     <RawVideo
         bgMode="full"

@@ -136,15 +136,29 @@ const RawVideo: React.FC<{
     /** Placeholder image */
     placeholderImg?: Omit<ImageProps, 'ratios' | 'coverSpace'>;
 
+    /** Enable autoplay without user interaction */
+    autoplay?: boolean;
+
+    /** Playing video in loop */
+    loop?: boolean;
+
     /** Section background */
     bgMode?: 'full' | 'inverted' | 'splitted';
 
     /** Video play icon */
     playIcon?: React.ReactNode;
-}> = ({ anchorId, bgMode, videoUrls, placeholderImg, playIcon }) => {
+}> = ({
+    anchorId,
+    bgMode,
+    videoUrls,
+    placeholderImg,
+    playIcon,
+    autoplay,
+    loop,
+}) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
-    const [isStarted, setIsStarted] = useState<boolean>(false);
+    const [isStarted, setIsStarted] = useState<boolean>(autoplay || false);
 
     return (
         <Section
@@ -172,6 +186,8 @@ const RawVideo: React.FC<{
                             isVisible={isStarted || !placeholderImg?.small}
                             controls
                             autoPlay
+                            loop={loop}
+                            muted={autoplay}
                             ratios={{ small: 16 / 9 }}
                             urls={videoUrls}
                             isInverted={isInverted}
