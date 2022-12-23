@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
+import { clampValue } from 'utils/clamp';
 import { spacings, mq } from 'utils/styles';
 
 export interface ColPropsSettings {
@@ -7,205 +8,466 @@ export interface ColPropsSettings {
     span?: number;
     /** Normalisierte Werte zwischen -1 und 1: z.B. -12 von 28 Spalten (-12 / 28) */
     move?: number;
+    /** Vertical alignment of column content */
     valign?: VerticalAlign;
+    /** Text alignment of column content  */
+    textAlign?: TextAlign;
 }
 
 type VerticalAlign = 'top' | 'center' | 'bottom';
+type HorizontalAlign = 'left' | 'center' | 'right';
+type TextAlign = 'left' | 'center' | 'right';
 
 interface ColProps extends ColPropsSettings {
     medium?: ColPropsSettings;
     semilarge?: ColPropsSettings;
     large?: ColPropsSettings;
     xlarge?: ColPropsSettings;
+    /** force column to the right */
+    toRight?: boolean;
+    /** force column to the left */
+    toLeft?: boolean;
 }
 
-const gridSettings = {
-    cols: 28,
+export const gridSettings = {
+    cols: 12,
     gutter: spacings.spacer,
 };
 
-const getWidth = (props: ColProps) => {
-    const mediumSpan = props.medium ? props.medium.span : 1;
-    const semilargeSpan = props.semilarge ? props.semilarge.span : 1;
-    const largeSpan = props.large ? props.large.span : 1;
-    const xlargeSpan = props.xlarge ? props.xlarge.span : 1;
+/** Get width of grid cols incl. gutter (relative to container element)  */
+export const getGridWidth = (props?: {
+    cols?: number;
+    gutter?: number;
+    gridWidth?: string;
+}) => {
+    const columns = props?.cols || gridSettings.cols;
+
+    const width = props?.gridWidth || '100%';
+    const gridGutter =
+        props?.gutter !== undefined ? props.gutter : gridSettings.gutter;
+    const gridCols = gridSettings.cols;
 
     return css`
-        width: ${(props.span || 1) * 100}%;
+        calc(((${width} - ${
+        (gridCols - 1) * gridGutter
+    }px) / ${gridCols}) * ${columns} + ${(columns - 1) * gridGutter}px)
+    `;
+};
 
-        ${(props: ColProps) => {
-            return props.medium
-                ? css`
-                      @media ${mq.medium} {
-                          width: ${(mediumSpan || 1) * 100}%;
-                      }
-                  `
-                : '';
-        }}
+const validateValue = (
+    value: number | undefined,
+    min: number,
+    max?: number
+) => {
+    if (value === undefined || value === null) return value;
+    return value !== clampValue(value, min, max) ? undefined : value;
+};
 
-        ${(props: ColProps) => {
-            return props.semilarge
-                ? css`
-                      @media ${mq.semilarge} {
-                          width: ${(semilargeSpan || 1) * 100}%;
-                      }
-                  `
-                : '';
-        }}
+const getWidth = (props: ColProps) => {
+    const span = validateValue(props.span, 0, 1);
+    const mediumSpan = validateValue(props.medium?.span, 0, 1);
+    const semilargeSpan = validateValue(props.semilarge?.span, 0, 1);
+    const largeSpan = validateValue(props.large?.span, 0, 1);
+    const xlargeSpan = validateValue(props.xlarge?.span, 0, 1);
 
-        ${(props: ColProps) => {
-            return props.large
-                ? css`
-                      @media ${mq.large} {
-                          width: ${(largeSpan || 1) * 100}%;
-                      }
-                  `
-                : '';
-        }}
+    return css`
+        width: ${(span || 1) * 100}%;
 
-        ${(props: ColProps) => {
-            return props.xlarge
-                ? css`
-                      @media ${mq.xlarge} {
-                          width: ${(xlargeSpan || 1) * 100}%;
-                      }
-                  `
-                : '';
-        }}
+        ${mediumSpan &&
+        css`
+            @media ${mq.medium} {
+                width: ${(mediumSpan || 1) * 100}%;
+            }
+        `}
+
+        ${semilargeSpan &&
+        css`
+            @media ${mq.semilarge} {
+                width: ${(semilargeSpan || 1) * 100}%;
+            }
+        `}
+
+        ${largeSpan &&
+        css`
+            @media ${mq.large} {
+                width: ${(largeSpan || 1) * 100}%;
+            }
+        `}
+
+        ${xlargeSpan &&
+        css`
+            @media ${mq.xlarge} {
+                width: ${(xlargeSpan || 1) * 100}%;
+            }
+        `}
     `;
 };
 
 const getLeftRight = (props: ColProps) => {
-    const mediumMove = props.medium ? props.medium.move : 0;
-    const semilargeMove = props.semilarge ? props.semilarge.move : 0;
-    const largeMove = props.large ? props.large.move : 0;
-    const xlargeMove = props.xlarge ? props.xlarge.move : 0;
+    const mediumMove = props?.medium?.move;
+    const semilargeMove = props?.semilarge?.move;
+    const largeMove = props?.large?.move;
+    const xlargeMove = props?.xlarge?.move;
 
     return css`
-        left: ${props.move && props.move > 0 ? props.move * 100 + '%' : 'auto'};
-        right: ${props.move && props.move < 0
-            ? props.move * -100 + '%'
+        left: ${props?.move && props?.move > 0
+            ? props?.move * 100 + '%'
+            : 'auto'};
+        right: ${props?.move && props?.move < 0
+            ? props?.move * -100 + '%'
             : 'auto'};
 
-        ${(props: ColProps) => {
-            return props.medium
-                ? css`
-                      @media ${mq.medium} {
-                          left: ${mediumMove && mediumMove > 0
-                              ? mediumMove * 100 + '%'
-                              : 'auto'};
-                          right: ${mediumMove && mediumMove < 0
-                              ? mediumMove * -100 + '%'
-                              : 'auto'};
-                      }
-                  `
-                : '';
-        }}
+        ${mediumMove !== undefined &&
+        css`
+            @media ${mq.medium} {
+                left: ${mediumMove && mediumMove > 0
+                    ? mediumMove * 100 + '%'
+                    : 'auto'};
+                right: ${mediumMove && mediumMove < 0
+                    ? mediumMove * -100 + '%'
+                    : 'auto'};
+            }
+        `}
 
-        ${(props: ColProps) => {
-            return props.semilarge
-                ? css`
-                      @media ${mq.semilarge} {
-                          left: ${semilargeMove && semilargeMove > 0
-                              ? semilargeMove * 100 + '%'
-                              : 'auto'};
-                          right: ${semilargeMove && semilargeMove < 0
-                              ? semilargeMove * -100 + '%'
-                              : 'auto'};
-                      }
-                  `
-                : '';
-        }}
+        ${semilargeMove !== undefined &&
+        css`
+            @media ${mq.semilarge} {
+                left: ${semilargeMove && semilargeMove > 0
+                    ? semilargeMove * 100 + '%'
+                    : 'auto'};
+                right: ${semilargeMove && semilargeMove < 0
+                    ? semilargeMove * -100 + '%'
+                    : 'auto'};
+            }
+        `}
 
-        ${(props: ColProps) => {
-            return props.large
-                ? css`
-                      @media ${mq.large} {
-                          left: ${largeMove && largeMove > 0
-                              ? largeMove * 100 + '%'
-                              : 'auto'};
-                          right: ${largeMove && largeMove < 0
-                              ? largeMove * -100 + '%'
-                              : 'auto'};
-                      }
-                  `
-                : '';
-        }}
+        ${largeMove !== undefined &&
+        css`
+            @media ${mq.large} {
+                left: ${largeMove && largeMove > 0
+                    ? largeMove * 100 + '%'
+                    : 'auto'};
+                right: ${largeMove && largeMove < 0
+                    ? largeMove * -100 + '%'
+                    : 'auto'};
+            }
+        `}
 
-        ${(props: ColProps) => {
-            return props.xlarge
-                ? css`
-                      @media ${mq.xlarge} {
-                          left: ${xlargeMove && xlargeMove > 0
-                              ? xlargeMove * 100 + '%'
-                              : 'auto'};
-                          right: ${xlargeMove && xlargeMove < 0
-                              ? xlargeMove * -100 + '%'
-                              : 'auto'};
-                      }
-                  `
-                : '';
-        }}
+        ${xlargeMove !== undefined &&
+        css`
+            @media ${mq.xlarge} {
+                left: ${xlargeMove && xlargeMove > 0
+                    ? xlargeMove * 100 + '%'
+                    : 'auto'};
+                right: ${xlargeMove && xlargeMove < 0
+                    ? xlargeMove * -100 + '%'
+                    : 'auto'};
+            }
+        `}
+    `;
+};
+
+const getGutter = (mode: 'grid' | 'col') => (props: GridProps) => {
+    const gutter = validateValue(props.gutter, 0) || 0;
+    const mediumGutter = validateValue(props?.medium?.gutter, 0);
+    const semilargeGutter = validateValue(props?.semilarge?.gutter, 0);
+    const largeGutter = validateValue(props?.large?.gutter, 0);
+    const xlargeGutter = validateValue(props?.xlarge?.gutter, 0);
+
+    const propertyTop = mode === 'grid' ? 'margin-top: -' : 'padding-top: ';
+    const propertyLeft = mode === 'grid' ? 'margin-left: -' : 'padding-left: ';
+
+    return css`
+        ${propertyTop}${gutter}px;
+        ${propertyLeft}${gutter}px;
+
+        ${mediumGutter !== undefined &&
+        css`
+            @media ${mq.medium} {
+                ${propertyTop}${mediumGutter}px;
+                ${propertyLeft}${mediumGutter}px;
+            }
+        `}
+
+        ${semilargeGutter !== undefined &&
+        css`
+            @media ${mq.semilarge} {
+                ${propertyTop}${semilargeGutter}px;
+                ${propertyLeft}${semilargeGutter}px;
+            }
+        `}
+        
+        ${largeGutter !== undefined &&
+        css`
+            @media ${mq.large} {
+                ${propertyTop}${largeGutter}px;
+                ${propertyLeft}${largeGutter}px;
+            }
+        `}
+
+        ${xlargeGutter !== undefined &&
+        css`
+            @media ${mq.xlarge} {
+                ${propertyTop}${xlargeGutter}px;
+                ${propertyLeft}${xlargeGutter}px;
+            }
+        `}
+    `;
+};
+
+const getTextAlign = (props: ColProps) => {
+    const mediumTextAlign = props?.medium?.textAlign;
+    const semilargeTextAlign = props?.semilarge?.textAlign;
+    const largeTextAlign = props?.large?.textAlign;
+    const xlargeTextAlign = props?.xlarge?.textAlign;
+
+    return css`
+        text-align: ${props?.textAlign || undefined};
+
+        ${mediumTextAlign !== undefined &&
+        css`
+            @media ${mq.medium} {
+                text-align: ${mediumTextAlign};
+            }
+        `}
+
+        ${semilargeTextAlign !== undefined &&
+        css`
+            @media ${mq.semilarge} {
+                text-align: ${semilargeTextAlign};
+            }
+        `}
+
+        ${largeTextAlign !== undefined &&
+        css`
+            @media ${mq.large} {
+                text-align: ${largeTextAlign};
+            }
+        `}
+
+        ${xlargeTextAlign !== undefined &&
+        css`
+            @media ${mq.xlarge} {
+                text-align: ${xlargeTextAlign};
+            }
+        `}
+    `;
+};
+
+const mapVerticalAlign = (alignMode?: VerticalAlign) => {
+    switch (alignMode) {
+        case 'top':
+            return 'flex-start';
+        case 'center':
+            return 'center';
+        case 'bottom':
+            return 'flex-end';
+        default:
+            return undefined;
+    }
+};
+
+const getVerticalAlign =
+    (selfAlign?: boolean) => (props: ColProps & GridProps) => {
+        const vAlign = mapVerticalAlign(props.valign);
+        const mediumAlign = mapVerticalAlign(props?.medium?.valign);
+        const semilargelAlign = mapVerticalAlign(props?.semilarge?.valign);
+        const largeAlign = mapVerticalAlign(props?.large?.valign);
+        const xlargeAlign = mapVerticalAlign(props?.xlarge?.valign);
+
+        const property = selfAlign ? 'align-self: ' : 'align-items: ';
+
+        return css`
+            ${property}${vAlign || undefined};
+
+            ${mediumAlign !== undefined &&
+            css`
+                @media ${mq.medium} {
+                    ${property}${mediumAlign};
+                }
+            `}
+
+            ${semilargelAlign !== undefined &&
+            css`
+                @media ${mq.semilarge} {
+                    ${property}${semilargelAlign};
+                }
+            `}
+
+        ${largeAlign !== undefined &&
+            css`
+                @media ${mq.large} {
+                    ${property}${largeAlign};
+                }
+            `}
+
+        ${xlargeAlign !== undefined &&
+            css`
+                @media ${mq.xlarge} {
+                    ${property}${xlargeAlign};
+                }
+            `}
+        `;
+    };
+
+const mapHorizontalAlign = (alignMode?: HorizontalAlign) => {
+    switch (alignMode) {
+        case 'left':
+            return 'flex-start';
+        case 'center':
+            return 'center';
+        case 'right':
+            return 'flex-end';
+        default:
+            return undefined;
+    }
+};
+
+const getHorinzontalAlign = (props: GridProps) => {
+    const hAlign = mapHorizontalAlign(props.halign);
+    const mediumAlign = mapHorizontalAlign(props?.medium?.halign);
+    const semilargelAlign = mapHorizontalAlign(props?.semilarge?.halign);
+    const largeAlign = mapHorizontalAlign(props?.large?.halign);
+    const xlargeAlign = mapHorizontalAlign(props?.xlarge?.halign);
+
+    return css`
+        justify-content: ${hAlign || undefined};
+
+        ${mediumAlign !== undefined &&
+        css`
+            @media ${mq.medium} {
+                justify-content: ${mediumAlign};
+            }
+        `}
+
+        ${semilargelAlign !== undefined &&
+        css`
+            @media ${mq.semilarge} {
+                justify-content: ${semilargelAlign};
+            }
+        `}
+
+        ${largeAlign !== undefined &&
+        css`
+            @media ${mq.large} {
+                justify-content: ${largeAlign};
+            }
+        `}
+
+        ${xlargeAlign !== undefined &&
+        css`
+            @media ${mq.xlarge} {
+                justify-content: ${xlargeAlign};
+            }
+        `}
     `;
 };
 
 const StyledCol = styled.div<GridProps & ColProps>`
     ${getWidth};
     ${getLeftRight};
-    padding-top: ${({ gutter }) => gutter || 0}px;
-    padding-left: ${({ gutter }) => gutter || 0}px;
+    ${getGutter('col')}
     display: block;
     position: relative;
 
-    align-self: ${({ valign }) => {
-        switch (valign) {
-            case 'top':
-                return 'flex-start';
-            case 'center':
-                return 'center';
-            case 'bottom':
-                return 'flex-end';
-            default:
-                return undefined;
-        }
-    }};
+    ${getTextAlign}
+    ${getVerticalAlign(true)}
+    ${({ toRight }) =>
+        toRight &&
+        css`
+            margin-left: auto;
+        `}
+        ${({ toLeft }) =>
+        toLeft &&
+        css`
+            margin-right: auto;
+        `}
 `;
 
-const Col: React.FC<ColProps> = (props) => {
-    return <React.Fragment>{props.children}</React.Fragment>;
+const Col: React.FC<ColProps & { children?: React.ReactNode }> = (props) => {
+    return <React.Fragment>{props?.children}</React.Fragment>;
 };
 
-interface GridProps {
+interface GridPropsSettings {
     gutter?: number;
     valign?: VerticalAlign;
+    halign?: HorizontalAlign;
+}
+
+interface GridProps extends GridPropsSettings {
+    medium?: GridPropsSettings;
+    semilarge?: GridPropsSettings;
+    large?: GridPropsSettings;
+    xlarge?: GridPropsSettings;
 }
 
 const StyledGrid = styled.div<GridProps>`
-    margin-top: -${({ gutter }) => gutter || 0}px;
-    margin-left: -${({ gutter }) => gutter || 0}px;
+    ${getGutter('grid')}
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 
-    align-items: ${({ valign }) => {
-        switch (valign) {
-            case 'top':
-                return 'flex-start';
-            case 'center':
-                return 'center';
-            case 'bottom':
-                return 'flex-end';
-            default:
-                return undefined;
-        }
-    }};
+    ${getVerticalAlign()}
+    ${getHorinzontalAlign}
 `;
 
-const Grid: React.FC<GridProps> = ({ gutter, valign, children }) => {
+const mapGutterToCol = (gutter?: number, colSettings?: any) => {
+    if (gutter === undefined) return colSettings;
+    if (colSettings) {
+        return {
+            ...colSettings,
+            gutter,
+        };
+    } else {
+        return {
+            gutter,
+        };
+    }
+};
+
+const Grid: React.FC<GridProps & { children?: React.ReactNode }> = ({
+    gutter,
+    valign,
+    children,
+    halign,
+    medium,
+    semilarge,
+    large,
+    xlarge,
+}) => {
     return (
-        <StyledGrid gutter={gutter} valign={valign}>
+        <StyledGrid
+            gutter={gutter}
+            valign={valign}
+            halign={halign}
+            medium={medium}
+            semilarge={semilarge}
+            large={large}
+            xlarge={xlarge}
+        >
             {React.Children.map(children, (comp: any) => {
-                return <StyledCol {...comp.props} gutter={gutter} />;
+                return comp ? (
+                    <StyledCol
+                        {...comp?.props}
+                        gutter={gutter}
+                        medium={mapGutterToCol(
+                            medium?.gutter,
+                            comp?.props?.medium
+                        )}
+                        semilarge={mapGutterToCol(
+                            semilarge?.gutter,
+                            comp?.props?.semilarge
+                        )}
+                        large={mapGutterToCol(
+                            large?.gutter,
+                            comp?.props?.large
+                        )}
+                        xlarge={mapGutterToCol(
+                            xlarge?.gutter,
+                            comp?.props?.xlarge
+                        )}
+                    />
+                ) : undefined;
             })}
         </StyledGrid>
     );

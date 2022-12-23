@@ -7,7 +7,7 @@ export default {
     component: GalleryComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -16,10 +16,14 @@ export const SingleImage: Story = () => (
     <Gallery
         images={[
             {
-                small: 'https://unsplash.it/619/305?image=400',
-                medium: 'https://unsplash.it/983/483?image=400',
-                large: 'https://unsplash.it/1399/688?image=400',
-                xlarge: 'https://unsplash.it/1400/690?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
         ]}
     />
@@ -29,16 +33,24 @@ export const MultipleImages: Story = () => (
     <Gallery
         images={[
             {
-                small: 'https://unsplash.it/619/305?image=400',
-                medium: 'https://unsplash.it/983/483?image=400',
-                large: 'https://unsplash.it/1399/688?image=400',
-                xlarge: 'https://unsplash.it/1400/690?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
             {
-                small: 'https://unsplash.it/619/305?image=401',
-                medium: 'https://unsplash.it/983/483?image=401',
-                large: 'https://unsplash.it/1399/688?image=401',
-                xlarge: 'https://unsplash.it/1400/690?image=401',
+                small: 'https://unsplash.it/640/315?image=401',
+                medium: 'https://unsplash.it/1024/505?image=401',
+                large: 'https://unsplash.it/1400/690?image=401',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
         ]}
     />
@@ -48,16 +60,24 @@ export const RatioA: Story = () => (
     <Gallery
         images={[
             {
-                small: 'https://unsplash.it/419/313?image=400',
-                medium: 'https://unsplash.it/983/736?image=400',
-                large: 'https://unsplash.it/1399/1048?image=400',
-                xlarge: 'https://unsplash.it/1400/1050?image=400',
+                small: 'https://unsplash.it/640/480?image=400',
+                medium: 'https://unsplash.it/1024/768?image=400',
+                large: 'https://unsplash.it/1400/1050?image=400',
+                ratios: {
+                    small: { w: 640, h: 480 },
+                    medium: { w: 1024, h: 768 },
+                    large: { w: 1400, h: 1050 },
+                },
             },
             {
-                small: 'https://unsplash.it/419/313?image=401',
-                medium: 'https://unsplash.it/983/736?image=401',
-                large: 'https://unsplash.it/1399/1048?image=401',
-                xlarge: 'https://unsplash.it/1400/1050?image=401',
+                small: 'https://unsplash.it/640/480?image=401',
+                medium: 'https://unsplash.it/1024/768?image=401',
+                large: 'https://unsplash.it/1400/1050?image=401',
+                ratios: {
+                    small: { w: 640, h: 480 },
+                    medium: { w: 1024, h: 768 },
+                    large: { w: 1400, h: 1050 },
+                },
             },
         ]}
     />
@@ -68,16 +88,24 @@ export const RatioB: Story = () => (
     <Gallery
         images={[
             {
-                small: 'https://unsplash.it/419/313?image=400',
-                medium: 'https://unsplash.it/481/481?image=400',
-                large: 'https://unsplash.it/686/686?image=400',
-                xlarge: 'https://unsplash.it/690/690?image=400',
+                small: 'https://unsplash.it/640/640?image=400',
+                medium: 'https://unsplash.it/1024/1024?image=400',
+                large: 'https://unsplash.it/1400/1400?image=400',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/419/313?image=401',
-                medium: 'https://unsplash.it/481/481?image=401',
-                large: 'https://unsplash.it/686/686?image=401',
-                xlarge: 'https://unsplash.it/690/690?image=401',
+                small: 'https://unsplash.it/640/640?image=401',
+                medium: 'https://unsplash.it/1024/1024?image=401',
+                large: 'https://unsplash.it/1400/1400?image=401',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
         ]}
     />
@@ -88,16 +116,24 @@ export const RatioC: Story = () => (
     <Gallery
         images={[
             {
-                small: 'https://unsplash.it/419/313?image=400',
-                medium: 'https://unsplash.it/481/642?image=400',
-                large: 'https://unsplash.it/689/919?image=400',
-                xlarge: 'https://unsplash.it/690/920?image=400',
+                small: 'https://unsplash.it/640/853?image=400',
+                medium: 'https://unsplash.it/1024/1365?image=400',
+                large: 'https://unsplash.it/1400/1867?image=400',
+                ratios: {
+                    small: { w: 640, h: 853 },
+                    medium: { w: 1024, h: 1365 },
+                    large: { w: 1400, h: 1867 },
+                },
             },
             {
-                small: 'https://unsplash.it/419/313?image=400',
-                medium: 'https://unsplash.it/481/642?image=400',
-                large: 'https://unsplash.it/689/919?image=400',
-                xlarge: 'https://unsplash.it/690/920?image=400',
+                small: 'https://unsplash.it/640/853?image=401',
+                medium: 'https://unsplash.it/1024/1365?image=401',
+                large: 'https://unsplash.it/1400/1867?image=401',
+                ratios: {
+                    small: { w: 640, h: 853 },
+                    medium: { w: 1024, h: 1365 },
+                    large: { w: 1400, h: 1867 },
+                },
             },
         ]}
     />
@@ -108,28 +144,44 @@ export const MixedImages: Story = () => (
     <Gallery
         images={[
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=401',
-                medium: 'https://unsplash.it/315/315?image=401',
-                large: 'https://unsplash.it/507/507?image=401',
-                xlarge: 'https://unsplash.it/710/710?image=401',
+                small: 'https://unsplash.it/640/640?image=401',
+                medium: 'https://unsplash.it/1024/1024?image=401',
+                large: 'https://unsplash.it/1400/1400?image=401',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=402',
-                medium: 'https://unsplash.it/315/315?image=402',
-                large: 'https://unsplash.it/507/507?image=402',
-                xlarge: 'https://unsplash.it/710/710?image=402',
+                small: 'https://unsplash.it/640/640?image=401',
+                medium: 'https://unsplash.it/1024/1024?image=401',
+                large: 'https://unsplash.it/1400/1400?image=401',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
         ]}
     />
@@ -140,29 +192,45 @@ export const MixedFirstFull: Story = () => (
     <Gallery
         images={[
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
                 isFull: true,
             },
             {
-                small: 'https://unsplash.it/630/630?image=401',
-                medium: 'https://unsplash.it/315/315?image=401',
-                large: 'https://unsplash.it/507/507?image=401',
-                xlarge: 'https://unsplash.it/710/710?image=401',
+                small: 'https://unsplash.it/640/640?image=401',
+                medium: 'https://unsplash.it/1024/1024?image=401',
+                large: 'https://unsplash.it/1400/1400?image=401',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=402',
-                medium: 'https://unsplash.it/315/315?image=402',
-                large: 'https://unsplash.it/507/507?image=402',
-                xlarge: 'https://unsplash.it/710/710?image=402',
+                small: 'https://unsplash.it/640/640?image=402',
+                medium: 'https://unsplash.it/1024/1024?image=402',
+                large: 'https://unsplash.it/1400/1400?image=402',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=404',
+                medium: 'https://unsplash.it/1024/505?image=404',
+                large: 'https://unsplash.it/1400/690?image=404',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
         ]}
     />
@@ -173,29 +241,45 @@ export const MixedSecondFull: Story = () => (
     <Gallery
         images={[
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=404',
+                medium: 'https://unsplash.it/1024/505?image=404',
+                large: 'https://unsplash.it/1400/690?image=404',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=401',
-                medium: 'https://unsplash.it/315/315?image=401',
-                large: 'https://unsplash.it/507/507?image=401',
-                xlarge: 'https://unsplash.it/710/710?image=401',
+                small: 'https://unsplash.it/640/640?image=402',
+                medium: 'https://unsplash.it/1024/1024?image=402',
+                large: 'https://unsplash.it/1400/1400?image=402',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
                 isFull: true,
             },
             {
-                small: 'https://unsplash.it/630/630?image=402',
-                medium: 'https://unsplash.it/315/315?image=402',
-                large: 'https://unsplash.it/507/507?image=402',
-                xlarge: 'https://unsplash.it/710/710?image=402',
+                small: 'https://unsplash.it/640/640?image=402',
+                medium: 'https://unsplash.it/1024/1024?image=402',
+                large: 'https://unsplash.it/1400/1400?image=402',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
         ]}
     />
@@ -206,29 +290,45 @@ export const MixedThirdFull: Story = () => (
     <Gallery
         images={[
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=404',
+                medium: 'https://unsplash.it/1024/505?image=404',
+                large: 'https://unsplash.it/1400/690?image=404',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=401',
-                medium: 'https://unsplash.it/315/315?image=401',
-                large: 'https://unsplash.it/507/507?image=401',
-                xlarge: 'https://unsplash.it/710/710?image=401',
+                small: 'https://unsplash.it/640/640?image=402',
+                medium: 'https://unsplash.it/1024/1024?image=402',
+                large: 'https://unsplash.it/1400/1400?image=402',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=402',
-                medium: 'https://unsplash.it/315/315?image=402',
-                large: 'https://unsplash.it/507/507?image=402',
-                xlarge: 'https://unsplash.it/710/710?image=402',
+                small: 'https://unsplash.it/640/640?image=401',
+                medium: 'https://unsplash.it/1024/1024?image=401',
+                large: 'https://unsplash.it/1400/1400?image=401',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
                 isFull: true,
             },
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
         ]}
     />
@@ -240,22 +340,34 @@ export const WithBackground: Story = () => (
         bgMode="full"
         images={[
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=401',
-                medium: 'https://unsplash.it/315/315?image=401',
-                large: 'https://unsplash.it/507/507?image=401',
-                xlarge: 'https://unsplash.it/710/710?image=401',
+                small: 'https://unsplash.it/640/640?image=401',
+                medium: 'https://unsplash.it/1024/1024?image=401',
+                large: 'https://unsplash.it/1400/1400?image=401',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=402',
-                medium: 'https://unsplash.it/315/315?image=402',
-                large: 'https://unsplash.it/507/507?image=402',
-                xlarge: 'https://unsplash.it/710/710?image=402',
+                small: 'https://unsplash.it/640/640?image=402',
+                medium: 'https://unsplash.it/1024/1024?image=402',
+                large: 'https://unsplash.it/1400/1400?image=402',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
         ]}
     />
@@ -266,22 +378,34 @@ export const SplittedBackground: Story = () => (
         bgMode="splitted"
         images={[
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=401',
-                medium: 'https://unsplash.it/315/315?image=401',
-                large: 'https://unsplash.it/507/507?image=401',
-                xlarge: 'https://unsplash.it/710/710?image=401',
+                small: 'https://unsplash.it/640/640?image=401',
+                medium: 'https://unsplash.it/1024/1024?image=401',
+                large: 'https://unsplash.it/1400/1400?image=401',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=402',
-                medium: 'https://unsplash.it/315/315?image=402',
-                large: 'https://unsplash.it/507/507?image=402',
-                xlarge: 'https://unsplash.it/710/710?image=402',
+                small: 'https://unsplash.it/640/640?image=402',
+                medium: 'https://unsplash.it/1024/1024?image=402',
+                large: 'https://unsplash.it/1400/1400?image=402',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
         ]}
     />
@@ -292,22 +416,34 @@ export const Inverted: Story = () => (
         bgMode="inverted"
         images={[
             {
-                small: 'https://unsplash.it/500/246?image=400',
-                medium: 'https://unsplash.it/640/315?image=400',
-                large: 'https://unsplash.it/1024/504?image=400',
-                xlarge: 'https://unsplash.it/1440/710?image=400',
+                small: 'https://unsplash.it/640/315?image=400',
+                medium: 'https://unsplash.it/1024/505?image=400',
+                large: 'https://unsplash.it/1400/690?image=400',
+                ratios: {
+                    small: { w: 640, h: 315 },
+                    medium: { w: 1024, h: 505 },
+                    large: { w: 1400, h: 690 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=401',
-                medium: 'https://unsplash.it/315/315?image=401',
-                large: 'https://unsplash.it/507/507?image=401',
-                xlarge: 'https://unsplash.it/710/710?image=401',
+                small: 'https://unsplash.it/640/640?image=401',
+                medium: 'https://unsplash.it/1024/1024?image=401',
+                large: 'https://unsplash.it/1400/1400?image=401',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
             {
-                small: 'https://unsplash.it/630/630?image=402',
-                medium: 'https://unsplash.it/315/315?image=402',
-                large: 'https://unsplash.it/507/507?image=402',
-                xlarge: 'https://unsplash.it/710/710?image=402',
+                small: 'https://unsplash.it/640/640?image=402',
+                medium: 'https://unsplash.it/1024/1024?image=402',
+                large: 'https://unsplash.it/1400/1400?image=402',
+                ratios: {
+                    small: { w: 640, h: 640 },
+                    medium: { w: 1024, h: 1024 },
+                    large: { w: 1400, h: 1400 },
+                },
             },
         ]}
     />

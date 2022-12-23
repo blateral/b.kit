@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
 import Datepicker from 'components/fields/Datepicker';
+import Clock from 'components/base/icons/Clock';
 
 export default {
     title: 'Fields / Datepicker',
@@ -19,7 +20,7 @@ export default {
             values: [{ name: 'gray', value: '#F0F0F0' }],
         },
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -41,17 +42,8 @@ export const WithLabel: Story = () => (
     <Datepicker label="Label" placeholder="Prompt Text" />
 );
 
-export const WithIcon: Story = () => (
-    <Datepicker
-        icon={{ src: 'http://placehold.it/50' }}
-        label="Label"
-        placeholder="Prompt Text"
-    />
-);
-
 export const WithCustomButtons: Story = () => (
     <Datepicker
-        icon={{ src: 'http://placehold.it/50' }}
         label="Label"
         placeholder="Prompt Text"
         submitAction={(clickHandler) => (
@@ -65,12 +57,11 @@ export const WithCustomButtons: Story = () => (
     />
 );
 
-export const WithCustomIndicator: Story = () => (
+export const CustomIcon: Story = () => (
     <Datepicker
-        icon={{ src: 'http://placehold.it/50' }}
+        customIcon={() => <Clock />}
         label="Label"
         placeholder="Prompt Text"
-        indicator={({ isOpen }) => <div>{isOpen ? 'close' : 'open'}</div>}
         nextCtrlUrl="/images/Arrow-Right.svg"
         prevCtrlUrl="/images/Arrow-Left.svg"
     />

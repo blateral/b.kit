@@ -1,0 +1,25 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import {
+    PriceListComponent,
+    PriceBlock,
+} from '../../../components/sections/PriceList';
+
+<Meta
+    title="Sections/PriceList/Info"
+    parameters={{
+        status: {
+            type: ['preview', 'qsReady'],
+        },
+    }}
+/>
+
+# PriceList
+
+The `PriceList` is intended to list priced elements, such as products or services.
+
+<ArgsTable of={PriceListComponent} />
+
+Each list item has props for `title`, `text` and `price`. The currency of the price element must be passed
+to the component prop and is not auto included.
+
+<ArgsTable of={PriceBlock} />

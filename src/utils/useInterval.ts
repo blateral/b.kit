@@ -1,23 +1,34 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-export default function useInterval(callback: any, delay?: number) {
-    const savedCallback: any = useRef();
+export default function useInterval(callback: () => void, delay: number) {
+    const callbackRef = useRef(callback);
+    const intervalRef = useRef<number>();
 
     // Remember the latest callback.
     useEffect(() => {
-        savedCallback.current = callback;
+        callbackRef.current = callback;
     }, [callback]);
 
-    // Set up the interval.
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    useEffect(() => {
-        function tick() {
-            savedCallback.current();
-        }
-        if (delay !== null) {
-            const id = setInterval(tick, delay);
-            return () => clearInterval(id);
-        }
+    const set = useCallback(() => {
+        intervalRef.current = window.setInterval(
+            () => callbackRef.current?.(),
+            delay
+        );
     }, [delay]);
+
+    const clear = useCallback(() => {
+        intervalRef.current && window.clearTimeout(intervalRef.current);
+    }, []);
+
+    useEffect(() => {
+        set();
+        return clear;
+    }, [delay, set, clear]);
+
+    const reset = useCallback(() => {
+        clear();
+        set();
+    }, [clear, set]);
+
+    return { clear, reset };
 }

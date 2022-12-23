@@ -1,5 +1,6 @@
-import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC } from 'react';
+import styled from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 
 import {
     getColors as color,
@@ -14,7 +15,7 @@ const View = styled.form`
     display: flex;
     flex-direction: column;
 
-    color: ${({ theme }) => color(theme).mono.dark};
+    color: ${({ theme }) => color(theme).text.default};
 
     @media ${mq.medium} {
         flex-direction: row;
@@ -24,9 +25,9 @@ const View = styled.form`
 const InputField = styled.input<{ backColor?: string }>`
     display: block;
     width: 100%;
-    height: 100%;
+    height: 49px;
     max-height: 49px;
-    padding: ${spacings.nudge * 3.5}px ${spacings.nudge * 3.5}px;
+    padding: ${spacings.nudge}px ${spacings.nudge * 3}px;
     color: inherit;
 
     background-color: ${({ backColor }) => backColor && backColor};
@@ -41,6 +42,15 @@ const InputField = styled.input<{ backColor?: string }>`
     font-weight: ${({ theme }) => font(theme).copy.small.weight};
     ${({ theme }) => withRange(font(theme).copy.small.size, 'font-size')}
     line-height: ${({ theme }) => font(theme).copy.small.lineHeight};
+
+    &:focus {
+        outline: ${({ theme }) => `2px solid ${color(theme).primary.default}`};
+        outline-offset: 0;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 
     &::placeholder {
         color: inherit;
@@ -57,10 +67,8 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
 
     margin-top: ${spacings.spacer * 0.5}px;
 
-    background-color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).light : color(theme).dark};
-    color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).dark : color(theme).light};
+    background-color: ${({ theme }) => color(theme).primary.default};
+    color: ${({ theme }) => color(theme).text.inverted};
 
     outline: none;
     border: none;
@@ -82,13 +90,17 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
         transform: scale(1.012);
     }
 
+    &:focus:not(:focus-visible) {
+        text-decoration: none;
+    }
+
     &:active {
         transform: scale(0.95);
     }
 `;
 
 const CompactForm: FC<{
-    isInverted?: boolean;
+    mode?: 'onSoft' | 'onDark' | 'default';
     value?: string;
     placeholder?: string;
     method?: string;
@@ -98,10 +110,9 @@ const CompactForm: FC<{
     onClick?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     onFocus?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
-    backgroundStyle?: 'white' | 'grey';
     className?: string;
 }> = ({
-    isInverted = false,
+    mode = 'default',
     value,
     placeholder,
     method,
@@ -111,10 +122,11 @@ const CompactForm: FC<{
     onClick,
     onBlur,
     onFocus,
-    backgroundStyle = 'grey',
     className,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
+    const bgColor =
+        mode === 'default' ? colors.elementBg.medium : colors.elementBg.light;
 
     return (
         <View
@@ -129,14 +141,12 @@ const CompactForm: FC<{
                 onClick={onClick}
                 onBlur={onBlur}
                 onFocus={onFocus}
-                backColor={
-                    backgroundStyle === 'grey' || isInverted
-                        ? color(theme).mono.light
-                        : color(theme).light
-                }
+                backColor={bgColor}
             />
             {buttonIcon && (
-                <SubmitBtn isInverted={isInverted}>{buttonIcon}</SubmitBtn>
+                <SubmitBtn isInverted={mode === 'onDark'}>
+                    {buttonIcon}
+                </SubmitBtn>
             )}
         </View>
     );

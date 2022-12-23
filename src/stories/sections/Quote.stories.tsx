@@ -7,7 +7,7 @@ export default {
     component: QuoteComponent,
     parameters: {
         status: {
-            type: 'beta',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;

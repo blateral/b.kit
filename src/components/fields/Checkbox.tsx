@@ -1,8 +1,8 @@
 import Check from 'components/base/icons/Check';
 import Copy from 'components/typography/Copy';
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
-import { hexToRgba } from 'utils/hexRgbConverter';
+import React from 'react';
+import styled from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.label`
@@ -25,15 +25,25 @@ const Label = styled(Copy)`
     }
 `;
 
-const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
+const CheckboxContainer = styled.div<{
+    isDisabled?: boolean;
+    isInverted?: boolean;
+}>`
+    color: ${({ theme }) => color(theme).text.inverted};
     cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
     pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 
     border: 2px solid transparent;
 
     &:focus-within {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        outline: 1px solid
+            ${({ theme, isInverted, isDisabled }) =>
+                isDisabled
+                    ? 'transparent'
+                    : isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+        outline-offset: 0;
     }
 `;
 
@@ -46,6 +56,7 @@ const Original = styled.input`
 const Box = styled.span<{
     isSelected?: boolean;
     isInverted?: boolean;
+    isDisabled?: boolean;
 }>`
     width: 20px;
     min-width: 20px;
@@ -54,15 +65,35 @@ const Box = styled.span<{
     position: relative;
 
     border: 2px solid
-        ${({ isInverted, theme, isSelected }) =>
-            isSelected
-                ? color(theme).primary.medium
-                : isInverted
-                ? color(theme).light
-                : color(theme).mono.medium};
+        ${({ isSelected, isDisabled, isInverted, theme }) => {
+            if (isDisabled) {
+                return isInverted
+                    ? color(theme).text.subtileInverted
+                    : color(theme).text.subtile;
+            }
+            if (isSelected) {
+                return isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default;
+            }
+            return isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.medium;
+        }};
 
-    background-color: ${({ isSelected, theme }) =>
-        isSelected ? color(theme).primary.medium : color(theme).light};
+    background-color: ${({ isSelected, isDisabled, isInverted, theme }) => {
+        if (isDisabled) {
+            return isInverted
+                ? color(theme).text.subtileInverted
+                : color(theme).text.subtile;
+        }
+        if (isSelected) {
+            return isInverted
+                ? color(theme).primary.inverted
+                : color(theme).primary.default;
+        }
+        return 'transparent';
+    }};
 `;
 
 const StyledCheck = styled(Check)`
@@ -75,7 +106,8 @@ const StyledCheck = styled(Check)`
     transform: translate(-50%, -50%);
 `;
 
-const Checkbox: React.FC<{
+export interface CheckboxProps {
+    enableMemo?: boolean;
     label?: string;
 
     onChange?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
@@ -89,7 +121,9 @@ const Checkbox: React.FC<{
     isSelected?: boolean;
     isInverted?: boolean;
     isRequired?: boolean;
-}> = ({
+}
+
+const Checkbox: React.FC<CheckboxProps> = ({
     label,
     isDisabled,
     isSelected,
@@ -101,12 +135,20 @@ const Checkbox: React.FC<{
     value,
     isRequired,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     return (
         <View>
-            <CheckboxContainer isDisabled={isDisabled} onClick={onClick}>
-                <Box isSelected={isSelected} isInverted={isInverted}>
+            <CheckboxContainer
+                isDisabled={isDisabled}
+                isInverted={isInverted}
+                onClick={onClick}
+            >
+                <Box
+                    isSelected={isSelected}
+                    isInverted={isInverted}
+                    isDisabled={isDisabled}
+                >
                     {isSelected && <StyledCheck />}
                 </Box>
                 <Original
@@ -125,7 +167,13 @@ const Checkbox: React.FC<{
                     size="small"
                     type="copy-b"
                     isInverted={isInverted}
-                    textColor={isDisabled ? color(theme).mono.dark : undefined}
+                    textColor={
+                        isDisabled
+                            ? isInverted
+                                ? colors.text.subtileInverted
+                                : colors.text.subtile
+                            : undefined
+                    }
                     innerHTML={`${label}${isRequired ? '<span> *</span>' : ''}`}
                 />
             )}
@@ -133,4 +181,21 @@ const Checkbox: React.FC<{
     );
 };
 
-export default Checkbox;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: CheckboxProps, next: CheckboxProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.label !== next.label) return false;
+    if (prev.isSelected !== next.isSelected) return false;
+    if (prev.value !== next.value) return false;
+
+    return true;
+};
+
+export default React.memo(Checkbox, areEqual);

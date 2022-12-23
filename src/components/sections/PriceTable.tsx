@@ -1,59 +1,58 @@
-import PriceTag, { PriceTagProps } from 'components/blocks/PriceTag';
-import { spacings, mq, getColors } from 'utils/styles';
 import React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
+
+import PriceTag, { PriceTagProps } from 'components/blocks/PriceTag';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+import { gridSettings } from 'components/base/Grid';
+import { mq } from 'utils/styles';
 
-const PriceFlex = styled.div`
+const Tag = styled(PriceTag)`
+    min-height: 500px;
+`;
+
+const Items = styled.div`
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
 
-    margin: -${spacings.spacer * 1.5}px;
-    margin-right: -${spacings.nudge * 3}px;
-    margin-left: -${spacings.nudge * 3}px;
-`;
-
-const PriceTagContainer = styled.div`
-    flex: 1 1 100%;
-    padding: ${spacings.spacer * 1.5}px;
-    padding-right: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge * 3}px;
+    margin-top: -${gridSettings.gutter}px;
+    margin-left: -${gridSettings.gutter}px;
 
     & > * {
-        min-height: 400px;
-    }
-
-    @media ${mq.semilarge} {
-        flex: 0 1 50%;
+        flex: 1 1 25%;
+        min-width: 286px;
+        max-width: 320px;
+        margin-top: ${gridSettings.gutter}px;
+        margin-left: ${gridSettings.gutter}px;
     }
 
     @media ${mq.large} {
-        flex: 0 1 33.33%;
-        max-width: 33.33%;
-
         & > * {
-            max-width: 400px;
+            max-width: 286px;
         }
     }
 `;
 
 const PriceTable: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+    /** Array of PriceTag card items */
     items: Array<Omit<PriceTagProps, 'isInverted'>>;
+    /** Center text inside card items */
+    isCentered?: boolean;
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ items, bgMode }) => {
+}> = ({ anchorId, items, isCentered, bgMode }) => {
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
     const priceTagCount = items?.length || 0;
 
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
-    const { sheetRefs: cardRefs } = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
         listLength: priceTagCount,
         identifiers: [
             '[data-sheet="superTitle"]',
@@ -72,27 +71,29 @@ const PriceTable: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? getColors(theme).dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? getColors(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace>
-                <PriceFlex>
-                    {items.map((item, i) => (
-                        <PriceTagContainer key={i} ref={cardRefs[i]}>
-                            <PriceTag
-                                {...item}
-                                isInverted={isInverted}
-                                hasBackground={hasBg}
-                            />
-                        </PriceTagContainer>
+                <Items>
+                    {items?.map((item, i) => (
+                        <Tag
+                            key={i}
+                            ref={cardRefs[i]}
+                            {...item}
+                            isInverted={isInverted}
+                            isCentered={isCentered}
+                            hasBackground={hasBg}
+                        />
                     ))}
-                </PriceFlex>
+                </Items>
             </Wrapper>
         </Section>
     );

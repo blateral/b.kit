@@ -1,0 +1,234 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+<Meta
+    title="Theming"
+    parameters={{
+        status: {
+            type: '',
+        },
+    }}
+/>
+
+# Theming
+
+The default theme can be modified by passing a custom `ThemeMods` object to the theme provider. To override the default b.kit values it is not neccessary to
+replace all values or subobjects. Just define the values you want to replace and you good to go. The hole theme configuration consists of three main parts:
+
+-   Colors
+-   Fonts
+-   Globals
+
+```javascript
+const theme: ThemeMods = {
+    colors: {
+        ...
+    },
+    fonts: {
+        base: {...},
+        types: {...}
+    },
+    globals: {
+        ...
+    }
+};
+```
+
+<br />
+
+## Colors
+
+Each component uses colors defined inside the colors subobject of the theme settings. The color namings are related to their use in the layout:
+
+| Key                           | Description                                                        |
+| ----------------------------- | ------------------------------------------------------------------ |
+| **primary**                   | Primary colors and hover colors for default and dark backgrounds   |
+| **secondary**                 | Secondary colors and hover colors for default and dark backgrounds |
+| **sectionBg**                 | Colors for section background layers in different brightness steps |
+| **elementBg**                 | Colors for element backgrounds like cards and accordion tabs.      |
+| **text**                      | General text colors that cannot defined by fonts definitions       |
+| **error** / **errorInverted** | Textcolors for error messages                                      |
+
+To override the default color theme settings you must not define every key in the theme object. Just create a object from type `ThemeMods` and pick the colors you want to adjust.
+They then mapped onto the default theme.
+
+```javascript
+const theme: ThemeMods = {
+    colors: {
+        elementBg: {
+            light: '#ffffff',
+            lightHover: '#D2DCE2',
+            medium: '#E2EAEE',
+            mediumHover: '#AAB6BD',
+        },
+        primary: {
+            default: '#2B4356',
+            hover: '#009FE3',
+            inverted: '#ffffff',
+            invertedHover: '#009FE3',
+        },
+        secondary: {
+            default: '#93A4B2',
+            hover: '#607483',
+            inverted: '#D2DCE2',
+        },
+    },
+};
+```
+
+<br />
+
+## Fonts
+
+Font styles include all settings to style text in different contexts. A `heading-1` for example is used by the components to display a heading, a `copy` style defines the look of a regular text block.
+
+> Font settings are only responsible to visually display text types. The used HTML tags are defined by the component or connector itself.
+
+| Key            | Description                                                       |
+| -------------- | ----------------------------------------------------------------- |
+| **copy**       | Text styles for flow / block text in three different sizes        |
+| **copy-i**     | Italic text styles for flow / block text in three different sizes |
+| **copy-b**     | Bold text styles for flow / block text in three different sizes   |
+| **super**      | Text styles for a smaller title placed above the main title       |
+| **heading-1**  | Text styles for the main heading                                  |
+| **heading-2**  | Text styles for the secondary heading                             |
+| **heading-3**  | Text styles for the tertiary heading                              |
+| **heading-4**  | Text styles for the quaternary heading                            |
+| **callout**    | Text styles for a big callout text                                |
+| **link**       | Text styles for different types of links                          |
+| **navigation** | Seperate text styles for the menu navigation                      |
+
+Some of them have different forms e.g. `copy-i` for copy italic or `copy-b` for copy bold. While `FontProps` containing the style props needed for the CSS styling, `FontOptions` are
+a another way to seperate the font types into different sizes:
+
+```typescript
+interface FontOptions {
+    small: FontProps;
+    medium: FontProps;
+    big: FontProps;
+}
+```
+
+### Base font styles
+
+Defining settings for every font type is sometimes redundant and a copy and paste nightmare. To reduce redundant style declarations you can define base styles that applies for all font types.
+Adjustments inside the types object use the base styles as a start and then override these settings with the own values.
+
+<br />
+
+## Globals
+
+The `globals` object inside the theme settings are used to store global configurations like section spacings or date formats. It also contains settings to define link icons inside rich text blocks.
+
+<br />
+
+## Using styles
+
+To use the styles that a generated by modifing the `DefaultTheme` context you need the Styled Components theme context reference.
+
+As a hook in functional React components:
+
+```typescript
+const { theme, colors, fonts, globals } = useLibTheme();
+```
+
+As a Higher Order Component (HOC) to wrap a component within a LibThemeProvider. This automatically adds a theme property to the component:
+
+```typescript
+export default withLibTheme(Component);
+```
+
+Inside a Styled Component:
+
+```jsx
+color: ${({theme}) => ...};
+```
+
+Then you can use the same functions also used by every b.kit component to get you the right color and font values:
+
+```typescript
+getColors(theme).dark;
+
+getFonts(theme).copy.small;
+```
+
+## Theme provider
+
+The theme provider uses the [React context architecture](https://reactjs.org/docs/context.html) to provide a global theme configuration across all components and child components. Instead of passing the theme settings
+with properties through every component level, the parent provider allows the component to directly access the theme object reference.
+
+To override the default theme settings you must wrap the component inside the `LibThemeProvider` component:
+
+```jsx
+import { Article, LibThemeProvider } from '@blateral/b.kit';
+
+const customTheme = {
+    colors: {
+        primary: {
+            default: '#2B4356',
+            hover: '#009FE3',
+            inverted: '#ffffff',
+            invertedHover: '#009FE3',
+        },
+    },
+};
+
+<LibThemeProvider theme={customTheme}>
+    <Article
+        title="Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+        superTitle="Cum sociis natoque"
+        text="Lorem ipsum dolor sit amet..."
+    />
+</LibThemeProvider>;
+```
+
+You also can nest multiple ThemeProvider components. Before appling the new theme settings passed through the `theme` property, the `LibThemeProvider` looks into
+the current theme context and merges settings from parent context providers with the new adjustments. Therefore the closest provider to the component has priority and overrides keys that
+are defined in parent provers.
+
+```jsx
+
+const customThemeA = {
+    fonts: {
+        types: {
+            'heading-2': {
+                color: '#ffffff'
+                size: [30]
+            }
+        }
+    }
+};
+
+const customThemeB = {
+    fonts: {
+        types: {
+            'heading-2': {
+                color: '#ff0000'
+            }
+        }
+    }
+};
+
+<LibThemeProvider theme={customThemeA}>
+    <Article
+        title="Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+        superTitle="Cum sociis natoque"
+        text="Lorem ipsum dolor sit amet..."
+    />
+    <LibThemeProvider theme={customThemeB}>
+        <Intro title="..." />
+    </LibThemeProvider>
+</LibThemeProvider>;
+
+/** Article styles **/
+"heading-2": {
+    color: '#ffffff'
+    size: [30]
+}
+
+/** Intro styles **/
+"heading-2": {
+    color: '#ff0000'
+    size: [30]
+}
+
+```

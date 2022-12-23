@@ -1,101 +1,13 @@
-import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
-import { getColors as color, mq, spacings } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { mq } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Fact, { FactProps } from 'components/blocks/Fact';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-
-const ContentContainer = styled.div<{ columns?: number }>`
-    & > * + * {
-        padding-top: ${spacings.spacer * 2}px;
-    }
-
-    @media ${mq.medium} {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-
-        @supports (display: grid) {
-            display: -ms-grid;
-            display: grid;
-            -ms-grid-columns: ${({ columns }) =>
-                columns &&
-                new Array(columns < 3 ? columns : 3).fill('').map(() => {
-                    return '1fr ';
-                })};
-            grid-template-columns: repeat(
-                ${({ columns }) => columns && (columns < 3 ? columns : 3)},
-                1fr
-            );
-        }
-
-        margin-left: -20px;
-        margin-top: -40px;
-
-        & > * {
-            flex: 0 0
-                ${({ columns }) =>
-                    columns && (1 / (columns < 3 ? columns : 3)) * 100 + '%'};
-            max-width: ${({ columns }) =>
-                columns && (1 / (columns < 3 ? columns : 3)) * 100 + '%'};
-            padding-left: 20px;
-            padding-top: 40px;
-
-            @supports (display: grid) {
-                max-width: 370px;
-            }
-        }
-    }
-
-    @media ${mq.semilarge} {
-        & > * {
-            flex: 0 0
-                ${({ columns }) =>
-                    columns && (1 / (columns < 4 ? columns : 4)) * 100 + '%'};
-            max-width: ${({ columns }) =>
-                columns && (1 / (columns < 4 ? columns : 4)) * 100 + '%'};
-        }
-
-        @supports (display: grid) {
-            -ms-grid-columns: ${({ columns }) =>
-                columns &&
-                new Array(columns < 4 ? columns : 4).fill('').map(() => {
-                    return '1fr ';
-                })};
-            grid-template-columns: repeat(
-                ${({ columns }) => columns && (columns < 4 ? columns : 4)},
-                1fr
-            );
-
-            & > * {
-                max-width: 370px;
-            }
-        }
-    }
-
-    @media ${mq.large} {
-        & > * {
-            flex: 0 0 ${({ columns }) => columns && (1 / columns) * 100 + '%'};
-            max-width: ${({ columns }) => columns && (1 / columns) * 100 + '%'};
-        }
-
-        @supports (display: grid) {
-            -ms-grid-columns: ${({ columns }) =>
-                columns &&
-                new Array(columns).fill('').map(() => {
-                    return '1fr ';
-                })};
-            grid-template-columns: repeat(${({ columns }) => columns}, 1fr);
-
-            & > * {
-                max-width: 370px;
-            }
-        }
-    }
-`;
+import Grid from 'components/base/Grid';
 
 const FactFill = styled.div`
     display: none;
@@ -106,19 +18,27 @@ const FactFill = styled.div`
 `;
 
 const FactGrid: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Controls amount columns on large screens */
     columns?: 3 | 4 | 6;
 
+    /** Array with fact card data */
     facts?: Array<Omit<FactProps, 'isInverted' | 'isCentered'>>;
 
+    /** Section background */
     bgMode?: 'full' | 'inverted' | 'splitted';
+
+    /** Center text inside fact card items */
     isCentered?: boolean;
-}> = ({ columns = 3, facts, bgMode, isCentered }) => {
-    const theme = useContext(ThemeContext);
+}> = ({ anchorId, columns = 3, facts, bgMode, isCentered }) => {
+    const { colors } = useLibTheme();
     const factCount = facts?.length || 0;
 
     const isInverted = bgMode === 'inverted';
 
-    const { sheetRefs: cardRefs } = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
         listLength: factCount,
         identifiers: ['[data-sheet="title"]', '[data-sheet="subtitle"]'],
         responsive: {
@@ -133,19 +53,20 @@ const FactGrid: FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.sectionBg.dark
                     : bgMode
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                {facts && (
-                    <ContentContainer columns={columns}>
-                        {facts.map((fact, i) => {
+                <Grid.Row>
+                    {facts &&
+                        facts.map((fact, i) => {
                             if (
                                 fact?.title ||
                                 fact?.subTitle ||
@@ -153,21 +74,43 @@ const FactGrid: FC<{
                                 fact?.text
                             ) {
                                 return (
-                                    <div key={i} ref={cardRefs[i]}>
+                                    <Grid.Col
+                                        key={i}
+                                        medium={{ span: 4 / 12 }}
+                                        semilarge={
+                                            columns > 3
+                                                ? { span: 3 / 12 }
+                                                : { span: 4 / 12 }
+                                        }
+                                        large={{ span: 12 / columns / 12 }}
+                                    >
                                         <Fact
                                             key={i}
+                                            ref={cardRefs[i]}
                                             {...fact}
                                             isCentered={isCentered}
                                             isInverted={isInverted}
                                         />
-                                    </div>
+                                    </Grid.Col>
                                 );
                             } else {
-                                return <FactFill ref={cardRefs[i]} key={i} />;
+                                return (
+                                    <Grid.Col
+                                        key={i}
+                                        medium={{ span: 4 / 12 }}
+                                        semilarge={
+                                            columns > 3
+                                                ? { span: 3 / 12 }
+                                                : { span: 4 / 12 }
+                                        }
+                                        large={{ span: 12 / columns / 12 }}
+                                    >
+                                        <FactFill ref={cardRefs[i]} key={i} />
+                                    </Grid.Col>
+                                );
                             }
                         })}
-                    </ContentContainer>
-                )}
+                </Grid.Row>
             </Wrapper>
         </Section>
     );

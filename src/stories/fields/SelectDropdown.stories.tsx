@@ -19,7 +19,7 @@ export default {
             values: [{ name: 'gray', value: '#F0F0F0' }],
         },
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -36,23 +36,26 @@ export const Default: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -66,23 +69,26 @@ export const WithLabel: Story = () => (
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -91,29 +97,32 @@ export const WithLabel: Story = () => (
 
 export const WithInitial: Story = () => (
     <SelectDropdown
-        value="2"
+        selectedItem="Item 2"
         label="Label"
         placeholder="Prompt Text"
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         onChange={console.log}
@@ -123,30 +132,33 @@ export const WithInitial: Story = () => (
 export const AsRequired: Story = () => (
     <SelectDropdown
         label="Label"
+        isRequired
         placeholder="Prompt Text"
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
-        isRequired
         onChange={console.log}
     />
 );
@@ -154,30 +166,34 @@ export const AsRequired: Story = () => (
 export const IsDisabled: Story = () => (
     <SelectDropdown
         label="Label"
+        isRequired
+        isDisabled
         placeholder="Prompt Text"
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
-        isDisabled
         onChange={console.log}
     />
 );
@@ -185,30 +201,33 @@ export const IsDisabled: Story = () => (
 export const IsInverted: Story = () => (
     <SelectDropdown
         label="Label"
+        isInverted
         placeholder="Prompt Text"
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
-        isInverted
         onChange={console.log}
     />
 );
@@ -222,40 +241,34 @@ IsInverted.parameters = {
 
 export const WithIcon: Story = () => (
     <SelectDropdown
-        icon={{ src: 'http://placehold.it/25' }}
         label="Label"
+        isRequired
         placeholder="Prompt Text"
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
-            },
-            {
-                label: 'Item 6',
-                value: '6',
-            },
-            {
-                label: 'Item 7',
-                value: '7',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
-        isRequired
         onChange={console.log}
     />
 );
@@ -263,31 +276,34 @@ export const WithIcon: Story = () => (
 export const HasError: Story = () => (
     <SelectDropdown
         label="Label"
+        isRequired
+        errorMessage="Bitte wählen Sie etwas aus!"
         placeholder="Prompt Text"
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
-        isRequired
-        errorMessage="Bitte wählen Sie etwas aus!"
         onChange={console.log}
     />
 );
@@ -295,35 +311,32 @@ export const HasError: Story = () => (
 export const WithCustomIndicator: Story = () => (
     <SelectDropdown
         label="Label"
+        isRequired
+        errorMessage="Bitte wählen Sie etwas aus!"
         placeholder="Prompt Text"
         items={[
             {
                 label: 'Item 1',
-                value: '1',
+                value: { targetMails: 'max.mustermann@mustermail.com' },
             },
             {
                 label: 'Item 2',
-                value: '2',
+                value: { targetMails: 'maxim.musterfrau@mustermail.com' },
             },
             {
                 label: 'Item 3',
-                value: '3',
+                value: {},
             },
             {
                 label: 'Item 4',
-                value: '4',
+                value: { text: 'Lorem Ipsum' },
             },
             {
                 label: 'Item 5',
-                value: '5',
-            },
-            {
-                label: 'Item 6',
-                value: '6',
-            },
-            {
-                label: 'Item 7',
-                value: '7',
+                value: {
+                    targetMails:
+                        'max.mustermann@mustermail.com,maxim.musterfrau@mustermail.com',
+                },
             },
         ]}
         indicator={({ isOpen }) => <div>{isOpen ? 'close' : 'open'}</div>}

@@ -14,10 +14,12 @@ const View = styled.div<{ isInverted?: boolean }>`
     display: flex;
     flex-direction: row;
 
-    color: ${({ theme }) => color(theme).dark};
+    color: ${({ theme }) => color(theme).text.default};
 
     background-color: ${({ theme, isInverted }) =>
-        isInverted ? color(theme).light : color(theme).mono.light};
+        isInverted
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.medium};
 `;
 
 const InputField = styled.input<{
@@ -50,6 +52,15 @@ const InputField = styled.input<{
     &::placeholder {
         color: inherit;
     }
+
+    &:focus {
+        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
+        outline-offset: 0;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 const ControlBtn = styled.button<{ isInverted?: boolean }>`
@@ -61,7 +72,7 @@ const ControlBtn = styled.button<{ isInverted?: boolean }>`
 
     margin: -2px;
     background-color: transparent;
-    color: ${({ theme }) => color(theme).dark};
+    color: ${({ theme }) => color(theme).text.default};
 
     outline: none;
     border: none;
@@ -76,6 +87,10 @@ const ControlBtn = styled.button<{ isInverted?: boolean }>`
     &:focus {
         text-decoration: underline;
         transform: scale(1.012);
+    }
+
+    &:focus:not(:focus-visible) {
+        text-decoration: none;
     }
 
     &:active {

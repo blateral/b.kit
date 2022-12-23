@@ -5,6 +5,7 @@ import typescript from 'rollup-plugin-typescript2';
 import ttypescript from 'ttypescript';
 import { terser } from 'rollup-plugin-terser';
 import { babel } from '@rollup/plugin-babel';
+import del from 'rollup-plugin-delete';
 
 import packageJson from './package.json';
 
@@ -23,13 +24,14 @@ export default {
         },
     ],
     plugins: [
+        del({ targets: 'lib' }),
         peerDepsExternal(),
         resolve(),
         commonjs(),
         typescript({
             typescript: ttypescript,
             tsconfigOverride: {
-                exclude: ['src/stories'],
+                exclude: ['src/stories', 'src/tests'],
             },
         }),
         babel({ babelHelpers: 'bundled' }),

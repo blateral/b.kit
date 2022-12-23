@@ -1,50 +1,87 @@
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
+import {
+    getColors as color,
+    mq,
+    spacings,
+    getGlobals as global,
+} from 'utils/styles';
+
 import Instagram from 'components/base/icons/socials/Instagram';
-import { getColors as color, mq, spacings } from 'utils/styles';
-import * as React from 'react';
 import Heading from 'components/typography/Heading';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Link, { LinkProps } from 'components/typography/Link';
+import { gridSettings } from 'components/base/Grid';
+import Image, { ImageProps } from 'components/blocks/Image';
 
-const Content = styled.div`
+const Cards = styled.ul`
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
-    margin: -${spacings.nudge}px;
-`;
+    margin-top: -${spacings.spacer}px;
+    margin-left: -${spacings.spacer}px;
 
-const ContentBlock = styled(Link)`
-    position: relative;
-    text-decoration: none;
-    color: inherit;
-
-    padding: ${spacings.nudge}px;
-    flex: 0 1 100%;
+    & > * {
+        flex: 1 1 100%;
+        margin-top: ${spacings.spacer}px;
+        margin-left: ${spacings.spacer}px;
+    }
 
     @media ${mq.medium} {
-        flex: 0 1 50%;
+        & > * {
+            flex: 1 1 calc(50% - ${gridSettings.gutter}px);
+            max-width: calc(50% - ${gridSettings.gutter}px);
+        }
     }
 
     @media ${mq.large} {
-        flex: 0 1 33.33%;
+        & > * {
+            flex: 1 1 calc(${(1 / 3) * 100}% - ${gridSettings.gutter}px);
+            max-width: calc(${(1 / 3) * 100}% - ${gridSettings.gutter}px);
+        }
     }
+`;
+
+const Item = styled.li`
+    display: block;
+    position: relative;
+    padding: 0;
+`;
+
+const Card = styled(Link)<{ isInverted?: boolean }>`
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: '#fff';
+    outline-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
+
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    overflow: hidden;
 
     &:before {
         content: '';
         position: absolute;
-        top: 5px;
-        bottom: 5px;
-        left: 5px;
-        right: 5px;
-        background: ${({ theme }) => color(theme).secondary.light};
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).secondary.inverted
+                : color(theme).secondary.default};
 
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.1s ease-in-out;
+        z-index: 1;
+        transition: opacity 0.2s ease-in-out;
     }
 
     &:hover {
@@ -53,25 +90,46 @@ const ContentBlock = styled(Link)`
             pointer-events: all;
         }
     }
+
+    &:focus {
+        &:before {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
 `;
 
-const Image = styled.img`
+const StyledImage = styled(Image)`
     display: block;
-    width: 100%;
+    height: 100%;
+    z-index: 0;
 `;
 
 const TextContainer = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 100%;
     transform: translate(-50%, -50%);
     text-align: center;
 
+    padding: ${spacings.nudge * 2}px;
+
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.1s ease-in-out;
+    z-index: 2;
+    transition: opacity 0.2s ease-in-out;
 
-    ${ContentBlock}:hover & {
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+
+    ${Card}:hover & {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    ${Card}:focus & {
         opacity: 1;
         pointer-events: all;
     }
@@ -85,74 +143,96 @@ const InstagramIcon = styled.div`
     position: absolute;
     left: 20px;
     bottom: 20px;
-    color: ${({ theme }) => color(theme).light};
+    color: ${({ theme }) => color(theme).text.inverted};
+    z-index: 2;
 
     & > * {
         fill: #fff;
 
-        ${ContentBlock}:hover & {
-            color: ${({ theme }) => color(theme).dark};
+        ${Card}:hover & {
+            color: ${({ theme }) => color(theme).text.inverted};
         }
     }
 `;
 
 const SocialWall: React.FC<{
-    items?: {
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Array with item settings */
+    items?: Array<{
         link?: LinkProps;
-        image?: { src: string; alt?: string };
-    }[];
+        image?: Omit<ImageProps, 'coverSpace' | 'ratio'>;
+    }>;
+
+    /** Text for main social media follow call */
     followUs?: string;
-    hashtag?: string;
+
+    /** Text for e.g. social media hashtag */
+    hashTag?: string;
+
+    /** Function to inject custom social icon on bottom left corner */
     socialIcon?: React.ReactNode;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ items, hashtag, followUs, socialIcon, bgMode }) => {
-    const theme = React.useContext(ThemeContext);
+}> = ({ anchorId, items, hashTag, followUs, socialIcon, bgMode }) => {
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
     return (
         <Section
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation
         >
             <Wrapper addWhitespace>
-                <Content>
-                    {items &&
-                        items.map((item, i) => {
-                            return (
-                                <ContentBlock isExternal {...item.link} key={i}>
-                                    {item.image && (
-                                        <Image
-                                            src={item.image.src}
-                                            alt={item.image.alt}
-                                        />
+                <Cards>
+                    {items?.map((item, i) => (
+                        <Item key={i}>
+                            <Card
+                                isExternal
+                                {...item.link}
+                                isInverted={isInverted}
+                                ariaLabel={item?.image?.alt}
+                            >
+                                {item.image && (
+                                    <StyledImage
+                                        {...item.image}
+                                        coverSpace
+                                        ratios={{
+                                            small: { w: 1, h: 1 },
+                                        }}
+                                        isInverted={isInverted}
+                                    />
+                                )}
+                                <TextContainer>
+                                    <FollowUs size="super" isInverted>
+                                        {followUs
+                                            ? followUs
+                                            : 'Follow Us On Instagram'}
+                                    </FollowUs>
+                                    {hashTag && (
+                                        <Heading size="heading-2" isInverted>
+                                            {hashTag}
+                                        </Heading>
                                     )}
-                                    <TextContainer>
-                                        <FollowUs size="super">
-                                            {followUs
-                                                ? followUs
-                                                : 'Follow Us On Instagram'}
-                                        </FollowUs>
-                                        {hashtag && (
-                                            <Heading size="heading-2">
-                                                {`#${hashtag}`}
-                                            </Heading>
-                                        )}
-                                    </TextContainer>
-                                    <InstagramIcon>
-                                        {socialIcon || <Instagram />}
-                                    </InstagramIcon>
-                                </ContentBlock>
-                            );
-                        })}
-                </Content>
+                                </TextContainer>
+                                <InstagramIcon>
+                                    {socialIcon || <Instagram />}
+                                </InstagramIcon>
+                            </Card>
+                        </Item>
+                    ))}
+                </Cards>
             </Wrapper>
         </Section>
     );

@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsCard from 'components/blocks/NewsCard';
-import Button from 'components/buttons/Button';
-import ButtonGhost from 'components/buttons/ButtonGhost';
+import Pointer from 'components/buttons/Pointer';
+import AngleRight from 'components/base/icons/AngleRight';
 
 export default {
     title: 'Blocks/NewsCard',
     component: NewsCard,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
@@ -25,18 +25,47 @@ export const WithText: Story = () => (
     />
 );
 
-export const WithTag: Story = () => (
+export const WithTags: Story = () => (
     <NewsCard
-        tag="Secondary Tag"
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
     />
 );
 
+export const WithCustomTags: Story = () => (
+    <NewsCard
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
+        onTagClick={console.log}
+        title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+        customTag={({ name, isActive, clickHandler }) => (
+            <button
+                style={{ background: isActive ? 'gray' : 'lightgray' }}
+                onClick={() => clickHandler && clickHandler()}
+            >
+                {name}
+            </button>
+        )}
+    />
+);
+
 export const WithPublishDate: Story = () => (
     <NewsCard
-        tag="Secondary Tag"
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -46,7 +75,11 @@ export const WithPublishDate: Story = () => (
 
 export const WithImage: Story = () => (
     <NewsCard
-        tag="Secondary Tag"
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -62,7 +95,11 @@ export const WithImage: Story = () => (
 
 export const WithAction: Story = () => (
     <NewsCard
-        tag="Secondary Tag"
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -73,15 +110,13 @@ export const WithAction: Story = () => (
             large: 'https://unsplash.it/1399/1048?image=400',
             xlarge: 'https://unsplash.it/1400/1050?image=400',
         }}
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
+        action={(isInverted) => (
+            <Pointer.View textDecoration="none" isInverted={isInverted}>
+                <Pointer.Label>Tertiary</Pointer.Label>
+                <Pointer.Icon>
+                    <AngleRight />
+                </Pointer.Icon>
+            </Pointer.View>
         )}
     />
 );
@@ -89,7 +124,11 @@ export const WithAction: Story = () => (
 export const Inverted: Story = () => (
     <NewsCard
         isInverted
-        tag="Secondary Tag"
+        tags={[
+            { name: 'Tag A', link: { href: '#0' } },
+            { name: 'TagB', link: { href: '#0' } },
+            { name: 'TagC', link: { href: '#0' } },
+        ]}
         onTagClick={console.log}
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
@@ -100,15 +139,13 @@ export const Inverted: Story = () => (
             large: 'https://unsplash.it/1399/1048?image=400',
             xlarge: 'https://unsplash.it/1400/1050?image=400',
         }}
-        primaryAction={(isInverted) => (
-            <Button.View isInverted={isInverted}>
-                <Button.Label>Primary</Button.Label>
-            </Button.View>
-        )}
-        secondaryAction={(isInverted) => (
-            <ButtonGhost.View isInverted={isInverted}>
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
+        action={(isInverted) => (
+            <Pointer.View textDecoration="none" isInverted={isInverted}>
+                <Pointer.Label>Tertiary</Pointer.Label>
+                <Pointer.Icon>
+                    <AngleRight />
+                </Pointer.Icon>
+            </Pointer.View>
         )}
     />
 );

@@ -1,47 +1,53 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
-import NewsList, { NewsListComponent } from 'components/sections/news/NewsList';
-import Button from 'components/buttons/Button';
-import ButtonGhost from 'components/buttons/ButtonGhost';
-import { NewsCardProps } from 'components/blocks/NewsCard';
+import NewsList, {
+    NewsItem,
+    NewsListComponent,
+} from 'components/sections/news/NewsList';
 import { generateItemList } from 'utils/storyHelpers';
+import Pointer from 'components/buttons/Pointer';
+import AngleRight from 'components/base/icons/AngleRight';
 
 export default {
     title: 'Sections/News/NewsList',
     component: NewsListComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
 } as Meta;
 
-const actions = {
-    primaryAction: (isInverted?: boolean) => (
-        <Button.View isInverted={isInverted}>
-            <Button.Label>Primary</Button.Label>
-        </Button.View>
-    ),
-    secondaryAction: (isInverted?: boolean) => (
-        <ButtonGhost.View isInverted={isInverted}>
-            <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-        </ButtonGhost.View>
+const action = {
+    action: (isInverted?: boolean) => (
+        <Pointer.View textDecoration="none" isInverted={isInverted}>
+            <Pointer.Label>Tertiary</Pointer.Label>
+            <Pointer.Icon>
+                <AngleRight />
+            </Pointer.Icon>
+        </Pointer.View>
     ),
 };
 
-const exampleNewsCard: NewsCardProps = {
-    tag: 'Secondary Tag',
+const exampleNewsCard: NewsItem = {
+    tags: [
+        { name: 'rathaus', link: { href: '#0' } },
+        { name: 'TagB', link: { href: '#0' } },
+        { name: 'TagC', link: { href: '#0' } },
+        { name: 'TagD', link: { href: '#0' } },
+        { name: 'TagE', link: { href: '#0' } },
+        { name: 'TagF', link: { href: '#0' } },
+        { name: 'TagG', link: { href: '#0' } },
+    ],
     publishDate: new Date('July 22, 2021 03:24:00'),
-    title:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
-    text:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
+    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     link: { href: '#0' },
-    ...actions,
+    ...action,
 };
 
-const exampleNews = generateItemList<NewsCardProps>(
+const exampleNews = generateItemList<NewsItem>(
     exampleNewsCard,
     10,
     (item, i) => ({
@@ -51,6 +57,9 @@ const exampleNews = generateItemList<NewsCardProps>(
             medium: 'https://unsplash.it/688/516?image=40' + i,
             large: 'https://unsplash.it/591/444?image=40' + i,
             xlarge: 'https://unsplash.it/592/445?image=40' + i,
+            ratios: {
+                small: { w: 4, h: 3 },
+            },
         },
     })
 );
@@ -65,6 +74,24 @@ export const Inverted: Story = () => (
     <NewsList bgMode="inverted" news={exampleNews} />
 );
 
-export const WithHandler: Story = () => (
-    <NewsList bgMode="inverted" news={exampleNews} onTagClick={console.log} />
+export const WithMoreVisibleItems: Story = () => (
+    <NewsList mode="expanded" bgMode="inverted" news={exampleNews} />
+);
+
+export const WithCustomTag: Story = () => (
+    <NewsList
+        bgMode="inverted"
+        news={exampleNews}
+        customTag={({ name, isActive, link }) => (
+            <a
+                style={{
+                    display: 'block',
+                    background: isActive ? 'gray' : 'lightgray',
+                }}
+                {...link}
+            >
+                {name}
+            </a>
+        )}
+    />
 );

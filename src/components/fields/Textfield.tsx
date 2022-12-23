@@ -1,165 +1,169 @@
-import Copy from 'components/typography/Copy';
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
-import { hexToRgba } from 'utils/hexRgbConverter';
+import React from 'react';
+import styled from 'styled-components';
+
+import { copyStyle } from 'components/typography/Copy';
 import {
     getColors as color,
+    getFonts as font,
     spacings,
-    getGlobalSettings as global,
+    getGlobals as global,
+    withRange,
 } from 'utils/styles';
+import FieldWrapper, { FieldProps } from './FormField';
+import { getFormFieldTextSize } from 'utils/formFieldText';
 
-const View = styled(Copy)`
-    display: block;
-    text-align: left;
-`;
-
-const FieldHead = styled(Copy)`
-    display: inline-flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-between;
-    padding-bottom: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge}px;
-    padding-right: ${spacings.nudge}px;
-`;
-
-const Field = styled.input<{
+const InputField = styled.input<{
     isInverted?: boolean;
     hasError?: boolean;
-    isDisabled?: boolean;
-    hasBack?: boolean;
 }>`
     display: block;
     outline: none;
     width: 100%;
-    min-height: 60px;
+    min-height: 40px;
     box-shadow: none;
-    border: none;
+
     border-radius: 0px;
-    outline: none;
     -webkit-appearance: none;
 
-    padding: ${spacings.nudge * 2}px ${spacings.spacer}px;
-    border: ${({ hasError, theme }) =>
-        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    padding: ${spacings.nudge}px;
+
+    border: 1px solid
+        ${({ theme, isInverted, hasError }) => {
+            if (isInverted) {
+                return hasError
+                    ? color(theme).errorInverted
+                    : color(theme).elementBg.light;
+            }
+            return hasError ? color(theme).error : color(theme).elementBg.dark;
+        }};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-    background-color: ${({ isInverted, hasBack, theme }) =>
-        isInverted || !hasBack ? color(theme).light : color(theme).mono.light};
 
-    font-weight: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    color: ${({ hasError, theme }) =>
-        hasError ? color(theme).error : 'inherit'};
+    background: transparent;
 
-    pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
+    ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
+
+    color: ${({ theme, isInverted, hasError }) => {
+        if (isInverted) {
+            return hasError
+                ? color(theme).text.errorInverted
+                : font(theme).copy.small.colorInverted;
+        }
+        return hasError
+            ? color(theme).text.error
+            : font(theme).copy.small.color;
+    }};
 
     &:active {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
     }
 
     &:focus {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        outline: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
+        outline-offset: 0;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
     }
 
     &::placeholder {
-        color: ${({ theme }) => hexToRgba(color(theme).dark, 0.4)};
+        color: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).text.subtileInverted
+                : color(theme).text.subtile};
     }
 `;
 
-const InfoMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
-`;
-
-const ErrorMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
-`;
-
-export type FormProps = {
-    label?: string;
-    errorMessage?: string;
-    infoMessage?: string;
-
+export type FormProps = FieldProps & {
     value?: string;
     name?: string;
     placeholder?: string;
-    isRequired?: boolean;
-    isDisabled?: boolean;
 };
 
-const Textfield: React.FC<
-    FormProps & {
-        type?: 'number' | 'text' | 'tel' | 'email' | 'password';
-        isInverted?: boolean;
-        lightBg?: boolean;
-        onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
-        onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
-    }
-> = ({
-    lightBg,
+export type TextfieldProps = FormProps & {
+    enableMemo?: boolean;
+    type?: 'number' | 'text' | 'tel' | 'email' | 'password';
+    isInverted?: boolean;
+    onChange?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
+    onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
+};
+
+const Textfield: React.FC<TextfieldProps> = ({
     type = 'text',
     label,
     errorMessage,
     infoMessage,
+    isRequired,
+    isDisabled,
+    isInverted,
     placeholder,
     value,
     name,
-    isInverted,
-    isDisabled,
-    isRequired,
     onChange,
     onBlur,
 }) => {
-    const theme = useContext(ThemeContext);
+    if (isDisabled) {
+        errorMessage = '';
+    }
 
     return (
-        <View renderAs="label">
-            {label && (
-                <FieldHead
-                    renderAs="span"
-                    isInverted={isInverted}
-                    textColor={isDisabled ? color(theme).mono.dark : undefined}
-                    size="medium"
-                    type="copy-b"
-                >
-                    {`${label}${isRequired ? ' *' : ''}`}
-                </FieldHead>
-            )}
-            <Field
-                hasBack={!lightBg}
-                placeholder={placeholder}
-                hasError={!!errorMessage}
-                type={type}
+        <FieldWrapper.View isDisabled={isDisabled}>
+            <FieldWrapper.Head
+                label={label}
+                isRequired={isRequired}
                 isInverted={isInverted}
-                isDisabled={isDisabled}
-                name={name}
-                value={value}
-                required={isRequired}
-                onChange={onChange}
-                onBlur={onBlur}
             />
-            {infoMessage && (
-                <InfoMessage textColor={color(theme).mono.dark} size="small">
-                    {infoMessage}
-                </InfoMessage>
-            )}
-            {errorMessage && (
-                <ErrorMessage
-                    textColor={color(theme).error}
-                    size="small"
-                    type="copy-i"
-                >
-                    {errorMessage
-                        ? errorMessage
-                        : 'Bitte geben Sie einen gültigen Text ein'}
-                </ErrorMessage>
-            )}
-        </View>
+            <FieldWrapper.Content>
+                <InputField
+                    placeholder={placeholder}
+                    hasError={!!errorMessage}
+                    type={type}
+                    isInverted={isInverted}
+                    name={name}
+                    value={value}
+                    required={isRequired}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                />
+            </FieldWrapper.Content>
+            <FieldWrapper.Messages
+                infoMessage={infoMessage}
+                errorMessage={errorMessage}
+                isInverted={isInverted}
+            />
+        </FieldWrapper.View>
     );
 };
 
-export default Textfield;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: TextfieldProps, next: TextfieldProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.value !== next.value) return false;
+    if (prev.errorMessage !== next.errorMessage) return false;
+    if (prev.infoMessage !== next.infoMessage) return false;
+    if (prev.label !== next.label) return false;
+    if (prev.placeholder !== next.placeholder) return false;
+
+    return true;
+};
+
+export default React.memo(Textfield, areEqual);

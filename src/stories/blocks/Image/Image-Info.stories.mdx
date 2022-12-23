@@ -1,0 +1,40 @@
+import { Meta, Story, Canvas, ArgsTable, Preview } from '@storybook/addon-docs';
+import Image from '../../../components/blocks/Image';
+
+<Meta
+    title="Blocks/Image/Info"
+    parameters={{
+        status: {
+            type: ['preview'],
+        },
+        viewMode: 'story',
+        previewTabs: {
+            'storybook/docs/panel': {
+                hidden: true,
+            },
+        },
+    }}
+/>
+
+# Image
+
+The `Image` component displays images in every type and format in the best accessable way.
+
+<ArgsTable of={Image} />
+
+## Breakpoints
+
+To avoid unnecessary huge images sizes on smaller viewports the component provides URL properties for multiple breakpoints.
+`small` referes to the smallest possible screen width and is required.
+
+## Layout Shifts
+
+Layout shifts often occure if a height or width of a image are not defined. Therefore the browser can't reserve the space needed to display the image
+until it's loaded. The following content experiences a shift in height if previous images are loaded. [See more](https://web.dev/cls/)
+
+To prevent this behaviour the `Image` component wraps the HTML `img` tag with a container that maintains the expected space. This can be done by defining
+the aspect ratios for at least one breakpoint in the `ratios` property. There're important points to consider:
+
+-   You can define the ratios by relative values like `w=4 h=3` if the `coverSpace` property is set to true. The component now tries to span the image to the full parent width.
+-   If `coverSpace` is set to false this won't work anymore. Instead you can define the ratios by absolute pixel values like `w=400 h=300` (400x300 px)
+-   Older browser don't support the CSS attribute `aspect-ratio`. Images without `coverSpace` will still experiences layout shifts.

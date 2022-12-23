@@ -1,5 +1,6 @@
 import * as React from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     FontOptionType,
     getFonts as font,
@@ -64,6 +65,8 @@ const View = styled(BaseStyles)`
         font(theme).callout[size].letterSpacing};
     text-transform: ${({ theme, size }) =>
         font(theme).callout[size].textTransform};
+    text-decoration: ${({ theme, size }) =>
+        font(theme).callout[size].textDecoration};
 `;
 
 export type CalloutTag =
@@ -88,6 +91,7 @@ const Callout: React.FC<{
     innerHTML?: string;
 
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     isInverted,
     renderAs = 'h2',
@@ -101,8 +105,8 @@ const Callout: React.FC<{
     children,
     ...rest
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const fontSettings = font(theme)?.callout?.[size];
+    const { fonts } = useLibTheme();
+    const fontSettings = fonts?.callout?.[size];
 
     return (
         <View

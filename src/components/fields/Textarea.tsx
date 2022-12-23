@@ -1,29 +1,16 @@
-import Copy from 'components/typography/Copy';
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
-import { hexToRgba } from 'utils/hexRgbConverter';
+import { copyStyle } from 'components/typography/Copy';
+import React from 'react';
+import styled from 'styled-components';
+import { getFormFieldTextSize } from 'utils/formFieldText';
 import {
     getColors as color,
-    mq,
+    getFonts as font,
     spacings,
-    getGlobalSettings as global,
+    getGlobals as global,
+    withRange,
 } from 'utils/styles';
+import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
-
-const View = styled(Copy)`
-    display: block;
-    text-align: left;
-`;
-
-const FieldHead = styled(Copy)`
-    display: inline-flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-between;
-    padding-bottom: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge}px;
-    padding-right: ${spacings.nudge}px;
-`;
 
 const Area = styled.textarea<{
     isInverted?: boolean;
@@ -34,125 +21,143 @@ const Area = styled.textarea<{
     display: block;
     outline: none;
     width: 100%;
-    min-height: 60px;
+    min-height: 100px;
     box-shadow: none;
-    border: none;
     border-radius: 0px;
-    outline: none;
     -webkit-appearance: none;
 
     resize: none;
-    width: 100%;
-    min-height: 120px;
 
-    @media ${mq.semilarge} {
-        min-height: 185px;
-    }
+    padding: ${spacings.nudge}px;
 
-    padding: ${spacings.nudge * 3}px ${spacings.spacer}px;
-
-    border: ${({ hasError, theme }) =>
-        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
+    border: 1px solid
+        ${({ theme, isInverted, hasError }) => {
+            if (isInverted) {
+                return hasError
+                    ? color(theme).errorInverted
+                    : color(theme).elementBg.light;
+            }
+            return hasError ? color(theme).error : color(theme).elementBg.dark;
+        }};
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-    background-color: ${({ isInverted, hasBack, theme }) =>
-        isInverted || !hasBack ? color(theme).light : color(theme).mono.light};
 
-    font-weight: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    color: ${({ hasError, theme }) =>
-        hasError ? color(theme).error : 'inherit'};
+    background: transparent;
 
-    pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
+    ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
+    
+    color: ${({ theme, isInverted, hasError }) => {
+        if (isInverted) {
+            return hasError
+                ? color(theme).text.errorInverted
+                : font(theme).copy.small.colorInverted;
+        }
+        return hasError
+            ? color(theme).text.error
+            : font(theme).copy.small.color;
+    }};
 
     &:active {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
     }
 
     &:focus {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        outline: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
+        outline-offset: 0;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
     }
 
     &::placeholder {
-        color: ${({ theme }) => hexToRgba(color(theme).dark, 0.4)};
+        color: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).text.subtileInverted
+                : color(theme).text.subtile};
     }
 `;
 
-const InfoMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-`;
+export type TextareaProps = FormProps & {
+    enableMemo?: boolean;
+    onChange?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
+    onBlur?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
+};
 
-const ErrorMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-`;
-
-const Textarea: React.FC<
-    FormProps & {
-        isInverted?: boolean;
-        lightBg?: boolean;
-        onChange?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
-        onBlur?: (ev: React.SyntheticEvent<HTMLTextAreaElement>) => void;
-    }
-> = ({
-    lightBg,
+const Textarea: React.FC<TextareaProps> = ({
     label,
+    isRequired,
     errorMessage,
     infoMessage,
+    isDisabled,
+    isInverted,
     placeholder,
     value,
     name,
-    isInverted,
-    isDisabled,
-    isRequired,
     onChange,
     onBlur,
 }) => {
-    const theme = React.useContext(ThemeContext);
+    if (isDisabled) {
+        errorMessage = '';
+    }
+
     return (
-        <View renderAs="label">
-            {label && (
-                <FieldHead
-                    renderAs="span"
-                    isInverted={isInverted}
-                    textColor={isDisabled ? color(theme).mono.dark : undefined}
-                    size="medium"
-                    type="copy-b"
-                >
-                    {`${label}${isRequired ? ' *' : ''}`}
-                </FieldHead>
-            )}
-            <Area
-                value={value}
-                name={name}
-                placeholder={placeholder}
-                hasError={!!errorMessage}
-                isDisabled={isDisabled}
+        <FieldWrapper.View isDisabled={isDisabled}>
+            <FieldWrapper.Head
+                label={label}
+                isRequired={isRequired}
                 isInverted={isInverted}
-                required={isRequired}
-                hasBack={!lightBg}
-                onChange={onChange}
-                onBlur={onBlur}
             />
-            {infoMessage && (
-                <InfoMessage textColor={color(theme).mono.dark} size="small">
-                    {infoMessage}
-                </InfoMessage>
-            )}
-            {errorMessage && (
-                <ErrorMessage
-                    textColor={color(theme).error}
-                    size="small"
-                    type="copy-i"
-                >
-                    {errorMessage
-                        ? errorMessage
-                        : 'Bitte geben Sie einen gültigen Text ein'}
-                </ErrorMessage>
-            )}
-        </View>
+            <FieldWrapper.Content>
+                <Area
+                    value={value}
+                    name={name}
+                    placeholder={placeholder}
+                    hasError={!!errorMessage}
+                    isDisabled={isDisabled}
+                    isInverted={isInverted}
+                    required={isRequired}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                />
+            </FieldWrapper.Content>
+            <FieldWrapper.Messages
+                infoMessage={infoMessage}
+                errorMessage={errorMessage}
+                isInverted={isInverted}
+            />
+        </FieldWrapper.View>
     );
 };
 
-export default Textarea;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: TextareaProps, next: TextareaProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.value !== next.value) return false;
+    if (prev.errorMessage !== next.errorMessage) return false;
+    if (prev.infoMessage !== next.infoMessage) return false;
+    if (prev.label !== next.label) return false;
+    if (prev.placeholder !== next.placeholder) return false;
+
+    return true;
+};
+
+export default React.memo(Textarea, areEqual);

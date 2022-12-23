@@ -1,7 +1,3 @@
-import { CookieConsentData } from 'components/blocks/CookieConsent';
-import { Cookie } from './cookie';
-import StatusFormatter from '../statusFormatter';
-
 export const isUrlInWhitelist = (
     urlString: string,
     whitelist: string[] = []
@@ -16,20 +12,26 @@ export const isUrlInWhitelist = (
     return isInWhiteList;
 };
 
-export const bindConsentButtons = (callback: () => void) => {
-    const allConsentButtons = document.querySelectorAll(
-        '[data-consent-button], .cookie-consent-button'
-    );
+export const bindConsentButtons = (
+    callback: () => void,
+    selectors: string[] = []
+) => {
+    const allConsentButtons = document.querySelectorAll(selectors.join(', '));
 
     for (let i = 0, len = allConsentButtons.length; i < len; i++) {
         allConsentButtons[i].addEventListener('click', callback);
     }
 };
 
-export const activateTrackingScripts = () => {
-    const scriptElements = document.querySelectorAll(
-        "script[type='text/consent_banner_script'], script[type='text/cookie-consent-script']"
-    );
+export const activateTrackingScripts = (scriptTypeSelectors: string[] = []) => {
+    const selectors = scriptTypeSelectors
+        .filter((selector) => selector)
+        .map((selector) => `script[type='text/${selector}']`)
+        .join(', ');
+
+    const scriptElements = selectors
+        ? document.querySelectorAll(selectors)
+        : [];
 
     let i = scriptElements.length;
     const newScriptElements: HTMLScriptElement[] = [];
@@ -63,33 +65,14 @@ export const activateTrackingScripts = () => {
     }
 };
 
-export const updateConsentStatusElements = ({
-    cookie,
-    status,
-    dateFormat,
-    timeFormat,
-    localeKey = 'en',
-}: {
-    cookie: Cookie<CookieConsentData>;
-    status: string;
-    dateFormat: string;
-    timeFormat: string;
-    localeKey: 'de' | 'en';
-}) => {
-    const allConsentStatusElements = document.querySelectorAll(
-        '[data-consent-status], .cookie-consent-status'
-    );
+export const updateConsentStatus = (
+    content: string,
+    selectors: string[] = []
+) => {
+    if (!content) return;
+    const statusElements = document.querySelectorAll(selectors.join(', '));
 
-    // render status inside defined dom elements without react
-    const formatter = new StatusFormatter(
-        cookie?.data.updatedAt,
-        status,
-        dateFormat,
-        timeFormat,
-        localeKey
-    );
-
-    for (let i = 0, len = allConsentStatusElements.length; i < len; i++) {
-        allConsentStatusElements[i].innerHTML = formatter.getFormattedStatus();
+    for (let i = 0, len = statusElements.length; i < len; i++) {
+        statusElements[i].innerHTML = content;
     }
 };

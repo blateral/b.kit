@@ -14,25 +14,25 @@ export default {
 
 export const Default: Story = () => (
     <Title
-        title="Ausstattung der Zimmer für Dauer- und Kurzzeitpflege"
+        title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"
         titleAs="h2"
     />
 );
 
 export const WithSupertitle: Story = () => (
     <Title
-        title="Ausstattung der Zimmer für Dauer- und Kurzzeitpflege"
+        title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"
         titleAs="h2"
-        superTitle="Haus St. Franziskus"
+        superTitle="Lorem Ipsum"
     />
 );
 
 export const Centered: Story = () => (
     <Title
         isCentered
-        title="Ausstattung der Zimmer für Dauer- und Kurzzeitpflege"
+        title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"
         titleAs="h2"
-        superTitle="Haus St. Franziskus"
+        superTitle="Lorem Ipsum"
     />
 );
 
@@ -40,9 +40,9 @@ export const Inverted: Story = () => (
     <Title
         colorMode="inverted"
         isCentered
-        title="Ausstattung der Zimmer für Dauer- und Kurzzeitpflege"
+        title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"
         titleAs="h2"
-        superTitle="Haus St. Franziskus"
+        superTitle="Lorem Ipsum"
     />
 );
 
@@ -57,9 +57,9 @@ export const OnImage: Story = () => (
     <Title
         colorMode="onImage"
         isCentered
-        title="Ausstattung der Zimmer für Dauer- und Kurzzeitpflege"
+        title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"
         titleAs="h2"
-        superTitle="Haus St. Franziskus"
+        superTitle="Lorem Ipsum"
     />
 );
 

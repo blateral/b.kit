@@ -1,70 +1,82 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
+import styled, { DefaultTheme } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
-import { getColors, mq, spacings, withRange } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
-import Tag from 'components/blocks/Tag';
+import { mq, spacings } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import Tag, { TagProps } from 'components/blocks/Tag';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import { useObserverSupport } from 'utils/useObserverSupport';
 import Copy from 'components/typography/Copy';
 import { useScrollTo } from 'utils/useScrollTo';
 import Pointer from 'components/buttons/Pointer';
+import { isValidArray } from 'utils/arrays';
+import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
+import Filter from 'components/base/icons/Filter';
+import useUpdateEffect from 'utils/useUpdateEffect';
+import useMounted from 'utils/useMounted';
 
 const TagContainer = styled.div`
-    margin: -${spacings.nudge}px;
-    ${withRange([spacings.spacer * 1.5, spacings.spacer * 3], 'margin-bottom')};
+    margin-top: -${spacings.nudge}px;
+    margin-left: -${spacings.nudge}px;
 
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    &:not(:only-child) {
+        margin-bottom: ${spacings.nudge * 6}px;
+    }
 `;
 
 const TagWrapper = styled.div`
-    padding: ${spacings.nudge}px;
+    padding-top: ${spacings.nudge}px;
+    padding-left: ${spacings.nudge}px;
 `;
 
-const List = styled.div`
-    & > * + * {
-        padding-top: ${spacings.spacer * 2}px;
-    }
+const News = styled.ul`
+    list-style: none;
+    margin: 0;
+    margin-top: -${spacings.nudge * 6}px;
+    margin-left: -${spacings.spacer}px;
+    padding: 0;
 
-    & > * + * {
-        padding-top: ${spacings.spacer * 2}px;
-    }
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
 
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: 'flex-start';
-        align-items: flex-start;
+    flex-wrap: wrap;
+`;
 
-        margin-left: -20px;
-        margin-top: -40px;
+const NewsItem = styled.li`
+    padding-top: ${spacings.nudge * 6}px;
+    padding-left: ${spacings.spacer}px;
+    flex: 1 0 100%;
 
-        & > * {
-            padding-left: 20px;
-            padding-top: 40px;
-            flex: 1 0 50%;
-            max-width: 50%;
-        }
+    @media ${mq.medium} {
+        flex: 1 0 50%;
+        max-width: 50%;
     }
 
     @media ${mq.large} {
-        & > * {
-            flex: 1 0 33.33%;
-            max-width: 33.33%;
-        }
+        flex: 1 0 33.33%;
+        max-width: 33.33%;
     }
 `;
 
 const ListFooter = styled.div`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
+    margin-top: ${spacings.nudge * 6}px;
     text-align: center;
 
     @media ${mq.medium} {
@@ -77,43 +89,109 @@ const ShowMore = styled.span<{ itemCount?: number }>`
         itemCount && itemCount > 2 ? 'block' : 'none'};
 `;
 
+const FilterIcon = styled(Copy)`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: ${spacings.nudge / 2}px ${spacings.nudge}px 0 0;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+`;
+
+export const getNewsFilterParams = (
+    url: string,
+    theme: DefaultTheme,
+    tags: string[] = []
+) => {
+    if (!url) return '';
+    if (!isValidArray(tags, false)) return url;
+
+    const filterName = theme.globals.sections.newsFilterName;
+    if (!filterName) return url;
+
+    try {
+        const validUrl = new URL(url);
+        const newParams = new URLSearchParams(validUrl.search);
+        newParams.set(filterName, encodeURIComponent(tags.join(',')));
+
+        return `${url}?${newParams.toString()}`;
+    } catch (err) {
+        return `${url}?${filterName}=${encodeURIComponent(tags.join(','))}`;
+    }
+};
+
 type NewsOverviewMq = 'small' | 'semilarge' | 'large';
 
+export type NewsItem = Omit<
+    NewsCardProps,
+    'customTag' | 'isInverted' | 'onTagClick'
+>;
+
 const NewsOverview: React.FC<{
-    news: NewsCardProps[];
-    activeTag?: string;
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Array of news item settings */
+    news?: NewsItem[];
+
+    /** Tags for news filtering */
     tags?: string[];
-    queryParams?: Record<string, any>;
-    onTagClick?: (tag: string, insideList?: boolean) => void;
+
+    /** Initial data. If not defined the component tries to collect this from URL params */
+    initial?: {
+        activeTags?: string[];
+        visibleRows?: number;
+    };
+
+    /** Text for load more toggle. Only visible if browser doesn't support IntersectionObserver. */
     showMoreText?: string;
 
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({
-    news,
-    activeTag,
-    tags,
-    queryParams,
-    onTagClick,
-    showMoreText,
 
+    /**
+     * Callback function to handle tag click outside of component
+     * If no callback is defined filtering is controlled on client
+     * */
+    onTagClick?: (tag: TagProps, insideList?: boolean) => void;
+
+    /** Function to inject custom tag node */
+    customTag?: (props: {
+        key: React.Key;
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
+    }) => React.ReactNode;
+}> = ({
+    anchorId,
+    news,
+    tags,
+    initial,
+    showMoreText,
     bgMode,
+
+    onTagClick,
+    customTag,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors, globals } = useLibTheme();
+    const filterName = globals.sections.newsFilterName;
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    activeTag = queryParams?.selected
-        ? decodeURI(queryParams.selected)
-        : activeTag;
-    const [selectedTag, setSelectedTag] = useState<string | undefined>(
-        activeTag || undefined
+    const [selectedTags, setSelectedTags] = useState<string[]>(
+        initial?.activeTags || []
     );
 
     const mqs: NewsOverviewMq[] = ['small', 'semilarge', 'large'];
     const currentMq = useMediaQuery(mqs) as NewsOverviewMq | undefined;
     const [itemsPerRow, setItemsPerRow] = useState(3);
-    const [visibleRows, setVisibleRows] = useState(3);
+    const [visibleRows, setVisibleRows] = useState(initial?.visibleRows || 3);
+    const isMounted = useMounted();
 
     const targetRef = useRef<HTMLDivElement>(null);
     const observerSupported = useObserverSupport();
@@ -121,21 +199,83 @@ const NewsOverview: React.FC<{
     const newsCount = news?.length || 0;
 
     const setNewPos = useScrollTo(800);
-    const { sheetRefs: cardRefs, triggerCalculation } = useEqualSheetHeight({
-        listLength: Math.min(visibleRows * itemsPerRow, newsCount),
-        identifiers: [
-            '[data-sheet="head"]',
-            '[data-sheet="title"]',
-            '[data-sheet="text"]',
-        ],
-        responsive: {
-            small: 1,
-            medium: 1,
-            semilarge: 2,
-            large: 3,
-            xlarge: 3,
-        },
-    });
+    const { sheetRefs: cardRefs, triggerCalculation } =
+        useEqualSheetHeight<HTMLDivElement>({
+            listLength: Math.min(visibleRows * itemsPerRow, newsCount),
+            identifiers: [
+                '[data-sheet="head"]',
+                '[data-sheet="title"]',
+                '[data-sheet="text"]',
+            ],
+            responsive: {
+                small: 1,
+                medium: 1,
+                semilarge: 2,
+                large: 3,
+                xlarge: 3,
+            },
+        });
+
+    const getFilters = useCallback(() => {
+        const tags: string[] = [];
+
+        const filters = getUrlParams()[filterName];
+        if (filters) {
+            const tagsFilter = filters?.split(',');
+            if (isValidArray(tagsFilter, false)) {
+                tags.push(...tagsFilter);
+            }
+        }
+        return tags;
+    }, [filterName]);
+
+    useEffect(() => {
+        // if initial data is defined exit hook
+        if (initial) return;
+
+        // if no initial data provied try to find needed params in URL
+        const paramTags = getFilters();
+        const paramRows = parseInt(getUrlParams()['rows']);
+
+        setVisibleRows(paramRows || 3);
+
+        if (isValidArray(paramTags, false)) {
+            setSelectedTags(paramTags);
+        }
+
+        // trigger equal sheet height recalculation
+        triggerCalculation();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getFilters, initial]);
+
+    useEffect(() => {
+        if (!initial || isMounted) return;
+
+        // set inital data into URL
+        setUrlParam('rows', initial?.visibleRows || 3);
+
+        if (isValidArray(initial?.activeTags, false)) {
+            setUrlParam(filterName, initial?.activeTags?.join(','));
+        } else {
+            deleteUrlParam(filterName);
+        }
+    }, [filterName, initial, isMounted]);
+
+    useUpdateEffect(() => {
+        setUrlParam('rows', visibleRows);
+    }, [visibleRows]);
+
+    useUpdateEffect(() => {
+        if (onTagClick || !isValidArray(selectedTags)) return;
+
+        // set filters to URL params
+        if (selectedTags.length > 0) {
+            setUrlParam(filterName, selectedTags.join(','));
+        } else {
+            deleteUrlParam(filterName);
+        }
+    }, [selectedTags]);
 
     useEffect(() => {
         switch (currentMq) {
@@ -157,16 +297,53 @@ const NewsOverview: React.FC<{
         }
     }, [currentMq, visibleRows]);
 
-    useEffect(() => {
-        setSelectedTag(activeTag);
-    }, [activeTag]);
+    const handleTagClick = (tag: TagProps, enableToggling = true) => {
+        setSelectedTags((prev) => {
+            const prevCopy = [...prev];
+            const itemIndex = tag.name ? prev.indexOf(tag.name) : -1;
 
-    useEffect(() => {
-        // if new tag is selected reset list rows to three visible item rows
-        setVisibleRows(3);
+            if (itemIndex === -1 && tag.name) {
+                return [...prevCopy, tag.name];
+            }
+            if (enableToggling) {
+                prevCopy.splice(itemIndex, 1);
+                return prevCopy;
+            }
+            return prev;
+        });
+        // trigger equal sheet height recalculation
         triggerCalculation();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedTag]);
+        setVisibleRows(3);
+    };
+
+    const filteredNews = useMemo(() => {
+        const tagFilterFn = (item: NewsItem) => {
+            if (!isValidArray(selectedTags, false)) return true;
+            if (!item.tags) return false;
+
+            let hasTags = false;
+            for (let i = 0; i < item.tags.length; i++) {
+                if (selectedTags.indexOf(item.tags[i].name || '') !== -1) {
+                    hasTags = true;
+                    break;
+                }
+            }
+            return hasTags;
+        };
+
+        let filtered = isValidArray(news) ? [...news] : [];
+
+        // adding filter
+        filtered = filtered?.filter(tagFilterFn);
+
+        return filtered;
+    }, [news, selectedTags]);
+
+    const visibleNews: NewsItem[] = useMemo(() => {
+        return (
+            filteredNews?.filter((_, i) => i < visibleRows * itemsPerRow) || []
+        );
+    }, [filteredNews, itemsPerRow, visibleRows]);
 
     useEffect(() => {
         // cancel if intersection observers are not supported
@@ -185,7 +362,10 @@ const NewsOverview: React.FC<{
                 const entry = entries[0];
                 if (entry?.isIntersecting) {
                     // on bottom of the wrapper load more news
-                    if (visibleRows < Math.ceil(newsCount / itemsPerRow)) {
+                    if (
+                        visibleRows <
+                        Math.ceil(filteredNews.length / itemsPerRow)
+                    ) {
                         setVisibleRows((prev) => prev + 1);
                     }
                 }
@@ -196,79 +376,111 @@ const NewsOverview: React.FC<{
         return () => {
             if (observer) observer.disconnect();
         };
-    }, [itemsPerRow, newsCount, visibleRows, observerSupported]);
+    }, [
+        itemsPerRow,
+        newsCount,
+        visibleRows,
+        observerSupported,
+        filteredNews.length,
+    ]);
+
+    const filteredTags = useMemo(() => {
+        return tags?.filter((tag) => tag);
+    }, [tags]);
 
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? getColors(theme).dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? getColors(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {tags && (
+                {isValidArray(filteredTags, false) && (
                     <TagContainer>
-                        {tags.sort().map((tag, i) => {
-                            return (
-                                <TagWrapper key={'tag_' + i}>
+                        <FilterIcon
+                            size="small"
+                            type="copy"
+                            isInverted={isInverted}
+                        >
+                            <Filter />
+                            <span>Filter</span>
+                        </FilterIcon>
+                        {filteredTags.map((tag, i) => (
+                            <TagWrapper key={i}>
+                                {customTag ? (
+                                    customTag({
+                                        key: i,
+                                        name: tag,
+                                        isInverted: isInverted,
+                                        isActive:
+                                            selectedTags.indexOf(tag) !== -1,
+                                        clickHandler: (ev) => {
+                                            ev?.preventDefault();
+                                            if (!onTagClick) {
+                                                handleTagClick({ name: tag });
+                                            } else onTagClick({ name: tag });
+                                        },
+                                    })
+                                ) : (
                                     <Tag
                                         isInverted={isInverted}
-                                        onClick={() => {
+                                        onClick={(ev) => {
+                                            ev?.preventDefault();
                                             if (!onTagClick) {
-                                                // if no callback is defined handle filtering on client side inside the component
-                                                setSelectedTag(
-                                                    selectedTag === tag
-                                                        ? undefined
-                                                        : tag
+                                                handleTagClick({ name: tag });
+                                            } else
+                                                onTagClick(
+                                                    { name: tag },
+                                                    false
                                                 );
-                                            } else onTagClick(tag, false);
                                         }}
-                                        isActive={selectedTag === tag}
+                                        isActive={
+                                            selectedTags.indexOf(tag) !== -1
+                                        }
                                     >
                                         {tag}
                                     </Tag>
-                                </TagWrapper>
-                            );
-                        })}
+                                )}
+                            </TagWrapper>
+                        ))}
                     </TagContainer>
                 )}
-                <List>
-                    {news &&
-                        news
-                            .filter((item) =>
-                                selectedTag ? item.tag === selectedTag : true
-                            )
-                            .filter((_, i) => i < visibleRows * itemsPerRow)
-                            .map((item, i) => {
-                                return (
-                                    <div key={i} ref={cardRefs[i]}>
-                                        <NewsCard
-                                            isInverted={isInverted}
-                                            onTagClick={(name) => {
-                                                // scroll back to top
-                                                setNewPos(0);
-                                                if (!onTagClick) {
-                                                    // if no callback is defined handle filtering on client side inside the component
-                                                    setSelectedTag(
-                                                        selectedTag === name
-                                                            ? undefined
-                                                            : name
-                                                    );
-                                                } else {
-                                                    onTagClick(name, true);
-                                                }
-                                            }}
-                                            {...item}
-                                        />
-                                    </div>
-                                );
-                            })}
-                </List>
+                <News>
+                    {visibleNews.map((item, i) => (
+                        <NewsItem key={`${i}_news_${item.title}`}>
+                            <NewsCard
+                                hasBg={hasBg || isInverted}
+                                ref={cardRefs[i]}
+                                {...item}
+                                tags={item.tags?.map((tag) => ({
+                                    name: tag.name,
+                                }))}
+                                isInverted={isInverted}
+                                onTagClick={(tag) => {
+                                    // scroll back to top
+                                    setNewPos(0);
+                                    if (!onTagClick) {
+                                        // if no callback is defined handle filtering on client side inside the component
+                                        handleTagClick(
+                                            { name: tag.name },
+                                            false
+                                        );
+                                    } else {
+                                        onTagClick({ name: tag.name }, true);
+                                    }
+                                }}
+                                customTag={customTag}
+                            />
+                        </NewsItem>
+                    ))}
+                </News>
                 <div ref={targetRef} />
                 {!observerSupported && (
                     <ListFooter>
@@ -284,13 +496,17 @@ const NewsOverview: React.FC<{
                                         ev.preventDefault();
                                         if (
                                             visibleRows <
-                                            Math.ceil(newsCount / itemsPerRow)
+                                            Math.ceil(
+                                                filteredNews.length /
+                                                    itemsPerRow
+                                            )
                                         ) {
                                             setVisibleRows((prev) => prev + 1);
                                         }
                                     }}
                                 >
-                                    {visibleRows < newsCount / itemsPerRow && (
+                                    {visibleRows <
+                                        filteredNews.length / itemsPerRow && (
                                         <Pointer.View
                                             as="button"
                                             isInverted={isInverted}

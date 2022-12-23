@@ -1,0 +1,143 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import CookieConsent from '../../../components/blocks/CookieConsent';
+
+<Meta
+    title="Blocks/Cookie Consent/Info"
+    parameters={{
+        status: {
+            type: '',
+        },
+    }}
+/>
+
+# Cookie Consent
+
+The `CookieConsent` block component displays a cookie banner overlay on which you can accept or decline different cookie types.
+You can declare different scripts in the DOM as a part of a cookie type. Depending on the website visitor decisions scripts of accepted cookie types
+are executed others are not. Therefore you can control script execution of e.g. analytics or other external sources.
+
+<ArgsTable of={CookieConsent} />
+
+The banner component block consists of multiple child components to allow easy adjustments in style and content. Children are wrapped within a function
+in which the parent `CookieConsent` component passes multiple parameters. They can be used to control the bevhaiours of the banner on the child level.
+
+```jsx
+<CookieConsent urlWhitelist={['/impressum', '/datenschutz']}>
+    {({
+        types,
+        setConsent,
+        acceptAll,
+        acceptSelected,
+        additionalAcceptProps,
+        additionalDeclineProps,
+    }) => (
+        <React.Fragment>
+            <CookieTitle innerHTML="Cookie title" />
+            <CookieText innerHTML="Cookie text" />
+            <CookieTypeSelect
+                title="Select cookie types"
+                types={types}
+                setConsent={setConsent}
+            />
+            <CookieActions
+                isMirrored
+                primary={
+                    <Button.View {...additionalAcceptProps} onClick={acceptAll}>
+                        <Button.Label>Accept all</Button.Label>
+                    </Button.View>
+                }
+                secondary={
+                    <ButtonGhost.View
+                        {...additionalDeclineProps}
+                        onClick={acceptSelected}
+                    >
+                        <ButtonGhost.Label>Accept selection</ButtonGhost.Label>
+                    </ButtonGhost.View>
+                }
+            />
+        </React.Fragment>
+    )}
+</CookieConsent>
+```
+
+## Cookie types
+
+To allow blocking of different script types the cookie consent is managed into different `CookieTypes`. They can be defined inside the `globals` settings of
+the library theme configuration.
+
+```javascript
+{
+    cookie: {
+        name: 'cookie-consent-v2',
+        lifetime: 365,
+        types: {
+            essentials: {
+                isAccepted: true,
+                isEditable: false,
+                label: 'Essentielle Funktionen',
+            },
+            analytics: {
+                isAccepted: false,
+                isEditable: true,
+                label: 'Analyse & Marketing',
+            },
+            functionals: {
+                isAccepted: false,
+                isEditable: true,
+                label: 'Funktionelle Erweiterungen',
+            },
+         },
+         ...
+    }
+}
+```
+
+In each `CookieType` you must define some essential informations:
+
+-   **label** Visible name
+-   **isAccepted** Is cookie type accepted by default
+-   **isEditable** Is cookie type editable by website user
+
+<br />
+
+### Assign script to cookie type
+
+To mark a script to be a part of a specific `CookieType` to must change the type of the script tag to the format of:
+
+`text/cookie-consent-script-COOKIE_TYPE`
+
+Replace `COOKIE_TYPE` with a key of the `CookieType` settings object:
+
+```html
+<script type="text/cookie-consent-script-analytics">
+    console.info("TEST: Analytics Script enabled!");
+</script>
+```
+
+or
+
+```html
+<script
+    type="text/cookie-consent-script-analytics"
+    src="/js/analytics.js"
+></script>
+```
+
+If the cookie type has been accepted and saved into the cookie consent cookie the script type automatically switches to `text/javascript`. The browser
+now recognize this tag as a Javascript snippet and call it.
+
+<br />
+
+### Display and change cookie consent decision
+
+You can display the current cookie consent status by adding `data-consent-status` attributes to any DOM element you like:
+
+```html
+<div data-consent-status></div>
+```
+
+With the `data-consent-button` attribute it is possible to reopen the cookie consent banner to change your cookie decision:
+
+```html
+<button data-consent-button>Open consent banner</button>
+```

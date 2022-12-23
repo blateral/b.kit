@@ -1,181 +1,195 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import React, { forwardRef } from 'react';
+import styled, { css } from 'styled-components';
 import {
     mq,
     spacings,
-    withRange,
-    getGlobalSettings as global,
+    getGlobals as global,
+    getFonts as font,
 } from 'utils/styles';
 
-import Copy from 'components/typography/Copy';
-import Image, { ImageProps as Props } from 'components/blocks/Image';
-import Actions from './Actions';
+import Copy, { copyStyle } from 'components/typography/Copy';
+import Image, { ImageProps } from 'components/blocks/Image';
+import Link, { LinkProps } from 'components/typography/Link';
 
-const View = styled.div`
+const View = styled.div<{ isCentered?: boolean }>`
     min-width: 270px;
     padding-bottom: ${spacings.nudge}px;
+    text-align: ${({ isCentered }) => isCentered && 'center'};
+
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
+    }
 `;
 
-const ImageContainer = styled.div<{ isCentered?: boolean }>`
+const TitleLink = styled(Link)<{ href?: string }>`
+    display: inline-block;
+    ${copyStyle('copy-b', 'big')}
+
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme)['copy-b'].big.colorInverted
+            : font(theme)['copy-b'].big.color};
+    text-decoration: none;
+
+    ${({ href, isInverted, theme }) =>
+        !href &&
+        css`
+            &:hover {
+                color: ${isInverted
+                    ? font(theme)['copy-b'].big.colorInverted
+                    : font(theme)['copy-b'].big.color};
+            }
+        `}
+`;
+
+const ImageContainer = styled(Link)<{ isCentered?: boolean }>`
     display: flex;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
-    padding-bottom: ${spacings.spacer * 2}px;
+    width: 100%;
 `;
 
 const StyledImage = styled(Image)`
-    // width: 100%;
-
     overflow: hidden;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 `;
 
-const Content = styled.div<{ addWhitespace?: boolean; isCentered?: boolean }>`
-    text-align: ${({ isCentered }) => isCentered && 'center'};
-    padding: 0
-        ${({ addWhitespace }) => addWhitespace && spacings.nudge * 2 + 'px'};
-
-    & + & {
-        ${withRange(
-            [spacings.spacer * 1.5, spacings.spacer * 2],
-            'padding-top'
-        )}
-    }
-`;
-
-const ArticleContent = styled(Content)<{ isCentered?: boolean }>`
+const ArticleContent = styled.div<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => isCentered && 'center'};
 
-    @media ${mq.medium} {
-        max-width: 95%;
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
     }
-`;
-
-const ContentBlock = styled(Copy)`
-    & + & {
-        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
-    }
-`;
-
-const Desc = styled.div`
-    ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
-`;
-
-const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
-    padding: 0
-        ${({ addWhitespace }) => addWhitespace && spacings.nudge * 2 + 'px'};
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
 
     @media ${mq.medium} {
-        width: 100%;
-
         & > * {
-            max-width: 50%;
-            min-width: 0 !important;
-            flex: 1;
+            max-width: 95%;
+            margin-right: ${({ isCentered }) => isCentered && 'auto'};
+            margin-left: ${({ isCentered }) => isCentered && 'auto'};
         }
     }
 `;
 
-export interface FeatureProps {
-    isInverted?: boolean;
-    isCentered?: boolean;
-    title?: string;
-    description?: string;
-    intro?: string;
-    text?: string;
-    image?: Props;
+const Action = styled.div`
+    max-width: 100%;
+`;
 
-    addWhitespace?: boolean;
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+export interface FeatureProps {
+    /** Invert color and background for darker themes */
+    isInverted?: boolean;
+
+    /** Center all texts */
+    isCentered?: boolean;
+
+    /** Image on item's top */
+    image?: ImageProps;
+
+    /** Item title text underneath the image */
+    title?: string;
+
+    /** Small item description text (richtext) */
+    description?: string;
+
+    /** Item intro text (partial richtext cause it's always bold) */
+    intro?: string;
+
+    /** Item's main text (richtext) */
+    text?: string;
+
+    /** Item link settings */
+    link?: LinkProps;
+
+    /** Function to inject custom primary button */
+    action?: (isInverted?: boolean) => React.ReactNode;
 }
 
-const Feature: React.FC<
+const Feature = forwardRef<
+    HTMLDivElement,
     FeatureProps & {
         className?: string;
     }
-> = ({
-    title,
-    description,
-    intro,
-    text,
-    image,
-    addWhitespace = false,
-    isInverted = false,
-    isCentered = false,
-    primaryAction,
-    secondaryAction,
-    className,
-}) => {
-    return (
-        <View className={className}>
-            {image && (
-                <ImageContainer isCentered={isCentered}>
-                    <StyledImage
-                        small={image.small}
-                        medium={image.medium}
-                        semilarge={image.semilarge}
-                        large={image.large}
-                        xlarge={image.xlarge}
-                        alt={image.alt}
-                        coverSpace={image.coverSpace}
-                    />
-                </ImageContainer>
-            )}
-            <Content addWhitespace={addWhitespace} isCentered={isCentered}>
-                <ContentBlock
-                    type="copy-b"
-                    size="big"
-                    isInverted={isInverted}
-                    data-sheet="title"
-                >
-                    {title}
-                </ContentBlock>
+>(
+    (
+        {
+            title,
+            description,
+            intro,
+            text,
+            link,
+            image,
+            isInverted = false,
+            isCentered = false,
+            action,
+            className,
+        },
+        ref
+    ) => {
+        return (
+            <View ref={ref} isCentered={isCentered} className={className}>
+                {image?.small && (
+                    <ImageContainer {...link} isCentered={isCentered}>
+                        <StyledImage
+                            small={image.small}
+                            medium={image.medium}
+                            semilarge={image.semilarge}
+                            large={image.large}
+                            xlarge={image.xlarge}
+                            alt={image.alt}
+                            ratios={image.ratios}
+                            coverSpace={
+                                image.coverSpace === undefined
+                                    ? true
+                                    : image.coverSpace
+                            }
+                            isInverted={isInverted}
+                        />
+                    </ImageContainer>
+                )}
+                {title && (
+                    <TitleLink
+                        {...link}
+                        isInverted={isInverted}
+                        ariaLabel={title}
+                        data-sheet="title"
+                    >
+                        {title}
+                    </TitleLink>
+                )}
                 {description && (
-                    <ContentBlock
+                    <Copy
                         size="small"
                         isInverted={isInverted}
                         data-sheet="desc"
-                    >
-                        <Desc
-                            dangerouslySetInnerHTML={{ __html: description }}
-                        />
-                    </ContentBlock>
-                )}
-            </Content>
-            <ArticleContent
-                addWhitespace={addWhitespace}
-                isCentered={isCentered}
-            >
-                {intro && (
-                    <ContentBlock
-                        type="copy-b"
-                        isInverted={isInverted}
-                        innerHTML={intro}
-                        data-sheet="intro"
+                        innerHTML={description}
                     />
                 )}
-                {text && (
-                    <ContentBlock
-                        type="copy"
-                        size="medium"
-                        isInverted={isInverted}
-                        innerHTML={text}
-                        data-sheet="text"
-                    />
+                {(intro || text) && (
+                    <ArticleContent isCentered={isCentered}>
+                        {intro && (
+                            <Copy
+                                type="copy-b"
+                                isInverted={isInverted}
+                                innerHTML={intro}
+                                data-sheet="intro"
+                            />
+                        )}
+                        {text && (
+                            <Copy
+                                type="copy"
+                                size="medium"
+                                isInverted={isInverted}
+                                innerHTML={text}
+                                data-sheet="text"
+                            />
+                        )}
+                    </ArticleContent>
                 )}
-            </ArticleContent>
-            {(primaryAction || secondaryAction) && (
-                <StyledActions
-                    isCentered={isCentered}
-                    addWhitespace={addWhitespace}
-                    primary={primaryAction && primaryAction(isInverted)}
-                    secondary={secondaryAction && secondaryAction(isInverted)}
-                />
-            )}
-        </View>
-    );
-};
+                {action && <Action>{action(isInverted)}</Action>}
+            </View>
+        );
+    }
+);
+
+Feature.displayName = 'Feature';
 
 export default Feature;

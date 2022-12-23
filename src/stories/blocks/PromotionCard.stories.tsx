@@ -1,20 +1,21 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import PromotionCard from 'components/blocks/PromotionCard';
+import Star from 'components/base/icons/Star';
 
 export default {
     title: 'Blocks/PromotionCard',
     component: PromotionCard,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
 
 export const Default: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
@@ -23,9 +24,21 @@ export const Default: Story = () => (
     />
 );
 
-export const WithText: Story = () => (
+export const WithTitle: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
+        image={{
+            small: 'https://unsplash.it/338/253?image=409',
+            medium: 'https://unsplash.it/722/541?image=409',
+            large: 'https://unsplash.it/958/718?image=409',
+        }}
+    />
+);
+
+export const WithSuperTitle: Story = () => (
+    <PromotionCard
+        superTitle="Lorem ipsum dolor sit amet dolor"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
@@ -36,7 +49,7 @@ export const WithText: Story = () => (
 
 export const WithActions: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
@@ -47,7 +60,7 @@ export const WithActions: Story = () => (
 
 export const WithLink: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
@@ -59,12 +72,23 @@ export const WithLink: Story = () => (
 
 export const WithClickHandler: Story = () => (
     <PromotionCard
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
+        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
             large: 'https://unsplash.it/958/718?image=409',
         }}
-        onClick={() => console.log('click')}
+    />
+);
+
+export const WithIcon: Story = () => (
+    <PromotionCard
+        title="Lorem ipsum dolor sit amet"
+        image={{
+            small: 'https://unsplash.it/338/253?image=409',
+            medium: 'https://unsplash.it/722/541?image=409',
+            large: 'https://unsplash.it/958/718?image=409',
+        }}
+        icon={() => <Star />}
     />
 );

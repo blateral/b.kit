@@ -5,24 +5,24 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const ArrowLeftRight: React.FC<{ iconColor?: string; className?: string }> = ({
-    iconColor = 'currentColor',
-    className,
-}) => (
+const ArrowLeftRight: React.FC<{
+    iconColor?: string;
+    className?: string;
+    ariaHidden?: boolean;
+}> = ({ iconColor = 'currentColor', className, ariaHidden = true }) => (
     <SVG
-        width="36"
-        height="17"
-        viewBox="0 0 36 17"
+        width="25"
+        height="24"
+        viewBox="0 0 25 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={className}
+        aria-hidden={ariaHidden}
     >
-        <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M3.06818 7.42108H32.7534l-6.3638-5.86523c-.3753-.34588-.3753-.71337 0-1.10248.1641-.17293.3635-.2594.598-.2594.2346 0 .4457.08647.6333.2594l7.8808 7.29576c.1642.12971.2463.31345.2463.55124 0 .21617-.0821.39991-.2463.55123l-7.8808 7.2309c-.1642.1729-.3694.2594-.6157.2594-.2462 0-.4515-.0864-.6156-.2594-.3753-.3459-.3753-.7133 0-1.1025l6.3663-5.86748H3.0657L9.43204 14.98c.37527.3459.37527.7134 0 1.1025-.16419.1729-.36355.2594-.5981.2594-.23455 0-.44564-.0865-.63328-.2594L.31986 8.78675c-.1642-.1297-.24628-.31344-.24628-.55123 0-.21617.08209-.39992.24627-.55124L8.20066.45338c.16419-.17294.36942-.25941.61569-.25941.24628 0 .4515.08647.61569.2594.37528.34588.37528.71337 0 1.10248L3.06818 7.42108z"
-            fill={iconColor}
-        />
+        <path d="M17.01 11H5v2h12.01v3L21 12l-3.99-4v3Z" fill={iconColor} />
+        <g clipPath="url(#a)">
+            <path d="M7.99 13H20v-2H7.99V8L4 12l3.99 4v-3Z" fill={iconColor} />
+        </g>
     </SVG>
 );
 

@@ -1,5 +1,5 @@
-import React, { FC, useContext, useEffect, useRef, useState } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -8,7 +8,7 @@ import { getColors as color, spacings } from 'utils/styles';
 import ArrowLeftRight from 'components/base/icons/ArrowLeftRight';
 import Copy from 'components/typography/Copy';
 import useIE from 'utils/useIE';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const clamp = (num: number, min: number, max: number) => {
     return Math.min(Math.max(num, min), max);
@@ -17,7 +17,6 @@ const clamp = (num: number, min: number, max: number) => {
 const Images = styled.div`
     position: relative;
     cursor: col-resize;
-
     & > * {
         pointer-events: none;
         user-select: none;
@@ -41,10 +40,8 @@ const ForegroundContainer = styled.div<{
     bottom: 0;
     width: 50%;
     overflow: hidden;
-
     transition: width ${({ hasTransition }) => (hasTransition ? 0.1 : 0)}s
         ease-in-out;
-
     ${({ hasAnim, initalValue }) =>
         hasAnim &&
         css`
@@ -53,7 +50,6 @@ const ForegroundContainer = styled.div<{
             animation-iteration-count: 1;
             animation-play-state: ${hasAnim && 'running'};
             animation-timing-function: ease-in-out;
-
             @keyframes ForegroundAnim {
                 0% {
                     width: ${initalValue
@@ -86,6 +82,11 @@ const ForegroundImg = styled(Image)`
     height: 100%;
     max-width: none;
     object-fit: cover;
+
+    img {
+        height: auto;
+        width: auto;
+    }
 `;
 
 const ForegroundOverlay = styled.div<{ color: string }>`
@@ -98,15 +99,15 @@ const ForegroundOverlay = styled.div<{ color: string }>`
 `;
 
 const ImageLabel = styled(Copy)<{ bgColor?: string }>`
-    height: ${spacings.spacer * 1.5}px;
-    padding: ${spacings.nudge}px ${spacings.spacer}px ${spacings.nudge * 2}px
+    height: ${spacings.spacer}px;
+    padding: ${spacings.nudge}px ${spacings.spacer}px ${spacings.spacer}px
         ${spacings.spacer}px;
     background: ${({ bgColor }) => bgColor && bgColor};
 `;
 
 const ForegroundLabel = styled(ImageLabel)`
     position: absolute;
-    bottom: ${spacings.spacer * 1.5}px;
+    bottom: ${spacings.spacer}px;
     left: ${spacings.spacer}px;
     pointer-events: none;
     white-space: nowrap;
@@ -114,7 +115,7 @@ const ForegroundLabel = styled(ImageLabel)`
 
 const BackgroundLabel = styled(ImageLabel)`
     position: absolute;
-    bottom: ${spacings.spacer * 1.5}px;
+    bottom: ${spacings.spacer}px;
     right: ${spacings.spacer}px;
     pointer-events: none;
     white-space: nowrap;
@@ -129,10 +130,8 @@ const ControlContainer = styled.div<{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     transition: left ${({ hasTransition }) => (hasTransition ? 0.1 : 0)}s
         ease-in-out;
-
     ${({ hasAnim, initalValue }) =>
         hasAnim &&
         css`
@@ -141,7 +140,6 @@ const ControlContainer = styled.div<{
             animation-iteration-count: 1;
             animation-play-state: ${hasAnim && 'running'};
             animation-timing-function: ease-in-out;
-
             @keyframes ControlAnim {
                 0% {
                     left: ${initalValue
@@ -171,12 +169,15 @@ const Control = styled.div`
     align-items: center;
     height: 54px;
     width: 54px;
-    border: solid 2px ${({ theme }) => color(theme).light};
+    border: solid 2px ${({ theme }) => color(theme).elementBg.light};
     border-radius: 50%;
-    background-color: ${({ theme }) => color(theme).primary.medium};
+    background-color: ${({ theme }) => color(theme).elementBg.medium};
 `;
 
 const ComparisonSlider: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     bgMode?: 'full' | 'inverted' | 'splitted';
     initialValue?: number;
     foregroundImg?: ImageProps;
@@ -188,6 +189,7 @@ const ComparisonSlider: FC<{
     dragControl?: React.ReactNode;
     enableControlAnim?: boolean;
 }> = ({
+    anchorId,
     bgMode,
     initialValue,
     foregroundImg,
@@ -208,7 +210,7 @@ const ComparisonSlider: FC<{
     const [interacted, setInteracted] = useState<boolean>(true);
     const [sideOffset, setSideOffset] = useState<number>(0);
     const controlRef = useRef<HTMLDivElement | null>(null);
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
 
     useEffect(() => {
         if (controlRef.current) {
@@ -294,12 +296,13 @@ const ComparisonSlider: FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.sectionBg.dark
                     : bgMode
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode)}
         >
@@ -327,7 +330,7 @@ const ComparisonSlider: FC<{
                         <BackgroundImg {...backgroundImg} />
                         {backgroundLabel && (
                             <BackgroundLabel
-                                textColor={color(theme).light}
+                                textColor={colors.text.inverted}
                                 bgColor={labelColor}
                             >
                                 {backgroundLabel}
@@ -342,7 +345,7 @@ const ComparisonSlider: FC<{
                             <ForegroundImg {...foregroundImg} />
                             {foregroundLabel && (
                                 <ForegroundLabel
-                                    textColor={color(theme).light}
+                                    textColor={colors.text.inverted}
                                     bgColor={labelColor}
                                 >
                                     {foregroundLabel}
@@ -362,7 +365,7 @@ const ComparisonSlider: FC<{
                             ) : (
                                 <Control>
                                     <ArrowLeftRight
-                                        iconColor={color(theme).light}
+                                        iconColor={colors.elementBg.light}
                                     />
                                 </Control>
                             )}

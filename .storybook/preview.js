@@ -1,11 +1,27 @@
 import { LibThemeProvider } from '../src/utils/LibThemeProvider';
+import DebugLines from '../src/components/debug/DebugLines';
 
 const customTheme = {
-    globalSettings: {
+    globals: {
         sections: {
             newsLocaleKey: 'de',
             newsDateFormat: 'dd.mm.YYYY',
             edgeRadius: '5px',
+        },
+        navigation: {
+            navBar: {
+                topHeight: {
+                    small: [0],
+                    large: [0],
+                },
+            },
+        },
+    },
+    colors: {
+        new: {
+            sectionBg: {
+                medium: 'red',
+            },
         },
     },
     fonts: {
@@ -57,27 +73,51 @@ export const parameters = {
     },
     status: {
         type: 'beta',
+        statuses: {
+            preview: {
+                background: '#FD6838',
+                color: '#fff',
+                description: 'Reworked not stable component',
+            },
+            qsReady: {
+                background: '#0CABA8',
+                color: '#fff',
+                description: 'Component is ready for final QS',
+            },
+        },
     },
     options: {
-        storySort: (previous, next) => {
-            // const [previousStory, previousMeta] = previous;
-            const [nextStory, nextMeta] = next;
+        // storySort: (previous, next) => {
+        //     // const [previousStory, previousMeta] = previous;
+        //     const [nextStory, nextMeta] = next;
 
-            if (
-                nextMeta.kind.search('Info') ||
-                nextMeta.kind.search('Introduction')
-            ) {
-                return -1;
-            } else return 0;
+        //     if (
+        //         nextMeta.kind.search('Info') ||
+        //         nextMeta.kind.search('Introduction')
+        //     ) {
+        //         return -1;
+        //     } else return 0;
+        // },
+        storySort: {
+            order: [
+                'Introduction',
+                'Theming',
+                'Optional Packages',
+                'Accessibility',
+                'Development',
+            ],
         },
     },
 };
 
 export const decorators = [
     (Story) => (
-        // <LibThemeProvider theme={customTheme}>
-        //     <Story />
-        // </LibThemeProvider>
-        <Story />
+        <>
+            {/* <LibThemeProvider theme={customTheme}>
+                <Story />
+            </LibThemeProvider> */}
+            <Story />
+            {/* <DebugLines /> */}
+        </>
     ),
 ];

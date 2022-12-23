@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
-import styled, { ThemeContext } from 'styled-components';
-import { withLibTheme } from 'utils/LibThemeProvider';
-import { getColors, spacings } from 'utils/styles';
+import styled from 'styled-components';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { spacings, getColors as color, mq } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 
@@ -11,84 +11,108 @@ const FactsContainer = styled.ul`
     margin: 0;
 
     list-style-type: none;
+
+    & > * + * {
+        margin-top: ${spacings.nudge}px;
+    }
 `;
 
-const FactsItem = styled.li<{ hasText?: boolean }>`
-    padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
+const FactItem = styled.li<{ hasText?: boolean; hasBack?: boolean }>`
+    padding: ${spacings.nudge * 2}px;
 
-    background: #fff;
-
-    cursor: pointer;
+    background: ${({ theme, hasBack }) =>
+        hasBack ? color(theme).elementBg.light : color(theme).elementBg.medium};
 
     display: flex;
     flex-direction: row;
     align-items: ${({ hasText }) => (hasText ? 'flex-start' : 'center')};
 
-    & + & {
-        margin-top: ${spacings.nudge * 2}px;
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 3}px;
     }
 `;
 
 const Icon = styled.img`
-    margin-right: ${spacings.spacer}px;
+    margin-right: ${spacings.nudge * 3}px;
     display: block;
-    width: 100%;
-    max-width: ${spacings.spacer * 2}px;
-`;
+    max-width: ${spacings.nudge * 5}px;
 
-const ContentBlock = styled.div`
-    max-width: 80%;
-
-    & > * + * {
-        margin-top: ${spacings.spacer}px;
+    @media ${mq.medium} {
+        margin-right: ${spacings.spacer}px;
     }
 `;
 
+const ContentBlock = styled.div`
+    & > * + * {
+        margin-top: ${spacings.nudge * 2}px;
+    }
+`;
+
+const Description = styled(Copy)`
+    max-width: 880px;
+`;
+
 const FactList: React.FC<{
-    facts?: {
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Array with fact item data */
+    facts?: Array<{
         label?: string;
         text?: string;
-        icon?: { src: string; alt?: string };
-    }[];
+    }>;
 
+    /** Icon for each fact item */
+    icon?: { src: string; alt?: string };
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ facts, bgMode }) => {
-    const theme = React.useContext(ThemeContext);
+}> = ({ anchorId, facts, icon, bgMode }) => {
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
+    const hasBack = isInverted || bgMode === 'full';
 
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? getColors(theme).dark
+                    ? colors.sectionBg.dark
                     : bgMode === 'full'
-                    ? getColors(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
-            bgMode={mapToBgMode(bgMode)}
+            bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {facts && (
                     <FactsContainer>
-                        {facts.map(({ label, text, icon }, i) => {
+                        {facts.map(({ label, text }, i) => {
                             return (
-                                <FactsItem key={i} hasText={!!text}>
+                                <FactItem
+                                    key={i}
+                                    hasText={!!text}
+                                    hasBack={hasBack}
+                                >
                                     {icon && (
-                                        <Icon src={icon.src} alt={icon.alt} />
+                                        <Icon
+                                            src={icon.src}
+                                            alt={icon.alt || ''}
+                                        />
                                     )}
                                     <ContentBlock>
                                         {label && (
                                             <Copy type="copy-b">{label}</Copy>
                                         )}
                                         {text && (
-                                            <Copy
+                                            <Description
                                                 type="copy"
                                                 innerHTML={text}
                                             />
                                         )}
                                     </ContentBlock>
-                                </FactsItem>
+                                </FactItem>
                             );
                         })}
                     </FactsContainer>

@@ -5,20 +5,22 @@ const SVG = styled.svg`
     display: block;
 `;
 
-const Route: React.FC<{ iconColor?: string; className?: string }> = ({
-    iconColor = 'currentColor',
-    className,
-}) => (
+const Route: React.FC<{
+    iconColor?: string;
+    className?: string;
+    ariaHidden?: boolean;
+}> = ({ iconColor = 'currentColor', className, ariaHidden = true }) => (
     <SVG
-        width="29"
-        height="30"
-        viewBox="0 0 29 30"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={className}
+        aria-hidden={ariaHidden}
     >
         <path
-            d="M28.629 13.5725L15.4275.371C15.1802.12367 14.871 0 14.5 0s-.6802.12367-.9275.371L.371 13.5725c-.24733.2679-.371.5823-.371.943 0 .3607.12367.6647.371.912L13.5725 28.629c.2473.2679.5565.4019.9275.4019s.6802-.134.9275-.4019L28.629 15.4275c.2473-.2473.371-.5513.371-.912s-.1237-.6751-.371-.943zm-11.5011 4.2356V14.5h-6.5853v3.9574H7.91471v-5.2559c0-.371.12882-.6853.38646-.943.25765-.2576.56166-.3864.91205-.3864h7.91468V8.56397l4.6376 4.63753-4.6376 4.6066z"
+            d="M14 10H9c-.6 0-1 .4-1 1v4h2v-3h4v2.5l3.5-3.5L14 7.5V10Zm-2-9C5.9 1 1 5.9 1 12s4.9 11 11 11 11-4.9 11-11S18.1 1 12 1Zm7.73 11.58-7.19 7.22c-.35.27-.79.27-1.15 0L4.2 12.58a.932.932 0 0 1 0-1.16l7.19-7.22c.35-.27.79-.27 1.15 0l7.19 7.22c.36.27.36.8 0 1.16Z"
             fill={iconColor}
         />
     </SVG>

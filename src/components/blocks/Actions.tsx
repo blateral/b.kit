@@ -3,26 +3,36 @@ import styled from 'styled-components';
 
 import { mq, spacings } from 'utils/styles';
 
-const View = styled.div<{ isCentered?: boolean; isMirrored?: boolean }>`
-    display: inline-flex;
+const View = styled.div<{ isCovered?: boolean }>`
+    display: block;
+
+    @media ${mq.medium} {
+        display: ${({ isCovered }) => (isCovered ? 'block' : 'inline-block')};
+    }
+`;
+
+const Content = styled.div<{
+    isMirrored?: boolean;
+    isCovered?: boolean;
+}>`
+    display: flex;
     flex-wrap: wrap;
     flex-direction: ${({ isMirrored }) =>
         isMirrored ? 'column-reverse' : 'column'};
 
-    justify-content: ${({ isMirrored, isCentered }) =>
-        isCentered ? 'center' : isMirrored ? 'flex-end' : 'flex-start'};
-
-    margin-top: -${spacings.spacer * 0.5}px;
+    margin-top: -${spacings.nudge * 2}px;
     margin-left: -${spacings.spacer}px;
-    width: calc(100% + ${spacings.spacer}px);
 
-    & > * {
-        flex: 1 0 auto;
-        margin-top: ${spacings.spacer * 0.5}px;
+    &&& > * {
+        /* flex: 1 1 ${({ isCovered }) => (isCovered ? '100%' : '0px')}; */
+        margin-top: ${spacings.nudge * 2}px;
         margin-left: ${spacings.spacer}px;
+
+        /* min-width: ${({ isCovered }) => isCovered && '0px'}; */
     }
 
     @media ${mq.medium} {
+        display: ${({ isCovered }) => (isCovered ? 'flex' : 'inline-flex')};
         flex-direction: ${({ isMirrored }) =>
             isMirrored ? 'row-reverse' : 'row'};
         align-items: stretch;
@@ -30,27 +40,43 @@ const View = styled.div<{ isCentered?: boolean; isMirrored?: boolean }>`
     }
 `;
 
+const TertiaryWrapper = styled.div`
+    align-self: flex-start;
+
+    @media ${mq.medium} {
+        align-self: center;
+    }
+`;
+
+export type ActionMode = 'wrap' | 'cover';
+
 const Actions: FC<{
-    isCentered?: boolean;
+    /** Behaviour of content wrapping. If set to cover the action container always tries to fill full width */
+    mode?: ActionMode;
+    /** Switch order of primary and secondary action */
     isMirrored?: boolean;
+    /** React node of primary action */
     primary?: React.ReactNode;
+    /** React node of secondary action */
     secondary?: React.ReactNode;
+    /** React node of tertiary action */
+    tertiary?: React.ReactNode;
     className?: string;
 }> = ({
-    isCentered = false,
+    mode = 'wrap',
     isMirrored = false,
     primary,
     secondary,
+    tertiary,
     className,
 }) => {
     return (
-        <View
-            isCentered={isCentered}
-            isMirrored={isMirrored}
-            className={className}
-        >
-            {primary && primary}
-            {secondary && secondary}
+        <View isCovered={mode === 'cover'} className={className}>
+            <Content isCovered={mode === 'cover'} isMirrored={isMirrored}>
+                {primary && primary}
+                {secondary && secondary}
+                {tertiary && <TertiaryWrapper>{tertiary}</TertiaryWrapper>}
+            </Content>
         </View>
     );
 };

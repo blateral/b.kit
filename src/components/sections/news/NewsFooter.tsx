@@ -1,62 +1,43 @@
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
-
+import React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import Copy from 'components/typography/Copy';
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'utils/useMediaQuery';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-import Pointer from 'components/buttons/Pointer';
-import { withLibTheme } from 'utils/LibThemeProvider';
-
-const ContentFlex = styled.div`
-    & > * + * {
-        padding-top: ${spacings.spacer * 2}px;
-    }
-
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: 'flex-start';
-        align-items: flex-start;
-
-        margin-left: -20px;
-        margin-top: -40px;
-
-        & > * {
-            padding-left: 20px;
-            padding-top: 40px;
-            flex: 1 0 50%;
-            max-width: 50%;
-        }
-    }
-`;
-
-const Actions = styled.div`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
-    text-align: left;
-`;
-
-const ShowMore = styled.span<{ itemCount?: number }>`
-    display: ${({ itemCount }) =>
-        itemCount && itemCount > 2 ? 'block' : 'none'};
-`;
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import Grid from 'components/base/Grid';
+import { LinkProps } from 'components/typography/Link';
+import { getNewsFilterParams } from './NewsOverview';
 
 type NewsFooterMq = 'small' | 'semilarge';
 
-const NewsFooter: React.FC<{
-    news: NewsCardProps[];
-    onTagClick?: (tag: string) => void;
+export type NewsItem = Omit<
+    NewsCardProps,
+    'isInverted' | 'onTagClick' | 'customTag'
+>;
 
+const NewsFooter: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Array of news item settings */
+    news: NewsItem[];
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-    showMoreText?: string;
-}> = ({ news, onTagClick, bgMode, showMoreText }) => {
+
+    /** Function to inject custom tag node */
+    customTag?: (props: {
+        key: React.Key;
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        link?: LinkProps;
+    }) => React.ReactNode;
+}> = ({ anchorId, news, bgMode, customTag }) => {
+    const { colors, theme } = useLibTheme();
     const newsCount = news?.length || 0;
-    const theme = useContext(ThemeContext);
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -66,7 +47,7 @@ const NewsFooter: React.FC<{
     const [itemsPerRow, setItemsPerRow] = useState(2);
     const [visibleRows, setVisibleRows] = useState(1);
 
-    const { sheetRefs: cardRefs } = useEqualSheetHeight({
+    const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
         listLength: Math.min(visibleRows * itemsPerRow, newsCount),
         identifiers: [
             '[data-sheet="head"]',
@@ -101,61 +82,57 @@ const NewsFooter: React.FC<{
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
-                <ContentFlex>
-                    {news &&
-                        news
-                            .filter((_, i) => i < visibleRows * itemsPerRow)
-                            .map((item, i) => {
-                                return (
-                                    <div key={i} ref={cardRefs[i]}>
-                                        <NewsCard
-                                            isInverted={isInverted}
-                                            onTagClick={onTagClick}
-                                            {...item}
-                                        />
-                                    </div>
-                                );
-                            })}
-                </ContentFlex>
-                {news && news.length > 0 && (
-                    <Actions>
-                        <Copy isInverted={isInverted}>
-                            <ShowMore
-                                itemCount={news.length}
-                                onClick={(ev) => {
-                                    ev.preventDefault();
-                                    if (
-                                        visibleRows <
-                                        Math.ceil(newsCount / itemsPerRow)
-                                    ) {
-                                        setVisibleRows((prev) => prev + 1);
-                                    }
-                                }}
+                <Grid.Row>
+                    {news
+                        ?.filter((_, i) => i < visibleRows * itemsPerRow)
+                        .map((item, i) => (
+                            <Grid.Col
+                                medium={{ span: 6 / 12 }}
+                                key={`${i}_news_${item.title}`}
                             >
-                                {visibleRows < newsCount / itemsPerRow && (
-                                    <Pointer.View
-                                        as="button"
-                                        isInverted={isInverted}
-                                    >
-                                        <Pointer.Label>
-                                            {showMoreText || 'mehr anzeigen'}
-                                        </Pointer.Label>
-                                    </Pointer.View>
-                                )}
-                            </ShowMore>
-                        </Copy>
-                    </Actions>
-                )}
+                                <NewsCard
+                                    key={i}
+                                    ref={cardRefs[i]}
+                                    {...item}
+                                    tags={item.tags?.map((tag) => {
+                                        let tagHref: string | undefined =
+                                            undefined;
+
+                                        if (tag.name && tag.link?.href) {
+                                            tagHref = getNewsFilterParams(
+                                                tag.link.href,
+                                                theme,
+                                                [tag.name]
+                                            );
+                                        }
+
+                                        return {
+                                            name: tag.name,
+                                            link: tag.link?.href
+                                                ? {
+                                                      ...tag.link,
+                                                      href: tagHref,
+                                                  }
+                                                : undefined,
+                                        };
+                                    })}
+                                    isInverted={isInverted}
+                                    customTag={customTag}
+                                />
+                            </Grid.Col>
+                        ))}
+                </Grid.Row>
             </Wrapper>
         </Section>
     );

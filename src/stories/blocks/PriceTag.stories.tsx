@@ -9,7 +9,7 @@ export default {
     component: PriceTag,
     parameters: {
         status: {
-            type: 'releaseCandidate',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -18,13 +18,13 @@ const button = (props: { isInverted?: boolean; isHighlighted?: boolean }) => {
     if (props.isHighlighted) {
         return (
             <Button.View isInverted={props.isInverted} as="button">
-                <Button.Label>Jetzt testen</Button.Label>
+                <Button.Label>Primary</Button.Label>
             </Button.View>
         );
     } else {
         return (
             <ButtonGhost.View isInverted={props.isInverted} as="button">
-                <ButtonGhost.Label>Jetzt testen</ButtonGhost.Label>
+                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         );
     }
@@ -32,20 +32,42 @@ const button = (props: { isInverted?: boolean; isHighlighted?: boolean }) => {
 
 export const Default: Story = () => (
     <PriceTag
-        superTitle="Pro Tarif"
+        superTitle="Tarif"
         title="199,-"
         text={`
-            <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`}
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</p>`}
+        action={button}
+    />
+);
+
+export const IsCentered: Story = () => (
+    <PriceTag
+        isCentered
+        superTitle="Tarif"
+        title="199,-"
+        text={`
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</p>`}
+        action={button}
+    />
+);
+
+export const IsHighlighted: Story = () => (
+    <PriceTag
+        isHighlighted
+        superTitle="Tarif"
+        title="199,-"
+        text={`
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</p>`}
         action={button}
     />
 );
 
 export const hasBackground: Story = () => (
     <PriceTag
-        superTitle="Pro Tarif"
+        superTitle="Tarif"
         title="199,-"
         text={`
-        <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`}
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</p>`}
         action={button}
         hasBackground
     />
@@ -53,10 +75,10 @@ export const hasBackground: Story = () => (
 
 export const IsInverted: Story = () => (
     <PriceTag
-        superTitle="Pro Tarif"
+        superTitle="Tarif"
         title="199,-"
         text={`
-        <p>EUR im Monat oder 2 Monate sparen für einmalig 1999,- EUR im Jahr</p>`}
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</p>`}
         action={button}
         isInverted
     />

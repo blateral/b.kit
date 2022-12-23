@@ -1,9 +1,11 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
+import { hexToRgba } from 'utils/hexRgbConverter';
 
 import {
     getColors as color,
     getFonts as font,
+    getGlobals as global,
     spacings,
     withRange,
 } from 'utils/styles';
@@ -14,66 +16,65 @@ const View = styled.a<{
     size?: 'default' | 'small';
 }>`
     min-height: 3em;
-    height: ${({ size }) => (size === 'default' ? '3.65em' : '3em')};
-    min-width: ${({ size }) => (size === 'default' ? '210px' : '120px')};
+    height: ${({ size }) => (size === 'default' ? '3.5em' : '3em')};
+    min-width: ${({ size }) => (size === 'default' ? '200px' : '120px')};
     padding: 0.1em 1.2em;
 
-    display: inline-block;
+    max-width: calc(100% - ${spacings.spacer}px);
+
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+
     vertical-align: middle;
 
     font-family: ${({ theme }) => font(theme).copy.medium.family};
     ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
     font-weight: ${({ theme }) => font(theme).copy.medium.weight};
-    text-align: center;
-    text-decoration: none;
     line-height: 1;
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
 
-    perspective: 1000;
-    -webkit-font-smoothing: subpixel-antialiased;
-    -webkit-perspective: 1000;
-    -moz-osx-font-smoothing: grayscale;
-    will-change: auto;
+    text-align: center;
+    text-decoration: none;
 
     outline: none;
     box-shadow: none;
     border: solid 1px
-        ${({ theme, inverted, disable }) =>
+        ${({ inverted, disable, theme }) =>
             disable
-                ? color(theme).mono.medium
+                ? color(theme).elementBg.medium
                 : inverted
-                ? color(theme).light
-                : color(theme).dark};
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     user-select: none;
     cursor: pointer;
 
     pointer-events: ${({ disable }) => (disable ? 'none' : 'all')};
 
-    // will-change: transform;
-
     background-color: transparent;
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).mono.medium
+            ? inverted
+                ? hexToRgba(color(theme).text.inverted, 0.6)
+                : hexToRgba(color(theme).text.default, 0.6)
             : inverted
-            ? color(theme).light
-            : color(theme).dark};
-    text-align: center;
+            ? color(theme).text.inverted
+            : color(theme).text.default};
 
     transition: all ease-in-out 0.2s;
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).mono.medium
+                ? inverted
+                    ? hexToRgba(color(theme).text.inverted, 0.6)
+                    : hexToRgba(color(theme).text.default, 0.6)
                 : inverted
-                ? color(theme).light
-                : color(theme).dark};
+                ? color(theme).text.inverted
+                : color(theme).text.default};
     }
 
     & > :not(:last-child) {
@@ -81,7 +82,7 @@ const View = styled.a<{
     }
 
     @media (hover: hover) and (pointer: fine) {
-        ${({ disable, inverted }) =>
+        ${({ disable, inverted, theme }) =>
             !disable &&
             css`
                 &:hover {
@@ -92,10 +93,20 @@ const View = styled.a<{
                 }
 
                 &:focus {
+                    outline: 1px solid
+                        ${inverted
+                            ? color(theme).primary.inverted
+                            : color(theme).primary.default};
+                    outline-offset: 0;
                     box-shadow: 0px 2px 6px
                         ${inverted
                             ? 'rgba(255, 255, 255, 0.25)'
                             : 'rgba(0, 0, 0, 0.3)'};
+                }
+
+                &:focus:not(:focus-visible) {
+                    outline: none;
+                    box-shadow: none;
                 }
 
                 &:active {
@@ -113,6 +124,7 @@ interface Props {
     isInverted?: boolean;
     isDisabled?: boolean;
     className?: string;
+    children?: React.ReactNode;
 }
 
 export type BtnProps = Props & {
@@ -161,6 +173,7 @@ const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
                 <View
                     ref={ref}
                     as={as as any}
+                    aria-disabled={isDisabled}
                     size={size}
                     href={(rest as LinkProps).href}
                     target={
@@ -194,8 +207,7 @@ const Icon = styled.div<{ iconColor?: string }>`
     width: 35px;
     height: 35px;
 
-    color: ${({ theme, iconColor }) =>
-        iconColor || color(theme).primary.medium};
+    color: ${({ iconColor }) => iconColor || 'inherit'};
 
     transition: transform 0.2s ease-in-out;
 
@@ -206,6 +218,12 @@ const Icon = styled.div<{ iconColor?: string }>`
 
 const Label = styled.span`
     display: inline-block;
+
+    max-width: 100%;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
 
 export default { View: ButtonGhost, Label: Label, Icon: Icon };

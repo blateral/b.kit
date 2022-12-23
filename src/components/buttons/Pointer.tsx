@@ -13,7 +13,7 @@ const View = styled.a<{
     disable?: boolean;
     textDecoration?: 'none' | 'underline';
 }>`
-    padding: 0.2em;
+    padding: 0.2em 0;
 
     display: inline-block;
     display: inline-flex;
@@ -38,7 +38,10 @@ const View = styled.a<{
     -moz-osx-font-smoothing: grayscale;
     will-change: auto;
 
-    outline: none;
+    outline-color: ${({ theme, inverted }) =>
+        inverted
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
     border: none;
     cursor: pointer;
 
@@ -47,35 +50,45 @@ const View = styled.a<{
     background: none;
     color: ${({ theme, inverted, disable }) =>
         disable
-            ? color(theme).mono.light
+            ? color(theme).elementBg.medium
             : inverted
-            ? color(theme).light
-            : color(theme).dark};
+            ? color(theme).text.copyInverted
+            : color(theme).text.copy};
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
             disable
-                ? color(theme).mono.light
+                ? color(theme).elementBg.medium
                 : inverted
-                ? color(theme).light
-                : color(theme).dark};
+                ? color(theme).text.copyInverted
+                : color(theme).text.copy};
+    }
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
     }
 
     & > :not(:last-child) {
         padding-right: ${spacings.nudge}px;
     }
 
-    &:hover {
-        opacity: 0.6;
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            opacity: 0.6;
+        }
     }
 
-    /* &:focus {
-        text-decoration: underline;
+    &:focus {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
     }
 
     &:active {
-        text-decoration: underline;
-    } */
+        opacity: 0.6;
+    }
 `;
 
 interface Props {
@@ -84,6 +97,7 @@ interface Props {
     onClick?: () => void;
     textDecoration?: 'none' | 'underline';
     className?: string;
+    children?: React.ReactNode;
 }
 
 export type BtnProps = Props & {
@@ -133,6 +147,7 @@ const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
                     as={as as any}
                     href={(rest as LinkProps).href}
                     data-disabled={isDisabled}
+                    data-inverted={isInverted}
                     target={
                         (rest as LinkProps).isExternal ? '_blank' : undefined
                     }
@@ -161,17 +176,19 @@ const Icon = styled.div<{ iconColor?: string }>`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    width: 35px;
-    height: 35px;
 
-    color: ${({ theme, iconColor }) =>
-        iconColor || color(theme).primary.medium};
+    color: ${({ theme, iconColor }) => iconColor || color(theme).text.copy};
 
     transition: transform 0.2s ease-in-out;
 
+    ${View}[data-inverted='true'] > & {
+        color: ${({ theme, iconColor }) =>
+            iconColor || color(theme).text.copyInverted};
+    }
+
     ${View}[data-disabled='true'] > & {
         color: ${({ theme, iconColor }) =>
-            iconColor || color(theme).mono.light};
+            iconColor || color(theme).elementBg.medium};
     }
 
     ${View}:hover > & {

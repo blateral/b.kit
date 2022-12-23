@@ -3,10 +3,9 @@ import styled, { ThemeContext } from 'styled-components';
 
 import {
     getColors as color,
-    getFonts as font,
+    getGlobals as global,
     mq,
     spacings,
-    withRange,
 } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -15,13 +14,12 @@ import { HeadlineTag } from 'components/typography/Heading';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import { withLibTheme } from 'utils/LibThemeProvider';
+import { gridSettings, getGridWidth } from 'components/base/Grid';
 
 const ContactView = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-
     margin: 0 auto;
     width: 100%;
 
@@ -29,216 +27,143 @@ const ContactView = styled.div`
     hyphens: auto;
     overflow-wrap: break-word;
 
-    @media ${mq.medium} {
+    & > * + * {
+        margin-top: ${spacings.spacer}px;
+    }
+
+    @media ${mq.semilarge} {
         flex-direction: row;
+
+        & > * + * {
+            margin-top: 0px;
+            margin-left: ${gridSettings.gutter}px;
+        }
     }
 `;
 
-const Avatar = styled.img`
-    height: 196px;
-    width: 196px;
+const Avatar = styled.img<{ isInverted?: boolean }>`
+    align-self: center;
+    display: block;
     border: solid 1px transparent;
     border-radius: 50%;
-    padding: ${spacings.nudge}px;
-    margin-right: ${spacings.nudge}px;
+    width: 180px;
+    height: 180px;
 
-    @media ${mq.xlarge} {
-        margin-right: ${spacings.spacer * 1.5}px;
-    }
-`;
+    background: ${({ theme, isInverted }) =>
+        isInverted
+            ? global(theme).sections.imagePlaceholderBg.inverted
+            : global(theme).sections.imagePlaceholderBg.default};
 
-const Info = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-self: flex-start;
-    align-content: center;
-    text-align: center;
-    width: 100%;
-
-    padding: ${spacings.spacer}px;
-
-    & > *:not(:last-child) {
-        margin-bottom: ${spacings.spacer * 1.5}px;
-    }
-
-    @media ${mq.medium} {
-        align-content: flex-start;
-        text-align: left;
-        width: auto;
+    @media ${mq.semilarge} {
+        display: block;
+        width: 190px;
+        height: 190px;
     }
 `;
 
 const Description = styled(Copy)`
     text-align: center;
 
+    .icon-label {
+        flex-direction: column;
+    }
+
+    .icon-label > * + * {
+        margin-left: 0;
+        margin-top: ${spacings.nudge * 2}px;
+    }
+
     & > * {
         justify-content: center;
     }
 
-    @media ${mq.medium} {
+    @media ${mq.semilarge} {
         text-align: left;
 
         & > * {
             justify-content: left;
         }
-    }
-`;
 
-const Address = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: ${spacings.nudge}px;
-
-    & + & {
-        margin-top: ${spacings.nudge}px;
-    }
-
-    & > *:not(:first-child) {
-        margin-left: 0;
-    }
-
-    @media ${mq.medium} {
-        justify-content: flex-start;
-        flex-direction: row;
-        padding: ${spacings.nudge}px ${spacings.nudge}px ${spacings.nudge}px 0;
-
-        & > *:not(:first-child) {
-            margin-left: ${spacings.spacer}px;
+        .icon-label {
+            flex-direction: row;
         }
-    }
-`;
 
-const Decorator = styled.div<{ isInverted?: boolean }>`
-    flex: 1;
-    width: 30px;
-    margin-bottom: ${spacings.nudge * 1.5}px;
-
-    color: ${({ theme, isInverted }) =>
-        isInverted
-            ? font(theme)['copy-b'].big.colorInverted
-            : font(theme)['copy-b'].big.color};
-
-    & > * {
-        max-width: 30px;
-    }
-
-    @media ${mq.medium} {
-        margin-bottom: 0;
-    }
-`;
-
-const AddressLabel = styled(Copy)`
-    flex: 0 100%;
-    text-align: center;
-
-    p {
-        margin: 0;
-    }
-
-    @media ${mq.medium} {
-        text-align: left;
+        .icon-label > * + * {
+            margin-left: ${spacings.nudge * 2}px;
+            margin-top: 0;
+        }
     }
 `;
 
 export interface ContactBoxProps {
     isInverted?: boolean;
-    name?: string;
     description?: string;
-    addresses?: { decorator?: React.ReactNode; label: string }[];
     avatar?: { src: string; alt: string };
 }
 
 const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
     isInverted,
-    name,
     description,
-    addresses,
     avatar,
     className,
 }) => {
     return (
         <ContactView className={className}>
-            {avatar && <Avatar src={avatar?.src} alt={avatar?.alt} />}
-            <Info>
-                {(name || description) && (
-                    <div>
-                        {name && (
-                            <Copy type="copy-b" isInverted={isInverted}>
-                                {name}
-                            </Copy>
-                        )}
-                        {description && (
-                            <Description
-                                type="copy"
-                                isInverted={isInverted}
-                                innerHTML={description}
-                            />
-                        )}
-                    </div>
-                )}
-                {addresses && addresses.length > 0 && (
-                    <div>
-                        {addresses?.map((address, i) => (
-                            <Address key={i}>
-                                <Decorator isInverted={isInverted}>
-                                    {address.decorator}
-                                </Decorator>
-                                <AddressLabel
-                                    type="copy-b"
-                                    size="big"
-                                    isInverted={isInverted}
-                                    innerHTML={address.label}
-                                />
-                            </Address>
-                        ))}
-                    </div>
-                )}
-            </Info>
+            <Avatar
+                src={avatar?.src}
+                alt={avatar?.alt}
+                isInverted={isInverted}
+            />
+            {description && (
+                <Description
+                    type="copy"
+                    isInverted={isInverted}
+                    innerHTML={description}
+                />
+            )}
         </ContactView>
     );
 };
 
-const StyledIntro = styled(IntroBlock)`
-    @media ${mq.semilarge} {
+const StyledIntro = styled(IntroBlock)<{ hasDecorator?: boolean }>`
+    max-width: 880px;
+    margin-right: auto;
+    margin-left: auto;
+
+    @media ${mq.xlarge} {
         & > *:first-child {
-            min-height: 110px;
+            min-height: ${({ hasDecorator }) => hasDecorator && '110px'};
         }
-    }
-`;
-
-const Content = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: ${(17 / 28) * spacings.wrapper}px;
-    margin: 0 auto;
-
-    & > * + * {
-        ${withRange([spacings.spacer * 1, spacings.spacer * 1.5], 'margin-top')}
-    }
-
-    @media ${mq.large} {
-        align-items: center;
     }
 `;
 
 const StyledContactBox = styled(ContactBox)`
-    margin-top: ${spacings.spacer * 2.5}px;
+    margin-top: ${spacings.spacer}px;
+
+    @media ${mq.semilarge} {
+        max-width: ${getGridWidth({ cols: 8 })};
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    @media ${mq.large} {
+        max-width: ${getGridWidth({ cols: 6 })};
+    }
 `;
 
 const StyledActions = styled(Actions)`
-    @media ${mq.semilarge} {
-        & > * {
-            max-width: 300px;
-        }
+    margin-top: ${spacings.spacer}px;
+
+    @media ${mq.medium} {
+        display: block;
+        text-align: center;
     }
 `;
 
 const NewsletterWrapper = styled.div`
     width: 100%;
-    margin-top: ${spacings.spacer * 2.5}px;
+    margin: 0 auto;
+    margin-top: ${spacings.spacer}px;
 
     @media ${mq.semilarge} {
         max-width: 400px;
@@ -251,7 +176,7 @@ const Badge = styled.div`
     height: 241px;
     width: 241px;
     margin-left: auto;
-    margin-bottom: -110px;
+    margin-bottom: -135px;
     z-index: 3;
 
     @media ${mq.xlarge} {
@@ -261,22 +186,36 @@ const Badge = styled.div`
 `;
 
 export const CallToAction: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+    /** Main title text */
     title?: string;
+    /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
+    /** Superior title that stands above main title */
     superTitle?: string;
+    /** Superior title HTML tag type (h3, h4 ...) */
     superTitleAs?: HeadlineTag;
+    /** Bold text underneath the title (limited richtext capabilites) */
     text?: string;
+    /** Props for contact area */
     contact?: ContactBoxProps;
+    /** Show Newsletter defined by inject function newsFormMain. Only visible if React node is defined! */
     hasNewsletter?: boolean;
-
+    /** Badge decorator visible only on large screens */
     badge?: React.ReactNode;
 
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
-    newsFormMain?: (isInverted?: boolean) => React.ReactNode;
-
+    /** Section background */
     bgMode?: 'full' | 'inverted';
+
+    /** Function to inject custom primary button */
+    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    /** Function to inject custom secondary button */
+    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    /** Function to inject newsletter form */
+    newsFormMain?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
+    anchorId,
     title,
     titleAs = 'h2',
     superTitle,
@@ -295,46 +234,49 @@ export const CallToAction: FC<{
     return (
         <Section
             addSeperation
-            bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
+            anchorId={anchorId}
+            bgColor={
+                isInverted
+                    ? color(theme).sectionBg.dark
+                    : color(theme).sectionBg.medium
+            }
             bgMode={bgMode ? mapToBgMode(bgMode, true) : 'full'}
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
-                <Content>
-                    {title && (
-                        <StyledIntro
-                            isCentered
-                            colorMode={isInverted ? 'inverted' : 'default'}
-                            title={title}
-                            titleAs={titleAs}
-                            superTitle={superTitle}
-                            superTitleAs={superTitleAs}
-                            text={text}
-                        />
-                    )}
-                    {contact && (
-                        <StyledContactBox
-                            isInverted={isInverted}
-                            name={contact.name}
-                            description={contact.description}
-                            addresses={contact.addresses}
-                            avatar={contact.avatar}
-                        />
-                    )}
-                    {newsFormMain && hasNewsletter && (
-                        <NewsletterWrapper>
-                            {newsFormMain(isInverted)}
-                        </NewsletterWrapper>
-                    )}
-                    {(primaryAction || secondaryAction) && (
-                        <StyledActions
-                            primary={primaryAction && primaryAction(isInverted)}
-                            secondary={
-                                secondaryAction && secondaryAction(isInverted)
-                            }
-                        />
-                    )}
-                </Content>
+                {title && (
+                    <StyledIntro
+                        isCentered
+                        colorMode={isInverted ? 'inverted' : 'default'}
+                        title={title}
+                        titleAs={titleAs}
+                        superTitle={superTitle}
+                        superTitleAs={superTitleAs}
+                        hasDecorator={!!badge}
+                        text={text}
+                    />
+                )}
+
+                {contact && (
+                    <StyledContactBox
+                        isInverted={isInverted}
+                        description={contact.description}
+                        avatar={contact.avatar}
+                    />
+                )}
+                {newsFormMain && hasNewsletter && (
+                    <NewsletterWrapper>
+                        {newsFormMain(isInverted)}
+                    </NewsletterWrapper>
+                )}
+                {(primaryAction || secondaryAction) && (
+                    <StyledActions
+                        primary={primaryAction && primaryAction(isInverted)}
+                        secondary={
+                            secondaryAction && secondaryAction(isInverted)
+                        }
+                    />
+                )}
             </Wrapper>
         </Section>
     );

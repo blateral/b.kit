@@ -1,20 +1,23 @@
+/* eslint-disable react/display-name */
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import CrossPromotion, {
     CrossPromotionComponent,
 } from 'components/sections/CrossPromotion';
 import Route from 'components/base/icons/Route';
+import Star from 'components/base/icons/Star';
+import Phone from 'components/base/icons/Phone';
 
 export default {
     title: 'Sections/CrossPromotion',
     component: CrossPromotionComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
-
+// #TODO: Bildgrößen auf Mobile checken
 export const SingleImageFull: Story = () => (
     <CrossPromotion
         main={[
@@ -23,10 +26,36 @@ export const SingleImageFull: Story = () => (
                 image: {
                     small: 'https://unsplash.it/619/464?image=409',
                     medium: 'https://unsplash.it/983/737?image=409',
-                    large: 'https://unsplash.it/1399/824?image=409',
-                    xlarge: 'https://unsplash.it/1400/826?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 5, h: 2 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+            },
+        ]}
+    />
+);
+
+export const WithSuperTitle: Story = () => (
+    <CrossPromotion
+        main={[
+            {
+                size: 'full',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=409',
+                    medium: 'https://unsplash.it/983/737?image=409',
+                    large: 'https://unsplash.it/1399/1050?image=409',
+                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 5, h: 2 },
+                    },
+                },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -43,8 +72,13 @@ export const TwoHalfCardsRatioA: Story = () => (
                     semilarge: 'https://unsplash.it/481/481?image=409',
                     large: 'https://unsplash.it/686/686?image=409',
                     xlarge: 'https://unsplash.it/690/690?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 1, h: 1 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
@@ -54,8 +88,13 @@ export const TwoHalfCardsRatioA: Story = () => (
                     semilarge: 'https://unsplash.it/481/481?image=410',
                     large: 'https://unsplash.it/686/686?image=410',
                     xlarge: 'https://unsplash.it/690/690?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 1, h: 1 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -71,22 +110,30 @@ export const TwoHalfCardsRatioB: Story = () => (
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',
                     medium: 'https://unsplash.it/791/593?image=410',
-                    semilarge: 'https://unsplash.it/689/1054?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
                     large: 'https://unsplash.it/790/1054?image=410',
-                    xlarge: 'https://unsplash.it/790/1055?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=411',
-                    medium: 'https://unsplash.it/791/592?image=411',
-                    semilarge: 'https://unsplash.it/689/1054?image=411',
-                    large: 'https://unsplash.it/790/1054?image=411',
-                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -101,21 +148,29 @@ export const TwoHalfCardsRatioC: Story = () => (
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
+                    medium: 'https://unsplash.it/791/593?image=409',
                     large: 'https://unsplash.it/1399/1050?image=409',
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
+                    medium: 'https://unsplash.it/791/593?image=409',
                     large: 'https://unsplash.it/1399/1050?image=409',
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -129,35 +184,49 @@ export const MixedImages: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=411',
-                    medium: 'https://unsplash.it/791/592?image=411',
-                    semilarge: 'https://unsplash.it/689/1054?image=411',
-                    large: 'https://unsplash.it/790/1054?image=411',
-                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=409',
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',
-                    medium: 'https://unsplash.it/983/737?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=410',
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -170,35 +239,49 @@ export const WithFullBackground: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=411',
-                    medium: 'https://unsplash.it/791/592?image=411',
-                    semilarge: 'https://unsplash.it/689/1054?image=411',
-                    large: 'https://unsplash.it/790/1054?image=411',
-                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=409',
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',
-                    medium: 'https://unsplash.it/983/737?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=410',
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -211,35 +294,49 @@ export const SplittedBackground: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=411',
-                    medium: 'https://unsplash.it/791/592?image=411',
-                    semilarge: 'https://unsplash.it/689/1054?image=411',
-                    large: 'https://unsplash.it/790/1054?image=411',
-                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=409',
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',
-                    medium: 'https://unsplash.it/983/737?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=410',
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -252,35 +349,49 @@ export const Inverted: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=411',
-                    medium: 'https://unsplash.it/791/592?image=411',
-                    semilarge: 'https://unsplash.it/689/1054?image=411',
-                    large: 'https://unsplash.it/790/1054?image=411',
-                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=409',
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',
-                    medium: 'https://unsplash.it/983/737?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=410',
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -293,35 +404,49 @@ export const isMirrored: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=411',
-                    medium: 'https://unsplash.it/791/592?image=411',
-                    semilarge: 'https://unsplash.it/689/1054?image=411',
-                    large: 'https://unsplash.it/790/1054?image=411',
-                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=409',
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',
-                    medium: 'https://unsplash.it/983/737?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=410',
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -335,35 +460,49 @@ export const isMirroredAndWithSplittedBackground: Story = () => (
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=411',
-                    medium: 'https://unsplash.it/791/592?image=411',
-                    semilarge: 'https://unsplash.it/689/1054?image=411',
-                    large: 'https://unsplash.it/790/1054?image=411',
-                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
             {
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=409',
                     xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',
-                    medium: 'https://unsplash.it/983/737?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=410',
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -378,13 +517,17 @@ export const WithLinks: Story = () => (
                 },
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=411',
-                    medium: 'https://unsplash.it/791/592?image=411',
-                    semilarge: 'https://unsplash.it/689/1054?image=411',
-                    large: 'https://unsplash.it/790/1054?image=411',
-                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -395,12 +538,17 @@ export const WithLinks: Story = () => (
                 },
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
-                    large: 'https://unsplash.it/1399/1050?image=409',
-                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 link: {
@@ -410,11 +558,16 @@ export const WithLinks: Story = () => (
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',
-                    medium: 'https://unsplash.it/983/737?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=410',
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />
@@ -430,13 +583,17 @@ export const CustomLinkIcons: Story = () => (
                 },
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=411',
-                    medium: 'https://unsplash.it/791/592?image=411',
-                    semilarge: 'https://unsplash.it/689/1054?image=411',
-                    large: 'https://unsplash.it/790/1054?image=411',
-                    xlarge: 'https://unsplash.it/790/1055?image=411',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
         aside={[
@@ -447,12 +604,17 @@ export const CustomLinkIcons: Story = () => (
                 },
                 size: 'half',
                 image: {
-                    small: 'https://unsplash.it/619/464?image=409',
-                    medium: 'https://unsplash.it/983/737?image=409',
-                    large: 'https://unsplash.it/1399/1050?image=409',
-                    xlarge: 'https://unsplash.it/1400/1050?image=409',
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
             {
                 link: {
@@ -462,11 +624,84 @@ export const CustomLinkIcons: Story = () => (
                 size: 'half',
                 image: {
                     small: 'https://unsplash.it/619/464?image=410',
-                    medium: 'https://unsplash.it/983/737?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
                     large: 'https://unsplash.it/1399/1050?image=410',
                     xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
                 },
-                title: 'Haus St. Franziskus – lorem ipsum dolor sit amet',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+        ]}
+    />
+);
+
+export const WithIcons: Story = () => (
+    <CrossPromotion
+        externalLinkIcon={<Route />}
+        main={[
+            {
+                link: {
+                    href: '#0',
+                },
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    semilarge: 'https://unsplash.it/689/920?image=410',
+                    large: 'https://unsplash.it/790/1054?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
+                },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+                icon: () => <Star />,
+            },
+        ]}
+        aside={[
+            {
+                link: {
+                    href: '#0',
+                    isExternal: true,
+                },
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
+                },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+                icon: () => <Phone />,
+            },
+            {
+                link: {
+                    href: '#0',
+                    isExternal: true,
+                },
+                size: 'half',
+                image: {
+                    small: 'https://unsplash.it/619/464?image=410',
+                    medium: 'https://unsplash.it/791/593?image=410',
+                    large: 'https://unsplash.it/1399/1050?image=410',
+                    xlarge: 'https://unsplash.it/1400/1050?image=410',
+                    ratios: {
+                        small: { w: 4, h: 3 },
+                        semilarge: { w: 3, h: 4 },
+                    },
+                },
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
             },
         ]}
     />

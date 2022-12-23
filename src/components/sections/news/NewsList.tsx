@@ -1,90 +1,88 @@
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { useMemo } from 'react';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
 import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import Copy from 'components/typography/Copy';
+import { mq, spacings } from 'utils/styles';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-import { useContext, useEffect, useState } from 'react';
-import { useMediaQuery } from 'utils/useMediaQuery';
-import Pointer from 'components/buttons/Pointer';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { LinkProps } from 'components/typography/Link';
+import { getNewsFilterParams } from './NewsOverview';
 
-const News = styled.div`
-    & > * + * {
-        padding-top: ${spacings.spacer * 2}px;
-    }
+const News = styled.ul`
+    list-style: none;
+    margin: 0;
+    margin-top: -${spacings.nudge * 6}px;
+    margin-left: -${spacings.spacer}px;
+    padding: 0;
 
-    @media ${mq.semilarge} {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: 'flex-start';
-        align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
 
-        margin-left: -20px;
-        margin-top: -40px;
+    flex-wrap: wrap;
+`;
 
-        & > * {
-            padding-left: 20px;
-            padding-top: 40px;
-            flex: 1 0 50%;
-            max-width: 50%;
-        }
+const NewsItem = styled.li`
+    padding-top: ${spacings.nudge * 6}px;
+    padding-left: ${spacings.spacer}px;
+    flex: 1 0 100%;
+    max-width: 100%;
+
+    @media ${mq.medium} {
+        flex: 1 0 50%;
+        max-width: 50%;
     }
 
     @media ${mq.large} {
-        & > * {
-            flex: 1 0 33.33%;
-            max-width: 33.33%;
-        }
+        flex: 1 0 33.33%;
+        max-width: 33.33%;
     }
 `;
 
-const ListFooter = styled.div`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
-    text-align: center;
-
-    @media ${mq.medium} {
-        text-align: left;
-    }
-`;
-
-const ShowMore = styled.span<{ itemCount?: number }>`
-    display: ${({ itemCount }) =>
-        itemCount && itemCount > 2 ? 'block' : 'none'};
-`;
-
-type NewsListMq = 'small' | 'semilarge' | 'large';
+export type NewsItem = Omit<
+    NewsCardProps,
+    'isInverted' | 'onTagClick' | 'customTag'
+>;
 
 const NewsList: React.FC<{
-    news?: NewsCardProps[];
-    onTagClick?: (tag: string) => void;
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Show a short version of three or a expanded version of six news items */
+    mode?: 'short' | 'expanded';
+
+    /** Array of news card settings */
+    news?: NewsItem[];
+
+    /** Sections background */
     bgMode?: 'full' | 'inverted';
-    showMoreText?: string;
-}> = ({
-    news,
-    onTagClick,
-    bgMode,
 
-    showMoreText,
-}) => {
-    const theme = useContext(ThemeContext);
-    const mqs: NewsListMq[] = ['small', 'semilarge', 'large'];
-    const currentMq = useMediaQuery(mqs) as NewsListMq | undefined;
-    const [itemsPerRow, setItemsPerRow] = useState(3);
-    const [visibleRows, setVisibleRows] = useState(1);
+    /** Function to inject custom tag node */
+    customTag?: (props: {
+        key: React.Key;
+        name: string;
+        isInverted?: boolean;
+        isActive?: boolean;
+        link?: LinkProps;
+    }) => React.ReactNode;
+}> = ({ anchorId, mode = 'short', news, bgMode, customTag }) => {
+    const { colors, theme } = useLibTheme();
 
-    const newsCount = news?.length || 0;
+    const items = useMemo<NewsCardProps[]>(() => {
+        if (!news) return [];
+        if (mode === 'expanded') return news.slice(0, 6);
+        else return news.slice(0, 3);
+    }, [news, mode]);
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    const { sheetRefs: cardRefs } = useEqualSheetHeight({
-        listLength: Math.min(visibleRows * itemsPerRow, newsCount),
+    const { sheetRefs: cardRefs } = useEqualSheetHeight<HTMLDivElement>({
+        listLength: items.length,
         identifiers: [
             '[data-sheet="head"]',
             '[data-sheet="title"]',
@@ -92,91 +90,61 @@ const NewsList: React.FC<{
         ],
         responsive: {
             small: 1,
-            medium: 1,
+            medium: 2,
             semilarge: 2,
             large: 3,
             xlarge: 3,
         },
     });
 
-    useEffect(() => {
-        switch (currentMq) {
-            case 'large':
-                setItemsPerRow(3);
-                break;
-
-            case 'semilarge':
-                setItemsPerRow(2);
-                break;
-
-            case 'small':
-                setItemsPerRow(1);
-                if (visibleRows < 3) setVisibleRows(3);
-                break;
-
-            default:
-                setItemsPerRow(1);
-        }
-    }, [currentMq, visibleRows]);
-
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            <Wrapper addWhitespace clampWidth="normal">
+            <Wrapper addWhitespace>
                 <News>
-                    {news &&
-                        news
-                            .filter((_, i) => i < visibleRows * itemsPerRow)
-                            .map((item, i) => {
-                                return (
-                                    <div key={i} ref={cardRefs[i]}>
-                                        <NewsCard
-                                            onTagClick={onTagClick}
-                                            isInverted={isInverted}
-                                            {...item}
-                                        />
-                                    </div>
-                                );
-                            })}
-                </News>
-                <ListFooter>
-                    {news && news.length > 0 && (
-                        <Copy type="copy" size="medium" isInverted={isInverted}>
-                            <ShowMore
-                                itemCount={news.length}
-                                onClick={(ev) => {
-                                    ev.preventDefault();
-                                    if (
-                                        visibleRows <
-                                        Math.ceil(newsCount / itemsPerRow)
-                                    ) {
-                                        setVisibleRows((prev) => prev + 1);
+                    {items?.map((item, i) => (
+                        <NewsItem key={i}>
+                            <NewsCard
+                                key={i}
+                                ref={cardRefs[i]}
+                                {...item}
+                                isInverted={isInverted}
+                                tags={item.tags?.map((tag) => {
+                                    let tagHref: string | undefined = undefined;
+
+                                    if (tag.name && tag.link?.href) {
+                                        tagHref = getNewsFilterParams(
+                                            tag.link.href,
+                                            theme,
+                                            [tag.name]
+                                        );
                                     }
-                                }}
-                            >
-                                {visibleRows < newsCount / itemsPerRow && (
-                                    <Pointer.View
-                                        as="button"
-                                        isInverted={isInverted}
-                                    >
-                                        <Pointer.Label>
-                                            {showMoreText || 'mehr anzeigen'}
-                                        </Pointer.Label>
-                                    </Pointer.View>
-                                )}
-                            </ShowMore>
-                        </Copy>
-                    )}
-                </ListFooter>
+
+                                    return {
+                                        name: tag.name,
+                                        link: tag.link?.href
+                                            ? {
+                                                  ...tag.link,
+                                                  href: tagHref,
+                                              }
+                                            : undefined,
+                                    };
+                                })}
+                                customTag={customTag}
+                            />
+                        </NewsItem>
+                    ))}
+                </News>
             </Wrapper>
         </Section>
     );

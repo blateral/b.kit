@@ -1,19 +1,20 @@
-import * as React from 'react';
+/* eslint-disable react/display-name */
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
 import SocialList from 'components/blocks/SocialList';
 
-import FacebookIcon from 'components/base/icons/socials/Facebook';
-import LinkedInIcon from 'components/base/icons/socials/LinkedIn';
-import XingIcon from 'components/base/icons/socials/Xing';
-import TwitterIcon from 'components/base/icons/socials/Twitter';
+import Facebook from 'components/base/icons/socials/Facebook';
+import LinkedIn from 'components/base/icons/socials/LinkedIn';
+import Xing from 'components/base/icons/socials/Xing';
+import Twitter from 'components/base/icons/socials/Twitter';
 
 export default {
     title: 'Blocks/SocialList',
     component: SocialList,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
@@ -21,10 +22,22 @@ export default {
 export const Default: Story = () => (
     <SocialList
         items={[
-            { href: '#', icon: <FacebookIcon /> },
-            { href: '#', icon: <LinkedInIcon /> },
-            { href: '#', icon: <XingIcon /> },
-            { href: '#', icon: <TwitterIcon /> },
+            { href: '#', title: 'Facebook', icon: () => <Facebook /> },
+            { href: '#', title: 'LinkedIn', icon: () => <LinkedIn /> },
+            { href: '#', title: 'Xing', icon: () => <Xing /> },
+            { href: '#', title: 'Twitter', icon: () => <Twitter /> },
+        ]}
+    />
+);
+
+export const WithTitle: Story = () => (
+    <SocialList
+        title="Follow us"
+        items={[
+            { href: '#', title: 'Facebook', icon: () => <Facebook /> },
+            { href: '#', title: 'LinkedIn', icon: () => <LinkedIn /> },
+            { href: '#', title: 'Xing', icon: () => <Xing /> },
+            { href: '#', title: 'Twitter', icon: () => <Twitter /> },
         ]}
     />
 );
@@ -32,11 +45,12 @@ export const Default: Story = () => (
 export const Inverted: Story = () => (
     <SocialList
         isInverted
+        title="Follow us"
         items={[
-            { href: '#', icon: <FacebookIcon /> },
-            { href: '#', icon: <LinkedInIcon /> },
-            { href: '#', icon: <XingIcon /> },
-            { href: '#', icon: <TwitterIcon /> },
+            { href: '#', title: 'Facebook', icon: () => <Facebook /> },
+            { href: '#', title: 'LinkedIn', icon: () => <LinkedIn /> },
+            { href: '#', title: 'Xing', icon: () => <Xing /> },
+            { href: '#', title: 'Twitter', icon: () => <Twitter /> },
         ]}
     />
 );

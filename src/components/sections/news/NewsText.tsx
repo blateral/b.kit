@@ -1,13 +1,11 @@
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
-import Actions from 'components/blocks/Actions';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
-import { getColors as color, spacings, withRange } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
-import { useContext } from 'react';
+import { spacings } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const ContentBlock = styled(Copy)<{
     clampText?: boolean;
@@ -23,30 +21,30 @@ const ContentBlock = styled(Copy)<{
     }
 `;
 
-const StyledActions = styled(Actions)`
-    ${withRange([spacings.spacer, spacings.spacer * 2], 'margin-top')};
-`;
-
 const NewsText: React.FC<{
-    text: string;
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
 
+    /** Main text (RichText) */
+    text: string;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ text, primaryAction, secondaryAction, bgMode }) => {
-    const theme = useContext(ThemeContext);
+}> = ({ anchorId, text, bgMode }) => {
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
@@ -56,14 +54,6 @@ const NewsText: React.FC<{
                         isInverted={isInverted}
                         type="copy"
                         innerHTML={text}
-                    />
-                )}
-                {(primaryAction || secondaryAction) && (
-                    <StyledActions
-                        primary={primaryAction && primaryAction(isInverted)}
-                        secondary={
-                            secondaryAction && secondaryAction(isInverted)
-                        }
                     />
                 )}
             </Wrapper>

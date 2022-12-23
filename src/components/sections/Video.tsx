@@ -1,42 +1,59 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from 'styled-components';
-
+import React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
-import { getColors as color, getGlobalSettings as global } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Wrapper from 'components/base/Wrapper';
 import { ImageProps } from 'components/blocks/Image';
 
 import VideoCard from 'components/blocks/VideoCard';
 
 const Video: React.FC<{
-    bgImage: ImageProps;
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    bgImage: Omit<ImageProps, 'ratios' | 'coverSpace'>;
     embedId: string;
-    playIcon?: React.ReactChild;
-    bgMode?: 'full' | 'inverted';
-}> = ({ bgMode, bgImage, embedId, playIcon }) => {
-    const theme = useContext(ThemeContext);
+
+    consentText?: string;
+    consentAction?: (props: {
+        handleClick?: () => void;
+        consentProps: Record<string, string>;
+    }) => React.ReactNode;
+
+    playIcon?: React.ReactNode;
+    bgMode?: 'full' | 'inverted' | 'splitted';
+}> = ({
+    anchorId,
+    bgMode,
+    bgImage,
+    embedId,
+    playIcon,
+    consentText,
+    consentAction,
+}) => {
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
     return (
         <Section
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
-                    : bgMode === 'full'
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.dark
+                    : bgMode
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
-            bgMode={mapToBgMode(bgMode, true)}
+            bgMode={mapToBgMode(bgMode)}
             addSeperation
         >
-            <Wrapper
-                addWhitespace={global(theme).sections.edgeRadius ? true : false}
-            >
+            <Wrapper addWhitespace>
                 <VideoCard
                     bgImage={bgImage}
                     embedId={embedId}
                     playIcon={playIcon}
+                    consentText={consentText}
+                    consentAction={consentAction}
                 />
             </Wrapper>
         </Section>

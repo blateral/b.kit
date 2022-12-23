@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { useMediaQuery } from './useMediaQuery';
 import { useFontsLoaded } from 'utils/useFontsLoaded';
+import useResizeThrottle from './useResizeThrottle';
 
 interface ItemsPerRow {
     small?: number;
@@ -22,10 +23,12 @@ type Mq = keyof ItemsPerRow;
 // useEqualSheetHeight
 // ********************
 
-export const useEqualSheetHeight = (props: {
+export const useEqualSheetHeight = <T extends HTMLElement>(props: {
     listLength: number;
     identifiers: string[];
     responsive?: ItemsPerRow;
+    /** Throttle timeout for resize events. Default: 400ms */
+    resizeThrottleTimeout?: number;
 }) => {
     const defaultResponsive = {
         small: 1,
@@ -41,36 +44,39 @@ export const useEqualSheetHeight = (props: {
         ? defaultResponsive[currentMq]
         : defaultResponsive.small;
 
-    const [sheetRefs, setSheetRefs] = useState<
-        MutableRefObject<HTMLDivElement>[]
-    >([]);
-
+    const [sheetRefs, setSheetRefs] = useState<MutableRefObject<T>[]>([]);
     const fontsLoaded = useFontsLoaded();
 
     const setHeights = useCallback(
         (
             heights: (number | null)[],
             selector: string,
-            refs: MutableRefObject<HTMLDivElement>[]
+            refs: MutableRefObject<T>[]
         ) => {
             const makeRows = (
-                result: Array<number>[],
+                result: Array<number | null>[],
                 _: number,
                 index: number,
-                arr: number[]
+                arr: Array<number | null>
             ) => {
                 // make new row after 3 items
-                if (index % itemsPerRow === 0)
+                if (index % itemsPerRow === 0) {
                     result.push(
                         arr.slice(index, index + itemsPerRow) as Array<number>
                     );
+                }
                 return result;
             };
 
-            const x = heights.reduce(makeRows, []);
+            // put item heights in 2-dimensional array to sort them in rows
+            const heightsInRows = heights.reduce(makeRows, []);
 
-            x.forEach((rowHeights, y) => {
-                const highest = rowHeights.slice().sort((vA, vB) => {
+            heightsInRows.forEach((rowHeights, y) => {
+                const validHeights = rowHeights.filter(
+                    (height) => height !== null
+                ) as number[];
+
+                const highest = validHeights.slice().sort((vA, vB) => {
                     if (vA && vB) {
                         if (vA > vB) return -1;
                         return 1;
@@ -83,9 +89,7 @@ export const useEqualSheetHeight = (props: {
                         const index = x + y * itemsPerRow;
                         const el = refs[index].current.querySelector(selector);
 
-                        if (el) {
-                            el.setAttribute('style', `height: ${highest}px`);
-                        }
+                        el?.setAttribute('style', `height: ${highest}px`);
                     }
                 }
             });
@@ -93,8 +97,15 @@ export const useEqualSheetHeight = (props: {
         [itemsPerRow]
     );
 
+    // Throttle viewport resize event for performance
+    const resizeState = useResizeThrottle(
+        props.resizeThrottleTimeout !== undefined
+            ? props.resizeThrottleTimeout
+            : 400
+    );
+
     useEffect(() => {
-        const resize = (refs: MutableRefObject<HTMLDivElement>[]) => () => {
+        const resize = (refs: MutableRefObject<T>[]) => () => {
             const identifierSizes = new Map<string, Array<number | null>>();
 
             // create identifier map
@@ -107,19 +118,16 @@ export const useEqualSheetHeight = (props: {
                 // get height for each element
                 props.identifiers.forEach((id) => {
                     const element = current.querySelector(id);
+                    const prevHeights = identifierSizes.get(id);
+                    let height: number | null = null;
 
                     if (element) {
                         element.removeAttribute('style');
+                        height = element.getBoundingClientRect().height;
+                    }
 
-                        const newHeight = element.scrollHeight;
-
-                        const prevHeights = identifierSizes.get(id);
-                        if (prevHeights) {
-                            identifierSizes.set(id, [
-                                ...prevHeights,
-                                newHeight,
-                            ]);
-                        }
+                    if (prevHeights) {
+                        identifierSizes.set(id, [...prevHeights, height]);
                     }
                 });
             });
@@ -132,21 +140,15 @@ export const useEqualSheetHeight = (props: {
 
         const resizeHandler = resize(sheetRefs);
         resizeHandler();
+    }, [props.identifiers, resizeState, setHeights, sheetRefs, fontsLoaded]);
 
-        window.addEventListener('resize', resizeHandler);
-
-        return () => {
-            window.removeEventListener('resize', resizeHandler);
-        };
-    }, [sheetRefs, currentMq, props.identifiers, setHeights, fontsLoaded]);
-
-    const triggerCalculation = () => {
+    const triggerCalculation = useCallback(() => {
         setSheetRefs((prev) =>
             Array(props.listLength)
                 .fill(null)
                 .map((_, i) => prev[i] || createRef())
         );
-    };
+    }, [props.listLength]);
 
     useEffect(() => {
         setSheetRefs((prev) =>

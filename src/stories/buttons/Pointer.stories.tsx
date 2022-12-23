@@ -17,7 +17,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -49,7 +49,7 @@ export const ExternalLink: Story = () => (
 
 export const WithIcon: Story = () => (
     <Pointer.View as="a" href="#" onClick={console.log}>
-        <Pointer.Label>zum Haus St. Ulrich</Pointer.Label>
+        <Pointer.Label>Lorem Ipsum</Pointer.Label>
         <Pointer.Icon>
             <ArrowRight />
         </Pointer.Icon>
@@ -58,7 +58,7 @@ export const WithIcon: Story = () => (
 
 export const Disabled: Story = () => (
     <Pointer.View as="a" href="#" isDisabled onClick={console.log}>
-        <Pointer.Label>zum Haus St. Ulrich</Pointer.Label>
+        <Pointer.Label>Lorem Ipsum</Pointer.Label>
         <Pointer.Icon>
             <ArrowRight />
         </Pointer.Icon>
@@ -67,7 +67,7 @@ export const Disabled: Story = () => (
 
 export const Inverted: Story = () => (
     <Pointer.View as="a" href="#" isInverted onClick={console.log}>
-        <Pointer.Label>zum Haus St. Ulrich</Pointer.Label>
+        <Pointer.Label>Lorem Ipsum</Pointer.Label>
         <Pointer.Icon>
             <ArrowRight />
         </Pointer.Icon>
@@ -83,7 +83,7 @@ Inverted.parameters = {
 
 export const InvertedAndDisabled: Story = () => (
     <Pointer.View as="a" href="#" isInverted isDisabled onClick={console.log}>
-        <Pointer.Label>zum Haus St. Ulrich</Pointer.Label>
+        <Pointer.Label>Lorem Ipsum</Pointer.Label>
         <Pointer.Icon>
             <ArrowRight />
         </Pointer.Icon>

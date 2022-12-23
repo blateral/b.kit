@@ -5,19 +5,82 @@ import Copy from '../../../components/typography/Copy';
     title="Typography/Copy/Info"
     parameters={{
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     }}
 />
 
 # Copy
 
-The copy component is meant to display text blocks in different scenarios like long Article block texts for example.
+The `Copy` component is meant to display text blocks in different scenarios like long Article block texts for example.
 Content can be inserted as a child of the React component or by using the `innerHTML` prop.
 
 <ArgsTable of={Copy} />
 
 ## Rich Text
+
+### Link Icons
+
+By default rich text links (anchor tags) inside a copy component have a icon right after the link text. They are defined inside
+the global theme `linkIcons` settings and can be overridden.
+
+<Canvas>
+    <Copy
+        innerHTML={`
+            <a href="test.html">Simple link</a>
+            <br>
+            <a href="test.svg">Link to svg file</a>
+            <br>
+            <a href="test.png">Link to png file</a>
+            <br>
+            <a href="test.zip">Link to zip file</a>
+            <br>
+            <a href="test.pdf">Link to pdf file</a>
+            <br>
+            <a href="test.docx">Link to text file</a>
+            <br>
+            <a href="mailto:max@mustermann.com">Link email address</a>
+            <br>
+            <a href="tel:34567890">Link to phone number</a>
+            <br>
+        `}
+    />
+</Canvas>
+
+To override this behaviour you can define each icon by providing a list of link icons to the `linkIcons` array in the global theme settings
+object. The icon is shown if one or more entries in the `patterns` array are found inside the href attribute of the link.
+
+```jsx
+const theme: ThemeMods = {
+    globals: {
+        icons: {
+            linkIcons: [
+                {
+                    /* with path to image */
+                    patterns: ['.jpg', '.jpeg', '.png', '.svg'],
+                    iconUrl: 'path/to/icon.svg',
+                    scale: () => 1.2,
+                },
+                {
+                    /* with icon font */
+                    patterns: ['.zip', '.tar'],
+                    iconChar: 'f102',
+                    iconFont: 'icons',
+                    scale: () => 1.2,
+                },
+                {
+                    /* with data image */
+                    patterns: ['mailto:'],
+                    iconUrl: 'data:image/svg+xml;base64,PHN2ZyB...',
+                    scale: () => 1.2,
+                },
+            ],
+        },
+    },
+};
+```
+
+### Icon classes
 
 If text is passed through the `innerHTML` prop you can use some HTML classes to style the children.
 

@@ -61,7 +61,9 @@ const Number = styled(Callout)<{ isInverted?: boolean; stringLength: number }>`
             : withRange([52, 72], 'font-size')}
 
     color: ${({ isInverted, theme }) =>
-        isInverted ? color(theme).light : color(theme).primary.dark};
+        isInverted
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
 `;
 
 const Label = styled(Heading)`
@@ -94,8 +96,8 @@ const IconBlock: React.FC<{
                 size="super"
                 textColor={
                     isInverted
-                        ? color(theme).light
-                        : color(theme).secondary.dark
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default
                 }
             >
                 {label}
@@ -138,16 +140,17 @@ const ContentContainer = styled.div`
     }
 `;
 
-export interface NumberListProps {
+const NumberList: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     items?: {
         icon?: { src: string; alt?: string };
         number?: string;
         label?: string;
     }[];
     bgMode?: 'full' | 'inverted';
-}
-
-const NumberList: React.FC<NumberListProps> = ({ items, bgMode }) => {
+}> = ({ anchorId, items, bgMode }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -155,12 +158,13 @@ const NumberList: React.FC<NumberListProps> = ({ items, bgMode }) => {
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? color(theme).sectionBg.dark
                     : hasBg
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? color(theme).sectionBg.medium
+                    : color(theme).sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Textarea from 'components/fields/Textarea';
 import styled from 'styled-components';
@@ -15,7 +15,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -29,9 +29,7 @@ const Helper = styled.div`
 
 export const Default: Story = () => <Textarea name="field_a" />;
 
-export const WithLightBackground: Story = () => (
-    <Textarea name="field_a" lightBg />
-);
+export const WithLightBackground: Story = () => <Textarea name="field_a" />;
 WithLightBackground.parameters = {
     backgrounds: {
         default: 'gray',
@@ -40,39 +38,54 @@ WithLightBackground.parameters = {
 };
 
 export const WithPlaceholder: Story = () => (
-    <Textarea name="field_a" placeholder="Enter text.." />
+    <Textarea name="field_a" placeholder="Placeholder" />
 );
 
 export const WithLabel: Story = () => (
-    <Textarea name="field_a" label="Label text" placeholder="Enter text.." />
+    <Textarea name="field_a" label="Label" placeholder="Placeholder" />
 );
 
 export const WithInfoMessage: Story = () => (
-    <Textarea label="Textarea" infoMessage="Das ist ein Textfeld" />
+    <Textarea
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a Textarea"
+    />
 );
 
 export const AsRequired: Story = () => (
-    <Textarea label="Textarea" isRequired infoMessage="Das ist ein Textfeld" />
+    <Textarea
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a Textarea"
+        isRequired
+    />
 );
 
 export const isDisabled: Story = () => (
-    <Textarea label="Textarea" isDisabled infoMessage="Das ist ein Textfeld" />
+    <Textarea
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a Textarea"
+        isDisabled
+    />
 );
 
 export const hasError: Story = () => (
     <Textarea
-        label="Textarea"
-        errorMessage="Bitte füllen Sie dieses Feld aus!"
-        infoMessage="Das ist ein Textfeld"
+        label="Label"
+        placeholder="Placeholder"
+        errorMessage="Please fill in"
+        infoMessage="This is a Textarea"
     />
 );
 
 export const IsInverted: Story = () => (
     <Textarea
-        lightBg={false}
-        label="Textarea"
+        label="Label"
+        placeholder="Placeholder"
+        infoMessage="This is a Textarea"
         isInverted
-        infoMessage="Das ist ein Textfeld"
     />
 );
 

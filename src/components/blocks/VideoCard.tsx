@@ -5,14 +5,27 @@ import { ImageProps } from 'components/blocks/Image';
 import {
     mq,
     getColors as color,
-    getGlobalSettings as global,
+    getGlobals as global,
+    spacings,
 } from 'utils/styles';
 import Play from 'components/base/icons/Play';
+import {
+    CookieConsentData,
+    selectors,
+} from 'utils/cookie-consent/useCookieConsent';
+import { Cookie, getCookie } from 'utils/cookie-consent/cookie';
+import Copy from 'components/typography/Copy';
+import ButtonGhost from 'components/buttons/ButtonGhost';
+import { useLibTheme } from 'utils/LibThemeProvider';
 
-const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
+const View = styled.div<{
+    bgImage?: ImageProps;
+    isActive?: boolean;
+    onClick?: () => void;
+}>`
     text-align: center;
 
-    cursor: pointer;
+    cursor: ${({ onClick }) => onClick && 'pointer'};
     position: relative;
 
     padding-bottom: 56.25%;
@@ -54,7 +67,7 @@ const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
         left: 0;
         bottom: 0;
         right: 0;
-        background-color: ${({ theme }) => color(theme).mono.medium};
+        background-color: ${({ theme }) => color(theme).elementBg.medium};
         opacity: ${({ bgImage }) => (bgImage ? '0.3' : '0')};
 
         pointer-events: none;
@@ -78,16 +91,27 @@ const View = styled.div<{ bgImage?: ImageProps; isActive?: boolean }>`
     }
 `;
 
-const VideoControls = styled.div`
+const VideoControls = styled.button`
+    display: block;
+    border: none;
+    background: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: ${({ theme }) => color(theme).light};
+    color: ${({ theme }) => color(theme).elementBg.light};
+    z-index: 1;
+    padding: 0;
+
+    cursor: pointer;
 
     & > * {
         opacity: 0.8;
         transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+        height: 80px;
+        width: 80px;
+
+        color: ${({ theme }) => color(theme).elementBg.dark};
     }
 
     ${View}:hover > & > * {
@@ -99,7 +123,48 @@ const VideoControls = styled.div`
         transform: scale(0.95);
         opacity: 1;
     }
+
+    &:focus {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
+        border-radius: 50%;
+        opacity: 1;
+
+        & > * {
+            color: ${({ theme }) => color(theme).primary.default};
+        }
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+        box-shadow: none;
+    }
 `;
+
+const ConsentOverlay = styled.div<{ isVisible?: boolean }>`
+    display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.6);
+    pointer-events: ${({ isVisible }) => (isVisible ? 'all' : 'none')};
+`;
+
+const ConsentContent = styled.div`
+    max-width: 330px;
+    text-align: center;
+
+    & > * + * {
+        margin-top: ${spacings.nudge * 3}px;
+    }
+`;
+
+const ConsentText = styled(Copy)``;
 
 const Iframe = styled.iframe`
     position: absolute;
@@ -114,25 +179,68 @@ const Iframe = styled.iframe`
 export interface VideoCardProps {
     bgImage: ImageProps;
     embedId: string;
-    playIcon?: React.ReactChild;
+    playIcon?: React.ReactNode;
+    consentText?: string;
+    consentAction?: (props: {
+        handleClick?: () => void;
+        consentProps: Record<string, string>;
+    }) => React.ReactNode;
 }
 
 const VideoCard: FC<VideoCardProps & { className?: string }> = ({
     bgImage,
     embedId,
     playIcon,
+    consentText = 'Für die Wiedergabe von Videos muss der Nutzung von Cookies & Daten zugestimmt werden.',
+    consentAction,
     className,
 }) => {
+    const { globals } = useLibTheme();
     const [isActive, setIsActive] = useState(false);
+    const [showConsent, setShowConsent] = useState(false);
+
+    const handlePlayClick = () => {
+        const cookie = getCookie(
+            globals.cookie.name
+        ) as Cookie<CookieConsentData>;
+
+        const isAccepted =
+            globals.cookie.videoCookieTypeRestrictions.reduce<boolean>(
+                (acc, current) => {
+                    if (!acc) return acc;
+                    if (!cookie || !cookie?.data.types) return false;
+
+                    // set acc to false if type is not defined or set to false
+                    acc = !!cookie?.data?.types?.[current];
+                    return acc;
+                },
+                true
+            );
+
+        if (isAccepted) {
+            setIsActive(true);
+            setShowConsent(false);
+        } else {
+            setShowConsent(true);
+        }
+    };
+
+    const handleConsentActionClick = () => {
+        setShowConsent(false);
+    };
 
     return (
         <View
-            onClick={() => setIsActive(true)}
+            onClick={!showConsent ? handlePlayClick : undefined}
             bgImage={isActive ? undefined : bgImage}
             isActive={isActive}
             className={className}
         >
-            {!isActive && <VideoControls>{playIcon || <Play />}</VideoControls>}
+            {!isActive && !showConsent && (
+                <VideoControls>
+                    {playIcon || <Play iconColor="#000" />}
+                </VideoControls>
+            )}
             {isActive && (
                 <Iframe
                     id="ytplayer"
@@ -140,6 +248,32 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 />
             )}
+            <ConsentOverlay isVisible={showConsent}>
+                <ConsentContent>
+                    {consentText && (
+                        <ConsentText isInverted>{consentText}</ConsentText>
+                    )}
+                    {consentAction ? (
+                        consentAction({
+                            handleClick: handleConsentActionClick,
+                            consentProps: {
+                                [selectors.buttons.attribute]: '',
+                            },
+                        })
+                    ) : (
+                        <ButtonGhost.View
+                            as="button"
+                            isInverted
+                            onClick={handleConsentActionClick}
+                            className={selectors.buttons.class}
+                        >
+                            <ButtonGhost.Label>
+                                Zustimmung ändern
+                            </ButtonGhost.Label>
+                        </ButtonGhost.View>
+                    )}
+                </ConsentContent>
+            </ConsentOverlay>
         </View>
     );
 };

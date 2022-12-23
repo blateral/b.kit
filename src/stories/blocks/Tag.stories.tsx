@@ -7,21 +7,26 @@ export default {
     component: Tag,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview'],
         },
     },
 } as Meta;
 
-export const Default: Story = () => <Tag>Tag Default</Tag>;
+export const Default: Story = () => (
+    <Tag name="Tag Default" link={{ href: '#0' }} />
+);
 
 export const WithHandler: Story = () => (
     <Tag onClick={() => console.log('click')}>Tag Default</Tag>
 );
 
 export const Active: Story = () => (
-    <Tag isActive onClick={() => console.log('click')}>
-        Tag Default
-    </Tag>
+    <Tag
+        isActive
+        onClick={() => console.log('click')}
+        name="Tag Default"
+        link={{ href: '#0' }}
+    />
 );
 
 export const Inverted: Story = () => (

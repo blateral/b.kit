@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Poster, { PosterComponent } from 'components/sections/Poster';
 import Button from 'components/buttons/Button';
@@ -9,7 +9,7 @@ export default {
     component: PosterComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady'],
         },
     },
 } as Meta;
@@ -17,24 +17,28 @@ export default {
 export const Default: Story = () => (
     <Poster
         image={{
-            small: 'https://unsplash.it/1023/500?image=409',
-            medium: 'https://unsplash.it/1023/500?image=409',
-            large: 'https://unsplash.it/1439/511?image=409',
-            xlarge: 'https://unsplash.it/2400/854?image=409',
+            small: 'https://unsplash.it/640/550?image=507',
+            medium: 'https://unsplash.it/832/550?image=507',
+            semilarge: 'https://unsplash.it/1024/550?image=507',
+            large: 'https://unsplash.it/1440/550?image=507',
+            xlarge: 'https://unsplash.it/2400/550?image=507',
+            alt: '',
         }}
     />
 );
 
 export const WithContent: Story = () => (
     <Poster
-        superTitle="Haus St. Franziskus"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        superTitle="Lorem Ipsum"
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
-            small: 'https://unsplash.it/1023/500?image=409',
-            medium: 'https://unsplash.it/1023/500?image=409',
-            large: 'https://unsplash.it/1439/511?image=409',
-            xlarge: 'https://unsplash.it/2400/854?image=409',
+            small: 'https://unsplash.it/640/550?image=507',
+            medium: 'https://unsplash.it/832/550?image=507',
+            semilarge: 'https://unsplash.it/1024/550?image=507',
+            large: 'https://unsplash.it/1440/550?image=507',
+            xlarge: 'https://unsplash.it/2400/550?image=507',
+            alt: '',
         }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
@@ -49,16 +53,19 @@ export const WithContent: Story = () => (
     />
 );
 
-export const WithWrapper: Story = () => (
+export const FullWidth: Story = () => (
     <Poster
-        superTitle="Haus St. Franziskus"
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken."
+        width="full"
+        superTitle="Lorem Ipsum"
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
-            small: 'https://unsplash.it/1023/500?image=409',
-            medium: 'https://unsplash.it/1023/500?image=409',
-            large: 'https://unsplash.it/1439/511?image=409',
-            xlarge: 'https://unsplash.it/2400/854?image=409',
+            small: 'https://unsplash.it/640/550?image=507',
+            medium: 'https://unsplash.it/832/550?image=507',
+            semilarge: 'https://unsplash.it/1024/550?image=507',
+            large: 'https://unsplash.it/1440/550?image=507',
+            xlarge: 'https://unsplash.it/2400/550?image=507',
+            alt: '',
         }}
         primaryAction={(isInverted) => (
             <Button.View isInverted={isInverted}>
@@ -70,6 +77,5 @@ export const WithWrapper: Story = () => (
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
         )}
-        hasWrapper
     />
 );

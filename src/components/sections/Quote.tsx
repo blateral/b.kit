@@ -1,19 +1,21 @@
 import React, { FC } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 
-import { getColors as color, mq, spacings } from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Callout from 'components/typography/Callout';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Copy from 'components/typography/Copy';
 
 const Content = styled.figure`
     margin: 0;
     padding: 0;
+
     & > * + * {
-        margin-top: ${spacings.spacer * 1.5}px;
+        margin-top: ${spacings.spacer}px;
     }
+
     @media ${mq.medium} {
         max-width: 960px;
         margin: 0 auto;
@@ -35,24 +37,34 @@ const Source = styled(Copy)`
 `;
 
 const Quote: FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Text of the blockquote (richtext) */
     text?: string;
+
+    /** Source of the quote e.g. author (richtext) */
     source?: string;
+
+    /** URL for additional cite informations */
     citeUrl?: string;
 
+    /** Section backgrounds */
     bgMode?: 'full' | 'inverted';
-}> = ({ bgMode, text, source, citeUrl }) => {
-    const theme = React.useContext(ThemeContext);
+}> = ({ anchorId, bgMode, text, source, citeUrl }) => {
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
-                    : bgMode
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.dark
+                    : bgMode === 'full'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >

@@ -1,25 +1,36 @@
 <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-    rel="stylesheet"
-/>
-<link
-    rel="stylesheet"
-    type="text/css"
-    charset="UTF-8"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-/>
-<link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-/>
-<link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 />
 
 <!-- <link href="styles/datepicker.css" rel="stylesheet" /> -->
 <link href="styles/react-datepicker.css" rel="stylesheet" />
+
+<style>
+    @font-face {
+        font-family: 'Roboto-fallback';
+        size-adjust: 100%;
+        src: local('Arial');
+    }
+</style>
+<link rel="preconnect" href="/fonts/roboto" crossorigin />
+
+<!-- We use the full link to the CSS file in the rest of the tags -->
+<link rel="preload" as="style" href="/fonts/roboto/roboto.css" />
+
+<link
+    rel="stylesheet"
+    href="/fonts/roboto/roboto.css"
+    media="print"
+    onload="this.media='all'"
+/>
+
+<noscript>
+    <link rel="stylesheet" href="/fonts/roboto/roboto.css" />
+</noscript>
+<script>
+    document.documentElement.setAttribute('lang', 'de');
+</script>
 <style>
     html {
         font-size: 100%;

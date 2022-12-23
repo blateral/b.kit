@@ -1,24 +1,27 @@
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const SVG = styled.svg`
     display: block;
 `;
 
-const Mail: React.FC<{ iconColor?: string; className?: string }> = ({
-    iconColor = 'currentColor',
-    className,
-}) => (
+const Mail: React.FC<{
+    iconColor?: string;
+    className?: string;
+    ariaHidden?: boolean;
+}> = ({ iconColor = 'currentColor', className, ariaHidden = true }) => (
     <SVG
-        width="25"
-        height="25"
-        viewBox="0 0 25 25"
+        viewBox="0 0 20 16"
+        width="21"
+        height="24"
+        fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={className}
+        aria-hidden={ariaHidden}
     >
         <path
+            d="M20 2c0-1.1-.9-2-2-2H2C.9 0 0 .9 0 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V2Zm-2 0-8 5-8-5h16Zm0 12H2V4l8 5 8-5v10Z"
             fill={iconColor}
-            d="M22.3988 2.6786c.61982 0 1.16669.24181 1.64061.72545.47402.48363.71098 1.0417.71098 1.6741v14.844c0 .6324-.23696 1.1905-.71098 1.6741-.47392.4836-1.0208.7255-1.64061.7255H2.60173c-.61979 0-1.16669-.2419-1.64061-.7255s-.71094-1.0417-.71094-1.6741v-14.844c0-.63244.23698-1.1905.71094-1.6741.47396-.48363 1.0208-.72545 1.64061-.72545zm-.27349 5.0781V5.3571l-9.62495 6.529-9.62504-6.529v2.3996l9.62504 6.529z"
         />
     </SVG>
 );

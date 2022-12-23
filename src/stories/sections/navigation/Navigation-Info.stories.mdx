@@ -1,0 +1,32 @@
+import { Meta, Story, Canvas, ArgsTable, Preview } from '@storybook/addon-docs';
+import Navigation from '../../../components/sections/navigation/Navigation';
+import NavBar from '../../../components/sections/navigation/NavBar';
+
+<Meta
+    title="Sections/Navigation/Info"
+    parameters={{
+        status: {
+            type: ['preview'],
+        },
+        viewMode: 'story',
+        previewTabs: {
+            'storybook/docs/panel': {
+                hidden: true,
+            },
+        },
+    }}
+/>
+
+# Navigation v2
+
+The `Navigation` is intended to
+
+<ArgsTable of={Navigation} />
+
+## NavBar
+
+<ArgsTable of={NavBar} />
+
+<Preview>
+    <Story id="sections-navigation-v2--bar-over-page-content" height="500px" />
+</Preview>

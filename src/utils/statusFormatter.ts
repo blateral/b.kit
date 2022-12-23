@@ -125,11 +125,11 @@ export default class StatusFormatter {
         const placeholders: {
             [key: string]: any;
         } = {
-            '%DATE%': this.getFormattedDate(),
-            '%TIME%': this.getFormattedTime(),
+            '<DATE>': this.getFormattedDate(),
+            '<TIME>': this.getFormattedTime(),
         };
 
-        const formattedInput = this.input.replace(/%\w+%/g, (foundString) => {
+        const formattedInput = this.input.replace(/<\w+>/g, (foundString) => {
             return placeholders[foundString] || foundString;
         });
         return formattedInput;
@@ -163,6 +163,64 @@ export default class StatusFormatter {
             );
         }
         return formattedTime;
+    }
+
+    public areOnSameDay(first: Date, second: Date) {
+        return (
+            first.getFullYear() === second.getFullYear() &&
+            first.getMonth() === second.getMonth() &&
+            first.getDate() === second.getDate()
+        );
+    }
+
+    /**
+     * Get formatted string of timespan from current date + duration in seconds
+     * @param duration Duration in seconds. Added to current date
+     * @returns
+     */
+    public getFormattedTimespan(
+        format = '',
+        duration?: number,
+        seperator = ' - '
+    ) {
+        const startTime = this.getFormattedTime();
+        let endTime = '';
+
+        if (duration === undefined) return '';
+
+        // create endDate
+        if (duration > 0) {
+            const endDate = new Date(this.date);
+            endDate.setSeconds(this.date.getSeconds() + duration);
+
+            const endTimeFormatter = new StatusFormatter(
+                endDate.getTime(),
+                this.input,
+                this.dateFormat,
+                this.timeFormat,
+                this.localeKey
+            );
+
+            endTime = endTimeFormatter.getFormattedTime();
+        }
+
+        // concatenate timespan string
+        const placeholders: {
+            [key: string]: any;
+        } = {
+            '<START>': startTime,
+            '<END>': endTime,
+            '<SEP>': seperator,
+        };
+
+        const formattedTimespan = format.replace(/<\w+>/g, (foundString) => {
+            if (foundString === '<SEP>' && !(startTime && endTime)) return '';
+            if (foundString === '<END>' && !endTime) return '';
+
+            return placeholders[foundString] || foundString;
+        });
+
+        return formattedTimespan;
     }
 
     private getDoubleDigitString(value: number) {
@@ -218,27 +276,27 @@ interface MonthNames {
 const weekDays: WeekDays = {
     de: {
         long: [
+            'Sonntag',
             'Montag',
             'Dienstag',
             'Mittwoch',
             'Donnerstag',
             'Freitag',
             'Samstag',
-            'Sonntag',
         ],
-        short: ['Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'],
+        short: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
     },
     en: {
         long: [
+            'Sunday',
             'Monday',
             'Tuesday',
             'Wednesday',
             'Thursday',
             'Friday',
             'Saturday',
-            'Sunday',
         ],
-        short: ['Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.'],
+        short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     },
 };
 

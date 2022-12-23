@@ -1,18 +1,19 @@
 import React, {
     useState,
     useEffect,
-    useContext,
     useRef,
     forwardRef,
     useCallback,
 } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 
 import {
     getColors as color,
+    getFonts as font,
     mq,
     spacings,
-    getGlobalSettings as global,
+    getGlobals as global,
+    withRange,
 } from 'utils/styles';
 import { format, isBefore, isValid } from 'date-fns';
 import de from 'date-fns/locale/de';
@@ -20,12 +21,16 @@ import de from 'date-fns/locale/de';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 import Button from 'components/buttons/Button';
 
-import Copy from 'components/typography/Copy';
+import { copyStyle } from 'components/typography/Copy';
 
-import AngleDown from 'components/base/icons/AngleDown';
-import AngleUp from 'components/base/icons/AngleUp';
 import ReactDatePicker from 'react-datepicker';
 import { hexToRgba } from 'utils/hexRgbConverter';
+import FieldWrapper from './FormField';
+import { useLibTheme } from 'utils/LibThemeProvider';
+
+import * as Icons from 'components/base/icons/Icons';
+import { getFormFieldTextSize } from 'utils/formFieldText';
+import { isEqual } from 'date-fns';
 
 const PickerView = styled.div`
     position: relative;
@@ -46,11 +51,14 @@ const PickerView = styled.div`
     }
 
     .react-datepicker {
+        display: flex;
+        flex-wrap: wrap;
         font-family: 'Roboto', sans-serif;
-        border: 1px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.2)} !important;
+        border: 1px solid
+            ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.2)} !important;
         border-radius: ${({ theme }) =>
-            global(theme).sections.edgeRadius} !important;
-        padding: ${spacings.spacer}px;
+            global(theme).sections.edgeRadius || '0px'} !important;
+        padding: ${spacings.nudge * 2}px;
         width: 100%;
 
         box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.15);
@@ -63,22 +71,24 @@ const PickerView = styled.div`
     .react-datepicker__header {
         border: none !important;
         background-color: transparent !important;
+        margin: 0 ${spacings.nudge * 3}px;
     }
 
     /* Month */
     .react-datepicker__month-container {
         width: 100%;
+        margin-bottom: ${spacings.nudge * 3}px;
     }
 
     @media ${mq.medium} {
         .react-datepicker__month-container {
-            width: auto;
+            max-width: 50%;
         }
     }
 
     .react-datepicker__month {
-        margin-left: ${spacings.spacer}px;
-        margin-right: ${spacings.spacer}px;
+        margin-left: ${spacings.nudge * 2}px;
+        margin-right: ${spacings.nudge * 2}px;
     }
 
     .react-datepicker__current-month {
@@ -87,9 +97,9 @@ const PickerView = styled.div`
         font-size: 17px;
         line-height: 1.3;
         text-transform: uppercase;
-        background-color: ${({ theme }) => color(theme).primary.medium};
+        background-color: ${({ theme }) => color(theme).primary.default};
         padding: 10px 15px;
-        color: ${({ theme }) => color(theme).light} !important;
+        color: ${({ theme }) => color(theme).text.inverted} !important;
         width: max-content;
         margin: 0 auto;
     }
@@ -126,7 +136,7 @@ const PickerView = styled.div`
 
     .react-datepicker__day {
         flex: 1 0 auto;
-        background-color: ${({ theme }) => color(theme).mono.light};
+        background-color: ${({ theme }) => color(theme).elementBg.light};
         border-radius: 0 !important;
         font-weight: 600;
 
@@ -136,26 +146,27 @@ const PickerView = styled.div`
     @media ${mq.medium} {
         .react-datepicker__day:hover {
             background-color: ${({ theme }) =>
-                color(theme).mono.dark} !important;
+                color(theme).elementBg.dark} !important;
             border-radius: 0 !important;
-            color: ${({ theme }) => color(theme).light};
+            color: ${({ theme }) => color(theme).text.inverted};
         }
     }
 
     .react-datepicker__day--outside-month {
-        color: ${({ theme }) => color(theme).mono.medium} !important;
+        color: ${({ theme }) => color(theme).elementBg.medium} !important;
         cursor: default;
     }
 
     .react-datepicker__day--selected {
         background-color: ${({ theme }) =>
-            color(theme).primary.medium} !important;
+            color(theme).primary.default} !important;
         border-radius: 0 !important;
-        color: ${({ theme }) => color(theme).light};
+        color: ${({ theme }) => color(theme).text.inverted};
     }
 
     .react-datepicker__day--today {
-        border: 1px solid ${({ theme }) => hexToRgba(color(theme).dark, 0.6)} !important;
+        border: 1px solid
+            ${({ theme }) => hexToRgba(color(theme).elementBg.dark, 0.6)} !important;
         border-radius: 0 !important;
     }
 
@@ -163,54 +174,55 @@ const PickerView = styled.div`
 
     .react-datepicker__triangle:before {
         border-bottom-color: ${({ theme }) =>
-            hexToRgba(color(theme).dark, 0.2)} !important;
+            hexToRgba(color(theme).elementBg.dark, 0.2)} !important;
     }
 
     .react-datepicker__triangle:after {
-        border-bottom-color: ${({ theme }) => color(theme).light} !important;
+        border-bottom-color: ${({ theme }) =>
+            color(theme).elementBg.light} !important;
     }
 
     /* Day Ranges */
 
     .react-datepicker__day--in-range {
         background-color: ${({ theme }) =>
-            hexToRgba(color(theme).primary.medium, 0.7)} !important;
+            hexToRgba(color(theme).primary.default, 0.7)} !important;
     }
 
     @media ${mq.medium} {
         .react-datepicker__day--in-range:hover {
             background-color: ${({ theme }) =>
-                hexToRgba(color(theme).primary.medium, 0.25)} !important;
+                hexToRgba(color(theme).primary.default, 0.25)} !important;
         }
     }
 
     .react-datepicker__day--range-start {
         background-color: ${({ theme }) =>
-            color(theme).primary.medium} !important;
+            color(theme).primary.default} !important;
     }
 
     @media ${mq.medium} {
         .react-datepicker__day--range-start:hover {
             background-color: ${({ theme }) =>
-                hexToRgba(color(theme).primary.medium, 0.25)} !important;
+                hexToRgba(color(theme).primary.default, 0.25)} !important;
         }
     }
 
     .react-datepicker__day--range-end {
         background-color: ${({ theme }) =>
-            color(theme).primary.medium} !important;
+            color(theme).primary.default} !important;
     }
 
     @media ${mq.medium} {
         .react-datepicker__day--range-end:hover {
             background-color: ${({ theme }) =>
-                hexToRgba(color(theme).primary.medium, 0.25)} !important;
+                hexToRgba(color(theme).primary.default, 0.25)} !important;
         }
     }
 
     .react-datepicker__day--in-selecting-range {
         background-color: ${({ theme }) =>
-            hexToRgba(color(theme).primary.medium, 0.7)} !important;
+            hexToRgba(color(theme).primary.default, 0.7)} !important;
     }
 
     /* Next-/Prev-Arrow */
@@ -219,76 +231,122 @@ const PickerView = styled.div`
     }
 
     .react-datepicker__navigation {
-        top: 0 !important;
+        top: ${spacings.nudge}px !important;
+    }
+
+    .react-datepicker__navigation-icon--next::before {
+        left: 0 !important;
+    }
+
+    .react-datepicker__navigation-icon--previous::before {
+        left: 0 !important;
+    }
+
+    .react-datepicker__navigation:focus {
+        outline: 1px solid ${({ theme }) => color(theme).primary.default};
     }
 
     /* Keyboard selection */
     .react-datepicker__day--keyboard-selected {
-        background: ${({ theme }) => color(theme).mono.dark};
+        outline: none;
+        background: ${({ theme }) => color(theme).elementBg.dark};
     }
 `;
 
-const View = styled(Copy)`
-    display: block;
-    text-align: left;
-    width: 100%;
-`;
-
-const FieldHead = styled(Copy)`
-    display: inline-flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-between;
-    padding-bottom: ${spacings.nudge * 3}px;
-    padding-left: ${spacings.nudge}px;
-    padding-right: ${spacings.nudge}px;
-`;
-
-const Icon = styled.img`
+const Icon = styled.div<{ isInverted?: boolean }>`
     height: 100%;
-    max-height: 25px;
-    max-width: 30px;
+    min-width: 24px;
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme).copy.small.colorInverted
+            : font(theme).copy.small.color};
+
+    & > * {
+        height: 20px;
+    }
 `;
 
 const DatepickerButton = styled.button<{
     hasError?: boolean;
     isActive?: boolean;
-    hasBg?: boolean;
+    isInverted?: boolean;
+    hasDateValue?: boolean;
 }>`
-    background: ${({ theme, hasBg }) =>
-        hasBg ? color(theme).mono.light : color(theme).light};
-    border: ${({ hasError, theme }) =>
-        hasError ? `2px solid ${color(theme).error}` : '2px solid transparent'};
-    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-    outline: none;
-    padding: ${spacings.spacer}px ${spacings.nudge * 3}px;
-    width: 100%;
-    max-height: 60px;
-    pointer-events: ${({ isActive }) => (isActive ? 'none' : 'all')};
-
-    position: relative;
-
-    &:focus {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
-    }
-
-    &:active {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
-    }
-
-    ${({ isActive }) =>
-        isActive &&
-        css`
-            border: ${({ theme }) =>
-                `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
-        `}
-
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    min-height: 40px;
+    padding: ${spacings.nudge}px;
+
+    border: 1px solid
+        ${({ theme, isInverted, hasError }) => {
+            if (isInverted) {
+                return hasError
+                    ? color(theme).errorInverted
+                    : color(theme).elementBg.light;
+            }
+            return hasError ? color(theme).error : color(theme).elementBg.dark;
+        }};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+
+    background: none;
+
+    ${copyStyle('copy', 'small')}
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
+    
+    color: ${({ theme, isInverted, hasError, hasDateValue }) => {
+        if (isInverted) {
+            return hasError
+                ? color(theme).text.errorInverted
+                : !hasDateValue
+                ? color(theme).text.subtileInverted
+                : font(theme).copy.small.colorInverted;
+        }
+        return hasError
+            ? color(theme).text.error
+            : !hasDateValue
+            ? color(theme).text.subtile
+            : font(theme).copy.small.color;
+    }};
+
+    outline: none;
+    pointer-events: ${({ isActive }) => (isActive ? 'none' : 'all')};
+
+    position: relative;
+
+    border: ${({ theme, isInverted, isActive }) =>
+        isActive &&
+        `1px solid ${
+            isInverted
+                ? color(theme).primary.inverted
+                : color(theme).primary.default
+        }`};
+
+    &:active {
+        border: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
+    }
+
+    &:focus {
+        outline: ${({ theme, isInverted }) =>
+            `1px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
+        outline-offset: 0;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 `;
 
 const DatepickerButtonMain = styled.div`
@@ -303,14 +361,19 @@ const DatepickerButtonMain = styled.div`
 
 const DatepickerFoot = styled.div`
     display: block;
+    width: 100%;
 
-    margin-top: ${spacings.spacer * 14}px;
+    /* margin-top: ${spacings.spacer * 14}px; */
 `;
 
 const FootFlex = styled.div`
     clear: both;
     display: flex;
     flex-direction: column;
+
+    & > * {
+        width: 100%;
+    }
 
     & > * + * {
         margin-top: ${spacings.spacer * 0.5}px;
@@ -320,21 +383,15 @@ const FootFlex = styled.div`
         align-items: center;
         flex-direction: row;
 
+        & > * {
+            width: auto;
+        }
+
         & > * + * {
             margin-top: 0;
             margin-left: ${spacings.spacer * 0.5}px;
         }
     }
-`;
-
-const InfoMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
-`;
-
-const ErrorMessage = styled(Copy)`
-    margin-top: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
 `;
 
 const ButtonLabel = styled(Button.Label)`
@@ -345,74 +402,71 @@ const ButtonGhostLabel = styled(ButtonGhost.Label)`
 `;
 
 interface PickerBtnProps {
-    isFocused?: boolean;
     label?: string;
+    errorMessage?: string;
+    infoMessage?: string;
+    isRequired?: boolean;
+    isDisabled?: boolean;
+    isInverted?: boolean;
+    isFocused?: boolean;
     name?: string;
     altText?: string;
-    errorMessage?: string;
     startDate?: Date | null | undefined;
     endDate?: Date | null | undefined;
-    icon?: { src: string; alt?: string };
     setFocused: React.Dispatch<React.SetStateAction<boolean>>;
     onClick?: (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-    hasBg?: boolean;
-    isInverted?: boolean;
     dateFormat?: string;
-    indicator?: (props: {
-        isOpen?: boolean;
-        isDisabled?: boolean;
+    customIcon?: (props: {
+        isInverted?: boolean;
+        singleSelect?: boolean;
     }) => React.ReactNode;
+    singleSelect?: boolean;
 }
 
 const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
     (
         {
-            isFocused,
             label,
+            errorMessage,
+            infoMessage,
+            isRequired,
+            isInverted,
+            isDisabled,
+            isFocused,
             name,
             altText,
-            errorMessage,
             startDate,
             endDate,
-            icon,
-            isInverted,
-            hasBg,
             setFocused,
             onClick,
             dateFormat = 'dd.MM.yyyy',
-            indicator,
+            customIcon,
+            singleSelect,
         },
         ref
     ) => {
-        const theme = useContext(ThemeContext);
-
         return (
-            <View renderAs="label">
-                {label && (
-                    <FieldHead
-                        renderAs="span"
+            <FieldWrapper.View isDisabled={isDisabled}>
+                <FieldWrapper.Head
+                    label={label}
+                    isRequired={isRequired}
+                    isInverted={isInverted}
+                />
+                <FieldWrapper.Content>
+                    <DatepickerButton
+                        ref={ref}
+                        type="button"
+                        onClick={(e) => {
+                            setFocused && setFocused(true);
+                            onClick && onClick(e);
+                        }}
+                        isActive={isFocused}
+                        hasDateValue={!!startDate}
                         isInverted={isInverted}
-                        size="medium"
-                        type="copy-b"
+                        hasError={!!errorMessage}
+                        className="myPickerButton"
                     >
-                        {label}
-                    </FieldHead>
-                )}
-                <DatepickerButton
-                    ref={ref}
-                    onClick={(e) => {
-                        setFocused && setFocused(true);
-                        onClick && onClick(e);
-                    }}
-                    isActive={isFocused}
-                    hasBg={hasBg && !isInverted}
-                    hasError={!!errorMessage}
-                    className="myPickerButton"
-                >
-                    <DatepickerButtonMain>
-                        {icon && <Icon src={icon.src} alt={icon.alt || ''} />}
-
-                        <Copy type="copy">
+                        <DatepickerButtonMain>
                             {startDate
                                 ? `${format(startDate, dateFormat)}${
                                       endDate
@@ -420,38 +474,45 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
                                           : ''
                                   }`
                                 : altText}
-                        </Copy>
-                    </DatepickerButtonMain>
-                    {indicator && indicator({ isOpen: isFocused })}
-                    {!indicator &&
-                        (isFocused ? (
-                            <AngleUp iconColor={color(theme).dark} />
-                        ) : (
-                            <AngleDown iconColor={color(theme).dark} />
-                        ))}
-                </DatepickerButton>
-                {name && (
-                    <>
-                        <input
-                            type="hidden"
-                            name={`${name}["start"]`}
-                            value={startDate?.toString()}
-                        />
-                        <input
-                            type="hidden"
-                            name={`${name}["end"]`}
-                            value={endDate?.toString()}
-                        />
-                    </>
-                )}
-            </View>
+                        </DatepickerButtonMain>
+                        <Icon isInverted={isInverted}>
+                            {customIcon ? (
+                                customIcon({ isInverted, singleSelect })
+                            ) : singleSelect ? (
+                                <Icons.CalendarToday />
+                            ) : (
+                                <Icons.DateRange />
+                            )}
+                        </Icon>
+                    </DatepickerButton>
+                    {name && (
+                        <>
+                            <input
+                                type="hidden"
+                                name={`${name}["start"]`}
+                                value={startDate?.toString()}
+                            />
+                            <input
+                                type="hidden"
+                                name={`${name}["end"]`}
+                                value={endDate?.toString()}
+                            />
+                        </>
+                    )}
+                </FieldWrapper.Content>
+                <FieldWrapper.Messages
+                    infoMessage={infoMessage}
+                    errorMessage={errorMessage}
+                    isInverted={isInverted}
+                />
+            </FieldWrapper.View>
         );
     }
 );
 PickerButton.displayName = 'PickerButton';
 
 const PickerHeader = styled.div`
-    margin-bottom: ${spacings.nudge * 2}px;
+    margin-bottom: ${spacings.nudge * 3}px;
 `;
 
 const getPickerHeader =
@@ -542,13 +603,16 @@ const getPickerHeader =
             </PickerHeader>
         );
 
-const Datepicker: React.FC<{
+export interface DatepickerProps {
+    enableMemo?: boolean;
     label?: string;
-    name?: string;
-    icon?: { src: string; alt?: string };
-    placeholder?: string;
     errorMessage?: string;
     infoMessage?: string;
+    isRequired?: boolean;
+    isDisabled?: boolean;
+    isInverted?: boolean;
+    name?: string;
+    placeholder?: string;
     dateSubmitLabel?: string;
     dateDeleteLabel?: string;
 
@@ -565,20 +629,24 @@ const Datepicker: React.FC<{
             e: React.SyntheticEvent<HTMLButtonElement, Event>
         ) => void
     ) => React.ReactNode;
-    indicator?: (props: {
-        isOpen?: boolean;
-        isDisabled?: boolean;
+    customIcon?: (props: {
+        isInverted?: boolean;
+        singleSelect?: boolean;
     }) => React.ReactNode;
     nextCtrlUrl?: React.ReactNode;
     prevCtrlUrl?: React.ReactNode;
 
     singleSelect?: boolean;
-    hasBg?: boolean;
-    isInverted?: boolean;
-}> = ({
+}
+
+const Datepicker: React.FC<DatepickerProps> = ({
     label,
+    errorMessage,
+    infoMessage,
+    isRequired,
+    isDisabled,
+    isInverted,
     name,
-    icon,
     dateSubmitLabel,
     dateDeleteLabel,
     placeholder,
@@ -586,21 +654,17 @@ const Datepicker: React.FC<{
     values,
     minDate = new Date(),
     maxDate,
-    errorMessage,
-    infoMessage,
-    isInverted,
-    hasBg,
     onDataChange,
     onSubmit,
     deleteAction,
     submitAction,
-    indicator,
+    customIcon,
     nextCtrlUrl,
     prevCtrlUrl,
 }) => {
-    const theme = useContext(ThemeContext);
-    const locale = global(theme).sections.datepickerLocaleKey;
-    const dateFormat = global(theme).sections.datepickerDateFormat;
+    const { globals } = useLibTheme();
+    const locale = globals.sections.datepickerLocaleKey;
+    const dateFormat = globals.sections.datepickerDateFormat;
 
     const pickerRef = useRef<ReactDatePicker | undefined>(null);
     const pickerBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -720,20 +784,22 @@ const Datepicker: React.FC<{
                 shouldCloseOnSelect={singleSelect}
                 customInput={
                     <PickerButton
-                        ref={pickerBtnRef}
                         label={label}
+                        isInverted={isInverted}
+                        isDisabled={isDisabled}
+                        infoMessage={infoMessage}
+                        errorMessage={errorMessage}
+                        isRequired={isRequired}
+                        ref={pickerBtnRef}
                         name={name}
                         altText={placeholder}
                         startDate={startDate}
                         endDate={endDate}
-                        errorMessage={errorMessage}
-                        icon={icon}
                         isFocused={focused}
                         setFocused={setFocused}
-                        isInverted={isInverted}
-                        hasBg={hasBg}
                         dateFormat={dateFormat}
-                        indicator={indicator}
+                        customIcon={customIcon}
+                        singleSelect={singleSelect}
                     />
                 }
                 showPopperArrow
@@ -775,24 +841,43 @@ const Datepicker: React.FC<{
                     </FootFlex>
                 </DatepickerFoot>
             </ReactDatePicker>
-            {infoMessage && (
-                <InfoMessage textColor={color(theme).mono.dark} size="small">
-                    {infoMessage}
-                </InfoMessage>
-            )}
-            {errorMessage && (
-                <ErrorMessage
-                    textColor={color(theme).error}
-                    size="small"
-                    type="copy-i"
-                >
-                    {errorMessage
-                        ? errorMessage
-                        : 'Bitte geben Sie einen gültigen Text ein'}
-                </ErrorMessage>
-            )}
         </PickerView>
     );
 };
 
-export default Datepicker;
+/**
+ * Function to compare both field prop states
+ * @param prev Previous props
+ * @param next Next props
+ * @returns
+ */
+const areEqual = (prev: DatepickerProps, next: DatepickerProps) => {
+    // only apply logic if memo functionality is enabled
+    if (!prev.enableMemo) return false;
+
+    if (prev.infoMessage !== next.infoMessage) return false;
+    if (prev.errorMessage !== next.errorMessage) return false;
+    if (prev.dateDeleteLabel !== next.dateDeleteLabel) return false;
+    if (prev.dateSubmitLabel !== next.dateSubmitLabel) return false;
+    if (prev.label !== next.label) return false;
+    if (prev.placeholder !== next.placeholder) return false;
+
+    // compare date values
+    const prevDateStart = prev.values?.[0];
+    const prevDateEnd = prev.values?.[1];
+    const nextDateStart = prev.values?.[0];
+    const nextDateEnd = prev.values?.[1];
+
+    if (
+        prevDateStart !== nextDateStart ||
+        !isEqual(prevDateStart || -1, nextDateStart || -1) ||
+        prevDateEnd !== nextDateEnd ||
+        !isEqual(prevDateEnd || -1, nextDateEnd || -1)
+    ) {
+        return false;
+    }
+
+    return true;
+};
+
+export default React.memo(Datepicker, areEqual);

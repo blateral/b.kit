@@ -1,16 +1,20 @@
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
 import Copy from 'components/typography/Copy';
 
 const CopyExample = () => (
     <>
+        <h5>Lorem Ipsum</h5>
+        <h2>Lorem Ipsum Dolor Sit</h2>
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere
-            doloremque, temporibus tempore error harum ea nostrum. Molestiae
-            tempora odio quo cumque ratione, velit veniam sint deserunt ex
+            <a href="mama.pdf">test PDF-Link</a> Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Facere doloremque, temporibus tempore
+            error harum ea nostrum. Molestiae tempora odio quo cumque ratione,
+            velit veniam sint deserunt ex <a href="mama.zip">test PDF-Link</a>{' '}
             eveniet magni perspiciatis.
         </p>
+        <h3>Lorem Ipsum Dolor Sit</h3>
         <ul>
             <li>Lorem ipsum dolor sit.</li>
             <li>Sunt sit, hic soluta.</li>
@@ -24,6 +28,14 @@ const CopyExample = () => (
             tempora odio quo cumque ratione, velit veniam sint deserunt ex
             eveniet magni perspiciatis.
         </p>
+        <a href="test.svg">icon list</a>
+        <br />
+        <a href="test.jpg">icon list</a>
+        <br />
+        <a href="test.html">icon list</a>
+
+        <h4>Lorem Ipsum Dolor Sit</h4>
+        <h2>Lorem Ipsum Dolor Sit</h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere
             doloremque, temporibus tempore error harum ea nostrum. Molestiae
@@ -44,9 +56,17 @@ const CopyExample = () => (
                 Itaque nihil, ducimus laboriosam.
                 <ol>
                     <li>Tempora dignissimos, voluptates impedit.</li>
-                    <li>Tempora dignissimos, voluptates impedit.</li>
+                    <li>
+                        Tempora dignissimos, voluptates impedit.
+                        <ol>
+                            <li>Tempora dignissimos, voluptates impedit.</li>
+                            <li>Tempora dignissimos, voluptates impedit.</li>
+                        </ol>
+                    </li>
                 </ol>
             </li>
+            <li>Accusamus veniam, voluptates tempora!</li>
+            <li>Itaque nihil, ducimus laboriosam.</li>
         </ol>
         <p>
             <a href="#0">Link</a>
@@ -73,7 +93,7 @@ export default {
     component: Copy,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;

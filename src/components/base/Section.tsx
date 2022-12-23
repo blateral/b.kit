@@ -1,15 +1,11 @@
-import * as React from 'react';
+import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
-import {
-    mq,
-    spacings,
-    withRange,
-    getGlobalSettings as global,
-} from 'utils/styles';
+import { concat } from 'utils/concat';
+import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 
 export type BgMode = 'full' | 'larger-left' | 'larger-right' | 'inverted';
 
-const getBackground = (mode: BgMode, bgColor: string) => {
+const getBackground = (bgColor: string, mode?: BgMode) => {
     let bgValue = undefined;
 
     switch (mode) {
@@ -27,6 +23,10 @@ const getBackground = (mode: BgMode, bgColor: string) => {
 
         case 'larger-right':
             bgValue = `linear-gradient(to right, transparent 40%, ${bgColor} 40%)`;
+            break;
+
+        default:
+            bgValue = bgColor;
             break;
     }
     return bgValue;
@@ -85,18 +85,18 @@ const View = styled.section<{
 
         if (addSeperation) {
             return css`
-                *:not([data-bg-ident='transparent'])
+                *:not([data-bg-ident='light'])
                     + &[data-bg-ident='larger-left${bgColorPart}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
-                *:not([data-bg-ident='transparent'])
+                *:not([data-bg-ident='light'])
                     + &[data-bg-ident='larger-right${bgColorPart}'] {
                     ${withRange(margin, 'margin-top')};
                 }
 
                 section[data-bg-ident='larger-left${bgColorPart}']
-                    + &:not([data-bg-ident='transparent']) {
+                    + &:not([data-bg-ident='light']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
                         'margin-top'
@@ -104,7 +104,7 @@ const View = styled.section<{
                 }
 
                 section[data-bg-ident='larger-right${bgColorPart}']
-                    + &:not([data-bg-ident='transparent']) {
+                    + &:not([data-bg-ident='light']) {
                     ${withRange(
                         isStackable ? marginStacked : margin,
                         'margin-top'
@@ -127,23 +127,28 @@ const View = styled.section<{
 const Back = styled.div<{
     bgColor?: string;
     bgMode?: BgMode;
+    clampSolidBg?: boolean;
 }>`
-    display: ${({ bgColor, bgMode }) => (bgColor && bgMode ? 'block' : 'none')};
+    display: ${({ bgColor }) => (bgColor ? 'block' : 'none')};
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    max-width: ${({ bgMode }) =>
-        (bgMode === 'full' || bgMode === 'inverted'
-            ? spacings.wrapperLarge
-            : spacings.wrapper) + 'px'};
+    max-width: ${({ bgMode, clampSolidBg }) => {
+        if (bgMode !== 'larger-left' && bgMode !== 'larger-right') {
+            return clampSolidBg ? `${spacings.wrapperLarge}px` : undefined;
+        } else {
+            return `${spacings.wrapper}px`;
+        }
+    }};
     background: ${({ bgColor }) => bgColor || undefined};
     margin: 0 auto;
+    z-index: -1;
 
     @media ${mq.semilarge} {
         background: ${({ bgColor, bgMode }) =>
-            bgColor && bgMode ? getBackground(bgMode, bgColor) : undefined};
+            bgColor && bgMode ? getBackground(bgColor, bgMode) : undefined};
     }
 
     @media ${mq.xlarge} {
@@ -174,7 +179,10 @@ const Back = styled.div<{
 
 export type SectionType = 'header' | 'footer' | 'div';
 
-const Section: React.FC<{
+export interface SectionProps {
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     /** Render as specific HTML tag type */
     renderAs?: SectionType;
 
@@ -184,61 +192,91 @@ const Section: React.FC<{
     /** Background mode */
     bgMode?: BgMode;
 
+    /** Clamp solid backgrounds (full, inverted) to large wrapper width */
+    clampSolidBg?: boolean;
+
     /** Enable section seperation spacing */
     addSeperation?: boolean;
 
     /** Allow stack feature for reduced section spacing to following section */
     isStackable?: boolean;
+}
 
-    className?: string;
-}> = ({
-    renderAs,
-    bgColor,
-    bgMode,
-    addSeperation = false,
-    isStackable = false,
-    className,
-    children,
-}) => {
-    switch (bgMode) {
-        case 'larger-left':
-            bgMode = 'larger-left';
-            break;
-        case 'larger-right':
-            bgMode = 'larger-right';
-            break;
-        case 'inverted':
-            bgMode = 'inverted';
-            break;
-        case 'full':
-            bgMode = 'full';
-            break;
-        default:
-            bgMode = undefined;
+const Section = forwardRef<
+    HTMLElement,
+    SectionProps & {
+        className?: string;
+        children?: React.ReactNode;
     }
+>(
+    (
+        {
+            anchorId,
+            renderAs,
+            bgColor,
+            bgMode,
+            clampSolidBg = true,
+            addSeperation = false,
+            isStackable = false,
+            className,
+            children,
+        },
+        ref
+    ) => {
+        switch (bgMode) {
+            case 'larger-left':
+                bgMode = 'larger-left';
+                break;
+            case 'larger-right':
+                bgMode = 'larger-right';
+                break;
+            case 'inverted':
+                bgMode = 'inverted';
+                break;
+            case 'full':
+                bgMode = 'full';
+                break;
+            default:
+                bgMode = undefined;
+        }
 
-    const ident = bgColor && bgMode ? `${bgMode}__${bgColor}` : 'transparent';
+        const noPadIdent = addSeperation ? '' : 'nopad';
+        const ident =
+            bgColor && bgMode
+                ? concat([`${bgMode}__${bgColor}`, noPadIdent], '--')
+                : 'light';
 
-    return (
-        <View
-            as={renderAs}
-            data-bg-ident={ident}
-            bgIdent={ident}
-            bgColor={bgColor || ''}
-            addSeperation={
-                !renderAs || (renderAs && renderAs !== 'div')
-                    ? addSeperation
-                    : false
-            }
-            isStackable={isStackable}
-            data-stack-ident={isStackable ? 'true' : 'false'}
-            className={className}
-        >
-            {bgColor && bgMode && <Back bgColor={bgColor} bgMode={bgMode} />}
-            {children}
-        </View>
-    );
-};
+        return (
+            <View
+                ref={ref}
+                id={anchorId || undefined}
+                as={renderAs}
+                data-bg-ident={ident}
+                bgIdent={ident}
+                bgColor={bgColor || ''}
+                addSeperation={
+                    !renderAs || (renderAs && renderAs !== 'div')
+                        ? addSeperation
+                        : false
+                }
+                isStackable={isStackable}
+                data-stack-ident={isStackable ? 'true' : 'false'}
+                className={className}
+            >
+                {bgColor && (
+                    <Back
+                        bgColor={bgColor}
+                        bgMode={bgMode}
+                        clampSolidBg={clampSolidBg}
+                    />
+                )}
+                {children}
+            </View>
+        );
+    }
+);
+
+Section.displayName = 'Section';
 
 export default Section;
 

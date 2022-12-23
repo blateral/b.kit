@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Meta, Story } from '@storybook/react';
 
 import SearchInput from 'components/fields/SearchInput';
-import Magnifier from 'components/base/icons/Magnifier';
+import Star from 'components/base/icons/Star';
 import CrossSmall from 'components/base/icons/CrossSmall';
 
 const Helper = styled.div`
@@ -24,7 +24,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'stable',
+            type: 'preview',
         },
     },
 } as Meta;
@@ -41,7 +41,7 @@ export const Default: Story = () => (
 export const WithSubmitIcon: Story = () => (
     <SearchInput
         placeholder="Suche"
-        submitIcon={<Magnifier />}
+        submitIcon={<Star />}
         onSubmit={() => console.log('submit')}
         onClick={console.log}
         onBlur={console.log}
@@ -51,7 +51,7 @@ export const WithSubmitIcon: Story = () => (
 export const WithSubmitAndClearIcon: Story = () => (
     <SearchInput
         placeholder="Suche"
-        submitIcon={<Magnifier />}
+        submitIcon={<Star />}
         clearIcon={<CrossSmall />}
         onSubmit={() => console.log('submit')}
         onClear={() => console.log('clear')}
@@ -64,7 +64,7 @@ export const Inverted: Story = () => (
     <SearchInput
         isInverted
         placeholder="Suche"
-        submitIcon={<Magnifier />}
+        submitIcon={<Star />}
         clearIcon={<CrossSmall />}
         onSubmit={() => console.log('submit')}
         onClear={() => console.log('clear')}

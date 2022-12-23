@@ -1,16 +1,17 @@
 /* eslint-disable react/display-name */
-import * as React from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import DynamicForm, {
     DynamicFormComponent,
-} from 'components/sections/DynamicForm';
+} from 'components/sections/form/DynamicForm';
+import * as Icons from 'components/base/icons/Icons';
 
 export default {
     title: 'Sections / DynamicForm',
     component: DynamicFormComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview'],
         },
     },
 } as Meta;
@@ -23,7 +24,6 @@ export const Default: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -39,11 +39,17 @@ export const Default: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -53,6 +59,12 @@ export const Default: Story = () => (
                     { text: 'mit Bad' },
                     { text: 'mit Küche', initialChecked: true },
                 ],
+            },
+            Standort: {
+                type: 'Location',
+                placeholder: 'Ort eingeben',
+                info: 'Bitte geben Sie einen Ort an',
+                isRequired: true,
             },
             Personen: {
                 type: 'FieldGroup',
@@ -67,17 +79,19 @@ export const Default: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
+                customUploadIcon: () => <Icons.UploadFile />,
+                customDeleteIcon: () => <Icons.DeleteForever />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -86,88 +100,10 @@ export const Default: Story = () => (
         }}
         onSubmit={async (values) => {
             console.log(values);
-            return;
-        }}
-    />
-);
-
-export const WithTwoColumns: Story = () => (
-    <DynamicForm
-        fields={{
-            Nachname: {
-                type: 'Field',
-                placeholder: 'Nachname..',
-                isRequired: true,
-                info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
-            },
-            Nachricht: {
-                type: 'Area',
-                placeholder: 'Nachricht eingeben..',
-                info: 'Nachricht eingeben',
-                isRequired: true,
-            },
-            Email: {
-                type: 'Field',
-                placeholder: 'Email eingeben..',
-                info: 'Email eingeben',
-                isRequired: true,
-                inputType: 'email',
-            },
-            Reisezeitraum: {
-                type: 'Datepicker',
-                isRequired: true,
-                info: 'Reisezeitraum eingeben',
-                placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
-            },
-            Leistungen: {
-                type: 'FieldGroup',
-                groupType: 'Checkbox',
-                isRequired: true,
-                fields: [
-                    { text: 'mit Bad' },
-                    { text: 'mit Küche', initialChecked: true },
-                ],
-                column: 'right',
-            },
-            Personen: {
-                type: 'FieldGroup',
-                groupType: 'Radio',
-                isRequired: true,
-                fields: [{ text: '1' }, { text: '2', initialChecked: true }],
-                column: 'right',
-            },
-            Alter: {
-                type: 'Field',
-                placeholder: 'Alter eingeben',
-                info: 'Bitte geben Sie Ihr Alter an',
-                inputType: 'number',
-                column: 'right',
-            },
-            Land: {
-                type: 'Select',
-                // initalValue: 'Germany',
-                isRequired: true,
-                dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
-                ],
-                icon: { src: 'http://placehold.it/25' },
-                column: 'right',
-            },
-            Upload: {
-                type: 'Upload',
-                isRequired: true,
-                addBtnLabel: 'Datei/en auswählen',
-                removeBtnLabel: 'Auswahl löschen',
-                acceptedFormats: 'image/png, image/jpg',
-                column: 'right',
-            },
-        }}
-        onSubmit={async (values) => {
-            console.log(values);
-            return;
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
         }}
     />
 );
@@ -180,7 +116,6 @@ export const WithCustomDatepickerButtons: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -196,11 +131,17 @@ export const WithCustomDatepickerButtons: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
                 submitAction: (clickHandler) => (
                     <button onClick={clickHandler}>auswählen</button>
                 ),
@@ -232,17 +173,19 @@ export const WithCustomDatepickerButtons: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
+                customUploadIcon: () => <Icons.UploadFile />,
+                customDeleteIcon: () => <Icons.DeleteForever />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -251,7 +194,10 @@ export const WithCustomDatepickerButtons: Story = () => (
         }}
         onSubmit={async (values) => {
             console.log(values);
-            return;
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
         }}
     />
 );
@@ -265,7 +211,6 @@ export const WithBackground: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -281,11 +226,17 @@ export const WithBackground: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -309,17 +260,19 @@ export const WithBackground: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
+                customUploadIcon: () => <Icons.UploadFile />,
+                customDeleteIcon: () => <Icons.DeleteForever />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -328,7 +281,10 @@ export const WithBackground: Story = () => (
         }}
         onSubmit={async (values) => {
             console.log(values);
-            return;
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
         }}
     />
 );
@@ -342,7 +298,6 @@ export const Inverted: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -358,11 +313,17 @@ export const Inverted: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -386,17 +347,19 @@ export const Inverted: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
+                customUploadIcon: () => <Icons.UploadFile />,
+                customDeleteIcon: () => <Icons.DeleteForever />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -405,7 +368,96 @@ export const Inverted: Story = () => (
         }}
         onSubmit={async (values) => {
             console.log(values);
-            return;
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
+        }}
+    />
+);
+
+export const WithErrorResponse: Story = () => (
+    <DynamicForm
+        fields={{
+            Nachname: {
+                type: 'Field',
+                placeholder: 'Nachname..',
+                isRequired: true,
+                info: 'Nachname eingeben',
+            },
+            // Nachricht: {
+            //     type: 'Area',
+            //     placeholder: 'Nachricht eingeben..',
+            //     info: 'Nachricht eingeben',
+            //     isRequired: true,
+            // },
+            // Email: {
+            //     type: 'Field',
+            //     placeholder: 'Email eingeben..',
+            //     info: 'Email eingeben',
+            //     isRequired: true,
+            //     inputType: 'email',
+            // },
+            // Reisezeitraum: {
+            //     customIcon: ({ singleSelect }) => {
+            //         return singleSelect ? (
+            //             <Icons.CalendarToday />
+            //         ) : (
+            //             <Icons.DateRange />
+            //         );
+            //     },
+            //     type: 'Datepicker',
+            //     isRequired: true,
+            //     info: 'Reisezeitraum eingeben',
+            //     placeholder: 'Reisezeitraum wählen..',
+            // },
+            // Leistungen: {
+            //     type: 'FieldGroup',
+            //     groupType: 'Checkbox',
+            //     isRequired: true,
+            //     fields: [
+            //         { text: 'mit Bad' },
+            //         { text: 'mit Küche', initialChecked: true },
+            //     ],
+            // },
+            // Personen: {
+            //     type: 'FieldGroup',
+            //     groupType: 'Radio',
+            //     isRequired: true,
+            //     fields: [{ text: '1' }, { text: '2', initialChecked: true }],
+            // },
+            // Alter: {
+            //     type: 'Field',
+            //     placeholder: 'Alter eingeben',
+            //     info: 'Bitte geben Sie Ihr Alter an',
+            //     inputType: 'number',
+            // },
+            // Land: {
+            //     placeholder: 'Select',
+            //     type: 'Select',
+            //     initialOption: 'Deutschland',
+            //     isRequired: true,
+            //     dropdownItems: [
+            //         { label: 'Schweiz', value: { country: 'Switzerland' } },
+            //         { label: 'Deutschland', value: { country: 'Switzerland' } },
+            //     ],
+            // },
+            // Upload: {
+            //     type: 'Upload',
+            //     customUploadIcon: () => <Icons.UploadFile />,
+            //     customDeleteIcon: () => <Icons.DeleteForever />,
+            //     isRequired: true,
+            //     addBtnLabel: 'Datei/en auswählen',
+            //     removeBtnLabel: 'Auswahl löschen',
+            //     acceptedFormats: 'image/png, image/jpg',
+            // },
+        }}
+        onSubmit={async (values) => {
+            console.log(values);
+            return {
+                isError: true,
+                message: 'Cannot send mail data!',
+            };
         }}
     />
 );
@@ -418,7 +470,6 @@ export const CustomSubmitButton: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -434,11 +485,17 @@ export const CustomSubmitButton: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -462,17 +519,19 @@ export const CustomSubmitButton: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
+                customUploadIcon: () => <Icons.UploadFile />,
+                customDeleteIcon: () => <Icons.DeleteForever />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -481,7 +540,10 @@ export const CustomSubmitButton: Story = () => (
         }}
         onSubmit={async (values) => {
             console.log(values);
-            return;
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
         }}
         submitAction={({ handleSubmit }) => (
             <button onClick={handleSubmit}>Submit</button>
@@ -497,7 +559,6 @@ export const WithCustomErrorMessages: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
                 errorMsg: 'Bitte geben Sie Ihren Nachnamen an',
             },
             Nachricht: {
@@ -516,11 +577,17 @@ export const WithCustomErrorMessages: Story = () => (
                 errorMsg: 'Bitte geben Sie eine valide E-Mail an',
             },
             Reisezeitraum: {
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
                 singleDateError: 'Bitte geben Sie ein Datum an',
                 multiDateError: 'Bitte geben Sie ein Start- und Enddatum an',
             },
@@ -549,18 +616,20 @@ export const WithCustomErrorMessages: Story = () => (
                 errorMsg: 'Bitte geben Sie ein Alter an',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
-                icon: { src: 'http://placehold.it/25' },
                 errorMsg: 'Bitte wählen Sie ein Land',
             },
             Upload: {
                 type: 'Upload',
+                customUploadIcon: () => <Icons.UploadFile />,
+                customDeleteIcon: () => <Icons.DeleteForever />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -570,7 +639,10 @@ export const WithCustomErrorMessages: Story = () => (
         }}
         onSubmit={async (values) => {
             console.log(values);
-            return;
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
         }}
     />
 );
@@ -583,7 +655,6 @@ export const CustomValidation: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
                 validate: async (key, value, config) => {
                     let error = '';
                     if (!value && config.isRequired)
@@ -631,11 +702,17 @@ export const CustomValidation: Story = () => (
                 },
             },
             Reisezeitraum: {
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
                 validate: async (key, value, config) => {
                     let error = '';
                     if (config.isRequired && (!value?.[0] || !value?.[1]))
@@ -683,14 +760,14 @@ export const CustomValidation: Story = () => (
                 },
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
-                icon: { src: 'http://placehold.it/25' },
                 validate: async (key, value, config) => {
                     let error = '';
                     if (!value && config.isRequired)
@@ -700,6 +777,8 @@ export const CustomValidation: Story = () => (
             },
             Upload: {
                 type: 'Upload',
+                customUploadIcon: () => <Icons.UploadFile />,
+                customDeleteIcon: () => <Icons.DeleteForever />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -714,7 +793,10 @@ export const CustomValidation: Story = () => (
         }}
         onSubmit={async (values) => {
             console.log(values);
-            return;
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
         }}
     />
 );
@@ -747,7 +829,6 @@ export const WithCustomFieldDefinition: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -763,11 +844,17 @@ export const WithCustomFieldDefinition: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
             },
             Leistungen: {
                 type: 'FieldGroup',
@@ -791,17 +878,19 @@ export const WithCustomFieldDefinition: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
+                customUploadIcon: () => <Icons.UploadFile />,
+                customDeleteIcon: () => <Icons.DeleteForever />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -810,7 +899,10 @@ export const WithCustomFieldDefinition: Story = () => (
         }}
         onSubmit={async (values) => {
             console.log(values);
-            return;
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
         }}
     />
 );
@@ -823,7 +915,6 @@ export const WithCustomDatepicker: Story = () => (
                 placeholder: 'Nachname..',
                 isRequired: true,
                 info: 'Nachname eingeben',
-                icon: { src: 'http://placehold.it/25' },
             },
             Nachricht: {
                 type: 'Area',
@@ -839,11 +930,17 @@ export const WithCustomDatepicker: Story = () => (
                 inputType: 'email',
             },
             Reisezeitraum: {
+                customIcon: ({ singleSelect }) => {
+                    return singleSelect ? (
+                        <Icons.CalendarToday />
+                    ) : (
+                        <Icons.DateRange />
+                    );
+                },
                 type: 'Datepicker',
                 isRequired: true,
                 info: 'Reisezeitraum eingeben',
                 placeholder: 'Reisezeitraum wählen..',
-                icon: { src: 'http://placehold.it/25' },
                 deleteAction: (handleClick) => (
                     <button onClick={handleClick}>delete</button>
                 ),
@@ -875,17 +972,19 @@ export const WithCustomDatepicker: Story = () => (
                 inputType: 'number',
             },
             Land: {
+                placeholder: 'Select',
                 type: 'Select',
-                // initalValue: 'Germany',
+                initialOption: 'Deutschland',
                 isRequired: true,
                 dropdownItems: [
-                    { label: 'Schweiz', value: 'Switzerland' },
-                    { label: 'Deutschland', value: 'Germany' },
+                    { label: 'Schweiz', value: { country: 'Switzerland' } },
+                    { label: 'Deutschland', value: { country: 'Switzerland' } },
                 ],
-                icon: { src: 'http://placehold.it/25' },
             },
             Upload: {
                 type: 'Upload',
+                customUploadIcon: () => <Icons.UploadFile />,
+                customDeleteIcon: () => <Icons.DeleteForever />,
                 isRequired: true,
                 addBtnLabel: 'Datei/en auswählen',
                 removeBtnLabel: 'Auswahl löschen',
@@ -894,7 +993,10 @@ export const WithCustomDatepicker: Story = () => (
         }}
         onSubmit={async (values) => {
             console.log(values);
-            return;
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
         }}
     />
 );

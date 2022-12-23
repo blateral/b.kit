@@ -9,15 +9,15 @@ export default {
     component: NewsIntroComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: ['preview', 'qsReady', 'releaseCandidate'],
         },
     },
 } as Meta;
 
 export const Default: Story = () => (
     <NewsIntro
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
     />
 );
 
@@ -26,8 +26,8 @@ export const WithAuthor: Story = () => (
         meta={{
             author: 'Max Mustermann',
         }}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
     />
 );
 
@@ -37,38 +37,65 @@ export const WithAuthorAndDate: Story = () => (
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
         }}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
     />
 );
 
-export const WithTag: Story = () => (
+export const WithTags: Story = () => (
     <NewsIntro
-        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
-        onTagClick={console.log}
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
         meta={{
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
         }}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
     />
 );
 
 export const WithImage: Story = () => (
     <NewsIntro
-        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
-        onTagClick={console.log}
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
         meta={{
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
         }}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/619/348?image=400',
             medium: 'https://unsplash.it/791/445?image=400',
-            semilarge: 'https://unsplash.it/944/531?image=400',
+            semilarge: 'https://unsplash.it/968/545?image=400',
+            ratios: {
+                small: { w: 619, h: 348 },
+            },
         }}
     />
 );
@@ -76,37 +103,111 @@ export const WithImage: Story = () => (
 export const WithBackground: Story = () => (
     <NewsIntro
         bgMode="full"
-        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
-        onTagClick={console.log}
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
         meta={{
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
         }}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/619/348?image=400',
             medium: 'https://unsplash.it/791/445?image=400',
-            semilarge: 'https://unsplash.it/944/531?image=400',
+            semilarge: 'https://unsplash.it/968/545?image=400',
+            ratios: {
+                small: { w: 619, h: 348 },
+            },
         }}
     />
 );
 
-export const isInverted: Story = () => (
+export const IsInverted: Story = () => (
     <NewsIntro
-        tags={['Tag Secondary', 'Tag Tertiary', 'Tag Quadrifilogio']}
-        onTagClick={console.log}
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
         meta={{
             author: 'Max Mustermann',
             date: new Date('July 22, 2021 03:24:00'),
         }}
-        title="Haus St. Franziskus – lorem ipsum dolor sit amet"
-        text="Mitten im historischen Altstadtkern von Überlingen liegt das Haus St. Franziskus. Das prachtvolle Gebäude, ursprünglich als Kloster von Franziskanermönchen errichtet, kann auf eine rund 750-jährige Geschichte zurückblicken. Heute hat sich das ehemalige Ordenshaus zu einer modernen und leistungsfähigen Einrichtung entwickelt, die über alle Sanierungsmaßnahmen hinweg ihr ganz besonderes Flair erhalten konnte.Die Jahrhunderte lange, durch Mönche und später durch Nonnen gelebte Nächstenliebe ist noch heute, schon beim Betreten des Hauses, deutlich spürbar."
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         image={{
             small: 'https://unsplash.it/619/348?image=400',
             medium: 'https://unsplash.it/791/445?image=400',
-            semilarge: 'https://unsplash.it/944/531?image=400',
+            semilarge: 'https://unsplash.it/968/545?image=400',
+            ratios: {
+                small: { w: 619, h: 348 },
+            },
         }}
         bgMode="inverted"
+    />
+);
+
+export const WithCustomTags: Story = () => (
+    <NewsIntro
+        tags={[
+            {
+                name: 'Tag Secondary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Tertiary',
+                link: { href: '#0' },
+            },
+            {
+                name: 'Tag Quadrifilogio',
+                link: { href: '#0' },
+            },
+        ]}
+        meta={{
+            author: 'Max Mustermann',
+            date: new Date('July 22, 2021 03:24:00'),
+        }}
+        title="Lorem ipsum dolor sit amet"
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        image={{
+            small: 'https://unsplash.it/619/348?image=400',
+            medium: 'https://unsplash.it/791/445?image=400',
+            semilarge: 'https://unsplash.it/968/545?image=400',
+            ratios: {
+                small: { w: 619, h: 348 },
+            },
+        }}
+        customTag={({ name, isActive, link }) => (
+            <a
+                style={{
+                    display: 'block',
+                    background: isActive ? 'gray' : 'lightgray',
+                }}
+                {...link}
+            >
+                {name}
+            </a>
+        )}
     />
 );

@@ -2,28 +2,26 @@ import Plus from 'components/base/icons/Plus';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
-import * as React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import { spacings, getColors as color, mq } from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { generateFAQ } from 'utils/structuredData';
+import Grid, { gridSettings } from 'components/base/Grid';
 
-const AccordionBlock = styled.ul`
+const AccordionContainer = styled.div`
     margin: 0;
     padding: 0;
-    list-style: none;
 
-    & + & {
-        margin-top: ${spacings.nudge * 2}px;
+    & > * + * {
+        margin-top: ${spacings.nudge}px;
     }
 `;
 
-const AccordionItems = styled.li`
-    cursor: pointer;
-`;
+const View = styled.details``;
 
-const AccordionHead = styled.div<{
+const AccordionHead = styled.summary<{
     isInverted?: boolean;
     hasBg?: boolean;
 }>`
@@ -32,104 +30,198 @@ const AccordionHead = styled.div<{
     align-items: center;
     justify-content: space-between;
 
-    padding: ${spacings.spacer}px;
+    padding: ${spacings.nudge * 2}px;
+    margin: 0;
+    border: none;
+    outline: none;
+    background: none;
+    user-select: none;
+    list-style: none;
 
     background: ${({ isInverted, hasBg, theme }) =>
-        isInverted || hasBg ? color(theme).light : color(theme).mono.light};
-`;
+        isInverted || hasBg
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.medium};
 
-const IconContainer = styled.div`
-    will-change: transform;
-    transition: all ease-in-out 0.2s;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
 
-    ${AccordionHead}:hover & {
-        transform: scale(1.2);
+    @media ${mq.medium} {
+        padding: ${spacings.nudge * 3}px;
+    }
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    &::marker {
+        display: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            background: ${({ theme, isInverted, hasBg }) =>
+                isInverted || hasBg
+                    ? color(theme).elementBg.lightHover
+                    : color(theme).elementBg.mediumHover};
+        }
+    }
+
+    &:focus {
+        background: ${({ theme, isInverted, hasBg }) =>
+            isInverted || hasBg
+                ? color(theme).elementBg.lightHover
+                : color(theme).elementBg.mediumHover};
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
     }
 `;
 
+const Column = styled(Copy)`
+    flex: 1 1 0;
+`;
+
 const AccordionText = styled.div<{
-    isVisible?: boolean;
     isInverted?: boolean;
     hasBg?: boolean;
     hasAside?: boolean;
-    hasColumns?: boolean;
 }>`
-    display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+    display: flex;
     flex-direction: column;
-
-    padding: ${spacings.spacer}px;
+    padding: ${spacings.nudge * 2}px;
     margin-top: 2px;
     background: ${({ isInverted, hasBg, theme }) =>
-        isInverted || hasBg ? color(theme).light : color(theme).mono.light};
+        isInverted || hasBg
+            ? color(theme).elementBg.light
+            : color(theme).elementBg.medium};
+
+    & > * {
+        max-width: 880px;
+    }
 
     & > * + * {
         margin-top: ${spacings.spacer}px;
     }
 
     @media ${mq.medium} {
+        padding: ${spacings.nudge * 3}px;
+    }
+
+    @media ${mq.semilarge} {
         flex-direction: row;
-        padding-bottom: ${({ hasAside }) =>
-            hasAside && spacings.spacer * 2 + 'px'};
 
         & > * + * {
-            margin-top: 0;
-            margin-left: ${spacings.spacer}px;
-        }
-
-        & > *:first-child {
-            flex: ${({ hasAside, hasColumns }) =>
-                !hasAside && !hasColumns
-                    ? '0 1 75%'
-                    : hasAside
-                    ? '0 1 50%'
-                    : undefined};
-        }
-
-        & > *:last-child {
-            flex: ${({ hasAside }) => hasAside && ' 0 1 50%'};
+            margin-top: 0px;
+            margin-left: ${gridSettings.gutter}px;
         }
     }
 `;
 
-const Accordion: React.FC<{
-    items: {
-        label?: string;
-        text?: string;
-        aside?: string;
-        hasColumns?: boolean;
-    }[];
+interface AccordionItem {
+    label?: string;
+    text?: string;
+    aside?: string;
+}
 
+const AccordionBlock: React.FC<
+    AccordionItem & {
+        isSelected?: boolean;
+        onClick?: () => void;
+        isInverted?: boolean;
+        hasBg?: boolean;
+        itemIcon?: (props: { isSelected: boolean }) => React.ReactNode;
+        className?: string;
+    }
+> = ({
+    label,
+    text,
+    aside,
+    isSelected,
+    onClick,
+    hasBg,
+    isInverted,
+    itemIcon,
+    className,
+}) => {
+    const { colors } = useLibTheme();
+
+    return (
+        <View open={isSelected} onToggle={onClick} className={className}>
+            <AccordionHead isInverted={isInverted} hasBg={hasBg}>
+                <Copy renderAs="span" size="big" type="copy-b">
+                    {label}
+                </Copy>
+                <span>
+                    {itemIcon ? (
+                        itemIcon({ isSelected: isSelected || false })
+                    ) : isSelected ? (
+                        <Minus iconColor={colors.text.default} />
+                    ) : (
+                        <Plus iconColor={colors.text.default} />
+                    )}
+                </span>
+            </AccordionHead>
+            <AccordionText
+                isInverted={isInverted}
+                hasBg={hasBg}
+                hasAside={!!aside}
+            >
+                {text && <Column type="copy" innerHTML={text} />}
+                {aside && <Column type="copy" innerHTML={aside} />}
+            </AccordionText>
+        </View>
+    );
+};
+
+const Accordion: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
+    /** Array of accordion items */
+    items?: AccordionItem[];
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ items, bgMode }) => {
+
+    /** Function to inject custom item state icon */
+    itemIcon?: (props: { isSelected: boolean }) => React.ReactNode;
+}> = ({ anchorId, items, bgMode, itemIcon }) => {
     const [currentItems, setCurrentItems] = React.useState<number[]>([]);
 
-    const theme = React.useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
     return (
         <Section
             addSeperation
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? colors.sectionBg.dark
                     : hasBg
-                    ? color(theme).mono.light
-                    : 'transparent'
+                    ? colors.sectionBg.medium
+                    : colors.sectionBg.light
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            {generateFAQ(items)}
+            {items && generateFAQ(items)}
             <Wrapper addWhitespace>
-                {items &&
-                    items.map(({ label, text, aside, hasColumns }, i) => {
-                        const isSelected = currentItems.indexOf(i) !== -1;
-                        return (
-                            <AccordionBlock key={i}>
-                                <AccordionItems>
-                                    <AccordionHead
-                                        isInverted={isInverted}
-                                        hasBg={hasBg}
+                <Grid.Row gutter={0}>
+                    <Grid.Col>
+                        <AccordionContainer aria-label="Accordion Control Group Buttons">
+                            {items?.map(({ label, text, aside }, i) => {
+                                const isSelected =
+                                    currentItems.indexOf(i) !== -1;
+                                return (
+                                    <AccordionBlock
+                                        key={`${label}_${i}`}
+                                        isSelected={isSelected}
+                                        label={label}
+                                        text={text}
+                                        aside={aside}
                                         onClick={() => {
                                             setCurrentItems((prev) => {
                                                 const copy = [...prev];
@@ -142,53 +234,15 @@ const Accordion: React.FC<{
                                                 return copy;
                                             });
                                         }}
-                                    >
-                                        <Copy size="big" type="copy-b">
-                                            {label}
-                                        </Copy>
-                                        <IconContainer>
-                                            {isSelected ? (
-                                                <Minus
-                                                    iconColor={
-                                                        color(theme).dark
-                                                    }
-                                                />
-                                            ) : (
-                                                <Plus
-                                                    iconColor={
-                                                        color(theme).dark
-                                                    }
-                                                />
-                                            )}
-                                        </IconContainer>
-                                    </AccordionHead>
-                                    <AccordionText
                                         isInverted={isInverted}
                                         hasBg={hasBg}
-                                        isVisible={isSelected}
-                                        hasAside={!!aside}
-                                        hasColumns={hasColumns}
-                                    >
-                                        {text && (
-                                            <Copy
-                                                type="copy"
-                                                innerHTML={text}
-                                                columns={
-                                                    !aside ? hasColumns : false
-                                                }
-                                            />
-                                        )}
-                                        {aside && (
-                                            <Copy
-                                                type="copy"
-                                                innerHTML={aside}
-                                            />
-                                        )}
-                                    </AccordionText>
-                                </AccordionItems>
-                            </AccordionBlock>
-                        );
-                    })}
+                                        itemIcon={itemIcon}
+                                    />
+                                );
+                            })}
+                        </AccordionContainer>
+                    </Grid.Col>
+                </Grid.Row>
             </Wrapper>
         </Section>
     );

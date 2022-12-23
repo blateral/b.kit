@@ -1,9 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { mq, spacings } from 'utils/styles';
+import { spacings } from 'utils/styles';
 
 export type ClampWidthType = 'small' | 'normal' | 'large';
+
+export const wrapperWhitespace = spacings.nudge * 2;
 
 const View = styled.div<{
     clampWidth?: ClampWidthType;
@@ -11,45 +13,30 @@ const View = styled.div<{
 }>`
     position: relative;
     width: 100%;
-    max-width: ${({ clampWidth }) =>
-        clampWidth === 'large'
-            ? spacings.wrapperLarge
-            : clampWidth === 'small'
-            ? spacings.wrapperSmall
-            : spacings.wrapper}px;
+    max-width: ${({ clampWidth }) => {
+        switch (clampWidth) {
+            case 'large':
+                return `${spacings.wrapperLarge}px`;
+
+            case 'small':
+                return `${spacings.wrapperSmall}px`;
+
+            default:
+            case 'normal':
+                return `${spacings.wrapper}px`;
+        }
+    }};
     margin-left: auto;
     margin-right: auto;
-    padding: 0 ${({ addWhitespace }) => (addWhitespace ? spacings.spacer : 0)}px;
-
-    @media ${mq.semilarge} {
-        padding-left: ${({ addWhitespace }) =>
-            addWhitespace ? (1 / 28) * 100 : 0}%;
-        padding-left: ${({ addWhitespace }) =>
-            addWhitespace
-                ? `
-                      max(
-                          ${spacings.spacer}px,
-                          ${(1 / 28) * 100}%
-                      );
-                  `
-                : 0};
-
-        padding-right: ${({ addWhitespace }) =>
-            addWhitespace ? spacings.spacer : 0}px;
-    }
-
-    @media ${mq.xlarge} {
-        padding-left: ${({ addWhitespace }) =>
-            addWhitespace ? (1 / 28) * spacings.wrapper : 0}px;
-        padding-right: ${({ addWhitespace }) =>
-            addWhitespace ? spacings.spacer : 0}px;
-    }
+    padding: 0
+        ${({ addWhitespace }) => (addWhitespace ? wrapperWhitespace : 0)}px;
 `;
 
 const Wrapper: React.FC<{
     addWhitespace?: boolean;
     clampWidth?: ClampWidthType;
     className?: string;
+    children?: React.ReactNode;
 }> = ({
     addWhitespace = false,
     clampWidth = 'normal',

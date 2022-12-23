@@ -1,57 +1,114 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { spacings, getColors as color } from 'utils/styles';
-import Copy from 'components/typography/Copy';
+import { copyStyle } from 'components/typography/Copy';
+import Link, { LinkProps } from 'components/typography/Link';
+import { getColors, spacings } from 'utils/styles';
 
-const View = styled(Copy)<{
+const View = styled(Link)<{
     isInverted?: boolean;
     isActive?: boolean;
-    onClick?: () => void;
+    isClickable?: boolean;
 }>`
     display: inline-block;
     border: 1px solid
-        ${({ isInverted, theme }) =>
-            isInverted ? color(theme).light : color(theme).dark};
-    border-radius: 15px;
+        ${({ isInverted }) => (isInverted ? '#dddddd' : '#444444')};
+    border-radius: 8px;
 
-    padding: 3px ${spacings.nudge * 2}px;
+    padding: 1px ${spacings.nudge}px;
+    max-height: 28px;
+    min-width: 60px;
     user-select: none;
 
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: center;
-    background: ${({ isActive, isInverted, theme }) =>
-        isActive && (isInverted ? color(theme).light : color(theme).dark)};
-    color: ${({ isActive, isInverted, theme }) =>
-        isActive && (isInverted ? color(theme).dark : color(theme).light)};
-    cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')};
 
-    transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+    text-decoration: none;
 
-    &:hover {
-        background: ${({ theme, isInverted, onClick }) =>
-            onClick && (isInverted ? color(theme).light : color(theme).dark)};
-        color: ${({ theme, isInverted, onClick }) =>
-            onClick && (isInverted ? color(theme).dark : color(theme).light)};
+    ${copyStyle('copy', 'small')}
+
+    background: none;
+
+    && {
+        background-color: ${({ isActive, isInverted }) =>
+            isActive && (isInverted ? '#dddddd' : '#444444')};
+        color: ${({ isActive, isInverted }) => {
+            if (isActive) {
+                return isInverted ? '#444444' : '#ffff';
+            } else {
+                return isInverted ? '#dddddd' : '#444444';
+            }
+        }};
+
+        transition: background-color 0.2s ease-in-out, color 0.1s ease-in-out;
+    }
+
+    cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
+
+    ${({ isClickable, isInverted }) =>
+        isClickable &&
+        css`
+            @media (hover: hover) and (pointer: fine) {
+                &&:hover {
+                    background-color: ${isInverted ? '#dddddd' : '#444444'};
+                    color: ${isInverted ? '#444444' : '#ffff'};
+                }
+            }
+        `}
+
+    &:focus {
+        /* background-color: ${({ isInverted }) =>
+            isInverted ? '#dddddd' : '#444444'};
+        color: ${({ isInverted }) => (isInverted ? '#444444' : '#ffff')}; */
+        outline: 2px solid
+            ${({ isInverted, theme }) =>
+                isInverted
+                    ? getColors(theme).primary.inverted
+                    : getColors(theme).primary.default};
+        outline-offset: -1px;
+        text-decoration: underline;
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+        text-decoration: none;
     }
 `;
 
-const Tag: FC<{
-    isInverted?: boolean;
-    isActive?: boolean;
-    onClick?: () => void;
-    className?: string;
-}> = ({ isInverted, isActive, onClick, className, children }) => {
+export interface TagProps {
+    name?: string;
+    link?: LinkProps;
+}
+
+const Tag: FC<
+    TagProps & {
+        /** Invert colors to use on dark background */
+        isInverted?: boolean;
+
+        /** Highlight tag if active */
+        isActive?: boolean;
+
+        /** Click callback */
+        onClick?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
+        className?: string;
+        children?: React.ReactNode;
+    }
+> = ({ name, link, isInverted, isActive, onClick, className, children }) => {
+    const tag = link?.href ? 'a' : onClick ? 'button' : 'span';
+
     return (
         <View
+            as={tag}
             isInverted={isInverted}
             isActive={isActive}
             onClick={onClick}
+            isClickable={!!onClick || !!(link && link.href)}
             className={className}
+            {...link}
         >
-            {children}
+            {name || children}
         </View>
     );
 };

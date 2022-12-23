@@ -34,26 +34,27 @@ const TimelineBlock = styled.div<{
         box-sizing: content-box;
         border: 2px solid
             ${({ theme, isInverted }) =>
-                isInverted ? color(theme).light : color(theme).dark};
+                isInverted
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.dark};
         border-radius: 50%;
 
         background: ${({ theme, isActive, isInverted }) =>
             isActive
                 ? isInverted
-                    ? color(theme).light
-                    : color(theme).dark
+                    ? color(theme).elementBg.light
+                    : color(theme).elementBg.dark
                 : isInverted
-                ? color(theme).dark
-                : color(theme).light};
+                ? color(theme).elementBg.dark
+                : color(theme).elementBg.light};
 
         position: absolute;
-        top: 0;
+        top: 16px;
         left: 0px;
 
         transition: all 0.2s ease-in-out;
 
         @media ${mq.large} {
-            top: 0;
             left: ${({ isSwitched }) => (!isSwitched ? '50%' : 'auto')};
             right: ${({ isSwitched }) => isSwitched && '50%'};
             transform: translateX(
@@ -70,7 +71,9 @@ const TimelineBlock = styled.div<{
         min-height: 160px;
         height: 100%;
         background: ${({ theme, isInverted }) =>
-            isInverted ? color(theme).light : color(theme).dark};
+            isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
         left: 5px;
 
         @media ${mq.large} {
@@ -78,12 +81,22 @@ const TimelineBlock = styled.div<{
             transform: translateX(-50%);
         }
     }
+
+    &:first-child {
+        padding-top: 0;
+
+        &:before {
+            top: 16px;
+        }
+    }
 `;
 
-const TimelineText = styled.div<{ isSwitched?: boolean }>`
+const TimelineText = styled.div<{
+    isSwitched?: boolean;
+}>`
     position: relative;
-    padding: ${spacings.spacer}px;
-    padding-bottom: ${spacings.spacer * 2}px;
+    padding-left: ${spacings.nudge * 3 + 2}px;
+    padding-bottom: ${spacings.spacer}px;
 
     @media ${mq.large} {
         max-width: 50%;
@@ -93,12 +106,16 @@ const TimelineText = styled.div<{ isSwitched?: boolean }>`
 
         padding: ${({ isSwitched }) =>
             isSwitched
-                ? `${spacings.spacer * 2}px 0 ${spacings.spacer * 2}px ${
-                      spacings.spacer * 1.5
+                ? `${spacings.spacer}px 0 ${spacings.spacer * 1.75}px ${
+                      spacings.spacer
                   }px`
-                : `${spacings.spacer * 2}px ${spacings.spacer * 1.5}px ${
-                      spacings.spacer * 2
+                : `${spacings.spacer}px ${spacings.spacer}px ${
+                      spacings.spacer * 1.75
                   }px 0`};
+    }
+
+    &:first-child {
+        padding-top: 0;
     }
 
     & > * + * {
@@ -106,10 +123,17 @@ const TimelineText = styled.div<{ isSwitched?: boolean }>`
     }
 `;
 
+const ItemTitle = styled(Heading)``;
+
+const ItemTextBlock = styled(Copy)``;
+
 const Timeline: React.FC<{
+    /** ID value for targeting section with anchor hashes */
+    anchorId?: string;
+
     items?: { label?: string; title?: string; text?: string }[];
     bgMode?: 'full' | 'inverted';
-}> = ({ bgMode, items }) => {
+}> = ({ anchorId, bgMode, items }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -161,11 +185,12 @@ const Timeline: React.FC<{
 
     return (
         <Section
+            anchorId={anchorId}
             bgColor={
                 isInverted
-                    ? color(theme).dark
+                    ? color(theme).sectionBg.dark
                     : hasBg
-                    ? color(theme).mono.light
+                    ? color(theme).sectionBg.medium
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, true)}
@@ -183,28 +208,25 @@ const Timeline: React.FC<{
                                 key={i}
                             >
                                 <TimelineText isSwitched={i % 2 === 0}>
-                                    <div>
-                                        <Heading
-                                            size="heading-1"
-                                            textColor={
-                                                isInverted
-                                                    ? color(theme).light
-                                                    : color(theme).secondary
-                                                          .dark
-                                            }
-                                        >
-                                            {item.label}
-                                        </Heading>
-                                    </div>
-                                    <div>
-                                        <Heading
-                                            size="heading-3"
-                                            isInverted={isInverted}
-                                        >
-                                            {item.title}
-                                        </Heading>
-                                    </div>
-                                    <Copy
+                                    <ItemTitle
+                                        size="heading-2"
+                                        textColor={
+                                            isInverted
+                                                ? color(theme).text.inverted
+                                                : color(theme).text.default
+                                        }
+                                    >
+                                        {item.label}
+                                    </ItemTitle>
+
+                                    <ItemTextBlock
+                                        type="copy-b"
+                                        size="big"
+                                        isInverted={isInverted}
+                                    >
+                                        {item.title}
+                                    </ItemTextBlock>
+                                    <ItemTextBlock
                                         innerHTML={item.text}
                                         isInverted={isInverted}
                                     />
