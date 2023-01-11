@@ -145,45 +145,35 @@ const Feature = forwardRef<
                         />
                     </ImageContainer>
                 )}
-                {title && (
-                    <TitleLink
-                        {...link}
-                        isInverted={isInverted}
-                        ariaLabel={title}
-                        data-sheet="title"
-                    >
-                        {title}
-                    </TitleLink>
-                )}
-                {description && (
+                <TitleLink
+                    {...link}
+                    isInverted={isInverted}
+                    ariaLabel={title}
+                    data-sheet="title"
+                >
+                    {title}
+                </TitleLink>
+                <Copy
+                    size="small"
+                    isInverted={isInverted}
+                    data-sheet="desc"
+                    innerHTML={description}
+                />
+                <ArticleContent isCentered={isCentered}>
                     <Copy
-                        size="small"
+                        type="copy-b"
                         isInverted={isInverted}
-                        data-sheet="desc"
-                        innerHTML={description}
+                        innerHTML={intro}
+                        data-sheet="intro"
                     />
-                )}
-                {(intro || text) && (
-                    <ArticleContent isCentered={isCentered}>
-                        {intro && (
-                            <Copy
-                                type="copy-b"
-                                isInverted={isInverted}
-                                innerHTML={intro}
-                                data-sheet="intro"
-                            />
-                        )}
-                        {text && (
-                            <Copy
-                                type="copy"
-                                size="medium"
-                                isInverted={isInverted}
-                                innerHTML={text}
-                                data-sheet="text"
-                            />
-                        )}
-                    </ArticleContent>
-                )}
+                    <Copy
+                        type="copy"
+                        size="medium"
+                        isInverted={isInverted}
+                        innerHTML={text}
+                        data-sheet="text"
+                    />
+                </ArticleContent>
                 {action && <Action>{action(isInverted)}</Action>}
             </View>
         );
