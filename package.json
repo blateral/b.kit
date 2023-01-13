@@ -111,13 +111,15 @@
     "exports": {
         ".": {
             "import": "./lib/esm/index.js",
-            "require": "./dist/cjs/index.js",
-            "default": "./lib/esm/index.js"
+            "require": "./lib/cjs/index.js",
+            "default": "./lib/esm/index.js",
+            "types": "./lib/types/index.d.ts"
         },
         "./hooks": {
-            "import": "./dist/esm/hooks.js",
-            "require": "./dist/cjs/hooks.js",
-            "default": "./dist/esm/hooks.js"
+            "import": "./lib/esm/hooks.js",
+            "require": "./lib/cjs/hooks.js",
+            "default": "./lib/esm/hooks.js",
+            "types": "./lib/types/hooks.d.ts"
         }
     }
 }
