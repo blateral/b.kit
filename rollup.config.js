@@ -6,19 +6,25 @@ import ttypescript from 'ttypescript';
 import { terser } from 'rollup-plugin-terser';
 import { babel } from '@rollup/plugin-babel';
 import del from 'rollup-plugin-delete';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
 
-import packageJson from './package.json';
+// import packageJson from './package.json';
 
 export default {
-    input: './src/index.ts',
+    input: {
+        index: './src/index.ts',
+        hooks: './src/hooks.ts',
+    },
     output: [
         {
-            file: packageJson.main,
+            dir: 'lib/cjs',
             format: 'cjs',
+            name: 'bkit',
             sourcemap: true,
+            plugins: [terser()],
         },
         {
-            file: packageJson.module,
+            dir: 'lib/esm',
             format: 'esm',
             sourcemap: true,
         },
@@ -26,15 +32,18 @@ export default {
     plugins: [
         del({ targets: 'lib' }),
         peerDepsExternal(),
-        resolve(),
         commonjs(),
+        resolve(),
         typescript({
             typescript: ttypescript,
+            useTsconfigDeclarationDir: true,
             tsconfigOverride: {
                 exclude: ['src/stories', 'src/tests'],
             },
         }),
-        babel({ babelHelpers: 'bundled' }),
-        terser(),
+        babel({
+            babelHelpers: 'bundled',
+            extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
+        }),
     ],
 };

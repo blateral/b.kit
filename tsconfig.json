@@ -23,6 +23,7 @@
         "isolatedModules": true,
         "declaration": true,
         "declarationMap": true,
+        "declarationDir": "lib/types",
         "sourceMap": true,
         "plugins": [
             {

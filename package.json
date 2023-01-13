@@ -2,11 +2,14 @@
     "name": "@blateral/b.kit",
     "version": "2.0.0",
     "description": "",
-    "main": "lib/index.js",
-    "module": "lib/index.es.js",
-    "types": "lib/index.d.ts",
+    "main": "lib/cjs/index.js",
+    "module": "lib/esm/index.js",
+    "types": "lib/types/index.d.ts",
+    "sideEffects": false,
     "files": [
-        "lib"
+        "lib/cjs/*",
+        "lib/esm/*",
+        "lib/types/*"
     ],
     "scripts": {
         "build": "yarn test && rollup -c",
@@ -94,5 +97,27 @@
         "@types/react-dom": "^18",
         "styled-components": "^5",
         "typescript": "^4"
+    },
+    "typesVersions": {
+        "*": {
+            "*": [
+                "lib/types/index.d.ts"
+            ],
+            "hooks": [
+                "lib/types/hooks.d.ts"
+            ]
+        }
+    },
+    "exports": {
+        ".": {
+            "import": "./lib/esm/index.js",
+            "require": "./dist/cjs/index.js",
+            "default": "./lib/esm/index.js"
+        },
+        "./hooks": {
+            "import": "./dist/esm/hooks.js",
+            "require": "./dist/cjs/hooks.js",
+            "default": "./dist/esm/hooks.js"
+        }
     }
 }
