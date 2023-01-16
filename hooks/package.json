@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../lib/esm/hooks.js",
+    "jsnext:main": "../lib/esm/hooks.js",
+    "module": "../lib/esm/hooks.js",
+    "types": "../lib/types/hooks.d.ts"
+}

@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../lib/esm/sections.js",
+    "jsnext:main": "../lib/esm/sections.js",
+    "module": "../lib/esm/sections.js",
+    "types": "../lib/types/sections.d.ts"
+}

@@ -14,6 +14,7 @@ export default {
     input: {
         index: './src/index.ts',
         hooks: './src/hooks.ts',
+        sections: './src/sections.ts',
     },
     output: [
         {
@@ -39,6 +40,7 @@ export default {
             useTsconfigDeclarationDir: true,
             tsconfigOverride: {
                 exclude: ['src/stories', 'src/tests'],
+                sourceRoot: '/types/',
             },
         }),
         babel({
