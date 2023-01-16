@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../lib/esm/icons.js",
+    "jsnext:main": "../lib/esm/icons.js",
+    "module": "../lib/esm/icons.js",
+    "types": "../lib/types/icons.d.ts"
+}

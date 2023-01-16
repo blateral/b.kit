@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import styled from 'styled-components';
 
 import Control from 'components/buttons/Control';
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 
 export default {
     title: 'Buttons/Control',

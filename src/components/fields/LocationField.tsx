@@ -20,7 +20,7 @@ import { LeafletMouseEvent } from 'leaflet';
 import useLazyInput from 'utils/useLazyInput';
 import useUpdateEffect from 'utils/useUpdateEffect';
 import useGeolocation from 'utils/useGeolocation';
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 
 const MapWrapper = styled.div<{ isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};

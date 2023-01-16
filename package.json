@@ -11,7 +11,10 @@
         "lib/esm/*",
         "lib/types/*",
         "hooks",
-        "sections"
+        "sections",
+        "icons",
+        "blocks",
+        "cookies"
     ],
     "scripts": {
         "build": "yarn test && rollup -c",

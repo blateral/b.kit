@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import LanguageSwitcher, { Language } from 'components/blocks/LanguageSwitcher';
 import FooterBottomGrid from '../skeletons/FooterBottomGrid';
 import { BottomLink } from '../Footer';
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 import { isValidArray } from 'utils/arrays';
 import styled from 'styled-components';
 import { spacings } from 'utils/styles';

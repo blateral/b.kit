@@ -1,9 +1,4 @@
 export { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-export {
-    setCookie,
-    deleteCookie,
-    getCookie,
-} from 'utils/cookie-consent/cookie';
 export { default as useIE } from 'utils/useIE';
 export { useItemHeight } from 'utils/useItemHeight';
 export { useFontsLoaded } from 'utils/useFontsLoaded';

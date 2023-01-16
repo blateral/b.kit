@@ -28,7 +28,7 @@ import { hexToRgba } from 'utils/hexRgbConverter';
 import FieldWrapper from './FormField';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 import { getFormFieldTextSize } from 'utils/formFieldText';
 import { isEqual } from 'date-fns';
 

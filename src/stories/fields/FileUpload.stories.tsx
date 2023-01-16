@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Meta, Story } from '@storybook/react';
 import FileUpload from 'components/fields/FileUpload';
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 
 export default {
     title: 'fields/FileUpload',

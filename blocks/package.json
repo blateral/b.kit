@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../lib/esm/blocks.js",
+    "jsnext:main": "../lib/esm/blocks.js",
+    "module": "../lib/esm/blocks.js",
+    "types": "../lib/types/blocks.d.ts"
+}

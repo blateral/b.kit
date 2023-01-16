@@ -4,7 +4,7 @@ import JobArticle, {
     JobArticleComponent,
 } from 'components/sections/jobs/JobArticle';
 import Button from 'components/buttons/Button';
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 
 export default {
     title: 'Sections / Jobs / JobArticle',

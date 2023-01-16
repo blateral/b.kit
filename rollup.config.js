@@ -15,6 +15,9 @@ export default {
         index: './src/index.ts',
         hooks: './src/hooks.ts',
         sections: './src/sections.ts',
+        icons: './src/icons.ts',
+        blocks: './src/blocks.ts',
+        cookies: './src/cookies.ts',
     },
     output: [
         {

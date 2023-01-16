@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 import React from 'react';
 
 import { css, DefaultTheme } from 'styled-components';

@@ -4,7 +4,7 @@ import { Meta, Story } from '@storybook/react';
 import DynamicForm, {
     DynamicFormComponent,
 } from 'components/sections/form/DynamicForm';
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 
 export default {
     title: 'Sections / DynamicForm',

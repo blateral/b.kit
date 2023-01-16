@@ -10,7 +10,7 @@ import {
 } from 'utils/styles';
 import FieldWrapper from './FormField';
 import { FormProps } from './Textfield';
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 import { getFormFieldTextSize } from 'utils/formFieldText';
 
 const FieldView = styled(FieldWrapper.View)`

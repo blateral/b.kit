@@ -27,7 +27,7 @@ import { generateLocalBusiness } from 'utils/structuredData';
 import Link from 'components/typography/Link';
 import LocationPin from 'components/base/icons/LocationPin';
 import Control from 'components/buttons/Control';
-import * as Icons from 'components/base/icons/Icons';
+import * as Icons from 'icons';
 import { getSVGDataImg as getSVGData } from 'utils/dataURI';
 import useLeafletMap from 'utils/useLeafletMap';
 import { isValidArray } from 'utils/arrays';
