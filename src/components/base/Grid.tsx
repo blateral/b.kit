@@ -368,6 +368,7 @@ const StyledCol = styled.div<GridProps & ColProps>`
     ${getLeftRight};
     ${getGutter('col')}
     display: inline-grid;
+    grid-template-columns: 100%;
     position: relative;
 
     ${getTextAlign}
