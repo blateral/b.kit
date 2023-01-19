@@ -79,6 +79,73 @@ export const Default: Story = () => (
     />
 );
 
+export const TextAlignment: Story = () => (
+    <FeatureList
+        features={[
+            {
+                title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
+                description: 'Name/ Place/Position/ Telefon/Date',
+                intro: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+                link: { href: '#test' },
+                ...actions,
+                image: {
+                    small: 'https://unsplash.it/640/640?image=70',
+                    medium: 'https://unsplash.it/832/832?image=70',
+                    semilarge: 'https://unsplash.it/600/600?image=70',
+                    ratios: {
+                        small: { w: 640, h: 640 },
+                    },
+                },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
+                intro: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+                link: { href: '#test' },
+                ...actions,
+                image: {
+                    small: 'https://unsplash.it/640/640?image=70',
+                    medium: 'https://unsplash.it/832/832?image=70',
+                    semilarge: 'https://unsplash.it/600/600?image=70',
+                    ratios: {
+                        small: { w: 640, h: 640 },
+                    },
+                },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
+                description: 'Name/ Place/Position/ Telefon/Date',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
+                link: { href: '#test' },
+                ...actions,
+                image: {
+                    small: 'https://unsplash.it/640/640?image=70',
+                    medium: 'https://unsplash.it/832/832?image=70',
+                    semilarge: 'https://unsplash.it/600/600?image=70',
+                    ratios: {
+                        small: { w: 640, h: 640 },
+                    },
+                },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
+                description: 'Name/ Place/Position/ Telefon/Date',
+                link: { href: '#test' },
+                ...actions,
+                image: {
+                    small: 'https://unsplash.it/640/640?image=70',
+                    medium: 'https://unsplash.it/832/832?image=70',
+                    semilarge: 'https://unsplash.it/600/600?image=70',
+                    ratios: {
+                        small: { w: 640, h: 640 },
+                    },
+                },
+            },
+        ]}
+    />
+);
+
 export const ImgRatioA: Story = () => (
     <FeatureList
         features={exampleFeaturesUneven.map((item, i) => ({

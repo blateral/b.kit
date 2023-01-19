@@ -367,7 +367,7 @@ const StyledCol = styled.div<GridProps & ColProps>`
     ${getWidth};
     ${getLeftRight};
     ${getGutter('col')}
-    display: block;
+    display: inline-grid;
     position: relative;
 
     ${getTextAlign}
