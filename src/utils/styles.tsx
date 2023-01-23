@@ -440,6 +440,7 @@ export interface GlobalSettings {
 
         /** Customnize gradient for all text on image background gradients */
         imageTextGradient: string;
+        secondayImageTextGradient?: string;
 
         /** Show placeholder background unitl image has been loaded */
         imagePlaceholderBg: {
@@ -569,6 +570,13 @@ const defaultGlobalSettings: GlobalSettings = {
                 rgba(0, 0, 0, 0) 100%
             );
         `,
+        secondayImageTextGradient: `linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0.3) 30%,
+            rgba(0, 0, 0, 0.2) 60%,
+            rgba(0, 0, 0, 0.15) 100%
+        );`,
         imagePlaceholderBg: {
             default: '#e2e2e2',
             inverted: '#1e1c1f',
