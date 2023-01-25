@@ -35,7 +35,7 @@ export const Default: Story = () => (
                 ],
                 locations: [
                     { name: 'Tuttlingen', addressCountry: 'DE' },
-                    { name: 'Sipplingen', addressCountry: 'DE' },
+                    { name: 'Sipplingen', addressCountry: 'en' },
                 ],
                 link: { href: '#0' },
             },
@@ -46,7 +46,7 @@ export const Default: Story = () => (
                     { name: 'Teilzeit', type: 'PART_TIME' },
                 ],
                 locations: [
-                    { name: 'Tuttlingen', addressCountry: 'DE' },
+                    { name: 'Friedrichshafen', addressCountry: 'DE' },
                     { name: 'Sipplingen', addressCountry: 'DE' },
                 ],
                 link: { href: '#0' },
