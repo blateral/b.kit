@@ -92,7 +92,10 @@ const Poster: FC<{
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
 
+    /** Align text and actions vertically */
     verticallyCentered?: boolean;
+
+    /** Align text and actions horizontally */
     horizontallyCentered?: boolean;
 }> = ({
     anchorId,
