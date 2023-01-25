@@ -469,3 +469,115 @@ export const WithAllLocationsLabel: Story = () => (
         ]}
     />
 );
+
+export const WithFilter: Story = () => (
+    <JobList
+        hasFilter
+        totalJobLocations={2}
+        allJobLocationsLabel="All locations"
+        jobs={[
+            {
+                jobTitle: 'Jobtitle 1<br/>(m/w/d)',
+                employmentTypes: [
+                    { name: 'Vollzeit', type: 'FULL_TIME' },
+                    { name: 'Teilzeit', type: 'PART_TIME' },
+                ],
+                locations: [
+                    { name: 'Tuttlingen', addressCountry: 'DE' },
+                    { name: 'Sipplingen', addressCountry: 'DE' },
+                ],
+                link: { href: '#0' },
+            },
+            {
+                jobTitle: `Jobtitle 2<br/>(m/w/d)`,
+                employmentTypes: [
+                    { name: 'Vollzeit', type: 'FULL_TIME' },
+                    { name: 'Teilzeit', type: 'PART_TIME' },
+                ],
+                locations: [{ name: 'Tuttlingen', addressCountry: 'DE' }],
+                link: { href: '#0' },
+            },
+            {
+                jobTitle: `Jobtitle 3<br/>(m/w/d)`,
+                employmentTypes: [
+                    { name: 'Vollzeit', type: 'FULL_TIME' },
+                    { name: 'Teilzeit', type: 'PART_TIME' },
+                ],
+                locations: [
+                    { name: 'Tuttlingen', addressCountry: 'DE' },
+                    { name: 'Sipplingen', addressCountry: 'DE' },
+                ],
+                link: { href: '#0' },
+            },
+            {
+                jobTitle: `Jobtitle 4<br/>(m/w/d)`,
+                employmentTypes: [
+                    { name: 'Vollzeit', type: 'FULL_TIME' },
+                    { name: 'Teilzeit', type: 'PART_TIME' },
+                ],
+                locations: [{ name: 'Tuttlingen', addressCountry: 'DE' }],
+                link: { href: '#0' },
+            },
+            {
+                jobTitle: `Jobtitle 5<br/>(m/w/d)`,
+                employmentTypes: [
+                    { name: 'Vollzeit', type: 'FULL_TIME' },
+                    { name: 'Teilzeit', type: 'PART_TIME' },
+                ],
+                locations: [
+                    { name: 'Tuttlingen', addressCountry: 'DE' },
+                    { name: 'Sipplingen', addressCountry: 'DE' },
+                ],
+                link: { href: '#0' },
+            },
+            {
+                jobTitle: `Jobtitle 6<br/>(m/w/d)`,
+                employmentTypes: [
+                    { name: 'Vollzeit', type: 'FULL_TIME' },
+                    { name: 'Teilzeit', type: 'PART_TIME' },
+                ],
+                locations: [
+                    { name: 'Tuttlingen', addressCountry: 'DE' },
+                    { name: 'Sipplingen', addressCountry: 'DE' },
+                ],
+                link: { href: '#0' },
+            },
+            {
+                jobTitle: `Jobtitle 7<br/>(m/w/d)`,
+                employmentTypes: [
+                    { name: 'Vollzeit', type: 'FULL_TIME' },
+                    { name: 'Teilzeit', type: 'PART_TIME' },
+                ],
+                locations: [
+                    { name: 'Tuttlingen', addressCountry: 'DE' },
+                    { name: 'Sipplingen', addressCountry: 'DE' },
+                ],
+                link: { href: '#0' },
+            },
+            {
+                jobTitle: `Jobtitle 8<br/>(m/w/d)`,
+                employmentTypes: [
+                    { name: 'Vollzeit', type: 'FULL_TIME' },
+                    { name: 'Teilzeit', type: 'PART_TIME' },
+                ],
+                locations: [
+                    { name: 'Tuttlingen', addressCountry: 'DE' },
+                    { name: 'Sipplingen', addressCountry: 'DE' },
+                ],
+                link: { href: '#0' },
+            },
+            {
+                jobTitle: `Jobtitle 9<br/>(m/w/d)`,
+                employmentTypes: [
+                    { name: 'Vollzeit', type: 'FULL_TIME' },
+                    { name: 'Teilzeit', type: 'PART_TIME' },
+                ],
+                locations: [
+                    { name: 'Tuttlingen', addressCountry: 'DE' },
+                    { name: 'Sipplingen', addressCountry: 'DE' },
+                ],
+                link: { href: '#0' },
+            },
+        ]}
+    />
+);

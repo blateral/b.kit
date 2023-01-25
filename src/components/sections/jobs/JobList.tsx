@@ -239,6 +239,7 @@ const JobList: React.FC<{
     locationIcon?: () => React.ReactNode;
 
     placeholder?: string;
+    hasFilter?: boolean;
 }> = ({
     anchorId,
     jobs,
@@ -247,6 +248,8 @@ const JobList: React.FC<{
     locationIcon,
     totalJobLocations,
     allJobLocationsLabel,
+    placeholder,
+    hasFilter,
 }) => {
     const { colors } = useLibTheme();
 
@@ -424,11 +427,13 @@ const JobList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <Filter
-                    placeholder="Suche"
-                    value={filterQuery}
-                    onSubmit={setFilterQuery}
-                />
+                {hasFilter && (
+                    <Filter
+                        placeholder={placeholder || 'Suche'}
+                        value={filterQuery}
+                        onSubmit={setFilterQuery}
+                    />
+                )}
                 <List>
                     {filteredJobs?.map((job, i) => (
                         <Item key={i}>
