@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import Section from 'components/base/Section';
 import Wrapper, { wrapperWhitespace } from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
-import { spacings, getGlobals as global, mq } from 'utils/styles';
+import { spacings, getGlobals as global } from 'utils/styles';
 import IntroBlock from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 import { withLibTheme } from 'utils/LibThemeProvider';
@@ -29,7 +29,7 @@ const Container = styled.figure<{
         right: 0;
         background: ${({ theme, verticallyCentered }) =>
             verticallyCentered
-                ? global(theme).sections.secondayImageTextGradient
+                ? global(theme).sections.imageTextGradientCentered
                 : global(theme).sections.imageTextGradient};
         pointer-events: none;
         z-index: 0;
@@ -59,24 +59,6 @@ const Intro = styled(IntroBlock)<{
 
     transform: ${({ verticallyCentered }) =>
         verticallyCentered ? 'translate(-50%, -50%)' : 'translateX(-50%)'};
-
-    ${({ verticallyCentered }) =>
-        verticallyCentered &&
-        css`
-            & > * {
-                & > * {
-                    text-align: center;
-                }
-            }
-
-            @media ${mq.semilarge} {
-                & > * {
-                    & > * {
-                        text-align: inherit;
-                    }
-                }
-            }
-        `};
 `;
 
 const Poster: FC<{
@@ -127,6 +109,7 @@ const Poster: FC<{
     horizontallyCentered,
 }) => {
     const isCentered = verticallyCentered && horizontallyCentered;
+
     return (
         <Section anchorId={anchorId} bgColor="image" bgMode="full">
             <Wrapper clampWidth={width === 'content' ? 'normal' : 'large'}>

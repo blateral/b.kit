@@ -440,7 +440,9 @@ export interface GlobalSettings {
 
         /** Customnize gradient for all text on image background gradients */
         imageTextGradient: string;
-        secondayImageTextGradient?: string;
+
+        /** Customnize gradient for all text on image background gradients if text is centered */
+        imageTextGradientCentered?: string;
 
         /** Show placeholder background unitl image has been loaded */
         imagePlaceholderBg: {
@@ -570,7 +572,7 @@ const defaultGlobalSettings: GlobalSettings = {
                 rgba(0, 0, 0, 0) 100%
             );
         `,
-        secondayImageTextGradient: `linear-gradient(
+        imageTextGradientCentered: `linear-gradient(
             0deg,
             rgba(0, 0, 0, 0.4) 0%,
             rgba(0, 0, 0, 0.3) 30%,
