@@ -56,8 +56,12 @@ const Filter = styled(FilterField)`
     min-width: 50%;
 `;
 
+export interface CardProps extends JobCardProps {
+    id: string;
+}
+
 export type JobItem = Omit<
-    JobCardProps,
+    CardProps,
     | 'isInverted'
     | 'hasBackground'
     | 'modelIcon'
@@ -78,111 +82,6 @@ const jobSoftTitleFilter = (filterQuery: string) => (value: JobItem) => {
     const regex = new RegExp(preparedQuery);
     return regex.test(perparedJobTitle);
 };
-
-const jobLocationRegionFilter = (filterQuery: string) => (value: JobItem) => {
-    if (!isValidArray(value.locations, false)) return false;
-
-    const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-    const regex = new RegExp(preparedQuery);
-
-    const result = value.locations.find((location) => {
-        const preparedAddressRegion = location.addressRegion
-            ?.toLowerCase()
-            .replace(/\s/g, '');
-        ('');
-
-        return regex.test(preparedAddressRegion || '');
-    });
-
-    return !!result;
-};
-
-const jobLocationCountryFilter = (filterQuery: string) => (value: JobItem) => {
-    if (!isValidArray(value.locations, false)) return false;
-
-    const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-    const regex = new RegExp(preparedQuery);
-
-    const result = value.locations.find((location) => {
-        const preparedCountry = location.addressCountry
-            ?.toLowerCase()
-            .replace(/\s/g, '');
-
-        return regex.test(preparedCountry || '');
-    });
-
-    return !!result;
-};
-
-const jobLocationPostalFilter = (filterQuery: string) => (value: JobItem) => {
-    if (!isValidArray(value.locations, false)) return false;
-
-    const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-    const regex = new RegExp(preparedQuery);
-
-    const result = value.locations.find((location) => {
-        const preparedPostal = location.postalCode
-            ?.toLowerCase()
-            .replace(/\s/g, '');
-
-        return regex.test(preparedPostal || '');
-    });
-
-    return !!result;
-};
-
-const jobLocationStreetAddressFilter =
-    (filterQuery: string) => (value: JobItem) => {
-        if (!isValidArray(value.locations, false)) return false;
-
-        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-        const regex = new RegExp(preparedQuery);
-
-        const result = value.locations.find((location) => {
-            const preparedStreetAddress = location.streetAddress
-                ?.toLowerCase()
-                .replace(/\s/g, '');
-
-            return regex.test(preparedStreetAddress || '');
-        });
-
-        return !!result;
-    };
-
-const jobLocationLocalityFilter = (filterQuery: string) => (value: JobItem) => {
-    if (!isValidArray(value.locations, false)) return false;
-
-    const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-    const regex = new RegExp(preparedQuery);
-
-    const result = value.locations.find((location) => {
-        const preparedLocality = location.addressLocality
-            ?.toLowerCase()
-            .replace(/\s/g, '');
-
-        return regex.test(preparedLocality || '');
-    });
-
-    return !!result;
-};
-
-const jobLocationDescriptionFilter =
-    (filterQuery: string) => (value: JobItem) => {
-        if (!isValidArray(value.locations, false)) return false;
-
-        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-        const regex = new RegExp(preparedQuery);
-
-        const result = value.locations.find((location) => {
-            const perparedDescription = location.description
-                ?.toLowerCase()
-                .replace(/\s/g, '');
-
-            return regex.test(perparedDescription || '');
-        });
-
-        return !!result;
-    };
 
 const jobLocationNameFilter = (filterQuery: string) => (value: JobItem) => {
     if (!isValidArray(value.locations, false)) return false;
@@ -212,9 +111,85 @@ const jobTypesFilter = (filterQuery: string) => (value: JobItem) => {
     });
 };
 
+const removeMatchIntersections = (array: FilterMatch[], item?: JobItem[]) => {
+    if (!item) return [];
+    return item?.filter(
+        (m) => !array.find((prioItem) => prioItem.item.id === m.id)
+    );
+};
+
 interface FilterMatch {
     item: JobItem;
+    priority: number;
 }
+
+const filterJobs = (filterQuery: string, jobs: JobItem[]) => {
+    const prioList: FilterMatch[] = [];
+    if (
+        !isValidArray(
+            jobs?.filter((job) => job.jobTitle !== undefined),
+            false
+        )
+    ) {
+        return prioList;
+    }
+
+    // PRIO 1 Filter: Exact name
+    const exactNameMatches = jobs?.filter(jobExactTitleFilter(filterQuery));
+    if (isValidArray(exactNameMatches, false)) {
+        prioList.push(
+            ...exactNameMatches.map((match) => ({
+                item: match,
+                priority: 1,
+            }))
+        );
+    }
+
+    // PRIO 2 Filter: Name
+    const nameMatches = removeMatchIntersections(
+        prioList,
+        jobs?.filter(jobSoftTitleFilter(filterQuery))
+    );
+    if (isValidArray(nameMatches, false)) {
+        prioList.push(
+            ...nameMatches.map((match) => ({
+                item: match,
+                priority: 2,
+            }))
+        );
+    }
+
+    // PRIO 3 Filter: Location
+    const locationNameMatches = removeMatchIntersections(
+        prioList,
+        jobs?.filter(jobLocationNameFilter(filterQuery))
+    );
+    if (isValidArray(locationNameMatches, false)) {
+        prioList.push(
+            ...locationNameMatches.map((match) => ({
+                item: match,
+                priority: 3,
+            }))
+        );
+    }
+
+    // PRIO 4 Filter: Job Type
+    const typeMatches = removeMatchIntersections(
+        prioList,
+        jobs?.filter(jobTypesFilter(filterQuery))
+    );
+
+    if (isValidArray(typeMatches, false)) {
+        prioList.push(
+            ...typeMatches.map((match) => ({
+                item: match,
+                priority: 4,
+            }))
+        );
+    }
+
+    return prioList;
+};
 
 const JobList: React.FC<{
     /** ID value for targeting section with anchor hashes */
@@ -238,7 +213,10 @@ const JobList: React.FC<{
     /** Injection function for job location icon */
     locationIcon?: () => React.ReactNode;
 
-    placeholder?: string;
+    /** Filter placeholder */
+    filterPlaceholder?: string;
+
+    /** Show filter input field */
     hasFilter?: boolean;
 }> = ({
     anchorId,
@@ -248,7 +226,7 @@ const JobList: React.FC<{
     locationIcon,
     totalJobLocations,
     allJobLocationsLabel,
-    placeholder,
+    filterPlaceholder,
     hasFilter,
 }) => {
     const { colors } = useLibTheme();
@@ -270,136 +248,39 @@ const JobList: React.FC<{
 
     const [filterQuery, setFilterQuery] = React.useState<string>('');
 
-    const filteredJobs: FilterMatch[] = React.useMemo(() => {
-        const prioList: FilterMatch[] = [];
-        if (
-            !isValidArray(
-                jobs?.filter((job) => job.jobTitle !== undefined),
-                false
-            )
-        ) {
-            return prioList;
+    const jobMatches: FilterMatch[] = React.useMemo(() => {
+        const queryParts = filterQuery.split(' ').map((part) => part.trim());
+        const searchMatches: Array<{
+            match: FilterMatch;
+            intersections: number;
+        }> = [];
+
+        // tracking matches of each query part
+        for (const part of queryParts) {
+            const matches = filterJobs(part, jobs || []);
+
+            for (const match of matches) {
+                const intersectionIndex = searchMatches.findIndex(
+                    (sItem) => sItem.match.item.id === match.item.id
+                );
+
+                if (intersectionIndex !== -1) {
+                    searchMatches[intersectionIndex].intersections += 1;
+                } else {
+                    searchMatches.push({
+                        match,
+                        intersections: 1,
+                    });
+                }
+            }
         }
 
-        // PRIO 1 Filter: Exact name
-        const exactNameMatches = jobs?.filter(jobExactTitleFilter(filterQuery));
-        if (isValidArray(exactNameMatches, false)) {
-            prioList.push(
-                ...exactNameMatches.map((match) => ({
-                    item: match,
-                    priority: 1,
-                }))
-            );
-        }
-
-        // PRIO 2 Filter: Name
-        const nameMatches = jobs?.filter(jobSoftTitleFilter(filterQuery));
-        if (isValidArray(nameMatches, false)) {
-            prioList.push(
-                ...nameMatches.map((match) => ({
-                    item: match,
-                    priority: 2,
-                }))
-            );
-        }
-
-        // PRIO 3 Filter: Location
-        const regionMatches = jobs?.filter(
-            jobLocationRegionFilter(filterQuery)
-        );
-        if (isValidArray(regionMatches, false)) {
-            prioList.push(
-                ...regionMatches.map((match) => ({
-                    item: match,
-                    priority: 3,
-                }))
-            );
-        }
-
-        const countryMatches = jobs?.filter(
-            jobLocationCountryFilter(filterQuery)
-        );
-        if (isValidArray(countryMatches, false)) {
-            prioList.push(
-                ...countryMatches.map((match) => ({
-                    item: match,
-                    priority: 3,
-                }))
-            );
-        }
-
-        const postalMatches = jobs?.filter(
-            jobLocationPostalFilter(filterQuery)
-        );
-        if (isValidArray(postalMatches, false)) {
-            prioList.push(
-                ...postalMatches.map((match) => ({
-                    item: match,
-                    priority: 3,
-                }))
-            );
-        }
-
-        const locationNameMatches = jobs?.filter(
-            jobLocationNameFilter(filterQuery)
-        );
-        if (isValidArray(locationNameMatches, false)) {
-            prioList.push(
-                ...locationNameMatches.map((match) => ({
-                    item: match,
-                    priority: 3,
-                }))
-            );
-        }
-
-        const localityMatches = jobs?.filter(
-            jobLocationLocalityFilter(filterQuery)
-        );
-        if (isValidArray(localityMatches, false)) {
-            prioList.push(
-                ...localityMatches.map((match) => ({
-                    item: match,
-                    priority: 3,
-                }))
-            );
-        }
-
-        const addressMatches = jobs?.filter(
-            jobLocationStreetAddressFilter(filterQuery)
-        );
-        if (isValidArray(addressMatches, false)) {
-            prioList.push(
-                ...addressMatches.map((match) => ({
-                    item: match,
-                    priority: 3,
-                }))
-            );
-        }
-
-        const descriptionMatches = jobs?.filter(
-            jobLocationDescriptionFilter(filterQuery)
-        );
-        if (isValidArray(descriptionMatches, false)) {
-            prioList.push(
-                ...descriptionMatches.map((match) => ({
-                    item: match,
-                    priority: 3,
-                }))
-            );
-        }
-
-        // PRIO 4 Filter: Types
-        const typeMatches = jobs?.filter(jobTypesFilter(filterQuery));
-        if (isValidArray(typeMatches, false)) {
-            prioList.push(
-                ...typeMatches.map((match) => ({
-                    item: match,
-                    priority: 4,
-                }))
-            );
-        }
-
-        return prioList;
+        // filter search matches by intersections so only matches with results for all search parts are shown
+        return searchMatches
+            .filter((m) => m.intersections >= queryParts.length)
+            .map<FilterMatch>((m) => ({
+                ...m.match,
+            }));
     }, [filterQuery, jobs]);
 
     const { params, update } = useParams();
@@ -429,26 +310,28 @@ const JobList: React.FC<{
             <Wrapper addWhitespace>
                 {hasFilter && (
                     <Filter
-                        placeholder={placeholder || 'Suche'}
+                        placeholder={filterPlaceholder || 'Suche'}
                         value={filterQuery}
                         onSubmit={setFilterQuery}
                     />
                 )}
                 <List>
-                    {filteredJobs?.map((job, i) => (
-                        <Item key={i}>
-                            <JobCard
-                                ref={cardRefs[i]}
-                                {...job.item}
-                                isInverted={isInverted}
-                                hasBackground={hasBg}
-                                modelIcon={modelIcon}
-                                locationIcon={locationIcon}
-                                totalLocations={totalJobLocations}
-                                allLocationsLabel={allJobLocationsLabel}
-                            />
-                        </Item>
-                    ))}
+                    {jobMatches
+                        ?.sort((a, b) => a.priority - b.priority)
+                        .map((match, i) => (
+                            <Item key={i}>
+                                <JobCard
+                                    ref={cardRefs[i]}
+                                    {...match.item}
+                                    isInverted={isInverted}
+                                    hasBackground={hasBg}
+                                    modelIcon={modelIcon}
+                                    locationIcon={locationIcon}
+                                    totalLocations={totalJobLocations}
+                                    allLocationsLabel={allJobLocationsLabel}
+                                />
+                            </Item>
+                        ))}
                 </List>
             </Wrapper>
         </Section>
