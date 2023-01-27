@@ -51,6 +51,7 @@ const Item = styled.li`
 `;
 
 const Filter = styled(FilterField)`
+    margin-top: ${spacings.nudge}px;
     margin-bottom: ${spacings.nudge * 5}px;
 
     min-width: 50%;
