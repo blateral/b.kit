@@ -199,9 +199,10 @@ const JobCard = React.forwardRef<
         if (hasLocations) {
             if (
                 totalLocations !== undefined &&
-                validLocations.length >= totalLocations
+                validLocations.length >= totalLocations &&
+                allLocationsLabel
             ) {
-                locationText = allLocationsLabel || '';
+                locationText = allLocationsLabel;
             } else {
                 locationText = validLocations
                     .map((loc) => loc.name)
