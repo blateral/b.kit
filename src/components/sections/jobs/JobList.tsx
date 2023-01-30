@@ -11,6 +11,7 @@ import FilterField from 'components/fields/FilterField';
 import { isValidArray } from 'utils/arrays';
 import useUpdateEffect from 'utils/useUpdateEffect';
 import useParams from 'utils/useParams';
+import { escapeRegExp } from 'utils/escape';
 
 const List = styled.ul`
     display: flex;
@@ -258,7 +259,7 @@ const JobList: React.FC<{
 
         // tracking matches of each query part
         for (const part of queryParts) {
-            const matches = filterJobs(part, jobs || []);
+            const matches = filterJobs(escapeRegExp(part), jobs || []);
 
             for (const match of matches) {
                 const intersectionIndex = searchMatches.findIndex(
