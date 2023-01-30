@@ -10,6 +10,7 @@ import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { mq, spacings } from 'utils/styles';
 import useParams from 'utils/useParams';
+import { escapeRegExp } from 'utils/escape';
 
 const Content = styled.div`
     & > * + * {
@@ -141,6 +142,8 @@ const PointOfInterestOverview: React.FC<{
     const [filterQuery, setFilterQuery] = useState<string>('');
 
     const filteredPOIs: FilterMatch[] = useMemo(() => {
+        const query = escapeRegExp(filterQuery);
+
         const prioList: FilterMatch[] = [];
         if (
             !isValidArray(
@@ -152,7 +155,7 @@ const PointOfInterestOverview: React.FC<{
         }
 
         // PRIO 1 Filter: Exact name
-        const exactNameMatches = pois?.filter(poiExactNameFilter(filterQuery));
+        const exactNameMatches = pois?.filter(poiExactNameFilter(query));
         if (isValidArray(exactNameMatches, false)) {
             prioList.push(
                 ...exactNameMatches.map((match) => ({
@@ -165,7 +168,7 @@ const PointOfInterestOverview: React.FC<{
         // PRIO 2 Filter: Name
         const nameMatches = removeMatchIntersections(
             prioList,
-            pois?.filter(poiSoftNameFilter(filterQuery))
+            pois?.filter(poiSoftNameFilter(query))
         );
 
         if (isValidArray(nameMatches, false)) {
@@ -180,7 +183,7 @@ const PointOfInterestOverview: React.FC<{
         // PRIO 3 Filter: Facts
         const factMatches = removeMatchIntersections(
             prioList,
-            pois?.filter(poiFactFilter(filterQuery))
+            pois?.filter(poiFactFilter(query))
         );
 
         if (isValidArray(factMatches, false)) {
@@ -195,7 +198,7 @@ const PointOfInterestOverview: React.FC<{
         // PRIO 4 Filter: Description
         const infoMatches = removeMatchIntersections(
             prioList,
-            pois?.filter(poiInfoFilter(filterQuery))
+            pois?.filter(poiInfoFilter(query))
         );
 
         if (isValidArray(infoMatches, false)) {
@@ -210,7 +213,7 @@ const PointOfInterestOverview: React.FC<{
         // PRIO 5 Filter: Description
         const descMatches = removeMatchIntersections(
             prioList,
-            pois?.filter(poiDescriptionFilter(filterQuery))
+            pois?.filter(poiDescriptionFilter(query))
         );
 
         if (isValidArray(descMatches, false)) {
