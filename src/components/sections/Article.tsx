@@ -73,7 +73,6 @@ const Article: React.FC<{
     primaryAction,
     secondaryAction,
 }) => {
-    // const theme = React.useContext(ThemeContext);
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';

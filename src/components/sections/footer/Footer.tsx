@@ -203,6 +203,7 @@ const Footer: React.FC<{
                                     medium={{ span: 6 / 12 }}
                                     semilarge={{ span: 4 / 12 }}
                                     large={{ span: 3 / 12 }}
+                                    valign="top"
                                 >
                                     <ColTitle
                                         type="copy-b"
@@ -226,7 +227,11 @@ const Footer: React.FC<{
                             );
                         })}
                         {customCol && (
-                            <Grid.Col large={{ span: 3 / 12 }} toRight>
+                            <Grid.Col
+                                large={{ span: 3 / 12 }}
+                                toRight
+                                valign="top"
+                            >
                                 <CustomCol>{customCol}</CustomCol>
                             </Grid.Col>
                         )}
