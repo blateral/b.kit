@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, {
     useState,
     useEffect,
@@ -441,90 +442,102 @@ const PickerHeader = styled.div`
     margin-bottom: ${spacings.nudge * 2}px;
 `;
 
-const getPickerHeader = (
-    locale: string,
-    prevMonthAction?: React.ReactNode,
-    nextMonthAction?: React.ReactNode
-    // eslint-disable-next-line react/display-name
-) => ({
-    monthDate,
-    customHeaderCount,
-    decreaseMonth,
-    increaseMonth,
-}: {
-    monthDate: Date;
-    customHeaderCount: number;
-    decreaseMonth: () => void;
-    increaseMonth: () => void;
-}) => (
-    <PickerHeader>
-        <button
-            aria-label="Previous Month"
-            className={
-                'react-datepicker__navigation react-datepicker__navigation--previous'
-            }
-            style={
-                customHeaderCount === 1 ? { visibility: 'hidden' } : undefined
-            }
-            onClick={(ev) => {
-                ev.preventDefault();
-                decreaseMonth();
-            }}
-        >
-            {prevMonthAction ? (
-                typeof prevMonthAction === 'string' ? (
-                    <img src={prevMonthAction} />
-                ) : (
-                    prevMonthAction
-                )
-            ) : (
-                <span
+const StyledNextButton = styled.button<{ headerCount?: number }>`
+    @media ${mq.medium} {
+        visibility: ${({ headerCount }) => headerCount === 0 && 'hidden'};
+    }
+`;
+
+const getPickerHeader =
+    (
+        locale: string,
+        prevMonthAction?: React.ReactNode,
+        nextMonthAction?: React.ReactNode
+        // eslint-disable-next-line react/display-name
+    ) =>
+    ({
+        monthDate,
+        customHeaderCount,
+        decreaseMonth,
+        increaseMonth,
+    }: {
+        monthDate: Date;
+        customHeaderCount: number;
+        decreaseMonth: () => void;
+        increaseMonth: () => void;
+    }) =>
+        (
+            <PickerHeader>
+                <button
+                    aria-label="Previous Month"
                     className={
-                        'react-datepicker__navigation-icon react-datepicker__navigation-icon--previous'
+                        'react-datepicker__navigation react-datepicker__navigation--previous'
                     }
+                    style={
+                        customHeaderCount === 1
+                            ? { visibility: 'hidden' }
+                            : undefined
+                    }
+                    onClick={(ev) => {
+                        ev.preventDefault();
+                        decreaseMonth();
+                    }}
                 >
-                    {'<'}
-                </span>
-            )}
-        </button>
-        <span className="react-datepicker__current-month">
-            {/* {monthDate.toLocaleString(locale, {
+                    {prevMonthAction ? (
+                        typeof prevMonthAction === 'string' ? (
+                            <img src={prevMonthAction} />
+                        ) : (
+                            prevMonthAction
+                        )
+                    ) : (
+                        <span
+                            className={
+                                'react-datepicker__navigation-icon react-datepicker__navigation-icon--previous'
+                            }
+                        >
+                            {'<'}
+                        </span>
+                    )}
+                </button>
+                <span className="react-datepicker__current-month">
+                    {/* {monthDate.toLocaleString(locale, {
                 month: 'long',
                 year: 'numeric',
             })} */}
-            {format(monthDate, 'LLLL', { locale: de })}
-        </span>
-        <button
-            aria-label="Next Month"
-            className={
-                'react-datepicker__navigation react-datepicker__navigation--next'
-            }
-            style={
-                customHeaderCount === 0 ? { visibility: 'hidden' } : undefined
-            }
-            onClick={(ev) => {
-                ev.preventDefault();
-                increaseMonth();
-            }}
-        >
-            {nextMonthAction ? (
-                typeof nextMonthAction === 'string' ? (
-                    <img src={nextMonthAction} />
-                ) : (
-                    nextMonthAction
-                )
-            ) : (
-                <span
-                    className={
-                        'react-datepicker__navigation-icon react-datepicker__navigation-icon--next'
-                    }
-                >
-                    {'>'}
+                    {format(monthDate, 'LLLL', { locale: de })}
                 </span>
-            )}
-        </button>
-    </PickerHeader>
-);
+                <StyledNextButton
+                    aria-label="Next Month"
+                    className={
+                        'react-datepicker__navigation react-datepicker__navigation--next'
+                    }
+                    // style={
+                    //     customHeaderCount === 0 ? { visibility: 'hidden' } : undefined
+                    // }
+                    headerCount={customHeaderCount}
+                    onClick={(ev) => {
+                        ev.preventDefault();
+                        increaseMonth();
+                    }}
+                >
+                    {nextMonthAction ? (
+                        typeof nextMonthAction === 'string' ? (
+                            <img src={nextMonthAction} />
+                        ) : (
+                            nextMonthAction
+                        )
+                    ) : (
+                        <span
+                            className={
+                                'react-datepicker__navigation-icon react-datepicker__navigation-icon--next'
+                            }
+                        >
+                            {'>'}
+                        </span>
+                    )}
+                </StyledNextButton>
+            </PickerHeader>
+        );
 
 const Datepicker: React.FC<{
     label?: string;
