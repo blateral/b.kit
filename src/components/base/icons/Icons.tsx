@@ -68,3 +68,4 @@ export { default as CurrentLocation } from 'components/base/icons/CurrentLocatio
 export { default as ToggleOn } from 'components/base/icons/ToggleOn';
 export { default as ToggleOff } from 'components/base/icons/ToggleOff';
 export { default as LocationSearch } from 'components/base/icons/LocationSearch';
+export { default as ClockFilled } from 'components/base/icons/ClockFilled';
