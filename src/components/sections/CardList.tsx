@@ -369,6 +369,8 @@ const CardList: React.FC<{
 
     /** Function to inject custom decoration icon */
     decorator?: (props: { isInverted?: boolean }) => React.ReactNode;
+
+    /** Force maximal three items per row */
     maxThreeCols?: boolean;
 }> = ({ anchorId, items, bgMode, decorator, maxThreeCols }) => {
     const { colors } = useLibTheme();
