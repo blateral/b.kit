@@ -76,6 +76,12 @@ const JobInfos = styled(Copy)`
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 4}px;
     }
+
+    color: ${({ theme }) => color(theme).primary.default};
+
+    ${View}:hover & {
+        color: ${({ theme }) => color(theme).primary.hover};
+    }
 `;
 
 const Info = styled.div`
@@ -226,11 +232,7 @@ const JobCard = React.forwardRef<
                     hyphens
                 />
                 {(hasEmploymentType || hasLocations) && (
-                    <JobInfos
-                        type="copy-b"
-                        textColor="inherit"
-                        data-sheet="info"
-                    >
+                    <JobInfos type="copy-b" data-sheet="info">
                         {hasEmploymentType && (
                             <Info>
                                 <Icon>

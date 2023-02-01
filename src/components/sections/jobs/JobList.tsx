@@ -315,6 +315,7 @@ const JobList: React.FC<{
                         placeholder={filterPlaceholder || 'Suche'}
                         value={filterQuery}
                         onSubmit={setFilterQuery}
+                        isInverted={isInverted}
                     />
                 )}
                 <List>
