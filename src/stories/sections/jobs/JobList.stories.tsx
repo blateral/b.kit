@@ -192,3 +192,7 @@ export const WithAllLocationsLabel: Story = () => (
 );
 
 export const WithFilter: Story = () => <JobList hasFilter jobs={jobs} />;
+
+export const WithFilterInverted: Story = () => (
+    <JobList hasFilter jobs={jobs} bgMode="inverted" />
+);
