@@ -332,6 +332,7 @@ const PointOfInterestOverview: React.FC<{
                         onSubmit={setFilterQuery}
                         submitIcon={filterSubmitIcon}
                         clearIcon={filterClearIcon}
+                        isInverted={isInverted}
                     />
                 )}
                 <Content>
