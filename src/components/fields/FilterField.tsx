@@ -90,7 +90,7 @@ const SubmitBtn = styled.button`
     }
 `;
 
-const CloseBtn = styled.button`
+const ClearBtn = styled.button`
     background: none;
     border: none;
     cursor: pointer;
@@ -115,8 +115,8 @@ const CloseBtn = styled.button`
     }
 
     & > * {
-        height: 16px;
-        width: 16px;
+        height: 20px;
+        width: 20px;
     }
 `;
 
@@ -127,6 +127,7 @@ const FilterField: FC<{
     onSubmit?: (value: string) => void;
     onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     submitIcon?: (isInverted?: boolean) => React.ReactNode;
+    clearIcon?: (isInverted?: boolean) => React.ReactNode;
     className?: string;
 }> = ({
     isInverted,
@@ -135,6 +136,7 @@ const FilterField: FC<{
     onSubmit,
     onBlur,
     submitIcon,
+    clearIcon,
     className,
 }) => {
     const {
@@ -175,9 +177,9 @@ const FilterField: FC<{
                 </SubmitBtn>
             )}
             {getValue !== '' && (
-                <CloseBtn onClick={() => setValue('')}>
-                    <Cross />
-                </CloseBtn>
+                <ClearBtn onClick={() => setValue('')}>
+                    {clearIcon ? clearIcon(isInverted) : <Cross />}
+                </ClearBtn>
             )}
         </View>
     );

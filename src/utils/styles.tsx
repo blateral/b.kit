@@ -468,6 +468,8 @@ export interface GlobalSettings {
         /** Filters */
         newsFilterName: string;
         eventFilterName: string;
+        jobFilterName: string;
+        poiFilterName: string;
     };
     cookie: {
         name: string;
@@ -595,6 +597,8 @@ const defaultGlobalSettings: GlobalSettings = {
 
         newsFilterName: 'newsFilter',
         eventFilterName: 'eventFilter',
+        jobFilterName: 'jobFilter',
+        poiFilterName: 'poiFilter',
     },
     cookie: {
         name: 'cookie-consent-v2',
