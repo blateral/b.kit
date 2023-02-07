@@ -15,7 +15,11 @@ import Cross from 'components/base/icons/Cross';
 const View = styled.div<{ isInverted?: boolean }>`
     display: flex;
     min-height: 50px;
-    border: solid 1px ${({ theme }) => color(theme).elementBg.dark};
+    border: solid 1px
+        ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
 
     color: ${({ theme, isInverted }) =>
         isInverted
