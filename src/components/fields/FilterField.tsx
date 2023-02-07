@@ -10,6 +10,7 @@ import {
 } from 'utils/styles';
 import Magnifier from 'components/base/icons/Magnifier';
 import useLazyInput from 'utils/useLazyInput';
+import Cross from 'components/base/icons/Cross';
 
 const View = styled.div<{ isInverted?: boolean }>`
     display: flex;
@@ -89,6 +90,36 @@ const SubmitBtn = styled.button`
     }
 `;
 
+const ClearBtn = styled.button`
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    padding: ${spacings.nudge * 2}px;
+    padding-left: ${spacings.nudge}px;
+    color: inherit;
+
+    transition: transform 0.2s ease-in-out;
+
+    &:focus {
+        text-decoration: underline;
+        transform: scale(1.012);
+    }
+
+    &:focus:not(:focus-visible) {
+        text-decoration: none;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    & > * {
+        height: 20px;
+        width: 20px;
+    }
+`;
+
 const FilterField: FC<{
     isInverted?: boolean;
     value?: string;
@@ -96,6 +127,7 @@ const FilterField: FC<{
     onSubmit?: (value: string) => void;
     onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
     submitIcon?: (isInverted?: boolean) => React.ReactNode;
+    clearIcon?: (isInverted?: boolean) => React.ReactNode;
     className?: string;
 }> = ({
     isInverted,
@@ -104,6 +136,7 @@ const FilterField: FC<{
     onSubmit,
     onBlur,
     submitIcon,
+    clearIcon,
     className,
 }) => {
     const {
@@ -138,9 +171,16 @@ const FilterField: FC<{
                     }
                 }}
             />
-            <SubmitBtn aria-label="filter_submit" onClick={forceUpdate}>
-                {submitIcon ? submitIcon(isInverted) : <Magnifier />}
-            </SubmitBtn>
+            {getValue === '' && (
+                <SubmitBtn aria-label="filter_submit" onClick={forceUpdate}>
+                    {submitIcon ? submitIcon(isInverted) : <Magnifier />}
+                </SubmitBtn>
+            )}
+            {getValue !== '' && (
+                <ClearBtn onClick={() => setValue('')}>
+                    {clearIcon ? clearIcon(isInverted) : <Cross />}
+                </ClearBtn>
+            )}
         </View>
     );
 };

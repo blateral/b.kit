@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
@@ -10,8 +10,9 @@ import { mq, spacings } from 'utils/styles';
 import FilterField from 'components/fields/FilterField';
 import { isValidArray } from 'utils/arrays';
 import useUpdateEffect from 'utils/useUpdateEffect';
-import useParams from 'utils/useParams';
 import { escapeRegExp } from 'utils/escape';
+import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
+import useMounted from 'utils/useMounted';
 
 const List = styled.ul`
     display: flex;
@@ -220,6 +221,12 @@ const JobList: React.FC<{
 
     /** Show filter input field */
     hasFilter?: boolean;
+
+    /** Injection function for filter submit icon */
+    filterSubmitIcon?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Injection function for filter reset icon */
+    filterClearIcon?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
     anchorId,
     jobs,
@@ -230,8 +237,11 @@ const JobList: React.FC<{
     allJobLocationsLabel,
     filterPlaceholder,
     hasFilter,
+    filterSubmitIcon,
+    filterClearIcon,
 }) => {
-    const { colors } = useLibTheme();
+    const { colors, globals } = useLibTheme();
+    const filterName = globals.sections.jobFilterName;
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -249,6 +259,7 @@ const JobList: React.FC<{
     });
 
     const [filterQuery, setFilterQuery] = React.useState<string>('');
+    const isMounted = useMounted();
 
     const jobMatches: FilterMatch[] = React.useMemo(() => {
         const queryParts = filterQuery.split(' ').map((part) => part.trim());
@@ -285,15 +296,40 @@ const JobList: React.FC<{
             }));
     }, [filterQuery, jobs]);
 
-    const { params, update } = useParams();
+    const getFilter = useCallback(() => {
+        return getUrlParams()[filterName];
+    }, [filterName]);
 
-    React.useEffect(() => {
-        setFilterQuery(params['filter'] || '');
-    }, [params]);
+    useEffect(() => {
+        const urlFilter = getFilter();
+
+        if (
+            urlFilter !== undefined &&
+            urlFilter !== null &&
+            typeof urlFilter === 'string'
+        ) {
+            setFilterQuery(urlFilter);
+        }
+    }, [getFilter]);
+
+    useEffect(() => {
+        if (isMounted) return;
+
+        // set inital data into URL
+        if (filterQuery) {
+            setUrlParam(filterName, filterQuery);
+        } else {
+            deleteUrlParam(filterName);
+        }
+    }, [filterName, filterQuery, isMounted]);
 
     useUpdateEffect(() => {
-        update('filter', filterQuery);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // set filters to URL params
+        if (filterQuery) {
+            setUrlParam(filterName, filterQuery);
+        } else {
+            deleteUrlParam(filterName);
+        }
     }, [filterQuery]);
 
     return (
@@ -316,6 +352,8 @@ const JobList: React.FC<{
                         value={filterQuery}
                         onSubmit={setFilterQuery}
                         isInverted={isInverted}
+                        submitIcon={filterSubmitIcon}
+                        clearIcon={filterClearIcon}
                     />
                 )}
                 <List>
