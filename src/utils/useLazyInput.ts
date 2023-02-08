@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import useDebounce from './useDebounce';
 
 const useLazyInput = (
@@ -11,8 +11,14 @@ const useLazyInput = (
         value,
     ]);
 
+    const update = useCallback((value: string, withoutDelay = false) => {
+        setValue(value);
+        if (withoutDelay) forceUpdate();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return {
-        setValue,
+        update,
         value,
         forceUpdate,
     };

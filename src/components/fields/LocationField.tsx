@@ -302,7 +302,7 @@ const LocationField: FC<LocationFieldProps> = ({
 
     const {
         value: descValue,
-        setValue: setDescValue,
+        update: setDescValue,
         forceUpdate,
     } = useLazyInput((value) => {
         setValue({
