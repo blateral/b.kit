@@ -144,7 +144,7 @@ const FilterField: FC<{
     className,
 }) => {
     const {
-        setValue,
+        update,
         value: getValue,
         forceUpdate,
     } = useLazyInput((value) => {
@@ -153,9 +153,9 @@ const FilterField: FC<{
 
     useEffect(() => {
         if (value !== undefined) {
-            setValue(value);
+            update(value);
         }
-    }, [setValue, value]);
+    }, [update, value]);
 
     return (
         <View isInverted={isInverted} className={className}>
@@ -166,7 +166,9 @@ const FilterField: FC<{
                 placeholder={placeholder}
                 onChange={(ev) => {
                     const newValue = ev?.currentTarget?.value;
-                    if (newValue !== undefined) setValue(newValue);
+                    if (newValue !== undefined) {
+                        update(newValue, newValue === '');
+                    }
                 }}
                 onBlur={onBlur}
                 onKeyDown={(ev) => {
@@ -181,7 +183,11 @@ const FilterField: FC<{
                 </SubmitBtn>
             )}
             {getValue !== '' && (
-                <ClearBtn onClick={() => setValue('')}>
+                <ClearBtn
+                    onClick={() => {
+                        update('', true);
+                    }}
+                >
                     {clearIcon ? clearIcon(isInverted) : <Cross />}
                 </ClearBtn>
             )}
