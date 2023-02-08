@@ -28,6 +28,7 @@ const base = css<{
 
     hyphens: auto;
     /* overflow-wrap: break-word; */
+    width: 100%;
 
     ${(props: { hyphens?: boolean }) =>
         !props.hyphens &&
