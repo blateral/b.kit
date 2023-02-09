@@ -216,6 +216,9 @@ const JobList: React.FC<{
     /** Injection function for job location icon */
     locationIcon?: () => React.ReactNode;
 
+    /** Initial filter query on component render */
+    initialFilterQuery?: string;
+
     /** Filter placeholder */
     filterPlaceholder?: string;
 
@@ -235,6 +238,7 @@ const JobList: React.FC<{
     locationIcon,
     totalJobLocations,
     allJobLocationsLabel,
+    initialFilterQuery,
     filterPlaceholder,
     hasFilter,
     filterSubmitIcon,
@@ -258,11 +262,16 @@ const JobList: React.FC<{
         },
     });
 
-    const [filterQuery, setFilterQuery] = React.useState<string>('');
+    const [filterQuery, setFilterQuery] = React.useState<string>(
+        initialFilterQuery || ''
+    );
     const isMounted = useMounted();
 
     const jobMatches: FilterMatch[] = React.useMemo(() => {
-        const queryParts = filterQuery.split(' ').map((part) => part.trim());
+        const queryParts =
+            filterQuery !== undefined
+                ? filterQuery.split(' ').map((part) => part.trim())
+                : [''];
         const searchMatches: Array<{
             match: FilterMatch;
             intersections: number;
@@ -350,6 +359,7 @@ const JobList: React.FC<{
                     <Filter
                         placeholder={filterPlaceholder || 'Suche'}
                         value={filterQuery}
+                        initialValue={initialFilterQuery}
                         onSubmit={setFilterQuery}
                         isInverted={isInverted}
                         submitIcon={filterSubmitIcon}

@@ -127,6 +127,7 @@ const ClearBtn = styled.button`
 const FilterField: FC<{
     isInverted?: boolean;
     value?: string;
+    initialValue?: string;
     placeholder?: string;
     onSubmit?: (value: string) => void;
     onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
@@ -136,6 +137,7 @@ const FilterField: FC<{
 }> = ({
     isInverted,
     value,
+    initialValue,
     placeholder,
     onSubmit,
     onBlur,
@@ -149,7 +151,7 @@ const FilterField: FC<{
         forceUpdate,
     } = useLazyInput((value) => {
         onSubmit?.(value);
-    }, value || '');
+    }, initialValue || '');
 
     useEffect(() => {
         if (value !== undefined) {

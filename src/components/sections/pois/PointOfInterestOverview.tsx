@@ -211,6 +211,9 @@ const PointOfInterestOverview: React.FC<{
     /** Enable/Disable filtering */
     enableFiltering?: boolean;
 
+    /** Initial filter query on component render */
+    initialFilterQuery?: string;
+
     /** Placeholder for filter input */
     filterPlaceholder?: string;
 
@@ -227,6 +230,7 @@ const PointOfInterestOverview: React.FC<{
     bgMode,
     pois,
     enableFiltering,
+    initialFilterQuery,
     filterPlaceholder = 'Filter',
     filterSubmitIcon,
     filterClearIcon,
@@ -237,7 +241,9 @@ const PointOfInterestOverview: React.FC<{
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    const [filterQuery, setFilterQuery] = useState<string>('');
+    const [filterQuery, setFilterQuery] = useState<string>(
+        initialFilterQuery || ''
+    );
     const isMounted = useMounted();
 
     const poiMatches: FilterMatch[] = React.useMemo(() => {
@@ -328,6 +334,7 @@ const PointOfInterestOverview: React.FC<{
                 {enableFiltering && (
                     <Filter
                         value={filterQuery}
+                        initialValue={initialFilterQuery}
                         placeholder={filterPlaceholder}
                         onSubmit={setFilterQuery}
                         submitIcon={filterSubmitIcon}
