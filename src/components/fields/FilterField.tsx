@@ -69,13 +69,11 @@ const Field = styled.input<{ isInverted?: boolean }>`
     }
 `;
 
-const SubmitBtn = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-
-    padding: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
+const SearchIcon = styled.div`
+    display: flex;
+    align-items: center;
+    padding-right: ${spacings.nudge * 2}px;
+    padding-left: ${spacings.nudge * 2}px;
     color: inherit;
 
     transition: transform 0.2s ease-in-out;
@@ -94,13 +92,15 @@ const SubmitBtn = styled.button`
     }
 `;
 
-const ClearBtn = styled.button`
+const ClearBtn = styled.button<{ isInverted?: boolean }>`
+    display: flex;
+    align-items: center;
     background: none;
     border: none;
     cursor: pointer;
 
-    padding: ${spacings.nudge * 2}px;
-    padding-left: ${spacings.nudge}px;
+    padding-right: ${spacings.nudge * 2}px;
+    padding-left: ${spacings.nudge * 2}px;
     color: inherit;
 
     transition: transform 0.2s ease-in-out;
@@ -108,10 +108,20 @@ const ClearBtn = styled.button`
     &:focus {
         text-decoration: underline;
         transform: scale(1.012);
+
+        outline: ${({ theme, isInverted }) =>
+            `2px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
+        outline-offset: -4px;
+        outline-style: dashed;
     }
 
     &:focus:not(:focus-visible) {
         text-decoration: none;
+        outline: none;
     }
 
     &:active {
@@ -180,12 +190,14 @@ const FilterField: FC<{
                 }}
             />
             {getValue === '' && (
-                <SubmitBtn aria-label="filter_submit" onClick={forceUpdate}>
+                <SearchIcon>
                     {submitIcon ? submitIcon(isInverted) : <Magnifier />}
-                </SubmitBtn>
+                </SearchIcon>
             )}
             {getValue !== '' && (
                 <ClearBtn
+                    isInverted={isInverted}
+                    aria-label="clear filter"
                     onClick={() => {
                         update('', true);
                     }}
