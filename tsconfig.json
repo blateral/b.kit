@@ -7,7 +7,7 @@
         "allowJs": true,
         "jsx": "react",
         "baseUrl": "./src",
-        "outDir": "lib",
+        "outDir": "./",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
@@ -23,7 +23,7 @@
         "isolatedModules": true,
         "declaration": true,
         "declarationMap": true,
-        "declarationDir": "lib/types",
+        "declarationDir": "types",
         "sourceMap": true,
         "plugins": [
             {
@@ -32,6 +32,6 @@
             }
         ]
     },
-    "exclude": ["node_modules", "lib"],
+    "exclude": ["node_modules", "esm", "cjs"],
     "include": ["src"]
 }

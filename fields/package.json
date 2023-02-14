@@ -1,7 +1,7 @@
 {
     "internal": true,
-    "main": "../lib/esm/fields.js",
-    "jsnext:main": "../lib/esm/fields.js",
-    "module": "../lib/esm/fields.js",
-    "types": "../lib/types/fields.d.ts"
+    "main": "../esm/fields.js",
+    "jsnext:main": "../esm/fields.js",
+    "module": "../esm/fields.js",
+    "types": "../types/fields.d.ts"
 }

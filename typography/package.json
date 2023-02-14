@@ -1,7 +1,7 @@
 {
     "internal": true,
-    "main": "../lib/esm/typography.js",
-    "jsnext:main": "../lib/esm/typography.js",
-    "module": "../lib/esm/typography.js",
-    "types": "../lib/types/typography.d.ts"
+    "main": "../esm/typography.js",
+    "jsnext:main": "../esm/typography.js",
+    "module": "../esm/typography.js",
+    "types": "../types/typography.d.ts"
 }

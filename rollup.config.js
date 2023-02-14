@@ -26,20 +26,20 @@ export default {
     },
     output: [
         {
-            dir: 'lib/cjs',
+            dir: 'cjs',
             format: 'cjs',
             name: 'bkit',
             sourcemap: true,
             plugins: [terser()],
         },
         {
-            dir: 'lib/esm',
+            dir: 'esm',
             format: 'esm',
             sourcemap: true,
         },
     ],
     plugins: [
-        del({ targets: 'lib' }),
+        del({ targets: ['types', 'esm', 'cjs'] }),
         peerDepsExternal(),
         commonjs(),
         resolve(),

@@ -1,7 +1,7 @@
 {
     "internal": true,
-    "main": "../lib/esm/navigation.js",
-    "jsnext:main": "../lib/esm/navigation.js",
-    "module": "../lib/esm/navigation.js",
-    "types": "../lib/types/navigation.d.ts"
+    "main": "../esm/navigation.js",
+    "jsnext:main": "../esm/navigation.js",
+    "module": "../esm/navigation.js",
+    "types": "../types/navigation.d.ts"
 }

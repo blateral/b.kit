@@ -1,7 +1,7 @@
 {
     "internal": true,
-    "main": "../lib/esm/cookies.js",
-    "jsnext:main": "../lib/esm/cookies.js",
-    "module": "../lib/esm/cookies.js",
-    "types": "../lib/types/cookies.d.ts"
+    "main": "../esm/cookies.js",
+    "jsnext:main": "../esm/cookies.js",
+    "module": "../esm/cookies.js",
+    "types": "../types/cookies.d.ts"
 }

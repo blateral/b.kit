@@ -1,7 +1,7 @@
 {
     "internal": true,
-    "main": "../lib/esm/base.js",
-    "jsnext:main": "../lib/esm/base.js",
-    "module": "../lib/esm/base.js",
-    "types": "../lib/types/base.d.ts"
+    "main": "../esm/base.js",
+    "jsnext:main": "../esm/base.js",
+    "module": "../esm/base.js",
+    "types": "../types/base.d.ts"
 }
