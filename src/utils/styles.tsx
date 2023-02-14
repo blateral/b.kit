@@ -441,6 +441,9 @@ export interface GlobalSettings {
         /** Customnize gradient for all text on image background gradients */
         imageTextGradient: string;
 
+        /** Customnize gradient for all text on image background gradients if text is centered */
+        imageTextGradientCentered?: string;
+
         /** Show placeholder background unitl image has been loaded */
         imagePlaceholderBg: {
             default: string;
@@ -465,6 +468,8 @@ export interface GlobalSettings {
         /** Filters */
         newsFilterName: string;
         eventFilterName: string;
+        jobFilterName: string;
+        poiFilterName: string;
     };
     cookie: {
         name: string;
@@ -569,6 +574,13 @@ const defaultGlobalSettings: GlobalSettings = {
                 rgba(0, 0, 0, 0) 100%
             );
         `,
+        imageTextGradientCentered: `linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0.3) 30%,
+            rgba(0, 0, 0, 0.2) 60%,
+            rgba(0, 0, 0, 0.15) 100%
+        );`,
         imagePlaceholderBg: {
             default: '#e2e2e2',
             inverted: '#1e1c1f',
@@ -585,6 +597,8 @@ const defaultGlobalSettings: GlobalSettings = {
 
         newsFilterName: 'newsFilter',
         eventFilterName: 'eventFilter',
+        jobFilterName: 'jobFilter',
+        poiFilterName: 'poiFilter',
     },
     cookie: {
         name: 'cookie-consent-v2',

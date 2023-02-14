@@ -73,7 +73,6 @@ const Article: React.FC<{
     primaryAction,
     secondaryAction,
 }) => {
-    // const theme = React.useContext(ThemeContext);
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -104,7 +103,7 @@ const Article: React.FC<{
                     />
                 )}
                 {hasContent && (
-                    <Grid.Row>
+                    <Grid.Row valign="top">
                         <Grid.Col
                             semilarge={{ span: halfAside ? 6 / 12 : 8 / 12 }}
                         >

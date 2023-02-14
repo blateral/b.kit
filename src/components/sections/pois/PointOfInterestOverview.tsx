@@ -4,12 +4,14 @@ import { Info } from 'components/blocks/InfoList';
 import POICard, { POICardProps } from 'components/blocks/POICard';
 import FilterField from 'components/fields/FilterField';
 import useUpdateEffect from 'utils/useUpdateEffect';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { mq, spacings } from 'utils/styles';
-import useParams from 'utils/useParams';
+import { escapeRegExp } from 'utils/escape';
+import useMounted from 'utils/useMounted';
+import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
 
 const Content = styled.div`
     & > * + * {
@@ -99,6 +101,94 @@ const removeMatchIntersections = (
     );
 };
 
+const filterPois = (
+    filterQuery: string,
+    pois: PointOfInterestOverviewItem[]
+) => {
+    const prioList: FilterMatch[] = [];
+    if (
+        !isValidArray(
+            pois?.filter((poi) => poi.id !== undefined),
+            false
+        )
+    ) {
+        return prioList;
+    }
+
+    // PRIO 1 Filter: Exact name
+    const exactNameMatches = pois?.filter(poiExactNameFilter(filterQuery));
+    if (isValidArray(exactNameMatches, false)) {
+        prioList.push(
+            ...exactNameMatches.map((match) => ({
+                item: match,
+                priority: 1,
+            }))
+        );
+    }
+
+    // PRIO 2 Filter: Name
+    const nameMatches = removeMatchIntersections(
+        prioList,
+        pois?.filter(poiSoftNameFilter(filterQuery))
+    );
+
+    if (isValidArray(nameMatches, false)) {
+        prioList.push(
+            ...nameMatches.map((match) => ({
+                item: match,
+                priority: 2,
+            }))
+        );
+    }
+
+    // PRIO 3 Filter: Facts
+    const factMatches = removeMatchIntersections(
+        prioList,
+        pois?.filter(poiFactFilter(filterQuery))
+    );
+
+    if (isValidArray(factMatches, false)) {
+        prioList.push(
+            ...factMatches.map((match) => ({
+                item: match,
+                priority: 3,
+            }))
+        );
+    }
+
+    // PRIO 4 Filter: Description
+    const infoMatches = removeMatchIntersections(
+        prioList,
+        pois?.filter(poiInfoFilter(filterQuery))
+    );
+
+    if (isValidArray(infoMatches, false)) {
+        prioList.push(
+            ...infoMatches.map((match) => ({
+                item: match,
+                priority: 4,
+            }))
+        );
+    }
+
+    // PRIO 5 Filter: Description
+    const descMatches = removeMatchIntersections(
+        prioList,
+        pois?.filter(poiDescriptionFilter(filterQuery))
+    );
+
+    if (isValidArray(descMatches, false)) {
+        prioList.push(
+            ...descMatches.map((match) => ({
+                item: match,
+                priority: 5,
+            }))
+        );
+    }
+
+    return prioList;
+};
+
 interface CardProps extends POICardProps {
     id: string;
     infos?: Array<Info & { allowFiltering?: boolean }>;
@@ -121,8 +211,17 @@ const PointOfInterestOverview: React.FC<{
     /** Enable/Disable filtering */
     enableFiltering?: boolean;
 
+    /** Initial filter query on component render */
+    initialFilterQuery?: string;
+
     /** Placeholder for filter input */
     filterPlaceholder?: string;
+
+    /** Injection function for filter submit icon */
+    filterSubmitIcon?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Injection function for filter reset icon */
+    filterClearIcon?: (isInverted?: boolean) => React.ReactNode;
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
@@ -131,109 +230,91 @@ const PointOfInterestOverview: React.FC<{
     bgMode,
     pois,
     enableFiltering,
+    initialFilterQuery,
     filterPlaceholder = 'Filter',
+    filterSubmitIcon,
+    filterClearIcon,
 }) => {
-    const { colors } = useLibTheme();
+    const { colors, globals } = useLibTheme();
+    const filterName = globals.sections.poiFilterName;
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    const [filterQuery, setFilterQuery] = useState<string>('');
+    const [filterQuery, setFilterQuery] = useState<string>(
+        initialFilterQuery || ''
+    );
+    const isMounted = useMounted();
 
-    const filteredPOIs: FilterMatch[] = useMemo(() => {
-        const prioList: FilterMatch[] = [];
-        if (
-            !isValidArray(
-                pois?.filter((poi) => poi.id !== undefined),
-                false
-            )
-        ) {
-            return prioList;
+    const poiMatches: FilterMatch[] = React.useMemo(() => {
+        const queryParts = filterQuery.split(' ').map((part) => part.trim());
+        const searchMatches: Array<{
+            match: FilterMatch;
+            intersections: number;
+        }> = [];
+
+        // tracking matches of each query part
+        for (const part of queryParts) {
+            const matches = filterPois(escapeRegExp(part), pois || []);
+
+            for (const match of matches) {
+                const intersectionIndex = searchMatches.findIndex(
+                    (sItem) => sItem.match.item.id === match.item.id
+                );
+
+                if (intersectionIndex !== -1) {
+                    searchMatches[intersectionIndex].intersections += 1;
+                } else {
+                    searchMatches.push({
+                        match,
+                        intersections: 1,
+                    });
+                }
+            }
         }
 
-        // PRIO 1 Filter: Exact name
-        const exactNameMatches = pois?.filter(poiExactNameFilter(filterQuery));
-        if (isValidArray(exactNameMatches, false)) {
-            prioList.push(
-                ...exactNameMatches.map((match) => ({
-                    item: match,
-                    priority: 1,
-                }))
-            );
-        }
-
-        // PRIO 2 Filter: Name
-        const nameMatches = removeMatchIntersections(
-            prioList,
-            pois?.filter(poiSoftNameFilter(filterQuery))
-        );
-
-        if (isValidArray(nameMatches, false)) {
-            prioList.push(
-                ...nameMatches.map((match) => ({
-                    item: match,
-                    priority: 2,
-                }))
-            );
-        }
-
-        // PRIO 3 Filter: Facts
-        const factMatches = removeMatchIntersections(
-            prioList,
-            pois?.filter(poiFactFilter(filterQuery))
-        );
-
-        if (isValidArray(factMatches, false)) {
-            prioList.push(
-                ...factMatches.map((match) => ({
-                    item: match,
-                    priority: 3,
-                }))
-            );
-        }
-
-        // PRIO 4 Filter: Description
-        const infoMatches = removeMatchIntersections(
-            prioList,
-            pois?.filter(poiInfoFilter(filterQuery))
-        );
-
-        if (isValidArray(infoMatches, false)) {
-            prioList.push(
-                ...infoMatches.map((match) => ({
-                    item: match,
-                    priority: 4,
-                }))
-            );
-        }
-
-        // PRIO 5 Filter: Description
-        const descMatches = removeMatchIntersections(
-            prioList,
-            pois?.filter(poiDescriptionFilter(filterQuery))
-        );
-
-        if (isValidArray(descMatches, false)) {
-            prioList.push(
-                ...descMatches.map((match) => ({
-                    item: match,
-                    priority: 5,
-                }))
-            );
-        }
-
-        return prioList;
+        // filter search matches by intersections so only matches with results for all search parts are shown
+        return searchMatches
+            .filter((m) => m.intersections >= queryParts.length)
+            .map<FilterMatch>((m) => ({
+                ...m.match,
+            }));
     }, [filterQuery, pois]);
 
-    const { params, update } = useParams();
+    const getFilter = useCallback(() => {
+        return getUrlParams()[filterName];
+    }, [filterName]);
 
     useEffect(() => {
-        setFilterQuery(params['filter'] || '');
-    }, [params]);
+        const urlFilter = getFilter();
+
+        if (
+            urlFilter !== undefined &&
+            urlFilter !== null &&
+            typeof urlFilter === 'string'
+        ) {
+            setFilterQuery(urlFilter);
+        }
+    }, [getFilter]);
+
+    useEffect(() => {
+        if (isMounted) return;
+
+        // set inital data into URL
+        if (filterQuery) {
+            setUrlParam(filterName, filterQuery);
+        } else {
+            deleteUrlParam(filterName);
+        }
+    }, [filterName, filterQuery, isMounted]);
 
     useUpdateEffect(() => {
-        update('filter', filterQuery);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // set filters to URL params
+        if (filterQuery) {
+            setUrlParam(filterName, filterQuery);
+        } else {
+            deleteUrlParam(filterName);
+        }
     }, [filterQuery]);
 
     return (
@@ -253,12 +334,16 @@ const PointOfInterestOverview: React.FC<{
                 {enableFiltering && (
                     <Filter
                         value={filterQuery}
+                        initialValue={initialFilterQuery}
                         placeholder={filterPlaceholder}
                         onSubmit={setFilterQuery}
+                        submitIcon={filterSubmitIcon}
+                        clearIcon={filterClearIcon}
+                        isInverted={isInverted}
                     />
                 )}
                 <Content>
-                    {filteredPOIs
+                    {poiMatches
                         ?.sort((a, b) => a.priority - b.priority)
                         ?.map((poi, i) => (
                             <POICard

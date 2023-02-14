@@ -38,7 +38,6 @@ const ItemContainer = styled.div<{ isCentered?: boolean }>`
 
 const Items = styled.ul<{ isVisible?: boolean; isCentered?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'flex' : 'block')};
-    max-width: 100%;
     align-items: center;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
@@ -46,14 +45,14 @@ const Items = styled.ul<{ isVisible?: boolean; isCentered?: boolean }>`
     flex-wrap: wrap;
     padding: 0;
     margin: 0;
-    margin-top: -${spacings.spacer}px;
-    margin-left: -${spacings.spacer}px;
+    margin-top: -${spacings.nudge * 2}px;
+    margin-left: -${spacings.nudge * 2}px;
 
     list-style: none;
 
     @media ${mq.medium} {
-        margin-top: -${spacings.spacer * 2}px;
-        margin-left: -${spacings.spacer * 2}px;
+        margin-top: -${spacings.spacer}px;
+        margin-left: -${spacings.spacer}px;
 
         & > * {
             flex: 0 1 auto;
@@ -65,8 +64,8 @@ const Item = styled.li<{
     isVisible?: boolean;
     index: number;
 }>`
-    padding-top: ${spacings.spacer}px;
-    padding-left: ${spacings.spacer}px;
+    padding-top: ${spacings.nudge * 2}px;
+    padding-left: ${spacings.nudge * 2}px;
 
     display: ${({ index, isVisible }) =>
         isVisible || index < 6 ? 'block' : 'none'};
@@ -76,8 +75,8 @@ const Item = styled.li<{
     }
 
     @media ${mq.medium} {
-        padding-top: ${spacings.spacer * 2}px;
-        padding-left: ${spacings.spacer * 2}px;
+        padding-top: ${spacings.spacer}px;
+        padding-left: ${spacings.spacer}px;
 
         & > img {
             width: auto;

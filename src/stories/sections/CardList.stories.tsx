@@ -57,6 +57,18 @@ export const Default: Story = () => (
                 },
                 link: { href: '#0' },
             },
+            {
+                title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+                subLabel: 'überlingen',
+                image: {
+                    small: 'https://unsplash.it/619/619',
+                    medium: 'https://unsplash.it/791/791',
+                    semilarge: 'https://unsplash.it/883/883',
+                    large: 'https://unsplash.it/766/766',
+                    xlarge: 'https://unsplash.it/824/824',
+                },
+                link: { href: '#0' },
+            },
         ]}
     />
 );
@@ -337,6 +349,65 @@ export const IsInverted: Story = () => (
 export const WithDecorator: Story = () => (
     <CardList
         decorator={() => <AngleRight />}
+        items={[
+            {
+                title: 'Musikschule',
+                subLabel: 'überlingen',
+                customIcon: () => <Star />,
+                link: { href: '#0' },
+            },
+            {
+                title: 'Stadtbücherei',
+                subLabel: 'überlingen',
+                customIcon: () => <Star />,
+                image: {
+                    small: 'https://unsplash.it/619/619',
+                    medium: 'https://unsplash.it/791/791',
+                    semilarge: 'https://unsplash.it/883/883',
+                    large: 'https://unsplash.it/766/766',
+                    xlarge: 'https://unsplash.it/824/824',
+                },
+                link: { href: '#0' },
+            },
+            {
+                title: 'Museum',
+                customIcon: () => <Star />,
+                subLabel: 'überlingen',
+                link: { href: '#0' },
+            },
+            {
+                title: 'Feuerwehr',
+                customIcon: () => <Star />,
+                subLabel: 'überlingen',
+                link: { href: '#0' },
+            },
+            {
+                title: 'Soziale Einrichtungen',
+                customIcon: () => <Star />,
+                subLabel: 'überlingen',
+                image: {
+                    small: 'https://unsplash.it/619/619',
+                    medium: 'https://unsplash.it/791/791',
+                    semilarge: 'https://unsplash.it/883/883',
+                    large: 'https://unsplash.it/766/766',
+                    xlarge: 'https://unsplash.it/824/824',
+                },
+                link: { href: '#0' },
+            },
+            {
+                title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+                customIcon: () => <Star />,
+                subLabel: 'überlingen',
+                link: { href: '#0' },
+            },
+        ]}
+    />
+);
+
+export const MaxThreeColumns: Story = () => (
+    <CardList
+        decorator={() => <AngleRight />}
+        maxThreeCols
         items={[
             {
                 title: 'Musikschule',

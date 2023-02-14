@@ -76,6 +76,12 @@ const JobInfos = styled(Copy)`
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 4}px;
     }
+
+    color: ${({ theme }) => color(theme).primary.default};
+
+    ${View}:hover & {
+        color: ${({ theme }) => color(theme).primary.hover};
+    }
 `;
 
 const Info = styled.div`
@@ -199,9 +205,10 @@ const JobCard = React.forwardRef<
         if (hasLocations) {
             if (
                 totalLocations !== undefined &&
-                validLocations.length >= totalLocations
+                validLocations.length >= totalLocations &&
+                allLocationsLabel
             ) {
-                locationText = allLocationsLabel || '';
+                locationText = allLocationsLabel;
             } else {
                 locationText = validLocations
                     .map((loc) => loc.name)
@@ -225,11 +232,7 @@ const JobCard = React.forwardRef<
                     hyphens
                 />
                 {(hasEmploymentType || hasLocations) && (
-                    <JobInfos
-                        type="copy-b"
-                        textColor="inherit"
-                        data-sheet="info"
-                    >
+                    <JobInfos type="copy-b" data-sheet="info">
                         {hasEmploymentType && (
                             <Info>
                                 <Icon>

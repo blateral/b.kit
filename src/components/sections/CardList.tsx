@@ -334,7 +334,7 @@ const List = styled.ul`
     }
 `;
 
-const CardItem = styled.li<{ isEqual?: boolean }>`
+const CardItem = styled.li<{ isEqual?: boolean; threeCols?: boolean }>`
     padding-top: ${spacings.nudge * 2}px;
     padding-left: ${spacings.nudge * 2}px;
 
@@ -352,7 +352,8 @@ const CardItem = styled.li<{ isEqual?: boolean }>`
     }
 
     @media (min-width: 75em) {
-        flex: ${({ isEqual }) => isEqual && '0 0 25%'};
+        flex: ${({ isEqual, threeCols }) =>
+            threeCols ? '0 0 33.33%' : isEqual && '0 0 25%'};
     }
 `;
 
@@ -368,7 +369,10 @@ const CardList: React.FC<{
 
     /** Function to inject custom decoration icon */
     decorator?: (props: { isInverted?: boolean }) => React.ReactNode;
-}> = ({ anchorId, items, bgMode, decorator }) => {
+
+    /** Force maximal three items per row */
+    maxThreeCols?: boolean;
+}> = ({ anchorId, items, bgMode, decorator, maxThreeCols }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
@@ -388,7 +392,11 @@ const CardList: React.FC<{
             <Wrapper addWhitespace>
                 <List>
                     {items?.map((item, i) => (
-                        <CardItem key={i} isEqual={items.length % 2 === 0}>
+                        <CardItem
+                            key={i}
+                            isEqual={items.length % 2 === 0}
+                            threeCols={maxThreeCols}
+                        >
                             <Card
                                 {...item}
                                 isInverted={isInverted}

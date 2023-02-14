@@ -11,6 +11,7 @@ import { withLibTheme } from 'utils/LibThemeProvider';
 
 const Container = styled.figure<{
     hasContent?: boolean;
+    verticallyCentered?: boolean;
 }>`
     position: relative;
     width: 100%;
@@ -26,7 +27,10 @@ const Container = styled.figure<{
         left: 0;
         bottom: 0;
         right: 0;
-        background: ${({ theme }) => global(theme).sections.imageTextGradient};
+        background: ${({ theme, verticallyCentered }) =>
+            verticallyCentered
+                ? global(theme).sections.imageTextGradientCentered
+                : global(theme).sections.imageTextGradient};
         pointer-events: none;
         z-index: 0;
     }
@@ -38,9 +42,13 @@ const StyledImage = styled(Image)`
     }
 `;
 
-const Intro = styled(IntroBlock)`
+const Intro = styled(IntroBlock)<{
+    verticallyCentered?: boolean;
+    horizontallyCentered?: boolean;
+}>`
     position: absolute;
-    bottom: 0;
+    bottom: ${({ verticallyCentered }) => !verticallyCentered && '0'};
+    top: ${({ verticallyCentered }) => verticallyCentered && '50%'};
     left: 50%;
     right: 0;
     max-height: 100%;
@@ -49,7 +57,8 @@ const Intro = styled(IntroBlock)`
     padding: ${wrapperWhitespace + spacings.nudge * 2}px;
     z-index: 1;
 
-    transform: translateX(-50%);
+    transform: ${({ verticallyCentered }) =>
+        verticallyCentered ? 'translate(-50%, -50%)' : 'translateX(-50%)'};
 `;
 
 const Poster: FC<{
@@ -82,6 +91,12 @@ const Poster: FC<{
 
     /** Function to inject custom secondary button */
     secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Align text and actions vertically */
+    verticallyCentered?: boolean;
+
+    /** Align text and actions horizontally */
+    horizontallyCentered?: boolean;
 }> = ({
     anchorId,
     width = 'content',
@@ -93,14 +108,23 @@ const Poster: FC<{
     primaryAction,
     secondaryAction,
     image,
+    verticallyCentered,
+    horizontallyCentered,
 }) => {
+    const isCentered = verticallyCentered && horizontallyCentered;
+
     return (
         <Section anchorId={anchorId} bgColor="image" bgMode="full">
             <Wrapper clampWidth={width === 'content' ? 'normal' : 'large'}>
-                <Container hasContent={!!title || !!text}>
+                <Container
+                    hasContent={!!title || !!text}
+                    verticallyCentered={verticallyCentered}
+                >
                     <StyledImage {...image} coverSpace ratios={undefined} />
                     {title && (
                         <Intro
+                            verticallyCentered={verticallyCentered}
+                            horizontallyCentered={horizontallyCentered}
                             renderAs="figcaption"
                             colorMode="onImage"
                             title={title}
@@ -114,6 +138,7 @@ const Poster: FC<{
                             maxTitleLines={3}
                             clampText
                             maxTextLines={4}
+                            isCentered={horizontallyCentered || isCentered}
                         />
                     )}
                 </Container>
