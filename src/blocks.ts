@@ -14,3 +14,4 @@ export { default as InfoList } from 'components/blocks/InfoList';
 export { default as HeaderPoster } from 'components/sections/header/HeaderPoster';
 export { default as HeaderVideo } from 'components/sections/header/HeaderVideo';
 export { default as HeaderKenBurns } from 'components/sections/header/HeaderKenBurns';
+export { default as SocialList } from 'components/blocks/SocialList';

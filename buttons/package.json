@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../lib/esm/buttons.js",
+    "jsnext:main": "../lib/esm/buttons.js",
+    "module": "../lib/esm/buttons.js",
+    "types": "../lib/types/buttons.d.ts"
+}

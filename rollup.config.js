@@ -13,11 +13,16 @@ import { DEFAULT_EXTENSIONS } from '@babel/core';
 export default {
     input: {
         index: './src/index.ts',
+        base: './src/base.ts',
         hooks: './src/hooks.ts',
         sections: './src/sections.ts',
         icons: './src/icons.ts',
         blocks: './src/blocks.ts',
         cookies: './src/cookies.ts',
+        navigation: './src/navigation.ts',
+        typography: './src/typography.ts',
+        fields: './src/fields.ts',
+        buttons: './src/buttons.ts',
     },
     output: [
         {

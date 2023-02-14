@@ -48,3 +48,8 @@ export { default as JobArticle } from 'components/sections/jobs/JobArticle';
 export { default as PointOfInterestDetail } from 'components/sections/pois/PointOfInterestDetail';
 export { default as PointOfInterestOverview } from 'components/sections/pois/PointOfInterestOverview';
 export { default as PointOfInterestMap } from 'components/sections/pois/PointOfInterestMap';
+
+/***** Footer *****/
+export { default as Footer } from 'components/sections/footer/Footer';
+export * as FooterPartials from 'components/sections/footer/partials/index';
+export * as FooterSkeletons from 'components/sections/footer/skeletons/index';

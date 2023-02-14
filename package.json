@@ -14,7 +14,12 @@
         "sections",
         "icons",
         "blocks",
-        "cookies"
+        "cookies",
+        "navigation",
+        "typography",
+        "fields",
+        "base",
+        "buttons"
     ],
     "scripts": {
         "build": "yarn test && rollup -c",
