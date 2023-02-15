@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/cookies.js",
+    "main": "../cjs/cookies.js",
     "jsnext:main": "../esm/cookies.js",
     "module": "../esm/cookies.js",
     "types": "../types/cookies.d.ts"

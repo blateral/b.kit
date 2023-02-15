@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/icons.js",
+    "main": "../cjs/icons.js",
     "jsnext:main": "../esm/icons.js",
     "module": "../esm/icons.js",
     "types": "../types/icons.d.ts"

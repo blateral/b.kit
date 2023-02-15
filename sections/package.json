@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/sections.js",
+    "main": "../cjs/sections.js",
     "jsnext:main": "../esm/sections.js",
     "module": "../esm/sections.js",
     "types": "../types/sections.d.ts"

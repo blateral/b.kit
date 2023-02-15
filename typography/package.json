@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/typography.js",
+    "main": "../cjs/typography.js",
     "jsnext:main": "../esm/typography.js",
     "module": "../esm/typography.js",
     "types": "../types/typography.d.ts"

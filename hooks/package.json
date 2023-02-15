@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/hooks.js",
+    "main": "../cjs/hooks.js",
     "jsnext:main": "../esm/hooks.js",
     "module": "../esm/hooks.js",
     "types": "../types/hooks.d.ts"

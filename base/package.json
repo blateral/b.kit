@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/base.js",
+    "main": "../cjs/base.js",
     "jsnext:main": "../esm/base.js",
     "module": "../esm/base.js",
     "types": "../types/base.d.ts"

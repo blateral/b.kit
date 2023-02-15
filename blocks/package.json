@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/blocks.js",
+    "main": "../cjs/blocks.js",
     "jsnext:main": "../esm/blocks.js",
     "module": "../esm/blocks.js",
     "types": "../types/blocks.d.ts"

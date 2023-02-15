@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/buttons.js",
+    "main": "../cjs/buttons.js",
     "jsnext:main": "../esm/buttons.js",
     "module": "../esm/buttons.js",
     "types": "../types/buttons.d.ts"

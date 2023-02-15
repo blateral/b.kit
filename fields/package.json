@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/fields.js",
+    "main": "../cjs/fields.js",
     "jsnext:main": "../esm/fields.js",
     "module": "../esm/fields.js",
     "types": "../types/fields.d.ts"

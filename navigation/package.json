@@ -1,6 +1,6 @@
 {
     "internal": true,
-    "main": "../esm/navigation.js",
+    "main": "../cjs/navigation.js",
     "jsnext:main": "../esm/navigation.js",
     "module": "../esm/navigation.js",
     "types": "../types/navigation.d.ts"
