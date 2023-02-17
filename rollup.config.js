@@ -16,6 +16,8 @@ export default {
         base: './src/base.ts',
         hooks: './src/hooks.ts',
         sections: './src/sections.ts',
+        sections_news: './src/sections_news.ts',
+        footer: './src/footer.ts',
         icons: './src/icons.ts',
         blocks: './src/blocks.ts',
         cookies: './src/cookies.ts',

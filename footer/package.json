@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../cjs/footer.js",
+    "jsnext:main": "../esm/footer.js",
+    "module": "../esm/footer.js",
+    "types": "../types/footer.d.ts"
+}

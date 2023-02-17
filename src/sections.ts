@@ -20,15 +20,6 @@ export { default as IndexList } from 'components/sections/IndexList';
 export { default as Intro } from 'components/sections/Intro';
 export { default as Map } from 'components/sections/Map';
 export { default as NavList } from 'components/sections/NavList';
-export { default as NewsAuthorCard } from 'components/sections/news/NewsAuthorCard';
-export { default as NewsFooter } from 'components/sections/news/NewsFooter';
-export { default as NewsImages } from 'components/sections/news/NewsImages';
-export { default as NewsIntro } from 'components/sections/news/NewsIntro';
-export { default as NewsList } from 'components/sections/news/NewsList';
-export { default as NewsOverview } from 'components/sections/news/NewsOverview';
-export { default as NewsTable } from 'components/sections/news/NewsTable';
-export { default as NewsText } from 'components/sections/news/NewsText';
-export { default as NewsVideo } from 'components/sections/news/NewsVideo';
 export { default as NumberList } from 'components/sections/NumberList';
 export { default as ParallaxBackground } from 'components/sections/ParallaxBackground';
 export { default as Poster } from 'components/sections/Poster';
@@ -48,8 +39,3 @@ export { default as JobArticle } from 'components/sections/jobs/JobArticle';
 export { default as PointOfInterestDetail } from 'components/sections/pois/PointOfInterestDetail';
 export { default as PointOfInterestOverview } from 'components/sections/pois/PointOfInterestOverview';
 export { default as PointOfInterestMap } from 'components/sections/pois/PointOfInterestMap';
-
-/***** Footer *****/
-export { default as Footer } from 'components/sections/footer/Footer';
-export * as FooterPartials from 'components/sections/footer/partials/index';
-export * as FooterSkeletons from 'components/sections/footer/skeletons/index';

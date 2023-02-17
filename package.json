@@ -12,6 +12,7 @@
         "types/*",
         "hooks",
         "sections",
+        "footer",
         "icons",
         "blocks",
         "cookies",

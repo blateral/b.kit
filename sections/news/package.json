@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../../cjs/sections_news.js",
+    "jsnext:main": "../../esm/sections_news.js",
+    "module": "../../esm/sections_news.js",
+    "types": "../../types/sections_news.d.ts"
+}
