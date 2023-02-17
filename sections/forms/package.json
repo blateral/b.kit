@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../../cjs/sections_forms.js",
+    "jsnext:main": "../../esm/sections_forms.js",
+    "module": "../../esm/sections_forms.js",
+    "types": "../../types/sections_forms.d.ts"
+}

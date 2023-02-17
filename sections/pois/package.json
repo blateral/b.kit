@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../../cjs/sections_pois.js",
+    "jsnext:main": "../../esm/sections_pois.js",
+    "module": "../../esm/sections_pois.js",
+    "types": "../../types/sections_pois.d.ts"
+}

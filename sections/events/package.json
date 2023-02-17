@@ -1,0 +1,7 @@
+{
+    "internal": true,
+    "main": "../../cjs/sections_events.js",
+    "jsnext:main": "../../esm/sections_events.js",
+    "module": "../../esm/sections_events.js",
+    "types": "../../types/sections_events.d.ts"
+}
