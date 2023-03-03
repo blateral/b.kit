@@ -77,19 +77,6 @@ const SearchIcon = styled.div`
     color: inherit;
 
     transition: transform 0.2s ease-in-out;
-
-    &:focus {
-        text-decoration: underline;
-        transform: scale(1.012);
-    }
-
-    &:focus:not(:focus-visible) {
-        text-decoration: none;
-    }
-
-    &:active {
-        transform: scale(0.95);
-    }
 `;
 
 const ClearBtn = styled.button<{ isInverted?: boolean }>`
