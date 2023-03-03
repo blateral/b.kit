@@ -62,7 +62,7 @@ const isValid = (ratio?: { w?: number; h?: number }) => {
 
 const aspectFallback = (ratio?: { w?: number; h?: number }) => css`
     @supports not (aspect-ratio: auto) {
-        height: 0;
+        height: ${isValid(ratio) && 0};
         padding-top: ${isValid(ratio) &&
         `calc(100% / ${getAspectRatio(ratio?.w, ratio?.h)})`};
     }
