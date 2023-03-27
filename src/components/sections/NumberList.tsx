@@ -1,25 +1,23 @@
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Callout from 'components/typography/Callout';
-import Heading from 'components/typography/Heading';
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { getColors as color, mq, spacings } from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import Copy from 'components/typography/Copy';
 
 const View = styled.div`
     text-align: center;
+    max-width: 380px;
+    min-width: 240px;
 
     & > * {
         margin: 0 auto;
     }
 
-    @media ${mq.semilarge} {
-        text-align: left;
-
-        & > * {
-            margin: 0;
-        }
+    & > * + * {
+        margin-top: ${spacings.nudge * 3}px;
     }
 `;
 
@@ -51,32 +49,22 @@ const NumberContainer = styled.div<{ height: number }>`
     }
 `;
 
-const Number = styled(Callout)<{ isInverted?: boolean; stringLength: number }>`
-    max-height: 140px;
-    ${({ stringLength }) =>
-        stringLength <= 6
-            ? withRange([72, 120], 'font-size')
-            : stringLength >= 10
-            ? withRange([33, 42], 'font-size')
-            : withRange([52, 72], 'font-size')}
-
-    color: ${({ isInverted, theme }) =>
-        isInverted
-            ? color(theme).primary.inverted
-            : color(theme).primary.default};
+const Number = styled(Callout)<{ stringLength: number }>`
+    font-weight: 700;
 `;
 
-const Label = styled(Heading)`
-    max-width: 80%;
-`;
+const Label = styled(Copy)``;
+
+const Text = styled(Copy)``;
 
 const IconBlock: React.FC<{
     icon?: { src: string; alt?: string };
     number?: string;
     label?: string;
+    text?: string;
     isInverted?: boolean;
-}> = ({ icon, label, number, isInverted }) => {
-    const theme = useContext(ThemeContext);
+}> = ({ icon, label, number, isInverted, text }) => {
+    const { colors } = useLibTheme();
 
     const stringLength = number ? number.length : 0;
 
@@ -93,23 +81,33 @@ const IconBlock: React.FC<{
                 </Number>
             </NumberContainer>
             <Label
-                size="super"
+                type="copy-b"
+                size="big"
                 textColor={
                     isInverted
-                        ? color(theme).primary.inverted
-                        : color(theme).primary.default
+                        ? colors.primary.inverted
+                        : colors.primary.default
                 }
             >
                 {label}
             </Label>
+            {text && (
+                <Text type="copy" size="medium" isInverted={isInverted}>
+                    {text}
+                </Text>
+            )}
         </View>
     );
 };
 
-const ContentContainer = styled.div`
+const ContentContainer = styled.div<{
+    cols: 3 | 4;
+    hAlign?: 'left' | 'center';
+}>`
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: ${({ hAlign }) =>
+        hAlign === 'center' ? 'center' : 'flex-start'};
     justify-content: space-between;
     flex-wrap: wrap;
 
@@ -135,7 +133,8 @@ const ContentContainer = styled.div`
         }
 
         @media ${mq.large} {
-            flex: 0 1 33.33%;
+            /* flex: 0 1 ${({ cols }) => (cols === 4 ? '25' : '33.33')}%; */
+            flex: 1 0 25%;
         }
     }
 `;
@@ -148,9 +147,12 @@ const NumberList: React.FC<{
         icon?: { src: string; alt?: string };
         number?: string;
         label?: string;
+        text?: string;
     }[];
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, items, bgMode }) => {
+    cols?: 3 | 4;
+    hAlign?: 'left' | 'center';
+}> = ({ anchorId, items, bgMode, cols = 3, hAlign = 'center' }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -169,7 +171,7 @@ const NumberList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <ContentContainer>
+                <ContentContainer cols={cols} hAlign={hAlign}>
                     {items?.map((item, i) => {
                         return (
                             <IconBlock
