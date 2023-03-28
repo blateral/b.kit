@@ -177,6 +177,13 @@ const NumberList: React.FC<{
             '[data-sheet="label"]',
             '[data-sheet="text"]',
         ],
+        responsive: {
+            small: 1,
+            medium: 1,
+            semilarge: 2,
+            large: cols,
+            xlarge: cols,
+        },
     });
 
     return (
