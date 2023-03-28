@@ -1,11 +1,12 @@
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Callout from 'components/typography/Callout';
-import React, { useContext } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Copy from 'components/typography/Copy';
+import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
 const View = styled.div`
     text-align: center;
@@ -57,57 +58,67 @@ const Label = styled(Copy)``;
 
 const Text = styled(Copy)``;
 
-const IconBlock: React.FC<{
+interface NumberProps {
     icon?: { src: string; alt?: string };
     number?: string;
     label?: string;
     text?: string;
     isInverted?: boolean;
-}> = ({ icon, label, number, isInverted, text }) => {
-    const { colors } = useLibTheme();
+}
 
-    const stringLength = number ? number.length : 0;
+const IconBlock = forwardRef<HTMLDivElement, NumberProps>(
+    ({ icon, label, number, isInverted, text }, ref) => {
+        const { colors } = useLibTheme();
 
-    return (
-        <View>
-            {icon && <Icon src={icon.src} alt={icon.alt} />}
-            <NumberContainer height={0}>
-                <Number
-                    renderAs="div"
-                    stringLength={stringLength}
-                    isInverted={isInverted}
+        const stringLength = number ? number.length : 0;
+        return (
+            <View ref={ref}>
+                {icon && <Icon src={icon.src} alt={icon.alt} />}
+                <NumberContainer height={0} data-sheet="number">
+                    <Number
+                        renderAs="div"
+                        stringLength={stringLength}
+                        isInverted={isInverted}
+                    >
+                        {number}
+                    </Number>
+                </NumberContainer>
+                <Label
+                    type="copy-b"
+                    size="big"
+                    textColor={
+                        isInverted
+                            ? colors.primary.inverted
+                            : colors.primary.default
+                    }
+                    data-sheet="label"
                 >
-                    {number}
-                </Number>
-            </NumberContainer>
-            <Label
-                type="copy-b"
-                size="big"
-                textColor={
-                    isInverted
-                        ? colors.primary.inverted
-                        : colors.primary.default
-                }
-            >
-                {label}
-            </Label>
-            {text && (
-                <Text type="copy" size="medium" isInverted={isInverted}>
-                    {text}
-                </Text>
-            )}
-        </View>
-    );
-};
+                    {label}
+                </Label>
+                {text && (
+                    <Text
+                        type="copy"
+                        size="medium"
+                        isInverted={isInverted}
+                        data-sheet="text"
+                    >
+                        {text}
+                    </Text>
+                )}
+            </View>
+        );
+    }
+);
+
+IconBlock.displayName = 'IconBlock';
 
 const ContentContainer = styled.div<{
     cols: 3 | 4;
     hAlign?: 'left' | 'center';
 }>`
     display: flex;
-    flex-direction: row;
-    align-items: ${({ hAlign }) =>
-        hAlign === 'center' ? 'center' : 'flex-start'};
+    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
 
@@ -115,6 +126,10 @@ const ContentContainer = styled.div<{
     margin-top: -${spacings.spacer * 2}px;
 
     @media ${mq.semilarge} {
+        flex-direction: row;
+
+        align-items: ${({ hAlign }) =>
+            hAlign === 'center' ? 'center' : 'flex-start'};
         margin-top: -${spacings.spacer}px;
     }
 
@@ -133,8 +148,7 @@ const ContentContainer = styled.div<{
         }
 
         @media ${mq.large} {
-            /* flex: 0 1 ${({ cols }) => (cols === 4 ? '25' : '33.33')}%; */
-            flex: 1 0 25%;
+            flex: 1 0 ${({ cols }) => (cols === 4 ? '25' : '33.33')}%;
         }
     }
 `;
@@ -157,6 +171,15 @@ const NumberList: React.FC<{
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
+    const { sheetRefs: numbersRef } = useEqualSheetHeight<HTMLDivElement>({
+        listLength: items?.length || 0,
+        identifiers: [
+            '[data-sheet="number"]',
+            '[data-sheet="label"]',
+            '[data-sheet="text"]',
+        ],
+    });
+
     return (
         <Section
             addSeperation
@@ -175,6 +198,7 @@ const NumberList: React.FC<{
                     {items?.map((item, i) => {
                         return (
                             <IconBlock
+                                ref={numbersRef[i]}
                                 {...item}
                                 key={i}
                                 isInverted={isInverted}

@@ -19,14 +19,14 @@ export const Default: Story = () => (
         items={[
             {
                 icon: { src: 'https://picsum.photos/140' },
-                number: '1234567',
+                number: '28000',
                 label: 'Lorem Ipsum',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
                 icon: { src: 'https://picsum.photos/140' },
                 number: '544',
-                label: 'Dolor Sit Amet',
+                label: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
@@ -45,7 +45,7 @@ export const WithBackground: Story = () => (
         items={[
             {
                 icon: { src: 'https://picsum.photos/140' },
-                number: '1234567',
+                number: '28000',
                 label: 'Lorem Ipsum',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
@@ -70,7 +70,7 @@ export const IsInverted: Story = () => (
         items={[
             {
                 icon: { src: 'https://picsum.photos/140' },
-                number: '1234567',
+                number: '28000',
                 label: 'Lorem Ipsum',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
@@ -97,7 +97,7 @@ export const With4Items: Story = () => (
         items={[
             {
                 icon: { src: 'https://picsum.photos/140' },
-                number: '1234567',
+                number: '28000',
                 label: 'Lorem Ipsum',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
