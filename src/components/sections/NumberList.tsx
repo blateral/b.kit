@@ -24,8 +24,7 @@ const View = styled.div`
 
 const Icon = styled.img`
     display: block;
-    max-width: 140px;
-    max-height: 140px;
+    max-width: 380px;
 
     margin-bottom: ${spacings.nudge * 2}px;
 `;
