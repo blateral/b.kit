@@ -8,9 +8,11 @@ import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Copy from 'components/typography/Copy';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
-const View = styled.div`
+const CARD_MAX_WIDTH = 380;
+
+const View = styled.li`
     text-align: center;
-    max-width: 380px;
+    max-width: ${CARD_MAX_WIDTH + spacings.spacer}px;
     min-width: 240px;
 
     & > * {
@@ -24,12 +26,12 @@ const View = styled.div`
 
 const Icon = styled.img`
     display: block;
-    max-width: 380px;
+    max-width: ${CARD_MAX_WIDTH}px;
 
     margin-bottom: ${spacings.nudge * 2}px;
 `;
 
-const NumberContainer = styled.div<{ height: number }>`
+const NumberContainer = styled.div`
     max-width: max-content;
     min-height: 90px;
 
@@ -42,14 +44,13 @@ const NumberContainer = styled.div<{ height: number }>`
         min-height: 100px;
     }
 
-    /* margin-bottom: ${spacings.nudge * 2}px; */
-
     @media ${mq.large} {
         min-height: 120px;
     }
 `;
 
-const Number = styled(Callout)<{ stringLength: number }>`
+const Digit = styled(Callout)<{ stringLength: number }>`
+    // #TODO: eigenen style für Zahl definieren
     font-weight: 700;
 `;
 
@@ -57,115 +58,137 @@ const Label = styled(Copy)``;
 
 const Text = styled(Copy)``;
 
-interface NumberProps {
+export interface NumberListCardProps {
     icon?: { src: string; alt?: string };
-    number?: string;
+    digit?: string;
     label?: string;
     text?: string;
-    isInverted?: boolean;
 }
 
-const IconBlock = forwardRef<HTMLDivElement, NumberProps>(
-    ({ icon, label, number, isInverted, text }, ref) => {
-        const { colors } = useLibTheme();
+const NumberListCard = forwardRef<
+    HTMLLIElement,
+    NumberListCardProps & { isInverted?: boolean }
+>(({ icon, label, digit, isInverted, text }, ref) => {
+    const { colors } = useLibTheme();
 
-        const stringLength = number ? number.length : 0;
-        return (
-            <View ref={ref}>
-                {icon && <Icon src={icon.src} alt={icon.alt} />}
-                <NumberContainer height={0} data-sheet="number">
-                    <Number
-                        renderAs="div"
-                        stringLength={stringLength}
-                        isInverted={isInverted}
-                    >
-                        {number}
-                    </Number>
-                </NumberContainer>
-                <Label
-                    type="copy-b"
-                    size="big"
-                    textColor={
-                        isInverted
-                            ? colors.primary.inverted
-                            : colors.primary.default
-                    }
-                    data-sheet="label"
+    const stringLength = digit ? digit.length : 0;
+
+    return (
+        <View ref={ref}>
+            {icon && <Icon src={icon.src} alt={icon.alt || ''} />}
+            <NumberContainer data-sheet="digit">
+                <Digit
+                    renderAs="span"
+                    stringLength={stringLength}
+                    isInverted={isInverted}
                 >
-                    {label}
-                </Label>
-                {text && (
-                    <Text
-                        type="copy"
-                        size="medium"
-                        isInverted={isInverted}
-                        data-sheet="text"
-                    >
-                        {text}
-                    </Text>
-                )}
-            </View>
-        );
+                    {digit}
+                </Digit>
+            </NumberContainer>
+            <Label
+                type="copy-b"
+                size="big"
+                textColor={
+                    isInverted
+                        ? colors.primary.inverted
+                        : colors.primary.default
+                }
+                data-sheet="label"
+            >
+                {label}
+            </Label>
+            {text && (
+                <Text
+                    type="copy"
+                    size="medium"
+                    isInverted={isInverted}
+                    data-sheet="text"
+                >
+                    {text}
+                </Text>
+            )}
+        </View>
+    );
+});
+
+NumberListCard.displayName = 'NumberListCard';
+
+const ListContainer = styled.div<{ columns: '3' | '4' }>`
+    margin: 0 auto;
+    max-width: ${CARD_MAX_WIDTH}px;
+
+    @media ${mq.semilarge} {
+        max-width: ${CARD_MAX_WIDTH * 2 + spacings.spacer}px;
     }
-);
 
-IconBlock.displayName = 'IconBlock';
+    @media ${mq.large} {
+        max-width: ${({ columns }) =>
+            columns === '4'
+                ? CARD_MAX_WIDTH * 4 + spacings.spacer * 3
+                : CARD_MAX_WIDTH * 3 + spacings.spacer * 2}px;
+    }
+`;
 
-const ContentContainer = styled.div<{
-    cols: 3 | 4;
-    hAlign?: 'left' | 'center';
+const CardList = styled.ul<{
+    isCentered?: boolean;
+    columns: '3' | '4';
 }>`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: ${({ isCentered }) => (isCentered ? 'center' : 'flex-start')};
     flex-wrap: wrap;
 
-    margin: -${spacings.spacer}px;
-    margin-top: -${spacings.spacer * 2}px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    margin-left: -${spacings.spacer}px;
+    margin-top: -${spacings.nudge * 6}px;
 
     @media ${mq.semilarge} {
         flex-direction: row;
-
-        align-items: ${({ hAlign }) =>
-            hAlign === 'center' ? 'center' : 'flex-start'};
-        margin-top: -${spacings.spacer}px;
+        justify-content: ${({ isCentered }) =>
+            isCentered ? 'center' : 'flex-start'};
+        margin-top: -${spacings.nudge * 10}px;
     }
 
     & > * {
-        padding: ${spacings.spacer}px;
-        padding-top: ${spacings.spacer * 2}px;
-
-        @media ${mq.semilarge} {
-            padding-top: ${spacings.spacer}px;
-        }
-
+        padding-left: ${spacings.spacer}px;
+        padding-top: ${spacings.nudge * 6}px;
         flex-basis: 100%;
 
         @media ${mq.semilarge} {
             flex: 0 0 50%;
+            padding-top: ${spacings.nudge * 10}px;
         }
 
         @media ${mq.large} {
-            flex: 1 0 ${({ cols }) => (cols === 4 ? '25' : '33.33')}%;
+            flex: 0 0 ${({ columns }) => (columns === '4' ? '25' : '33.33')}%;
         }
     }
 `;
+
+export interface NumberListItem {
+    icon?: { src: string; alt?: string };
+    digit?: string;
+    label?: string;
+    text?: string;
+}
 
 const NumberList: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
-    items?: {
-        icon?: { src: string; alt?: string };
-        number?: string;
-        label?: string;
-        text?: string;
-    }[];
+    items?: NumberListItem[];
+    columns?: 3 | 4;
+
+    /** Center texts in every card item */
+    isCentered?: boolean;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-    cols?: 3 | 4;
-    hAlign?: 'left' | 'center';
-}> = ({ anchorId, items, bgMode, cols = 3, hAlign = 'center' }) => {
+}> = ({ anchorId, items, bgMode, columns = 3, isCentered = true }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -173,7 +196,7 @@ const NumberList: React.FC<{
     const { sheetRefs: numbersRef } = useEqualSheetHeight<HTMLDivElement>({
         listLength: items?.length || 0,
         identifiers: [
-            '[data-sheet="number"]',
+            '[data-sheet="digit"]',
             '[data-sheet="label"]',
             '[data-sheet="text"]',
         ],
@@ -181,8 +204,8 @@ const NumberList: React.FC<{
             small: 1,
             medium: 1,
             semilarge: 2,
-            large: cols,
-            xlarge: cols,
+            large: columns,
+            xlarge: columns,
         },
     });
 
@@ -200,18 +223,23 @@ const NumberList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <ContentContainer cols={cols} hAlign={hAlign}>
-                    {items?.map((item, i) => {
-                        return (
-                            <IconBlock
-                                ref={numbersRef[i]}
-                                {...item}
-                                key={i}
-                                isInverted={isInverted}
-                            />
-                        );
-                    })}
-                </ContentContainer>
+                <ListContainer columns={columns.toString() as '3' | '4'}>
+                    <CardList
+                        isCentered={isCentered}
+                        columns={columns.toString() as '3' | '4'}
+                    >
+                        {items?.map((item, i) => {
+                            return (
+                                <NumberListCard
+                                    key={i}
+                                    ref={numbersRef[i] as any}
+                                    {...item}
+                                    isInverted={isInverted}
+                                />
+                            );
+                        })}
+                    </CardList>
+                </ListContainer>
             </Wrapper>
         </Section>
     );
