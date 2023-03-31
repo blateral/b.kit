@@ -18,19 +18,113 @@ export const Default: Story = () => (
     <NumberList
         items={[
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '28000',
                 label: 'Lorem Ipsum',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '544',
                 label: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
+                digit: '197',
+                label: 'Consetetur sadipscing elitr',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
+                digit: '544',
+                label: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
+                digit: '197',
+                label: 'Consetetur sadipscing elitr',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+        ]}
+    />
+);
+
+export const WithSVG: Story = () => (
+    <NumberList
+        items={[
+            {
+                image: {
+                    small: '/images/leaf.svg',
+                    coverSpace: false,
+                },
+                digit: '28000',
+                label: 'Lorem Ipsum',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: '/images/leaf.svg',
+                    coverSpace: false,
+                },
+                digit: '544',
+                label: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: '/images/leaf.svg',
+                    coverSpace: false,
+                },
+                digit: '197',
+                label: 'Consetetur sadipscing elitr',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: '/images/leaf.svg',
+                    coverSpace: false,
+                },
+                digit: '544',
+                label: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: '/images/leaf.svg',
+                    coverSpace: false,
+                },
                 digit: '197',
                 label: 'Consetetur sadipscing elitr',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
@@ -44,19 +138,61 @@ export const WithBackground: Story = () => (
         bgMode="full"
         items={[
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '28000',
                 label: 'Lorem Ipsum',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '544',
                 label: 'Dolor Sit Amet',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
+                digit: '197',
+                label: 'Consetetur sadipscing elitr',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
+                digit: '544',
+                label: 'Dolor Sit Amet',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '197',
                 label: 'Consetetur sadipscing elitr',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
@@ -69,19 +205,61 @@ export const IsInverted: Story = () => (
     <NumberList
         items={[
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '28000',
                 label: 'Lorem Ipsum',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '544',
                 label: 'Dolor Sit Amet',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
+                digit: '197',
+                label: 'Consetetur sadipscing elitr',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
+                digit: '544',
+                label: 'Dolor Sit Amet',
+                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
+            },
+            {
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '197',
                 label: 'Consetetur sadipscing elitr',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
@@ -91,68 +269,66 @@ export const IsInverted: Story = () => (
     />
 );
 
-export const With4Items: Story = () => (
-    <NumberList
-        columns={4}
-        items={[
-            {
-                icon: { src: 'https://picsum.photos/140' },
-                digit: '28000',
-                label: 'Lorem Ipsum',
-                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
-            },
-            {
-                icon: { src: 'https://picsum.photos/140' },
-                digit: '544',
-                label: 'Dolor Sit Amet',
-                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
-            },
-            {
-                icon: { src: 'https://picsum.photos/140' },
-                digit: '197',
-                label: 'Consetetur sadipscing elitr',
-                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
-            },
-            {
-                icon: { src: 'https://picsum.photos/140' },
-                digit: '514',
-                label: 'Sed diam nonumy eirmod tempor invidunt ut labore',
-                text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
-            },
-        ]}
-    />
-);
-
 export const LeftAligned: Story = () => (
     <NumberList
         isCentered={false}
         items={[
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '28000',
                 label: 'Lorem Ipsum',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '544',
                 label: 'Dolor Sit Amet',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '197',
                 label: 'Consetetur sadipscing elitr',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '197',
                 label: 'Consetetur sadipscing elitr',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
             },
             {
-                icon: { src: 'https://picsum.photos/140' },
+                image: {
+                    small: 'https://unsplash.it/380/209?image=700',
+                    coverSpace: true,
+                    ratios: {
+                        small: { w: 380, h: 209 },
+                    },
+                },
                 digit: '197',
                 label: 'Consetetur sadipscing elitr',
                 text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam  Lorem ipsum dolor sit amet, consetetur  ',
