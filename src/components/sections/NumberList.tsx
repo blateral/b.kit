@@ -1,159 +1,181 @@
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Callout from 'components/typography/Callout';
-import Heading from 'components/typography/Heading';
-import React, { useContext } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { getColors as color, mq, spacings, withRange } from 'utils/styles';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import {
+    getColors as color,
+    spacings,
+    getGlobals as global,
+} from 'utils/styles';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import Copy from 'components/typography/Copy';
+import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+import Image, { ImageProps } from 'components/blocks/Image';
 
-const View = styled.div`
-    text-align: center;
+const View = styled.li<{ isCentered?: boolean }>`
+    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
 
     & > * {
-        margin: 0 auto;
+        margin: ${({ isCentered }) => (isCentered ? '0 auto' : 0)};
+        margin-right: auto;
     }
 
-    @media ${mq.semilarge} {
-        text-align: left;
-
-        & > * {
-            margin: 0;
-        }
+    & > * + * {
+        margin-top: ${spacings.nudge * 3}px;
     }
 `;
 
-const Icon = styled.img`
-    display: block;
-    max-width: 140px;
-    max-height: 140px;
-
-    margin-bottom: ${spacings.nudge * 2}px;
-`;
-
-const NumberContainer = styled.div<{ height: number }>`
-    max-width: max-content;
-    min-height: 90px;
-
+const ImageContainer = styled.div<{ isCentered?: boolean }>`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-
-    @media ${mq.semilarge} {
-        min-height: 100px;
-    }
-
-    /* margin-bottom: ${spacings.nudge * 2}px; */
-
-    @media ${mq.large} {
-        min-height: 120px;
-    }
+    justify-content: ${({ isCentered }) =>
+        isCentered ? 'center' : 'flex-start'};
+    margin-bottom: ${spacings.nudge * 3}px;
+    max-width: 100%;
 `;
 
-const Number = styled(Callout)<{ isInverted?: boolean; stringLength: number }>`
-    max-height: 140px;
-    ${({ stringLength }) =>
-        stringLength <= 6
-            ? withRange([72, 120], 'font-size')
-            : stringLength >= 10
-            ? withRange([33, 42], 'font-size')
-            : withRange([52, 72], 'font-size')}
-
-    color: ${({ isInverted, theme }) =>
-        isInverted
-            ? color(theme).primary.inverted
-            : color(theme).primary.default};
+const StyledImage = styled(Image)`
+    overflow: hidden;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 `;
 
-const Label = styled(Heading)`
-    max-width: 80%;
-`;
+const Label = styled(Copy)``;
 
-const IconBlock: React.FC<{
-    icon?: { src: string; alt?: string };
-    number?: string;
+const Text = styled(Copy)``;
+
+export interface NumberListCardProps {
+    image?: ImageProps;
+    digit?: string;
     label?: string;
-    isInverted?: boolean;
-}> = ({ icon, label, number, isInverted }) => {
-    const theme = useContext(ThemeContext);
+    text?: string;
+}
 
-    const stringLength = number ? number.length : 0;
+const NumberListCard = forwardRef<
+    HTMLLIElement,
+    NumberListCardProps & {
+        isInverted?: boolean;
+        isCentered?: boolean;
+        className?: string;
+    }
+>(({ image, label, digit, isInverted, isCentered, text, className }, ref) => {
+    const { colors } = useLibTheme();
 
     return (
-        <View>
-            {icon && <Icon src={icon.src} alt={icon.alt} />}
-            <NumberContainer height={0}>
-                <Number
-                    renderAs="div"
-                    stringLength={stringLength}
-                    isInverted={isInverted}
-                >
-                    {number}
-                </Number>
-            </NumberContainer>
+        <View ref={ref} isCentered={isCentered} className={className}>
+            {image?.small && (
+                <ImageContainer isCentered={isCentered}>
+                    <StyledImage
+                        isInverted={isInverted}
+                        small={image.small}
+                        medium={image.medium}
+                        semilarge={image.semilarge}
+                        large={image.large}
+                        xlarge={image.xlarge}
+                        alt={image.alt}
+                        coverSpace={image.coverSpace}
+                        ratios={image.ratios}
+                        showPlaceholder={image.showPlaceholder}
+                    />
+                </ImageContainer>
+            )}
+            <Callout
+                data-sheet="digit"
+                size="mediumBold"
+                renderAs="div"
+                isInverted={isInverted}
+            >
+                {digit}
+            </Callout>
             <Label
-                size="super"
+                type="copy-b"
+                size="big"
                 textColor={
                     isInverted
-                        ? color(theme).primary.inverted
-                        : color(theme).primary.default
+                        ? colors.primary.inverted
+                        : colors.primary.default
                 }
+                data-sheet="label"
             >
                 {label}
             </Label>
+            {text && (
+                <Text
+                    type="copy"
+                    size="medium"
+                    isInverted={isInverted}
+                    data-sheet="text"
+                >
+                    {text}
+                </Text>
+            )}
         </View>
     );
-};
+});
 
-const ContentContainer = styled.div`
-    display: flex;
-    flex-direction: row;
+NumberListCard.displayName = 'NumberListCard';
+
+const CardList = styled.ul`
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, auto));
+    grid-row-gap: ${spacings.nudge * 6}px;
+    grid-column-gap: ${spacings.spacer}px;
+    justify-content: center;
     align-items: flex-start;
-    justify-content: space-between;
-    flex-wrap: wrap;
 
-    margin: -${spacings.spacer}px;
-    margin-top: -${spacings.spacer * 2}px;
-
-    @media ${mq.semilarge} {
-        margin-top: -${spacings.spacer}px;
-    }
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
     & > * {
-        padding: ${spacings.spacer}px;
-        padding-top: ${spacings.spacer * 2}px;
-
-        @media ${mq.semilarge} {
-            padding-top: ${spacings.spacer}px;
-        }
-
-        flex-basis: 100%;
-
-        @media ${mq.semilarge} {
-            flex: 0 0 50%;
-        }
-
-        @media ${mq.large} {
-            flex: 0 1 33.33%;
-        }
+        min-width: 240px;
+        max-width: 440px;
     }
 `;
+
+export interface NumberListItem {
+    image?: ImageProps;
+    digit?: string;
+    label?: string;
+    text?: string;
+}
 
 const NumberList: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
-    items?: {
-        icon?: { src: string; alt?: string };
-        number?: string;
-        label?: string;
-    }[];
+    items?: NumberListItem[];
+
+    /** Center texts in every card item */
+    isCentered?: boolean;
+
+    /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, items, bgMode }) => {
+}> = ({ anchorId, items, bgMode, isCentered = true }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
+
+    const { sheetRefs: numbersRef } = useEqualSheetHeight<HTMLDivElement>({
+        listLength: items?.length || 0,
+        identifiers: [
+            '[data-sheet="digit"]',
+            '[data-sheet="label"]',
+            '[data-sheet="text"]',
+        ],
+        responsive: {
+            small: 1,
+            medium: 2,
+            semilarge: 3,
+            large: 4,
+            xlarge: 4,
+        },
+        customMediaQueries: {
+            medium: '(min-width: 36.5em)',
+            semilarge: '(min-width: 54.75em)',
+            large: '(min-width: 73em)',
+            xlarge: '(min-width: 90em)',
+        },
+    });
 
     return (
         <Section
@@ -169,17 +191,19 @@ const NumberList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <ContentContainer>
+                <CardList>
                     {items?.map((item, i) => {
                         return (
-                            <IconBlock
-                                {...item}
+                            <NumberListCard
                                 key={i}
+                                ref={numbersRef[i] as any}
+                                {...item}
                                 isInverted={isInverted}
+                                isCentered={isCentered}
                             />
                         );
                     })}
-                </ContentContainer>
+                </CardList>
             </Wrapper>
         </Section>
     );

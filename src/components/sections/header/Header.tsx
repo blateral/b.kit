@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 
-import { CalloutTag } from 'components/typography/Callout';
 import { mq, spacings, withRange } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import HeaderKenBurns from './HeaderKenBurns';
@@ -9,7 +8,7 @@ import HeaderPoster from './HeaderPoster';
 import Actions from 'components/blocks/Actions';
 import HeaderVideo from './HeaderVideo';
 import Copy from 'components/typography/Copy';
-import Heading from 'components/typography/Heading';
+import Heading, { HeadlineTag } from 'components/typography/Heading';
 import Section, { mapToBgMode } from 'components/base/Section';
 import { ImageProps } from 'components/blocks/Image';
 import {
@@ -360,7 +359,7 @@ const Header: FC<{
     title?: string;
 
     /** Header title HTML tag type (h2, h3, h4...) */
-    titleAs?: CalloutTag;
+    titleAs?: HeadlineTag;
 
     /** Header text on image */
     text?: string;
