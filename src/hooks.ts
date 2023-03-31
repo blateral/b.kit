@@ -7,6 +7,7 @@ export {
     isBrowser,
     useMediaQuery,
     useMediaQueries,
+    useDynamicMediaQueries,
 } from 'utils/useMediaQuery';
 export { useScroll, ScrollDirection } from 'utils/useScroll';
 export { useScrollTo } from 'utils/useScrollTo';
