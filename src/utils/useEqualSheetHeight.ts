@@ -5,9 +5,10 @@ import {
     createRef,
     useCallback,
 } from 'react';
-import { useMediaQuery } from './useMediaQuery';
+import { useDynamicMediaQueries } from './useMediaQuery';
 import { useFontsLoaded } from 'utils/useFontsLoaded';
 import useResizeThrottle from './useResizeThrottle';
+import { MediaQueryType, mq } from './styles';
 
 interface ItemsPerRow {
     small?: number;
@@ -29,6 +30,7 @@ export const useEqualSheetHeight = <T extends HTMLElement>(props: {
     responsive?: ItemsPerRow;
     /** Throttle timeout for resize events. Default: 400ms */
     resizeThrottleTimeout?: number;
+    customMediaQueries?: { [key in Exclude<Mq, 'small'>]: string };
 }) => {
     const defaultResponsive = {
         small: 1,
@@ -37,12 +39,14 @@ export const useEqualSheetHeight = <T extends HTMLElement>(props: {
         large: 3,
         xlarge: 3,
         ...props.responsive,
-    };
-    const mqs: Mq[] = ['small', 'medium', 'semilarge', 'large', 'xlarge'];
-    const currentMq = useMediaQuery(mqs) as Mq | undefined;
-    const itemsPerRow = currentMq
-        ? defaultResponsive[currentMq]
-        : defaultResponsive.small;
+    } as Record<MediaQueryType, number>;
+
+    const queries = useDynamicMediaQueries(props.customMediaQueries || mq);
+    const currentMq = Object.keys(queries).reduce<Mq>(
+        (acc, key) => (queries[key] ? key : acc) as Mq,
+        'small'
+    );
+    const itemsPerRow = defaultResponsive[currentMq];
 
     const [sheetRefs, setSheetRefs] = useState<MutableRefObject<T>[]>([]);
     const fontsLoaded = useFontsLoaded();

@@ -110,3 +110,57 @@ export const useMediaQuery = (mqs?: MediaQueryType[]) => {
 
     return mediaQuery;
 };
+
+export interface MediaQueries {
+    [key: string]: string;
+}
+
+export const useDynamicMediaQueries = <QueryMap extends MediaQueries>(
+    mq: QueryMap
+) => {
+    const [mediaQueries, setMediaQueries] = useState<
+        { [key in keyof QueryMap]: boolean }
+    >(() => {
+        return Object.keys(mq).reduce((acc, current) => {
+            const copy = { ...acc };
+            copy[current] = false;
+            return copy;
+        }, {}) as Record<keyof QueryMap, boolean>;
+    });
+
+    useEffect(() => {
+        const getMq = () => {
+            const newQueryState = {};
+
+            for (const key in mq) {
+                newQueryState[key as string] = window.matchMedia(
+                    mq[key]
+                ).matches;
+            }
+            return newQueryState as Record<keyof QueryMap, boolean>;
+        };
+
+        const setQueries = (newQueries: Record<keyof QueryMap, boolean>) => {
+            setMediaQueries((prev) => {
+                for (const key in newQueries) {
+                    if (prev[key] === undefined) return newQueries;
+                    if (newQueries[key] !== prev[key]) {
+                        return newQueries;
+                    }
+                }
+                return prev;
+            });
+        };
+
+        const handleResize = () => {
+            setQueries(getMq());
+        };
+
+        window.addEventListener('resize', handleResize);
+        setQueries(getMq());
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, [mq, mediaQueries]);
+
+    return mediaQueries;
+};

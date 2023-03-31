@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled, { css } from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import {
-    FontOptionType,
+    CalloutFontOptionType,
     getFonts as font,
     mq,
     styleTextColor,
@@ -11,7 +11,7 @@ import {
 
 // Styles
 const BaseStyles = styled.h1<{
-    size: FontOptionType;
+    size: CalloutFontOptionType;
     hyphens?: boolean;
     hasShadow?: boolean;
     textColor?: string;
@@ -83,7 +83,7 @@ export type CalloutTag =
 const Callout: React.FC<{
     isInverted?: boolean;
     renderAs?: CalloutTag;
-    size?: FontOptionType;
+    size?: CalloutFontOptionType;
     textColor?: string;
     textGradient?: string;
     hyphens?: boolean;

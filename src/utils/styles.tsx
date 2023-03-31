@@ -149,7 +149,15 @@ export interface FontOptions {
     big: FontProps;
 }
 
+export interface CalloutFontOptions {
+    small: FontProps;
+    medium: FontProps;
+    mediumBold: FontProps;
+    big: FontProps;
+}
+
 export type FontOptionType = keyof FontOptions;
+export type CalloutFontOptionType = keyof CalloutFontOptions;
 
 export interface Fonts {
     copy: FontOptions;
@@ -160,7 +168,7 @@ export interface Fonts {
     'heading-2': FontProps;
     'heading-3': FontProps;
     'heading-4': FontProps;
-    callout: FontOptions;
+    callout: CalloutFontOptions;
     link: {
         color: string;
         colorInverted: string;
@@ -343,11 +351,17 @@ const defaultFonts: Fonts = {
             lineHeight: '1.17',
             size: [72],
         },
+        mediumBold: {
+            ...headingBase,
+            weight: '700',
+            lineHeight: '1.17',
+            size: [72],
+        },
         big: {
             ...headingBase,
             weight: '300',
             lineHeight: '1.17',
-            size: [92],
+            size: [76],
         },
     },
     link: {
