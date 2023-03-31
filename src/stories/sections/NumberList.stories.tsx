@@ -19,10 +19,10 @@ export const Default: Story = () => (
         items={[
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '28000',
@@ -31,10 +31,10 @@ export const Default: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '544',
@@ -43,10 +43,10 @@ export const Default: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '197',
@@ -55,10 +55,10 @@ export const Default: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '544',
@@ -67,10 +67,10 @@ export const Default: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '197',
@@ -139,10 +139,10 @@ export const WithBackground: Story = () => (
         items={[
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '28000',
@@ -151,10 +151,10 @@ export const WithBackground: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '544',
@@ -163,10 +163,10 @@ export const WithBackground: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '197',
@@ -175,10 +175,10 @@ export const WithBackground: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '544',
@@ -187,10 +187,10 @@ export const WithBackground: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '197',
@@ -206,10 +206,10 @@ export const IsInverted: Story = () => (
         items={[
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '28000',
@@ -218,10 +218,10 @@ export const IsInverted: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '544',
@@ -230,10 +230,10 @@ export const IsInverted: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '197',
@@ -242,10 +242,10 @@ export const IsInverted: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '544',
@@ -254,10 +254,10 @@ export const IsInverted: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '197',
@@ -275,10 +275,10 @@ export const LeftAligned: Story = () => (
         items={[
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '28000',
@@ -287,10 +287,10 @@ export const LeftAligned: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '544',
@@ -299,10 +299,10 @@ export const LeftAligned: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '197',
@@ -311,10 +311,10 @@ export const LeftAligned: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '197',
@@ -323,10 +323,10 @@ export const LeftAligned: Story = () => (
             },
             {
                 image: {
-                    small: 'https://unsplash.it/380/209?image=700',
+                    small: 'https://unsplash.it/440/242?image=700',
                     coverSpace: true,
                     ratios: {
-                        small: { w: 380, h: 209 },
+                        small: { w: 440, h: 242 },
                     },
                 },
                 digit: '197',
