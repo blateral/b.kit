@@ -47,7 +47,6 @@ export const useEqualSheetHeight = <T extends HTMLElement>(props: {
         'small'
     );
     const itemsPerRow = defaultResponsive[currentMq];
-    console.log(itemsPerRow);
 
     const [sheetRefs, setSheetRefs] = useState<MutableRefObject<T>[]>([]);
     const fontsLoaded = useFontsLoaded();
