@@ -113,9 +113,8 @@ const NumberListCard = forwardRef<
                     size="medium"
                     isInverted={isInverted}
                     data-sheet="text"
-                >
-                    {text}
-                </Text>
+                    innerHTML={text}
+                />
             )}
         </View>
     );
@@ -138,6 +137,7 @@ const CardList = styled.ul`
 
     & > * {
         flex: 0 0 100%;
+        width: 100%;
         min-width: ${CARD_MIN_WIDTH + spacings.spacer}px;
         max-width: ${CARD_MAX_WIDTH + spacings.spacer}px;
         padding-left: ${spacings.spacer}px;
