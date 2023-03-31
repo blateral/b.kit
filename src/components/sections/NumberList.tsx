@@ -13,6 +13,15 @@ import Copy from 'components/typography/Copy';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 import Image, { ImageProps } from 'components/blocks/Image';
 
+const CARD_MIN_WIDTH = 240;
+const CARD_MAX_WIDTH = 440;
+const MEDIA_QUERIES = {
+    medium: '(min-width: 36.5em)',
+    semilarge: '(min-width: 54.75em)',
+    large: '(min-width: 73em)',
+    xlarge: '(min-width: 90em)',
+};
+
 const View = styled.li<{ isCentered?: boolean }>`
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
 
@@ -115,20 +124,84 @@ const NumberListCard = forwardRef<
 NumberListCard.displayName = 'NumberListCard';
 
 const CardList = styled.ul`
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, auto));
-    grid-row-gap: ${spacings.nudge * 6}px;
-    grid-column-gap: ${spacings.spacer}px;
-    justify-content: center;
-    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
 
     list-style: none;
     padding: 0;
     margin: 0;
+    margin-left: -${spacings.spacer}px;
+    margin-top: -${spacings.nudge * 6}px;
 
     & > * {
-        min-width: 240px;
-        max-width: 440px;
+        flex: 0 0 100%;
+        min-width: ${CARD_MIN_WIDTH + spacings.spacer}px;
+        max-width: ${CARD_MAX_WIDTH + spacings.spacer}px;
+        padding-left: ${spacings.spacer}px;
+        padding-top: ${spacings.nudge * 6}px;
+    }
+
+    @media ${MEDIA_QUERIES.medium} {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+
+        margin-top: -${spacings.nudge * 10}px;
+
+        & > * {
+            flex: 0 0 50%;
+            padding-top: ${spacings.nudge * 10}px;
+        }
+
+        & > li:first-child:nth-last-child(1) {
+            /* -or- li:only-child { */
+            flex: 0 0 100%;
+        }
+    }
+
+    @media ${MEDIA_QUERIES.semilarge} {
+        & > * {
+            flex: 0 0 33.33%;
+        }
+
+        /* one item */
+        & > li:first-child:nth-last-child(1) {
+            /* -or- li:only-child { */
+            flex: 0 0 100%;
+        }
+
+        /* two items */
+        & > li:first-child:nth-last-child(2),
+        & > li:first-child:nth-last-child(2) ~ li {
+            flex: 0 0 50%;
+        }
+    }
+
+    @media ${MEDIA_QUERIES.large} {
+        & > * {
+            flex: 0 0 25%;
+        }
+
+        /* one item */
+        & > li:first-child:nth-last-child(1) {
+            /* -or- li:only-child { */
+            flex: 0 0 100%;
+        }
+
+        /* two items */
+        & > li:first-child:nth-last-child(2),
+        & > li:first-child:nth-last-child(2) ~ li {
+            flex: 0 0 50%;
+        }
+
+        /* three items */
+        & > li:first-child:nth-last-child(3),
+        & > li:first-child:nth-last-child(3) ~ li {
+            flex: 0 0 33.33%;
+        }
     }
 `;
 
@@ -169,12 +242,7 @@ const NumberList: React.FC<{
             large: 4,
             xlarge: 4,
         },
-        customMediaQueries: {
-            medium: '(min-width: 36.5em)',
-            semilarge: '(min-width: 54.75em)',
-            large: '(min-width: 73em)',
-            xlarge: '(min-width: 90em)',
-        },
+        customMediaQueries: MEDIA_QUERIES,
     });
 
     return (
