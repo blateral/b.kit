@@ -149,7 +149,7 @@ const Feature = forwardRef<
                     {...link}
                     isInverted={isInverted}
                     ariaLabel={title}
-                    data-sheet="title"
+                    dataSheet="title"
                 >
                     {title}
                 </TitleLink>
