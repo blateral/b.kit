@@ -34,12 +34,12 @@ export const WithActions: Story = () => (
         title="Lorem ipsum dolor sit amet consectetur adipiscing elit"
         superTitle="Lorem Ipsum"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. "
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -59,12 +59,12 @@ export const WithImage: Story = () => (
                 small: { h: 1, w: 1 },
             },
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -84,12 +84,12 @@ export const ImageWithOriginalSize: Story = () => (
                 small: { h: 100, w: 200 },
             },
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -110,12 +110,12 @@ export const ClampedTitle: Story = () => (
                 small: { h: 1, w: 1 },
             },
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -137,12 +137,12 @@ export const Centered: Story = () => (
                 small: { h: 1, w: 1 },
             },
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -164,12 +164,12 @@ export const Inverted: Story = () => (
                 small: { h: 1, w: 1 },
             },
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -198,12 +198,12 @@ export const OnImage: Story = () => (
                 small: { h: 1, w: 1 },
             },
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>

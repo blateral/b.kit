@@ -71,7 +71,7 @@ export const WithActions: Story = () => (
         intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         link={{ href: '#test' }}
-        action={(isInverted) => (
+        action={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
@@ -93,7 +93,7 @@ export const Centered: Story = () => (
         intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         link={{ href: '#test' }}
-        action={(isInverted) => (
+        action={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
@@ -115,7 +115,7 @@ export const Inverted: Story = () => (
         intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         link={{ href: '#test' }}
-        action={(isInverted) => (
+        action={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>

@@ -59,7 +59,7 @@ export const WithTertiaryAction: Story = () => (
 export const WithImage: Story = () => (
     <EventBlock
         date={new Date('July 22, 2021 03:24:00')}
-        image={[
+        images={[
             {
                 small: 'https://unsplash.it/640/274',
                 medium: 'https://unsplash.it/832/357',

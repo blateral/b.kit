@@ -40,12 +40,12 @@ export const WithContent: Story = () => (
             xlarge: 'https://unsplash.it/2400/550?image=507',
             alt: '',
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -66,12 +66,12 @@ export const VerticallyCentered: Story = () => (
             xlarge: 'https://unsplash.it/2400/550?image=507',
             alt: '',
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -93,12 +93,12 @@ export const HorizontallyCentered: Story = () => (
             xlarge: 'https://unsplash.it/2400/550?image=507',
             alt: '',
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -120,12 +120,12 @@ export const Centered: Story = () => (
             xlarge: 'https://unsplash.it/2400/550?image=507',
             alt: '',
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -149,12 +149,12 @@ export const FullWidth: Story = () => (
             xlarge: 'https://unsplash.it/2400/550?image=507',
             alt: '',
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -176,12 +176,12 @@ export const FullWidthAndVerticallyCentered: Story = () => (
             xlarge: 'https://unsplash.it/2400/550?image=507',
             alt: '',
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -204,12 +204,12 @@ export const FullWidthAndHorizontallyCentered: Story = () => (
             xlarge: 'https://unsplash.it/2400/550?image=507',
             alt: '',
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -232,12 +232,12 @@ export const FullWidthAndCentered: Story = () => (
             xlarge: 'https://unsplash.it/2400/550?image=507',
             alt: '',
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>

@@ -135,7 +135,7 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -170,7 +170,7 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -205,7 +205,7 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -240,7 +240,7 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -275,7 +275,7 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -317,7 +317,7 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -352,7 +352,7 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -387,7 +387,7 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -422,7 +422,7 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -457,7 +457,7 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -500,7 +500,7 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -535,7 +535,7 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -570,7 +570,7 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -605,7 +605,7 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -640,7 +640,7 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -683,7 +683,7 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -718,7 +718,7 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -753,7 +753,7 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -788,7 +788,7 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',
@@ -823,7 +823,7 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: [
+                images: [
                     {
                         small: 'https://unsplash.it/640/320',
                         medium: 'https://unsplash.it/832/306',

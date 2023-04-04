@@ -5,11 +5,11 @@ import FeatureList, {
     FeatureListComponent,
 } from 'components/sections/FeatureList';
 import Button from 'components/buttons/Button';
-import { FeatureProps } from 'components/blocks/Feature';
+import { FeatureActionProps, FeatureProps } from 'components/blocks/Feature';
 import { generateItemList } from 'utils/storyHelpers';
 
 const actions = {
-    action: (isInverted?: boolean) => (
+    action: ({ isInverted }: FeatureActionProps) => (
         <Button.View href="#test" isInverted={isInverted}>
             <Button.Label>Primary</Button.Label>
         </Button.View>
