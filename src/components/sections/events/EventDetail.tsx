@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -9,16 +9,50 @@ import Tag from 'components/blocks/Tag';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { LinkProps } from 'components/typography/Link';
-import { mq, spacings } from 'utils/styles';
+import { getColors, mq, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import StatusFormatter from 'utils/statusFormatter';
 import InfoList from 'components/blocks/InfoList';
 import { isValidArray } from 'utils/arrays';
 
+const ImageContainer = styled.div<{ hasMultipleImages?: boolean }>`
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    background-color: ${({ theme }) => getColors(theme).elementBg.medium};
+
+    margin-bottom: ${spacings.spacer}px;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+
+    & > * {
+        ${({ hasMultipleImages }) =>
+            hasMultipleImages &&
+            css`
+                &:last-child {
+                    display: none;
+                }
+            `}
+    }
+
+    @media ${mq.medium} {
+        flex: 0 0 50%;
+
+        & > * {
+            &:last-child {
+                display: block;
+            }
+        }
+    }
+`;
+
 const StyledImage = styled(Image)`
-    &:not(:last-child) {
-        margin-bottom: ${spacings.spacer}px;
+    @media ${mq.medium} {
+        max-width: 50%;
     }
 `;
 
@@ -173,13 +207,21 @@ const EventDetail: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {event.image?.small && (
-                    <StyledImage
-                        {...event.image}
-                        coverSpace
-                        allowEdgeRadius
-                        isInverted={isInverted}
-                    />
+                {event.image && (
+                    <ImageContainer hasMultipleImages={event.image.length > 1}>
+                        {event.image.map(
+                            (img, i) =>
+                                img.small && (
+                                    <StyledImage
+                                        key={i}
+                                        {...img}
+                                        coverSpace
+                                        allowEdgeRadius
+                                        isInverted={isInverted}
+                                    />
+                                )
+                        )}
+                    </ImageContainer>
                 )}
                 <Grid.Row
                     gutter={spacings.nudge * 5}

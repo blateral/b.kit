@@ -93,7 +93,7 @@ export interface EventProps {
     activeTags?: string[];
 
     /** Event image */
-    image?: Omit<ImageProps, 'coverSpace' | 'ratios'>;
+    image?: Array<Omit<ImageProps, 'coverSpace' | 'ratios'>>;
 
     /** Event title */
     title?: string;
@@ -170,21 +170,26 @@ const EventBlock: React.FC<EventProps> = ({
 
     return (
         <View>
-            {image?.small && (
-                <ImageContainer>
-                    <Image
-                        {...image}
-                        coverSpace
-                        allowEdgeRadius
-                        isInverted={isInverted}
-                        ratios={{
-                            small: { w: 640, h: 320 },
-                            medium: { w: 752, h: 276 },
-                            large: { w: 375, h: 250 },
-                        }}
-                    />
-                </ImageContainer>
-            )}
+            {image &&
+                image.map(
+                    (img, i) =>
+                        img?.small && (
+                            <ImageContainer key={i}>
+                                <Image
+                                    {...img}
+                                    coverSpace
+                                    allowEdgeRadius
+                                    isInverted={isInverted}
+                                    ratios={{
+                                        small: { w: 640, h: 320 },
+                                        medium: { w: 752, h: 276 },
+                                        large: { w: 375, h: 250 },
+                                    }}
+                                />
+                            </ImageContainer>
+                        )
+                )}
+
             <MainContent>
                 {isValidArray(filteredTags, false) && (
                     <TagContainer>
