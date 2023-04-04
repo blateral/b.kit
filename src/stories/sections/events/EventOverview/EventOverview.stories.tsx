@@ -34,7 +34,7 @@ const exampleEventTag1 = generateItemList<EventItem>(
             { name: 'Tag 2', link: { href: '#0' } },
         ],
         publishDate: new Date(`July ${i + 1}, 2021 03:24:00`),
-        image: [
+        images: [
             {
                 small: 'https://unsplash.it/640/320?image=40' + i,
                 medium: 'https://unsplash.it/832/306?image=40' + i,
@@ -56,7 +56,7 @@ const exampleEventTag2 = generateItemList<EventItem>(
             { name: 'Tag 3', link: { href: '#0' } },
         ],
         publishDate: new Date(`May ${i + 1}, 2021 03:24:00`),
-        image: [
+        images: [
             {
                 small: 'https://unsplash.it/640/320?image=30' + i,
                 medium: 'https://unsplash.it/832/306?image=30' + i,
@@ -74,7 +74,7 @@ const exampleEventTag3 = generateItemList<EventItem>(
         ...item,
         tags: [{ name: 'Tag 3', link: { href: '#0' } }],
         publishDate: new Date(`November ${i + 1}, 2021 03:24:00`),
-        image: [
+        images: [
             {
                 small: 'https://unsplash.it/640/320?image=50' + i,
                 medium: 'https://unsplash.it/832/306?image=50' + i,
