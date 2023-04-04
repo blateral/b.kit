@@ -97,10 +97,10 @@ export const WithImage: Story = () => (
         event={{
             images: [
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=110',
+                    medium: 'https://unsplash.it/396/297?image=110',
+                    semilarge: 'https://unsplash.it/492/369?image=110',
+                    large: 'https://unsplash.it/700/525?image=110',
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
@@ -126,16 +126,16 @@ export const With2Images: Story = () => (
         event={{
             images: [
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=110',
+                    medium: 'https://unsplash.it/396/297?image=110',
+                    semilarge: 'https://unsplash.it/492/369?image=110',
+                    large: 'https://unsplash.it/700/525?image=110',
                 },
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=111',
+                    medium: 'https://unsplash.it/396/297?image=111',
+                    semilarge: 'https://unsplash.it/492/369?image=111',
+                    large: 'https://unsplash.it/700/525?image=111',
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
@@ -161,16 +161,16 @@ export const WithInfoList: Story = () => (
         event={{
             images: [
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=110',
+                    medium: 'https://unsplash.it/396/297?image=110',
+                    semilarge: 'https://unsplash.it/492/369?image=110',
+                    large: 'https://unsplash.it/700/525?image=110',
                 },
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=111',
+                    medium: 'https://unsplash.it/396/297?image=111',
+                    semilarge: 'https://unsplash.it/492/369?image=111',
+                    large: 'https://unsplash.it/700/525?image=111',
                 },
             ],
             title: 'Lorem ipsum dolor sit amet dolor sit amet dolor',
@@ -262,16 +262,16 @@ export const WithBackground: Story = () => (
         event={{
             images: [
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=110',
+                    medium: 'https://unsplash.it/396/297?image=110',
+                    semilarge: 'https://unsplash.it/492/369?image=110',
+                    large: 'https://unsplash.it/700/525?image=110',
                 },
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=111',
+                    medium: 'https://unsplash.it/396/297?image=111',
+                    semilarge: 'https://unsplash.it/492/369?image=111',
+                    large: 'https://unsplash.it/700/525?image=111',
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
@@ -363,16 +363,16 @@ export const IsInverted: Story = () => (
         event={{
             images: [
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=110',
+                    medium: 'https://unsplash.it/396/297?image=110',
+                    semilarge: 'https://unsplash.it/492/369?image=110',
+                    large: 'https://unsplash.it/700/525?image=110',
                 },
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=111',
+                    medium: 'https://unsplash.it/396/297?image=111',
+                    semilarge: 'https://unsplash.it/492/369?image=111',
+                    large: 'https://unsplash.it/700/525?image=111',
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
@@ -463,16 +463,16 @@ export const CustomTag: Story = () => (
         event={{
             images: [
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=110',
+                    medium: 'https://unsplash.it/396/297?image=110',
+                    semilarge: 'https://unsplash.it/492/369?image=110',
+                    large: 'https://unsplash.it/700/525?image=110',
                 },
                 {
-                    small: 'https://unsplash.it/640/320?image=110',
-                    medium: 'https://unsplash.it/832/416?image=110',
-                    semilarge: 'https://unsplash.it/1024/512?image=110',
-                    large: 'https://unsplash.it/1440/720?image=110',
+                    small: 'https://unsplash.it/640/480?image=111',
+                    medium: 'https://unsplash.it/396/297?image=111',
+                    semilarge: 'https://unsplash.it/492/369?image=111',
+                    large: 'https://unsplash.it/700/525?image=111',
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
