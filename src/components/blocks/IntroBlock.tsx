@@ -146,10 +146,10 @@ const IntroBlock: React.FC<{
     textSize?: keyof FontOptions;
 
     /** Function to inject custom primary button */
-    primaryAction?: (props?: IntroActionProps) => React.ReactNode;
+    primaryAction?: (props: IntroActionProps) => React.ReactNode;
 
     /** Function to inject custom secondary button */
-    secondaryAction?: (props?: IntroActionProps) => React.ReactNode;
+    secondaryAction?: (props: IntroActionProps) => React.ReactNode;
 
     /** Center text and actions */
     isCentered?: boolean;
