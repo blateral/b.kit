@@ -93,7 +93,7 @@ export interface EventProps {
     activeTags?: string[];
 
     /** Event image */
-    image?: Array<Omit<ImageProps, 'coverSpace' | 'ratios'>>;
+    images?: Array<Omit<ImageProps, 'coverSpace' | 'ratios'>>;
 
     /** Event title */
     title?: string;
@@ -134,7 +134,7 @@ const EventBlock: React.FC<EventProps> = ({
     customTag,
     onTagClick,
     title,
-    image,
+    images,
     date,
     text,
     link,
@@ -170,26 +170,22 @@ const EventBlock: React.FC<EventProps> = ({
 
     return (
         <View>
-            {image &&
-                image.map(
-                    (img, i) =>
-                        img?.small && (
-                            <ImageContainer key={i}>
-                                <Image
-                                    {...img}
-                                    coverSpace
-                                    allowEdgeRadius
-                                    isInverted={isInverted}
-                                    ratios={{
-                                        small: { w: 640, h: 320 },
-                                        medium: { w: 752, h: 276 },
-                                        large: { w: 375, h: 250 },
-                                    }}
-                                />
-                            </ImageContainer>
-                        )
-                )}
-
+            {images?.map((img, i) => {
+                if (!img.small) return null;
+                return (
+                    <ImageContainer key={i}>
+                        <Image
+                            {...img}
+                            coverSpace
+                            allowEdgeRadius
+                            isInverted={isInverted}
+                            ratios={{
+                                small: { w: 4, h: 3 },
+                            }}
+                        />
+                    </ImageContainer>
+                );
+            })}
             <MainContent>
                 {isValidArray(filteredTags, false) && (
                     <TagContainer>

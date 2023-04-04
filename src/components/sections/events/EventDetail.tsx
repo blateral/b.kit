@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
@@ -9,19 +9,24 @@ import Tag from 'components/blocks/Tag';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { LinkProps } from 'components/typography/Link';
-import { getColors, mq, spacings } from 'utils/styles';
+import { mq, spacings, getGlobals as global } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import StatusFormatter from 'utils/statusFormatter';
 import InfoList from 'components/blocks/InfoList';
 import { isValidArray } from 'utils/arrays';
 
-const ImageContainer = styled.div<{ hasMultipleImages?: boolean }>`
+const ImageContainer = styled.div<{
+    isInverted?: boolean;
+}>`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
 
-    background-color: ${({ theme }) => getColors(theme).elementBg.medium};
+    background-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? global(theme).sections.imagePlaceholderBg.inverted
+            : global(theme).sections.imagePlaceholderBg.default};
 
     margin-bottom: ${spacings.spacer}px;
 
@@ -29,23 +34,15 @@ const ImageContainer = styled.div<{ hasMultipleImages?: boolean }>`
         margin-left: ${spacings.nudge}px;
     }
 
-    & > * {
-        ${({ hasMultipleImages }) =>
-            hasMultipleImages &&
-            css`
-                &:last-child {
-                    display: none;
-                }
-            `}
+    & > *:not(:only-child):last-child {
+        display: none;
     }
 
     @media ${mq.medium} {
         flex: 0 0 50%;
 
-        & > * {
-            &:last-child {
-                display: block;
-            }
+        & > *:not(:only-child):last-child {
+            display: inline-block;
         }
     }
 `;
@@ -90,9 +87,6 @@ const EventTitle = styled(Heading)`
 
 const EventDateTime = styled(Copy)`
     max-width: 880px;
-    /* overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; */
 
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
@@ -147,7 +141,7 @@ const EventDetail: React.FC<{
     anchorId?: string;
 
     /** Array of event item settings */
-    event: DetailEventProps & { address?: string; abstract?: string };
+    event?: DetailEventProps & { address?: string; abstract?: string };
 
     /** Additional event infos */
     infos?: EventInfoGroup[];
@@ -207,20 +201,21 @@ const EventDetail: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {event.image && (
-                    <ImageContainer hasMultipleImages={event.image.length > 1}>
-                        {event.image.map(
-                            (img, i) =>
-                                img.small && (
-                                    <StyledImage
-                                        key={i}
-                                        {...img}
-                                        coverSpace
-                                        allowEdgeRadius
-                                        isInverted={isInverted}
-                                    />
-                                )
-                        )}
+                {isValidArray(event?.images, false) && (
+                    <ImageContainer isInverted={isInverted}>
+                        {event?.images.map((img, i) => {
+                            if (!img.small) return null;
+                            return (
+                                <StyledImage
+                                    key={i}
+                                    {...img}
+                                    coverSpace
+                                    allowEdgeRadius
+                                    isInverted={isInverted}
+                                    ratios={{ small: { w: 4, h: 3 } }}
+                                />
+                            );
+                        })}
                     </ImageContainer>
                 )}
                 <Grid.Row
@@ -228,7 +223,7 @@ const EventDetail: React.FC<{
                     semilarge={{ gutter: spacings.spacer }}
                 >
                     <Grid.Col semilarge={{ span: hasInfos ? 5.7 / 8 : 1 }}>
-                        {event.tags && (
+                        {event?.tags && (
                             <TagContainer>
                                 {event.tags.map((tag, i) => (
                                     <TagWrapper key={'tag_' + i}>
@@ -252,7 +247,7 @@ const EventDetail: React.FC<{
                                 ))}
                             </TagContainer>
                         )}
-                        {event.title && (
+                        {event?.title && (
                             <EventTitle
                                 size="heading-2"
                                 isInverted={isInverted}
@@ -261,20 +256,25 @@ const EventDetail: React.FC<{
                             </EventTitle>
                         )}
                         {publishedAt && (
-                            <EventDateTime size="big" type="copy-b">
+                            <EventDateTime
+                                size="big"
+                                type="copy-b"
+                                isInverted={isInverted}
+                            >
                                 {publishedAt || ''}
                                 {publishedAt && timespan ? ' | ' : ''}
                                 {timespan}
                             </EventDateTime>
                         )}
-                        {event.address && (
+                        {event?.address && (
                             <EventAddress
                                 size="big"
                                 type="copy"
                                 innerHTML={event.address}
+                                isInverted={isInverted}
                             />
                         )}
-                        {event.abstract && (
+                        {event?.abstract && (
                             <EventText
                                 size="medium"
                                 type="copy-b"
@@ -283,7 +283,7 @@ const EventDetail: React.FC<{
                                 {event.abstract}
                             </EventText>
                         )}
-                        {event.text && (
+                        {event?.text && (
                             <EventText
                                 size="medium"
                                 isInverted={isInverted}

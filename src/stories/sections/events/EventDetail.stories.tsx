@@ -95,17 +95,12 @@ export const WithTags: Story = () => (
 export const WithImage: Story = () => (
     <EventDetail
         event={{
-            image: [
+            images: [
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
@@ -129,28 +124,18 @@ export const WithImage: Story = () => (
 export const With2Images: Story = () => (
     <EventDetail
         event={{
-            image: [
+            images: [
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
@@ -174,28 +159,18 @@ export const With2Images: Story = () => (
 export const WithInfoList: Story = () => (
     <EventDetail
         event={{
-            image: [
+            images: [
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
             ],
             title: 'Lorem ipsum dolor sit amet dolor sit amet dolor',
@@ -285,28 +260,18 @@ export const WithBackground: Story = () => (
     <EventDetail
         bgMode="full"
         event={{
-            image: [
+            images: [
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
@@ -396,28 +361,18 @@ export const IsInverted: Story = () => (
     <EventDetail
         bgMode="inverted"
         event={{
-            image: [
+            images: [
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
@@ -506,28 +461,18 @@ export const IsInverted: Story = () => (
 export const CustomTag: Story = () => (
     <EventDetail
         event={{
-            image: [
+            images: [
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
                 {
                     small: 'https://unsplash.it/640/320?image=110',
                     medium: 'https://unsplash.it/832/416?image=110',
                     semilarge: 'https://unsplash.it/1024/512?image=110',
                     large: 'https://unsplash.it/1440/720?image=110',
-                    ratios: {
-                        small: { w: 352, h: 372 },
-                        medium: { w: 752, h: 772 },
-                        large: { w: 1238, h: 1258 },
-                    },
                 },
             ],
             title: 'Lorem ipsum dolor sit amet',
