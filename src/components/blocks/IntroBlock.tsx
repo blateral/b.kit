@@ -103,6 +103,11 @@ const DesktopImageContainer = styled.div`
     }
 `;
 
+export interface IntroActionProps {
+    isInverted?: boolean;
+    isTextCentered?: boolean;
+}
+
 const IntroBlock: React.FC<{
     /** Define rendered HTML DOM tag of intro container */
     renderAs?: 'div' | 'figcaption';
@@ -141,10 +146,10 @@ const IntroBlock: React.FC<{
     textSize?: keyof FontOptions;
 
     /** Function to inject custom primary button */
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    primaryAction?: (props?: IntroActionProps) => React.ReactNode;
 
     /** Function to inject custom secondary button */
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    secondaryAction?: (props?: IntroActionProps) => React.ReactNode;
 
     /** Center text and actions */
     isCentered?: boolean;
@@ -252,9 +257,19 @@ const IntroBlock: React.FC<{
                 )}
                 {(primaryAction || secondaryAction) && (
                     <StyledActions
-                        primary={primaryAction && primaryAction(isInverted)}
+                        primary={
+                            primaryAction &&
+                            primaryAction({
+                                isInverted,
+                                isTextCentered: isCentered,
+                            })
+                        }
                         secondary={
-                            secondaryAction && secondaryAction(isInverted)
+                            secondaryAction &&
+                            secondaryAction({
+                                isInverted,
+                                isTextCentered: isCentered,
+                            })
                         }
                     />
                 )}

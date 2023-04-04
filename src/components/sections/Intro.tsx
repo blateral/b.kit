@@ -1,7 +1,7 @@
 import React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import IntroBlock from 'components/blocks/IntroBlock';
+import IntroBlock, { IntroActionProps } from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { ImageProps } from 'components/blocks/Image';
@@ -36,10 +36,10 @@ const Intro: React.FC<{
     image?: ImageProps;
 
     /** Function to inject custom primary button */
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    primaryAction?: (props: IntroActionProps) => React.ReactNode;
 
     /** Function to inject custom secondary button */
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    secondaryAction?: (props: IntroActionProps) => React.ReactNode;
 
     /** Center text and actions */
     isCentered?: boolean;

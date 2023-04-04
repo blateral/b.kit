@@ -5,7 +5,7 @@ import Section from 'components/base/Section';
 import Wrapper, { wrapperWhitespace } from 'components/base/Wrapper';
 import Image, { ImageProps } from 'components/blocks/Image';
 import { spacings, getGlobals as global } from 'utils/styles';
-import IntroBlock from 'components/blocks/IntroBlock';
+import IntroBlock, { IntroActionProps } from 'components/blocks/IntroBlock';
 import { HeadlineTag } from 'components/typography/Heading';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
@@ -87,10 +87,10 @@ const Poster: FC<{
     text?: string;
 
     /** Function to inject custom primary button */
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    primaryAction?: (props: IntroActionProps) => React.ReactNode;
 
     /** Function to inject custom secondary button */
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    secondaryAction?: (props: IntroActionProps) => React.ReactNode;
 
     /** Align text and actions vertically */
     verticallyCentered?: boolean;

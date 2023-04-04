@@ -15,7 +15,7 @@ const FeatureList: React.FC<{
     isCentered?: boolean;
 
     /** Array with feature item content */
-    features?: FeatureProps[];
+    features?: Omit<FeatureProps, 'isInverted' | 'isCentered'>[];
 
     /** If not defined the component falls back to legacy logic: Uneven items = max 3 per row, even items = max 2 per row */
     columns?: 2 | 3;
