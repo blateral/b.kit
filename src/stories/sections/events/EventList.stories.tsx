@@ -135,12 +135,14 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -162,12 +164,14 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -189,12 +193,14 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -216,12 +222,14 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -243,12 +251,14 @@ export const WithImages: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -277,12 +287,14 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -304,12 +316,14 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -331,12 +345,14 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -358,12 +374,14 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -385,12 +403,14 @@ export const WithBackground: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -420,12 +440,14 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -447,12 +469,14 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -474,12 +498,14 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -501,12 +527,14 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -528,12 +556,14 @@ export const IsInverted: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -563,12 +593,14 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -590,12 +622,14 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -617,12 +651,14 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -644,12 +680,14 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
@@ -671,12 +709,14 @@ export const WithCustomTag: Story = () => (
             {
                 date: new Date('July 22, 2021 03:24:00'),
                 title: 'Sitzung des Gemeinderates',
-                image: {
-                    small: 'https://unsplash.it/640/320',
-                    medium: 'https://unsplash.it/832/306',
-                    semilarge: 'https://unsplash.it/1023/376',
-                    large: 'https://unsplash.it/591/394',
-                },
+                image: [
+                    {
+                        small: 'https://unsplash.it/640/320',
+                        medium: 'https://unsplash.it/832/306',
+                        semilarge: 'https://unsplash.it/1023/376',
+                        large: 'https://unsplash.it/591/394',
+                    },
+                ],
                 address: 'Stadt Überlingen, im Pfarrsaal, Münsterplatz 5',
                 tags: [
                     { name: 'Tag 1', link: { href: '#0' } },
