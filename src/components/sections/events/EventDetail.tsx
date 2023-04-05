@@ -53,6 +53,14 @@ const StyledImage = styled(Image)`
     }
 `;
 
+const StyledTextImage = styled(Image)`
+    margin-top: ${spacings.nudge * 3}px;
+
+    @media ${mq.medium} {
+        display: none;
+    }
+`;
+
 const TagContainer = styled.div`
     max-width: 880px;
     margin-top: -${spacings.nudge}px;
@@ -187,6 +195,8 @@ const EventDetail: React.FC<{
         );
     }
 
+    const secondaryImage = event?.images?.[1];
+
     return (
         <Section
             addSeperation
@@ -282,6 +292,15 @@ const EventDetail: React.FC<{
                             >
                                 {event.abstract}
                             </EventText>
+                        )}
+                        {secondaryImage && (
+                            <StyledTextImage
+                                {...secondaryImage}
+                                coverSpace
+                                allowEdgeRadius
+                                isInverted={isInverted}
+                                ratios={{ small: { w: 4, h: 3 } }}
+                            />
                         )}
                         {event?.text && (
                             <EventText
