@@ -39,14 +39,14 @@ const ImageFlex = styled.div<{ hasMultipleImages?: boolean }>`
     flex: 0 1 30%;
     background-color: ${({ theme }) => getColors(theme).elementBg.medium};
 
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+
     & > * {
         &:last-child {
             display: none;
         }
-    }
-
-    & > * + * {
-        margin-left: ${spacings.nudge}px;
     }
 
     @media ${mq.semilarge} {
@@ -63,16 +63,16 @@ const ImageFlex = styled.div<{ hasMultipleImages?: boolean }>`
         }
     }
 
-    & > * {
-        ${({ hasMultipleImages }) =>
-            hasMultipleImages &&
-            css`
-                @media ${mq.large} {
+    @media ${mq.large} {
+        & > * {
+            ${({ hasMultipleImages }) =>
+                hasMultipleImages &&
+                css`
                     &:last-child {
                         display: none;
                     }
-                }
-            `}
+                `}
+        }
     }
 `;
 
@@ -228,9 +228,9 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
     }, [tags]);
 
     return (
-        <View>
+        <View hasBg={hasBg}>
             {images && (
-                <ImageFlex>
+                <ImageFlex hasMultipleImages={images.length > 1}>
                     {images.map((img, i) => {
                         if (!img.small) return null;
                         return (
