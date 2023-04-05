@@ -36,7 +36,6 @@ const View = styled.div<{ hasBg?: boolean }>`
 `;
 
 const ImageFlex = styled.div<{ hasMultipleImages?: boolean }>`
-    flex: 0 1 30%;
     background-color: ${({ theme }) => getColors(theme).elementBg.medium};
 
     & > * + * {
@@ -64,6 +63,8 @@ const ImageFlex = styled.div<{ hasMultipleImages?: boolean }>`
     }
 
     @media ${mq.large} {
+        flex: 0 1 30%;
+
         & > * {
             ${({ hasMultipleImages }) =>
                 hasMultipleImages &&
