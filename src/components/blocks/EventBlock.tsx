@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import Tag, { TagProps } from './Tag';
 import Copy, { copyStyle } from 'components/typography/Copy';
@@ -14,14 +14,14 @@ const View = styled.div<{ hasBg?: boolean }>`
     text-decoration: none;
     color: inherit;
 
-    & > * + * {
-        margin-top: ${spacings.nudge * 3}px;
-    }
-
     background-color: ${({ theme, hasBg }) =>
         hasBg
             ? getColors(theme).elementBg.light
             : getColors(theme).elementBg.medium};
+
+    & > * + * {
+        margin-top: ${spacings.nudge}px;
+    }
 
     @media ${mq.large} {
         display: flex;
@@ -35,66 +35,57 @@ const View = styled.div<{ hasBg?: boolean }>`
     }
 `;
 
-const ImageFlex = styled.div<{ hasMultipleImages?: boolean }>`
-    background-color: ${({ theme }) => getColors(theme).elementBg.medium};
+const ImageFlex = styled.div`
+    margin-left: auto;
 
     & > * + * {
         margin-left: ${spacings.nudge}px;
     }
 
-    & > * {
-        &:last-child {
-            display: none;
-        }
+    & > *:not(:first-child) {
+        display: none;
     }
 
-    @media ${mq.semilarge} {
+    @media ${mq.medium} {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
 
         flex: 0 0 50%;
 
-        & > * {
-            &:last-child {
-                display: block;
-            }
+        & > *:not(:first-child) {
+            display: inline-block;
         }
     }
 
     @media ${mq.large} {
         flex: 0 1 30%;
 
-        & > * {
-            ${({ hasMultipleImages }) =>
-                hasMultipleImages &&
-                css`
-                    &:last-child {
-                        display: none;
-                    }
-                `}
+        & > *:not(:first-child) {
+            display: none;
         }
     }
 `;
 
-const ImageContainer = styled.div`
-    @media ${mq.semilarge} {
+const CardImage = styled(Image)`
+    height: 100%;
+
+    img {
+        width: calc(100% + 1px);
+    }
+
+    @media ${mq.medium} {
         max-width: 50%;
     }
 
     @media ${mq.large} {
         max-width: 100%;
     }
-
-    & > * {
-        display: block;
-    }
 `;
 
 const MainContent = styled.div`
-    padding: ${spacings.nudge * 2}px;
-    padding-top: 0;
     flex: 0 1 70%;
+    padding: ${spacings.nudge * 2}px;
 
     & > * + * {
         margin-top: ${spacings.nudge * 3}px;
@@ -228,24 +219,25 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
         return tags?.filter((tag) => tag.name);
     }, [tags]);
 
+    const cardImages = useMemo(() => images?.slice(0, 2), [images]);
+
     return (
         <View hasBg={hasBg}>
-            {images && (
-                <ImageFlex hasMultipleImages={images.length > 1}>
-                    {images.map((img, i) => {
+            {isValidArray(cardImages, false) && cardImages.length > 1 && (
+                <ImageFlex>
+                    {cardImages.map((img, i) => {
                         if (!img.small) return null;
                         return (
-                            <ImageContainer key={i}>
-                                <Image
-                                    {...img}
-                                    coverSpace
-                                    allowEdgeRadius
-                                    isInverted={isInverted}
-                                    ratios={{
-                                        small: { w: 4, h: 3 },
-                                    }}
-                                />
-                            </ImageContainer>
+                            <CardImage
+                                {...img}
+                                key={i}
+                                coverSpace
+                                allowEdgeRadius
+                                isInverted={isInverted}
+                                ratios={{
+                                    small: { w: 4, h: 3 },
+                                }}
+                            />
                         );
                     })}
                 </ImageFlex>
