@@ -9,48 +9,57 @@ import Tag from 'components/blocks/Tag';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { LinkProps } from 'components/typography/Link';
-import { mq, spacings, getGlobals as global } from 'utils/styles';
+import { mq, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import StatusFormatter from 'utils/statusFormatter';
 import InfoList from 'components/blocks/InfoList';
 import { isValidArray } from 'utils/arrays';
 
-const ImageContainer = styled.div<{
-    isInverted?: boolean;
-}>`
+const ImageContainer = styled.div`
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    justify-content: center;
 
-    background-color: ${({ theme, isInverted }) =>
-        isInverted
-            ? global(theme).sections.imagePlaceholderBg.inverted
-            : global(theme).sections.imagePlaceholderBg.default};
+    overflow: hidden;
 
     margin-bottom: ${spacings.spacer}px;
+`;
 
-    & > * + * {
-        margin-left: ${spacings.nudge}px;
-    }
-
-    & > *:not(:only-child):last-child {
+const StyledImage = styled(Image)`
+    &:not(:first-child) {
         display: none;
     }
 
     @media ${mq.medium} {
-        flex: 0 0 50%;
+        max-width: 50%;
 
-        & > *:not(:only-child):last-child {
+        &:not(:first-child) {
             display: inline-block;
+        }
+
+        & + & {
+            margin-left: ${spacings.nudge}px;
         }
     }
 `;
 
-const StyledImage = styled(Image)`
-    @media ${mq.medium} {
-        max-width: 50%;
-    }
+const ImageBackground = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    filter: blur(10px);
+    transform: scale(1.5);
+    z-index: -1;
 `;
 
 const StyledTextImage = styled(Image)`
@@ -195,7 +204,8 @@ const EventDetail: React.FC<{
         );
     }
 
-    const secondaryImage = event?.images?.[1];
+    const images = useMemo(() => event?.images?.slice(0, 2), [event?.images]);
+    const secondaryImage = images?.[1];
 
     return (
         <Section
@@ -211,9 +221,9 @@ const EventDetail: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {isValidArray(event?.images, false) && (
-                    <ImageContainer isInverted={isInverted}>
-                        {event?.images.map((img, i) => {
+                {isValidArray(images, false) && (
+                    <ImageContainer>
+                        {images.map((img, i) => {
                             if (!img.small) return null;
                             return (
                                 <StyledImage
@@ -226,6 +236,13 @@ const EventDetail: React.FC<{
                                 />
                             );
                         })}
+                        {images.length < 2 && (
+                            <ImageBackground
+                                style={{
+                                    backgroundImage: `url(${event?.images?.[0].small})`,
+                                }}
+                            />
+                        )}
                     </ImageContainer>
                 )}
                 <Grid.Row
