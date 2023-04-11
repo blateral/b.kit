@@ -86,6 +86,7 @@ const CardImage = styled(Image)`
 const MainContent = styled.div`
     flex: 0 1 70%;
     padding: ${spacings.nudge * 2}px;
+    padding-bottom: ${spacings.nudge * 3}px;
 
     & > * + * {
         margin-top: ${spacings.nudge * 3}px;
