@@ -1,5 +1,7 @@
 node_modules
 .DS_Store
-lib
-
+cjs
+esm
+types
 .vercel
+lib

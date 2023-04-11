@@ -1,15 +1,19 @@
 {
     "name": "@blateral/b.kit",
-    "version": "2.4.2",
+    "version": "2.5.0-beta.1.0",
     "description": "",
-    "main": "lib/index.js",
-    "module": "lib/index.es.js",
-    "types": "lib/index.d.ts",
+    "main": "cjs/index.js",
+    "module": "esm/index.js",
+    "types": "types/index.d.ts",
+    "sideEffects": false,
     "files": [
-        "lib"
+        "cjs/*",
+        "esm/*",
+        "types/*",
+        "lib/*"
     ],
     "scripts": {
-        "build": "yarn test && rollup -c",
+        "build": "yarn test && rollup -c && node postbuild.mjs",
         "watch": "rollup -c -w",
         "storybook": "start-storybook -s ./public -p 9000 -c .storybook --no-manager-cache",
         "deploy-storybook": "yarn storybook-to-ghpages",
