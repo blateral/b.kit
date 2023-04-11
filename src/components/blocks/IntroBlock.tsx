@@ -76,11 +76,14 @@ const StyledActions = styled(Actions)<{ isCentered?: boolean }>`
     }
 `;
 
-const MobileImageContainer = styled.div<{ isCentered?: boolean }>`
+const MobileImageContainer = styled.div<{
+    isCentered?: boolean;
+    coverSpace?: boolean;
+}>`
     width: 100%;
     height: 100%;
     max-width: 400px;
-    max-height: 400px;
+    max-height: ${({ coverSpace }) => coverSpace && '400px'};
     text-align: center;
 
     margin: 0 auto;
@@ -97,9 +100,9 @@ const DesktopImageContainer = styled.div`
 
     @media ${mq.semilarge} {
         display: block;
-        /* flex: 1 0 33.33%; */
 
         max-width: 400px;
+        max-width: calc(100% - 66.66% - ${spacings.spacer}px);
     }
 `;
 
@@ -222,7 +225,10 @@ const IntroBlock: React.FC<{
                     />
                 )}
                 {image?.small && (
-                    <MobileImageContainer isCentered={isCentered}>
+                    <MobileImageContainer
+                        isCentered={isCentered}
+                        coverSpace={coverSpace}
+                    >
                         <Image
                             {...image}
                             coverSpace={coverSpace}
