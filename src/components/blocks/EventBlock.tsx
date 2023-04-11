@@ -3,19 +3,24 @@ import styled from 'styled-components';
 
 import Tag, { TagProps } from './Tag';
 import Copy, { copyStyle } from 'components/typography/Copy';
-import { spacings, mq, getFonts as font } from 'utils/styles';
+import { spacings, mq, getFonts as font, getColors } from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import Image, { ImageProps } from './Image';
 import Link, { LinkProps } from 'components/typography/Link';
 import { isValidArray } from 'utils/arrays';
 
-const View = styled.div`
+const View = styled.div<{ hasBg?: boolean }>`
     text-decoration: none;
     color: inherit;
 
+    background-color: ${({ theme, hasBg }) =>
+        hasBg
+            ? getColors(theme).elementBg.light
+            : getColors(theme).elementBg.medium};
+
     & > * + * {
-        margin-top: ${spacings.nudge * 3}px;
+        margin-top: ${spacings.nudge}px;
     }
 
     @media ${mq.large} {
@@ -30,13 +35,57 @@ const View = styled.div`
     }
 `;
 
-const ImageContainer = styled.div`
-    flex: 0 1 30%;
+const ImageFlex = styled.div`
     margin-left: auto;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+
+    & > *:not(:first-child) {
+        display: none;
+    }
+
+    @media ${mq.medium} {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+
+        flex: 0 0 50%;
+
+        & > *:not(:first-child) {
+            display: inline-block;
+        }
+    }
+
+    @media ${mq.large} {
+        flex: 0 1 30%;
+
+        & > *:not(:first-child) {
+            display: none;
+        }
+    }
+`;
+
+const CardImage = styled(Image)`
+    height: 100%;
+
+    img {
+        width: calc(100% + 1px);
+    }
+
+    @media ${mq.medium} {
+        max-width: 50%;
+    }
+
+    @media ${mq.large} {
+        max-width: 100%;
+    }
 `;
 
 const MainContent = styled.div`
     flex: 0 1 70%;
+    padding: ${spacings.nudge * 2}px;
 
     & > * + * {
         margin-top: ${spacings.nudge * 3}px;
@@ -44,6 +93,7 @@ const MainContent = styled.div`
 
     @media ${mq.large} {
         max-width: 830px;
+        padding: ${spacings.nudge * 3}px;
     }
 `;
 
@@ -56,7 +106,7 @@ const TagContainer = styled.div`
     flex-wrap: wrap;
 `;
 
-const TitleWrapper = styled.div`
+const TextWrapper = styled.div`
     & > * + * {
         margin-top: ${spacings.nudge}px;
     }
@@ -93,7 +143,7 @@ export interface EventProps {
     activeTags?: string[];
 
     /** Event image */
-    image?: Omit<ImageProps, 'coverSpace' | 'ratios'>;
+    images?: Array<Omit<ImageProps, 'coverSpace' | 'ratios'>>;
 
     /** Event title */
     title?: string;
@@ -130,17 +180,18 @@ export interface EventProps {
     onTagClick?: (tag: TagProps) => void;
 }
 
-const EventBlock: React.FC<EventProps> = ({
+const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
     customTag,
     onTagClick,
     title,
-    image,
+    images,
     date,
     text,
     link,
     tags,
     isInverted,
     action,
+    hasBg,
 }) => {
     const { globals } = useLibTheme();
 
@@ -168,22 +219,28 @@ const EventBlock: React.FC<EventProps> = ({
         return tags?.filter((tag) => tag.name);
     }, [tags]);
 
+    const cardImages = useMemo(() => images?.slice(0, 2), [images]);
+
     return (
-        <View>
-            {image?.small && (
-                <ImageContainer>
-                    <Image
-                        {...image}
-                        coverSpace
-                        allowEdgeRadius
-                        isInverted={isInverted}
-                        ratios={{
-                            small: { w: 640, h: 320 },
-                            medium: { w: 752, h: 276 },
-                            large: { w: 375, h: 250 },
-                        }}
-                    />
-                </ImageContainer>
+        <View hasBg={hasBg}>
+            {isValidArray(cardImages, false) && cardImages.length > 1 && (
+                <ImageFlex>
+                    {cardImages.map((img, i) => {
+                        if (!img.small) return null;
+                        return (
+                            <CardImage
+                                {...img}
+                                key={i}
+                                coverSpace
+                                allowEdgeRadius
+                                isInverted={isInverted}
+                                ratios={{
+                                    small: { w: 4, h: 3 },
+                                }}
+                            />
+                        );
+                    })}
+                </ImageFlex>
             )}
             <MainContent>
                 {isValidArray(filteredTags, false) && (
@@ -196,7 +253,6 @@ const EventBlock: React.FC<EventProps> = ({
                                             customTag({
                                                 key: 'tag_' + i,
                                                 name: tag.name || '',
-                                                isInverted: isInverted,
                                                 isActive: false,
                                                 link: tag.link || {},
                                                 clickHandler:
@@ -204,7 +260,6 @@ const EventBlock: React.FC<EventProps> = ({
                                             })
                                         ) : (
                                             <Tag
-                                                isInverted={isInverted}
                                                 name={tag.name}
                                                 link={tag.link}
                                                 onClick={handleTagClick(tag)}
@@ -215,26 +270,16 @@ const EventBlock: React.FC<EventProps> = ({
                         )}
                     </TagContainer>
                 )}
-                <TitleWrapper>
+                {title && <TitleLink {...link}>{title}</TitleLink>}
+                <TextWrapper>
                     {date && (
-                        <Copy isInverted={isInverted} size="medium" type="copy">
+                        <Copy size="medium" type="copy-b">
                             {publishedAt}
                         </Copy>
                     )}
-                    {title && (
-                        <TitleLink {...link} isInverted={isInverted}>
-                            {title}
-                        </TitleLink>
-                    )}
-                </TitleWrapper>
-                {text && (
-                    <Text
-                        size="small"
-                        isInverted={isInverted}
-                        innerHTML={text}
-                    />
-                )}
-                {action && <div> {action({ isInverted })} </div>}
+                    {text && <Text size="small" innerHTML={text} />}
+                </TextWrapper>
+                {action && <div> {action({ isInverted: false })} </div>}
             </MainContent>
         </View>
     );

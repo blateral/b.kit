@@ -16,33 +16,31 @@ const List = styled.ul<{ hasBg?: boolean }>`
     margin: 0;
     padding: 0;
 
-    & > * + * {
+    /* & > * + * {
         border-top: 1px solid
             ${({ theme, hasBg }) =>
-                hasBg
-                    ? color(theme).elementBg.light
-                    : color(theme).elementBg.medium};
+        hasBg ? color(theme).elementBg.light : color(theme).elementBg.medium};
     }
 
     & > *:first-of-type {
         border-top: 1px solid
             ${({ theme, hasBg }) =>
-                hasBg
-                    ? color(theme).elementBg.light
-                    : color(theme).elementBg.medium};
+        hasBg ? color(theme).elementBg.light : color(theme).elementBg.medium};
     }
 
     & > *:last-of-type {
         border-bottom: 1px solid
             ${({ theme, hasBg }) =>
-                hasBg
-                    ? color(theme).elementBg.light
-                    : color(theme).elementBg.medium};
+        hasBg ? color(theme).elementBg.light : color(theme).elementBg.medium};
+    } */
+
+    & > * + * {
+        padding-top: ${spacings.nudge * 3}px;
     }
 `;
 
 const ListItem = styled.li`
-    padding: ${spacings.nudge * 3}px 0;
+    /* padding: ${spacings.nudge * 3}px 0; */
 `;
 
 export type EventItem = Omit<
@@ -114,6 +112,7 @@ const EventList: React.FC<{
                         return (
                             <ListItem key={i}>
                                 <EventBlock
+                                    hasBg={bgMode === 'full'}
                                     {...event}
                                     tags={event.tags?.map((tag) => {
                                         let tagHref: string | undefined =

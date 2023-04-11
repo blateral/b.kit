@@ -128,12 +128,12 @@ export const WithActions: Story = () => (
                 </p>
             `,
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -187,12 +187,12 @@ export const WithBadge: Story = () => (
                 </p>
             `,
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>
@@ -253,12 +253,12 @@ export const IsInverted: Story = () => (
                 </p>
             `,
         }}
-        primaryAction={(isInverted) => (
+        primaryAction={({ isInverted }) => (
             <Button.View isInverted={isInverted}>
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         )}
-        secondaryAction={(isInverted) => (
+        secondaryAction={({ isInverted }) => (
             <ButtonGhost.View isInverted={isInverted}>
                 <ButtonGhost.Label>Secondary</ButtonGhost.Label>
             </ButtonGhost.View>

@@ -16,9 +16,57 @@ import StatusFormatter from 'utils/statusFormatter';
 import InfoList from 'components/blocks/InfoList';
 import { isValidArray } from 'utils/arrays';
 
+const ImageContainer = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+
+    overflow: hidden;
+
+    margin-bottom: ${spacings.spacer}px;
+`;
+
 const StyledImage = styled(Image)`
-    &:not(:last-child) {
-        margin-bottom: ${spacings.spacer}px;
+    &:not(:first-child) {
+        display: none;
+    }
+
+    @media ${mq.medium} {
+        max-width: 50%;
+
+        &:not(:first-child) {
+            display: inline-block;
+        }
+
+        & + & {
+            margin-left: ${spacings.nudge}px;
+        }
+    }
+`;
+
+const ImageBackground = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    filter: blur(10px);
+    transform: scale(1.5);
+    z-index: -1;
+`;
+
+const StyledTextImage = styled(Image)`
+    margin-top: ${spacings.nudge * 3}px;
+
+    @media ${mq.medium} {
+        display: none;
     }
 `;
 
@@ -56,9 +104,6 @@ const EventTitle = styled(Heading)`
 
 const EventDateTime = styled(Copy)`
     max-width: 880px;
-    /* overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; */
 
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
@@ -113,7 +158,7 @@ const EventDetail: React.FC<{
     anchorId?: string;
 
     /** Array of event item settings */
-    event: DetailEventProps & { address?: string; abstract?: string };
+    event?: DetailEventProps & { address?: string; abstract?: string };
 
     /** Additional event infos */
     infos?: EventInfoGroup[];
@@ -159,6 +204,9 @@ const EventDetail: React.FC<{
         );
     }
 
+    const images = useMemo(() => event?.images?.slice(0, 2), [event?.images]);
+    const secondaryImage = images?.[1];
+
     return (
         <Section
             addSeperation
@@ -173,20 +221,36 @@ const EventDetail: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {event.image?.small && (
-                    <StyledImage
-                        {...event.image}
-                        coverSpace
-                        allowEdgeRadius
-                        isInverted={isInverted}
-                    />
+                {isValidArray(images, false) && (
+                    <ImageContainer>
+                        {images.map((img, i) => {
+                            if (!img.small) return null;
+                            return (
+                                <StyledImage
+                                    key={i}
+                                    {...img}
+                                    coverSpace
+                                    allowEdgeRadius
+                                    isInverted={isInverted}
+                                    ratios={{ small: { w: 4, h: 3 } }}
+                                />
+                            );
+                        })}
+                        {images.length < 2 && (
+                            <ImageBackground
+                                style={{
+                                    backgroundImage: `url(${event?.images?.[0].small})`,
+                                }}
+                            />
+                        )}
+                    </ImageContainer>
                 )}
                 <Grid.Row
                     gutter={spacings.nudge * 5}
                     semilarge={{ gutter: spacings.spacer }}
                 >
                     <Grid.Col semilarge={{ span: hasInfos ? 5.7 / 8 : 1 }}>
-                        {event.tags && (
+                        {event?.tags && (
                             <TagContainer>
                                 {event.tags.map((tag, i) => (
                                     <TagWrapper key={'tag_' + i}>
@@ -210,7 +274,7 @@ const EventDetail: React.FC<{
                                 ))}
                             </TagContainer>
                         )}
-                        {event.title && (
+                        {event?.title && (
                             <EventTitle
                                 size="heading-2"
                                 isInverted={isInverted}
@@ -219,20 +283,25 @@ const EventDetail: React.FC<{
                             </EventTitle>
                         )}
                         {publishedAt && (
-                            <EventDateTime size="big" type="copy-b">
+                            <EventDateTime
+                                size="big"
+                                type="copy-b"
+                                isInverted={isInverted}
+                            >
                                 {publishedAt || ''}
                                 {publishedAt && timespan ? ' | ' : ''}
                                 {timespan}
                             </EventDateTime>
                         )}
-                        {event.address && (
+                        {event?.address && (
                             <EventAddress
                                 size="big"
                                 type="copy"
                                 innerHTML={event.address}
+                                isInverted={isInverted}
                             />
                         )}
-                        {event.abstract && (
+                        {event?.abstract && (
                             <EventText
                                 size="medium"
                                 type="copy-b"
@@ -241,7 +310,16 @@ const EventDetail: React.FC<{
                                 {event.abstract}
                             </EventText>
                         )}
-                        {event.text && (
+                        {secondaryImage && (
+                            <StyledTextImage
+                                {...secondaryImage}
+                                coverSpace
+                                allowEdgeRadius
+                                isInverted={isInverted}
+                                ratios={{ small: { w: 4, h: 3 } }}
+                            />
+                        )}
+                        {event?.text && (
                             <EventText
                                 size="medium"
                                 isInverted={isInverted}

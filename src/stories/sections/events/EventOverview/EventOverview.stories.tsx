@@ -34,12 +34,20 @@ const exampleEventTag1 = generateItemList<EventItem>(
             { name: 'Tag 2', link: { href: '#0' } },
         ],
         publishDate: new Date(`July ${i + 1}, 2021 03:24:00`),
-        image: {
-            small: 'https://unsplash.it/640/320?image=40' + i,
-            medium: 'https://unsplash.it/832/306?image=40' + i,
-            semilarge: 'https://unsplash.it/1023/376?image=40' + i,
-            large: 'https://unsplash.it/591/394?image=40' + i,
-        },
+        images: [
+            {
+                small: 'https://unsplash.it/610/465?image=110',
+                medium: 'https://unsplash.it/400/300?image=110',
+                semilarge: 'https://unsplash.it/500/375?image=110',
+                large: 'https://unsplash.it/500/375?image=110',
+            },
+            {
+                small: 'https://unsplash.it/610/465?image=111',
+                medium: 'https://unsplash.it/400/300?image=111',
+                semilarge: 'https://unsplash.it/500/375?image=111',
+                large: 'https://unsplash.it/500/375?image=111',
+            },
+        ],
         text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     })
 );
@@ -54,12 +62,20 @@ const exampleEventTag2 = generateItemList<EventItem>(
             { name: 'Tag 3', link: { href: '#0' } },
         ],
         publishDate: new Date(`May ${i + 1}, 2021 03:24:00`),
-        image: {
-            small: 'https://unsplash.it/640/320?image=30' + i,
-            medium: 'https://unsplash.it/832/306?image=30' + i,
-            semilarge: 'https://unsplash.it/1023/376?image=30' + i,
-            large: 'https://unsplash.it/591/394?image=30' + i,
-        },
+        images: [
+            {
+                small: 'https://unsplash.it/610/465?image=99',
+                medium: 'https://unsplash.it/400/300?image=99',
+                semilarge: 'https://unsplash.it/500/375?image=99',
+                large: 'https://unsplash.it/500/375?image=99',
+            },
+            {
+                small: 'https://unsplash.it/610/465?image=112',
+                medium: 'https://unsplash.it/400/300?image=112',
+                semilarge: 'https://unsplash.it/500/375?image=112',
+                large: 'https://unsplash.it/500/375?image=112',
+            },
+        ],
     })
 );
 
@@ -70,12 +86,14 @@ const exampleEventTag3 = generateItemList<EventItem>(
         ...item,
         tags: [{ name: 'Tag 3', link: { href: '#0' } }],
         publishDate: new Date(`November ${i + 1}, 2021 03:24:00`),
-        image: {
-            small: 'https://unsplash.it/640/320?image=50' + i,
-            medium: 'https://unsplash.it/832/306?image=50' + i,
-            semilarge: 'https://unsplash.it/1023/376?image=50' + i,
-            large: 'https://unsplash.it/591/394?image=50' + i,
-        },
+        images: [
+            {
+                small: 'https://unsplash.it/610/465?image=109',
+                medium: 'https://unsplash.it/400/300?image=109',
+                semilarge: 'https://unsplash.it/500/375?image=109',
+                large: 'https://unsplash.it/500/375?image=109',
+            },
+        ],
     })
 );
 

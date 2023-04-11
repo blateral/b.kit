@@ -1,19 +1,14 @@
-import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
-import {
-    getColors as color,
-    getGlobals as global,
-    mq,
-    spacings,
-} from 'utils/styles';
+import { getGlobals as global, mq, spacings } from 'utils/styles';
 import Copy from 'components/typography/Copy';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { HeadlineTag } from 'components/typography/Heading';
 import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
-import { withLibTheme } from 'utils/LibThemeProvider';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { gridSettings, getGridWidth } from 'components/base/Grid';
 
 const ContactView = styled.div`
@@ -185,6 +180,11 @@ const Badge = styled.div`
     }
 `;
 
+export interface CtaActionProps {
+    isInverted?: boolean;
+    isTextCentered?: boolean;
+}
+
 export const CallToAction: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -209,9 +209,9 @@ export const CallToAction: FC<{
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom primary button */
-    primaryAction?: (isInverted?: boolean) => React.ReactNode;
+    primaryAction?: (props: CtaActionProps) => React.ReactNode;
     /** Function to inject custom secondary button */
-    secondaryAction?: (isInverted?: boolean) => React.ReactNode;
+    secondaryAction?: (props: CtaActionProps) => React.ReactNode;
     /** Function to inject newsletter form */
     newsFormMain?: (isInverted?: boolean) => React.ReactNode;
 }> = ({
@@ -229,16 +229,15 @@ export const CallToAction: FC<{
     newsFormMain,
     bgMode,
 }) => {
-    const theme = useContext(ThemeContext);
+    const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
+
     return (
         <Section
             addSeperation
             anchorId={anchorId}
             bgColor={
-                isInverted
-                    ? color(theme).sectionBg.dark
-                    : color(theme).sectionBg.medium
+                isInverted ? colors.sectionBg.dark : colors.sectionBg.medium
             }
             bgMode={bgMode ? mapToBgMode(bgMode, true) : 'full'}
         >
@@ -271,9 +270,16 @@ export const CallToAction: FC<{
                 )}
                 {(primaryAction || secondaryAction) && (
                     <StyledActions
-                        primary={primaryAction && primaryAction(isInverted)}
+                        primary={
+                            primaryAction &&
+                            primaryAction({ isInverted, isTextCentered: true })
+                        }
                         secondary={
-                            secondaryAction && secondaryAction(isInverted)
+                            secondaryAction &&
+                            secondaryAction({
+                                isInverted,
+                                isTextCentered: true,
+                            })
                         }
                     />
                 )}

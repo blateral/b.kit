@@ -74,6 +74,11 @@ const Action = styled.div`
     max-width: 100%;
 `;
 
+export interface FeatureActionProps {
+    isInverted?: boolean;
+    isTextCentered?: boolean;
+}
+
 export interface FeatureProps {
     /** Invert color and background for darker themes */
     isInverted?: boolean;
@@ -100,7 +105,7 @@ export interface FeatureProps {
     link?: LinkProps;
 
     /** Function to inject custom primary button */
-    action?: (isInverted?: boolean) => React.ReactNode;
+    action?: (props: FeatureActionProps) => React.ReactNode;
 }
 
 const Feature = forwardRef<
@@ -174,7 +179,11 @@ const Feature = forwardRef<
                         data-sheet="text"
                     />
                 </ArticleContent>
-                {action && <Action>{action(isInverted)}</Action>}
+                {action && (
+                    <Action>
+                        {action({ isInverted, isTextCentered: isCentered })}
+                    </Action>
+                )}
             </View>
         );
     }

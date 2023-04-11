@@ -41,28 +41,26 @@ const Events = styled.ul<{ hasBg?: boolean }>`
     margin: 0;
     padding: 0;
 
-    & > * + * {
+    /* & > * + * {
         border-top: 1px solid
             ${({ theme, hasBg }) =>
-                hasBg
-                    ? color(theme).elementBg.light
-                    : color(theme).elementBg.medium};
+        hasBg ? color(theme).elementBg.light : color(theme).elementBg.medium};
     }
 
     & > *:first-of-type {
         border-top: 1px solid
             ${({ theme, hasBg }) =>
-                hasBg
-                    ? color(theme).elementBg.light
-                    : color(theme).elementBg.medium};
+        hasBg ? color(theme).elementBg.light : color(theme).elementBg.medium};
     }
 
     & > *:last-of-type {
         border-bottom: 1px solid
             ${({ theme, hasBg }) =>
-                hasBg
-                    ? color(theme).elementBg.light
-                    : color(theme).elementBg.medium};
+        hasBg ? color(theme).elementBg.light : color(theme).elementBg.medium};
+    } */
+
+    & > * + * {
+        padding-top: ${spacings.nudge * 3}px;
     }
 `;
 
@@ -79,7 +77,7 @@ const FilterIcon = styled(Copy)`
 `;
 
 const EventItem = styled.li`
-    padding: ${spacings.nudge * 3}px 0;
+    /* padding: ${spacings.nudge * 3}px 0; */
 `;
 
 const ListFooter = styled.div`
@@ -426,6 +424,7 @@ const EventOverview: React.FC<{
                         return (
                             <EventItem key={`${i}_event_${item.title}`}>
                                 <EventBlock
+                                    hasBg={bgMode === 'full'}
                                     {...item}
                                     text={text}
                                     tags={item.tags?.map((tag) => ({
