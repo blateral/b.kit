@@ -4,8 +4,9 @@ import { Meta, Story } from '@storybook/react';
 import CallToAction, {
     CallToActionComponent,
 } from 'components/sections/CallToAction';
-import { Button, CompactForm } from 'index';
 import ButtonGhost from 'components/buttons/ButtonGhost';
+import Button from 'components/buttons/Button';
+import CompactForm from 'components/fields/CompactForm';
 
 export default {
     title: 'Sections/CallToAction',

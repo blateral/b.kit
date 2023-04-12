@@ -6,35 +6,45 @@ import ttypescript from 'ttypescript';
 import { terser } from 'rollup-plugin-terser';
 import { babel } from '@rollup/plugin-babel';
 import del from 'rollup-plugin-delete';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
+import { getFiles } from './postbuild.mjs';
 
-import packageJson from './package.json';
-
-export default {
-    input: './src/index.ts',
-    output: [
-        {
-            file: packageJson.main,
-            format: 'cjs',
-            sourcemap: true,
-        },
-        {
-            file: packageJson.module,
-            format: 'esm',
-            sourcemap: true,
-        },
-    ],
-    plugins: [
-        del({ targets: 'lib' }),
-        peerDepsExternal(),
-        resolve(),
-        commonjs(),
-        typescript({
-            typescript: ttypescript,
-            tsconfigOverride: {
-                exclude: ['src/stories', 'src/tests'],
+/** Rollup main entrypoint **/
+export default [
+    {
+        input: ['./src/index.ts', ...getFiles('./src').map((el) => el.path)],
+        output: [
+            {
+                dir: 'cjs',
+                format: 'cjs',
+                name: 'bkit',
+                sourcemap: true,
+                plugins: [terser()],
             },
-        }),
-        babel({ babelHelpers: 'bundled' }),
-        terser(),
-    ],
-};
+            {
+                dir: 'esm',
+                format: 'esm',
+                sourcemap: true,
+            },
+        ],
+        plugins: [
+            del({ targets: ['types', 'esm', 'cjs', 'lib'] }),
+            peerDepsExternal(),
+            commonjs(),
+            resolve(),
+            typescript({
+                typescript: ttypescript,
+                useTsconfigDeclarationDir: true,
+                tsconfigOverride: {
+                    exclude: ['src/stories', 'src/tests'],
+                    sourceRoot: '/types/',
+                },
+            }),
+            babel({
+                babelHelpers: 'bundled',
+                extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
+            }),
+        ],
+        external: ['react', 'react-dom', 'styled-components'],
+    },
+];
