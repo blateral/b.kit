@@ -1,36 +1,44 @@
 /***** Hooks *****/
-export * from 'utils/useEqualSheetHeight';
-export * from 'utils/cookie-consent/cookie';
-export * from 'utils/useIE';
-export * from 'utils/useItemHeight';
-export * from 'utils/useFontsLoaded';
-export * from 'utils/useMediaQuery';
-export * from 'utils/useScroll';
-export * from 'utils/useScrollTo';
-export * from 'utils/usePoster';
-export * from 'utils/useInterval';
-export * from 'utils/useTouch';
-export * from 'utils/useUpdateEffect';
-export * from 'utils/useMounted';
-export * from 'utils/useTimeout';
-export * from 'utils/useDebounce';
-export * from 'utils/useScrollThrottle';
-export * from 'utils/useResizeThrottle';
-export * from 'utils/useLazyInput';
-export * from 'utils/useArray';
-export * from 'utils/useImgPreload';
-export * from 'utils/hexRgbConverter';
-export * from 'utils/backgroundImage';
-export * from 'utils/clamp';
-export * from 'utils/fontLoading';
-export * from 'utils/navigation';
-export * from 'utils/arrays';
-export * from 'utils/concat';
-export * from 'utils/getLinkIcon';
-export * from 'utils/useLeafletMap';
-export * from 'utils/useParams';
-export * from 'utils/useGeolocation';
-export * from 'utils/useObserverSupport';
+export { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+export { default as useIE } from 'utils/useIE';
+export { useItemHeight } from 'utils/useItemHeight';
+export { useFontsLoaded } from 'utils/useFontsLoaded';
+export {
+    getMediaQuery,
+    isBrowser,
+    useMediaQuery,
+    useMediaQueries,
+    useDynamicMediaQueries,
+} from 'utils/useMediaQuery';
+export { useScroll, ScrollDirection } from 'utils/useScroll';
+export { useScrollTo } from 'utils/useScrollTo';
+export { usePoster, canUseWebP } from 'utils/usePoster';
+export { default as useInterval } from 'utils/useInterval';
+export { default as useTouch } from 'utils/useTouch';
+export { default as useUpdateEffect } from 'utils/useUpdateEffect';
+export { default as useMounted } from 'utils/useMounted';
+export { default as useTimeout } from 'utils/useTimeout';
+export { default as useDebounce } from 'utils/useDebounce';
+export { default as useScrollThrottle } from 'utils/useScrollThrottle';
+export { default as useResizeThrottle } from 'utils/useResizeThrottle';
+export { default as useLazyInput } from 'utils/useLazyInput';
+export { default as useArray } from 'utils/useArray';
+export { useImgPreload } from 'utils/useImgPreload';
+export { hexToRgba } from 'utils/hexRgbConverter';
+export { getBgImage } from 'utils/backgroundImage';
+export { clampValue } from 'utils/clamp';
+export { importFonts } from 'utils/fontLoading';
+export { getCurrentNavItem, getCurrentNavPath } from 'utils/navigation';
+export { isEmptyArray, isValidArray } from 'utils/arrays';
+export { concat, printAnchorTag } from 'utils/concat';
+export { getLinkIcon } from 'utils/getLinkIcon';
+export { default as useLeafletMap } from 'utils/useLeafletMap';
+export { default as useParams } from 'utils/useParams';
+export { default as useGeolocation } from 'utils/useGeolocation';
+export { useObserverSupport } from 'utils/useObserverSupport';
 export * from 'utils/urlParams';
 export * from 'utils/dataURI';
-export * from 'utils/cookie-consent/useCookieConsent';
+export {
+    default as useCookieConsent,
+    selectors,
+} from 'utils/cookie-consent/useCookieConsent';
