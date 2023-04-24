@@ -9,19 +9,31 @@ import Tag from 'components/blocks/Tag';
 import Copy from 'components/typography/Copy';
 import Heading from 'components/typography/Heading';
 import { LinkProps } from 'components/typography/Link';
-import { mq, spacings } from 'utils/styles';
+import { mq, spacings, getGlobals as global } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Grid from 'components/base/Grid';
 import StatusFormatter from 'utils/statusFormatter';
 import InfoList from 'components/blocks/InfoList';
 import { isValidArray } from 'utils/arrays';
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.div<{ hAlign?: 'left' | 'center' | 'right' }>`
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: ${({ hAlign }) => {
+        switch (hAlign) {
+            case 'center':
+                return 'center';
+
+            case 'right':
+                return 'flex-end';
+
+            case 'left':
+            default:
+                return 'flex-start';
+        }
+    }};
 
     overflow: hidden;
 
@@ -46,7 +58,7 @@ const StyledImage = styled(Image)`
     }
 `;
 
-const ImageBackground = styled.div`
+const ImageBackground = styled.div<{ isInverted?: boolean }>`
     position: absolute;
     top: 0;
     left: 0;
@@ -56,6 +68,10 @@ const ImageBackground = styled.div`
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-color: ${({ theme, isInverted }) =>
+        isInverted
+            ? global(theme).sections.imagePlaceholderBg.inverted
+            : global(theme).sections.imagePlaceholderBg.default};
 
     filter: blur(10px);
     transform: scale(1.5);
@@ -163,6 +179,9 @@ const EventDetail: React.FC<{
     /** Additional event infos */
     infos?: EventInfoGroup[];
 
+    /** Use image as blurred background for single images */
+    useImageAsBg?: boolean;
+
     /** Section background */
     bgMode?: 'inverted' | 'full';
 
@@ -174,7 +193,7 @@ const EventDetail: React.FC<{
         isActive?: boolean;
         link?: LinkProps;
     }) => React.ReactNode;
-}> = ({ anchorId, event, infos, bgMode, customTag }) => {
+}> = ({ anchorId, event, infos, useImageAsBg, bgMode, customTag }) => {
     const { colors, globals } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -222,7 +241,7 @@ const EventDetail: React.FC<{
         >
             <Wrapper addWhitespace>
                 {isValidArray(images, false) && (
-                    <ImageContainer>
+                    <ImageContainer hAlign={useImageAsBg ? 'center' : 'left'}>
                         {images.map((img, i) => {
                             if (!img.small) return null;
                             return (
@@ -236,13 +255,15 @@ const EventDetail: React.FC<{
                                 />
                             );
                         })}
-                        {images.length < 2 && (
-                            <ImageBackground
-                                style={{
-                                    backgroundImage: `url(${event?.images?.[0].small})`,
-                                }}
-                            />
-                        )}
+                        <ImageBackground
+                            isInverted={isInverted}
+                            style={{
+                                backgroundImage:
+                                    useImageAsBg && images.length < 2
+                                        ? `url(${event?.images?.[0].small})`
+                                        : undefined,
+                            }}
+                        />
                     </ImageContainer>
                 )}
                 <Grid.Row
