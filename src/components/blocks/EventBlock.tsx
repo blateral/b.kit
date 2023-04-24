@@ -53,7 +53,8 @@ const ImageFlex = styled.div`
 
         flex: 0 0 50%;
 
-        & > *:not(:first-child) {
+        & > *:not(:first-child),
+        & > *:not(:nth-child(2)) {
             display: inline-block;
         }
     }
@@ -224,7 +225,7 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
 
     return (
         <View hasBg={hasBg}>
-            {isValidArray(cardImages, false) && cardImages.length > 1 && (
+            {isValidArray(cardImages, false) && (
                 <ImageFlex>
                     {cardImages.map((img, i) => {
                         if (!img.small) return null;

@@ -169,7 +169,7 @@ export const WithImages: Story = () => (
             },
             {
                 date: new Date('July 22, 2021 03:24:00'),
-                title: 'Sitzung des Gemeinderates',
+                title: 'Sitzung des Gemeinderates A',
                 images: [
                     {
                         small: 'https://unsplash.it/610/465?image=111',
