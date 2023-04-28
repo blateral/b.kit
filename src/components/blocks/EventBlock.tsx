@@ -35,6 +35,8 @@ const View = styled.div<{ hasBg?: boolean }>`
     }
 `;
 
+const ImageLink = styled(Link)``;
+
 const ImageFlex = styled.div`
     margin-left: auto;
 
@@ -226,23 +228,25 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
     return (
         <View hasBg={hasBg}>
             {isValidArray(cardImages, false) && (
-                <ImageFlex>
-                    {cardImages.map((img, i) => {
-                        if (!img.small) return null;
-                        return (
-                            <CardImage
-                                {...img}
-                                key={i}
-                                coverSpace
-                                allowEdgeRadius
-                                isInverted={isInverted}
-                                ratios={{
-                                    small: { w: 4, h: 3 },
-                                }}
-                            />
-                        );
-                    })}
-                </ImageFlex>
+                <ImageLink {...link}>
+                    <ImageFlex>
+                        {cardImages.map((img, i) => {
+                            if (!img.small) return null;
+                            return (
+                                <CardImage
+                                    {...img}
+                                    key={i}
+                                    coverSpace
+                                    allowEdgeRadius
+                                    isInverted={isInverted}
+                                    ratios={{
+                                        small: { w: 4, h: 3 },
+                                    }}
+                                />
+                            );
+                        })}
+                    </ImageFlex>
+                </ImageLink>
             )}
             <MainContent>
                 {isValidArray(filteredTags, false) && (
