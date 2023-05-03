@@ -61,11 +61,16 @@ const ImageLink = styled(Link)`
     }
 
     @media ${mq.large} {
-        flex: 0 1 30%;
+        flex: 0 1 45%;
+        max-width: 430px;
 
         & > *:not(:first-child) {
             display: none;
         }
+    }
+
+    @media ${mq.xlarge} {
+        flex: 0 1 30%;
     }
 `;
 
@@ -123,6 +128,11 @@ const TagWrapper = styled.div`
 const TitleLink = styled(Link)`
     display: inline-block;
     ${copyStyle('copy-b', 'big')}
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 
     color: ${({ theme, isInverted }) =>
         isInverted
