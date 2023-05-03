@@ -220,7 +220,7 @@ const NewsCard = forwardRef<
 
         return (
             <View ref={ref} className={className}>
-                {image ? (
+                {image?.small ? (
                     <ImageLink {...link} ariaLabel={title}>
                         <StyledImage
                             {...image}
