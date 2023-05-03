@@ -35,7 +35,8 @@ const View = styled.div<{ hasBg?: boolean }>`
     }
 `;
 
-const ImageFlex = styled.div`
+const ImageLink = styled(Link)`
+    display: block;
     margin-left: auto;
 
     & > * + * {
@@ -60,11 +61,16 @@ const ImageFlex = styled.div`
     }
 
     @media ${mq.large} {
-        flex: 0 1 30%;
+        flex: 0 1 45%;
+        max-width: 430px;
 
         & > *:not(:first-child) {
             display: none;
         }
+    }
+
+    @media ${mq.xlarge} {
+        flex: 0 1 30%;
     }
 `;
 
@@ -122,6 +128,11 @@ const TagWrapper = styled.div`
 const TitleLink = styled(Link)`
     display: inline-block;
     ${copyStyle('copy-b', 'big')}
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 
     color: ${({ theme, isInverted }) =>
         isInverted
@@ -221,28 +232,28 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
         return tags?.filter((tag) => tag.name);
     }, [tags]);
 
-    const cardImages = useMemo(() => images?.slice(0, 2), [images]);
+    const cardImages = useMemo(
+        () => images?.slice(0, 2)?.filter((img) => img.small),
+        [images]
+    );
 
     return (
         <View hasBg={hasBg}>
             {isValidArray(cardImages, false) && (
-                <ImageFlex>
-                    {cardImages.map((img, i) => {
-                        if (!img.small) return null;
-                        return (
-                            <CardImage
-                                {...img}
-                                key={i}
-                                coverSpace
-                                allowEdgeRadius
-                                isInverted={isInverted}
-                                ratios={{
-                                    small: { w: 4, h: 3 },
-                                }}
-                            />
-                        );
-                    })}
-                </ImageFlex>
+                <ImageLink {...link}>
+                    {cardImages.map((img, i) => (
+                        <CardImage
+                            {...img}
+                            key={i}
+                            coverSpace
+                            allowEdgeRadius
+                            isInverted={isInverted}
+                            ratios={{
+                                small: { w: 4, h: 3 },
+                            }}
+                        />
+                    ))}
+                </ImageLink>
             )}
             <MainContent>
                 {isValidArray(filteredTags, false) && (
