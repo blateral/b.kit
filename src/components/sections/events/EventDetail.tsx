@@ -42,7 +42,7 @@ const ImageContainer = styled.div<{ hAlign?: 'left' | 'center' | 'right' }>`
 
 const ImgWrapper = styled.div`
     flex: 0 0 100%;
-    margin-bottom: -${spacings.nudge * 0.5}px;
+    margin-bottom: -6px;
 
     &:not(:first-child) {
         display: none;
