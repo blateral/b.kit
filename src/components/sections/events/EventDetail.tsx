@@ -40,13 +40,17 @@ const ImageContainer = styled.div<{ hAlign?: 'left' | 'center' | 'right' }>`
     margin-bottom: ${spacings.spacer}px;
 `;
 
-const StyledImage = styled(Image)`
+const ImgWrapper = styled.div`
+    flex: 0 0 100%;
+    margin-bottom: -${spacings.nudge * 0.5}px;
+
     &:not(:first-child) {
         display: none;
     }
 
     @media ${mq.medium} {
         max-width: 50%;
+        flex: 0 0 50%;
 
         &:not(:first-child) {
             display: inline-block;
@@ -245,14 +249,15 @@ const EventDetail: React.FC<{
                         {images.map((img, i) => {
                             if (!img.small) return null;
                             return (
-                                <StyledImage
-                                    key={i}
-                                    {...img}
-                                    coverSpace
-                                    allowEdgeRadius
-                                    isInverted={isInverted}
-                                    ratios={{ small: { w: 4, h: 3 } }}
-                                />
+                                <ImgWrapper key={i}>
+                                    <Image
+                                        {...img}
+                                        coverSpace
+                                        allowEdgeRadius
+                                        isInverted={isInverted}
+                                        ratios={{ small: { w: 4, h: 3 } }}
+                                    />
+                                </ImgWrapper>
                             );
                         })}
                         <ImageBackground
