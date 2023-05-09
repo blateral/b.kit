@@ -36,7 +36,7 @@ const Title: FC<{
             {superTitle && (
                 <div>
                     <Heading
-                        as={superTitleAs || 'h2'}
+                        renderAs={superTitleAs || 'h2'}
                         size="super"
                         textColor={colorMode === 'onImage' ? '#fff' : undefined}
                         isInverted={colorMode === 'inverted'}
@@ -47,7 +47,7 @@ const Title: FC<{
             {title && (
                 <div>
                     <Heading
-                        as={titleAs || 'h3'}
+                        renderAs={titleAs || 'h3'}
                         size={'heading-2'}
                         textColor={colorMode === 'onImage' ? '#fff' : undefined}
                         isInverted={colorMode === 'inverted'}

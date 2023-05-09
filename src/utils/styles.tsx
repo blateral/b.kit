@@ -1,4 +1,8 @@
 import { css, DefaultTheme } from 'styled-components';
+import { XOR } from './types';
+import { getSVGDataImg as getSVGData } from 'utils/dataURI';
+import ExternalIcon from 'components/base/icons/External';
+import React from 'react';
 
 export type MediaQueryType =
     | 'small'
@@ -101,6 +105,7 @@ export interface FontProps {
     letterSpacing?: string;
     size: [number, number];
     textTransform?: string;
+    textDecoration?: string;
     color?: string;
     colorInverted?: string;
     colorGradient?: string;
@@ -128,6 +133,14 @@ export interface Fonts {
     'heading-4': FontProps;
     label: FontOptions;
     callout: FontOptions;
+    link: {
+        color: string;
+        colorInverted: string;
+        colorHover: string;
+        colorHoverInverted: string;
+        textTransform?: string;
+        textDecoration?: string;
+    };
 }
 
 export type FontType = keyof Fonts;
@@ -302,9 +315,45 @@ const defaultFonts: Fonts = {
             size: [60, 62],
         },
     },
+    link: {
+        color: '#2441DA',
+        colorHover: '#122278',
+        colorInverted: '#fff',
+        colorHoverInverted: '#C8C8C8',
+    },
 };
 
 /***** Global Settings *****/
+interface LinkIcon {
+    isExternal?: boolean;
+    /** Patterns of Href value to show this icon (e.g. .svg, .png) */
+    patterns: string[];
+    /** Icon scale factor. 1 is default */
+    scale?: (props: { type?: keyof Fonts; size?: FontOptionType }) => number;
+    /** Set vertical alignment of icon in text */
+    vAlign?:
+        | 'bottom'
+        | 'baseline'
+        | 'middle'
+        | 'top'
+        | 'text-top'
+        | 'text-bottom'
+        | 'super'
+        | 'sub';
+}
+
+export interface LinkUrlIcon extends LinkIcon {
+    // icon (e.g. URL, base64 or icon font char)
+    iconUrl: (isInverted?: boolean) => string;
+}
+
+export interface LinkFontIcon extends LinkIcon {
+    /** Define font family for icon font */
+    iconFont: string;
+    /** Define icon font character */
+    iconChar: string;
+}
+
 export interface GlobalSettings {
     sections: {
         /** Radius of image and card edges */
@@ -316,7 +365,26 @@ export interface GlobalSettings {
         newsTimeFormat: string;
         newsLocaleKey: 'de' | 'en';
     };
+    icons: {
+        linkIcons: Array<XOR<LinkUrlIcon, LinkFontIcon>>;
+    };
 }
+
+const getLinkIconScale = (props: {
+    type?: keyof Fonts;
+    size?: FontOptionType;
+}) => {
+    if (
+        props.type === 'copy' ||
+        props.type === 'copy-b' ||
+        props.type === 'copy-i'
+    ) {
+        if (props.size === 'medium') return 0.8;
+        if (props.size === 'small') return 0.7;
+        if (props.size === 'big') return 0.9;
+    }
+    return 0.8;
+};
 
 const defaultGlobalSettings: GlobalSettings = {
     sections: {
@@ -333,6 +401,25 @@ const defaultGlobalSettings: GlobalSettings = {
         newsDateFormat: 'dd/mm/yy',
         newsTimeFormat: 'hh:mm',
         newsLocaleKey: 'en',
+    },
+    icons: {
+        linkIcons: [
+            {
+                iconUrl: (isInverted) =>
+                    getSVGData(
+                        <ExternalIcon
+                            iconColor={
+                                isInverted
+                                    ? defaultFonts.link.colorInverted
+                                    : defaultFonts.link.color
+                            }
+                        />
+                    ),
+                patterns: [], // default link icon
+                isExternal: true,
+                scale: getLinkIconScale,
+            },
+        ],
     },
 };
 

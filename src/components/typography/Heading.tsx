@@ -1,33 +1,34 @@
 import * as React from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { useLibTheme } from 'utils/LibThemeProvider';
 import {
     styleTextColor,
     FontType,
     getFonts as font,
     mq,
     withRange,
+    FontProps,
 } from 'utils/styles';
 
-type HeadingType = Exclude<
+type HeadingType = Extract<
     FontType,
-    'copy' | 'copy-i' | 'copy-b' | 'label' | 'callout'
+    'heading-1' | 'heading-2' | 'heading-3' | 'heading-4' | 'super'
 >;
 
-// Styles
-const BaseStyles = styled.h1<{
+const base = css<{
     hyphens?: boolean;
     hasShadow?: boolean;
     textColor?: string;
     textGradient?: string;
-    type: HeadingType;
 }>`
-    display: inline-block;
+    display: block;
     margin: 0;
     padding: 0;
     ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
 
     hyphens: auto;
     /* overflow-wrap: break-word; */
+    width: 100%;
 
     ${(props: { hyphens?: boolean }) =>
         !props.hyphens &&
@@ -58,15 +59,30 @@ const BaseStyles = styled.h1<{
     }
 `;
 
-const View = styled(BaseStyles)`
-    font-family: ${({ type, theme }) => font(theme)[type].family};
-    font-weight: ${({ type, theme }) => font(theme)[type].weight};
-    font-style: ${({ type, theme }) => font(theme)[type].style};
-    ${({ type, theme }) => withRange(font(theme)[type].size, 'font-size')}
-    line-height: ${({ type, theme }) => font(theme)[type].lineHeight};
-    letter-spacing: ${({ type, theme }) => font(theme)[type].letterSpacing};
-    text-transform: ${({ type, theme }) => font(theme)[type].textTransform};
-    max-width: -webkit-fill-available;
+export const headingStyle = (type: HeadingType) => css`
+    ${base};
+    font-family: ${({ theme }) => (font(theme)[type] as FontProps).family};
+    font-weight: ${({ theme }) => (font(theme)[type] as FontProps).weight};
+    font-style: ${({ theme }) => (font(theme)[type] as FontProps).style};
+    ${({ theme }) =>
+        withRange((font(theme)[type] as FontProps).size, 'font-size')}
+    line-height: ${({ theme }) => (font(theme)[type] as FontProps).lineHeight};
+    letter-spacing: ${({ theme }) =>
+        (font(theme)[type] as FontProps).letterSpacing};
+    text-transform: ${({ theme }) =>
+        (font(theme)[type] as FontProps).textTransform};
+    text-decoration: ${({ theme }) =>
+        (font(theme)[type] as FontProps).textDecoration};
+`;
+
+const View = styled.h1<{
+    hyphens?: boolean;
+    hasShadow?: boolean;
+    textColor?: string;
+    textGradient?: string;
+    headingType: HeadingType;
+}>`
+    ${({ headingType }) => headingStyle(headingType)}
 `;
 
 export type HeadlineTag =
@@ -77,10 +93,11 @@ export type HeadlineTag =
     | 'h5'
     | 'h6'
     | 'span'
-    | 'div';
+    | 'div'
+    | 'blockquote';
 
 const Heading: React.FC<{
-    as?: HeadlineTag;
+    renderAs?: HeadlineTag;
     isInverted?: boolean;
     size?: HeadingType;
     textColor?: string;
@@ -90,8 +107,9 @@ const Heading: React.FC<{
     innerHTML?: string;
 
     className?: string;
+    children?: React.ReactNode;
 }> = ({
-    as,
+    renderAs,
     isInverted,
     className,
     size = 'heading-2',
@@ -103,7 +121,7 @@ const Heading: React.FC<{
     children,
     ...rest
 }) => {
-    const theme = React.useContext(ThemeContext);
+    const { fonts } = useLibTheme();
     let tag: HeadlineTag = 'h2';
 
     switch (size) {
@@ -126,12 +144,12 @@ const Heading: React.FC<{
     }
 
     // get font settings from global context
-    const fontSettings = font(theme)?.[size];
+    const fontSettings = fonts?.[size] as FontProps;
 
     return (
         <View
-            as={as || tag}
-            type={size}
+            as={renderAs || tag}
+            headingType={size}
             textColor={
                 textColor ||
                 (isInverted ? fontSettings.colorInverted : fontSettings.color)
@@ -158,7 +176,7 @@ const Heading: React.FC<{
 };
 
 Heading.defaultProps = {
-    as: 'h2',
+    renderAs: 'h2',
     size: 'heading-2',
 };
 

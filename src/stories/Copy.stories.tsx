@@ -51,6 +51,10 @@ const CopyExample = () => (
         <p>
             <a href="#0">Link</a>
             <br />
+            <a href="#0" target="_blank">
+                External Link
+            </a>
+            <br />
             <b>Bold</b>
             <br />
             <i>Italic</i>

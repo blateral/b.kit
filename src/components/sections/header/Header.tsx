@@ -301,7 +301,7 @@ const Header: FC<{
                                         >
                                             {intro.title && (
                                                 <Heading
-                                                    as="h1"
+                                                    renderAs="h1"
                                                     size="heading-1"
                                                     hasShadow
                                                     textColor="#fff"
