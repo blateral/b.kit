@@ -8,6 +8,7 @@ import {
     FontOptionType,
     getFonts as font,
     styleTextColor,
+    getColors,
 } from 'utils/styles';
 
 type CopyType = Exclude<
@@ -67,6 +68,17 @@ const BaseStyles = styled.div<{
     ol li {
         list-style-position: outside;
         margin-left: 1.1em;
+    }
+
+    ul li {
+        list-style-type: '+';
+
+        padding-inline-start: 1ch;
+
+        &::marker {
+            color: ${({ theme }) => getColors(theme).primary.dark};
+            font-weight: 700;
+        }
     }
 
     ${({ columns }) =>
