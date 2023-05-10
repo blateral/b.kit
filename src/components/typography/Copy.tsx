@@ -28,6 +28,7 @@ const BaseStyles = styled.div<{
     columns?: boolean;
     type: CopyType;
     size: FontOptionType;
+    markerInverted?: boolean;
 }>`
     hyphens: auto;
     ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
@@ -76,7 +77,10 @@ const BaseStyles = styled.div<{
         padding-inline-start: 1ch;
 
         &::marker {
-            color: ${({ theme }) => getColors(theme).primary.dark};
+            color: ${({ theme, markerInverted }) =>
+                markerInverted
+                    ? getColors(theme).secondary.light
+                    : getColors(theme).primary.dark};
             font-weight: 700;
         }
     }
@@ -120,6 +124,7 @@ const Copy: React.FC<{
     columns?: boolean;
     innerHTML?: string;
     className?: string;
+    markerDefault?: string;
 }> = ({
     isInverted,
     type = 'copy',
@@ -137,6 +142,7 @@ const Copy: React.FC<{
 
     return (
         <View
+            markerInverted={isInverted}
             type={type}
             size={size}
             textColor={

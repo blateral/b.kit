@@ -12,7 +12,7 @@ const View = styled(Copy)<{
     display: inline-block;
     border: 1px solid
         ${({ isInverted, theme }) =>
-            isInverted ? color(theme).light : color(theme).dark};
+            isInverted ? color(theme).light : '#434F55'};
     border-radius: 15px;
 
     padding: 3px ${spacings.nudge * 2}px;
@@ -23,18 +23,20 @@ const View = styled(Copy)<{
     overflow: hidden;
     text-align: center;
     background: ${({ isActive, isInverted, theme }) =>
-        isActive && (isInverted ? color(theme).light : color(theme).dark)};
+        isActive && (isInverted ? color(theme).light : '#434F55')};
     color: ${({ isActive, isInverted, theme }) =>
-        isActive && (isInverted ? color(theme).dark : color(theme).light)};
+        isActive &&
+        (isInverted ? color(theme).primary.dark : color(theme).light)};
     cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')};
 
     transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
 
     &:hover {
         background: ${({ theme, isInverted, onClick }) =>
-            onClick && (isInverted ? color(theme).light : color(theme).dark)};
+            onClick && (isInverted ? color(theme).light : '#434F55')};
         color: ${({ theme, isInverted, onClick }) =>
-            onClick && (isInverted ? color(theme).dark : color(theme).light)};
+            onClick &&
+            (isInverted ? color(theme).primary.dark : color(theme).light)};
     }
 `;
 

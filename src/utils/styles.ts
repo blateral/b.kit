@@ -112,6 +112,7 @@ export interface FontOptions {
     small: FontProps;
     medium: FontProps;
     big: FontProps;
+    
 }
 
 export type FontOptionType = keyof FontOptions;
