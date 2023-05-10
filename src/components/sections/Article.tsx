@@ -134,7 +134,8 @@ const Article: React.FC<{
                     <ContentBlock>
                         {intro && (
                             <ContentText
-                                type="copy-b"
+                                type="copy"
+                                size="big"
                                 isInverted={isInverted}
                                 innerHTML={intro}
                             />

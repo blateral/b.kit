@@ -17,7 +17,9 @@
         "publish-yalc": "rm -rf lib && yarn build && yalc publish",
         "tc": "tsc --noEmit",
         "check-publish": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
-        "deploy": "yarn tc && yarn build && yarn publish"
+        "deploy": "yarn tc && yarn build && yarn publish",
+        "deploy-patch": "yarn tc && yarn build && yarn publish --tag patch",
+        "deploy-beta": "yarn tc && yarn build && yarn publish --tag beta"
     },
     "repository": {
         "type": "git",
