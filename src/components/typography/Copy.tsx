@@ -85,6 +85,16 @@ const BaseStyles = styled.div<{
         }
     }
 
+    ${({ size }) =>
+        size === 'big' &&
+        css`
+            ul {
+                li + li {
+                    margin-top: ${spacings.spacer}px;
+                }
+            }
+        `}
+
     ${({ columns }) =>
         columns &&
         css`
