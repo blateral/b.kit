@@ -194,7 +194,7 @@ const Teaser: FC<{
                             />
                             {intro && (
                                 <ContentBlock
-                                    type="copy-b"
+                                    size="big"
                                     isInverted={isInverted}
                                     innerHTML={intro}
                                 />
