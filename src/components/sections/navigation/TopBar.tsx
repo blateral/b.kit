@@ -127,17 +127,19 @@ const Column = styled.div<{
 const LeftCol = styled(Column)`
     flex: 1;
     justify-content: flex-start;
-    align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
+    /* align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')}; */
+    align-self: center;
     text-align: left;
 
-    ${({ isTop }) =>
+    /* ${({ isTop }) =>
         isTop &&
-        withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
+        withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')} */
 `;
 
 const CenterCol = styled(Column)`
     display: flex;
-    align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
+    /* align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')}; */
+    align-self: center;
     padding: 0 ${spacings.nudge * 2}px;
     text-align: center;
 `;
@@ -145,12 +147,13 @@ const CenterCol = styled(Column)`
 const RightCol = styled(Column)`
     flex: 1;
     justify-content: flex-end;
-    align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')};
+    /* align-self: ${({ isTop }) => (isTop ? 'flex-start' : 'center')}; */
+    align-self: center;
     text-align: right;
 
-    ${({ isTop }) =>
+    /* ${({ isTop }) =>
         isTop &&
-        withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
+        withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')} */
 
     & > * {
         min-width: auto;
