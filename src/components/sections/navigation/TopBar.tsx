@@ -315,7 +315,7 @@ const TopBar: FC<{
     if (scale !== undefined) logoScale = scale;
 
     // calc logo height
-    const logoHeight = clampValue(115 * logoScale, 60, 300);
+    const logoHeight = clampValue(115 * logoScale, 50, 300);
     const logoTopHeight =
         scalePageTop &&
         scaleScrolled &&
