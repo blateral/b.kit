@@ -111,10 +111,10 @@ const HeaderCol = styled.div`
 const LeftCol = styled(HeaderCol)`
     flex: 1;
     justify-content: flex-start;
-    align-self: flex-start;
+    align-self: center;
     text-align: left;
 
-    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
+    /* ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')} */
 `;
 
 const CenterCol = styled(HeaderCol)`
@@ -125,9 +125,10 @@ const CenterCol = styled(HeaderCol)`
 const RightCol = styled(HeaderCol)`
     flex: 1;
     justify-content: flex-end;
+    align-self: center;
     text-align: right;
 
-    ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')}
+    /* ${withRange([spacings.nudge, spacings.nudge * 1.5], 'padding-top')} */
 
     & > * {
         min-width: auto;
