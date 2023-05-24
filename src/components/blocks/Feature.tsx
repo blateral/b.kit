@@ -115,29 +115,33 @@ const Feature: React.FC<
                     />
                 </ImageContainer>
             )}
-            <Content addWhitespace={addWhitespace} isCentered={isCentered}>
-                {title && (
-                    <ContentBlock
-                        type="copy-b"
-                        size="big"
-                        isInverted={isInverted}
-                        data-sheet="title"
-                    >
-                        {title}
-                    </ContentBlock>
-                )}
-                {description && (
-                    <ContentBlock
-                        size="small"
-                        isInverted={isInverted}
-                        data-sheet="desc"
-                    >
-                        <Desc
-                            dangerouslySetInnerHTML={{ __html: description }}
-                        />
-                    </ContentBlock>
-                )}
-            </Content>
+            {(title || description) && (
+                <Content addWhitespace={addWhitespace} isCentered={isCentered}>
+                    {title && (
+                        <ContentBlock
+                            type="copy-b"
+                            size="big"
+                            isInverted={isInverted}
+                            data-sheet="title"
+                        >
+                            {title}
+                        </ContentBlock>
+                    )}
+                    {description && (
+                        <ContentBlock
+                            size="small"
+                            isInverted={isInverted}
+                            data-sheet="desc"
+                        >
+                            <Desc
+                                dangerouslySetInnerHTML={{
+                                    __html: description,
+                                }}
+                            />
+                        </ContentBlock>
+                    )}
+                </Content>
+            )}
             <ArticleContent
                 addWhitespace={addWhitespace}
                 isCentered={isCentered}
