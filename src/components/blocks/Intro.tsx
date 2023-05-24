@@ -86,7 +86,7 @@ const Intro: React.FC<{
             />
             {text && (
                 <ContentBlock
-                    type="copy-b"
+                    type="copy"
                     textColor={colorMode === 'onImage' ? '#fff' : undefined}
                     isInverted={colorMode === 'inverted'}
                     isCentered={isCentered}
