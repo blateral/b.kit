@@ -116,14 +116,16 @@ const Feature: React.FC<
                 </ImageContainer>
             )}
             <Content addWhitespace={addWhitespace} isCentered={isCentered}>
-                <ContentBlock
-                    type="copy-b"
-                    size="big"
-                    isInverted={isInverted}
-                    data-sheet="title"
-                >
-                    {title}
-                </ContentBlock>
+                {title && (
+                    <ContentBlock
+                        type="copy-b"
+                        size="big"
+                        isInverted={isInverted}
+                        data-sheet="title"
+                    >
+                        {title}
+                    </ContentBlock>
+                )}
                 {description && (
                     <ContentBlock
                         size="small"
