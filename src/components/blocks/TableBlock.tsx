@@ -1,3 +1,5 @@
+import ButtonLeft from 'components/base/icons/ButtonLeft';
+import ButtonRight from 'components/base/icons/ButtonRight';
 import Copy from 'components/typography/Copy';
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
@@ -5,6 +7,8 @@ import styled from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.div`
+    position: relative;
+
     &:focus {
         outline: 1px dashed ${({ theme }) => color(theme).primary.default};
     }
@@ -90,6 +94,19 @@ const TableData = styled(Copy)<{
     }
 `;
 
+const ButtonContainer = styled.div`
+    position: absolute;
+    bottom: 40px;
+`;
+
+const ButtonRightContainer = styled(ButtonContainer)`
+    right: 20px;
+`;
+
+const ButtonLeftContainer = styled(ButtonContainer)`
+    left: 20px;
+`;
+
 export interface TableProps {
     tableTitle?: string;
     rowTitle?: string[];
@@ -113,8 +130,17 @@ const TableBlock = forwardRef<HTMLDivElement, TableProps>(
         },
         ref
     ) => {
+        const tableView = document.getElementById('blockView');
+
+        const [showButtonRight, setShowButtonRight] = React.useState(true);
+        const [showButtonLeft, setShowButtonLeft] = React.useState(false);
+        // tableView?.scrollWidth > tableView.offsetWidth;
+        console.log(tableView);
+        setShowButtonLeft(false);
+        setShowButtonRight(true);
+
         return (
-            <View ref={ref}>
+            <View ref={ref} id="blockView">
                 <TableContainer tabIndex={1}>
                     <TableBody>
                         {tableTitle && (
@@ -162,6 +188,16 @@ const TableBlock = forwardRef<HTMLDivElement, TableProps>(
                         </tbody>
                     </TableBody>
                 </TableContainer>
+                {showButtonLeft && (
+                    <ButtonLeftContainer>
+                        <ButtonLeft />
+                    </ButtonLeftContainer>
+                )}
+                {showButtonRight && (
+                    <ButtonRightContainer>
+                        <ButtonRight />
+                    </ButtonRightContainer>
+                )}
             </View>
         );
     }
