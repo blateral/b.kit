@@ -1,7 +1,7 @@
 import ButtonLeft from 'components/base/icons/ButtonLeft';
 import ButtonRight from 'components/base/icons/ButtonRight';
 import Copy from 'components/typography/Copy';
-import React, { forwardRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { getColors as color, spacings } from 'utils/styles';
@@ -94,7 +94,7 @@ const TableData = styled(Copy)<{
     }
 `;
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled.button`
     position: absolute;
     bottom: 40px;
 `;
@@ -118,90 +118,136 @@ export interface TableProps {
     lastCol?: 'left' | 'right';
 }
 
-const TableBlock = forwardRef<HTMLDivElement, TableProps>(
-    (
-        {
-            row,
-            tableTitle,
-            rowTitle,
-            isInverted = false,
-            hasBack = false,
-            lastCol = 'left',
-        },
-        ref
-    ) => {
-        const tableView = document.getElementById('blockView');
+const TableBlock: FC<TableProps> = ({
+    row,
+    tableTitle,
+    rowTitle,
+    isInverted = false,
+    hasBack = false,
+    lastCol = 'left',
+}) => {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [showButtonRight, setShowButtonRight] = React.useState(false);
+    const [showButtonLeft, setShowButtonLeft] = React.useState(false);
 
-        const [showButtonRight, setShowButtonRight] = React.useState(true);
-        const [showButtonLeft, setShowButtonLeft] = React.useState(false);
-        // tableView?.scrollWidth > tableView.offsetWidth;
-        console.log(tableView);
-        setShowButtonLeft(false);
-        setShowButtonRight(true);
+    useEffect(() => {
+        // bitte Interaktionen mit dem DOM immer nur in einem useEffect oder einem Callback von z.B. onClick, onChange
+        // da das DOM nur im Browser und nicht auf dem Server existiert!
 
-        return (
-            <View ref={ref} id="blockView">
-                <TableContainer tabIndex={1}>
-                    <TableBody>
-                        {tableTitle && (
-                            <Caption
-                                renderAs="caption"
-                                type="copy-b"
-                                isInverted={isInverted}
-                            >
-                                {tableTitle}
-                            </Caption>
-                        )}
-                        {rowTitle && (
-                            <thead>
-                                <tr>
-                                    {rowTitle.map((item, ii) => (
-                                        <TableHead
+        const scrollEl = scrollRef.current;
+        if (!scrollEl) return;
+
+        const calcControls = () => {
+            if (scrollEl.scrollWidth > scrollEl.offsetWidth) {
+                console.log(
+                    'overflow',
+                    scrollEl.scrollLeft, // scroll position innerhalb des view containers (linke Kante des Scrollelements)
+                    scrollEl.offsetWidth, // sichtbarer Bereich der Tabelle bzw. des scrollbaren Bereichs
+                    scrollEl.scrollWidth // Breite des kompletten, auch nicht sichtbaren, scrollbaren Bereichs
+                );
+
+                setShowButtonLeft(scrollEl.scrollLeft > 0);
+                setShowButtonRight(
+                    scrollEl.scrollLeft + scrollEl.offsetWidth <
+                        scrollEl.scrollWidth
+                );
+            } else {
+                setShowButtonLeft(false);
+                setShowButtonRight(false);
+            }
+        };
+
+        calcControls();
+        window.addEventListener('resize', calcControls);
+        scrollEl.addEventListener('scroll', calcControls);
+
+        // wenn component von React wieder aus dem DOM entfernt wird bitte event listener entfernen sonst laufen die weiter
+        // auch wichtig bei Sachen wie setTimeout etc.
+        return () => {
+            window.removeEventListener('resize', calcControls);
+            scrollEl.removeEventListener('scroll', calcControls);
+        };
+    }, []);
+
+    const handleRightClick = () => {
+        const scrollEl = scrollRef.current;
+        if (!scrollEl) return;
+
+        scrollEl?.scrollBy({ left: scrollEl.offsetWidth, behavior: 'smooth' });
+    };
+
+    const handleLeftClick = () => {
+        const scrollEl = scrollRef.current;
+        if (!scrollEl) return;
+
+        scrollEl?.scrollBy({
+            left: scrollEl.offsetWidth * -1,
+            behavior: 'smooth',
+        });
+    };
+
+    return (
+        <View>
+            <TableContainer tabIndex={1} ref={scrollRef}>
+                <TableBody>
+                    {tableTitle && (
+                        <Caption
+                            renderAs="caption"
+                            type="copy-b"
+                            isInverted={isInverted}
+                        >
+                            {tableTitle}
+                        </Caption>
+                    )}
+                    {rowTitle && (
+                        <thead>
+                            <tr>
+                                {rowTitle.map((item, ii) => (
+                                    <TableHead
+                                        key={ii}
+                                        type="copy-b"
+                                        renderAs="th"
+                                        isInverted={!isInverted}
+                                        alignRight={lastCol === 'right'}
+                                    >
+                                        {item}
+                                    </TableHead>
+                                ))}
+                            </tr>
+                        </thead>
+                    )}
+                    <tbody>
+                        {row.map(({ cols }, i) => (
+                            <tr key={i}>
+                                {cols.map((itemText, ii) => {
+                                    return (
+                                        <TableData
                                             key={ii}
-                                            type="copy-b"
-                                            renderAs="th"
-                                            isInverted={!isInverted}
+                                            renderAs="td"
+                                            hasBack={hasBack}
                                             alignRight={lastCol === 'right'}
-                                        >
-                                            {item}
-                                        </TableHead>
-                                    ))}
-                                </tr>
-                            </thead>
-                        )}
-                        <tbody>
-                            {row.map(({ cols }, i) => (
-                                <tr key={i}>
-                                    {cols.map((itemText, ii) => {
-                                        return (
-                                            <TableData
-                                                key={ii}
-                                                renderAs="td"
-                                                hasBack={hasBack}
-                                                alignRight={lastCol === 'right'}
-                                                innerHTML={itemText}
-                                            />
-                                        );
-                                    })}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </TableBody>
-                </TableContainer>
-                {showButtonLeft && (
-                    <ButtonLeftContainer>
-                        <ButtonLeft />
-                    </ButtonLeftContainer>
-                )}
-                {showButtonRight && (
-                    <ButtonRightContainer>
-                        <ButtonRight />
-                    </ButtonRightContainer>
-                )}
-            </View>
-        );
-    }
-);
+                                            innerHTML={itemText}
+                                        />
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
+                </TableBody>
+            </TableContainer>
+            {showButtonLeft && (
+                <ButtonLeftContainer onClick={handleLeftClick}>
+                    <ButtonLeft />
+                </ButtonLeftContainer>
+            )}
+            {showButtonRight && (
+                <ButtonRightContainer onClick={handleRightClick}>
+                    <ButtonRight />
+                </ButtonRightContainer>
+            )}
+        </View>
+    );
+};
 
 TableBlock.displayName = 'TableBlock';
 
