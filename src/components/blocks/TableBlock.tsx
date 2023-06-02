@@ -25,6 +25,7 @@ const Caption = styled(Copy)`
 `;
 
 const TableContainer = styled.div`
+    position: relative;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
@@ -95,8 +96,19 @@ const TableData = styled(Copy)<{
 `;
 
 const ButtonContainer = styled.button`
+    border: none;
+    background: none;
+
     position: absolute;
     bottom: 40px;
+
+    cursor: pointer;
+
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+        opacity: 0.7;
+    }
 `;
 
 const ButtonRightContainer = styled(ButtonContainer)`
@@ -131,9 +143,6 @@ const TableBlock: FC<TableProps> = ({
     const [showButtonLeft, setShowButtonLeft] = React.useState(false);
 
     useEffect(() => {
-        // bitte Interaktionen mit dem DOM immer nur in einem useEffect oder einem Callback von z.B. onClick, onChange
-        // da das DOM nur im Browser und nicht auf dem Server existiert!
-
         const scrollEl = scrollRef.current;
         if (!scrollEl) return;
 
@@ -234,17 +243,17 @@ const TableBlock: FC<TableProps> = ({
                         ))}
                     </tbody>
                 </TableBody>
+                {showButtonLeft && (
+                    <ButtonLeftContainer onClick={handleLeftClick}>
+                        <ButtonLeft />
+                    </ButtonLeftContainer>
+                )}
+                {showButtonRight && (
+                    <ButtonRightContainer onClick={handleRightClick}>
+                        <ButtonRight />
+                    </ButtonRightContainer>
+                )}
             </TableContainer>
-            {showButtonLeft && (
-                <ButtonLeftContainer onClick={handleLeftClick}>
-                    <ButtonLeft />
-                </ButtonLeftContainer>
-            )}
-            {showButtonRight && (
-                <ButtonRightContainer onClick={handleRightClick}>
-                    <ButtonRight />
-                </ButtonRightContainer>
-            )}
         </View>
     );
 };
