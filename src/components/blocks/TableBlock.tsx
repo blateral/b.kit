@@ -243,17 +243,17 @@ const TableBlock: FC<TableProps> = ({
                         ))}
                     </tbody>
                 </TableBody>
-                {showButtonLeft && (
-                    <ButtonLeftContainer onClick={handleLeftClick}>
-                        <ButtonLeft />
-                    </ButtonLeftContainer>
-                )}
-                {showButtonRight && (
-                    <ButtonRightContainer onClick={handleRightClick}>
-                        <ButtonRight />
-                    </ButtonRightContainer>
-                )}
             </TableContainer>
+            {showButtonLeft && (
+                <ButtonLeftContainer onClick={handleLeftClick}>
+                    <ButtonLeft />
+                </ButtonLeftContainer>
+            )}
+            {showButtonRight && (
+                <ButtonRightContainer onClick={handleRightClick}>
+                    <ButtonRight />
+                </ButtonRightContainer>
+            )}
         </View>
     );
 };
