@@ -168,7 +168,7 @@ const TableBlock: FC<TableProps> = ({
                 setShowButtonLeft(scrollEl.scrollLeft > 0);
                 setShowButtonRight(
                     scrollEl.scrollLeft + scrollEl.offsetWidth <
-                        scrollEl.scrollWidth
+                        scrollEl.scrollWidth - 1 // reduced by 1 pixel to prevent bug on some viewport widths
                 );
             } else {
                 setShowButtonLeft(false);
@@ -255,26 +255,22 @@ const TableBlock: FC<TableProps> = ({
                 </TableBody>
             </TableContainer>
             <ButtonLeftContainer
-                key="left"
-                aria-label="scroll left"
                 style={{
                     marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
                 }}
                 isVisible={showButtons && showButtonLeft}
                 onClick={handleLeftClick}
             >
-                <ButtonLeft />
+                <ButtonLeft id="left" />
             </ButtonLeftContainer>
             <ButtonRightContainer
-                key="right"
-                aria-label="scroll right"
                 style={{
                     marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
                 }}
                 isVisible={showButtons && showButtonRight}
                 onClick={handleRightClick}
             >
-                <ButtonRight />
+                <ButtonRight id="right" />
             </ButtonRightContainer>
         </View>
     );

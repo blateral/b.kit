@@ -6,10 +6,11 @@ const SVG = styled.svg`
 `;
 
 const ButtonLeft: React.FC<{
+    id?: string;
     iconColor?: string;
     className?: string;
     ariaHidden?: boolean;
-}> = ({ className, ariaHidden = true }) => (
+}> = ({ id, className, ariaHidden = true }) => (
     <SVG
         width="48"
         height="48"
@@ -27,14 +28,14 @@ const ButtonLeft: React.FC<{
             fill="#000"
             fillOpacity=".4"
         />
-        <g clipPath="url(#a)">
+        <g clipPath={`url(#button-left-path-${id})`}>
             <path
                 d="m29.51 15.87-1.77-1.77-9.9 9.9 9.9 9.9 1.77-1.77L21.38 24l8.13-8.13Z"
                 fill="#fff"
             />
         </g>
         <defs>
-            <clipPath id="a">
+            <clipPath id={`button-left-path-${id}`}>
                 <path fill="#fff" d="M36 36H12V12h24z" />
             </clipPath>
         </defs>
