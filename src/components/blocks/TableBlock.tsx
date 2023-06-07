@@ -255,6 +255,8 @@ const TableBlock: FC<TableProps> = ({
                 </TableBody>
             </TableContainer>
             <ButtonLeftContainer
+                key="left"
+                aria-label="scroll left"
                 style={{
                     marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
                 }}
@@ -264,6 +266,8 @@ const TableBlock: FC<TableProps> = ({
                 <ButtonLeft />
             </ButtonLeftContainer>
             <ButtonRightContainer
+                key="right"
+                aria-label="scroll right"
                 style={{
                     marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
                 }}
