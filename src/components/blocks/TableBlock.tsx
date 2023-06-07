@@ -1,10 +1,15 @@
+import ButtonLeft from 'components/base/icons/ButtonLeft';
+import ButtonRight from 'components/base/icons/ButtonRight';
 import Copy from 'components/typography/Copy';
-import React, { forwardRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.div`
+    display: grid;
+    position: relative;
+
     &:focus {
         outline: 1px dashed ${({ theme }) => color(theme).primary.default};
     }
@@ -21,9 +26,13 @@ const Caption = styled(Copy)`
 `;
 
 const TableContainer = styled.div`
+    position: relative;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
+
+    grid-column: 1;
+    grid-row: 1;
 
     &:focus {
         outline: none;
@@ -90,6 +99,43 @@ const TableData = styled(Copy)<{
     }
 `;
 
+const ButtonContainer = styled.button<{ isVisible?: boolean }>`
+    position: sticky;
+    bottom: 40px;
+    opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+    pointer-events: ${({ isVisible }) => (isVisible ? 'all' : 'none')};
+    border: none;
+    background: none;
+
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    margin: ${spacings.spacer}px ${spacings.nudge * 2}px;
+
+    cursor: ${({ isVisible }) => (isVisible ? 'pointer' : 'default')};
+    pointer-events: none;
+
+    transition: opacity ease-in-out 0.2s;
+
+    &:hover {
+        opacity: ${({ isVisible }) => (isVisible ? 0.7 : 0)};
+    }
+
+    & > * {
+        pointer-events: all;
+    }
+`;
+
+const ButtonRightContainer = styled(ButtonContainer)`
+    float: right;
+    justify-self: end;
+`;
+
+const ButtonLeftContainer = styled(ButtonContainer)`
+    float: left;
+    justify-self: start;
+`;
+
 export interface TableProps {
     tableTitle?: string;
     rowTitle?: string[];
@@ -101,71 +147,134 @@ export interface TableProps {
     lastCol?: 'left' | 'right';
 }
 
-const TableBlock = forwardRef<HTMLDivElement, TableProps>(
-    (
-        {
-            row,
-            tableTitle,
-            rowTitle,
-            isInverted = false,
-            hasBack = false,
-            lastCol = 'left',
-        },
-        ref
-    ) => {
-        return (
-            <View ref={ref}>
-                <TableContainer tabIndex={1}>
-                    <TableBody>
-                        {tableTitle && (
-                            <Caption
-                                renderAs="caption"
-                                type="copy-b"
-                                isInverted={isInverted}
-                            >
-                                {tableTitle}
-                            </Caption>
-                        )}
-                        {rowTitle && (
-                            <thead>
-                                <tr>
-                                    {rowTitle.map((item, ii) => (
-                                        <TableHead
+const TableBlock: FC<TableProps> = ({
+    row,
+    tableTitle,
+    rowTitle,
+    isInverted = false,
+    hasBack = false,
+    lastCol = 'left',
+}) => {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [showButtonRight, setShowButtonRight] = React.useState(false);
+    const [showButtonLeft, setShowButtonLeft] = React.useState(false);
+
+    useEffect(() => {
+        const scrollEl = scrollRef.current;
+        if (!scrollEl) return;
+
+        const calcControls = () => {
+            if (scrollEl.scrollWidth > scrollEl.offsetWidth) {
+                setShowButtonLeft(scrollEl.scrollLeft > 0);
+                setShowButtonRight(
+                    scrollEl.scrollLeft + scrollEl.offsetWidth <
+                        scrollEl.scrollWidth - 1 // reduced by 1 pixel to prevent bug on some viewport widths
+                );
+            } else {
+                setShowButtonLeft(false);
+                setShowButtonRight(false);
+            }
+        };
+
+        calcControls();
+        window.addEventListener('resize', calcControls);
+        scrollEl.addEventListener('scroll', calcControls);
+
+        return () => {
+            window.removeEventListener('resize', calcControls);
+            scrollEl.removeEventListener('scroll', calcControls);
+        };
+    }, []);
+
+    const handleRightClick = () => {
+        const scrollEl = scrollRef.current;
+        if (!scrollEl) return;
+
+        scrollEl?.scrollBy({ left: scrollEl.offsetWidth, behavior: 'smooth' });
+    };
+
+    const handleLeftClick = () => {
+        const scrollEl = scrollRef.current;
+        if (!scrollEl) return;
+
+        scrollEl?.scrollBy({
+            left: scrollEl.offsetWidth * -1,
+            behavior: 'smooth',
+        });
+    };
+
+    const showButtons = rowTitle || row.length > 0;
+
+    return (
+        <View>
+            <TableContainer tabIndex={1} ref={scrollRef}>
+                <TableBody>
+                    {tableTitle && (
+                        <Caption
+                            renderAs="caption"
+                            type="copy-b"
+                            isInverted={isInverted}
+                        >
+                            {tableTitle}
+                        </Caption>
+                    )}
+                    {rowTitle && (
+                        <thead>
+                            <tr>
+                                {rowTitle.map((item, ii) => (
+                                    <TableHead
+                                        key={ii}
+                                        type="copy-b"
+                                        renderAs="th"
+                                        isInverted={!isInverted}
+                                        alignRight={lastCol === 'right'}
+                                    >
+                                        {item}
+                                    </TableHead>
+                                ))}
+                            </tr>
+                        </thead>
+                    )}
+                    <tbody>
+                        {row.map(({ cols }, i) => (
+                            <tr key={i}>
+                                {cols.map((itemText, ii) => {
+                                    return (
+                                        <TableData
                                             key={ii}
-                                            type="copy-b"
-                                            renderAs="th"
-                                            isInverted={!isInverted}
+                                            renderAs="td"
+                                            hasBack={hasBack}
                                             alignRight={lastCol === 'right'}
-                                        >
-                                            {item}
-                                        </TableHead>
-                                    ))}
-                                </tr>
-                            </thead>
-                        )}
-                        <tbody>
-                            {row.map(({ cols }, i) => (
-                                <tr key={i}>
-                                    {cols.map((itemText, ii) => {
-                                        return (
-                                            <TableData
-                                                key={ii}
-                                                renderAs="td"
-                                                hasBack={hasBack}
-                                                alignRight={lastCol === 'right'}
-                                                innerHTML={itemText}
-                                            />
-                                        );
-                                    })}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </TableBody>
-                </TableContainer>
-            </View>
-        );
-    }
-);
+                                            innerHTML={itemText}
+                                        />
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
+                </TableBody>
+            </TableContainer>
+            <ButtonLeftContainer
+                style={{
+                    marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
+                }}
+                isVisible={showButtons && showButtonLeft}
+                onClick={handleLeftClick}
+            >
+                <ButtonLeft id="left" />
+            </ButtonLeftContainer>
+            <ButtonRightContainer
+                style={{
+                    marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
+                }}
+                isVisible={showButtons && showButtonRight}
+                onClick={handleRightClick}
+            >
+                <ButtonRight id="right" />
+            </ButtonRightContainer>
+        </View>
+    );
+};
 
 TableBlock.displayName = 'TableBlock';
 

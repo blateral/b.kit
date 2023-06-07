@@ -129,7 +129,7 @@ Install yalc globally: `yarn global add yalc`.
 **Inside the library/package repository:**
 
 1. Run `yarn build` to bundle the package.
-2. Run `yalc push` to push it to local global store (~/.yalc).
+2. Run `yalc push --sig` or `yarn push-yalc` to push it to local global store (~/.yalc).
 
 **Inside a repository that consumes the package:**
 

@@ -7,6 +7,10 @@ import TableBlock, { TableProps } from 'components/blocks/TableBlock';
 import styled from 'styled-components';
 import { spacings } from 'utils/styles';
 
+const NewsTableSection = styled(Section)`
+    overflow: unset;
+`;
+
 const TableWrapper = styled(Wrapper)`
     & > * + * {
         margin-top: ${spacings.spacer}px;
@@ -28,7 +32,7 @@ const NewsTable: React.FC<{
     const hasBg = bgMode === 'full' || isInverted;
 
     return (
-        <Section
+        <NewsTableSection
             addSeperation
             anchorId={anchorId}
             bgColor={
@@ -52,7 +56,7 @@ const NewsTable: React.FC<{
                     );
                 })}
             </TableWrapper>
-        </Section>
+        </NewsTableSection>
     );
 };
 

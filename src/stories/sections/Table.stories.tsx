@@ -56,6 +56,30 @@ export const Default: Story = () => (
                             'Lorem ipsum dolor sit amet',
                         ],
                     },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
+                    {
+                        cols: [
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                            'Lorem ipsum dolor sit amet',
+                        ],
+                    },
                 ],
             },
         ]}
