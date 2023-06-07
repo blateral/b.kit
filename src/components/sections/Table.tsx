@@ -7,6 +7,10 @@ import TableBlock, { TableProps } from 'components/blocks/TableBlock';
 import styled from 'styled-components';
 import { spacings } from 'utils/styles';
 
+const TableSection = styled(Section)`
+    overflow: unset;
+`;
+
 const TableWrapper = styled(Wrapper)`
     & > * + * {
         margin-top: ${spacings.spacer}px;
@@ -28,7 +32,7 @@ const Table: React.FC<{
     const hasBg = bgMode === 'full' || isInverted;
 
     return (
-        <Section
+        <TableSection
             addSeperation
             anchorId={anchorId}
             bgColor={
@@ -52,7 +56,7 @@ const Table: React.FC<{
                     );
                 })}
             </TableWrapper>
-        </Section>
+        </TableSection>
     );
 };
 

@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.div`
+    display: grid;
     position: relative;
 
     &:focus {
@@ -29,6 +30,9 @@ const TableContainer = styled.div`
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
+
+    grid-column: 1;
+    grid-row: 1;
 
     &:focus {
         outline: none;
@@ -95,28 +99,41 @@ const TableData = styled(Copy)<{
     }
 `;
 
-const ButtonContainer = styled.button`
+const ButtonContainer = styled.button<{ isVisible?: boolean }>`
+    position: sticky;
+    bottom: 40px;
+    opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+    pointer-events: ${({ isVisible }) => (isVisible ? 'all' : 'none')};
     border: none;
     background: none;
 
-    position: absolute;
-    bottom: 40px;
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    margin: ${spacings.spacer}px ${spacings.nudge * 2}px;
 
-    cursor: pointer;
+    cursor: ${({ isVisible }) => (isVisible ? 'pointer' : 'default')};
+    pointer-events: none;
 
-    transition: all ease-in-out 0.2s;
+    transition: opacity ease-in-out 0.2s;
 
     &:hover {
-        opacity: 0.7;
+        opacity: ${({ isVisible }) => (isVisible ? 0.7 : 0)};
+    }
+
+    & > * {
+        pointer-events: all;
     }
 `;
 
 const ButtonRightContainer = styled(ButtonContainer)`
-    right: 20px;
+    float: right;
+    justify-self: end;
 `;
 
 const ButtonLeftContainer = styled(ButtonContainer)`
-    left: 20px;
+    float: left;
+    justify-self: start;
 `;
 
 export interface TableProps {
@@ -148,13 +165,6 @@ const TableBlock: FC<TableProps> = ({
 
         const calcControls = () => {
             if (scrollEl.scrollWidth > scrollEl.offsetWidth) {
-                console.log(
-                    'overflow',
-                    scrollEl.scrollLeft, // scroll position innerhalb des view containers (linke Kante des Scrollelements)
-                    scrollEl.offsetWidth, // sichtbarer Bereich der Tabelle bzw. des scrollbaren Bereichs
-                    scrollEl.scrollWidth // Breite des kompletten, auch nicht sichtbaren, scrollbaren Bereichs
-                );
-
                 setShowButtonLeft(scrollEl.scrollLeft > 0);
                 setShowButtonRight(
                     scrollEl.scrollLeft + scrollEl.offsetWidth <
@@ -170,8 +180,6 @@ const TableBlock: FC<TableProps> = ({
         window.addEventListener('resize', calcControls);
         scrollEl.addEventListener('scroll', calcControls);
 
-        // wenn component von React wieder aus dem DOM entfernt wird bitte event listener entfernen sonst laufen die weiter
-        // auch wichtig bei Sachen wie setTimeout etc.
         return () => {
             window.removeEventListener('resize', calcControls);
             scrollEl.removeEventListener('scroll', calcControls);
@@ -194,6 +202,8 @@ const TableBlock: FC<TableProps> = ({
             behavior: 'smooth',
         });
     };
+
+    const showButtons = rowTitle || row.length > 0;
 
     return (
         <View>
@@ -244,16 +254,24 @@ const TableBlock: FC<TableProps> = ({
                     </tbody>
                 </TableBody>
             </TableContainer>
-            {showButtonLeft && (
-                <ButtonLeftContainer onClick={handleLeftClick}>
-                    <ButtonLeft />
-                </ButtonLeftContainer>
-            )}
-            {showButtonRight && (
-                <ButtonRightContainer onClick={handleRightClick}>
-                    <ButtonRight />
-                </ButtonRightContainer>
-            )}
+            <ButtonLeftContainer
+                style={{
+                    marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
+                }}
+                isVisible={showButtons && showButtonLeft}
+                onClick={handleLeftClick}
+            >
+                <ButtonLeft />
+            </ButtonLeftContainer>
+            <ButtonRightContainer
+                style={{
+                    marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
+                }}
+                isVisible={showButtons && showButtonRight}
+                onClick={handleRightClick}
+            >
+                <ButtonRight />
+            </ButtonRightContainer>
         </View>
     );
 };
