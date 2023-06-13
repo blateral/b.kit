@@ -1,4 +1,5 @@
-import { Section, Wrapper } from 'base';
+import Section from 'components/base/Section';
+import Wrapper from 'components/base/Wrapper';
 import React from 'react';
 import { withLibTheme } from 'utils/LibThemeProvider';
 

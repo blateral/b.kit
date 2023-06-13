@@ -1,10 +1,10 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import HtmlCode from 'components/sections/HtmlCode';
+import HtmlCode, { HtmlCodeComponent } from 'components/sections/HtmlCode';
 
 export default {
     title: 'Sections / HtmlCode',
-    component: HtmlCode,
+    component: HtmlCodeComponent,
     parameters: {
         status: {
             type: 'preview',
