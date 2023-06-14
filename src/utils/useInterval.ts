@@ -17,7 +17,7 @@ export default function useInterval(callback: () => void, delay: number) {
     }, [delay]);
 
     const clear = useCallback(() => {
-        intervalRef.current && window.clearTimeout(intervalRef.current);
+        intervalRef.current && window.clearInterval(intervalRef.current);
     }, []);
 
     useEffect(() => {

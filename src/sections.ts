@@ -29,3 +29,4 @@ export { default as Timeline } from 'components/sections/Timeline';
 export { default as Video } from 'components/sections/Video';
 export { default as RawVideo } from 'components/sections/RawVideo';
 export { default as Map } from 'components/sections/Map';
+export { default as HtmlCode } from 'components/sections/HtmlCode';
