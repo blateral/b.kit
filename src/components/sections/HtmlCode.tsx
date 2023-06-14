@@ -26,7 +26,7 @@ const HtmlCode: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
-            <Wrapper>
+            <Wrapper clampWidth="normal" addWhitespace>
                 {html && <div dangerouslySetInnerHTML={{ __html: html }} />}
             </Wrapper>
         </Section>
