@@ -4,8 +4,11 @@ import React from 'react';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 
 const HtmlCode: React.FC<{
-    html: string;
+    /** ID value for targeting section with anchor hashes */
     anchorId?: string;
+    /** HTML content */
+    html?: string;
+    /** Section background */
     bgMode?: 'full' | 'inverted';
 }> = ({ html, anchorId, bgMode }) => {
     const isInverted = bgMode === 'inverted';
@@ -24,7 +27,7 @@ const HtmlCode: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper>
-                <div dangerouslySetInnerHTML={{ __html: html }} />
+                {html && <div dangerouslySetInnerHTML={{ __html: html }} />}
             </Wrapper>
         </Section>
     );
