@@ -30,6 +30,14 @@ const Head = styled(Wrapper)`
     @media ${mq.semilarge} {
         padding-right: 0;
     }
+
+    @media ${mq.xlarge} {
+        margin-left: auto;
+    }
+
+    @media ${mq.xxxLarge} {
+        margin-left: auto;
+    }
 `;
 
 const IntroBlock = styled.div`
