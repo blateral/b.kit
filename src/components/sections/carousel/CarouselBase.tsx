@@ -27,7 +27,7 @@ const Head = styled(Wrapper)`
     padding-left: 0;
     margin-left: ${spacings.nudge * 2}px;
 
-    @media ${mq.large} {
+    @media ${mq.xlarge} {
         padding-left: inherit;
         margin-left: auto;
     }
