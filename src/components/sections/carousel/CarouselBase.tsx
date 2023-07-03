@@ -23,6 +23,14 @@ const View = styled(Wrapper)`
 const Head = styled(Wrapper)`
     display: flex;
     flex-direction: row;
+
+    padding-left: 0;
+    margin-left: ${spacings.nudge * 2}px;
+
+    @media ${mq.large} {
+        padding-left: inherit;
+        margin-left: auto;
+    }
 `;
 
 const IntroBlock = styled.div`
@@ -221,7 +229,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                 afterChange={afterChange}
                 onInit={onInit}
             >
-                <Head clampWidth="normal">
+                <Head clampWidth="normal" addWhitespace>
                     {title && (
                         <IntroBlock>
                             <Intro
