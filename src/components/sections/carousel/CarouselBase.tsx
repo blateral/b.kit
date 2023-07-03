@@ -23,11 +23,13 @@ const View = styled(Wrapper)`
 const Head = styled(Wrapper)`
     display: flex;
     flex-direction: row;
+    margin-left: 0;
 `;
 
 const IntroBlock = styled.div`
     flex: 1;
     ${withRange([spacings.spacer * 2, spacings.spacer * 3], 'padding-bottom')}
+    margin-left: ${spacings.nudge * 2}px;
 `;
 
 const TopControls = styled.div`
