@@ -221,7 +221,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                 afterChange={afterChange}
                 onInit={onInit}
             >
-                <Head clampWidth="normal" addWhitespace>
+                <Head clampWidth="normal">
                     {title && (
                         <IntroBlock>
                             <Intro
