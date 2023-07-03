@@ -23,13 +23,12 @@ const View = styled(Wrapper)`
 const Head = styled(Wrapper)`
     display: flex;
     flex-direction: row;
+    margin-left: 0;
 
-    padding-left: 0;
-    margin-left: ${spacings.nudge * 2}px;
+    padding-right: ${spacings.nudge * 2}px;
 
-    @media ${mq.xlarge} {
-        padding-left: inherit;
-        margin-left: auto;
+    @media ${mq.semilarge} {
+        padding-right: 0;
     }
 `;
 
@@ -229,7 +228,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                 afterChange={afterChange}
                 onInit={onInit}
             >
-                <Head clampWidth="normal" addWhitespace>
+                <Head clampWidth="normal">
                     {title && (
                         <IntroBlock>
                             <Intro
