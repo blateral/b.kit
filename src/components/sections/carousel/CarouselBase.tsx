@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import { mq, spacings, getColors as color, withRange } from 'utils/styles';
-import Wrapper from 'components/base/Wrapper';
 import ArrowLeftGhost from 'components/base/icons/ArrowLeftGhost';
 import ArrowRightGhost from 'components/base/icons/ArrowRightGhost';
 import Slider from 'components/blocks/Slider';
@@ -10,7 +9,7 @@ import { ResponsiveObject } from 'react-slick';
 import Intro from 'components/blocks/Intro';
 import { HeadlineTag } from 'components/typography/Heading';
 
-const View = styled(Wrapper)`
+const View = styled.div`
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -20,16 +19,10 @@ const View = styled(Wrapper)`
     }
 `;
 
-const Head = styled(Wrapper)`
+const Head = styled.div`
     display: flex;
     flex-direction: row;
     margin-left: 0;
-
-    padding-right: ${spacings.nudge * 2}px;
-
-    @media ${mq.semilarge} {
-        padding-right: 0;
-    }
 
     @media ${mq.xlarge} {
         margin-left: auto;
@@ -94,10 +87,10 @@ const StyledSlides = styled(Slider.Slides)`
     margin-bottom: ${spacings.spacer}px;
 
     @media ${mq.xlarge} {
-        margin-left: auto;
         width: 100%;
-        max-width: ${spacings.wrapperLarge -
-        (spacings.wrapperLarge - spacings.wrapper) / 2}px;
+        /* max-width: ${spacings.wrapperLarge -
+        (spacings.wrapperLarge - spacings.wrapper) / 2}px; */
+        max-width: ${spacings.wrapper}px;
     }
 `;
 
@@ -221,7 +214,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
     className,
 }) => {
     return (
-        <View clampWidth="large" className={className}>
+        <View className={className}>
             <Slider.Provider
                 variableWidth={variableWidths}
                 sameHeight={variableWidths}
@@ -236,7 +229,7 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                 afterChange={afterChange}
                 onInit={onInit}
             >
-                <Head clampWidth="normal">
+                <Head>
                     {title && (
                         <IntroBlock>
                             <Intro
@@ -282,12 +275,12 @@ const CarouselBase: FC<CarouselProps & { className?: string }> = ({
                         </TopControls>
                     )}
                 </Head>
-
                 <StyledSlides>
                     {React.Children.map(children, (child, i) => (
                         <Slider.Slide key={i}>{child}</Slider.Slide>
                     ))}
                 </StyledSlides>
+
                 {React.Children.count(children) > 1 && (
                     <Footer>
                         <CtrlWrapperLeft>

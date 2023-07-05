@@ -5,6 +5,7 @@ import { getColors as color } from 'utils/styles';
 import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import VideoCard, { VideoCardProps } from 'components/blocks/VideoCard';
+import Wrapper from 'components/base/Wrapper';
 
 const VideoCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
@@ -55,47 +56,51 @@ const VideoCarousel: FC<
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <CarouselBase
-                title={title}
-                titleAs={titleAs}
-                superTitle={superTitle}
-                superTitleAs={superTitleAs}
-                text={text}
-                primaryAction={primaryAction}
-                secondaryAction={secondaryAction}
-                spacing="normal"
-                isInverted={isInverted}
-                controlNext={controlNext}
-                controlPrev={controlPrev}
-                dot={dot}
-                beforeChange={beforeChange}
-                afterChange={afterChange}
-                onInit={onInit}
-                slidesToShow={videoCount > 1 ? 2.75 : 1}
-                responsive={[
-                    {
-                        breakpoint: 1024,
-                        settings: {
-                            slidesToShow: videoCount > 1 ? 2.25 : 1,
+            <Wrapper addWhitespace>
+                <CarouselBase
+                    title={title}
+                    titleAs={titleAs}
+                    superTitle={superTitle}
+                    superTitleAs={superTitleAs}
+                    text={text}
+                    primaryAction={primaryAction}
+                    secondaryAction={secondaryAction}
+                    spacing="normal"
+                    isInverted={isInverted}
+                    controlNext={controlNext}
+                    controlPrev={controlPrev}
+                    dot={dot}
+                    beforeChange={beforeChange}
+                    afterChange={afterChange}
+                    onInit={onInit}
+                    slidesToShow={videoCount > 1 ? 2.75 : 1}
+                    responsive={[
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: videoCount > 1 ? 2.25 : 1,
+                            },
                         },
-                    },
-                    {
-                        breakpoint: 832,
-                        settings: {
-                            slidesToShow: videoCount > 1 ? 1.15 : 1,
+                        {
+                            breakpoint: 832,
+                            settings: {
+                                slidesToShow: videoCount > 1 ? 1.15 : 1,
+                            },
                         },
-                    },
-                    {
-                        breakpoint: 640,
-                        settings: {
-                            slidesToShow: videoCount > 1 ? 1.15 : 1,
+                        {
+                            breakpoint: 640,
+                            settings: {
+                                slidesToShow: videoCount > 1 ? 1.15 : 1,
+                            },
                         },
-                    },
-                ]}
-            >
-                {videos &&
-                    videos.map((video, i) => <VideoCard key={i} {...video} />)}
-            </CarouselBase>
+                    ]}
+                >
+                    {videos &&
+                        videos.map((video, i) => (
+                            <VideoCard key={i} {...video} />
+                        ))}
+                </CarouselBase>
+            </Wrapper>
         </Section>
     );
 };

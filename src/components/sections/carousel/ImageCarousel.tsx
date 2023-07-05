@@ -5,6 +5,7 @@ import { getColors as color } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
+import Wrapper from 'components/base/Wrapper';
 
 const ImageCarousel: FC<
     Omit<CarouselProps, 'variableWidths'> & {
@@ -56,42 +57,46 @@ const ImageCarousel: FC<
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <CarouselBase
-                title={title}
-                titleAs={titleAs}
-                superTitle={superTitle}
-                superTitleAs={superTitleAs}
-                text={text}
-                primaryAction={primaryAction}
-                secondaryAction={secondaryAction}
-                variableWidths
-                spacing={spacing}
-                isInverted={isInverted}
-                controlNext={controlNext}
-                controlPrev={controlPrev}
-                dot={dot}
-                beforeChange={beforeChange}
-                afterChange={afterChange}
-                onInit={onInit}
-                slidesToShow={imageCount > 1 ? 2.75 : 1}
-                responsive={[
-                    {
-                        breakpoint: 832,
-                        settings: {
-                            slidesToShow: imageCount > 1 ? 2.25 : 1,
+            <Wrapper addWhitespace>
+                <CarouselBase
+                    title={title}
+                    titleAs={titleAs}
+                    superTitle={superTitle}
+                    superTitleAs={superTitleAs}
+                    text={text}
+                    primaryAction={primaryAction}
+                    secondaryAction={secondaryAction}
+                    variableWidths
+                    spacing={spacing}
+                    isInverted={isInverted}
+                    controlNext={controlNext}
+                    controlPrev={controlPrev}
+                    dot={dot}
+                    beforeChange={beforeChange}
+                    afterChange={afterChange}
+                    onInit={onInit}
+                    slidesToShow={imageCount > 1 ? 2.75 : 1}
+                    responsive={[
+                        {
+                            breakpoint: 832,
+                            settings: {
+                                slidesToShow: imageCount > 1 ? 2.25 : 1,
+                            },
                         },
-                    },
-                    {
-                        breakpoint: 640,
-                        settings: {
-                            slidesToShow: imageCount > 1 ? 1.15 : 1,
+                        {
+                            breakpoint: 640,
+                            settings: {
+                                slidesToShow: imageCount > 1 ? 1.15 : 1,
+                            },
                         },
-                    },
-                ]}
-            >
-                {images &&
-                    images.map((img, i) => <FullWidthImg key={i} {...img} />)}
-            </CarouselBase>
+                    ]}
+                >
+                    {images &&
+                        images.map((img, i) => (
+                            <FullWidthImg key={i} {...img} />
+                        ))}
+                </CarouselBase>
+            </Wrapper>
         </Section>
     );
 };

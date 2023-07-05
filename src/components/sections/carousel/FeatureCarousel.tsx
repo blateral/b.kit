@@ -1,34 +1,12 @@
 import React, { FC } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import { ThemeContext } from 'styled-components';
 
-import { getColors as color, spacings, mq } from 'utils/styles';
+import { getColors as color } from 'utils/styles';
 import Section, { BgMode } from 'components/base/Section';
 import CarouselBase, { CarouselProps } from './CarouselBase';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-
-const StyledWrapper = styled.div`
-    padding-left: ${spacings.nudge * 2}px;
-
-    @media ${mq.medium} {
-        padding-left: ${spacings.spacer * 2}px;
-    }
-
-    @media ${mq.semilarge} {
-        padding-left: ${(1 / 28) * 100}%;
-
-        padding-left: ${`
-                      max(
-                          ${spacings.spacer}px,
-                          ${(1 / 28) * 100}%
-                      );
-                  `};
-    }
-
-    @media ${mq.xlarge} {
-        padding-left: ${(1 / 28) * spacings.wrapper}px;
-    }
-`;
+import Wrapper from 'components/base/Wrapper';
 
 const FeatureCarousel: FC<
     Omit<CarouselProps, 'variableWidths' | 'spacing'> & {
@@ -95,7 +73,7 @@ const FeatureCarousel: FC<
             }
             bgMode={!isInverted ? getSectionBgMode() : undefined}
         >
-            <StyledWrapper>
+            <Wrapper addWhitespace>
                 <CarouselBase
                     title={title}
                     titleAs={titleAs}
@@ -146,7 +124,7 @@ const FeatureCarousel: FC<
                             </div>
                         ))}
                 </CarouselBase>
-            </StyledWrapper>
+            </Wrapper>
         </Section>
     );
 };
