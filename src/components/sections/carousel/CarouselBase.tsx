@@ -12,7 +12,6 @@ import { HeadlineTag } from 'components/typography/Heading';
 const View = styled.div`
     position: relative;
     width: 100%;
-    overflow: hidden;
 
     @media ${mq.xlarge} {
         padding: 0;
