@@ -74,6 +74,10 @@ const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
         justify-content: ${({ isCentered }) =>
             isCentered ? 'center' : 'flex-start'};
     }
+
+    @media ${mq.large} {
+        display: flex;
+    }
 `;
 
 const ActionsWrapper = styled.div<{ isCentered?: boolean }>`
@@ -106,8 +110,7 @@ const Item = styled.img<{ isVisible?: boolean; index: number }>`
     }
 
     @media ${mq.large} {
-        display: ${({ index, isVisible }) =>
-            isVisible || index < 10 ? 'block' : 'none'};
+        display: block;
     }
 `;
 
@@ -116,6 +119,10 @@ const ListFooter = styled(Copy)<{ isCentered?: boolean }>`
 
     @media ${mq.medium} {
         text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+    }
+
+    @media ${mq.large} {
+        display: none;
     }
 `;
 
