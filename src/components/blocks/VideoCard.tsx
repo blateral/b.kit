@@ -185,6 +185,11 @@ export interface VideoCardProps {
         handleClick?: () => void;
         consentProps: Record<string, string>;
     }) => React.ReactNode;
+    /**
+     * Custom handler for play button click
+     * @returns true if video should be played
+     */
+    onPlay?: () => boolean;
 }
 
 const VideoCard: FC<VideoCardProps & { className?: string }> = ({
@@ -193,6 +198,7 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
     playIcon,
     consentText = 'Für die Wiedergabe von Videos muss der Nutzung von Cookies & Daten zugestimmt werden.',
     consentAction,
+    onPlay,
     className,
 }) => {
     const { globals } = useLibTheme();
@@ -200,22 +206,28 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
     const [showConsent, setShowConsent] = useState(false);
 
     const handlePlayClick = () => {
-        const cookie = getCookie(
-            globals.cookie.name
-        ) as Cookie<CookieConsentData>;
+        let isAccepted = false;
 
-        const isAccepted =
-            globals.cookie.videoCookieTypeRestrictions.reduce<boolean>(
-                (acc, current) => {
-                    if (!acc) return acc;
-                    if (!cookie || !cookie?.data.types) return false;
+        if (onPlay) {
+            isAccepted = onPlay();
+        } else {
+            const cookie = getCookie(
+                globals.cookie.name
+            ) as Cookie<CookieConsentData>;
 
-                    // set acc to false if type is not defined or set to false
-                    acc = !!cookie?.data?.types?.[current];
-                    return acc;
-                },
-                true
-            );
+            isAccepted =
+                globals.cookie.videoCookieTypeRestrictions.reduce<boolean>(
+                    (acc, current) => {
+                        if (!acc) return acc;
+                        if (!cookie || !cookie?.data.types) return false;
+
+                        // set acc to false if type is not defined or set to false
+                        acc = !!cookie?.data?.types?.[current];
+                        return acc;
+                    },
+                    true
+                );
+        }
 
         if (isAccepted) {
             setIsActive(true);

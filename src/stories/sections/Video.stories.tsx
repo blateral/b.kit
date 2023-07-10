@@ -170,3 +170,20 @@ export const WithCustomPlayIcon: Story = () => (
         playIcon={<Play iconColor="red" />}
     />
 );
+
+export const WithCustomPlayHandling: Story = () => (
+    <Video
+        bgMode="inverted"
+        bgImage={{
+            small: 'https://unsplash.it/640/480',
+            medium: 'https://unsplash.it/1024/576',
+            large: 'https://unsplash.it/1440/810',
+            xlarge: 'https://unsplash.it/1680/810',
+            alt: 'Placeholder Image',
+        }}
+        embedId="pVE92TNDwUk"
+        onPlay={() => {
+            return window.confirm('Cookies bestätigen?');
+        }}
+    />
+);
