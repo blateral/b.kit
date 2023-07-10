@@ -182,7 +182,7 @@ export const WithCustomPlayHandling: Story = () => (
             alt: 'Placeholder Image',
         }}
         embedId="pVE92TNDwUk"
-        onPlay={() => {
+        onPlayClick={() => {
             return window.confirm('Cookies bestätigen?');
         }}
     />

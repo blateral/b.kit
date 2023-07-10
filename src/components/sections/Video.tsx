@@ -23,7 +23,7 @@ const Video: React.FC<{
      * Custom handler for play button click
      * @returns true if video should be played
      */
-    onPlay?: () => boolean;
+    onPlayClick?: () => boolean;
 
     playIcon?: React.ReactNode;
     bgMode?: 'full' | 'inverted' | 'splitted';
@@ -35,7 +35,7 @@ const Video: React.FC<{
     playIcon,
     consentText,
     consentAction,
-    onPlay,
+    onPlayClick,
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
@@ -60,7 +60,7 @@ const Video: React.FC<{
                     playIcon={playIcon}
                     consentText={consentText}
                     consentAction={consentAction}
-                    onPlay={onPlay}
+                    onPlayClick={onPlayClick}
                 />
             </Wrapper>
         </Section>

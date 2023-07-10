@@ -189,7 +189,7 @@ export interface VideoCardProps {
      * Custom handler for play button click
      * @returns true if video should be played
      */
-    onPlay?: () => boolean;
+    onPlayClick?: () => boolean;
 }
 
 const VideoCard: FC<VideoCardProps & { className?: string }> = ({
@@ -198,7 +198,7 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
     playIcon,
     consentText = 'Für die Wiedergabe von Videos muss der Nutzung von Cookies & Daten zugestimmt werden.',
     consentAction,
-    onPlay,
+    onPlayClick,
     className,
 }) => {
     const { globals } = useLibTheme();
@@ -208,8 +208,8 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
     const handlePlayClick = () => {
         let isAccepted = false;
 
-        if (onPlay) {
-            isAccepted = onPlay();
+        if (onPlayClick) {
+            isAccepted = onPlayClick();
         } else {
             const cookie = getCookie(
                 globals.cookie.name
