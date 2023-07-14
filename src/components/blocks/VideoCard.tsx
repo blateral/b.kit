@@ -189,7 +189,7 @@ export interface VideoCardProps {
      * Custom handler for play button click
      * @returns true if video should be played
      */
-    onPlayClick?: () => boolean;
+    onPlayClick?: () => Promise<boolean>;
 }
 
 const VideoCard: FC<VideoCardProps & { className?: string }> = ({
@@ -205,11 +205,11 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
     const [isActive, setIsActive] = useState(false);
     const [showConsent, setShowConsent] = useState(false);
 
-    const handlePlayClick = () => {
+    const handlePlayClick = async () => {
         let isAccepted = false;
 
         if (onPlayClick) {
-            isAccepted = onPlayClick();
+            isAccepted = await onPlayClick();
         } else {
             const cookie = getCookie(
                 globals.cookie.name
