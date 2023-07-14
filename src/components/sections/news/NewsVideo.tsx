@@ -27,6 +27,11 @@ const NewsVideo: React.FC<{
         handleClick?: () => void;
         consentProps: Record<string, string>;
     }) => React.ReactNode;
+    /**
+     * Custom handler for play button click
+     * @returns true if video should be played
+     */
+    onPlayClick?: () => Promise<boolean>;
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
@@ -37,6 +42,7 @@ const NewsVideo: React.FC<{
     playIcon,
     consentText,
     consentAction,
+    onPlayClick,
     bgMode,
 }) => {
     const { colors } = useLibTheme();
@@ -65,6 +71,7 @@ const NewsVideo: React.FC<{
                         playIcon={playIcon}
                         consentText={consentText}
                         consentAction={consentAction}
+                        onPlayClick={onPlayClick}
                     />
                 )}
             </Wrapper>
