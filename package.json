@@ -1,6 +1,6 @@
 {
     "name": "@blateral/b.kit",
-    "version": "2.7.3",
+    "version": "2.7.4",
     "description": "",
     "main": "cjs/index.js",
     "module": "esm/index.js",
