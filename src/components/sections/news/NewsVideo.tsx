@@ -31,7 +31,7 @@ const NewsVideo: React.FC<{
      * Custom handler for play button click
      * @returns true if video should be played
      */
-    onPlayClick?: () => boolean;
+    onPlayClick?: () => Promise<boolean>;
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
