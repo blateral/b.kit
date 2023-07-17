@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { ImageProps } from 'components/blocks/Image';
 import { mq, getColors as color, spacings } from 'utils/styles';
 import Play from 'components/base/icons/Play';
-import { selectors } from 'utils/cookie-consent/useCookieConsent';
 import Copy from 'components/typography/Copy';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
@@ -169,10 +168,7 @@ export interface VideoCardProps {
     embedId: string;
     playIcon?: React.ReactNode;
     consentText?: string;
-    consentAction?: (props: {
-        handleClick?: () => void;
-        consentProps: Record<string, string>;
-    }) => React.ReactNode;
+    consentAction?: (props: { handleClick?: () => void }) => React.ReactNode;
     /**
      * Custom handler for play button click
      * @returns true if video should be played
@@ -238,16 +234,12 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
                     {consentAction ? (
                         consentAction({
                             handleClick: handleConsentActionClick,
-                            consentProps: {
-                                [selectors.buttons.attribute]: '',
-                            },
                         })
                     ) : (
                         <ButtonGhost.View
                             as="button"
                             isInverted
                             onClick={handleConsentActionClick}
-                            className={selectors.buttons.class}
                         >
                             <ButtonGhost.Label>
                                 Zustimmung ändern
