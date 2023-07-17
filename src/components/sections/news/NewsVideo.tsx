@@ -22,6 +22,18 @@ const NewsVideo: React.FC<{
 
     isInverted?: boolean;
     hasBack?: boolean;
+
+    consentText?: string;
+    consentAction?: (props: {
+        label: string;
+        handleClick?: () => void;
+        consentProps: Record<string, string>;
+    }) => React.ReactNode;
+    /**
+     * Custom handler for play button click
+     * @returns true if video should be played
+     */
+    onPlayClick?: () => Promise<boolean>;
 }> = ({
     bgImage,
     embedId,
@@ -30,6 +42,9 @@ const NewsVideo: React.FC<{
     secondaryAction,
     isInverted = false,
     hasBack = false,
+    consentText,
+    consentAction,
+    onPlayClick,
 }) => {
     const theme = useContext(ThemeContext);
     return (
@@ -50,6 +65,9 @@ const NewsVideo: React.FC<{
                             bgImage={bgImage}
                             embedId={embedId}
                             playIcon={playIcon}
+                            consentText={consentText}
+                            consentAction={consentAction}
+                            onPlayClick={onPlayClick}
                         />
                     )}
                 </div>
