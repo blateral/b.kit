@@ -120,6 +120,7 @@ const CtrlWrapperRight = styled(CtrlWrapper)`
 const StyledDotGroup = styled(Slider.DotGroup)`
     display: inline-block;
     align-self: center;
+    text-align: center;
     padding: ${spacings.nudge * 2}px 0;
 `;
 
