@@ -107,7 +107,7 @@ const FeatureCarousel: FC<
                         {
                             breakpoint: 640,
                             settings: {
-                                slidesToShow: featureCount > 1 ? 1.15 : 1,
+                                slidesToShow: 1,
                             },
                         },
                     ]}

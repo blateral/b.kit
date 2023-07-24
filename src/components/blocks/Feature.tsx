@@ -16,10 +16,18 @@ const ImageContainer = styled.div<{ isCentered?: boolean }>`
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
     padding-bottom: ${spacings.spacer * 2}px;
+
+    & > * {
+        width: 100%;
+    }
 `;
 
 const StyledImage = styled(Image)`
-    // width: 100%;
+    width: 100%;
+
+    @media ${mq.medium} {
+        width: auto;
+    }
 `;
 
 const Content = styled.div<{ addWhitespace?: boolean; isCentered?: boolean }>`
