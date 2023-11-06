@@ -186,7 +186,7 @@ const ScrollArea = styled.div`
     }
 
     & > *:last-child {
-        margin-bottom: ${spacings.nudge * 10}px;
+        margin-bottom: 120px;
     }
 
     @media ${mq.medium} {
