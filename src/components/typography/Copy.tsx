@@ -61,7 +61,7 @@ const base = css<{
         vertical-align: baseline;
     }
 
-    hyphens: auto;
+    /* hyphens: auto; */
     ${({ textColor, textGradient }) => styleTextColor(textColor, textGradient)}
 
     /* @media ${mq.medium} {

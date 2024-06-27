@@ -17,10 +17,6 @@ const View = styled.div<{ isCentered?: boolean }>`
 
 const SuperTitle = styled(Heading)`
     display: block;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 `;
 
 const MainTitle = styled(Heading)<{ maxLines?: number }>`
