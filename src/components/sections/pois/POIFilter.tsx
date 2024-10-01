@@ -48,13 +48,12 @@ const CloseButton = styled.div`
 `;
 
 const SearchContainer = styled(Copy)`
+    position: relative;
     border: 1px solid ${({ theme }) => color(theme).elementBg.dark};
     border-radius: ${spacings.nudge}px;
     background: ${({ theme }) => color(theme).elementBg.light};
 
     padding: ${spacings.nudge}px ${spacings.nudge * 1.5}px;
-
-    cursor: text;
 
     display: flex;
     flex-direction: row;
@@ -76,10 +75,10 @@ const SearchContainer = styled(Copy)`
     }
 `;
 
-const SearchInput = styled.input`
+const SearchInput = styled.input<{ hasValue?: boolean }>`
     border: none;
     outline: none;
-    width: 100%;
+    width: ${({ hasValue }) => (hasValue ? 'calc(100% - 60px)' : 100)}%;
 
     font-size: ${({ theme }) => font(theme).copy.medium.size}px;
 `;
@@ -158,6 +157,17 @@ const Reset = styled(Copy)`
     margin-top: ${spacings.nudge * 2}px;
 `;
 
+const Clear = styled.div`
+    cursor: pointer;
+    position: absolute;
+    right: ${spacings.nudge * 2}px;
+
+    svg {
+        height: 24px;
+        width: 24px;
+    }
+`;
+
 export interface FilterProps {
     label?: string;
     dropdownLabel?: string;
@@ -193,9 +203,16 @@ const FilterBar: FC<FilterProps> = ({
             <SearchContainer>
                 <Magnifier />
                 <SearchInput
+                    hasValue={!!search}
                     value={search}
                     onChange={(e) => setSearch(e.currentTarget.value)}
                 />
+                {search && search.length > 0 && (
+                    <Clear onClick={() => setSearch('')}>
+                        {' '}
+                        <Cross />{' '}
+                    </Clear>
+                )}
             </SearchContainer>
             {categories && (
                 <div>
