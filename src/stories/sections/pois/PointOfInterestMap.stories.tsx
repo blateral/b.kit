@@ -119,6 +119,37 @@ export const WithPOIs: Story = () => (
     />
 );
 
+export const WithFilter: Story = () => (
+    <PointOfInterestMap
+        filter={{
+            label: 'Suchen & Filtern',
+            dropdownLabel: 'Kategorien',
+            categories: [
+                {
+                    label: 'Restaurant',
+                    value: {},
+                },
+                {
+                    label: 'Hotel',
+                    value: {},
+                },
+                {
+                    label: 'Handel',
+                    value: {},
+                },
+                {
+                    label: 'Kantine',
+                    value: {},
+                },
+            ],
+        }}
+        pois={pois}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
+    />
+);
+
 export const WithInitialPOI: Story = () => (
     <PointOfInterestMap
         pois={pois}

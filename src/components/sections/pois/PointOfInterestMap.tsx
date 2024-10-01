@@ -20,6 +20,7 @@ import useGeolocation from 'utils/useGeolocation';
 import CurrentLocation from 'components/base/icons/CurrentLocation';
 import Cross from 'components/base/icons/Cross';
 import MyLocation from 'components/base/icons/MyLocation';
+import POIFilter, { FilterProps } from './POIFilter';
 
 const genHeightStyles = () => css`
     // Doing some crazy shit to calculate curent navbar height in CSS
@@ -423,6 +424,8 @@ const PointOfInterestMap: FC<{
 
     /** Custom icon for my location request button */
     customLocationRequest?: React.ReactNode;
+
+    filter?: FilterProps;
 }> = ({
     anchorId,
     size,
@@ -441,6 +444,7 @@ const PointOfInterestMap: FC<{
     currentPosMarker,
     customCardClose,
     customLocationRequest,
+    filter,
 }) => {
     const isLarge = size === 'large';
     const { colors } = useLibTheme();
@@ -598,6 +602,7 @@ const PointOfInterestMap: FC<{
         >
             <Wrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <MapContainer>
+                    {filter && <POIFilter filter={filter} />}
                     <Map ref={setMapContainer} isLarge={size === 'large'} />
                     {showOwnPosition && (
                         <RequestGeolocationBtn onClick={handleLocationRequest}>
