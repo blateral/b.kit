@@ -189,9 +189,10 @@ export interface FilterProps {
     label?: string;
     dropdownLabel?: string;
     categories?: {
-        value: Record<string, string>;
+        value: string;
         label: string;
     }[];
+    initialSelected?: string[];
     selectedCount?: number;
     searchValue?: string;
     onClose?: () => void;
@@ -206,9 +207,14 @@ const FilterBar: FC<FilterProps> = ({
     label,
     onClose,
     onReset,
+    initialSelected,
 }) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [search, setSearch] = React.useState(searchValue);
+    const [selected, setSelected] = React.useState(initialSelected);
+
+    selectedCount = selected?.length || 0;
+
     return (
         <FilterView>
             <FilterHead type="copy-b" size="big">
@@ -253,7 +259,18 @@ const FilterBar: FC<FilterProps> = ({
                             categories.map((cat, i) => {
                                 return (
                                     <div key={i}>
-                                        <Checkbox label={cat.label} />
+                                        <Checkbox
+                                            isSelected={selected?.includes(
+                                                cat.value
+                                            )}
+                                            value={cat.value}
+                                            onClick={() =>
+                                                selected &&
+                                                selected.push(cat.value)
+                                            }
+                                            onChange={() => setSelected([''])}
+                                            label={cat.label}
+                                        />
                                     </div>
                                 );
                             })}
