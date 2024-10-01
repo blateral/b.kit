@@ -127,19 +127,19 @@ export const WithFilter: Story = () => (
             categories: [
                 {
                     label: 'Restaurant',
-                    value: {},
+                    value: '',
                 },
                 {
                     label: 'Hotel',
-                    value: {},
+                    value: '',
                 },
                 {
                     label: 'Handel',
-                    value: {},
+                    value: '',
                 },
                 {
                     label: 'Kantine',
-                    value: {},
+                    value: '',
                 },
             ],
         }}
