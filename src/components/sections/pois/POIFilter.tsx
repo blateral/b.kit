@@ -78,7 +78,7 @@ const SearchContainer = styled(Copy)`
 const SearchInput = styled.input<{ hasValue?: boolean }>`
     border: none;
     outline: none;
-    width: ${({ hasValue }) => (hasValue ? 'calc(100% - 60px)' : 100)}%;
+    width: ${({ hasValue }) => (hasValue ? 'calc(100% - 60px)' : '100%')};
 
     font-size: ${({ theme }) => font(theme).copy.medium.size}px;
 `;
