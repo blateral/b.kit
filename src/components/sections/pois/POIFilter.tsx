@@ -15,6 +15,7 @@ import Magnifier from 'components/base/icons/Magnifier';
 import Cross from 'components/base/icons/Cross';
 import { Pointer } from 'buttons';
 import AngleRight from 'components/base/icons/AngleRight';
+import AngleDown from 'components/base/icons/AngleDown';
 
 const FilterView = styled.div`
     @media ${mq.medium} {
@@ -104,6 +105,16 @@ const DropdownHead = styled.div`
 `;
 
 const HeadContent = styled(Copy)`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+`;
+
+const HeadAside = styled(Copy)`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -209,8 +220,7 @@ const FilterBar: FC<FilterProps> = ({
                 />
                 {search && search.length > 0 && (
                     <Clear onClick={() => setSearch('')}>
-                        {' '}
-                        <Cross />{' '}
+                        <Cross />
                     </Clear>
                 )}
             </SearchContainer>
@@ -225,9 +235,12 @@ const FilterBar: FC<FilterProps> = ({
                             <Filter />
                             <div>{dropdownLabel}</div>
                         </HeadContent>
-                        <Counter>
-                            <span>{selectedCount}</span>
-                        </Counter>
+                        <HeadAside>
+                            <Counter>
+                                <span>{selectedCount}</span>
+                            </Counter>
+                            <AngleDown />
+                        </HeadAside>
                     </DropdownHead>
                     <DropdownBody isVisible={isOpen}>
                         {categories &&
@@ -272,7 +285,7 @@ const FilterButton = styled.button`
     border-radius: ${spacings.nudge}px;
 
     & > * + * {
-        margin-left: ${spacings.nudge * 2}px;
+        margin-left: ${spacings.nudge}px;
     }
 
     @media ${mq.medium} {
@@ -325,6 +338,16 @@ const SubmitPointer = styled(Pointer.View)`
     margin-top: ${spacings.nudge * 3}px;
 `;
 
+const ButtonContent = styled(Copy)`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+`;
+
 const POIFilter: FC<{ filter: FilterProps }> = ({ filter }) => {
     filter.selectedCount = 0;
     const [mobileVisible, setMobileVisible] = React.useState(false);
@@ -334,9 +357,12 @@ const POIFilter: FC<{ filter: FilterProps }> = ({ filter }) => {
             <FilterButton onClick={() => setMobileVisible(!mobileVisible)}>
                 <Filter />
                 <Copy>{filter.label}</Copy>
-                <Counter>
-                    <span>{filter.selectedCount}</span>
-                </Counter>
+                <ButtonContent>
+                    <Counter>
+                        <span>{filter.selectedCount}</span>
+                    </Counter>
+                    <AngleDown />
+                </ButtonContent>
             </FilterButton>
             {mobileVisible && <Backdrop />}
             <MobileView isVisible={mobileVisible}>
