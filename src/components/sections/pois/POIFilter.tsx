@@ -16,6 +16,7 @@ import Cross from 'components/base/icons/Cross';
 import { Pointer } from 'buttons';
 import AngleRight from 'components/base/icons/AngleRight';
 import AngleDown from 'components/base/icons/AngleDown';
+import CrossBubble from 'components/base/icons/CrossBubble';
 
 const FilterView = styled.div`
     @media ${mq.medium} {
@@ -46,6 +47,11 @@ const FilterHead = styled(Copy)`
 
 const CloseButton = styled.div`
     cursor: pointer;
+
+    svg {
+        width: 30px;
+        height: 30px;
+    }
 `;
 
 const SearchContainer = styled(Copy)`
@@ -174,8 +180,8 @@ const Clear = styled.div`
     right: ${spacings.nudge * 2}px;
 
     svg {
-        height: 24px;
-        width: 24px;
+        height: 20px;
+        width: 20px;
     }
 `;
 
@@ -220,7 +226,7 @@ const FilterBar: FC<FilterProps> = ({
                 />
                 {search && search.length > 0 && (
                     <Clear onClick={() => setSearch('')}>
-                        <Cross />
+                        <CrossBubble />
                     </Clear>
                 )}
             </SearchContainer>
