@@ -289,10 +289,14 @@ const useLeafletMap = (settings: Partial<LeafletMapSettings>) => {
      * Adjust zoom to show all markers
      */
     const showAllMarkers = useCallback(() => {
-        if (map && markersLayerGroup) {
-            map.fitBounds(markersLayerGroup.getBounds(), {
-                padding: L.point(mapSettings.fitBoundsPadding),
-            });
+        try {
+            if (map && markersLayerGroup) {
+                map.fitBounds(markersLayerGroup.getBounds(), {
+                    padding: L.point(mapSettings.fitBoundsPadding),
+                });
+            }
+        } catch (err) {
+            console.log(err);
         }
     }, [L, map, mapSettings.fitBoundsPadding, markersLayerGroup]);
 

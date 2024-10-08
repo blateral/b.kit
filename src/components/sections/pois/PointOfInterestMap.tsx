@@ -20,7 +20,11 @@ import useGeolocation from 'utils/useGeolocation';
 import CurrentLocation from 'components/base/icons/CurrentLocation';
 import Cross from 'components/base/icons/Cross';
 import MyLocation from 'components/base/icons/MyLocation';
-import POIFilter, { FilterProps } from './POIFilter';
+import FilterBar, { FilterState } from 'components/blocks/FilterBar';
+import Magnifier from 'components/base/icons/Magnifier';
+import CrossBubble from 'components/base/icons/CrossBubble';
+import Filter from 'components/base/icons/Filter';
+import { getFilterMatches } from './filters';
 
 const genHeightStyles = () => css`
     // Doing some crazy shit to calculate curent navbar height in CSS
@@ -275,6 +279,13 @@ const CloseBtn = styled.button`
     }
 `;
 
+const MapPOIFilter = styled(FilterBar)`
+    position: absolute;
+    top: ${spacings.nudge * 2}px;
+    left: ${spacings.nudge * 2}px;
+    width: 100%;
+`;
+
 const MapCard: FC<{
     name?: string;
     facts?: string[];
@@ -352,7 +363,7 @@ export interface MapPOI {
     icon?: LocationIcon;
 
     /** POI name */
-    name?: string;
+    name: string;
 
     /** POI short description text */
     description?: string;
@@ -425,7 +436,7 @@ const PointOfInterestMap: FC<{
     /** Custom icon for my location request button */
     customLocationRequest?: React.ReactNode;
 
-    filter?: FilterProps;
+    // filter?: POIFilterProps;
 }> = ({
     anchorId,
     size,
@@ -444,7 +455,7 @@ const PointOfInterestMap: FC<{
     currentPosMarker,
     customCardClose,
     customLocationRequest,
-    filter,
+    // filter,
 }) => {
     const isLarge = size === 'large';
     const { colors } = useLibTheme();
@@ -456,6 +467,39 @@ const PointOfInterestMap: FC<{
     const activePOI = useMemo(() => {
         return pois?.find((poi) => poi.id === activePoiId);
     }, [activePoiId, pois]);
+
+    const [filters, setFilters] = useState<FilterState>({
+        categoryFilter: [],
+        textFilter: '',
+    });
+
+    const activePois = useMemo(() => {
+        // text matches
+        const matches =
+            getFilterMatches<MapPOI>(filters?.textFilter || '', pois || []) ||
+            pois;
+
+        return (
+            pois?.filter((poi) => {
+                if (
+                    !isValidArray(filters.categoryFilter, false) &&
+                    !filters.textFilter
+                ) {
+                    return true;
+                }
+
+                if (filters.textFilter) {
+                    const match = matches.find((m) => m.item.id === poi.id);
+                    if (match) return true;
+                }
+
+                if (isValidArray(filters.categoryFilter, false)) {
+                    return filters.categoryFilter.includes(poi.id);
+                }
+                return false;
+            }) || []
+        );
+    }, [pois, filters]);
 
     const {
         isSupported: isGeolocationSupported,
@@ -483,7 +527,7 @@ const PointOfInterestMap: FC<{
         };
 
         const markers: LeafletMapMarker[] =
-            pois
+            activePois
                 ?.filter((poi) => poi.id !== undefined)
                 ?.map(({ id, position, icon }) => ({
                     id,
@@ -510,7 +554,7 @@ const PointOfInterestMap: FC<{
         isGeolocationSupported,
         location?.coords.latitude,
         location?.coords.longitude,
-        pois,
+        activePois,
     ]);
 
     const {
@@ -602,8 +646,27 @@ const PointOfInterestMap: FC<{
         >
             <Wrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <MapContainer>
-                    {filter && <POIFilter filter={filter} />}
                     <Map ref={setMapContainer} isLarge={size === 'large'} />
+                    <MapPOIFilter
+                        value={filters}
+                        onChange={setFilters}
+                        textFilter={{
+                            placeholder: 'Search...',
+                            icon: () => <Magnifier width={18} height={18} />,
+                            submitIcon: () => null,
+                            clearIcon: () => <CrossBubble />,
+                        }}
+                        categoryFilter={{
+                            label: 'Kategories',
+                            items:
+                                pois?.map((poi) => ({
+                                    value: poi.id,
+                                    label: poi.name || '',
+                                })) || [],
+                            icon: () => <Filter />,
+                            resetLabel: 'reset selection',
+                        }}
+                    />
                     {showOwnPosition && (
                         <RequestGeolocationBtn onClick={handleLocationRequest}>
                             {customLocationRequest || (

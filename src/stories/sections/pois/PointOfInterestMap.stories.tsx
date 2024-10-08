@@ -121,28 +121,29 @@ export const WithPOIs: Story = () => (
 
 export const WithFilter: Story = () => (
     <PointOfInterestMap
-        filter={{
-            label: 'Suchen & Filtern',
-            dropdownLabel: 'Kategorien',
-            categories: [
-                {
-                    label: 'Restaurant',
-                    value: '',
-                },
-                {
-                    label: 'Hotel',
-                    value: '',
-                },
-                {
-                    label: 'Handel',
-                    value: '',
-                },
-                {
-                    label: 'Kantine',
-                    value: '',
-                },
-            ],
-        }}
+        // filter={{
+        //     label: 'Suchen & Filtern',
+        //     dropdownLabel: 'Kategorien',
+        //     categories: [
+        //         {
+        //             label: 'Restaurant',
+        //             value: 'Restaurant',
+        //         },
+        //         {
+        //             label: 'Hotel',
+        //             value: 'Hotel',
+        //         },
+        //         {
+        //             label: 'Handel',
+        //             value: 'Handel',
+        //         },
+        //         {
+        //             label: 'Kantine',
+        //             value: 'Kantine',
+        //         },
+        //     ],
+
+        // }}
         pois={pois}
         flyToZoom={12}
         allMarkersOnInit

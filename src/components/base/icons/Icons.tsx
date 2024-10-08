@@ -69,3 +69,6 @@ export { default as ToggleOn } from 'components/base/icons/ToggleOn';
 export { default as ToggleOff } from 'components/base/icons/ToggleOff';
 export { default as LocationSearch } from 'components/base/icons/LocationSearch';
 export { default as ClockFilled } from 'components/base/icons/ClockFilled';
+export { default as Magnifier } from 'components/base/icons/Magnifier';
+export { default as CrossBubble } from 'components/base/icons/CrossBubble';
+export { default as Filter } from 'components/base/icons/Filter';

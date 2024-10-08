@@ -7,13 +7,21 @@ const SVG = styled.svg`
 
 const Magnifier: React.FC<{
     iconColor?: string;
+    width?: number;
+    height?: number;
     className?: string;
     ariaHidden?: boolean;
-}> = ({ iconColor = 'currentColor', className, ariaHidden = true }) => (
+}> = ({
+    iconColor = 'currentColor',
+    width = 18,
+    height = 18,
+    className,
+    ariaHidden = true,
+}) => (
     <SVG
         viewBox="0 0 18 18"
-        width="18"
-        height="18"
+        width={width}
+        height={height}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden={ariaHidden}
