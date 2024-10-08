@@ -7,7 +7,6 @@ import {
     getColors as color,
     getFonts as font,
     getGlobals as global,
-    mq,
 } from 'utils/styles';
 import Magnifier from 'components/base/icons/Magnifier';
 import useLazyInput from 'utils/useLazyInput';
