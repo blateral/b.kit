@@ -148,7 +148,11 @@ export const WithInitialFilters: Story = () => (
 
 export const WithCustomFilters: Story = () => (
     <PointOfInterestMap
-        poiFilters={({ pois, filters, setFilters }) => (
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
+        customPoiFilters={({ pois, filters, setFilters }) => (
             <div>
                 <input
                     value={filters.textFilter || ''}

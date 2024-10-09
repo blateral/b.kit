@@ -29,7 +29,7 @@ import MyLocation from 'components/base/icons/MyLocation';
 import { FilterState } from 'components/blocks/FilterBar';
 import { getFilterMatches } from './filters';
 
-import * as PoiPartials from './partials';
+import * as PoiPartials from 'components/sections/pois/partials';
 import { deleteUrlParam, setUrlParam } from 'hooks';
 
 const genHeightStyles = () => css`
@@ -470,13 +470,13 @@ const PointOfInterestMap: FC<{
     initialPoiFilters?: FilterState;
 
     /** POI filter settings */
-    poiFilters?:
-        | PoiMapFilters
-        | ((props: {
-              pois: MapPOI[];
-              filters: FilterState;
-              setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
-          }) => React.ReactNode);
+    poiFilters?: PoiMapFilters;
+    customPoiFilters?: (props: {
+        pois: MapPOI[];
+        filters: FilterState;
+        setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+        settings?: PoiMapFilters;
+    }) => React.ReactNode;
 }> = ({
     anchorId,
     size,
@@ -497,6 +497,7 @@ const PointOfInterestMap: FC<{
     customLocationRequest,
     initialPoiFilters,
     poiFilters,
+    customPoiFilters,
 }) => {
     const isLarge = size === 'large';
     const { colors, globals } = useLibTheme();
@@ -505,9 +506,6 @@ const PointOfInterestMap: FC<{
         initialPointOfInterest || ''
     );
     const [isDirty, setIsDirty] = useState<boolean>(false);
-    const activePOI = useMemo(() => {
-        return pois?.find((poi) => poi.id === activePoiId);
-    }, [activePoiId, pois]);
 
     const [filters, setFilters] = useState<FilterState>(
         initialPoiFilters || {
@@ -527,6 +525,10 @@ const PointOfInterestMap: FC<{
 
         return Array.from(matches).map((m) => m[1].item) as MapPOI[];
     }, [pois, filters]);
+
+    const activePOI = useMemo(() => {
+        return activePois?.find((poi) => poi.id === activePoiId);
+    }, [activePoiId, activePois]);
 
     const {
         isSupported: isGeolocationSupported,
@@ -686,6 +688,11 @@ const PointOfInterestMap: FC<{
         filters.categoryFilter,
     ]);
 
+    useEffect(() => {
+        setActivePoiId('');
+        setIsDirty(false);
+    }, [filters]);
+
     return (
         <PoiMapSection
             anchorId={anchorId}
@@ -710,11 +717,12 @@ const PointOfInterestMap: FC<{
                                 </RequestGeolocationBtn>
                             )}
                             {poiFilters ? (
-                                typeof poiFilters === 'function' ? (
-                                    poiFilters?.({
+                                customPoiFilters ? (
+                                    customPoiFilters({
                                         filters,
                                         setFilters,
                                         pois: pois || [],
+                                        settings: poiFilters,
                                     })
                                 ) : (
                                     <PoiPartials.PoiFilterBar

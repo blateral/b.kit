@@ -12,7 +12,7 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import {
     mq,
     spacings,
@@ -80,18 +80,6 @@ const OverlayToggleView = styled.button<{ isInverted?: boolean }>`
         display: none;
     }
 
-    @media (hover: hover) and (pointer: fine) {
-        ${({ isInverted }) =>
-            css`
-                &:hover {
-                    box-shadow: 0px 8px 16px
-                        ${isInverted
-                            ? 'rgba(255, 255, 255, 0.25)'
-                            : 'rgba(0, 0, 0, 0.25)'};
-                }
-            `}
-    }
-
     &:focus {
         text-decoration: underline;
         box-shadow: 0px 8px 16px
@@ -105,14 +93,6 @@ const OverlayToggleView = styled.button<{ isInverted?: boolean }>`
         text-decoration: none;
         outline: none;
         box-shadow: none;
-    }
-
-    &:active {
-        box-shadow: 0px 2px 6px
-            ${({ isInverted }) =>
-                isInverted
-                    ? 'rgba(255, 255, 255, 0.25)'
-                    : 'rgba(0, 0, 0, 0.3)'};
     }
 `;
 
@@ -308,6 +288,7 @@ const MobileBarSubmitPointer = styled(Pointer.View)`
 `;
 
 export interface FilterBarProps {
+    isInverted?: boolean;
     hasBorders?: boolean;
     value?: FilterState;
     onChange?: (filters: FilterState) => void;
@@ -341,6 +322,7 @@ export interface FilterState {
 }
 
 const FilterBar: FC<FilterBarProps & { className?: string }> = ({
+    isInverted,
     hasBorders,
     value,
     onChange,
@@ -404,7 +386,7 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
     const overallSelected =
         (filters?.categoryFilter?.length || 0) + (filters.textFilter ? 1 : 0);
 
-    const closeIconElement = closeIcon?.() || (
+    const closeIconElement = closeIcon?.(isInverted) || (
         <Icons.Cross width={32} height={32} />
     );
 
@@ -429,6 +411,7 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                 <DesktopFilters>
                     {textFilter && (
                         <TextFilter
+                            isInverted={isInverted}
                             icon={textFilter.icon}
                             submitIcon={textFilter.submitIcon}
                             clearIcon={textFilter.clearIcon}
@@ -446,6 +429,7 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                     {categoryFilter &&
                         isValidArray(categoryFilter?.items, false) && (
                             <Select
+                                isInverted={isInverted}
                                 items={categoryFilter.items}
                                 placeholder={categoryFilter.label}
                                 icon={filterIcon}

@@ -6,11 +6,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import { mq, spacings } from 'utils/styles';
+import { mq, spacings, getColors as color } from 'utils/styles';
 import { deleteUrlParam, setUrlParam } from 'utils/urlParams';
 import { FilterState } from 'components/blocks/FilterBar';
 import { getFilterMatches } from './filters';
-import { PoiPartials } from 'sections.pois';
+import * as PoiPartials from 'components/sections/pois/partials';
 
 const Content = styled.div`
     & > * + * {
@@ -27,9 +27,18 @@ const Content = styled.div`
 const PoiOverviewFilterBar = styled(PoiPartials.PoiFilterBar)`
     // margin to show prevent section overflow outline
     margin-top: 2px;
+    border: solid 1px
+        ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
 
     &:not(:last-child) {
         margin-bottom: ${spacings.nudge * 5}px;
+    }
+
+    @media ${mq.medium} {
+        border: none;
     }
 `;
 
@@ -75,14 +84,21 @@ const PointOfInterestOverview: React.FC<{
     initialPoiFilters?: FilterState;
 
     /** POI filter settings */
-    poiFilters?:
-        | PoiOverviewFilters
-        | ((props: {
-              pois: PointOfInterestOverviewItem[];
-              filters: FilterState;
-              setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
-          }) => React.ReactNode);
-}> = ({ anchorId, bgMode, pois, initialPoiFilters, poiFilters }) => {
+    poiFilters?: PoiOverviewFilters;
+    customPoiFilters?: (props: {
+        pois: PointOfInterestOverviewItem[];
+        filters: FilterState;
+        setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+        settings?: PoiOverviewFilters;
+    }) => React.ReactNode;
+}> = ({
+    anchorId,
+    bgMode,
+    pois,
+    initialPoiFilters,
+    poiFilters,
+    customPoiFilters,
+}) => {
     const { colors, globals } = useLibTheme();
     const filterName = globals.sections.poiFilterName;
     const factFiltername = globals.sections.poiFactFilterName;
@@ -142,11 +158,12 @@ const PointOfInterestOverview: React.FC<{
         >
             <Wrapper addWhitespace>
                 {poiFilters ? (
-                    typeof poiFilters === 'function' ? (
-                        poiFilters?.({
+                    customPoiFilters ? (
+                        customPoiFilters?.({
                             filters,
                             setFilters,
                             pois: pois || [],
+                            settings: poiFilters,
                         })
                     ) : (
                         <PoiOverviewFilterBar
