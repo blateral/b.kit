@@ -134,7 +134,7 @@ export const WithFilter: Story = () => (
 
 export const WithInitialFilters: Story = () => (
     <PointOfInterestMap
-        initialPoiFilters={{ categoryFilter: ['id1'], textFilter: 'Schloss' }}
+        initialPoiFilters={{ categoryFilter: ['id1'], textFilter: 'id2' }}
         poiFilters={{
             categoryFilter: {},
             textFilter: {},

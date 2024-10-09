@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import POIFacts from 'components/blocks/POIFacts';
 import Copy from 'components/typography/Copy';
 import { isValidArray } from 'utils/arrays';
-import { getColors as color, mq, spacings } from 'utils/styles';
+import {
+    getColors as color,
+    getGlobals as global,
+    mq,
+    spacings,
+} from 'utils/styles';
 import InfoList, { Info } from './InfoList';
 
 const View = styled.div<{ isInverted?: boolean }>`
@@ -14,7 +19,7 @@ const View = styled.div<{ isInverted?: boolean }>`
                 ? color(theme).elementBg.light
                 : color(theme).elementBg.dark};
     padding: ${spacings.nudge * 2}px;
-    border-radius: ${spacings.nudge}px;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     overflow: hidden;
 
     & > * + * {

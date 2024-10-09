@@ -163,7 +163,10 @@ export const Default: Story = () => (
 
 export const WithFiltering: Story = () => (
     <PointOfInterestOverview
-        enableFiltering
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
         pois={[
             {
                 id: 'poi_1',
@@ -305,7 +308,10 @@ export const WithFiltering: Story = () => (
 export const WithBackground: Story = () => (
     <PointOfInterestOverview
         bgMode="full"
-        enableFiltering
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
         pois={[
             {
                 id: 'poi_1',
@@ -447,7 +453,10 @@ export const WithBackground: Story = () => (
 export const Inverted: Story = () => (
     <PointOfInterestOverview
         bgMode="inverted"
-        enableFiltering
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
         pois={[
             {
                 id: 'poi_1',

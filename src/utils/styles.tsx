@@ -484,6 +484,7 @@ export interface GlobalSettings {
         eventFilterName: string;
         jobFilterName: string;
         poiFilterName: string;
+        poiFactFilterName: string;
     };
     cookie: {
         name: string;
@@ -613,6 +614,7 @@ const defaultGlobalSettings: GlobalSettings = {
         eventFilterName: 'eventFilter',
         jobFilterName: 'jobFilter',
         poiFilterName: 'poiFilter',
+        poiFactFilterName: 'poiFactFilter',
     },
     cookie: {
         name: 'cookie-consent-v2',

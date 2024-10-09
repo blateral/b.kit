@@ -4,7 +4,8 @@ import Magnifier from 'components/base/icons/Magnifier';
 import FilterBar, { FilterBarProps } from 'components/blocks/FilterBar';
 import React, { FC } from 'react';
 
-const PoiFilterBar: FC<FilterBarProps> = ({
+const PoiFilterBar: FC<FilterBarProps & { className?: string }> = ({
+    hasBorders,
     value,
     onChange,
     textFilter,
@@ -13,9 +14,11 @@ const PoiFilterBar: FC<FilterBarProps> = ({
     closeIcon,
     toggleLabel,
     filterIcon,
+    className,
 }) => {
     return (
         <FilterBar
+            hasBorders={hasBorders}
             value={value}
             onChange={onChange}
             textFilter={
@@ -48,6 +51,7 @@ const PoiFilterBar: FC<FilterBarProps> = ({
             closeIcon={closeIcon ? closeIcon : () => <CrossBubble />}
             toggleLabel={toggleLabel || 'Search & Filter'}
             filterIcon={filterIcon ? filterIcon : () => <Filter />}
+            className={className}
         />
     );
 };

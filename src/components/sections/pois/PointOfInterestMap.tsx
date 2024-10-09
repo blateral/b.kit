@@ -30,6 +30,7 @@ import { FilterState } from 'components/blocks/FilterBar';
 import { getFilterMatches } from './filters';
 
 import * as PoiPartials from './partials';
+import { deleteUrlParam, setUrlParam } from 'hooks';
 
 const genHeightStyles = () => css`
     // Doing some crazy shit to calculate curent navbar height in CSS
@@ -498,7 +499,7 @@ const PointOfInterestMap: FC<{
     poiFilters,
 }) => {
     const isLarge = size === 'large';
-    const { colors } = useLibTheme();
+    const { colors, globals } = useLibTheme();
 
     const [activePoiId, setActivePoiId] = useState<string>(
         initialPointOfInterest || ''
@@ -662,6 +663,28 @@ const PointOfInterestMap: FC<{
             }
         }
     };
+
+    const filterName = globals.sections.poiFilterName;
+    const factFiltername = globals.sections.poiFactFilterName;
+
+    useEffect(() => {
+        if (filters.textFilter) {
+            setUrlParam(filterName, filters.textFilter);
+        } else {
+            deleteUrlParam(filterName);
+        }
+
+        if (isValidArray(filters.categoryFilter, false)) {
+            setUrlParam(factFiltername, filters.categoryFilter.join(','));
+        } else {
+            deleteUrlParam(factFiltername);
+        }
+    }, [
+        filterName,
+        factFiltername,
+        filters.textFilter,
+        filters.categoryFilter,
+    ]);
 
     return (
         <PoiMapSection

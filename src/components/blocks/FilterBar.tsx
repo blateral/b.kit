@@ -30,20 +30,20 @@ const FilterView = styled.div`
     display: inline-block;
 `;
 
-const TextFilter = styled(FilterField)`
+const TextFilter = styled(FilterField)<{ hasBorders?: boolean }>`
     min-height: 45px;
     height: 45px;
     background: ${({ theme }) => color(theme).elementBg.light};
-    border: none;
+    border: ${({ hasBorders }) => (!hasBorders ? 'none' : undefined)};
 `;
 
-const Select = styled(MultiselectDropdown)`
+const Select = styled(MultiselectDropdown)<{ hasBorders?: boolean }>`
     min-width: 220px;
     min-height: 45px;
 
     button,
     ul {
-        border: none;
+        border: ${({ hasBorders }) => (!hasBorders ? 'none' : undefined)};
         background: ${({ theme }) => color(theme).elementBg.light};
     }
 `;
@@ -308,6 +308,7 @@ const MobileBarSubmitPointer = styled(Pointer.View)`
 `;
 
 export interface FilterBarProps {
+    hasBorders?: boolean;
     value?: FilterState;
     onChange?: (filters: FilterState) => void;
     toggleLabel?: string;
@@ -340,6 +341,7 @@ export interface FilterState {
 }
 
 const FilterBar: FC<FilterBarProps & { className?: string }> = ({
+    hasBorders,
     value,
     onChange,
     mobileSubmitLabel = 'Apply filters',
@@ -438,6 +440,7 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                                     textFilter: value,
                                 }));
                             }}
+                            hasBorders={hasBorders}
                         />
                     )}
                     {categoryFilter &&
@@ -455,6 +458,7 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                                     }))
                                 }
                                 selectedItems={filters.categoryFilter}
+                                hasBorders={hasBorders}
                             />
                         )}
                 </DesktopFilters>
