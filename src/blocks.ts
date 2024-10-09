@@ -14,3 +14,4 @@ export { default as POICard } from 'components/blocks/POICard';
 export { default as InfoList } from 'components/blocks/InfoList';
 
 export { default as SocialList } from 'components/blocks/SocialList';
+export { default as FilterBar } from 'components/blocks/FilterBar';

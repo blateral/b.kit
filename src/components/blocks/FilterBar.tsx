@@ -1,11 +1,12 @@
 import * as Icons from 'components/base/icons/Icons';
 import FilterField from 'components/fields/FilterField';
 import MultiselectDropdown from 'components/fields/MultiselectDropdown';
-import Copy from 'components/typography/Copy';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import { isValidArray } from 'hooks';
 import React, {
     FC,
     Fragment,
+    ReactNode,
     SyntheticEvent,
     useEffect,
     useRef,
@@ -17,10 +18,13 @@ import {
     spacings,
     getColors as color,
     getGlobals as global,
+    withRange,
 } from 'utils/styles';
 import Portal from './Portal';
 import Pointer from 'components/buttons/Pointer';
 import equal from 'fast-deep-equal/react';
+import { useLibTheme } from 'utils/LibThemeProvider';
+import { getFormFieldTextSize } from 'utils/formFieldText';
 
 const FilterView = styled.div`
     display: inline-block;
@@ -55,6 +59,11 @@ const OverlayToggleView = styled.button<{ isInverted?: boolean }>`
 
     padding: ${spacings.nudge}px;
     background: ${({ theme }) => color(theme).elementBg.light};
+
+    ${copyStyle('copy', 'small')}
+    line-height: normal;
+    /** Clamping min font size to 16px to prevent browser zooming */
+    ${({ theme }) => withRange(getFormFieldTextSize(theme), 'font-size')}
 
     border: none;
     outline: none;
@@ -132,10 +141,34 @@ const Counter = styled(Copy)`
     }
 `;
 
-const ButtonContent = styled(Copy)`
+const Indicator = styled.span`
     display: flex;
-    flex-direction: row;
     align-items: center;
+    pointer-events: none;
+
+    & > * + * {
+        margin-left: ${spacings.nudge}px;
+    }
+`;
+
+const Icon = styled.div`
+    display: flex;
+    align-items: center;
+    padding-left: ${spacings.nudge}px;
+    color: inherit;
+
+    transition: transform 0.2s ease-in-out;
+`;
+
+const Label = styled.span`
+    display: flex;
+    align-items: center;
+    user-select: none;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
 
     & > * + * {
         margin-left: ${spacings.nudge}px;
@@ -146,23 +179,34 @@ const OverlayToggle: FC<{
     isInverted?: boolean;
     label: string;
     onClick?: (ev: SyntheticEvent<HTMLButtonElement>) => void;
+    icon?: (isInverted?: boolean) => ReactNode;
+    indicator?: () => ReactNode;
     selected?: number;
     className?: string;
-}> = ({ isInverted, label, selected, onClick, className }) => {
+}> = ({ isInverted, label, selected, onClick, icon, indicator, className }) => {
+    const iconElement = icon?.(isInverted);
+    const { colors } = useLibTheme();
+
     return (
         <OverlayToggleView
             isInverted={isInverted}
             onClick={onClick}
             className={className}
         >
-            <Icons.Filter />
-            <Copy>{label}</Copy>
-            <ButtonContent>
+            <Label>
+                {iconElement && <Icon>{iconElement}</Icon>}
+                <span>{label}</span>
+            </Label>
+
+            <Indicator>
                 <Counter size="small">
                     <span>{selected || 0}</span>
                 </Counter>
-                <Icons.AngleDown />
-            </ButtonContent>
+                {indicator?.()}
+                {!indicator && (
+                    <Icons.AngleDown iconColor={colors.elementBg.dark} />
+                )}
+            </Indicator>
         </OverlayToggleView>
     );
 };
@@ -275,11 +319,6 @@ export interface FilterBarProps {
             value: string;
             label: string;
         }>;
-        icon?: (isInverted?: boolean) => React.ReactNode;
-        indicator?: (props: {
-            isOpen: boolean;
-            isDisabled?: boolean;
-        }) => React.ReactNode;
     };
     textFilter?: {
         placeholder?: string;
@@ -288,6 +327,11 @@ export interface FilterBarProps {
         clearIcon?: (isInverted?: boolean) => React.ReactNode;
     };
     closeIcon?: (isInverted?: boolean) => React.ReactNode;
+    filterIcon?: (isInverted?: boolean) => React.ReactNode;
+    indicator?: (props: {
+        isOpen: boolean;
+        isDisabled?: boolean;
+    }) => React.ReactNode;
 }
 
 export interface FilterState {
@@ -303,6 +347,8 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
     categoryFilter,
     textFilter,
     closeIcon,
+    filterIcon,
+    indicator,
     className,
 }) => {
     const [filters, setFilters] = useState<FilterState>(
@@ -327,6 +373,12 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
             textFilter: mobileTextFilter,
             categoryFilter: mobileCategoryFilter,
         });
+    };
+
+    const handleMobileBarClose = () => {
+        setIsMobileBarOpen(false);
+        setMobileCategoryFilter(filters.categoryFilter || []);
+        setMobileTextFilter(filters.textFilter || '');
     };
 
     useEffect(() => {
@@ -361,6 +413,16 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                     label={toggleLabel || ''}
                     selected={overallSelected}
                     onClick={() => setIsMobileBarOpen((prev) => !prev)}
+                    icon={filterIcon}
+                    indicator={
+                        indicator
+                            ? () =>
+                                  indicator({
+                                      isOpen: false,
+                                      isDisabled: false,
+                                  })
+                            : undefined
+                    }
                 />
                 <DesktopFilters>
                     {textFilter && (
@@ -383,8 +445,8 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                             <Select
                                 items={categoryFilter.items}
                                 placeholder={categoryFilter.label}
-                                icon={categoryFilter.icon}
-                                indicator={categoryFilter.indicator}
+                                icon={filterIcon}
+                                indicator={indicator}
                                 resetLabel={categoryFilter.resetLabel}
                                 onChange={(value) =>
                                     setFilters((prev) => ({
@@ -399,9 +461,7 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
             </FilterView>
             <Portal isVisible={isMobileBarOpen}>
                 <MobileBarStage>
-                    <MobileBarBackdrop
-                        onClick={() => setIsMobileBarOpen(false)}
-                    />
+                    <MobileBarBackdrop onClick={handleMobileBarClose} />
                     <MobileBarContent>
                         <FilterBarHead>
                             <Copy type="copy-b" size="big">
@@ -409,7 +469,7 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                             </Copy>
                             {closeIconElement && (
                                 <FilterBarCloseBtn
-                                    onClick={() => setIsMobileBarOpen(false)}
+                                    onClick={handleMobileBarClose}
                                 >
                                     {closeIconElement}
                                 </FilterBarCloseBtn>
@@ -432,8 +492,8 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                                         inlined
                                         items={categoryFilter.items}
                                         placeholder={categoryFilter.label}
-                                        icon={categoryFilter.icon}
-                                        indicator={categoryFilter.indicator}
+                                        icon={filterIcon}
+                                        indicator={indicator}
                                         resetLabel={categoryFilter.resetLabel}
                                         selectedItems={mobileCategoryFilter}
                                         onChange={setMobileCategoryFilter}

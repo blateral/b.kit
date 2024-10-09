@@ -42,8 +42,9 @@ export const Default: Story = () => (
                 { label: 'Handel', value: 'handel' },
                 { label: 'Kantine', value: 'kantine' },
             ],
-            icon: () => <Filter />,
+
             resetLabel: 'reset selection',
         }}
+        filterIcon={() => <Filter />}
     />
 );

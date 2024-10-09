@@ -20,11 +20,10 @@ import useGeolocation from 'utils/useGeolocation';
 import CurrentLocation from 'components/base/icons/CurrentLocation';
 import Cross from 'components/base/icons/Cross';
 import MyLocation from 'components/base/icons/MyLocation';
-import FilterBar, { FilterState } from 'components/blocks/FilterBar';
-import Magnifier from 'components/base/icons/Magnifier';
-import CrossBubble from 'components/base/icons/CrossBubble';
-import Filter from 'components/base/icons/Filter';
+import { FilterState } from 'components/blocks/FilterBar';
 import { getFilterMatches } from './filters';
+
+import * as PoiPartials from './partials';
 
 const genHeightStyles = () => css`
     // Doing some crazy shit to calculate curent navbar height in CSS
@@ -163,10 +162,6 @@ const Map = styled.div<{ isLarge?: boolean }>`
 `;
 
 const RequestGeolocationBtn = styled.button`
-    position: absolute;
-    top: ${spacings.nudge * 2}px;
-    left: ${spacings.nudge * 2}px;
-
     background-color: transparent;
     border: none;
     padding: ${spacings.nudge}px;
@@ -279,11 +274,18 @@ const CloseBtn = styled.button`
     }
 `;
 
-const MapPOIFilter = styled(FilterBar)`
+const Overlay = styled.div`
     position: absolute;
     top: ${spacings.nudge * 2}px;
     left: ${spacings.nudge * 2}px;
     width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    & > * + * {
+        margin-left: ${spacings.nudge * 2}px;
+    }
 `;
 
 const MapCard: FC<{
@@ -378,6 +380,27 @@ export interface MapPOI {
     action?: React.ReactNode;
 }
 
+export interface PoiMapFilters {
+    toggleLabel?: string;
+    mobileSubmitLabel?: string;
+    categoryFilter?: {
+        label?: string;
+        resetLabel?: string;
+    };
+    textFilter?: {
+        placeholder?: string;
+        icon?: (isInverted?: boolean) => React.ReactNode;
+        submitIcon?: (isInverted?: boolean) => React.ReactNode;
+        clearIcon?: (isInverted?: boolean) => React.ReactNode;
+    };
+    closeIcon?: (isInverted?: boolean) => React.ReactNode;
+    filterIcon?: (isInverted?: boolean) => React.ReactNode;
+    indicator?: (props: {
+        isOpen: boolean;
+        isDisabled?: boolean;
+    }) => React.ReactNode;
+}
+
 const PointOfInterestMap: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -436,7 +459,14 @@ const PointOfInterestMap: FC<{
     /** Custom icon for my location request button */
     customLocationRequest?: React.ReactNode;
 
-    // filter?: POIFilterProps;
+    /** POI filters */
+    poiFilters?:
+        | PoiMapFilters
+        | ((props: {
+              pois: MapPOI[];
+              filters: FilterState;
+              setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+          }) => React.ReactNode);
 }> = ({
     anchorId,
     size,
@@ -455,7 +485,7 @@ const PointOfInterestMap: FC<{
     currentPosMarker,
     customCardClose,
     customLocationRequest,
-    // filter,
+    poiFilters,
 }) => {
     const isLarge = size === 'large';
     const { colors } = useLibTheme();
@@ -647,32 +677,58 @@ const PointOfInterestMap: FC<{
             <Wrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <MapContainer>
                     <Map ref={setMapContainer} isLarge={size === 'large'} />
-                    <MapPOIFilter
-                        value={filters}
-                        onChange={setFilters}
-                        textFilter={{
-                            placeholder: 'Search...',
-                            icon: () => <Magnifier width={18} height={18} />,
-                            submitIcon: () => null,
-                            clearIcon: () => <CrossBubble />,
-                        }}
-                        categoryFilter={{
-                            label: 'Kategories',
-                            items:
-                                pois?.map((poi) => ({
-                                    value: poi.id,
-                                    label: poi.name || '',
-                                })) || [],
-                            icon: () => <Filter />,
-                            resetLabel: 'reset selection',
-                        }}
-                    />
-                    {showOwnPosition && (
-                        <RequestGeolocationBtn onClick={handleLocationRequest}>
-                            {customLocationRequest || (
-                                <MyLocation iconColor={colors.text.default} />
+                    {(showOwnPosition || poiFilters) && (
+                        <Overlay>
+                            {showOwnPosition && (
+                                <RequestGeolocationBtn
+                                    onClick={handleLocationRequest}
+                                >
+                                    {customLocationRequest || (
+                                        <MyLocation
+                                            iconColor={colors.text.default}
+                                        />
+                                    )}
+                                </RequestGeolocationBtn>
                             )}
-                        </RequestGeolocationBtn>
+                            {poiFilters ? (
+                                typeof poiFilters === 'function' ? (
+                                    poiFilters?.({
+                                        filters,
+                                        setFilters,
+                                        pois: pois || [],
+                                    })
+                                ) : (
+                                    <PoiPartials.PoiFilterBar
+                                        value={filters}
+                                        onChange={setFilters}
+                                        textFilter={
+                                            poiFilters?.textFilter || undefined
+                                        }
+                                        categoryFilter={
+                                            poiFilters?.categoryFilter
+                                                ? {
+                                                      ...poiFilters.categoryFilter,
+                                                      items: pois?.map(
+                                                          (poi) =>
+                                                              ({
+                                                                  value: poi.id,
+                                                                  label: poi.name,
+                                                              } || [])
+                                                      ),
+                                                  }
+                                                : undefined
+                                        }
+                                        mobileSubmitLabel={
+                                            poiFilters?.mobileSubmitLabel
+                                        }
+                                        closeIcon={poiFilters?.closeIcon}
+                                        toggleLabel={poiFilters?.toggleLabel}
+                                        filterIcon={poiFilters?.filterIcon}
+                                        indicator={poiFilters?.indicator}
+                                    />
+                                )
+                            ) : null}
+                        </Overlay>
                     )}
                     {activePOI && activePOI.name && (
                         <CardStage
