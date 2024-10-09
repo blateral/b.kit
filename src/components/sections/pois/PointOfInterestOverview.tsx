@@ -2,16 +2,15 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { Info } from 'components/blocks/InfoList';
 import POICard, { POICardProps } from 'components/blocks/POICard';
-import FilterField from 'components/fields/FilterField';
-import useUpdateEffect from 'utils/useUpdateEffect';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import { mq, spacings } from 'utils/styles';
-import { escapeRegExp } from 'utils/escape';
-import useMounted from 'utils/useMounted';
-import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
+import { mq, spacings, getColors as color } from 'utils/styles';
+import { deleteUrlParam, setUrlParam } from 'utils/urlParams';
+import { FilterState } from 'components/blocks/FilterBar';
+import { getFilterMatches } from './filters';
+import * as PoiPartials from 'components/sections/pois/partials';
 
 const Content = styled.div`
     & > * + * {
@@ -25,169 +24,23 @@ const Content = styled.div`
     }
 `;
 
-const Filter = styled(FilterField)`
+const PoiOverviewFilterBar = styled(PoiPartials.PoiFilterBar)`
     // margin to show prevent section overflow outline
     margin-top: 2px;
+    border: solid 1px
+        ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.dark};
 
     &:not(:last-child) {
         margin-bottom: ${spacings.nudge * 5}px;
     }
+
+    @media ${mq.medium} {
+        border: none;
+    }
 `;
-
-const poiExactNameFilter =
-    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
-        const regex = new RegExp(filterQuery);
-        return regex.test(value.name);
-    };
-
-const poiSoftNameFilter =
-    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
-        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-        const preparedName = value.name.toLowerCase().replace(/\s/g, '');
-
-        const regex = new RegExp(preparedQuery);
-        return regex.test(preparedName);
-    };
-
-const poiFactFilter =
-    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
-        if (!isValidArray(value.facts, false)) return false;
-
-        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-        const regex = new RegExp(preparedQuery);
-
-        const result = value.facts.find((fact) => {
-            const preparedFact = fact.toLowerCase().replace(/\s/g, '');
-            return regex.test(preparedFact);
-        });
-
-        return !!result;
-    };
-
-const poiInfoFilter =
-    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
-        if (!isValidArray(value?.infos, false)) return false;
-
-        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-        const regex = new RegExp(preparedQuery);
-
-        return !!value.infos.find((info) => {
-            if (!info.text) return false;
-            const preparedText = info.text.toLowerCase().replace(/\s/g, '');
-            return regex.test(preparedText);
-        });
-    };
-
-const poiDescriptionFilter =
-    (filterQuery: string) => (value: PointOfInterestOverviewItem) => {
-        if (!value.shortDescription) return false;
-
-        const preparedQuery = filterQuery.toLowerCase().replace(/\s/g, '');
-        const preparedDesc = value.shortDescription
-            .toLowerCase()
-            .replace(/\s/g, '');
-
-        const regex = new RegExp(preparedQuery);
-        return regex.test(preparedDesc);
-    };
-
-const removeMatchIntersections = (
-    array: FilterMatch[],
-    item?: PointOfInterestOverviewItem[]
-) => {
-    if (!item) return [];
-    return item?.filter(
-        (m) => !array.find((prioItem) => prioItem.item.id === m.id)
-    );
-};
-
-const filterPois = (
-    filterQuery: string,
-    pois: PointOfInterestOverviewItem[]
-) => {
-    const prioList: FilterMatch[] = [];
-    if (
-        !isValidArray(
-            pois?.filter((poi) => poi.id !== undefined),
-            false
-        )
-    ) {
-        return prioList;
-    }
-
-    // PRIO 1 Filter: Exact name
-    const exactNameMatches = pois?.filter(poiExactNameFilter(filterQuery));
-    if (isValidArray(exactNameMatches, false)) {
-        prioList.push(
-            ...exactNameMatches.map((match) => ({
-                item: match,
-                priority: 1,
-            }))
-        );
-    }
-
-    // PRIO 2 Filter: Name
-    const nameMatches = removeMatchIntersections(
-        prioList,
-        pois?.filter(poiSoftNameFilter(filterQuery))
-    );
-
-    if (isValidArray(nameMatches, false)) {
-        prioList.push(
-            ...nameMatches.map((match) => ({
-                item: match,
-                priority: 2,
-            }))
-        );
-    }
-
-    // PRIO 3 Filter: Facts
-    const factMatches = removeMatchIntersections(
-        prioList,
-        pois?.filter(poiFactFilter(filterQuery))
-    );
-
-    if (isValidArray(factMatches, false)) {
-        prioList.push(
-            ...factMatches.map((match) => ({
-                item: match,
-                priority: 3,
-            }))
-        );
-    }
-
-    // PRIO 4 Filter: Description
-    const infoMatches = removeMatchIntersections(
-        prioList,
-        pois?.filter(poiInfoFilter(filterQuery))
-    );
-
-    if (isValidArray(infoMatches, false)) {
-        prioList.push(
-            ...infoMatches.map((match) => ({
-                item: match,
-                priority: 4,
-            }))
-        );
-    }
-
-    // PRIO 5 Filter: Description
-    const descMatches = removeMatchIntersections(
-        prioList,
-        pois?.filter(poiDescriptionFilter(filterQuery))
-    );
-
-    if (isValidArray(descMatches, false)) {
-        prioList.push(
-            ...descMatches.map((match) => ({
-                item: match,
-                priority: 5,
-            }))
-        );
-    }
-
-    return prioList;
-};
 
 interface CardProps extends POICardProps {
     id: string;
@@ -196,9 +49,25 @@ interface CardProps extends POICardProps {
 
 export type PointOfInterestOverviewItem = Omit<CardProps, 'isInverted'>;
 
-interface FilterMatch {
-    item: PointOfInterestOverviewItem;
-    priority: number;
+export interface PoiOverviewFilters {
+    toggleLabel?: string;
+    mobileSubmitLabel?: string;
+    categoryFilter?: {
+        label?: string;
+        resetLabel?: string;
+    };
+    textFilter?: {
+        placeholder?: string;
+        icon?: (isInverted?: boolean) => React.ReactNode;
+        submitIcon?: (isInverted?: boolean) => React.ReactNode;
+        clearIcon?: (isInverted?: boolean) => React.ReactNode;
+    };
+    closeIcon?: (isInverted?: boolean) => React.ReactNode;
+    filterIcon?: (isInverted?: boolean) => React.ReactNode;
+    indicator?: (props: {
+        isOpen: boolean;
+        isDisabled?: boolean;
+    }) => React.ReactNode;
 }
 
 const PointOfInterestOverview: React.FC<{
@@ -208,114 +77,71 @@ const PointOfInterestOverview: React.FC<{
     /** Array of POI card settings */
     pois?: PointOfInterestOverviewItem[];
 
-    /** Enable/Disable filtering */
-    enableFiltering?: boolean;
-
-    /** Initial filter query on component render */
-    initialFilterQuery?: string;
-
-    /** Placeholder for filter input */
-    filterPlaceholder?: string;
-
-    /** Injection function for filter submit icon */
-    filterSubmitIcon?: (isInverted?: boolean) => React.ReactNode;
-
-    /** Injection function for filter reset icon */
-    filterClearIcon?: (isInverted?: boolean) => React.ReactNode;
-
     /** Section background */
     bgMode?: 'full' | 'inverted';
+
+    /** Initial POI filter states */
+    initialPoiFilters?: FilterState;
+
+    /** POI filter settings */
+    poiFilters?: PoiOverviewFilters;
+    customPoiFilters?: (props: {
+        pois: PointOfInterestOverviewItem[];
+        filters: FilterState;
+        setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+        settings?: PoiOverviewFilters;
+    }) => React.ReactNode;
 }> = ({
     anchorId,
     bgMode,
     pois,
-    enableFiltering,
-    initialFilterQuery,
-    filterPlaceholder = 'Filter',
-    filterSubmitIcon,
-    filterClearIcon,
+    initialPoiFilters,
+    poiFilters,
+    customPoiFilters,
 }) => {
     const { colors, globals } = useLibTheme();
     const filterName = globals.sections.poiFilterName;
+    const factFiltername = globals.sections.poiFactFilterName;
 
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
 
-    const [filterQuery, setFilterQuery] = useState<string>(
-        initialFilterQuery || ''
+    const [filters, setFilters] = useState<FilterState>(
+        initialPoiFilters || {
+            categoryFilter: [],
+            textFilter: '',
+        }
     );
-    const isMounted = useMounted();
 
-    const poiMatches: FilterMatch[] = React.useMemo(() => {
-        const queryParts = filterQuery.split(' ').map((part) => part.trim());
-        const searchMatches: Array<{
-            match: FilterMatch;
-            intersections: number;
-        }> = [];
+    const poiMatches = useMemo(() => {
+        const matches =
+            getFilterMatches<PointOfInterestOverviewItem>(
+                filters?.textFilter || '',
+                filters?.categoryFilter || [],
+                pois || []
+            ) || pois;
 
-        // tracking matches of each query part
-        for (const part of queryParts) {
-            const matches = filterPois(escapeRegExp(part), pois || []);
-
-            for (const match of matches) {
-                const intersectionIndex = searchMatches.findIndex(
-                    (sItem) => sItem.match.item.id === match.item.id
-                );
-
-                if (intersectionIndex !== -1) {
-                    searchMatches[intersectionIndex].intersections += 1;
-                } else {
-                    searchMatches.push({
-                        match,
-                        intersections: 1,
-                    });
-                }
-            }
-        }
-
-        // filter search matches by intersections so only matches with results for all search parts are shown
-        return searchMatches
-            .filter((m) => m.intersections >= queryParts.length)
-            .map<FilterMatch>((m) => ({
-                ...m.match,
-            }));
-    }, [filterQuery, pois]);
-
-    const getFilter = useCallback(() => {
-        return getUrlParams()[filterName];
-    }, [filterName]);
+        return Array.from(matches).map((m) => m[1]);
+    }, [pois, filters]);
 
     useEffect(() => {
-        const urlFilter = getFilter();
-
-        if (
-            urlFilter !== undefined &&
-            urlFilter !== null &&
-            typeof urlFilter === 'string'
-        ) {
-            setFilterQuery(urlFilter);
-        }
-    }, [getFilter]);
-
-    useEffect(() => {
-        if (isMounted) return;
-
-        // set inital data into URL
-        if (filterQuery) {
-            setUrlParam(filterName, filterQuery);
+        if (filters.textFilter) {
+            setUrlParam(filterName, filters.textFilter);
         } else {
             deleteUrlParam(filterName);
         }
-    }, [filterName, filterQuery, isMounted]);
 
-    useUpdateEffect(() => {
-        // set filters to URL params
-        if (filterQuery) {
-            setUrlParam(filterName, filterQuery);
+        if (isValidArray(filters.categoryFilter, false)) {
+            setUrlParam(factFiltername, filters.categoryFilter.join(','));
         } else {
-            deleteUrlParam(filterName);
+            deleteUrlParam(factFiltername);
         }
-    }, [filterQuery]);
+    }, [
+        filterName,
+        factFiltername,
+        filters.textFilter,
+        filters.categoryFilter,
+    ]);
 
     return (
         <Section
@@ -331,17 +157,42 @@ const PointOfInterestOverview: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                {enableFiltering && (
-                    <Filter
-                        value={filterQuery}
-                        initialValue={initialFilterQuery}
-                        placeholder={filterPlaceholder}
-                        onSubmit={setFilterQuery}
-                        submitIcon={filterSubmitIcon}
-                        clearIcon={filterClearIcon}
-                        isInverted={isInverted}
-                    />
-                )}
+                {poiFilters ? (
+                    customPoiFilters ? (
+                        customPoiFilters?.({
+                            filters,
+                            setFilters,
+                            pois: pois || [],
+                            settings: poiFilters,
+                        })
+                    ) : (
+                        <PoiOverviewFilterBar
+                            hasBorders
+                            value={filters}
+                            onChange={setFilters}
+                            textFilter={poiFilters?.textFilter || undefined}
+                            categoryFilter={
+                                poiFilters?.categoryFilter
+                                    ? {
+                                          ...poiFilters.categoryFilter,
+                                          items: pois?.map(
+                                              (poi) =>
+                                                  ({
+                                                      value: poi.id,
+                                                      label: poi.name,
+                                                  } || [])
+                                          ),
+                                      }
+                                    : undefined
+                            }
+                            mobileSubmitLabel={poiFilters?.mobileSubmitLabel}
+                            closeIcon={poiFilters?.closeIcon}
+                            toggleLabel={poiFilters?.toggleLabel}
+                            filterIcon={poiFilters?.filterIcon}
+                            indicator={poiFilters?.indicator}
+                        />
+                    )
+                ) : null}
                 <Content>
                     {poiMatches
                         ?.sort((a, b) => a.priority - b.priority)

@@ -9,5 +9,6 @@ export { default as Radio } from 'components/fields/Radio';
 export { default as FileUpload } from 'components/fields/FileUpload';
 export { default as LocationField } from 'components/fields/LocationField';
 export { default as SelectDropdown } from 'components/fields/SelectDropdown';
+export { default as MultiselectDropdown } from 'components/fields/MultiselectDropdown';
 export { default as Textarea } from 'components/fields/Textarea';
 export { default as Textfield } from 'components/fields/Textfield';

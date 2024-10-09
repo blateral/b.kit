@@ -119,6 +119,78 @@ export const WithPOIs: Story = () => (
     />
 );
 
+export const WithFilter: Story = () => (
+    <PointOfInterestMap
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
+        pois={pois}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
+    />
+);
+
+export const WithInitialFilters: Story = () => (
+    <PointOfInterestMap
+        initialPoiFilters={{ categoryFilter: ['id1'], textFilter: 'id2' }}
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
+        pois={pois}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
+    />
+);
+
+export const WithCustomFilters: Story = () => (
+    <PointOfInterestMap
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
+        customPoiFilters={({ pois, filters, setFilters }) => (
+            <div>
+                <input
+                    value={filters.textFilter || ''}
+                    onChange={(e) =>
+                        setFilters((prev) => ({
+                            ...prev,
+                            textFilter: e.target.value,
+                        }))
+                    }
+                />
+                <select
+                    value={filters.categoryFilter?.[0] || ''}
+                    onChange={(e) => {
+                        setFilters((prev) => ({
+                            ...prev,
+                            categoryFilter: [
+                                ...(filters.categoryFilter || []),
+                                e.target.value,
+                            ],
+                        }));
+                    }}
+                >
+                    <option value=""></option>
+                    {pois.map((poi) => (
+                        <option key={poi.id} value={poi.id}>
+                            {poi.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        )}
+        pois={pois}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
+    />
+);
+
 export const WithInitialPOI: Story = () => (
     <PointOfInterestMap
         pois={pois}
@@ -126,6 +198,10 @@ export const WithInitialPOI: Story = () => (
         flyToZoom={12}
         allMarkersOnInit
         fitBoundsPadding={[30, 30]}
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
     />
 );
 
@@ -136,6 +212,10 @@ export const Large: Story = () => (
         flyToZoom={12}
         allMarkersOnInit
         fitBoundsPadding={[30, 30]}
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
     />
 );
 
@@ -148,6 +228,10 @@ export const LargeWithHeader: Story = () => (
             flyToZoom={12}
             allMarkersOnInit
             fitBoundsPadding={[30, 30]}
+            poiFilters={{
+                categoryFilter: {},
+                textFilter: {},
+            }}
         />
     </>
 );
@@ -162,6 +246,10 @@ export const WithGeolocation: Story = () => (
             allMarkersOnInit
             fitBoundsPadding={[30, 30]}
             showOwnPosition
+            poiFilters={{
+                categoryFilter: {},
+                textFilter: {},
+            }}
         />
     </>
 );
@@ -183,6 +271,10 @@ export const CustomCurrentPosMarker: Story = () => (
                 url: marker,
             }}
             showOwnPosition
+            poiFilters={{
+                categoryFilter: {},
+                textFilter: {},
+            }}
         />
     </>
 );
@@ -198,6 +290,10 @@ export const CustomLocationRequestIcon: Story = () => (
             fitBoundsPadding={[30, 30]}
             customLocationRequest={<FlyTo />}
             showOwnPosition
+            poiFilters={{
+                categoryFilter: {},
+                textFilter: {},
+            }}
         />
     </>
 );

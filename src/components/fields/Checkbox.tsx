@@ -11,7 +11,7 @@ const View = styled.label`
     align-items: center;
 
     & > * + * {
-        margin-left: ${spacings.nudge * 2}px;
+        margin-left: ${spacings.nudge}px;
     }
 `;
 
@@ -123,7 +123,7 @@ export interface CheckboxProps {
     isRequired?: boolean;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({
+const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
     label,
     isDisabled,
     isSelected,
@@ -134,11 +134,12 @@ const Checkbox: React.FC<CheckboxProps> = ({
     name,
     value,
     isRequired,
+    className,
 }) => {
     const { colors } = useLibTheme();
 
     return (
-        <View>
+        <View className={className}>
             <CheckboxContainer
                 isDisabled={isDisabled}
                 isInverted={isInverted}

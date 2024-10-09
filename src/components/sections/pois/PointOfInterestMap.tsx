@@ -5,7 +5,13 @@ import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import useLeafletMap, { LeafletMapMarker } from 'utils/useLeafletMap';
-import { mq, withRange, getColors as color, spacings } from 'utils/styles';
+import {
+    mq,
+    withRange,
+    getColors as color,
+    getGlobals as global,
+    spacings,
+} from 'utils/styles';
 import {
     generateNavbarIdent as genIdent,
     getFullNavbarHeights as getNavHeight,
@@ -20,6 +26,11 @@ import useGeolocation from 'utils/useGeolocation';
 import CurrentLocation from 'components/base/icons/CurrentLocation';
 import Cross from 'components/base/icons/Cross';
 import MyLocation from 'components/base/icons/MyLocation';
+import { FilterState } from 'components/blocks/FilterBar';
+import { getFilterMatches } from './filters';
+
+import * as PoiPartials from 'components/sections/pois/partials';
+import { deleteUrlParam, setUrlParam } from 'hooks';
 
 const genHeightStyles = () => css`
     // Doing some crazy shit to calculate curent navbar height in CSS
@@ -158,10 +169,6 @@ const Map = styled.div<{ isLarge?: boolean }>`
 `;
 
 const RequestGeolocationBtn = styled.button`
-    position: absolute;
-    top: ${spacings.nudge * 2}px;
-    left: ${spacings.nudge * 2}px;
-
     background-color: transparent;
     border: none;
     padding: ${spacings.nudge}px;
@@ -228,7 +235,7 @@ const MapCardView = styled.div`
     background: ${({ theme }) => color(theme).elementBg.light};
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
     pointer-events: all;
-    border-radius: 8px;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     & > * + * {
         margin-top: ${spacings.nudge * 3}px;
@@ -271,6 +278,20 @@ const CloseBtn = styled.button`
 
     &:active {
         transform: scale(0.95);
+    }
+`;
+
+const Overlay = styled.div`
+    position: absolute;
+    top: ${spacings.nudge * 2}px;
+    left: ${spacings.nudge * 2}px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    & > * + * {
+        margin-left: ${spacings.nudge * 2}px;
     }
 `;
 
@@ -351,7 +372,7 @@ export interface MapPOI {
     icon?: LocationIcon;
 
     /** POI name */
-    name?: string;
+    name: string;
 
     /** POI short description text */
     description?: string;
@@ -364,6 +385,27 @@ export interface MapPOI {
 
     /** Function to inject custom action node */
     action?: React.ReactNode;
+}
+
+export interface PoiMapFilters {
+    toggleLabel?: string;
+    mobileSubmitLabel?: string;
+    categoryFilter?: {
+        label?: string;
+        resetLabel?: string;
+    };
+    textFilter?: {
+        placeholder?: string;
+        icon?: (isInverted?: boolean) => React.ReactNode;
+        submitIcon?: (isInverted?: boolean) => React.ReactNode;
+        clearIcon?: (isInverted?: boolean) => React.ReactNode;
+    };
+    closeIcon?: (isInverted?: boolean) => React.ReactNode;
+    filterIcon?: (isInverted?: boolean) => React.ReactNode;
+    indicator?: (props: {
+        isOpen: boolean;
+        isDisabled?: boolean;
+    }) => React.ReactNode;
 }
 
 const PointOfInterestMap: FC<{
@@ -423,6 +465,18 @@ const PointOfInterestMap: FC<{
 
     /** Custom icon for my location request button */
     customLocationRequest?: React.ReactNode;
+
+    /** Initial POI filter states */
+    initialPoiFilters?: FilterState;
+
+    /** POI filter settings */
+    poiFilters?: PoiMapFilters;
+    customPoiFilters?: (props: {
+        pois: MapPOI[];
+        filters: FilterState;
+        setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+        settings?: PoiMapFilters;
+    }) => React.ReactNode;
 }> = ({
     anchorId,
     size,
@@ -441,17 +495,40 @@ const PointOfInterestMap: FC<{
     currentPosMarker,
     customCardClose,
     customLocationRequest,
+    initialPoiFilters,
+    poiFilters,
+    customPoiFilters,
 }) => {
     const isLarge = size === 'large';
-    const { colors } = useLibTheme();
+    const { colors, globals } = useLibTheme();
 
     const [activePoiId, setActivePoiId] = useState<string>(
         initialPointOfInterest || ''
     );
     const [isDirty, setIsDirty] = useState<boolean>(false);
+
+    const [filters, setFilters] = useState<FilterState>(
+        initialPoiFilters || {
+            categoryFilter: [],
+            textFilter: '',
+        }
+    );
+
+    const activePois = useMemo(() => {
+        // text matches
+        const matches =
+            getFilterMatches<MapPOI>(
+                filters?.textFilter || '',
+                filters?.categoryFilter || [],
+                pois || []
+            ) || pois;
+
+        return Array.from(matches).map((m) => m[1].item) as MapPOI[];
+    }, [pois, filters]);
+
     const activePOI = useMemo(() => {
-        return pois?.find((poi) => poi.id === activePoiId);
-    }, [activePoiId, pois]);
+        return activePois?.find((poi) => poi.id === activePoiId);
+    }, [activePoiId, activePois]);
 
     const {
         isSupported: isGeolocationSupported,
@@ -479,7 +556,7 @@ const PointOfInterestMap: FC<{
         };
 
         const markers: LeafletMapMarker[] =
-            pois
+            activePois
                 ?.filter((poi) => poi.id !== undefined)
                 ?.map(({ id, position, icon }) => ({
                     id,
@@ -506,7 +583,7 @@ const PointOfInterestMap: FC<{
         isGeolocationSupported,
         location?.coords.latitude,
         location?.coords.longitude,
-        pois,
+        activePois,
     ]);
 
     const {
@@ -589,6 +666,33 @@ const PointOfInterestMap: FC<{
         }
     };
 
+    const filterName = globals.sections.poiFilterName;
+    const factFiltername = globals.sections.poiFactFilterName;
+
+    useEffect(() => {
+        if (filters.textFilter) {
+            setUrlParam(filterName, filters.textFilter);
+        } else {
+            deleteUrlParam(filterName);
+        }
+
+        if (isValidArray(filters.categoryFilter, false)) {
+            setUrlParam(factFiltername, filters.categoryFilter.join(','));
+        } else {
+            deleteUrlParam(factFiltername);
+        }
+    }, [
+        filterName,
+        factFiltername,
+        filters.textFilter,
+        filters.categoryFilter,
+    ]);
+
+    useEffect(() => {
+        setActivePoiId('');
+        setIsDirty(false);
+    }, [filters]);
+
     return (
         <PoiMapSection
             anchorId={anchorId}
@@ -599,12 +703,59 @@ const PointOfInterestMap: FC<{
             <Wrapper clampWidth={isLarge ? 'large' : 'normal'}>
                 <MapContainer>
                     <Map ref={setMapContainer} isLarge={size === 'large'} />
-                    {showOwnPosition && (
-                        <RequestGeolocationBtn onClick={handleLocationRequest}>
-                            {customLocationRequest || (
-                                <MyLocation iconColor={colors.text.default} />
+                    {(showOwnPosition || poiFilters) && (
+                        <Overlay>
+                            {showOwnPosition && (
+                                <RequestGeolocationBtn
+                                    onClick={handleLocationRequest}
+                                >
+                                    {customLocationRequest || (
+                                        <MyLocation
+                                            iconColor={colors.text.default}
+                                        />
+                                    )}
+                                </RequestGeolocationBtn>
                             )}
-                        </RequestGeolocationBtn>
+                            {poiFilters ? (
+                                customPoiFilters ? (
+                                    customPoiFilters({
+                                        filters,
+                                        setFilters,
+                                        pois: pois || [],
+                                        settings: poiFilters,
+                                    })
+                                ) : (
+                                    <PoiPartials.PoiFilterBar
+                                        value={filters}
+                                        onChange={setFilters}
+                                        textFilter={
+                                            poiFilters?.textFilter || undefined
+                                        }
+                                        categoryFilter={
+                                            poiFilters?.categoryFilter
+                                                ? {
+                                                      ...poiFilters.categoryFilter,
+                                                      items: pois?.map(
+                                                          (poi) =>
+                                                              ({
+                                                                  value: poi.id,
+                                                                  label: poi.name,
+                                                              } || [])
+                                                      ),
+                                                  }
+                                                : undefined
+                                        }
+                                        mobileSubmitLabel={
+                                            poiFilters?.mobileSubmitLabel
+                                        }
+                                        closeIcon={poiFilters?.closeIcon}
+                                        toggleLabel={poiFilters?.toggleLabel}
+                                        filterIcon={poiFilters?.filterIcon}
+                                        indicator={poiFilters?.indicator}
+                                    />
+                                )
+                            ) : null}
+                        </Overlay>
                     )}
                     {activePOI && activePOI.name && (
                         <CardStage

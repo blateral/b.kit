@@ -9,10 +9,18 @@ const Cross: React.FC<{
     iconColor?: string;
     ariaHidden?: boolean;
     className?: string;
-}> = ({ iconColor = 'currentColor', ariaHidden = true, className }) => (
+    width?: number;
+    height?: number;
+}> = ({
+    iconColor = 'currentColor',
+    ariaHidden = true,
+    width = 40,
+    height = 40,
+    className,
+}) => (
     <SVG
-        width="40"
-        height="40"
+        width={width}
+        height={height}
         viewBox="0 0 24 24"
         aria-hidden={ariaHidden}
         fill="none"

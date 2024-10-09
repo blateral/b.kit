@@ -6,7 +6,7 @@ import {
     spacings,
     getColors as color,
     getFonts as font,
-    mq,
+    getGlobals as global,
 } from 'utils/styles';
 import Magnifier from 'components/base/icons/Magnifier';
 import useLazyInput from 'utils/useLazyInput';
@@ -14,12 +14,13 @@ import Cross from 'components/base/icons/Cross';
 
 const View = styled.div<{ isInverted?: boolean }>`
     display: flex;
-    min-height: 50px;
+    height: 45px;
     border: solid 1px
         ${({ theme, isInverted }) =>
             isInverted
                 ? color(theme).elementBg.light
                 : color(theme).elementBg.dark};
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     color: ${({ theme, isInverted }) =>
         isInverted
@@ -39,14 +40,12 @@ const View = styled.div<{ isInverted?: boolean }>`
     &:focus-within & > input:not(:focus-visible) {
         outline: none;
     }
-
-    @media ${mq.medium} {
-        max-width: 400px;
-    }
 `;
 
 const Field = styled.input<{ isInverted?: boolean }>`
     flex: 1 1 auto;
+    min-width: 20%;
+
     background-color: transparent;
     box-shadow: none;
     border: none;
@@ -58,8 +57,15 @@ const Field = styled.input<{ isInverted?: boolean }>`
     ${copyStyle('copy', 'medium')}
     line-height: 1;
 
-    padding: ${spacings.nudge * 2}px;
-    padding-right: ${spacings.nudge}px;
+    padding: ${spacings.nudge * 2}px ${spacings.nudge}px;
+
+    &:not(:first-child) {
+        padding-left: 0px;
+    }
+
+    &:not(:last-child) {
+        padding-right: 0px;
+    }
 
     &::placeholder {
         color: ${({ theme, isInverted }) =>
@@ -69,10 +75,10 @@ const Field = styled.input<{ isInverted?: boolean }>`
     }
 `;
 
-const SearchIcon = styled.div`
+const Icon = styled.div`
     display: flex;
     align-items: center;
-    padding-right: ${spacings.nudge * 2}px;
+    padding-right: ${spacings.nudge}px;
     padding-left: ${spacings.nudge * 2}px;
     color: inherit;
 
@@ -80,13 +86,15 @@ const SearchIcon = styled.div`
 `;
 
 const ClearBtn = styled.button<{ isInverted?: boolean }>`
+    flex: 0 0 auto;
+
     display: flex;
     align-items: center;
     background: none;
     border: none;
     cursor: pointer;
 
-    padding-right: ${spacings.nudge * 2}px;
+    padding-right: ${spacings.nudge}px;
     padding-left: ${spacings.nudge * 2}px;
     color: inherit;
 
@@ -128,6 +136,7 @@ const FilterField: FC<{
     placeholder?: string;
     onSubmit?: (value: string) => void;
     onBlur?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
+    icon?: (isInverted?: boolean) => React.ReactNode;
     submitIcon?: (isInverted?: boolean) => React.ReactNode;
     clearIcon?: (isInverted?: boolean) => React.ReactNode;
     className?: string;
@@ -138,6 +147,7 @@ const FilterField: FC<{
     placeholder,
     onSubmit,
     onBlur,
+    icon,
     submitIcon,
     clearIcon,
     className,
@@ -156,8 +166,21 @@ const FilterField: FC<{
         }
     }, [update, value]);
 
+    const iconElement = icon ? icon(isInverted) : null;
+    const submitIconElement = submitIcon ? (
+        submitIcon(isInverted)
+    ) : (
+        <Magnifier width={20} height={20} />
+    );
+    const clearIconElement = clearIcon ? (
+        clearIcon(isInverted)
+    ) : (
+        <Cross width={20} height={20} />
+    );
+
     return (
         <View isInverted={isInverted} className={className}>
+            {iconElement && <Icon>{iconElement}</Icon>}
             <Field
                 type="text"
                 isInverted={isInverted}
@@ -176,12 +199,10 @@ const FilterField: FC<{
                     }
                 }}
             />
-            {getValue === '' && (
-                <SearchIcon>
-                    {submitIcon ? submitIcon(isInverted) : <Magnifier />}
-                </SearchIcon>
+            {getValue === '' && submitIconElement && (
+                <Icon>{submitIconElement}</Icon>
             )}
-            {getValue !== '' && (
+            {getValue !== '' && clearIconElement && (
                 <ClearBtn
                     isInverted={isInverted}
                     aria-label="clear filter"
@@ -189,7 +210,7 @@ const FilterField: FC<{
                         update('', true);
                     }}
                 >
-                    {clearIcon ? clearIcon(isInverted) : <Cross />}
+                    {clearIconElement}
                 </ClearBtn>
             )}
         </View>
