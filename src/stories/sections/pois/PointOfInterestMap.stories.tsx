@@ -132,6 +132,20 @@ export const WithFilter: Story = () => (
     />
 );
 
+export const WithInitialFilters: Story = () => (
+    <PointOfInterestMap
+        initialPoiFilters={{ categoryFilter: ['id1'], textFilter: 'Schloss' }}
+        poiFilters={{
+            categoryFilter: {},
+            textFilter: {},
+        }}
+        pois={pois}
+        flyToZoom={12}
+        allMarkersOnInit
+        fitBoundsPadding={[30, 30]}
+    />
+);
+
 export const WithCustomFilters: Story = () => (
     <PointOfInterestMap
         poiFilters={({ pois, filters, setFilters }) => (

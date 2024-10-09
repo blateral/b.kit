@@ -171,38 +171,38 @@ const filterPois = <T extends POIData>(filterQuery: string, pois: T[]) => {
 
 export const getFilterMatches = <T extends POIData>(
     filterQuery: string,
+    includeIds: string[],
     items: T[]
 ) => {
-    const queryParts = filterQuery.split(' ').map((part) => part.trim());
-    const searchMatches: Array<{
-        match: FilterMatch;
-        intersections: number;
-    }> = [];
+    const searchMatches: Map<string, FilterMatch> = new Map();
 
-    // tracking matches of each query part
-    for (const part of queryParts) {
-        const matches = filterPois(escapeRegExp(part), items || []);
-
-        for (const match of matches) {
-            const intersectionIndex = searchMatches.findIndex(
-                (sItem) => sItem.match.item.id === match.item.id
-            );
-
-            if (intersectionIndex !== -1) {
-                searchMatches[intersectionIndex].intersections += 1;
-            } else {
-                searchMatches.push({
-                    match,
-                    intersections: 1,
-                });
-            }
+    if (!filterQuery && !includeIds.length) {
+        for (const item of items) {
+            searchMatches.set(item.id, {
+                item,
+                priority: 0,
+            });
         }
     }
 
-    // filter search matches by intersections so only matches with results for all search parts are shown
-    return searchMatches
-        .filter((m) => m.intersections >= queryParts.length)
-        .map<FilterMatch>((m) => ({
-            ...m.match,
-        }));
+    for (const item of items) {
+        if (includeIds.includes(item.id)) {
+            searchMatches.set(item.id, {
+                item,
+                priority: 1,
+            });
+        }
+    }
+
+    // tracking matches of each query part
+    const matches = filterQuery
+        ? filterPois(escapeRegExp(filterQuery), items || [])
+        : [];
+
+    for (const match of matches) {
+        if (searchMatches.has(match.item.id)) continue;
+        searchMatches.set(match.item.id, match);
+    }
+
+    return searchMatches;
 };

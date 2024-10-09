@@ -5,7 +5,13 @@ import Section from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import useLeafletMap, { LeafletMapMarker } from 'utils/useLeafletMap';
-import { mq, withRange, getColors as color, spacings } from 'utils/styles';
+import {
+    mq,
+    withRange,
+    getColors as color,
+    getGlobals as global,
+    spacings,
+} from 'utils/styles';
 import {
     generateNavbarIdent as genIdent,
     getFullNavbarHeights as getNavHeight,
@@ -228,7 +234,7 @@ const MapCardView = styled.div`
     background: ${({ theme }) => color(theme).elementBg.light};
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
     pointer-events: all;
-    border-radius: 8px;
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     & > * + * {
         margin-top: ${spacings.nudge * 3}px;
@@ -459,7 +465,10 @@ const PointOfInterestMap: FC<{
     /** Custom icon for my location request button */
     customLocationRequest?: React.ReactNode;
 
-    /** POI filters */
+    /** Initial POI filter states */
+    initialPoiFilters?: FilterState;
+
+    /** POI filter settings */
     poiFilters?:
         | PoiMapFilters
         | ((props: {
@@ -485,6 +494,7 @@ const PointOfInterestMap: FC<{
     currentPosMarker,
     customCardClose,
     customLocationRequest,
+    initialPoiFilters,
     poiFilters,
 }) => {
     const isLarge = size === 'large';
@@ -498,37 +508,23 @@ const PointOfInterestMap: FC<{
         return pois?.find((poi) => poi.id === activePoiId);
     }, [activePoiId, pois]);
 
-    const [filters, setFilters] = useState<FilterState>({
-        categoryFilter: [],
-        textFilter: '',
-    });
+    const [filters, setFilters] = useState<FilterState>(
+        initialPoiFilters || {
+            categoryFilter: [],
+            textFilter: '',
+        }
+    );
 
     const activePois = useMemo(() => {
         // text matches
         const matches =
-            getFilterMatches<MapPOI>(filters?.textFilter || '', pois || []) ||
-            pois;
+            getFilterMatches<MapPOI>(
+                filters?.textFilter || '',
+                filters?.categoryFilter || [],
+                pois || []
+            ) || pois;
 
-        return (
-            pois?.filter((poi) => {
-                if (
-                    !isValidArray(filters.categoryFilter, false) &&
-                    !filters.textFilter
-                ) {
-                    return true;
-                }
-
-                if (filters.textFilter) {
-                    const match = matches.find((m) => m.item.id === poi.id);
-                    if (match) return true;
-                }
-
-                if (isValidArray(filters.categoryFilter, false)) {
-                    return filters.categoryFilter.includes(poi.id);
-                }
-                return false;
-            }) || []
-        );
+        return Array.from(matches).map((m) => m[1].item) as MapPOI[];
     }, [pois, filters]);
 
     const {
