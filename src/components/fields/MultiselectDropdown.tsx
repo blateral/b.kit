@@ -89,7 +89,7 @@ const Select = styled.button<{
     }
 `;
 
-const SelectMain = styled.span`
+const SelectMain = styled(Copy)`
     display: flex;
     align-items: center;
     user-select: none;
@@ -140,7 +140,7 @@ const Flyout = styled.ul<{
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     max-height: 300px;
-    /* overflow-y: auto; */
+    overflow-y: auto;
     scrollbar-width: none;
 
     outline: none;

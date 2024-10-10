@@ -4,7 +4,12 @@ import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
 import React from 'react';
 import styled from 'styled-components';
-import { spacings, getColors as color, mq } from 'utils/styles';
+import {
+    spacings,
+    getColors as color,
+    getGlobals as global,
+    mq,
+} from 'utils/styles';
 import Minus from 'components/base/icons/Minus';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { generateFAQ } from 'utils/structuredData';
@@ -19,7 +24,10 @@ const AccordionContainer = styled.div`
     }
 `;
 
-const View = styled.details``;
+const View = styled.details`
+    border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    overflow: hidden;
+`;
 
 const AccordionHead = styled.summary<{
     isInverted?: boolean;

@@ -171,12 +171,12 @@ const filterPois = <T extends POIData>(filterQuery: string, pois: T[]) => {
 
 export const getFilterMatches = <T extends POIData>(
     filterQuery: string,
-    includeIds: string[],
+    categoryFilters: string[],
     items: T[]
 ) => {
     const searchMatches: Map<string, FilterMatch> = new Map();
 
-    if (!filterQuery && !includeIds.length) {
+    if (!filterQuery && !categoryFilters.length) {
         for (const item of items) {
             searchMatches.set(item.id, {
                 item,
@@ -186,7 +186,7 @@ export const getFilterMatches = <T extends POIData>(
     }
 
     for (const item of items) {
-        if (includeIds.includes(item.id)) {
+        if (item.facts?.some((fact) => categoryFilters.includes(fact))) {
             searchMatches.set(item.id, {
                 item,
                 priority: 1,
