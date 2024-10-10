@@ -36,6 +36,7 @@ const PoiOverviewFilterBar = styled(PoiPartials.PoiFilterBar)`
             isInverted
                 ? color(theme).elementBg.light
                 : color(theme).elementBg.dark};
+    border-radius: ${({ theme }) => theme.globals.sections.edgeRadius};
 
     &:not(:last-child) {
         margin-bottom: ${spacings.nudge * 5}px;
