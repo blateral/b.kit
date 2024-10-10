@@ -30,7 +30,7 @@ const pois: MapPOI[] = [
         id: 'id1',
         name: 'POI A',
         position: [47.79678, 9.09737],
-        facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
+        facts: ['Fact 1', 'Fact 6'],
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Blandit turpis cursus in hac habitasse platea dictumst quisque. Elit ut aliquam purus sit amet. Hendrerit dolor magna eget est lorem ipsum dolor sit amet. Sollicitudin tempor id eu nisl nunc mi ipsum.',
         infos: [
@@ -75,7 +75,7 @@ const pois: MapPOI[] = [
         id: 'id2',
         name: 'Spielplatz Schloss Rauenstein',
         position: [48.864716, 2.349014],
-        facts: ['Fact 1', 'Fact 2', 'Fact 3'],
+        facts: ['Fact 1', 'Fact 4', 'Fact 5'],
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },

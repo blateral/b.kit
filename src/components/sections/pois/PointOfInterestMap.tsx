@@ -514,8 +514,21 @@ const PointOfInterestMap: FC<{
         }
     );
 
+    const categories = useMemo(() => {
+        return pois?.reduce<string[]>((acc, poi) => {
+            const newCategories = [...acc];
+
+            for (const fact of poi.facts || []) {
+                if (!newCategories.includes(fact)) {
+                    newCategories.push(fact);
+                }
+            }
+
+            return newCategories;
+        }, []);
+    }, [pois]);
+
     const activePois = useMemo(() => {
-        // text matches
         const matches =
             getFilterMatches<MapPOI>(
                 filters?.textFilter || '',
@@ -524,7 +537,7 @@ const PointOfInterestMap: FC<{
             ) || pois;
 
         return Array.from(matches).map((m) => m[1].item) as MapPOI[];
-    }, [pois, filters]);
+    }, [filters?.textFilter, filters?.categoryFilter, pois]);
 
     const activePOI = useMemo(() => {
         return activePois?.find((poi) => poi.id === activePoiId);
@@ -735,11 +748,11 @@ const PointOfInterestMap: FC<{
                                             poiFilters?.categoryFilter
                                                 ? {
                                                       ...poiFilters.categoryFilter,
-                                                      items: pois?.map(
-                                                          (poi) =>
+                                                      items: categories?.map(
+                                                          (cat) =>
                                                               ({
-                                                                  value: poi.id,
-                                                                  label: poi.name,
+                                                                  value: cat,
+                                                                  label: cat,
                                                               } || [])
                                                       ),
                                                   }
