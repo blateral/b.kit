@@ -12,6 +12,10 @@ import { FilterState } from 'components/blocks/FilterBar';
 import { getFilterMatches } from './filters';
 import * as PoiPartials from 'components/sections/pois/partials';
 
+const POISection = styled(Section)`
+    overflow: visible;
+`;
+
 const Content = styled.div`
     & > * + * {
         margin-top: ${spacings.nudge * 5}px;
@@ -113,6 +117,20 @@ const PointOfInterestOverview: React.FC<{
         }
     );
 
+    const categories = useMemo(() => {
+        return pois?.reduce<string[]>((acc, poi) => {
+            const newCategories = [...acc];
+
+            for (const fact of poi.facts || []) {
+                if (!newCategories.includes(fact)) {
+                    newCategories.push(fact);
+                }
+            }
+
+            return newCategories;
+        }, []);
+    }, [pois]);
+
     const poiMatches = useMemo(() => {
         const matches =
             getFilterMatches<PointOfInterestOverviewItem>(
@@ -122,7 +140,7 @@ const PointOfInterestOverview: React.FC<{
             ) || pois;
 
         return Array.from(matches).map((m) => m[1]);
-    }, [pois, filters]);
+    }, [filters?.textFilter, filters?.categoryFilter, pois]);
 
     useEffect(() => {
         if (filters.textFilter) {
@@ -144,7 +162,7 @@ const PointOfInterestOverview: React.FC<{
     ]);
 
     return (
-        <Section
+        <POISection
             addSeperation
             anchorId={anchorId}
             bgColor={
@@ -175,11 +193,11 @@ const PointOfInterestOverview: React.FC<{
                                 poiFilters?.categoryFilter
                                     ? {
                                           ...poiFilters.categoryFilter,
-                                          items: pois?.map(
-                                              (poi) =>
+                                          items: categories?.map(
+                                              (cat) =>
                                                   ({
-                                                      value: poi.id,
-                                                      label: poi.name,
+                                                      value: cat,
+                                                      label: cat,
                                                   } || [])
                                           ),
                                       }
@@ -190,6 +208,7 @@ const PointOfInterestOverview: React.FC<{
                             toggleLabel={poiFilters?.toggleLabel}
                             filterIcon={poiFilters?.filterIcon}
                             indicator={poiFilters?.indicator}
+                            isInverted={isInverted}
                         />
                     )
                 ) : null}
@@ -205,7 +224,7 @@ const PointOfInterestOverview: React.FC<{
                         ))}
                 </Content>
             </Wrapper>
-        </Section>
+        </POISection>
     );
 };
 

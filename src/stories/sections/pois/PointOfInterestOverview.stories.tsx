@@ -195,14 +195,7 @@ export const WithFiltering: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Fact 1',
-                    'Fact 2',
-                    'Fact 3',
-                    'Fact 4',
-                    'Fact 5',
-                    'Fact 6',
-                ],
+                facts: ['Fact 1', 'Fact 6'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -244,7 +237,7 @@ export const WithFiltering: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
+                facts: ['Fact 1', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -286,7 +279,7 @@ export const WithFiltering: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
+                facts: ['Fact 2'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -371,14 +364,7 @@ export const WithCustomFiltering: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: [
-                    'Fact 1',
-                    'Fact 2',
-                    'Fact 3',
-                    'Fact 4',
-                    'Fact 5',
-                    'Fact 6',
-                ],
+                facts: ['Fact 1', 'Fact 6'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -420,7 +406,7 @@ export const WithCustomFiltering: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
+                facts: ['Fact 1', 'Fact 4', 'Fact 5'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
@@ -462,7 +448,7 @@ export const WithCustomFiltering: Story = () => (
                         icon: () => <Computer />,
                     },
                 ],
-                facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
+                facts: ['Fact 2'],
                 action: (isInverted) => (
                     <Pointer.View
                         as="a"
