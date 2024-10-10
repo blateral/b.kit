@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import AngleDown from 'components/base/icons/AngleDown';
 import AngleUp from 'components/base/icons/AngleUp';
@@ -51,6 +51,7 @@ const Select = styled.button<{
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
 
     background: transparent;
+    transition: background-color 0.2s ease-in-out;
 
     ${copyStyle('copy', 'small')}
     /** Clamping min font size to 16px to prevent browser zooming */
@@ -67,6 +68,22 @@ const Select = styled.button<{
             : font(theme).copy.small.color;
     }};
     line-height: normal;
+
+    @media (hover: hover) and (pointer: fine) {
+        ${({ isInverted, theme, isOpen }) =>
+            css`
+                &:hover {
+                    outline: ${`1px solid ${
+                        isOpen
+                            ? 'transparent'
+                            : isInverted
+                            ? color(theme).primary.inverted
+                            : color(theme).primary.default
+                    }`};
+                    outline-offset: 0;
+                }
+            `}
+    }
 
     &:focus {
         outline: ${({ theme, isInverted, isOpen }) =>
@@ -357,9 +374,11 @@ const MultiselectDropdown: React.FC<
                             <span>{placeholder}</span>
                         </SelectMain>
                         <Indicator>
-                            <Counter size="small">
-                                <span>{selected.length}</span>
-                            </Counter>
+                            {selected.length > 0 && (
+                                <Counter size="small">
+                                    <span>{selected.length}</span>
+                                </Counter>
+                            )}
                             {indicator &&
                                 indicator({ isOpen, isDisabled: isDisabled })}
                             {!indicator &&

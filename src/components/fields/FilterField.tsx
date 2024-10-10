@@ -95,10 +95,17 @@ const ClearBtn = styled.button<{ isInverted?: boolean }>`
     cursor: pointer;
 
     padding-right: ${spacings.nudge}px;
-    padding-left: ${spacings.nudge * 2}px;
+    padding-left: ${spacings.nudge}px;
+    margin-left: ${spacings.nudge}px;
     color: inherit;
 
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            opacity: 0.8;
+        }
+    }
 
     &:focus {
         text-decoration: underline;
