@@ -68,9 +68,9 @@ const View = styled.a<{
         margin-left: ${spacings.nudge}px;
     }
 
-    & > :not(:last-child) {
+    /* & > :not(:last-child) {
         padding-right: ${spacings.nudge}px;
-    }
+    } */
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {

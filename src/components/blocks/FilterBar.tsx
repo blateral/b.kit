@@ -179,9 +179,11 @@ const OverlayToggle: FC<{
             </Label>
 
             <Indicator>
-                <Counter size="small">
-                    <span>{selected || 0}</span>
-                </Counter>
+                {selected ? (
+                    <Counter size="small">
+                        <span>{selected || 0}</span>
+                    </Counter>
+                ) : null}
                 {indicator?.()}
                 {!indicator && (
                     <Icons.AngleDown iconColor={colors.elementBg.dark} />
@@ -196,7 +198,7 @@ const DesktopFilters = styled.div`
 
     @media ${mq.medium} {
         display: flex;
-        flex-direction: row-reverse;
+        flex-direction: row;
         align-items: center;
         justify-content: flex-end;
 
@@ -205,7 +207,7 @@ const DesktopFilters = styled.div`
         }
 
         & > * + * {
-            margin-right: ${spacings.nudge}px;
+            margin-left: ${spacings.nudge}px;
         }
     }
 `;
@@ -409,23 +411,6 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                     }
                 />
                 <DesktopFilters>
-                    {textFilter && (
-                        <TextFilter
-                            isInverted={isInverted}
-                            icon={textFilter.icon}
-                            submitIcon={textFilter.submitIcon}
-                            clearIcon={textFilter.clearIcon}
-                            placeholder={textFilter.placeholder}
-                            value={filters.textFilter}
-                            onSubmit={(value) => {
-                                setFilters((prev) => ({
-                                    ...prev,
-                                    textFilter: value,
-                                }));
-                            }}
-                            hasBorders={hasBorders}
-                        />
-                    )}
                     {categoryFilter &&
                         isValidArray(categoryFilter?.items, false) && (
                             <Select
@@ -445,6 +430,23 @@ const FilterBar: FC<FilterBarProps & { className?: string }> = ({
                                 hasBorders={hasBorders}
                             />
                         )}
+                    {textFilter && (
+                        <TextFilter
+                            isInverted={isInverted}
+                            icon={textFilter.icon}
+                            submitIcon={textFilter.submitIcon}
+                            clearIcon={textFilter.clearIcon}
+                            placeholder={textFilter.placeholder}
+                            value={filters.textFilter}
+                            onSubmit={(value) => {
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    textFilter: value,
+                                }));
+                            }}
+                            hasBorders={hasBorders}
+                        />
+                    )}
                 </DesktopFilters>
             </FilterView>
             <Portal isVisible={isMobileBarOpen}>
