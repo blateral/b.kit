@@ -160,6 +160,11 @@ const base = css<{
         margin-top: -${spacings.nudge * 1.5}px;
     }
 
+    b,
+    strong {
+        font-weight: bold;
+    }
+
     p,
     blockquote,
     ol,
