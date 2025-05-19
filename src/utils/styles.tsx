@@ -555,15 +555,15 @@ const defaultGlobalSettings: GlobalSettings = {
                 isEditable: false,
                 label: 'Essentielle Funktionen',
             },
-            analytics: {
-                isAccepted: false,
-                isEditable: true,
-                label: 'Analyse & Marketing',
-            },
             functionals: {
                 isAccepted: false,
                 isEditable: true,
                 label: 'Funktionelle Erweiterungen',
+            },
+            analytics: {
+                isAccepted: false,
+                isEditable: true,
+                label: 'Analyse & Marketing',
             },
         },
         consentDateFormat: () => 'dd.mm.yy',
