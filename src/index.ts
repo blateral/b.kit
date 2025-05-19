@@ -155,6 +155,7 @@ export {
     CookieTitle,
     CookieText,
     CookieActions,
+    CookieTypeSelect,
 } from 'components/blocks/CookieConsent';
 export { default as Slider } from 'components/blocks/Slider';
 
