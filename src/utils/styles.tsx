@@ -5,6 +5,7 @@ import React from 'react';
 import { css, DefaultTheme } from 'styled-components';
 import { getSVGDataImg as getSVGData } from 'utils/dataURI';
 import { XOR } from './types';
+import { CookieTypes } from './cookie-consent/useCookieConsent';
 
 export type MediaQueryType =
     | 'small'
@@ -477,6 +478,19 @@ export interface GlobalSettings {
         // };
         linkIcons: Array<XOR<LinkUrlIcon, LinkFontIcon>>;
     };
+    cookie: {
+        name: string;
+        types: CookieTypes;
+        lifetime: number;
+
+        /** Date and Time Formats for cookie consent */
+        consentDateFormat: (date: Date) => string;
+        consentTimeFormat: (date: Date) => string;
+        consentLocaleKey: 'de' | 'en';
+        consentStatusFormat: string;
+
+        videoCookieTypeRestrictions: string[];
+    };
 }
 
 const getLinkIconScale = (props: {
@@ -531,6 +545,33 @@ const defaultGlobalSettings: GlobalSettings = {
         eventLocaleKey: 'de',
         datepickerLocaleKey: 'de',
         datepickerDateFormat: 'dd.MM.yyyy',
+    },
+    cookie: {
+        name: 'cookie-consent-v2',
+        lifetime: 365,
+        types: {
+            essentials: {
+                isAccepted: true,
+                isEditable: false,
+                label: 'Essentielle Funktionen',
+            },
+            analytics: {
+                isAccepted: false,
+                isEditable: true,
+                label: 'Analyse & Marketing',
+            },
+            functionals: {
+                isAccepted: false,
+                isEditable: true,
+                label: 'Funktionelle Erweiterungen',
+            },
+        },
+        consentDateFormat: () => 'dd.mm.yy',
+        consentTimeFormat: () => 'hh:mm',
+        consentLocaleKey: 'de',
+        consentStatusFormat: 'Cookie aktualisiert am <DATE> um <TIME> Uhr',
+
+        videoCookieTypeRestrictions: ['functionals'],
     },
     navigation: {
         navBar: {
