@@ -2,59 +2,63 @@ import React, { FC } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import { getColors as color, spacings } from 'utils/styles';
-import Link from 'components/typography/Link';
+import Link, { LinkProps } from 'components/typography/Link';
 
-const View = styled.div`
+const View = styled.ul`
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    // padding: ${spacings.nudge * 2}px 0;
-    // overflow: hidden;
-
-    & > * + * {
-        margin-left: ${spacings.nudge * 3}px;
-    }
+    gap: ${spacings.nudge * 2}px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 `;
 
-const IconItemView = styled.div`
-    transition: all ease-in-out 0.2s;
-
-    &:hover {
-        transform: scale(1.1);
-    }
-
-    &:focus {
-        text-decoration: underline;
-        transform: scale(1.012);
-    }
-
-    &:active {
-        transform: scale(0.95);
-    }
+const IconItemView = styled.li`
+    margin: 0;
+    padding: 0;
 `;
 
 const StyledLink = styled(Link)<{ textColor?: string }>`
-    display: block;
-    padding: ${spacings.nudge * 2}px ${spacings.nudge * 1.5}px;
-    margin: -${spacings.nudge * 2}px -${spacings.nudge * 1.5}px;
+    display: flex;
+    align-items: center;
+    padding: ${spacings.nudge}px;
+    margin: -${spacings.nudge}px;
     color: ${({ theme, textColor }) => textColor || color(theme).dark};
+
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+        opacity: 0.75;
+    }
+
+    &:focus-visible {
+        outline: 2px solid ${({ textColor }) => textColor};
+    }
 `;
 
 const SocialList: FC<{
     isInverted?: boolean;
-    items?: { href: string; icon: React.ReactNode }[];
+    items?: Array<LinkProps & { icon: React.ReactNode }>;
+    ariaLabel?: string;
     className?: string;
-}> = ({ isInverted = false, items, className }) => {
+}> = ({ isInverted = false, items, ariaLabel, className }) => {
     const theme = React.useContext(ThemeContext);
 
     return (
-        <View className={className}>
-            {items &&
-                items.map((item, i) => (
+        <View aria-label={ariaLabel} className={className}>
+            {items?.map((item, i) => {
+                const { icon, ...rest } = item;
+
+                return (
                     <IconItemView key={i}>
                         <StyledLink
-                            isExternal
-                            href={item.href}
+                            {...rest}
+                            isExternal={
+                                item.isExternal !== undefined
+                                    ? item.isExternal
+                                    : true
+                            }
                             textColor={
                                 isInverted
                                     ? color(theme).light
@@ -64,7 +68,8 @@ const SocialList: FC<{
                             {item.icon}
                         </StyledLink>
                     </IconItemView>
-                ))}
+                );
+            })}
         </View>
     );
 };

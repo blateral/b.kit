@@ -177,7 +177,18 @@ const View = styled.div<{
     ${({ copyType, size }) => copyStyle(copyType, size)}
 `;
 
-export type CopyTag = 'label' | 'span' | 'div' | 'legend' | 'figcaption';
+export type CopyTag =
+    | 'label'
+    | 'span'
+    | 'div'
+    | 'legend'
+    | 'th'
+    | 'td'
+    | 'li'
+    | 'p'
+    | 'caption'
+    | 'figcaption'
+    | 'address';
 
 const Copy: React.FC<{
     renderAs?: CopyTag;
@@ -188,6 +199,9 @@ const Copy: React.FC<{
     size?: FontOptionType;
     columns?: boolean;
     innerHTML?: string;
+    role?: string;
+    ariaLabel?: string;
+    ariaLevel?: 1 | 2 | 3 | 4 | 5 | 6;
     className?: string;
 }> = ({
     renderAs,
@@ -198,6 +212,9 @@ const Copy: React.FC<{
     textGradient,
     columns = false,
     innerHTML,
+    role,
+    ariaLabel,
+    ariaLevel,
     className,
     children,
     ...rest
@@ -226,6 +243,9 @@ const Copy: React.FC<{
             dangerouslySetInnerHTML={
                 innerHTML && !children ? { __html: innerHTML } : undefined
             }
+            role={role}
+            aria-label={ariaLabel}
+            aria-level={ariaLevel}
             className={className}
             {...rest}
         >
