@@ -360,10 +360,25 @@ const ComparisonSlider: FC<{
                             {dragControl ? (
                                 dragControl
                             ) : (
-                                <Control>
-                                    <ArrowLeftRight
-                                        iconColor={color(theme).light}
-                                    />
+                                <Control
+                                    role="slider"
+                                    tabIndex={0}
+                                    aria-valuemin={0}
+                                    aria-valuemax={100}
+                                    aria-valuenow={Math.round(slideValue * 100)}
+                                    aria-label="Image comparison slider"
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                                        e.preventDefault();
+                                        setInteracted(true);
+                                        setSlideValue((prev) => {
+                                            const delta = e.key === 'ArrowLeft' ? -0.05 : 0.05;
+                                            return clamp(prev + delta, 0, 1);
+                                        });
+                                        }
+                                    }}
+                                    >
+                                    <ArrowLeftRight iconColor={color(theme).light} />
                                 </Control>
                             )}
                         </ControlContainer>
