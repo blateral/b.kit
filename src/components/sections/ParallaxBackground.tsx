@@ -81,38 +81,20 @@ const ParallaxBackground: FC<{
     const [cRef, setContainerRef] = useState<HTMLElement | null>(null);
     const parallaxRef = useRef<HTMLDivElement>(null);
 
-    let width = 1;
-    if (typeof contentWidth === 'string') {
-        switch (contentWidth) {
-            case '1/4': {
-                width = 0.25;
-                break;
-            }
+    const widthMap = {
+        '1/4': 0.25,
+        half: 0.5,
+        '3/4': 0.75,
+        full: 1,
+        auto: -1,
+    };
 
-            case 'half': {
-                width = 0.5;
-                break;
-            }
-
-            case '3/4': {
-                width = 0.75;
-                break;
-            }
-
-            case 'auto': {
-                width = -1;
-                break;
-            }
-
-            default:
-            case 'full': {
-                width = 1;
-                break;
-            }
-        }
-    } else if (!isNaN(contentWidth)) {
-        width = contentWidth;
-    }
+    const width =
+        typeof contentWidth === 'string'
+            ? widthMap[contentWidth] ?? 1
+            : typeof contentWidth === 'number'
+            ? contentWidth
+            : 1;
 
     useEffect(() => {
         setIsLoaded(true);
@@ -158,7 +140,7 @@ const ParallaxBackground: FC<{
     return (
         <>
             {isLoaded && (
-                <View ref={setContainerRef} data-bg-ident="transparent">
+                <View ref={setContainerRef} data-bg-ident="transparent" aria-hidden={true}>
                     <Parallax
                         ref={parallaxRef}
                         style={{
@@ -172,6 +154,7 @@ const ParallaxBackground: FC<{
                                     hAlign={hAlign}
                                     coverSpace={width !== -1}
                                     {...image}
+                                    aria-hidden={true}
                                 />
                             )}
                         </Content>
