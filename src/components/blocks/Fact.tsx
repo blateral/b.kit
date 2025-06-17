@@ -7,7 +7,8 @@ import Copy from 'components/typography/Copy';
 
 const View = styled.div``;
 
-const ImageContainer = styled.div<{ isCentered?: boolean }>`
+const ImageContainer = styled.figure<{ isCentered?: boolean }>`
+    margin: 0;
     display: flex;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
@@ -67,7 +68,7 @@ const Fact: FC<
     className,
 }) => {
     return (
-        <View className={className}>
+        <View className={className} role="group">
             {image && (
                 <ImageContainer isCentered={isCentered}>
                     <StyledImage
@@ -76,7 +77,7 @@ const Fact: FC<
                         semilarge={image.semilarge}
                         large={image.large}
                         xlarge={image.xlarge}
-                        alt={image.alt}
+                        alt={image.alt || ''}
                         coverSpace={image.coverSpace}
                     />
                 </ImageContainer>

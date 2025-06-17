@@ -141,6 +141,7 @@ const FactGrid: FC<{
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode)}
+            aria-labelledby="fact-grid-heading"
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {facts && (
@@ -153,14 +154,16 @@ const FactGrid: FC<{
                                 fact?.text
                             ) {
                                 return (
-                                    <div key={i} ref={cardRefs[i]}>
+                                    <article key={i} ref={cardRefs[i]} aria-label={
+                                            fact?.title || `Fact ${i + 1}`
+                                        }>
                                         <Fact
                                             key={i}
                                             {...fact}
                                             isCentered={isCentered}
                                             isInverted={isInverted}
                                         />
-                                    </div>
+                                    </article>
                                 );
                             } else {
                                 return <FactFill ref={cardRefs[i]} key={i} />;
