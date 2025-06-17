@@ -31,15 +31,11 @@ const StyledImage = styled(Image)`
 `;
 
 const Content = styled.div<{ addWhitespace?: boolean; isCentered?: boolean }>`
-    text-align: ${({ isCentered }) => isCentered && 'center'};
-    padding: 0
-        ${({ addWhitespace }) => addWhitespace && spacings.nudge * 2 + 'px'};
+    text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+    padding: 0 ${({ addWhitespace }) => (addWhitespace ? `${spacings.nudge * 2}px` : '0')};
 
     & + & {
-        ${withRange(
-            [spacings.spacer * 1.5, spacings.spacer * 2],
-            'padding-top'
-        )}
+        ${withRange([spacings.spacer * 1.5, spacings.spacer * 2], 'padding-top')}
     }
 `;
 
@@ -62,8 +58,7 @@ const Desc = styled.div`
 `;
 
 const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
-    padding: 0
-        ${({ addWhitespace }) => addWhitespace && spacings.nudge * 2 + 'px'};
+    padding: 0 ${({ addWhitespace }) => (addWhitespace ? `${spacings.nudge * 2}px` : '0')};
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
 
     @media ${mq.medium} {
@@ -118,7 +113,7 @@ const Feature: React.FC<
                         semilarge={image.semilarge}
                         large={image.large}
                         xlarge={image.xlarge}
-                        alt={image.alt}
+                        alt={image.alt ?? ''}
                         coverSpace={image.coverSpace}
                     />
                 </ImageContainer>

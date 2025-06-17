@@ -51,6 +51,8 @@ const FeatureList: React.FC<{
     const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
 
+    const isHalf = featureCount % 2 === 0;
+
     const { sheetRefs: cardRefs } = useEqualSheetHeight({
         listLength: featureCount,
         identifiers: [
@@ -63,8 +65,8 @@ const FeatureList: React.FC<{
             small: 1,
             medium: 1,
             semilarge: 2,
-            large: featureCount % 2 === 0 ? 2 : 3,
-            xlarge: featureCount % 2 === 0 ? 2 : 3,
+            large: isHalf  ? 2 : 3,
+            xlarge: isHalf ? 2 : 3,
         },
     });
 
@@ -83,7 +85,7 @@ const FeatureList: React.FC<{
             <Wrapper addWhitespace clampWidth="normal">
                 {features && (
                     <ContentContainer
-                        isHalf={features.length % 2 === 0 ? true : false}
+                        isHalf={isHalf}
                     >
                         {features &&
                             features.map((feature, i) => {
