@@ -2,9 +2,10 @@ import * as React from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
 import styled, { ThemeContext } from 'styled-components';
 import { withLibTheme } from 'utils/LibThemeProvider';
-import { getColors, spacings } from 'utils/styles';
+import { getColors, getFonts as font, spacings, withRange } from 'utils/styles';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
+import Heading from 'components/typography/Heading';
 
 const FactsContainer = styled.ul`
     padding: 0;
@@ -17,8 +18,6 @@ const FactsItem = styled.li<{ hasText?: boolean }>`
     padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
 
     background: #fff;
-
-    cursor: pointer;
 
     display: flex;
     flex-direction: row;
@@ -42,6 +41,18 @@ const ContentBlock = styled.div`
     & > * + * {
         margin-top: ${spacings.spacer}px;
     }
+`;
+
+const StyledLabel = styled(Heading) `
+    font-weight: 700;
+
+    font-family: ${({ theme }) => font(theme)['copy-b'].medium.family};
+    font-weight: ${({ theme }) => font(theme)['copy-b'].medium.weight};
+    font-style: ${({ theme }) => font(theme)['copy-b'].medium.style};
+    ${({ theme }) => withRange(font(theme)['copy-b'].medium.size, 'font-size')}
+    line-height: ${({ theme }) => font(theme)['copy-b'].medium.lineHeight};
+    letter-spacing: ${({ theme }) => font(theme)['copy-b'].medium.letterSpacing};
+    text-transform: ${({ theme }) => font(theme)['copy-b'].medium.textTransform};
 `;
 
 const FactList: React.FC<{
@@ -75,11 +86,12 @@ const FactList: React.FC<{
                             return (
                                 <FactsItem key={i} hasText={!!text}>
                                     {icon && (
-                                        <Icon src={icon.src} alt={icon.alt} />
+                                        <Icon src={icon.src} alt={icon.alt ?? ''}
+                                        aria-hidden={!icon.alt}/>
                                     )}
                                     <ContentBlock>
                                         {label && (
-                                            <Copy type="copy-b">{label}</Copy>
+                                            <StyledLabel renderAs='h3' >{label}</StyledLabel>
                                         )}
                                         {text && (
                                             <Copy
