@@ -108,6 +108,7 @@ const Article: React.FC<{
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode)}
+            renderAs='article'
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 <StyledTitle

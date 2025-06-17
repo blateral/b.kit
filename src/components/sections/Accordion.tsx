@@ -23,10 +23,16 @@ const AccordionItems = styled.li`
     cursor: pointer;
 `;
 
-const AccordionHead = styled.div<{
+const AccordionHead = styled.button<{
     isInverted?: boolean;
     hasBg?: boolean;
 }>`
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
     display: flex;
     flex-direction: row;
     align-items: center;

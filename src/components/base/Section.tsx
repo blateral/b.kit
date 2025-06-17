@@ -172,7 +172,7 @@ const Back = styled.div<{
     }
 `;
 
-export type SectionType = 'header' | 'footer' | 'div';
+export type SectionType = 'header' | 'footer' | 'div' | 'article' ;
 
 const Section: React.FC<{
     /** Render as specific HTML tag type */
