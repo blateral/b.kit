@@ -144,8 +144,8 @@ const PromotionCard: FC<PromotionCardProps> = ({
     );
 
     return (
-        <View onClick={onClick} clickable={onClick || link ? true : false}>
-            <StyledImage {...image} coverSpace />
+        <View onClick={onClick} clickable={onClick || link ? true : false} tabIndex={0}>
+            <StyledImage {...image} alt={image.alt || ''} coverSpace />
             {title && (
                 <IntroContainer>
                     <LinkHelper {...linkObj} />

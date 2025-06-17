@@ -56,6 +56,18 @@ const PosterContainer = styled.div`
     }
 `;
 
+const VisuallyHidden = styled.span`
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+`;
+
 const CrossPromotion: React.FC<{
     main?: Array<
         Omit<PromotionCardProps, 'externalLinkIcon'> & {
@@ -87,6 +99,7 @@ const CrossPromotion: React.FC<{
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, false, isMirrored)}
+            aria-labelledby="cross-promotion-heading"
         >
             <Wrapper
                 clampWidth="normal"
@@ -107,6 +120,9 @@ const CrossPromotion: React.FC<{
                                                             externalLinkIcon
                                                         }
                                                     />
+                                                    <VisuallyHidden>
+                                                        Promotion: {card.title}
+                                                    </VisuallyHidden>
                                                 </PosterContainer>
                                             ))}
                                     </FlexGridCol>
@@ -135,6 +151,9 @@ const CrossPromotion: React.FC<{
                                                         externalLinkIcon
                                                     }
                                                 />
+                                                <VisuallyHidden>
+                                                    Promotion: {card.title}
+                                                </VisuallyHidden>
                                             </PosterContainer>
                                         ))}
                                     </FlexGridCol>
@@ -148,6 +167,9 @@ const CrossPromotion: React.FC<{
                                                             externalLinkIcon
                                                         }
                                                     />
+                                                    <VisuallyHidden>
+                                                        Promotion: {card.title}
+                                                    </VisuallyHidden>
                                                 </PosterContainer>
                                             ))}
                                     </FlexGridCol>
