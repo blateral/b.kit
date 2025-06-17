@@ -33,7 +33,7 @@ const ImgWrapper = styled.div<{ isFull?: boolean }>`
     }
 
     @media ${mq.semilarge} {
-        flex: 0 ${({ isFull }) => (isFull ? 100 : 50)}%;
+        flex: 0 0 ${({ isFull }) => (isFull ? '100%' : '50%')};
         padding-left: ${spacings.spacer}px;
         padding-top: ${spacings.spacer}px;
 
@@ -87,13 +87,13 @@ const Gallery: FC<{
             className={className}
         >
             <Wrapper
-                addWhitespace={global(theme).sections.edgeRadius ? true : false}
+                addWhitespace={!!global(theme).sections.edgeRadius}
             >
                 <ImgContainer>
                     {images &&
                         images.map((img, i) => (
                             <ImgWrapper key={i} isFull={img.isFull}>
-                                <StyledImage {...img} />
+                                <StyledImage {...img} alt={img.alt || ''}/>
                             </ImgWrapper>
                         ))}
                 </ImgContainer>
