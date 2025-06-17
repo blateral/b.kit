@@ -160,7 +160,7 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
 }) => {
     return (
         <ContactView className={className}>
-            {avatar && <Avatar src={avatar?.src} alt={avatar?.alt} />}
+            {avatar && <Avatar src={avatar?.src} alt={avatar?.alt || ''} />}
             <Info>
                 {(name || description) && (
                     <div>
