@@ -119,7 +119,7 @@ const TableBlock: React.FC<TableProps> = ({
                     </Copy>
                 </Wrapper>
             )}
-            <TableContainer>
+            <TableContainer  tabIndex={0} aria-label={tableTitle || 'Data table'}>
                 <TableBody>
                     {rowTitle && (
                         <thead>
@@ -131,6 +131,7 @@ const TableBlock: React.FC<TableProps> = ({
                                             isInverted={isInverted}
                                             hasBack={hasBack}
                                             alignRight={lastCol === 'right'}
+                                            scope="col"
                                         >
                                             <Copy type="copy-b">{item}</Copy>
                                         </TableHead>
