@@ -123,7 +123,7 @@ const SocialWall: React.FC<{
             addSeperation
         >
             <Wrapper addWhitespace>
-                <Content>
+                <Content role="list" aria-label="Instagram Feed">
                     {items &&
                         items.map((item, i) => {
                             return (
@@ -131,7 +131,7 @@ const SocialWall: React.FC<{
                                     {item.image && (
                                         <Image
                                             src={item.image.src}
-                                            alt={item.image.alt}
+                                            alt={item.image.alt ?? ''}
                                         />
                                     )}
                                     <TextContainer>
