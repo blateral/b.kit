@@ -110,6 +110,8 @@ const Quicknav: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
             addSeperation
             className={className}
+            ariaRole="navigation"
+            aria-label="Quick navigation"
         >
             <Wrapper addWhitespace>
                 <NavList ref={parentRef}>
@@ -126,8 +128,17 @@ const Quicknav: React.FC<{
                                         onNavClick(i, item.label);
                                     }
                                 }}
+                                aria-current={
+                                    isActiveItem === i ? 'true' : undefined
+                                }
+                                role="tab"
+                                tabIndex={0}
+                                onKeyPress={(e) =>
+                                    (e.key === 'Enter' || e.key === ' ') &&
+                                    setIsActiveItem(i)
+                                }
                             >
-                                <NavItemContainer>
+                                <NavItemContainer tabIndex={-1}>
                                     <QuicknavButton
                                         label={item.label}
                                         link={item.link}

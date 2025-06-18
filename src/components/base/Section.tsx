@@ -172,7 +172,7 @@ const Back = styled.div<{
     }
 `;
 
-export type SectionType = 'header' | 'footer' | 'div' | 'article' ;
+export type SectionType = 'header' | 'footer' | 'div' | 'article';
 
 const Section: React.FC<{
     /** Render as specific HTML tag type */
@@ -191,6 +191,9 @@ const Section: React.FC<{
     isStackable?: boolean;
 
     className?: string;
+
+    ariaRole?: string;
+    ariaLabel?: string;
 }> = ({
     renderAs,
     bgColor,
@@ -199,6 +202,8 @@ const Section: React.FC<{
     isStackable = false,
     className,
     children,
+    ariaRole,
+    ariaLabel,
 }) => {
     switch (bgMode) {
         case 'larger-left':
@@ -233,6 +238,8 @@ const Section: React.FC<{
             isStackable={isStackable}
             data-stack-ident={isStackable ? 'true' : 'false'}
             className={className}
+            role={ariaRole || 'region'}
+            aria-label={ariaLabel || undefined}
         >
             {bgColor && bgMode && <Back bgColor={bgColor} bgMode={bgMode} />}
             {children}

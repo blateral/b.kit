@@ -45,6 +45,7 @@ const QuicknavButton: React.FC<{
             isActive={isActive}
             isDisabled={isDisabled}
             isInverted={isInverted}
+            tabIndex={-1} // Prevents focus outline
         >
             <Copy type={isActive ? 'copy-b' : 'copy'} isInverted={isInverted}>
                 {label}
