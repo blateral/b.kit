@@ -60,7 +60,11 @@ const ShowMore = styled.span<{ itemCount?: number }>`
     }
 `;
 
-const Items = styled.div<{ isVisible?: boolean; isCentered?: boolean }>`
+const Items = styled.ul<{ isVisible?: boolean; isCentered?: boolean }>`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
     display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
     align-items: center;
     justify-content: center;
@@ -92,10 +96,13 @@ const StyledActions = styled(Actions)`
     }
 `;
 
+const ListItem = styled.li`
+    margin-top: ${spacings.spacer}px;
+    margin-left: ${spacings.spacer}px;
+`;
+
 const ItemLink = styled(Link)`
     display: block;
-    margin-top: ${spacings.spacer}px;
-    margin-left: ${spacings.spacer}px; ;
 `;
 
 const Item = styled.img<{ isVisible?: boolean; index: number }>`
@@ -168,14 +175,16 @@ const IconList: React.FC<{
                         >
                             {items.map(({ src, alt, link }, i) => {
                                 return (
-                                    <ItemLink key={i} {...link}>
-                                        <Item
-                                            isVisible={showMore}
-                                            index={i}
-                                            src={src}
-                                            alt={alt}
-                                        />
-                                    </ItemLink>
+                                    <ListItem key={i}>
+                                        <ItemLink {...link}>
+                                            <Item
+                                                isVisible={showMore}
+                                                index={i}
+                                                src={src}
+                                                alt={alt}
+                                            />
+                                        </ItemLink>
+                                    </ListItem>
                                 );
                             })}
                         </Items>
