@@ -6,7 +6,11 @@ import Section, { mapToBgMode } from 'components/base/Section';
 import Link from 'components/typography/Link';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
-const Socials = styled.div<{ isInverted?: boolean }>`
+const Socials = styled.ul<{ isInverted?: boolean }>`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -23,11 +27,14 @@ const StyledWrapper = styled(Wrapper)`
     padding-right: ${spacings.spacer * 2}px;
 `;
 
-const Social = styled(Link)`
-    color: inherit;
+const Social = styled.li`
     padding: ${spacings.nudge}px;
 
     transition: color 0.2s ease-in-out;
+`;
+
+const StyledLink = styled(Link)`
+    color: inherit;
 
     &:hover {
         color: ${({ theme }) => color(theme).mono.dark};
@@ -65,8 +72,14 @@ const SocialNav: FC<{
             <StyledWrapper addWhitespace>
                 <Socials isInverted={isInverted}>
                     {socials?.map((social, i) => (
-                        <Social key={i} href={social?.href} isExternal>
-                            {social?.icon}
+                        <Social key={i}>
+                            <StyledLink
+                                href={social?.href}
+                                isExternal
+                                ariaLabel="Social Link"
+                            >
+                                {social?.icon}
+                            </StyledLink>
                         </Social>
                     ))}
                 </Socials>
