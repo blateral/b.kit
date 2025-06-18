@@ -354,7 +354,7 @@ const StyledDotGroup = styled(Slider.DotGroup)`
     }
 `;
 
-const DotWrapper = styled.button`
+const DotWrapper = styled.div`
     border: none;
     outline: none;
     background: none;
@@ -368,7 +368,12 @@ const DotWrapper = styled.button`
     }
 `;
 
-const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
+const Dot = styled.button<{ isActive?: boolean; isInverted?: boolean }>`
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+
     height: 14px;
     width: 14px;
     border: solid 1px
@@ -384,6 +389,12 @@ const Dot = styled.div<{ isActive?: boolean; isInverted?: boolean }>`
                 ? color(theme).light
                 : color(theme).dark
             : 'transparent'};
+
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => color(theme).dark};
+        outline-offset: 2px;
+        border-radius: 50%;
+    }
 `;
 
 const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
@@ -554,6 +565,7 @@ const Map: FC<{
                 <SliderContext.Consumer>
                     {({ goToStep }) => (
                         <MapContainer
+                            aria-label="Interactive map showing company locations"
                             url={provider}
                             attribution={attribution}
                             onReady={({ showAll, goTo }) => {
@@ -625,6 +637,7 @@ const Map: FC<{
                                             <StyledControl
                                                 type="next"
                                                 isInverted={isInverted}
+                                                aria-label="Next location"
                                             >
                                                 {(isActive) =>
                                                     controlNext ? (
@@ -641,6 +654,7 @@ const Map: FC<{
                                             <StyledControl
                                                 type="prev"
                                                 isInverted={isInverted}
+                                                aria-label="Previous location"
                                             >
                                                 {(isActive) =>
                                                     controlPrev ? (
@@ -673,6 +687,10 @@ const Map: FC<{
                                                                 }
                                                                 isInverted={
                                                                     isInverted
+                                                                }
+                                                                aria-label={`Go to location ${i}`}
+                                                                aria-pressed={
+                                                                    isActive
                                                                 }
                                                             />
                                                         )}
