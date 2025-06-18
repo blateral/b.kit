@@ -169,7 +169,13 @@ const Teaser: FC<{
                         }}
                     >
                         <ImgWrapper isMirrored={isMirrored}>
-                            {image && <StyledImage coverSpace {...image} />}
+                            {image && (
+                                <StyledImage
+                                    coverSpace
+                                    {...image}
+                                    alt={image.alt ?? ''}
+                                />
+                            )}
                             {image?.description && (
                                 <ImgDescMobile
                                     size="small"
