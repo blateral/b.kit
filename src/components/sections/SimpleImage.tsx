@@ -35,7 +35,13 @@ const SimpleImage: FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper>
-                {image && <StyledImage hAlign={hAlign} {...image} />}
+                {image && (
+                    <StyledImage
+                        hAlign={hAlign}
+                        {...image}
+                        alt={image.alt ?? ''}
+                    />
+                )}
             </Wrapper>
         </Section>
     );
