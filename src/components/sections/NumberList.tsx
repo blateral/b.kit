@@ -7,7 +7,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { getColors as color, mq, spacings, withRange } from 'utils/styles';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
-const View = styled.div`
+const View = styled.li`
     text-align: center;
 
     & > * {
@@ -80,7 +80,7 @@ const IconBlock: React.FC<{
 
     return (
         <View>
-            {icon && <Icon src={icon.src} alt={icon.alt} />}
+            {icon && <Icon src={icon.src} alt={icon.alt ?? ''} />}
             <NumberContainer height={0}>
                 <Number
                     renderAs="div"
@@ -104,7 +104,10 @@ const IconBlock: React.FC<{
     );
 };
 
-const ContentContainer = styled.div`
+const ContentContainer = styled.ul`
+    margin: 0;
+    padding: 0;
+    list-style: none;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
