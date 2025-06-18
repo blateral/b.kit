@@ -72,6 +72,8 @@ const PriceTag: React.FC<PriceTagProps & { className?: string }> = ({
             isHighlighted={isHighlighted}
             hasBg={hasBackground}
             className={className}
+            role="region"
+            aria-label={`Price tier: ${superTitle || title}`}
         >
             {superTitle && (
                 <Copy
