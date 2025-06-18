@@ -132,13 +132,17 @@ const NewsList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="normal">
-                <News>
+                <News role="list">
                     {news &&
                         news
                             .filter((_, i) => i < visibleRows * itemsPerRow)
                             .map((item, i) => {
                                 return (
-                                    <div key={i} ref={cardRefs[i]}>
+                                    <div
+                                        key={i}
+                                        ref={cardRefs[i]}
+                                        role="listitem"
+                                    >
                                         <NewsCard
                                             onTagClick={onTagClick}
                                             isInverted={isInverted}
