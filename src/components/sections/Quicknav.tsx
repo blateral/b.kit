@@ -138,7 +138,7 @@ const Quicknav: React.FC<{
                                     setIsActiveItem(i)
                                 }
                             >
-                                <NavItemContainer tabIndex={-1}>
+                                <NavItemContainer>
                                     <QuicknavButton
                                         label={item.label}
                                         link={item.link}
