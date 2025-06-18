@@ -14,7 +14,7 @@ import Tag from 'components/blocks/Tag';
 import StatusFormatter from 'utils/statusFormatter';
 import Link, { LinkProps } from 'components/typography/Link';
 
-const View = styled.div`
+const View = styled.article`
     position: relative;
     text-decoration: none;
     padding-bottom: ${spacings.spacer}px;
@@ -48,7 +48,7 @@ const Head = styled(Copy)`
     }
 `;
 
-const PublishDate = styled.div`
+const PublishDate = styled.time.attrs({ 'aria-label': 'Published date' })`
     &:only-child {
         margin-left: auto;
     }
@@ -138,6 +138,7 @@ const NewsCard: React.FC<
                     <Tag
                         isInverted={isInverted}
                         onClick={onTagClick ? () => onTagClick(tag) : undefined}
+                        aria-label={`Filter by ${tag}`}
                     >
                         {tag}
                     </Tag>
@@ -146,7 +147,10 @@ const NewsCard: React.FC<
             </Head>
             <Main>
                 {title && (
-                    <TitleLink {...link}>
+                    <TitleLink
+                        {...link}
+                        aria-label={`Read more about: ${title}`}
+                    >
                         <Copy
                             isInverted={isInverted}
                             size="big"
