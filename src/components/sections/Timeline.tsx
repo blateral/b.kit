@@ -176,11 +176,17 @@ const Timeline: React.FC<{
                     items.map((item, i) => {
                         return (
                             <TimelineBlock
+                                as="article"
                                 ref={targetRefs[i]}
                                 isActive={activeItem === i}
                                 isSwitched={i % 2 === 0}
                                 isInverted={isInverted}
                                 key={i}
+                                aria-labelledby={`timeline-item-${i}-title`}
+                                aria-describedby={`timeline-item-${i}-text`}
+                                aria-current={
+                                    activeItem === i ? 'step' : undefined
+                                }
                             >
                                 <TimelineText isSwitched={i % 2 === 0}>
                                     <div>
