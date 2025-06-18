@@ -58,7 +58,7 @@ const PriceList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <ItemList>
+                <ItemList role="list">
                     {items.map((item, i) => {
                         return (
                             <ItemBlock key={i} hasBg={isInverted || hasBg}>
