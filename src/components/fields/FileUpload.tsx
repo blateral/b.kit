@@ -222,7 +222,7 @@ const FileUpload: FC<
         <View renderAs="label">
             {label && (
                 <FieldHead
-                    renderAs="span"
+                    renderAs="label"
                     isInverted={isInverted}
                     textColor={isDisabled ? color(theme).mono.dark : undefined}
                     size="medium"

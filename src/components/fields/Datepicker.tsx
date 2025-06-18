@@ -387,10 +387,10 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
         const theme = useContext(ThemeContext);
 
         return (
-            <View renderAs="label">
+            <View>
                 {label && (
                     <FieldHead
-                        renderAs="span"
+                        renderAs="label"
                         isInverted={isInverted}
                         size="medium"
                         type="copy-b"
@@ -785,6 +785,7 @@ const Datepicker: React.FC<{
                     textColor={color(theme).error}
                     size="small"
                     type="copy-i"
+                    role="alert"
                 >
                     {errorMessage
                         ? errorMessage

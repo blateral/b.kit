@@ -106,7 +106,11 @@ const Checkbox: React.FC<{
     return (
         <View>
             <CheckboxContainer isDisabled={isDisabled} onClick={onClick}>
-                <Box isSelected={isSelected} isInverted={isInverted}>
+                <Box
+                    isSelected={isSelected}
+                    isInverted={isInverted}
+                    tabIndex={0}
+                >
                     {isSelected && <StyledCheck />}
                 </Box>
                 <Original
@@ -121,7 +125,7 @@ const Checkbox: React.FC<{
             </CheckboxContainer>
             {label && (
                 <Label
-                    renderAs="span"
+                    renderAs="label"
                     size="small"
                     type="copy-b"
                     isInverted={isInverted}

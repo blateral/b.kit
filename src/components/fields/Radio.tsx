@@ -119,7 +119,7 @@ const RadioButton: React.FC<{
             </RadioContainer>
             {label && (
                 <Label
-                    renderAs="span"
+                    renderAs="label"
                     size="small"
                     type="copy-b"
                     textColor={

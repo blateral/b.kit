@@ -188,7 +188,8 @@ export type CopyTag =
     | 'p'
     | 'caption'
     | 'figcaption'
-    | 'address';
+    | 'address'
+    | 'label';
 
 const Copy: React.FC<{
     renderAs?: CopyTag;

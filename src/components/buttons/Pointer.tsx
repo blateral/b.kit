@@ -120,6 +120,7 @@ const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
                     disable={isDisabled}
                     onClick={onClick}
                     className={className}
+                    role="button"
                     {...rest}
                 >
                     {children}

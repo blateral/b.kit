@@ -152,6 +152,8 @@ const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
                     onClick={onClick}
                     className={className}
                     {...rest}
+                    role="button"
+                    tabIndex={0}
                 >
                     {children}
                 </View>
