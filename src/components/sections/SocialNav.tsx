@@ -70,7 +70,11 @@ const SocialNav: FC<{
             addSeperation
         >
             <StyledWrapper addWhitespace>
-                <Socials isInverted={isInverted}>
+                <Socials
+                    isInverted={isInverted}
+                    role="navigation"
+                    aria-label="Social media links"
+                >
                     {socials?.map((social, i) => (
                         <Social key={i}>
                             <StyledLink
