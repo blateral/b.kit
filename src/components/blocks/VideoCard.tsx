@@ -99,6 +99,12 @@ const VideoControls = styled.div`
         transform: scale(0.95);
         opacity: 1;
     }
+
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => color(theme).light};
+        outline-offset: 2px;
+        border-radius: 50%;
+    }
 `;
 
 const Iframe = styled.iframe`
@@ -132,7 +138,19 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
             isActive={isActive}
             className={className}
         >
-            {!isActive && <VideoControls>{playIcon || <Play />}</VideoControls>}
+            {!isActive && (
+                <VideoControls
+                    role="button"
+                    aria-label="Play video"
+                    tabIndex={0}
+                    onKeyPress={(e) =>
+                        (e.key === 'Enter' || e.key === ' ') &&
+                        setIsActive(true)
+                    }
+                >
+                    {playIcon || <Play />}
+                </VideoControls>
+            )}
             {isActive && (
                 <Iframe
                     id="ytplayer"
