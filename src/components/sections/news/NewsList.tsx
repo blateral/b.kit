@@ -13,7 +13,11 @@ import { useMediaQuery } from 'utils/useMediaQuery';
 import Pointer from 'components/buttons/Pointer';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
-const News = styled.div`
+const News = styled.ul`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
     & > * + * {
         padding-top: ${spacings.spacer * 2}px;
     }
@@ -138,17 +142,13 @@ const NewsList: React.FC<{
                             .filter((_, i) => i < visibleRows * itemsPerRow)
                             .map((item, i) => {
                                 return (
-                                    <div
-                                        key={i}
-                                        ref={cardRefs[i]}
-                                        role="listitem"
-                                    >
+                                    <li key={i} ref={cardRefs[i] as any}>
                                         <NewsCard
                                             onTagClick={onTagClick}
                                             isInverted={isInverted}
                                             {...item}
                                         />
-                                    </div>
+                                    </li>
                                 );
                             })}
                 </News>

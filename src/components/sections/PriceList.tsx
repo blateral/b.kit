@@ -45,6 +45,7 @@ const PriceList: React.FC<{
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
     const theme = React.useContext(ThemeContext);
+
     return (
         <Section
             addSeperation
@@ -58,7 +59,7 @@ const PriceList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <ItemList role="list">
+                <ItemList>
                     {items.map((item, i) => {
                         return (
                             <ItemBlock key={i} hasBg={isInverted || hasBg}>

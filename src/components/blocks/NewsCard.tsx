@@ -6,22 +6,27 @@ import {
     spacings,
     withRange,
     getGlobalSettings as global,
+    getColors as color,
+    getFonts as font,
 } from 'utils/styles';
-import Copy from 'components/typography/Copy';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import Actions from 'components/blocks/Actions';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Tag from 'components/blocks/Tag';
 import StatusFormatter from 'utils/statusFormatter';
 import Link, { LinkProps } from 'components/typography/Link';
 
-const View = styled.article`
+const View = styled.article<{ isInverted?: boolean }>`
     position: relative;
     text-decoration: none;
     padding-bottom: ${spacings.spacer}px;
-`;
 
-const ImageLink = styled(Link)`
-    width: 100%;
+    &:has(:focus-visible) {
+        outline: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted ? color(theme).light : color(theme).dark};
+        outline-offset: 2px;
+    }
 `;
 
 const StyledImage = styled(Image)`
@@ -31,6 +36,14 @@ const StyledImage = styled(Image)`
 
 const TitleLink = styled(Link)`
     text-decoration: none;
+    outline: none;
+
+    &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
 `;
 
 const Head = styled(Copy)`
@@ -60,6 +73,14 @@ const Main = styled.div`
     & > * + * {
         margin-top: ${spacings.spacer}px;
     }
+`;
+
+const CardTitle = styled.h3<{ isInverted?: boolean }>`
+    ${copyStyle('copy-b', 'big')};
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme)['copy-b'].big.colorInverted
+            : font(theme)['copy-b'].big.color};
 `;
 
 const StyledActions = styled(Actions)`
@@ -127,12 +148,8 @@ const NewsCard: React.FC<
     }
 
     return (
-        <View className={className}>
-            {image && (
-                <ImageLink {...link}>
-                    <StyledImage coverSpace {...image} />
-                </ImageLink>
-            )}
+        <View isInverted={isInverted} className={className}>
+            {image && <StyledImage coverSpace {...image} />}
             <Head isInverted={isInverted} data-sheet="head">
                 {tag && (
                     <Tag
@@ -151,14 +168,9 @@ const NewsCard: React.FC<
                         {...link}
                         aria-label={`Read more about: ${title}`}
                     >
-                        <Copy
-                            isInverted={isInverted}
-                            size="big"
-                            type="copy-b"
-                            data-sheet="title"
-                        >
+                        <CardTitle isInverted={isInverted} data-sheet="title">
                             {title}
-                        </Copy>
+                        </CardTitle>
                     </TitleLink>
                 )}
                 {text && (
