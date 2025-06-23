@@ -11,7 +11,7 @@ import Copy from 'components/typography/Copy';
 import Image, { ImageProps as Props } from 'components/blocks/Image';
 import Actions from './Actions';
 
-const View = styled.div`
+const View = styled.article`
     min-width: 270px;
     padding-bottom: ${spacings.nudge}px;
 `;
@@ -32,10 +32,15 @@ const StyledImage = styled(Image)`
 
 const Content = styled.div<{ addWhitespace?: boolean; isCentered?: boolean }>`
     text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
-    padding: 0 ${({ addWhitespace }) => (addWhitespace ? `${spacings.nudge * 2}px` : '0')};
+    padding: 0
+        ${({ addWhitespace }) =>
+            addWhitespace ? `${spacings.nudge * 2}px` : '0'};
 
     & + & {
-        ${withRange([spacings.spacer * 1.5, spacings.spacer * 2], 'padding-top')}
+        ${withRange(
+            [spacings.spacer * 1.5, spacings.spacer * 2],
+            'padding-top'
+        )}
     }
 `;
 
@@ -58,7 +63,9 @@ const Desc = styled.div`
 `;
 
 const StyledActions = styled(Actions)<{ addWhitespace?: boolean }>`
-    padding: 0 ${({ addWhitespace }) => (addWhitespace ? `${spacings.nudge * 2}px` : '0')};
+    padding: 0
+        ${({ addWhitespace }) =>
+            addWhitespace ? `${spacings.nudge * 2}px` : '0'};
     ${withRange([spacings.spacer, spacings.spacer * 2], 'padding-top')}
 
     @media ${mq.medium} {
