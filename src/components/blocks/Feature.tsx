@@ -7,9 +7,10 @@ import {
     getGlobalSettings as global,
 } from 'utils/styles';
 
-import Copy from 'components/typography/Copy';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import Image, { ImageProps as Props } from 'components/blocks/Image';
 import Actions from './Actions';
+import Heading from 'components/typography/Heading';
 
 const View = styled.article`
     min-width: 270px;
@@ -53,6 +54,16 @@ const ArticleContent = styled(Content)<{ isCentered?: boolean }>`
 `;
 
 const ContentBlock = styled(Copy)`
+    & + & {
+        ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
+    }
+`;
+
+const TitleBlock = styled(Heading)`
+    margin: 0;
+    padding: 0;
+    ${copyStyle('copy-b', 'big')};
+
     & + & {
         ${withRange([spacings.spacer * 0.5, spacings.spacer], 'padding-top')}
     }
@@ -126,14 +137,13 @@ const Feature: React.FC<
                 </ImageContainer>
             )}
             <Content addWhitespace={addWhitespace} isCentered={isCentered}>
-                <ContentBlock
-                    type="copy-b"
-                    size="big"
+                <TitleBlock
                     isInverted={isInverted}
+                    renderAs="h3"
                     data-sheet="title"
                 >
                     {title}
-                </ContentBlock>
+                </TitleBlock>
                 {description && (
                     <ContentBlock
                         size="small"
