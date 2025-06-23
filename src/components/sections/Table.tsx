@@ -9,7 +9,7 @@ import { hexToRgba } from 'utils/hexRgbConverter';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
 const TableContainer = styled.div`
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
 `;
@@ -119,7 +119,10 @@ const TableBlock: React.FC<TableProps> = ({
                     </Copy>
                 </Wrapper>
             )}
-            <TableContainer  tabIndex={0} aria-label={tableTitle || 'Data table'}>
+            <TableContainer
+                tabIndex={0}
+                aria-label={tableTitle || 'Data table'}
+            >
                 <TableBody>
                     {rowTitle && (
                         <thead>
