@@ -68,6 +68,7 @@ const LinkHelper = styled(Link)`
     right: 0;
     bottom: 0;
     left: 0;
+    outline: none;
 `;
 
 const IntroContainer = styled.div`
