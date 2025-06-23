@@ -7,7 +7,7 @@ import Copy from 'components/typography/Copy';
 
 const View = styled.div``;
 
-const ImageContainer = styled.figure<{ isCentered?: boolean }>`
+const ImageContainer = styled.div<{ isCentered?: boolean }>`
     margin: 0;
     display: flex;
     justify-content: ${({ isCentered }) =>

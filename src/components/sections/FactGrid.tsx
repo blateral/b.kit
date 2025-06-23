@@ -145,7 +145,6 @@ const FactGrid: FC<{
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode)}
-            aria-labelledby="fact-grid-heading"
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {facts && (
