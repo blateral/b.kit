@@ -16,7 +16,7 @@ import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
-const ContactView = styled.div`
+const ContactView = styled(Section)`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -159,7 +159,7 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
     className,
 }) => {
     return (
-        <ContactView className={className}>
+        <ContactView className={className} ariaRole="region">
             {avatar && <Avatar src={avatar?.src} alt={avatar?.alt || ''} />}
             <Info>
                 {(name || description) && (

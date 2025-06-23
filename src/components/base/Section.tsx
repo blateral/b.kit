@@ -238,7 +238,7 @@ const Section: React.FC<{
             isStackable={isStackable}
             data-stack-ident={isStackable ? 'true' : 'false'}
             className={className}
-            role={ariaRole || 'region'}
+            role={ariaRole}
             aria-label={ariaLabel || undefined}
         >
             {bgColor && bgMode && <Back bgColor={bgColor} bgMode={bgMode} />}
