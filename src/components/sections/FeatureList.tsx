@@ -85,6 +85,7 @@ const FeatureList: React.FC<{
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode)}
+            ariaRole="region"
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {features && (
