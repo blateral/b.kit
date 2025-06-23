@@ -204,6 +204,6 @@ export const WithCustomControl: Story = () => (
             xlarge: 'http://unsplash.it/1680/810?image=410',
             alt: 'Placeholder Image',
         }}
-        dragControl={<ArrowRightGhost />}
+        dragControl={() => <ArrowRightGhost />}
     />
 );
