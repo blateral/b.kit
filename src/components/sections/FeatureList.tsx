@@ -8,7 +8,11 @@ import Wrapper from 'components/base/Wrapper';
 import Feature, { FeatureProps } from 'components/blocks/Feature';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
-const ContentContainer = styled.div<{ isHalf?: boolean }>`
+const ContentContainer = styled.ul<{ isHalf?: boolean }>`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
     & > * + * {
         padding-top: ${spacings.spacer * 2}px;
     }
@@ -65,7 +69,7 @@ const FeatureList: React.FC<{
             small: 1,
             medium: 1,
             semilarge: 2,
-            large: isHalf  ? 2 : 3,
+            large: isHalf ? 2 : 3,
             xlarge: isHalf ? 2 : 3,
         },
     });
@@ -84,20 +88,18 @@ const FeatureList: React.FC<{
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {features && (
-                    <ContentContainer
-                        isHalf={isHalf}
-                    >
+                    <ContentContainer isHalf={isHalf}>
                         {features &&
                             features.map((feature, i) => {
                                 return (
-                                    <div key={i} ref={cardRefs[i]}>
+                                    <li key={i} ref={cardRefs[i] as any}>
                                         <Feature
                                             isCentered={isCentered}
                                             isInverted={isInverted}
                                             addWhitespace
                                             {...feature}
                                         />
-                                    </div>
+                                    </li>
                                 );
                             })}
                     </ContentContainer>
