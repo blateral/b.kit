@@ -91,6 +91,7 @@ const IconBlock: React.FC<{
                 </Number>
             </NumberContainer>
             <Label
+                renderAs="h3"
                 size="super"
                 textColor={
                     isInverted
