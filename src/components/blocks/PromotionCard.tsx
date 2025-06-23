@@ -7,6 +7,7 @@ import {
     spacings,
     withRange,
     getGlobalSettings as global,
+    getColors as color,
 } from 'utils/styles';
 import Image, { ImageProps } from 'components/blocks/Image';
 import Link, { LinkProps } from 'components/typography/Link';
@@ -15,12 +16,13 @@ import External from 'components/base/icons/External';
 
 const View = styled.div<{
     clickable?: boolean;
+    isInverted?: boolean;
 }>`
     display: block;
     position: relative;
     width: 100%;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-    overflow: hidden;
+    /* overflow: hidden; */
 
     &:after {
         content: '';
@@ -44,6 +46,13 @@ const View = styled.div<{
                 box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
             }
         `}
+
+    &:has(:focus-visible) {
+        outline: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted ? color(theme).light : color(theme).dark};
+        outline-offset: 2px;
+    }
 `;
 
 const StyledImage = styled(Image)`
@@ -59,6 +68,7 @@ const LinkHelper = styled(Link)`
     right: 0;
     bottom: 0;
     left: 0;
+    outline: none;
 `;
 
 const IntroContainer = styled.div`
@@ -117,6 +127,7 @@ export interface PromotionCardProps {
     link?: LinkProps;
     onClick?: () => void;
     externalLinkIcon?: React.ReactNode;
+    isInverted?: boolean;
 }
 
 const PromotionCard: FC<PromotionCardProps> = ({
@@ -127,6 +138,7 @@ const PromotionCard: FC<PromotionCardProps> = ({
     link,
     onClick,
     externalLinkIcon,
+    isInverted,
 }) => {
     // fallback for older versions
     let linkObj = link;
@@ -145,9 +157,9 @@ const PromotionCard: FC<PromotionCardProps> = ({
 
     return (
         <View
+            isInverted={isInverted}
             onClick={onClick}
             clickable={onClick || link ? true : false}
-            // tabIndex={0}
         >
             <StyledImage {...image} alt={image.alt || ''} coverSpace />
             {title && (

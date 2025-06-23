@@ -42,6 +42,13 @@ const AccordionHead = styled.button<{
 
     background: ${({ isInverted, hasBg, theme }) =>
         isInverted || hasBg ? color(theme).light : color(theme).mono.light};
+
+    &:focus-visible {
+        outline: solid 2px
+            ${({ theme, isInverted, hasBg }) =>
+                isInverted || hasBg ? color(theme).light : color(theme).dark};
+        outline-offset: 2px;
+    }
 `;
 
 const IconContainer = styled.div`

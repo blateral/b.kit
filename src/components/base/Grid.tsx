@@ -201,9 +201,14 @@ const StyledGrid = styled.div<GridProps>`
     }};
 `;
 
-const Grid: React.FC<GridProps> = ({ gutter, valign, children }) => {
+const Grid: React.FC<GridProps & { ariaRole?: string }> = ({
+    gutter,
+    valign,
+    ariaRole,
+    children,
+}) => {
     return (
-        <StyledGrid gutter={gutter} valign={valign}>
+        <StyledGrid gutter={gutter} valign={valign} role={ariaRole}>
             {React.Children.map(children, (comp: any) => {
                 return <StyledCol {...comp.props} gutter={gutter} />;
             })}
