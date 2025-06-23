@@ -16,7 +16,7 @@ import IntroBlock from 'components/blocks/IntroBlock';
 import Actions from 'components/blocks/Actions';
 import { withLibTheme } from 'utils/LibThemeProvider';
 
-const ContactView = styled(Section)`
+const ContactView = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -159,7 +159,7 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
     className,
 }) => {
     return (
-        <ContactView className={className} ariaRole="region">
+        <ContactView className={className}>
             {avatar && <Avatar src={avatar?.src} alt={avatar?.alt || ''} />}
             <Info>
                 {(name || description) && (
@@ -297,6 +297,7 @@ export const CallToAction: FC<{
             addSeperation
             bgColor={isInverted ? color(theme).dark : color(theme).mono.light}
             bgMode={bgMode ? mapToBgMode(bgMode, true) : 'full'}
+            ariaRole="region"
         >
             <Wrapper addWhitespace clampWidth="normal">
                 {badge && <Badge>{badge}</Badge>}
