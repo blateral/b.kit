@@ -128,9 +128,7 @@ const Quicknav: React.FC<{
                                         onNavClick(i, item.label);
                                     }
                                 }}
-                                aria-current={
-                                    isActiveItem === i ? 'true' : undefined
-                                }
+                                aria-current={isActiveItem === i}
                                 role="tab"
                                 tabIndex={0}
                                 onKeyPress={(e) =>
