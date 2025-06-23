@@ -174,6 +174,11 @@ const Control = styled.div`
     border: solid 2px ${({ theme }) => color(theme).light};
     border-radius: 50%;
     background-color: ${({ theme }) => color(theme).primary.medium};
+
+    &:focus-visible {
+        outline: solid 2px ${({ theme }) => color(theme).light};
+        outline-offset: 2px;
+    }
 `;
 
 const ComparisonSlider: FC<{
@@ -185,7 +190,9 @@ const ComparisonSlider: FC<{
     backgroundLabel?: string;
     overlayColor?: string;
     labelColor?: string;
-    dragControl?: React.ReactNode;
+    dragControl?: (
+        keyDownHandler?: (ev: React.KeyboardEvent<HTMLDivElement>) => void
+    ) => React.ReactNode;
     enableControlAnim?: boolean;
 }> = ({
     bgMode,
@@ -291,6 +298,17 @@ const ComparisonSlider: FC<{
 
     const isInverted = bgMode === 'inverted';
 
+    const handleControlKeydown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+        if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
+            ev.preventDefault();
+            setInteracted(true);
+            setSlideValue((prev) => {
+                const delta = ev.key === 'ArrowLeft' ? -0.05 : 0.05;
+                return clamp(prev + delta, 0, 1);
+            });
+        }
+    };
+
     return (
         <Section
             addSeperation
@@ -358,7 +376,7 @@ const ComparisonSlider: FC<{
                             style={{ left: slideValue * 100 + '%' }}
                         >
                             {dragControl ? (
-                                dragControl
+                                dragControl(handleControlKeydown)
                             ) : (
                                 <Control
                                     role="slider"
@@ -367,18 +385,11 @@ const ComparisonSlider: FC<{
                                     aria-valuemax={100}
                                     aria-valuenow={Math.round(slideValue * 100)}
                                     aria-label="Image comparison slider"
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-                                        e.preventDefault();
-                                        setInteracted(true);
-                                        setSlideValue((prev) => {
-                                            const delta = e.key === 'ArrowLeft' ? -0.05 : 0.05;
-                                            return clamp(prev + delta, 0, 1);
-                                        });
-                                        }
-                                    }}
-                                    >
-                                    <ArrowLeftRight iconColor={color(theme).light} />
+                                    onKeyDown={handleControlKeydown}
+                                >
+                                    <ArrowLeftRight
+                                        iconColor={color(theme).light}
+                                    />
                                 </Control>
                             )}
                         </ControlContainer>
