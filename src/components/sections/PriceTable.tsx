@@ -7,19 +7,22 @@ import Wrapper from 'components/base/Wrapper';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
-const PriceFlex = styled.div`
+const PriceFlex = styled.ul`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
 
+    margin: 0;
+    padding: 0;
+    list-style: none;
     margin: -${spacings.spacer * 1.5}px;
     margin-right: -${spacings.nudge * 3}px;
     margin-left: -${spacings.nudge * 3}px;
 `;
 
-const PriceTagContainer = styled.div`
+const PriceTagContainer = styled.li`
     flex: 1 1 100%;
     padding: ${spacings.spacer * 1.5}px;
     padding-right: ${spacings.nudge * 3}px;
@@ -84,7 +87,7 @@ const PriceTable: React.FC<{
             <Wrapper addWhitespace>
                 <PriceFlex>
                     {items.map((item, i) => (
-                        <PriceTagContainer key={i} ref={cardRefs[i]}>
+                        <PriceTagContainer key={i} ref={cardRefs[i] as any}>
                             <PriceTag
                                 {...item}
                                 isInverted={isInverted}
