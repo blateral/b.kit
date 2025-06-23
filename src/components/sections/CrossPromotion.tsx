@@ -99,7 +99,6 @@ const CrossPromotion: React.FC<{
                     : 'transparent'
             }
             bgMode={mapToBgMode(bgMode, false, isMirrored)}
-            aria-labelledby="cross-promotion-heading"
         >
             <Wrapper
                 clampWidth="normal"

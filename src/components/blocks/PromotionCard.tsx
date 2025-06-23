@@ -67,7 +67,7 @@ const IntroContainer = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    overflow: auto;
+    /* overflow: auto; */
     z-index: 1;
 
     padding-left: ${spacings.spacer}px;
@@ -144,11 +144,15 @@ const PromotionCard: FC<PromotionCardProps> = ({
     );
 
     return (
-        <View onClick={onClick} clickable={onClick || link ? true : false} tabIndex={0}>
+        <View
+            onClick={onClick}
+            clickable={onClick || link ? true : false}
+            // tabIndex={0}
+        >
             <StyledImage {...image} alt={image.alt || ''} coverSpace />
             {title && (
                 <IntroContainer>
-                    <LinkHelper {...linkObj} />
+                    <LinkHelper {...linkObj} ariaLabel={title} />
                     <StyledTitle
                         colorMode="onImage"
                         superTitle={superTitle}
