@@ -50,6 +50,7 @@ const SocialNav: FC<{
     socials: Array<{
         href: string;
         icon: React.ReactNode;
+        title?: string;
     }>;
     bgMode?: 'full' | 'inverted';
 }> = ({ socials, bgMode }) => {
@@ -80,7 +81,8 @@ const SocialNav: FC<{
                             <StyledLink
                                 href={social?.href}
                                 isExternal
-                                ariaLabel="Social Link"
+                                title={social?.title}
+                                ariaLabel={social?.title || 'Social link'}
                             >
                                 {social?.icon}
                             </StyledLink>
