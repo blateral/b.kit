@@ -148,6 +148,7 @@ const Accordion: React.FC<{
                                                 return copy;
                                             });
                                         }}
+                                        aria-expanded={isSelected}
                                     >
                                         <Copy size="big" type="copy-b">
                                             {label}
