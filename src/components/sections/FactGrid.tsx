@@ -8,7 +8,11 @@ import Wrapper from 'components/base/Wrapper';
 import Fact, { FactProps } from 'components/blocks/Fact';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
 
-const ContentContainer = styled.div<{ columns?: number }>`
+const ContentContainer = styled.ul<{ columns?: number }>`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
     & > * + * {
         padding-top: ${spacings.spacer * 2}px;
     }
@@ -154,16 +158,20 @@ const FactGrid: FC<{
                                 fact?.text
                             ) {
                                 return (
-                                    <article key={i} ref={cardRefs[i]} aria-label={
-                                            fact?.title || `Fact ${i + 1}`
-                                        }>
-                                        <Fact
-                                            key={i}
-                                            {...fact}
-                                            isCentered={isCentered}
-                                            isInverted={isInverted}
-                                        />
-                                    </article>
+                                    <li key={i} ref={cardRefs[i] as any}>
+                                        <article
+                                            aria-label={
+                                                fact?.title || `Fact ${i + 1}`
+                                            }
+                                        >
+                                            <Fact
+                                                key={i}
+                                                {...fact}
+                                                isCentered={isCentered}
+                                                isInverted={isInverted}
+                                            />
+                                        </article>
+                                    </li>
                                 );
                             } else {
                                 return <FactFill ref={cardRefs[i]} key={i} />;
