@@ -9,7 +9,7 @@ import Minus from 'components/base/icons/Minus';
 import { withLibTheme } from 'utils/LibThemeProvider';
 import { generateFAQ } from 'utils/structuredData';
 
-const AccordionBlock = styled.ul`
+const AccordionBlock = styled.details`
     margin: 0;
     padding: 0;
     list-style: none;
@@ -19,20 +19,10 @@ const AccordionBlock = styled.ul`
     }
 `;
 
-const AccordionItems = styled.li`
-    cursor: pointer;
-`;
-
-const AccordionHead = styled.button<{
+const AccordionHead = styled.summary<{
     isInverted?: boolean;
     hasBg?: boolean;
 }>`
-    background: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -51,7 +41,7 @@ const AccordionHead = styled.button<{
     }
 `;
 
-const IconContainer = styled.div`
+const IconContainer = styled.span`
     will-change: transform;
     transition: all ease-in-out 0.2s;
 
@@ -134,75 +124,73 @@ const Accordion: React.FC<{
         >
             {generateFAQ(items)}
             <Wrapper addWhitespace>
-                {items &&
-                    items.map(({ label, text, aside, hasColumns }, i) => {
+                <div aria-label="Accordion Control Group Buttons">
+                    {items?.map(({ label, text, aside, hasColumns }, i) => {
                         const isSelected = currentItems.indexOf(i) !== -1;
+
                         return (
                             <AccordionBlock key={i}>
-                                <AccordionItems>
-                                    <AccordionHead
-                                        isInverted={isInverted}
-                                        hasBg={hasBg}
-                                        onClick={() => {
-                                            setCurrentItems((prev) => {
-                                                const copy = [...prev];
-                                                const index = copy.indexOf(i);
-                                                if (index === -1) {
-                                                    copy.push(i);
-                                                } else {
-                                                    copy.splice(index, 1);
-                                                }
-                                                return copy;
-                                            });
-                                        }}
-                                        aria-expanded={isSelected}
+                                <AccordionHead
+                                    role="button"
+                                    isInverted={isInverted}
+                                    hasBg={hasBg}
+                                    onClick={() => {
+                                        setCurrentItems((prev) => {
+                                            const copy = [...prev];
+                                            const index = copy.indexOf(i);
+                                            if (index === -1) {
+                                                copy.push(i);
+                                            } else {
+                                                copy.splice(index, 1);
+                                            }
+                                            return copy;
+                                        });
+                                    }}
+                                    aria-expanded={isSelected}
+                                >
+                                    <Copy
+                                        size="big"
+                                        type="copy-b"
+                                        renderAs="span"
                                     >
-                                        <Copy size="big" type="copy-b">
-                                            {label}
-                                        </Copy>
-                                        <IconContainer>
-                                            {isSelected ? (
-                                                <Minus
-                                                    iconColor={
-                                                        color(theme).dark
-                                                    }
-                                                />
-                                            ) : (
-                                                <Plus
-                                                    iconColor={
-                                                        color(theme).dark
-                                                    }
-                                                />
-                                            )}
-                                        </IconContainer>
-                                    </AccordionHead>
-                                    <AccordionText
-                                        isInverted={isInverted}
-                                        hasBg={hasBg}
-                                        isVisible={isSelected}
-                                        hasAside={!!aside}
-                                        hasColumns={hasColumns}
-                                    >
-                                        {text && (
-                                            <Copy
-                                                type="copy"
-                                                innerHTML={text}
-                                                columns={
-                                                    !aside ? hasColumns : false
-                                                }
+                                        {label}
+                                    </Copy>
+                                    <IconContainer>
+                                        {isSelected ? (
+                                            <Minus
+                                                iconColor={color(theme).dark}
+                                            />
+                                        ) : (
+                                            <Plus
+                                                iconColor={color(theme).dark}
                                             />
                                         )}
-                                        {aside && (
-                                            <Copy
-                                                type="copy"
-                                                innerHTML={aside}
-                                            />
-                                        )}
-                                    </AccordionText>
-                                </AccordionItems>
+                                    </IconContainer>
+                                </AccordionHead>
+                                <AccordionText
+                                    isInverted={isInverted}
+                                    hasBg={hasBg}
+                                    isVisible={isSelected}
+                                    hasAside={!!aside}
+                                    hasColumns={hasColumns}
+                                >
+                                    {text && (
+                                        <Copy
+                                            type="copy"
+                                            innerHTML={text}
+                                            columns={
+                                                !aside ? hasColumns : false
+                                            }
+                                        />
+                                    )}
+                                    {aside && (
+                                        <Copy type="copy" innerHTML={aside} />
+                                    )}
+                                </AccordionText>
                             </AccordionBlock>
                         );
                     })}
+                </div>
             </Wrapper>
         </Section>
     );

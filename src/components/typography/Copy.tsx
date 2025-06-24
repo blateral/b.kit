@@ -72,6 +72,11 @@ const base = css<{
         &:hover {
             opacity: 0.75;
         }
+
+        &:focus-visible {
+            outline: dotted 2px currentColor;
+            outline-offset: 2px;
+        }
     }
 
     *:first-child {

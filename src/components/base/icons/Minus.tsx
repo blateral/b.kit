@@ -15,6 +15,7 @@ const Minus: React.FC<{ iconColor?: string; className?: string }> = ({
         viewBox="0 0 14 2"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden
         className={className}
     >
         <path d="M14 2H0V0h14v2z" fill={iconColor} />
