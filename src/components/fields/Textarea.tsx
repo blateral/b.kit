@@ -66,13 +66,11 @@ const Area = styled.textarea<{
     pointer-events: ${({ isDisabled }) => isDisabled && 'none'};
 
     &:active {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme }) => `2px solid ${color(theme).dark}`};
     }
 
     &:focus {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme }) => `2px solid ${color(theme).dark}`};
     }
 
     &::placeholder {

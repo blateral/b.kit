@@ -269,20 +269,17 @@ const DatepickerButton = styled.button<{
     position: relative;
 
     &:focus {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme }) => `2px solid ${color(theme).dark}`};
     }
 
     &:active {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme }) => `2px solid ${color(theme).dark}`};
     }
 
     ${({ isActive }) =>
         isActive &&
         css`
-            border: ${({ theme }) =>
-                `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+            border: ${({ theme }) => `2px solid ${color(theme).dark}`};
         `}
 
     display: flex;

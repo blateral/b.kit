@@ -120,8 +120,8 @@ const RadioButton: React.FC<{
             {label && (
                 <Label
                     renderAs="span"
-                    size="small"
-                    type="copy-b"
+                    size="medium"
+                    type="copy"
                     textColor={
                         isDisabled
                             ? color(theme).mono.medium

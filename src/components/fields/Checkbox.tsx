@@ -126,8 +126,8 @@ const Checkbox: React.FC<{
             {label && (
                 <Label
                     renderAs="span"
-                    size="small"
-                    type="copy-b"
+                    size="medium"
+                    type="copy"
                     isInverted={isInverted}
                     textColor={isDisabled ? color(theme).mono.dark : undefined}
                     innerHTML={`${label}${isRequired ? '<span> *</span>' : ''}`}

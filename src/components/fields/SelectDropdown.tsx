@@ -52,19 +52,17 @@ const Select = styled.button<{
     position: relative;
 
     &:active {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme }) => `2px solid ${color(theme).dark}`};
     }
 
     &:focus {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme }) => `2px solid ${color(theme).dark}`};
     }
 
     ${({ isActive, theme }) =>
         isActive &&
         css`
-            border: 2px solid ${hexToRgba(color(theme).dark, 0.2)};
+            border: ${({ theme }) => `2px solid ${color(theme).dark}`};
         `}
 
     display: flex;
