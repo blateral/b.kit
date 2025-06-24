@@ -272,7 +272,7 @@ const SelectDropdown: React.FC<{
         <View renderAs="label">
             {label && (
                 <FieldHead
-                    renderAs="label"
+                    renderAs="span"
                     isInverted={isInverted}
                     textColor={isDisabled ? color(theme).mono.dark : undefined}
                     size="medium"
@@ -287,6 +287,11 @@ const SelectDropdown: React.FC<{
                     aria-label={
                         activeItem?.label || placeholder || 'Select item'
                     }
+                    role="combobox"
+                    aria-expanded={isOpen}
+                    aria-controls="listbox"
+                    aria-haspopup="listbox"
+                    tabIndex={0}
                     isActive={isOpen}
                     hasBg={hasBg && !isInverted}
                     hasError={!!errorMessage}

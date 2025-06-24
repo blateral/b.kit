@@ -149,8 +149,6 @@ const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
                     disable={isDisabled}
                     onClick={onClick}
                     className={className}
-                    role="button"
-                    tabIndex={0}
                     {...rest}
                 >
                     {children}

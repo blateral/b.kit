@@ -409,9 +409,10 @@ const ControlView = styled.button``;
 const Control: FC<{
     type: 'next' | 'prev';
     onClick?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
+    ariaLabel?: string;
     className?: string;
     children?: (isActive?: boolean) => React.ReactNode;
-}> = ({ type, onClick, children, className }) => {
+}> = ({ type, onClick, ariaLabel, children, className }) => {
     return (
         <SliderContext.Consumer>
             {(values) => {
@@ -431,6 +432,7 @@ const Control: FC<{
                                     ? values.isOnLastStep()
                                     : values.isOnFirstStep()
                             }
+                            aria-label={ariaLabel}
                         >
                             {children &&
                                 children(

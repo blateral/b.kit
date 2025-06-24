@@ -139,6 +139,15 @@ const CardHeader = styled.div`
     display: flex;
 `;
 
+const Address = styled.address`
+    & > * + * {
+        ${withRange(
+            [spacings.spacer * 1.5, spacings.spacer * 2.5],
+            'margin-top'
+        )}
+    }
+`;
+
 const StyledActions = styled(Actions)`
     padding-left: ${spacings.nudge}px;
     padding-right: ${spacings.nudge}px;
@@ -241,69 +250,74 @@ const LocationInfoCard: FC<{
                     superTitleAs={superTitleAs}
                 />
             </CardHeader>
-            {location.companyName && (
-                <CompanyInfo
-                    companyName={location.companyName || ''}
-                    address={location.address}
-                    isInverted={isInverted}
-                />
-            )}
-            {location.contact && (
-                <ContactList isInverted={isInverted}>
-                    {location.contact?.telephone && (
-                        <li>
-                            <span>
-                                {location?.contact?.telephone.icon ? (
-                                    location.contact.telephone.icon({
-                                        isInverted,
-                                    })
-                                ) : (
-                                    <Phone />
-                                )}
-                            </span>
-                            <ContactListLabel
-                                isInverted={isInverted}
-                                type="copy-b"
-                                size="big"
-                            >
-                                <Link
-                                    href={`tel:${
-                                        location?.contact.telephone.link ||
-                                        location?.contact.telephone.label
-                                    }`}
+            <Address>
+                {location.companyName && (
+                    <CompanyInfo
+                        companyName={location.companyName || ''}
+                        address={location.address}
+                        isInverted={isInverted}
+                    />
+                )}
+
+                {location.contact && (
+                    <ContactList isInverted={isInverted}>
+                        {location.contact?.telephone && (
+                            <li>
+                                <span aria-hidden={true}>
+                                    {location?.contact?.telephone.icon ? (
+                                        location.contact.telephone.icon({
+                                            isInverted,
+                                        })
+                                    ) : (
+                                        <Phone />
+                                    )}
+                                </span>
+                                <ContactListLabel
+                                    isInverted={isInverted}
+                                    type="copy-b"
+                                    size="big"
                                 >
-                                    {location?.contact.telephone?.label}
-                                </Link>
-                            </ContactListLabel>
-                        </li>
-                    )}
-                    {location.contact.email && (
-                        <li>
-                            <span>
-                                {location?.contact?.email.icon ? (
-                                    location.contact.email.icon({ isInverted })
-                                ) : (
-                                    <Mail />
-                                )}
-                            </span>
-                            <ContactListLabel
-                                isInverted={isInverted}
-                                type="copy-b"
-                                size="big"
-                            >
-                                <Link
-                                    href={`mailto:${
-                                        location?.contact?.email.link ||
-                                        location.contact.email.label
-                                    }`}
+                                    <Link
+                                        href={`tel:${
+                                            location?.contact.telephone.link ||
+                                            location?.contact.telephone.label
+                                        }`}
+                                    >
+                                        {location?.contact.telephone?.label}
+                                    </Link>
+                                </ContactListLabel>
+                            </li>
+                        )}
+                        {location.contact.email && (
+                            <li>
+                                <span>
+                                    {location?.contact?.email.icon ? (
+                                        location.contact.email.icon({
+                                            isInverted,
+                                        })
+                                    ) : (
+                                        <Mail />
+                                    )}
+                                </span>
+                                <ContactListLabel
+                                    isInverted={isInverted}
+                                    type="copy-b"
+                                    size="big"
                                 >
-                                    {location?.contact?.email.label}
-                                </Link>
-                            </ContactListLabel>
-                        </li>
-                    )}
-                </ContactList>
-            )}
+                                    <Link
+                                        href={`mailto:${
+                                            location?.contact?.email.link ||
+                                            location.contact.email.label
+                                        }`}
+                                    >
+                                        {location?.contact?.email.label}
+                                    </Link>
+                                </ContactListLabel>
+                            </li>
+                        )}
+                    </ContactList>
+                )}
+            </Address>
             {location.meta?.contact && (
                 <Copy
                     type="copy"
@@ -427,6 +441,13 @@ const StyledControl = styled(Slider.Control)<{ isInverted?: boolean }>`
 
     @media ${mq.semilarge} {
         display: block;
+    }
+
+    &:focus-visible {
+        outline: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted ? color(theme).light : color(theme).dark};
+        outline-offset: 2px;
     }
 `;
 
@@ -637,7 +658,7 @@ const Map: FC<{
                                             <StyledControl
                                                 type="next"
                                                 isInverted={isInverted}
-                                                aria-label="Next location"
+                                                ariaLabel="Next location"
                                             >
                                                 {(isActive) =>
                                                     controlNext ? (
@@ -654,7 +675,7 @@ const Map: FC<{
                                             <StyledControl
                                                 type="prev"
                                                 isInverted={isInverted}
-                                                aria-label="Previous location"
+                                                ariaLabel="Previous location"
                                             >
                                                 {(isActive) =>
                                                     controlPrev ? (

@@ -387,10 +387,10 @@ const PickerButton = forwardRef<HTMLButtonElement, PickerBtnProps>(
         const theme = useContext(ThemeContext);
 
         return (
-            <View>
+            <View renderAs="label">
                 {label && (
                     <FieldHead
-                        renderAs="label"
+                        renderAs="span"
                         isInverted={isInverted}
                         size="medium"
                         type="copy-b"

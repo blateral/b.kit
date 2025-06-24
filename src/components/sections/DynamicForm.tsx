@@ -989,7 +989,6 @@ const generateDatepicker = ({
             }
             nextCtrlUrl={field.nextCtrlUrl}
             prevCtrlUrl={field.prevCtrlUrl}
-            aria-describedby={error && isTouched ? error : undefined}
         />
     );
 };
@@ -1017,7 +1016,6 @@ const generateArea = ({
         infoMessage={field.info}
         errorMessage={error && isTouched ? error : undefined}
         lightBg={hasBg}
-        aria-describedby={error && isTouched ? error : undefined}
     />
 );
 
@@ -1044,7 +1042,6 @@ const generateUpload = ({
         }}
         hasBg={!hasBg}
         isInverted={isInverted}
-        aria-describedby={error && isTouched ? error : undefined}
     />
 );
 
@@ -1072,7 +1069,6 @@ const generateField = ({
         infoMessage={field.info}
         errorMessage={error && isTouched ? error : undefined}
         lightBg={hasBg}
-        aria-describedby={error && isTouched ? error : undefined}
     />
 );
 
@@ -1094,7 +1090,6 @@ const generateSelect = ({
         name={key}
         placeholder={field.placeholder}
         errorMessage={error && isTouched ? error : undefined}
-        aria-describedby={error && isTouched ? error : undefined}
         items={field.dropdownItems || []}
         value={value as string}
         onChange={async (value) => {

@@ -125,7 +125,7 @@ const Checkbox: React.FC<{
             </CheckboxContainer>
             {label && (
                 <Label
-                    renderAs="label"
+                    renderAs="span"
                     size="small"
                     type="copy-b"
                     isInverted={isInverted}
