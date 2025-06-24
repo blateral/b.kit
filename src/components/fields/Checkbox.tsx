@@ -2,7 +2,6 @@ import Check from 'components/base/icons/Check';
 import Copy from 'components/typography/Copy';
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled.label`
@@ -32,8 +31,7 @@ const CheckboxContainer = styled.div<{ isDisabled?: boolean }>`
     border: 2px solid transparent;
 
     &:focus-within {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme }) => `2px solid ${color(theme).dark}`};
     }
 `;
 

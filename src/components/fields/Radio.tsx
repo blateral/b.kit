@@ -1,7 +1,6 @@
 import Copy from 'components/typography/Copy';
 import * as React from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
-import { hexToRgba } from 'utils/hexRgbConverter';
 import { getColors as color, spacings } from '../../utils/styles';
 
 const View = styled.label`
@@ -22,8 +21,7 @@ const RadioContainer = styled.div<{ isDisabled?: boolean }>`
     border-radius: 50%;
 
     &:focus-within {
-        border: ${({ theme }) =>
-            `2px solid ${hexToRgba(color(theme).dark, 0.2)}`};
+        border: ${({ theme }) => `2px solid ${color(theme).dark}`};
     }
 `;
 
