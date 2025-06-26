@@ -86,6 +86,9 @@ const Callout: React.FC<{
     hyphens?: boolean;
     hasShadow?: boolean;
     innerHTML?: string;
+    role?: string;
+    ariaLabel?: string;
+    ariaLevel?: 1 | 2 | 3 | 4 | 5 | 6;
 
     className?: string;
 }> = ({
@@ -98,6 +101,9 @@ const Callout: React.FC<{
     hyphens = false,
     hasShadow = false,
     innerHTML,
+    role,
+    ariaLabel,
+    ariaLevel,
     children,
     ...rest
 }) => {
@@ -125,6 +131,9 @@ const Callout: React.FC<{
             dangerouslySetInnerHTML={
                 innerHTML && !children ? { __html: innerHTML } : undefined
             }
+            role={role}
+            aria-label={ariaLabel}
+            aria-level={ariaLevel}
             className={className}
             {...rest}
         >

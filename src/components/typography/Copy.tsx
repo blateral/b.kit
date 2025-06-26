@@ -87,23 +87,6 @@ const base = css<{
         margin-bottom: 0;
     }
 
-    /* :not(li) > ul,
-    :not(li) > ol {
-        display: inline-block;
-        padding-left: 0;
-    }
-
-    li > ul,
-    li > ol {
-        padding-left: 0;
-    } */
-
-    /* ul,
-    ol li {
-        list-style-position: outside;
-        margin-left: 1.1em;
-    } */
-
     & > p {
         margin-right: 0;
         margin-left: 0;
@@ -135,6 +118,65 @@ const base = css<{
 
     h4 {
         ${headingStyle('heading-4')}
+    }
+
+    h2,
+    h3,
+    h4,
+    h5 {
+        margin-top: ${spacings.nudge * 5}px;
+        margin-bottom: ${spacings.nudge * 5}px;
+    }
+
+    h2 {
+        margin-bottom: ${spacings.spacer * 1.5}px;
+    }
+
+    *:not(h2, h3, h4, h5) + h2,
+    *:not(h2, h3, h4, h5) + h3,
+    *:not(h2, h3, h4, h5) + h4,
+    *:not(h2, h3, h4, h5) + h5 {
+        margin-top: ${spacings.spacer * 2}px;
+    }
+
+    *:is(h3, h4, h5) + h2 {
+        margin-top: -${spacings.nudge * 2}px;
+    }
+
+    b,
+    strong {
+        font-weight: bold;
+    }
+
+    p,
+    blockquote,
+    ol,
+    ul {
+        margin-top: ${spacings.nudge * 5}px;
+        margin-bottom: ${spacings.nudge * 5}px;
+    }
+
+    ol,
+    ul {
+        padding-left: ${spacings.nudge * 5}px;
+    }
+
+    li {
+        & > * {
+            vertical-align: top;
+        }
+    }
+
+    ul ul li {
+        list-style-type: disc;
+    }
+
+    ol ol li {
+        list-style-type: lower-latin;
+    }
+
+    ol ol ol li {
+        list-style-type: lower-roman;
     }
 
     // classes for richtext

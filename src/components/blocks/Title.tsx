@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import Heading, { HeadlineTag } from 'components/typography/Heading';
-import { spacings, withRange } from 'utils/styles';
+import { FontType, spacings, withRange } from 'utils/styles';
 
 const View = styled.div<{ isCentered?: boolean }>`
     display: block;
@@ -14,12 +14,15 @@ const View = styled.div<{ isCentered?: boolean }>`
     }
 `;
 
+export type TitleSize = Extract<FontType, 'heading-1' | 'heading-2'>;
+
 const Title: FC<{
     colorMode?: 'default' | 'inverted' | 'onImage';
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     title?: string;
     titleAs?: HeadlineTag;
+    titleSize?: TitleSize;
     isCentered?: boolean;
     className?: string;
 }> = ({
@@ -28,6 +31,7 @@ const Title: FC<{
     superTitleAs,
     title,
     titleAs,
+    titleSize,
     isCentered = false,
     className,
 }) => {
@@ -48,7 +52,11 @@ const Title: FC<{
                 <div>
                     <Heading
                         renderAs={titleAs || 'h2'}
-                        size="heading-2"
+                        size={
+                            titleSize === 'heading-1'
+                                ? 'heading-1'
+                                : 'heading-2'
+                        }
                         textColor={colorMode === 'onImage' ? '#fff' : undefined}
                         isInverted={colorMode === 'inverted'}
                         innerHTML={title}

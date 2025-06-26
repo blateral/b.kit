@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled, { ThemeContext, css } from 'styled-components';
 
 import Section, { mapToBgMode } from 'components/base/Section';
-import Title from 'components/blocks/Title';
+import Title, { TitleSize } from 'components/blocks/Title';
 import Copy from 'components/typography/Copy';
 import Wrapper from 'components/base/Wrapper';
 import { spacings, mq, getColors as color } from 'utils/styles';
@@ -70,6 +70,7 @@ const StyledActions = styled(Actions)`
 const Article: React.FC<{
     title?: string;
     titleAs?: HeadlineTag;
+    titleSize?: TitleSize;
     superTitle?: string;
     superTitleAs?: HeadlineTag;
     intro?: string;
@@ -84,6 +85,7 @@ const Article: React.FC<{
 }> = ({
     title,
     titleAs,
+    titleSize,
     superTitle,
     superTitleAs,
     intro,
@@ -113,6 +115,7 @@ const Article: React.FC<{
                 <StyledTitle
                     title={title}
                     titleAs={titleAs}
+                    titleSize={titleSize}
                     superTitle={superTitle}
                     superTitleAs={superTitleAs}
                     colorMode={isInverted ? 'inverted' : 'default'}
