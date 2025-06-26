@@ -6,13 +6,22 @@ export interface LinkProps {
     href?: string;
     title?: string;
     ariaLabel?: string;
+    ariaCurrent?: React.ComponentProps<'a'>['aria-current'];
 }
 
 const Link: FC<
     LinkProps & {
         className?: string;
     }
-> = ({ isExternal = false, href, title, ariaLabel, children, className }) => {
+> = ({
+    isExternal = false,
+    href,
+    title,
+    ariaLabel,
+    ariaCurrent,
+    children,
+    className,
+}) => {
     return (
         <a
             href={href}
@@ -20,6 +29,7 @@ const Link: FC<
             rel={isExternal ? 'noopener noreferrer' : undefined}
             title={title}
             aria-label={ariaLabel}
+            aria-current={ariaCurrent}
             className={className}
         >
             {children}
