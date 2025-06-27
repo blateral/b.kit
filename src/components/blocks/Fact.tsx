@@ -69,7 +69,7 @@ const Fact: FC<
 }) => {
     return (
         <View className={className} role="group">
-            {image && (
+            {image?.small && (
                 <ImageContainer isCentered={isCentered}>
                     <StyledImage
                         small={image.small}
