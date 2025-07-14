@@ -85,7 +85,7 @@ const EventList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List hasBg={hasBg}>
+                <List hasBg={hasBg} aria-label="Veranstaltungen">
                     {events?.map((event, i) => {
                         let timespan = '';
 

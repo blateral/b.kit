@@ -10,7 +10,7 @@ import Image, { ImageProps } from './Image';
 import Link, { LinkProps } from 'components/typography/Link';
 import { isValidArray } from 'utils/arrays';
 
-const View = styled.div<{ hasBg?: boolean }>`
+const View = styled.a<{ hasBg?: boolean }>`
     text-decoration: none;
     color: inherit;
 
@@ -33,9 +33,14 @@ const View = styled.div<{ hasBg?: boolean }>`
             padding-right: ${spacings.spacer}px;
         }
     }
+
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => getColors(theme).primary.default};
+        outline-offset: 2px;
+    }
 `;
 
-const ImageLink = styled(Link)`
+const ImageContainer = styled.div`
     display: block;
     margin-left: auto;
 
@@ -237,10 +242,17 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
         [images]
     );
 
+    const titleId = React.useId();
+
     return (
-        <View hasBg={hasBg}>
+        <View
+            hasBg={hasBg}
+            href={link?.href}
+            role="group"
+            aria-labelledby={titleId}
+        >
             {isValidArray(cardImages, false) && (
-                <ImageLink {...link}>
+                <ImageContainer>
                     {cardImages.map((img, i) => (
                         <CardImage
                             {...img}
@@ -251,9 +263,10 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
                             ratios={{
                                 small: { w: 4, h: 3 },
                             }}
+                            alt={img.alt ?? ''}
                         />
                     ))}
-                </ImageLink>
+                </ImageContainer>
             )}
             <MainContent>
                 {isValidArray(filteredTags, false) && (
@@ -283,7 +296,11 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
                         )}
                     </TagContainer>
                 )}
-                {title && <TitleLink {...link}>{title}</TitleLink>}
+                {title && (
+                    <TitleLink as="h2" id={titleId} {...link}>
+                        {title}
+                    </TitleLink>
+                )}
                 <TextWrapper>
                     {date && (
                         <Copy size="medium" type="copy-b">
