@@ -30,18 +30,13 @@ const View = styled.button<{ isInverted?: boolean; disabled?: boolean }>`
         }
     }
 
-    &:focus {
-        outline: dotted 2px
+    &:focus-visible {
+        outline: solid 2px
             ${({ theme, isInverted }) =>
                 isInverted
                     ? color(theme).primary.inverted
                     : color(theme).primary.default};
-        outline-offset: 4px;
-
-        color: ${({ theme, isInverted }) =>
-            isInverted
-                ? color(theme).primary.invertedHover
-                : color(theme).primary.hover};
+        outline-offset: 2px;
     }
 
     &:focus:not(:focus-visible) {

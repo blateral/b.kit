@@ -78,8 +78,9 @@ const View = styled.a<{
         }
     }
 
-    &:focus {
+    &:focus-visible {
         outline: 2px solid ${({ theme }) => color(theme).primary.default};
+        outline-offset: 2px;
     }
 
     &:focus:not(:focus-visible) {

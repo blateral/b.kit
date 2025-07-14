@@ -92,16 +92,13 @@ const View = styled.a<{
                             : 'rgba(0, 0, 0, 0.25)'};
                 }
 
-                &:focus {
-                    outline: 1px solid
+                &:focus-visible {
+                    outline: 2px solid
                         ${inverted
                             ? color(theme).primary.inverted
                             : color(theme).primary.default};
-                    outline-offset: 0;
-                    box-shadow: 0px 2px 6px
-                        ${inverted
-                            ? 'rgba(255, 255, 255, 0.25)'
-                            : 'rgba(0, 0, 0, 0.3)'};
+
+                    outline-offset: 2px;
                 }
 
                 &:focus:not(:focus-visible) {

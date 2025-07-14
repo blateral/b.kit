@@ -103,12 +103,16 @@ const View = styled.a<{
     ${({ disable, inverted }) =>
         !disable &&
         css`
-            &:focus {
-                text-decoration: underline;
-                box-shadow: 0px 8px 16px
-                    ${inverted
-                        ? 'rgba(255, 255, 255, 0.25)'
-                        : 'rgba(0, 0, 0, 0.25)'};
+            &:focus-visible {
+                outline: 2px solid
+                    ${({ theme }) =>
+                        disable
+                            ? color(theme).elementBg.medium
+                            : inverted
+                            ? color(theme).primary.inverted
+                            : color(theme).primary.default};
+
+                outline-offset: 2px;
             }
 
             &:focus:not(:focus-visible) {
