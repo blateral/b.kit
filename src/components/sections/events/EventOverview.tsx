@@ -348,7 +348,7 @@ const EventOverview: React.FC<{
         >
             <Wrapper addWhitespace>
                 {isValidArray(filteredTags, false) && (
-                    <TagContainer>
+                    <TagContainer aria-label="Eventfilter">
                         <FilterIcon
                             size="small"
                             type="copy"
@@ -397,7 +397,7 @@ const EventOverview: React.FC<{
                         ))}
                     </TagContainer>
                 )}
-                <Events hasBg={hasBg}>
+                <Events hasBg={hasBg} aria-label="Weitere Events">
                     {visibleEvents.map((item, i) => {
                         let timespan = '';
 
@@ -422,7 +422,10 @@ const EventOverview: React.FC<{
                         const text = concat([timespan, item.address], ' | ');
 
                         return (
-                            <EventItem key={`${i}_event_${item.title}`}>
+                            <EventItem
+                                key={`${i}_event_${item.title}`}
+                                aria-label={`Event: ${item.title}. Datum: ${timespan}. Ort: ${item.address}.`}
+                            >
                                 <EventBlock
                                     hasBg={bgMode === 'full'}
                                     {...item}
@@ -482,6 +485,7 @@ const EventOverview: React.FC<{
                                         <Pointer.View
                                             as="button"
                                             isInverted={isInverted}
+                                            ariaLabel="Mehr Events anzeigen"
                                         >
                                             <Pointer.Label>
                                                 {showMoreText ||

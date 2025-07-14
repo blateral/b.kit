@@ -99,6 +99,7 @@ interface Props {
     textDecoration?: 'none' | 'underline';
     className?: string;
     children?: React.ReactNode;
+    ariaLabel?: string;
 }
 
 export type BtnProps = Props & {
@@ -121,6 +122,7 @@ const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
             className,
             textDecoration,
             children,
+            ariaLabel,
             ...rest
         },
         ref
@@ -135,6 +137,7 @@ const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
                     disable={isDisabled}
                     onClick={onClick}
                     className={className}
+                    aria-label={ariaLabel}
                     {...rest}
                 >
                     {children}
@@ -161,6 +164,7 @@ const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
                     disable={isDisabled}
                     onClick={onClick}
                     className={className}
+                    aria-label={ariaLabel}
                     {...rest}
                 >
                     {children}
