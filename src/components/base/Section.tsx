@@ -177,7 +177,7 @@ const Back = styled.div<{
     }
 `;
 
-export type SectionType = 'header' | 'footer' | 'div';
+export type SectionType = 'header' | 'footer' | 'div' | 'article';
 
 export interface SectionProps {
     /** ID value for targeting section with anchor hashes */
@@ -200,6 +200,9 @@ export interface SectionProps {
 
     /** Allow stack feature for reduced section spacing to following section */
     isStackable?: boolean;
+
+    ariaLabeledBy?: string;
+    ariaLabel?: string;
 }
 
 const Section = forwardRef<
@@ -219,6 +222,8 @@ const Section = forwardRef<
             addSeperation = false,
             isStackable = false,
             className,
+            ariaLabeledBy,
+            ariaLabel,
             children,
         },
         ref
@@ -262,6 +267,8 @@ const Section = forwardRef<
                 isStackable={isStackable}
                 data-stack-ident={isStackable ? 'true' : 'false'}
                 className={className}
+                aria-labelledby={ariaLabeledBy}
+                aria-label={ariaLabel}
             >
                 {bgColor && (
                     <Back

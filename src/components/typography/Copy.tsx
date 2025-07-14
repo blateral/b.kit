@@ -361,6 +361,9 @@ const Copy: React.FC<{
     onClick?: (ev: React.SyntheticEvent<HTMLElement>) => void;
     className?: string;
     children?: React.ReactNode;
+    ariaLabel?: string;
+    ariaLevel?: number;
+    ariaRole?: string;
 }> = ({
     renderAs,
     isInverted,
@@ -374,6 +377,9 @@ const Copy: React.FC<{
     onClick,
     className,
     children,
+    ariaLabel,
+    ariaLevel,
+    ariaRole,
     ...rest
 }) => {
     const { fonts } = useLibTheme();
@@ -404,6 +410,9 @@ const Copy: React.FC<{
             }
             onClick={onClick}
             className={className}
+            aria-label={ariaLabel}
+            role={ariaRole}
+            aria-level={ariaLevel}
             {...rest}
         >
             {children}

@@ -3,9 +3,17 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
 
-import { mq, spacings } from 'utils/styles';
+import { getColors, mq, spacings } from 'utils/styles';
 
-const View = styled.div``;
+const View = styled.div`
+    a {
+        &:focus-visible {
+            outline: 2px solid
+                ${({ theme }) => getColors(theme).primary.default};
+            outline-offset: 2px;
+        }
+    }
+`;
 
 const Container = styled.ul`
     display: flex;
@@ -92,7 +100,7 @@ const InfoList: FC<{
 }> = ({ isInverted, items, className }) => {
     return (
         <View className={className}>
-            <Container>
+            <Container aria-label="Info-Liste">
                 {items?.map((group, i) => {
                     const groupItems =
                         group?.items?.filter((item) => item.text) || [];
@@ -106,12 +114,14 @@ const InfoList: FC<{
                                     type="copy-b"
                                     renderAs="span"
                                     isInverted={isInverted}
+                                    ariaLevel={3}
+                                    ariaRole="heading"
                                 >
                                     {group.title}
                                 </Title>
                             )}
                             {hasItems && (
-                                <Infos>
+                                <Infos aria-label={group.title}>
                                     {groupItems.map((info, ii) => (
                                         <Content key={ii}>
                                             <Icon isInverted={isInverted}>

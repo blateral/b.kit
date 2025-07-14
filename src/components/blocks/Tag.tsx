@@ -58,17 +58,13 @@ const View = styled(Link)<{
             }
         `}
 
-    &:focus {
-        /* background-color: ${({ isInverted }) =>
-            isInverted ? '#dddddd' : '#444444'};
-        color: ${({ isInverted }) => (isInverted ? '#444444' : '#ffff')}; */
+    &:focus-visible {
         outline: 2px solid
             ${({ isInverted, theme }) =>
                 isInverted
                     ? getColors(theme).primary.inverted
                     : getColors(theme).primary.default};
-        outline-offset: -1px;
-        text-decoration: underline;
+        outline-offset: 2px;
     }
 
     &:focus:not(:focus-visible) {
@@ -94,8 +90,18 @@ const Tag: FC<
         onClick?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
         className?: string;
         children?: React.ReactNode;
+        ariaLabel?: string;
     }
-> = ({ name, link, isInverted, isActive, onClick, className, children }) => {
+> = ({
+    name,
+    link,
+    isInverted,
+    isActive,
+    onClick,
+    className,
+    children,
+    ariaLabel,
+}) => {
     const tag = link?.href ? 'a' : onClick ? 'button' : 'span';
 
     return (
@@ -106,6 +112,7 @@ const Tag: FC<
             onClick={onClick}
             isClickable={!!onClick || !!(link && link.href)}
             className={className}
+            aria-label={ariaLabel}
             {...link}
         >
             {name || children}

@@ -97,6 +97,7 @@ export type HeadlineTag =
     | 'blockquote';
 
 const Heading: React.FC<{
+    id?: string;
     renderAs?: HeadlineTag;
     isInverted?: boolean;
     size?: HeadingType;
@@ -119,6 +120,7 @@ const Heading: React.FC<{
     hasShadow = false,
     innerHTML,
     children,
+    id,
     ...rest
 }) => {
     const { fonts } = useLibTheme();
@@ -148,6 +150,7 @@ const Heading: React.FC<{
 
     return (
         <View
+            id={id}
             as={renderAs || tag}
             headingType={size}
             textColor={
