@@ -366,23 +366,57 @@ const JobList: React.FC<{
                         clearIcon={filterClearIcon}
                     />
                 )}
-                <List>
+                <List aria-label="Stellenangebote">
                     {jobMatches
                         ?.sort((a, b) => a.priority - b.priority)
-                        .map((match, i) => (
-                            <Item key={i}>
-                                <JobCard
-                                    ref={cardRefs[i]}
-                                    {...match.item}
-                                    isInverted={isInverted}
-                                    hasBackground={hasBg}
-                                    modelIcon={modelIcon}
-                                    locationIcon={locationIcon}
-                                    totalLocations={totalJobLocations}
-                                    allLocationsLabel={allJobLocationsLabel}
-                                />
-                            </Item>
-                        ))}
+                        .map((match, i) => {
+                            const employmentType = match.item.employmentTypes
+                                ?.filter((type) => type.name)
+                                .map((type) => type.name)
+                                ?.join(', ');
+
+                            const validLocations = match.item.locations?.filter(
+                                (loc) => loc.name
+                            );
+                            const hasLocations = isValidArray(
+                                validLocations,
+                                false
+                            );
+
+                            let locationText = '';
+
+                            if (hasLocations) {
+                                if (
+                                    totalJobLocations !== undefined &&
+                                    validLocations.length >=
+                                        totalJobLocations &&
+                                    allJobLocationsLabel
+                                ) {
+                                    locationText = allJobLocationsLabel;
+                                } else {
+                                    locationText = validLocations
+                                        .map((loc) => loc.name)
+                                        ?.join(', ');
+                                }
+                            }
+                            return (
+                                <Item
+                                    key={i}
+                                    aria-label={`Stellenangebot: ${match.item.jobTitle}, ${employmentType}, ${locationText}`}
+                                >
+                                    <JobCard
+                                        ref={cardRefs[i]}
+                                        {...match.item}
+                                        isInverted={isInverted}
+                                        hasBackground={hasBg}
+                                        modelIcon={modelIcon}
+                                        locationIcon={locationIcon}
+                                        totalLocations={totalJobLocations}
+                                        allLocationsLabel={allJobLocationsLabel}
+                                    />
+                                </Item>
+                            );
+                        })}
                 </List>
             </Wrapper>
         </Section>

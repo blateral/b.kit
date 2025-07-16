@@ -56,6 +56,7 @@ const Link = forwardRef<
         onClick?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
         className?: string;
         children?: React.ReactNode;
+        ariaHidden?: boolean;
     }
 >(
     (
@@ -69,6 +70,7 @@ const Link = forwardRef<
             dataSheet,
             children,
             className,
+            ariaHidden = false,
         },
         ref
     ) => {
@@ -84,6 +86,7 @@ const Link = forwardRef<
                 data-sheet={dataSheet}
                 onClick={onClick}
                 className={className}
+                aria-hidden={ariaHidden}
             >
                 {children}
             </View>

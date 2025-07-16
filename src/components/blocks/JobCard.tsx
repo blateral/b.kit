@@ -27,10 +27,10 @@ const View = styled.div<{
 
     border-radius: ${({ theme }) => getGlobals(theme).sections.edgeRadius};
 
-    ${({ clickable, isInverted }) =>
+    ${({ clickable, isInverted, theme }) =>
         clickable &&
         css`
-            transition: all 0.2s ease-in-out;
+            transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
             cursor: pointer;
 
             &:hover {
@@ -42,16 +42,9 @@ const View = styled.div<{
                 color: ${({ theme }) => color(theme).primary.hover};
             }
 
-            &:focus {
-                box-shadow: 0px 2px 6px
-                    ${isInverted
-                        ? 'rgba(255, 255, 255, 0.7)'
-                        : 'rgba(0, 0, 0, 0.3)'};
-            }
-
-            &:focus:not(:focus-visible) {
-                outline: none;
-                box-shadow: none;
+            &:has(:focus-visible) {
+                outline: 2px solid ${color(theme).primary.default};
+                outline-offset: 2px;
             }
 
             &:active {
@@ -117,15 +110,22 @@ const MainLabel = styled.div`
     align-items: center;
 `;
 
-const ViewLink = styled(Link)`
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+const HeadingLink = styled(Link)`
+    color: ${({ theme }) => color(theme).primary.default};
+    text-decoration: none;
 
-    && {
-        margin: 0;
+    ${View}:hover & {
+        color: ${({ theme }) => color(theme).primary.hover};
+    }
+
+    &:focus-visible {
+        outline: none;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
     }
 `;
 
@@ -216,6 +216,11 @@ const JobCard = React.forwardRef<
             }
         }
 
+        const employmentType = employmentTypes
+            ?.filter((type) => type.name)
+            .map((type) => type.name)
+            ?.join(', ');
+
         return (
             <View
                 ref={ref}
@@ -224,13 +229,18 @@ const JobCard = React.forwardRef<
                 className={className}
                 clickable={!!link}
             >
-                <Heading
-                    textColor="inherit"
-                    size="heading-2"
-                    data-sheet="title"
-                    innerHTML={jobTitle}
-                    hyphens
-                />
+                <HeadingLink
+                    {...link}
+                    ariaLabel={link?.href ? jobTitle : undefined}
+                >
+                    <Heading
+                        textColor="inherit"
+                        size="heading-2"
+                        data-sheet="title"
+                        innerHTML={jobTitle}
+                        hyphens
+                    />
+                </HeadingLink>
                 {(hasEmploymentType || hasLocations) && (
                     <JobInfos type="copy-b" data-sheet="info">
                         {hasEmploymentType && (
@@ -238,11 +248,10 @@ const JobCard = React.forwardRef<
                                 <Icon>
                                     {modelIcon ? modelIcon() : <ClockFilled />}
                                 </Icon>
-                                <MainLabel>
-                                    {employmentTypes
-                                        ?.filter((type) => type.name)
-                                        .map((type) => type.name)
-                                        ?.join(', ')}
+                                <MainLabel
+                                    aria-label={`Beschäftigungsart: ${employmentType}`}
+                                >
+                                    {employmentType}
                                 </MainLabel>
                             </Info>
                         )}
@@ -255,16 +264,14 @@ const JobCard = React.forwardRef<
                                         <LocationPin />
                                     )}
                                 </Icon>
-                                <MainLabel>{locationText}</MainLabel>
+                                <MainLabel
+                                    aria-label={`Standorte: ${locationText}`}
+                                >
+                                    {locationText}
+                                </MainLabel>
                             </Info>
                         )}
                     </JobInfos>
-                )}
-                {link && (
-                    <ViewLink
-                        {...link}
-                        ariaLabel={link?.href ? jobTitle : undefined}
-                    />
                 )}
             </View>
         );
