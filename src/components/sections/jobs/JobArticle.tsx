@@ -161,6 +161,11 @@ const JobArticle: React.FC<JobArticleProps> = ({
         datePosted, // datePosted
     };
 
+    const employmentType = employmentTypes
+        ?.filter((type) => type.name)
+        .map((type) => type.name)
+        ?.join(', ');
+
     return (
         <Section
             addSeperation
@@ -197,11 +202,10 @@ const JobArticle: React.FC<JobArticleProps> = ({
                                             <ClockFilled />
                                         )}
                                     </Icon>
-                                    <MainLabel>
-                                        {employmentTypes
-                                            ?.filter((type) => type.name)
-                                            .map((type) => type.name)
-                                            ?.join(', ')}
+                                    <MainLabel
+                                        aria-label={`Beschäftigungsart: ${employmentType}`}
+                                    >
+                                        {employmentType}
                                     </MainLabel>
                                 </Info>
                             )}
@@ -215,7 +219,11 @@ const JobArticle: React.FC<JobArticleProps> = ({
                                             <LocationPin />
                                         )}
                                     </Icon>
-                                    <MainLabel>{locationText}</MainLabel>
+                                    <MainLabel
+                                        aria-label={`Standort: ${locationText}`}
+                                    >
+                                        {locationText}
+                                    </MainLabel>
                                 </Info>
                             )}
                         </JobInfos>
