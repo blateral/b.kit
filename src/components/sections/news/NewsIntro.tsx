@@ -214,6 +214,7 @@ const NewsIntro: React.FC<{
                     {image?.small && (
                         <Image
                             {...image}
+                            alt={image.alt ?? ''}
                             coverSpace
                             allowEdgeRadius
                             isInverted={isInverted}
