@@ -33,7 +33,7 @@ export const linkStyles = (isInverted?: boolean) => css`
     }
 
     &:focus-visible {
-        outline: 2px solid
+        outline: 2px dotted
             ${({ theme }) =>
                 isInverted
                     ? font(theme).link.colorInverted

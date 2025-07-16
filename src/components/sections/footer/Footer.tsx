@@ -211,7 +211,7 @@ const Footer: React.FC<{
                                     >
                                         {title}
                                     </ColTitle>
-                                    <LinkList>
+                                    <LinkList aria-label={title}>
                                         {links?.map(({ link, label }, ii) => (
                                             <LinkItem key={ii}>
                                                 <StyledLink
