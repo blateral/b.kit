@@ -25,6 +25,11 @@ const View = styled.div`
 const ImageLink = styled(Link)`
     display: block;
     width: 100%;
+
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => getColors(theme).primary.default};
+        outline-offset: 2px;
+    }
 `;
 
 const StyledImage = styled(Image)`
@@ -219,7 +224,7 @@ const NewsCard = forwardRef<
         }, [tags]);
 
         return (
-            <View ref={ref} className={className}>
+            <View ref={ref} className={className} aria-label={title}>
                 {image?.small ? (
                     <ImageLink {...link} ariaLabel={title}>
                         <StyledImage

@@ -93,13 +93,14 @@ const NewsFooter: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
-                <Grid.Row>
+                <Grid.Row asList ariaLabel="Weitere News">
                     {news
                         ?.filter((_, i) => i < visibleRows * itemsPerRow)
                         .map((item, i) => (
                             <Grid.Col
                                 medium={{ span: 6 / 12 }}
                                 key={`${i}_news_${item.title}`}
+                                ariaLabel={item.title}
                             >
                                 <NewsCard
                                     key={i}

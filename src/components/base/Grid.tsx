@@ -3,6 +3,11 @@ import styled, { css } from 'styled-components';
 import { clampValue } from 'utils/clamp';
 import { spacings, mq } from 'utils/styles';
 
+interface AriaProps {
+    ariaLabel?: string;
+    asList?: boolean;
+}
+
 export interface ColPropsSettings {
     /** Normalisierte Werte zwischen 0 und 1: z.B.  12 von 28 Spalten (12 / 28) */
     span?: number;
@@ -27,6 +32,7 @@ interface ColProps extends ColPropsSettings {
     toRight?: boolean;
     /** force column to the left */
     toLeft?: boolean;
+    ariaLabel?: string;
 }
 
 export const gridSettings = {
@@ -403,6 +409,12 @@ interface GridProps extends GridPropsSettings {
 }
 
 const StyledGrid = styled.div<GridProps>`
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
     ${getGutter('grid')}
     display: flex;
     flex-direction: row;
@@ -426,53 +438,60 @@ const mapGutterToCol = (gutter?: number, colSettings?: any) => {
     }
 };
 
-const Grid: React.FC<GridProps & { children?: React.ReactNode }> = ({
-    gutter,
-    valign,
-    children,
-    halign,
-    medium,
-    semilarge,
-    large,
-    xlarge,
-}) => {
-    return (
-        <StyledGrid
-            gutter={gutter}
-            valign={valign}
-            halign={halign}
-            medium={medium}
-            semilarge={semilarge}
-            large={large}
-            xlarge={xlarge}
-        >
-            {React.Children.map(children, (comp: any) => {
-                return comp ? (
-                    <StyledCol
-                        {...comp?.props}
-                        gutter={gutter}
-                        medium={mapGutterToCol(
-                            medium?.gutter,
-                            comp?.props?.medium
-                        )}
-                        semilarge={mapGutterToCol(
-                            semilarge?.gutter,
-                            comp?.props?.semilarge
-                        )}
-                        large={mapGutterToCol(
-                            large?.gutter,
-                            comp?.props?.large
-                        )}
-                        xlarge={mapGutterToCol(
-                            xlarge?.gutter,
-                            comp?.props?.xlarge
-                        )}
-                    />
-                ) : undefined;
-            })}
-        </StyledGrid>
-    );
-};
+const Grid: React.FC<GridProps & AriaProps & { children?: React.ReactNode }> =
+    ({
+        gutter,
+        valign,
+        children,
+        halign,
+        medium,
+        semilarge,
+        large,
+        xlarge,
+        asList,
+        ariaLabel,
+    }) => {
+        return (
+            <StyledGrid
+                gutter={gutter}
+                valign={valign}
+                halign={halign}
+                medium={medium}
+                semilarge={semilarge}
+                large={large}
+                xlarge={xlarge}
+                as={asList ? 'ul' : 'div'}
+                aria-label={ariaLabel}
+            >
+                {React.Children.map(children, (comp: any) => {
+                    return comp ? (
+                        <StyledCol
+                            aria-label={comp?.props?.ariaLabel}
+                            {...comp?.props}
+                            as={asList ? 'li' : 'div'}
+                            gutter={gutter}
+                            medium={mapGutterToCol(
+                                medium?.gutter,
+                                comp?.props?.medium
+                            )}
+                            semilarge={mapGutterToCol(
+                                semilarge?.gutter,
+                                comp?.props?.semilarge
+                            )}
+                            large={mapGutterToCol(
+                                large?.gutter,
+                                comp?.props?.large
+                            )}
+                            xlarge={mapGutterToCol(
+                                xlarge?.gutter,
+                                comp?.props?.xlarge
+                            )}
+                        />
+                    ) : undefined;
+                })}
+            </StyledGrid>
+        );
+    };
 
 Grid.defaultProps = {
     gutter: gridSettings.gutter,
