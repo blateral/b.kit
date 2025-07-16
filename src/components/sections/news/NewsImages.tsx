@@ -65,6 +65,7 @@ const NewsImages: React.FC<{
                             >
                                 <StyledImage
                                     {...img}
+                                    alt={img.alt ?? ''}
                                     coverSpace
                                     isInverted={isInverted}
                                 />
