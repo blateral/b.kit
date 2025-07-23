@@ -31,6 +31,7 @@ export const Default: Story = () => (
                 iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis
                 dolore te feugait nulla facilisi.
             </p>
+            <a href="#0">Link Beispiel</a>
         `}
     />
 );
