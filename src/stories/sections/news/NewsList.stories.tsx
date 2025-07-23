@@ -19,7 +19,7 @@ export default {
     },
 } as Meta;
 
-const action = {
+const cardFooter = {
     action: (isInverted?: boolean) => (
         <Pointer.View textDecoration="none" isInverted={isInverted}>
             <Pointer.Label>Tertiary</Pointer.Label>
@@ -44,7 +44,7 @@ const exampleNewsCard: NewsItem = {
     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy ',
     text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ',
     link: { href: '#0' },
-    ...action,
+    ...cardFooter,
 };
 
 const exampleNews = generateItemList<NewsItem>(

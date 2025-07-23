@@ -111,7 +111,7 @@ const NewsList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <News>
+                <News aria-label="News-Liste">
                     {items?.map((item, i) => (
                         <NewsItem key={i}>
                             <NewsCard

@@ -5,7 +5,7 @@ import {
     spacings,
     getGlobals as global,
     getFonts as font,
-    getColors,
+    getColors as color,
 } from 'utils/styles';
 import Copy, { copyStyle } from 'components/typography/Copy';
 import Image, { ImageProps } from 'components/blocks/Image';
@@ -15,19 +15,23 @@ import Link, { LinkProps } from 'components/typography/Link';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { isValidArray } from 'utils/arrays';
 
-const View = styled.div`
+const View = styled.article<{ isInverted?: boolean }>`
     position: relative;
     text-decoration: none;
     margin: 0;
     padding: 0;
-`;
 
-const ImageLink = styled(Link)`
-    display: block;
-    width: 100%;
+    &:hover {
+        & > * {
+            color: ${({ theme, isInverted }) =>
+                isInverted
+                    ? font(theme).link.colorHoverInverted
+                    : font(theme).link.colorHover};
+        }
+    }
 
-    &:focus-visible {
-        outline: 2px solid ${({ theme }) => getColors(theme).primary.default};
+    &:has([data-sheet='title']:focus-visible) {
+        outline: 2px dotted ${({ theme }) => color(theme).text.default};
         outline-offset: 2px;
     }
 `;
@@ -41,8 +45,8 @@ const BorderPlaceholder = styled.div<{ hasBg?: boolean }>`
     border-top: 1px solid
         ${({ theme, hasBg }) =>
             hasBg
-                ? getColors(theme).elementBg.light
-                : getColors(theme).elementBg.medium};
+                ? color(theme).elementBg.light
+                : color(theme).elementBg.medium};
 `;
 
 const TitleLink = styled(Link)`
@@ -54,6 +58,16 @@ const TitleLink = styled(Link)`
             ? font(theme)['copy-b'].big.colorInverted
             : font(theme)['copy-b'].big.color};
     text-decoration: none;
+
+    &:focus-visible {
+        outline: none;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
 `;
 
 const Head = styled.div`
@@ -76,10 +90,15 @@ const Head = styled.div`
     }
 `;
 
-const Tags = styled.div`
+const Tags = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     overflow: scroll;
     scrollbar-width: none;
+
+    z-index: 1;
 
     &::-webkit-scrollbar {
         width: 0;
@@ -129,7 +148,7 @@ const Text = styled(Copy)`
     }
 `;
 
-const Action = styled.div`
+const CardFooter = styled.div`
     margin-top: ${spacings.nudge * 3}px;
 `;
 
@@ -159,7 +178,7 @@ export interface NewsCardProps {
     onTagClick?: (tag: TagProps) => void;
 
     /** Function to inject primary action */
-    action?: (isInverted?: boolean) => React.ReactNode;
+    cardFooter?: (isInverted?: boolean) => React.ReactNode;
 
     /** Function to inject custom tag node */
     customTag?: (props: {
@@ -190,10 +209,10 @@ const NewsCard = forwardRef<
             image,
             link,
             isInverted,
-            action,
             customTag,
             className,
             hasBg,
+            cardFooter,
         },
         ref
     ) => {
@@ -214,10 +233,14 @@ const NewsCard = forwardRef<
         const handleTagClick = (tag: TagProps) =>
             onTagClick
                 ? (ev?: React.SyntheticEvent<HTMLAnchorElement>) => {
+                      ev?.stopPropagation();
                       ev?.preventDefault();
                       onTagClick(tag);
                   }
-                : undefined;
+                : (ev?: React.SyntheticEvent<HTMLAnchorElement>) => {
+                      ev?.stopPropagation();
+                      ev?.preventDefault();
+                  };
 
         const filteredTags = useMemo(() => {
             return tags?.filter((tag) => tag.name);
@@ -226,19 +249,17 @@ const NewsCard = forwardRef<
         return (
             <View ref={ref} className={className} aria-label={title}>
                 {image?.small ? (
-                    <ImageLink {...link} ariaLabel={title}>
-                        <StyledImage
-                            {...image}
-                            coverSpace
-                            isInverted={isInverted}
-                        />
-                    </ImageLink>
+                    <StyledImage
+                        {...image}
+                        coverSpace
+                        isInverted={isInverted}
+                    />
                 ) : (
                     <BorderPlaceholder hasBg={hasBg} />
                 )}
                 <Head data-sheet="head">
                     {isValidArray(filteredTags, false) && (
-                        <Tags>
+                        <Tags aria-label="News Kategorien">
                             {filteredTags.map((tag, i) => {
                                 if (customTag) {
                                     return customTag({
@@ -251,13 +272,14 @@ const NewsCard = forwardRef<
                                     });
                                 } else {
                                     return (
-                                        <Tag
-                                            key={i}
-                                            isInverted={isInverted}
-                                            name={tag.name}
-                                            link={tag.link}
-                                            onClick={handleTagClick(tag)}
-                                        />
+                                        <li key={i}>
+                                            <Tag
+                                                isInverted={isInverted}
+                                                name={tag.name}
+                                                link={tag.link}
+                                                onClick={handleTagClick(tag)}
+                                            />
+                                        </li>
                                     );
                                 }
                             })}
@@ -294,7 +316,9 @@ const NewsCard = forwardRef<
                         />
                     )}
                 </Main>
-                {action && <Action>{action(isInverted)}</Action>}
+                {cardFooter && (
+                    <CardFooter>{cardFooter(isInverted)}</CardFooter>
+                )}
             </View>
         );
     }

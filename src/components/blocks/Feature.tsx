@@ -70,7 +70,7 @@ const ArticleContent = styled.div<{ isCentered?: boolean }>`
     }
 `;
 
-const Action = styled.div`
+const CardFooter = styled.div`
     max-width: 100%;
 `;
 
@@ -105,7 +105,7 @@ export interface FeatureProps {
     link?: LinkProps;
 
     /** Function to inject custom primary button */
-    action?: (props: FeatureActionProps) => React.ReactNode;
+    cardFooter?: (props: FeatureActionProps) => React.ReactNode;
 }
 
 const Feature = forwardRef<
@@ -124,7 +124,7 @@ const Feature = forwardRef<
             image,
             isInverted = false,
             isCentered = false,
-            action,
+            cardFooter,
             className,
         },
         ref
@@ -179,10 +179,10 @@ const Feature = forwardRef<
                         data-sheet="text"
                     />
                 </ArticleContent>
-                {action && (
-                    <Action>
-                        {action({ isInverted, isTextCentered: isCentered })}
-                    </Action>
+                {cardFooter && (
+                    <CardFooter>
+                        {cardFooter({ isInverted, isTextCentered: isCentered })}
+                    </CardFooter>
                 )}
             </View>
         );

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import NewsCard from 'components/blocks/NewsCard';
-import Pointer from 'components/buttons/Pointer';
+import { Pointer } from 'buttons';
 import AngleRight from 'components/base/icons/AngleRight';
+// import Pointer from 'components/buttons/Pointer';
+// import AngleRight from 'components/base/icons/AngleRight';
 
 export default {
     title: 'Blocks/NewsCard',
@@ -35,6 +37,7 @@ export const WithTags: Story = () => (
         onTagClick={console.log}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+        link={{ href: '#0' }}
     />
 );
 
@@ -110,7 +113,7 @@ export const WithAction: Story = () => (
             large: 'https://unsplash.it/1399/1048?image=400',
             xlarge: 'https://unsplash.it/1400/1050?image=400',
         }}
-        action={(isInverted) => (
+        cardFooter={(isInverted) => (
             <Pointer.View textDecoration="none" isInverted={isInverted}>
                 <Pointer.Label>Tertiary</Pointer.Label>
                 <Pointer.Icon>
@@ -139,7 +142,7 @@ export const Inverted: Story = () => (
             large: 'https://unsplash.it/1399/1048?image=400',
             xlarge: 'https://unsplash.it/1400/1050?image=400',
         }}
-        action={(isInverted) => (
+        cardFooter={(isInverted) => (
             <Pointer.View textDecoration="none" isInverted={isInverted}>
                 <Pointer.Label>Tertiary</Pointer.Label>
                 <Pointer.Icon>
