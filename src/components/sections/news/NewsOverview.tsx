@@ -452,7 +452,7 @@ const NewsOverview: React.FC<{
                         ))}
                     </TagContainer>
                 )}
-                <News>
+                <News aria-label="Neuigkeiten-Übersicht">
                     {visibleNews.map((item, i) => (
                         <NewsItem key={`${i}_news_${item.title}`}>
                             <NewsCard
