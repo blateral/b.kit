@@ -21,6 +21,9 @@ const View = styled.article<{ isInverted?: boolean }>`
     margin: 0;
     padding: 0;
 
+    display: flex;
+    flex-direction: column-reverse;
+
     &:hover {
         & > * {
             color: ${({ theme, isInverted }) =>
@@ -31,7 +34,11 @@ const View = styled.article<{ isInverted?: boolean }>`
     }
 
     &:has([data-sheet='title']:focus-visible) {
-        outline: 2px dotted ${({ theme }) => color(theme).text.default};
+        outline: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.default
+                    : color(theme).primary.default};
         outline-offset: 2px;
     }
 `;
@@ -247,16 +254,33 @@ const NewsCard = forwardRef<
         }, [tags]);
 
         return (
-            <View ref={ref} className={className} aria-label={title}>
-                {image?.small ? (
-                    <StyledImage
-                        {...image}
-                        coverSpace
-                        isInverted={isInverted}
-                    />
-                ) : (
-                    <BorderPlaceholder hasBg={hasBg} />
-                )}
+            <View
+                ref={ref}
+                className={className}
+                aria-label={title}
+                isInverted={isInverted}
+            >
+                <Main>
+                    {title && (
+                        <TitleLink
+                            {...link}
+                            ariaLabel={title}
+                            isInverted={isInverted}
+                            dataSheet="title"
+                        >
+                            {title}
+                        </TitleLink>
+                    )}
+                    {text && (
+                        <Text
+                            isInverted={isInverted}
+                            type="copy"
+                            innerHTML={text}
+                            data-sheet="text"
+                            size="medium"
+                        />
+                    )}
+                </Main>
                 <Head data-sheet="head">
                     {isValidArray(filteredTags, false) && (
                         <Tags aria-label="News Kategorien">
@@ -295,29 +319,17 @@ const NewsCard = forwardRef<
                         </PublishDate>
                     )}
                 </Head>
-                <Main>
-                    {title && (
-                        <TitleLink
-                            {...link}
-                            ariaLabel={title}
-                            isInverted={isInverted}
-                            dataSheet="title"
-                        >
-                            {title}
-                        </TitleLink>
-                    )}
-                    {text && (
-                        <Text
-                            isInverted={isInverted}
-                            type="copy"
-                            innerHTML={text}
-                            data-sheet="text"
-                            size="medium"
-                        />
-                    )}
-                </Main>
                 {cardFooter && (
                     <CardFooter>{cardFooter(isInverted)}</CardFooter>
+                )}
+                {image?.small ? (
+                    <StyledImage
+                        {...image}
+                        coverSpace
+                        isInverted={isInverted}
+                    />
+                ) : (
+                    <BorderPlaceholder hasBg={hasBg} />
                 )}
             </View>
         );
