@@ -4,7 +4,7 @@ import Copy from 'components/typography/Copy';
 import React, { FC, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import { getColors as color, spacings } from 'utils/styles';
+import { getColors as color, getColors, spacings } from 'utils/styles';
 
 const View = styled.div`
     display: grid;
@@ -124,6 +124,10 @@ const ButtonContainer = styled.button<{ isVisible?: boolean }>`
     & > * {
         pointer-events: all;
     }
+
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => getColors(theme).primary.default};
+    }
 `;
 
 const ButtonRightContainer = styled(ButtonContainer)`
@@ -207,13 +211,19 @@ const TableBlock: FC<TableProps> = ({
 
     return (
         <View>
-            <TableContainer tabIndex={1} ref={scrollRef}>
+            <TableContainer
+                tabIndex={1}
+                ref={scrollRef}
+                role="region"
+                aria-labelledby="table-caption"
+            >
                 <TableBody>
                     {tableTitle && (
                         <Caption
                             renderAs="caption"
                             type="copy-b"
                             isInverted={isInverted}
+                            id="table-caption"
                         >
                             {tableTitle}
                         </Caption>
@@ -260,6 +270,7 @@ const TableBlock: FC<TableProps> = ({
                 }}
                 isVisible={showButtons && showButtonLeft}
                 onClick={handleLeftClick}
+                aria-label="Links navigieren"
             >
                 <ButtonLeft id="left" />
             </ButtonLeftContainer>
@@ -269,6 +280,7 @@ const TableBlock: FC<TableProps> = ({
                 }}
                 isVisible={showButtons && showButtonRight}
                 onClick={handleRightClick}
+                aria-label="Rechts navigieren"
             >
                 <ButtonRight id="right" />
             </ButtonRightContainer>

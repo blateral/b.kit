@@ -349,6 +349,7 @@ export type CopyTag =
     | 'figcaption';
 
 const Copy: React.FC<{
+    id?: any;
     renderAs?: CopyTag;
     isInverted?: boolean;
     textColor?: string;
@@ -380,6 +381,7 @@ const Copy: React.FC<{
     ariaLabel,
     ariaLevel,
     ariaRole,
+    id,
     ...rest
 }) => {
     const { fonts } = useLibTheme();
@@ -388,6 +390,7 @@ const Copy: React.FC<{
     return (
         <View
             as={renderAs}
+            id={id}
             copyType={type}
             size={size}
             textColor={
