@@ -89,6 +89,15 @@ const View = styled.div<{
             rgba(29, 34, 35, 0) 59.02%
         );
     }
+
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
+        outline-offset: 2px;
+
+        & > * {
+            color: ${({ theme }) => color(theme).primary.default};
+        }
+    }
 `;
 
 const VideoControls = styled.button`
@@ -122,16 +131,6 @@ const VideoControls = styled.button`
     ${View}:active > & > * {
         transform: scale(0.95);
         opacity: 1;
-    }
-
-    &:focus {
-        outline: 2px solid ${({ theme }) => color(theme).primary.default};
-        border-radius: 50%;
-        opacity: 1;
-
-        & > * {
-            color: ${({ theme }) => color(theme).primary.default};
-        }
     }
 
     &:focus:not(:focus-visible) {
@@ -248,18 +247,24 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
             isActive={isActive}
             className={className}
         >
-            {!isActive && !showConsent && (
-                <VideoControls>
-                    {playIcon || <Play iconColor="#000" />}
-                </VideoControls>
-            )}
-            {isActive && (
-                <Iframe
-                    id="ytplayer"
-                    src={`https://www.youtube.com/embed/${embedId}?autoplay=1`}
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                />
-            )}
+            <div aria-hidden="true">
+                {!isActive && !showConsent && (
+                    <VideoControls
+                        aria-label="Video abspielen"
+                        tabIndex={showConsent ? -1 : 0}
+                    >
+                        {playIcon || <Play iconColor="#000" />}
+                    </VideoControls>
+                )}
+
+                {isActive && (
+                    <Iframe
+                        id="ytplayer"
+                        src={`https://www.youtube.com/embed/${embedId}?autoplay=1`}
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    />
+                )}
+            </div>
             <ConsentOverlay isVisible={showConsent}>
                 <ConsentContent>
                     {consentText && (

@@ -125,6 +125,7 @@ export const CookieConsent: FC<{
     theme,
 }) => {
     const { globals } = useLibTheme();
+    const cookieConsentRef = useRef<HTMLDivElement>(null);
 
     const statusRenderer = useCallback(
         (props: { updatedAt: number; state: CookieTypes }) => {
@@ -199,13 +200,18 @@ export const CookieConsent: FC<{
 
     useEffect(() => {
         document.body.style.overflow = isVisible ? 'hidden' : 'visible';
+        document.body.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
+
+        if (isVisible) {
+            cookieConsentRef.current?.focus();
+        }
     }, [isVisible]);
 
     if (!isVisible) return null;
     return (
         <LibThemeProvider theme={theme}>
             <Stage zIndex={zIndex} bgOpacity={overlayOpacity}>
-                <View className={className}>
+                <View className={className} tabIndex={1} ref={cookieConsentRef}>
                     {children?.({
                         types: cookieTypes,
                         acceptAll,

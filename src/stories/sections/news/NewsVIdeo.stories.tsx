@@ -41,6 +41,7 @@ export default {
                                 isMirrored
                                 primary={
                                     <Button.View
+                                        as="button"
                                         {...additionalAcceptProps}
                                         onClick={acceptAll}
                                     >
@@ -51,6 +52,7 @@ export default {
                                 }
                                 secondary={
                                     <ButtonGhost.View
+                                        as="button"
                                         {...additionalDeclineProps}
                                         onClick={declineAll}
                                     >
