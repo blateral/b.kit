@@ -239,11 +239,21 @@ const Teaser: FC<{
                                         ratios={video?.aspectRatios}
                                         isVisible={isLoaded}
                                         isInverted={isInverted}
-                                        ariaLabel={`Video zu: ${title}`}
+                                        ariaLabel={
+                                            description
+                                                ? undefined
+                                                : `Video zu: ${title}`
+                                        }
+                                        ariaDescribedBy={
+                                            description
+                                                ? 'media-caption'
+                                                : undefined
+                                        }
                                     />
                                 )}
                                 {description && (
                                     <Description
+                                        id="media-caption"
                                         size="small"
                                         renderAs="figcaption"
                                         isInverted={isInverted}
