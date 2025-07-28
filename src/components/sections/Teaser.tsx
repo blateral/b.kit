@@ -222,6 +222,7 @@ const Teaser: FC<{
                                     <StyledImage
                                         {...image}
                                         isInverted={isInverted}
+                                        alt={image.alt ?? ''}
                                         coverSpace
                                     />
                                 )}
