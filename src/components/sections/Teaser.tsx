@@ -239,6 +239,7 @@ const Teaser: FC<{
                                         ratios={video?.aspectRatios}
                                         isVisible={isLoaded}
                                         isInverted={isInverted}
+                                        ariaLabel={`Video zu: ${title}`}
                                     />
                                 )}
                                 {description && (
