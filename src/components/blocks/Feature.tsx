@@ -12,6 +12,7 @@ import Image, { ImageProps } from 'components/blocks/Image';
 import Link, { LinkProps } from 'components/typography/Link';
 
 const View = styled.div<{ isCentered?: boolean }>`
+    position: relative;
     min-width: 270px;
     padding-bottom: ${spacings.nudge}px;
     text-align: ${({ isCentered }) => isCentered && 'center'};
@@ -40,9 +41,15 @@ const TitleLink = styled(Link)<{ href?: string }>`
                     : font(theme)['copy-b'].big.color};
             }
         `}
+
+    &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
 `;
 
-const ImageContainer = styled(Link)<{ isCentered?: boolean }>`
+const ImageContainer = styled.div<{ isCentered?: boolean }>`
     display: flex;
     justify-content: ${({ isCentered }) =>
         isCentered ? 'center' : 'flex-start'};
@@ -132,7 +139,7 @@ const Feature = forwardRef<
         return (
             <View ref={ref} isCentered={isCentered} className={className}>
                 {image?.small && (
-                    <ImageContainer {...link} isCentered={isCentered}>
+                    <ImageContainer isCentered={isCentered}>
                         <StyledImage
                             small={image.small}
                             medium={image.medium}

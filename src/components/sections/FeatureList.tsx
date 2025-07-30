@@ -69,6 +69,8 @@ const FeatureList: React.FC<{
             <Wrapper addWhitespace clampWidth="normal">
                 <Grid.Row
                     halign={isHalf || featureCount <= 2 ? 'center' : 'left'}
+                    asList
+                    ariaLabel={'Liste an Features'}
                 >
                     {features?.map((feature, i) => (
                         <Grid.Col
