@@ -64,7 +64,10 @@ const FactGrid: FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <Grid.Row>
+                <Grid.Row
+                    asList
+                    ariaLabel="Wichtige Informationen im Überblick"
+                >
                     {facts &&
                         facts.map((fact, i) => {
                             if (
