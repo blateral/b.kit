@@ -15,9 +15,7 @@ import Title from 'components/blocks/Title';
 import External from 'components/base/icons/External';
 import { HeadlineTag } from 'components/typography/Heading';
 
-const View = styled(Link)<{
-    clickable?: boolean;
-}>`
+const View = styled(Link)<{ clickable?: boolean }>`
     display: block;
     position: relative;
     width: 100%;
@@ -47,7 +45,7 @@ const View = styled(Link)<{
                 box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
             }
 
-            &:focus {
+            &:focus-visible {
                 box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
                 outline: solid 2px
                     ${isInverted
@@ -196,10 +194,9 @@ const PromotionCard = forwardRef<
         return (
             <View
                 ref={ref}
-                clickable={!!href || !!link}
                 {...linkObj}
                 className={className}
-                as="article"
+                clickable={!!href || !!link}
             >
                 <StyledImage
                     {...image}
@@ -219,7 +216,7 @@ const PromotionCard = forwardRef<
                                     ? title + externalIconString
                                     : title
                             }
-                            titleAs={titleAs || 'div'}
+                            titleAs={titleAs || 'h3'}
                             clampTitle
                         />
                     </IntroContainer>
