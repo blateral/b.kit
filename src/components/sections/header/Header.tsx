@@ -428,7 +428,6 @@ const Header: FC<{
 
     return (
         <Section
-            renderAs="header"
             addSeperation
             anchorId={anchorId}
             bgColor={
