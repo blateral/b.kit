@@ -212,22 +212,20 @@ const IconList: React.FC<{
             <Wrapper clampWidth="normal" addWhitespace>
                 <ItemContainer isCentered={isCentered}>
                     <Items
+                        id="icon-list-items"
                         isVisible={!showMore ? true : showMore === true}
                         isCentered={isCentered}
+                        aria-label="Liste an Icons"
                     >
                         {items?.map(
                             ({ src, link, alt, ratio, showPlaceholder }, i) => (
                                 <Item isVisible={showMore} index={i} key={i}>
-                                    <ItemLink
-                                        {...link}
-                                        isInverted={isInverted}
-                                        ariaLabel={alt}
-                                    >
+                                    <ItemLink {...link} isInverted={isInverted}>
                                         <Image
                                             data-img-loaded={false}
                                             isInverted={isInverted}
                                             small={src}
-                                            alt={alt}
+                                            alt={alt ?? ''}
                                             ratios={
                                                 ratio
                                                     ? { small: ratio }
@@ -260,6 +258,7 @@ const IconList: React.FC<{
                                 as="button"
                                 isInverted={isInverted}
                                 aria-pressed={showMore}
+                                aria-controls="icon-list-items"
                                 onClick={() => handleToggleClick()}
                             >
                                 <Pointer.Label>
