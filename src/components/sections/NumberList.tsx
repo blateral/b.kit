@@ -223,7 +223,9 @@ const NumberList: React.FC<{
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, items, bgMode, isCentered = true }) => {
+
+    ariaLabel?: string;
+}> = ({ anchorId, items, bgMode, isCentered = true, ariaLabel }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -259,7 +261,7 @@ const NumberList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <CardList>
+                <CardList aria-label={ariaLabel}>
                     {items?.map((item, i) => {
                         return (
                             <NumberListCard
