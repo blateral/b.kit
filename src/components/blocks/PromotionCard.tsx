@@ -199,8 +199,14 @@ const PromotionCard = forwardRef<
                 clickable={!!href || !!link}
                 {...linkObj}
                 className={className}
+                as="article"
             >
-                <StyledImage {...image} isInverted={isInverted} coverSpace />
+                <StyledImage
+                    {...image}
+                    alt={image.alt ?? ''}
+                    isInverted={isInverted}
+                    coverSpace
+                />
                 {icon && <Icon>{icon({ isInverted })}</Icon>}
                 {title && (
                     <IntroContainer>

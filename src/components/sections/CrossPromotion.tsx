@@ -50,7 +50,18 @@ const CrossPromotion: React.FC<{
 
     /** Inject custom icon that indicates an external link */
     externalLinkIcon?: React.ReactNode;
-}> = ({ anchorId, main, aside, bgMode, isMirrored, externalLinkIcon }) => {
+
+    /** Aria-Label for accessibility */
+    ariaLabel?: string;
+}> = ({
+    anchorId,
+    main,
+    aside,
+    bgMode,
+    isMirrored,
+    externalLinkIcon,
+    ariaLabel,
+}) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -71,7 +82,7 @@ const CrossPromotion: React.FC<{
             <Wrapper clampWidth="normal" addWhitespace>
                 {aside ? (
                     isMirrored ? (
-                        <Grid.Row>
+                        <Grid.Row asList ariaLabel={ariaLabel}>
                             <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {main &&
                                     main.map((card, i) => (
