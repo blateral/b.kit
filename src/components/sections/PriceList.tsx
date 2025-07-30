@@ -89,7 +89,9 @@ const PriceList: React.FC<{
 
     /** Section background */
     bgMode?: 'inverted' | 'full';
-}> = ({ anchorId, bgMode, items }) => {
+
+    ariaLabel?: string;
+}> = ({ anchorId, bgMode, items, ariaLabel }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBack = isInverted || bgMode === 'full';
@@ -108,7 +110,7 @@ const PriceList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <ItemList>
+                <ItemList aria-label={ariaLabel}>
                     {items?.map((item, i) => (
                         <PriceBlock key={i} {...item} hasBg={hasBack} />
                     ))}
