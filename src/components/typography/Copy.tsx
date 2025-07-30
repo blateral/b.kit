@@ -346,7 +346,8 @@ export type CopyTag =
     | 'li'
     | 'p'
     | 'caption'
-    | 'figcaption';
+    | 'figcaption'
+    | 'h3';
 
 const Copy: React.FC<{
     id?: any;

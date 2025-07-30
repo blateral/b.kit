@@ -428,6 +428,7 @@ const Header: FC<{
 
     return (
         <Section
+            renderAs="header"
             addSeperation
             anchorId={anchorId}
             bgColor={
@@ -461,7 +462,7 @@ const Header: FC<{
                                     isInverted
                                     size="heading-1"
                                     isCentered={isCentered}
-                                    renderAs={titleAs}
+                                    renderAs={titleAs || 'h1'}
                                     innerHTML={title}
                                 />
                             )}
