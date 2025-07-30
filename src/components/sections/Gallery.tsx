@@ -48,7 +48,7 @@ const Gallery: FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace>
-                <Grid.Row>
+                <Grid.Row asList ariaLabel="Galerie">
                     {images?.map((img, i) => (
                         <Grid.Col
                             key={i}
@@ -58,6 +58,7 @@ const Gallery: FC<{
                         >
                             <StyledImage
                                 {...img}
+                                alt={img.alt ?? ''}
                                 coverSpace
                                 isInverted={isInverted}
                             />
