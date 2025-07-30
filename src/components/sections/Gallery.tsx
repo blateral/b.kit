@@ -48,13 +48,19 @@ const Gallery: FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace>
-                <Grid.Row asList ariaLabel="Galerie">
+                <Grid.Row
+                    asList={images && images.length > 1}
+                    ariaLabel="Galerie"
+                >
                     {images?.map((img, i) => (
                         <Grid.Col
                             key={i}
                             semilarge={{
                                 span: img.isFull ? 12 / 12 : 6 / 12,
                             }}
+                            ariaLabel={
+                                img.alt ? img.alt : `Galerie Bild ${i + 1}`
+                            }
                         >
                             <StyledImage
                                 {...img}
