@@ -11,7 +11,7 @@ import Actions from 'components/blocks/Actions';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { gridSettings, getGridWidth } from 'components/base/Grid';
 
-const ContactView = styled.div`
+const ContactView = styled.figure`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -106,11 +106,12 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
         <ContactView className={className}>
             <Avatar
                 src={avatar?.src}
-                alt={avatar?.alt}
+                alt={avatar?.alt ?? ''}
                 isInverted={isInverted}
             />
             {description && (
                 <Description
+                    renderAs="figcaption"
                     type="copy"
                     isInverted={isInverted}
                     innerHTML={description}
