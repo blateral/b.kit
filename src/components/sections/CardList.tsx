@@ -372,7 +372,9 @@ const CardList: React.FC<{
 
     /** Force maximal three items per row */
     maxThreeCols?: boolean;
-}> = ({ anchorId, items, bgMode, decorator, maxThreeCols }) => {
+
+    ariaLabel?: string;
+}> = ({ anchorId, items, bgMode, decorator, maxThreeCols, ariaLabel }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
@@ -390,7 +392,7 @@ const CardList: React.FC<{
             addSeperation
         >
             <Wrapper addWhitespace>
-                <List>
+                <List aria-label={ariaLabel}>
                     {items?.map((item, i) => (
                         <CardItem
                             key={i}
