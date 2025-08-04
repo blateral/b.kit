@@ -88,7 +88,16 @@ const IndexList: React.FC<{
 
     /** Top offset for scroll to clicked item. Default: auto */
     scrollToOffset?: number;
-}> = ({ anchorId, items, bgMode, customIcon, scrollToOffset }) => {
+
+    ariaLabel?: string;
+}> = ({
+    anchorId,
+    items,
+    bgMode,
+    customIcon,
+    scrollToOffset,
+    ariaLabel = 'Index-Liste',
+}) => {
     const { colors, theme } = useLibTheme();
     const setTargetPos = useScrollTo(500);
     const { semilarge } = useMediaQueries();
@@ -154,7 +163,11 @@ const IndexList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List hasBg={hasBg} isInverted={isInverted}>
+                <List
+                    hasBg={hasBg}
+                    isInverted={isInverted}
+                    aria-label={ariaLabel}
+                >
                     {items?.map((item, i) => (
                         <ListItem key={i}>
                             <IndexLink
