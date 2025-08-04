@@ -65,7 +65,9 @@ const NavList: React.FC<{
 
     /** Function to inject custom title decorator icon */
     customTitleIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-}> = ({ anchorId, items, bgMode, customTitleIcon }) => {
+
+    ariaLabel?: string;
+}> = ({ anchorId, items, bgMode, customTitleIcon, ariaLabel }) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -85,7 +87,7 @@ const NavList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List>
+                <List aria-label={ariaLabel}>
                     {items?.map((item, i) => (
                         <ListItem key={i}>
                             <NavBlock
