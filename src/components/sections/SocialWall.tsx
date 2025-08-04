@@ -176,7 +176,17 @@ const SocialWall: React.FC<{
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, items, hashTag, followUs, socialIcon, bgMode }) => {
+
+    ariaLabel?: string;
+}> = ({
+    anchorId,
+    items,
+    hashTag,
+    followUs,
+    socialIcon,
+    bgMode,
+    ariaLabel,
+}) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -195,7 +205,7 @@ const SocialWall: React.FC<{
             addSeperation
         >
             <Wrapper addWhitespace>
-                <Cards>
+                <Cards aria-label={ariaLabel}>
                     {items?.map((item, i) => (
                         <Item key={i}>
                             <Card
@@ -214,7 +224,7 @@ const SocialWall: React.FC<{
                                         isInverted={isInverted}
                                     />
                                 )}
-                                <TextContainer>
+                                <TextContainer aria-hidden="true">
                                     <FollowUs size="super" isInverted>
                                         {followUs
                                             ? followUs
