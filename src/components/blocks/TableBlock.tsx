@@ -215,7 +215,9 @@ const TableBlock: FC<TableProps> = ({
                 tabIndex={1}
                 ref={scrollRef}
                 role="region"
-                aria-labelledby="table-caption"
+                aria-labelledby={`table-caption-${tableTitle
+                    ?.replace(/\s+/g, '-')
+                    .toLowerCase()}`}
             >
                 <TableBody>
                     {tableTitle && (
@@ -223,7 +225,9 @@ const TableBlock: FC<TableProps> = ({
                             renderAs="caption"
                             type="copy-b"
                             isInverted={isInverted}
-                            id="table-caption"
+                            id={`table-caption-${tableTitle
+                                .replace(/\s+/g, '-')
+                                .toLowerCase()}`}
                         >
                             {tableTitle}
                         </Caption>
