@@ -172,6 +172,11 @@ const Control = styled.div`
     border: solid 2px ${({ theme }) => color(theme).elementBg.light};
     border-radius: 50%;
     background-color: ${({ theme }) => color(theme).elementBg.medium};
+
+    &:focus-visible {
+        outline: solid 2px ${({ theme }) => color(theme).elementBg.light};
+        outline-offset: 2px;
+    }
 `;
 
 const ComparisonSlider: FC<{
@@ -293,6 +298,17 @@ const ComparisonSlider: FC<{
 
     const isInverted = bgMode === 'inverted';
 
+    const handleControlKeydown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+        if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
+            ev.preventDefault();
+            setInteracted(true);
+            setSlideValue((prev) => {
+                const delta = ev.key === 'ArrowLeft' ? -0.05 : 0.05;
+                return clamp(prev + delta, 0, 1);
+            });
+        }
+    };
+
     return (
         <Section
             addSeperation
@@ -363,7 +379,15 @@ const ComparisonSlider: FC<{
                             {dragControl ? (
                                 dragControl
                             ) : (
-                                <Control>
+                                <Control
+                                    role="slider"
+                                    tabIndex={0}
+                                    aria-valuemin={0}
+                                    aria-valuemax={100}
+                                    aria-valuenow={Math.round(slideValue * 100)}
+                                    aria-label="Image comparison slider"
+                                    onKeyDown={handleControlKeydown}
+                                >
                                     <ArrowLeftRight
                                         iconColor={colors.elementBg.light}
                                     />
