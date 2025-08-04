@@ -11,6 +11,7 @@ import StatusFormatter from '../../utils/statusFormatter';
 import Info from '../base/icons/Info';
 
 const View = styled.div<{ isInverted?: boolean }>`
+    position: relative;
     display: -ms-grid;
     display: grid;
 
@@ -21,7 +22,6 @@ const View = styled.div<{ isInverted?: boolean }>`
 
     text-decoration: none;
 
-    position: relative;
     border: 2px solid
         ${({ theme, isInverted }) =>
             isInverted
@@ -89,11 +89,10 @@ const Title = styled(Copy)`
 `;
 
 const ViewLink = styled(Link)`
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    /* position: absolute;
+    inset: 0; */
+
+    color: inherit;
 
     && {
         margin: 0;
@@ -111,6 +110,12 @@ const ViewLink = styled(Link)`
     &:focus:not(:focus-visible) {
         outline: none;
         box-shadow: none;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
     }
 `;
 
@@ -160,9 +165,14 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
             <Icon>{customIcon ? customIcon({ isInverted }) : <Info />}</Icon>
             <MainLabel>
                 {title && (
-                    <Title textColor="inherit" size="medium" type="copy-b">
-                        {title}
-                    </Title>
+                    <ViewLink
+                        {...link}
+                        ariaLabel={link?.href ? title : undefined}
+                    >
+                        <Title textColor="inherit" size="medium" type="copy-b">
+                            {title}
+                        </Title>
+                    </ViewLink>
                 )}
             </MainLabel>
             <span />
@@ -180,12 +190,6 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
                     </Copy>
                 )}
             </Content>
-            {link && (
-                <ViewLink
-                    {...link}
-                    ariaLabel={link?.href ? title : undefined}
-                />
-            )}
         </View>
     );
 };
