@@ -565,6 +565,12 @@ const LocationField: FC<LocationFieldProps> = ({
                                         forceUpdate();
                                         onBlur?.(getValue);
                                     }}
+                                    aria-required={isRequired}
+                                    aria-label={label}
+                                    aria-invalid={!!errorMessage}
+                                    aria-errormessage={
+                                        errorMessage ? errorMessage : undefined
+                                    }
                                 />
                             </FieldWrapper.Content>
                         </FieldView>

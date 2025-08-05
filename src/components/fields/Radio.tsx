@@ -124,6 +124,8 @@ const RadioButton: React.FC<RadioButtonProps> = ({
                     value={value}
                     checked={isSelected}
                     onChange={onChange}
+                    aria-checked={isSelected}
+                    aria-disabled={isDisabled}
                 />
             </RadioContainer>
             {label && (
