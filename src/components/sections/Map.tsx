@@ -183,7 +183,7 @@ const ContactListLink = styled(Link)`
     }
 `;
 
-const AddressContainer = styled.div<{ hasIcon?: boolean }>`
+const AddressContainer = styled.address<{ hasIcon?: boolean }>`
     display: -ms-grid;
     display: grid;
 
@@ -294,7 +294,10 @@ const LocationInfoCard: FC<
                 />
             )}
             {contact && (
-                <ContactList isInverted={isInverted}>
+                <ContactList
+                    isInverted={isInverted}
+                    aria-label="Kontakt Informationen"
+                >
                     {contact?.telephone?.label && (
                         <li>
                             {phoneIconContent && (
