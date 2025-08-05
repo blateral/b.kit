@@ -136,6 +136,13 @@ const Textfield: React.FC<TextfieldProps> = ({
                     required={isRequired}
                     onChange={onChange}
                     onBlur={onBlur}
+                    aria-required={isRequired}
+                    aria-label={label}
+                    aria-invalid={!!errorMessage}
+                    aria-errormessage={errorMessage ? errorMessage : undefined}
+                    aria-disabled={isDisabled}
+                    disabled={isDisabled}
+                    aria-placeholder={placeholder}
                 />
             </FieldWrapper.Content>
             <FieldWrapper.Messages

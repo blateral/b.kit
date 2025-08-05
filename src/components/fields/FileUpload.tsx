@@ -397,6 +397,11 @@ const FileUpload: FC<FileUploadProps> = ({
                     required={isRequired}
                     disabled={isDisabled}
                     accept={acceptedFormats}
+                    aria-required={isRequired}
+                    aria-label={label}
+                    aria-invalid={!!errorMessage}
+                    aria-errormessage={errorMessage ? errorMessage : undefined}
+                    aria-describedBy={infoMessage ? infoMessage : undefined}
                 />
             </FieldWrapper.Content>
             <FieldWrapper.Messages
