@@ -138,8 +138,10 @@ const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
 }) => {
     const { colors } = useLibTheme();
 
+    const inputId = `${name}-${value}`;
+
     return (
-        <View className={className}>
+        <View className={className} htmlFor={inputId}>
             <CheckboxContainer
                 isDisabled={isDisabled}
                 isInverted={isInverted}
@@ -153,6 +155,7 @@ const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
                     {isSelected && <StyledCheck />}
                 </Box>
                 <Original
+                    id={inputId}
                     type="checkbox"
                     name={`${name}[]`}
                     value={value}
@@ -160,6 +163,10 @@ const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
                     required={isRequired}
                     onChange={onChange}
                     onBlur={onBlur}
+                    aria-checked={isSelected}
+                    aria-disabled={isDisabled}
+                    aria-required={isRequired}
+                    tabIndex={isDisabled ? -1 : 0}
                 />
             </CheckboxContainer>
             {label && (
