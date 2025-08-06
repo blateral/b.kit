@@ -133,6 +133,12 @@ const VideoControls = styled.button`
         opacity: 1;
     }
 
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => color(theme).elementBg.dark};
+        outline-offset: 2px;
+        border-radius: 50%;
+    }
+
     &:focus:not(:focus-visible) {
         outline: none;
         box-shadow: none;
