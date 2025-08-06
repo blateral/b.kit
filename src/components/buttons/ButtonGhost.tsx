@@ -153,8 +153,8 @@ const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
         if (as === 'button') {
             return (
                 <View
-                    ref={ref}
-                    as={as as any}
+                    ref={ref as any}
+                    as="button"
                     size={size}
                     inverted={isInverted}
                     disable={isDisabled}
