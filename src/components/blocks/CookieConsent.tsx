@@ -24,17 +24,9 @@ import StatusFormatter from 'utils/statusFormatter';
 import { getColors as color, mq, spacings } from 'utils/styles';
 import useMounted from 'utils/useMounted';
 
-const Stage = styled.div<{ zIndex?: number; bgOpacity?: number }>`
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, ${({ bgOpacity }) => bgOpacity || 0.4});
-    z-index: ${({ zIndex }) => zIndex || 1000};
-`;
-
-const View = styled.div`
+const View = styled.dialog<{ zIndex?: number; bgOpacity?: number }>`
+    margin-bottom: 0;
+    border: none;
     box-sizing: border-box;
     max-width: 900px;
     width: 100vw;
@@ -42,7 +34,7 @@ const View = styled.div`
     max-height: 85%;
     overflow-y: scroll;
     padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
@@ -67,6 +59,11 @@ const View = styled.div`
         bottom: ${spacings.spacer * 1.5}px;
         max-height: 100vh;
         overflow: auto;
+    }
+
+    ::backdrop {
+        background-color: rgba(0, 0, 0, ${({ bgOpacity }) => bgOpacity || 0.4});
+        z-index: ${({ zIndex }) => zIndex || 1000};
     }
 `;
 
@@ -125,7 +122,7 @@ export const CookieConsent: FC<{
     theme,
 }) => {
     const { globals } = useLibTheme();
-    const cookieConsentRef = useRef<HTMLDivElement>(null);
+    const cookieConsentRef = useRef<any>(null);
 
     const statusRenderer = useCallback(
         (props: { updatedAt: number; state: CookieTypes }) => {
@@ -204,29 +201,37 @@ export const CookieConsent: FC<{
 
         if (isVisible) {
             cookieConsentRef.current?.focus();
+            cookieConsentRef.current.showModal();
+        } else {
+            cookieConsentRef.current?.close();
         }
     }, [isVisible]);
 
     if (!isVisible) return null;
     return (
         <LibThemeProvider theme={theme}>
-            <Stage zIndex={zIndex} bgOpacity={overlayOpacity}>
-                <View className={className} tabIndex={1} ref={cookieConsentRef}>
-                    {children?.({
-                        types: cookieTypes,
-                        acceptAll,
-                        acceptSelected,
-                        setConsent,
-                        declineAll,
-                        additionalAcceptProps: {
-                            ['data-gtm']: 'button-cookie-consent-accept',
-                        },
-                        additionalDeclineProps: {
-                            ['data-gtm']: 'button-cookie-consent-decline',
-                        },
-                    })}
-                </View>
-            </Stage>
+            <View
+                role="dialog"
+                className={className}
+                tabIndex={1}
+                ref={cookieConsentRef}
+                zIndex={zIndex}
+                bgOpacity={overlayOpacity}
+            >
+                {children?.({
+                    types: cookieTypes,
+                    acceptAll,
+                    acceptSelected,
+                    setConsent,
+                    declineAll,
+                    additionalAcceptProps: {
+                        ['data-gtm']: 'button-cookie-consent-accept',
+                    },
+                    additionalDeclineProps: {
+                        ['data-gtm']: 'button-cookie-consent-decline',
+                    },
+                })}
+            </View>
         </LibThemeProvider>
     );
 };

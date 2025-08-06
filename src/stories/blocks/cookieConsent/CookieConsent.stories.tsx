@@ -158,6 +158,7 @@ export const Advanced: Story = () => (
                             <Button.View
                                 {...additionalAcceptProps}
                                 onClick={acceptAll}
+                                as="button"
                             >
                                 <Button.Label>
                                     Alle Cookies erlauben
@@ -168,6 +169,7 @@ export const Advanced: Story = () => (
                             <ButtonGhost.View
                                 {...additionalDeclineProps}
                                 onClick={acceptSelected}
+                                as="button"
                             >
                                 <ButtonGhost.Label>
                                     Auswahl übernehmen
