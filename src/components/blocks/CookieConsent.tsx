@@ -61,9 +61,14 @@ const View = styled.dialog<{ zIndex?: number; bgOpacity?: number }>`
         overflow: auto;
     }
 
-    ::backdrop {
+    &::backdrop {
         background-color: rgba(0, 0, 0, ${({ bgOpacity }) => bgOpacity || 0.4});
         z-index: ${({ zIndex }) => zIndex || 1000};
+    }
+
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => color(theme).elementBg.light};
+        outline-offset: 2px;
     }
 `;
 
