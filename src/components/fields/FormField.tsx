@@ -78,7 +78,12 @@ const Messages: React.FC<{
     return (
         <React.Fragment>
             {infoMessage && (
-                <FieldMessage size="small" type="copy" isInverted={isInverted}>
+                <FieldMessage
+                    id="info-message"
+                    size="small"
+                    type="copy"
+                    isInverted={isInverted}
+                >
                     {infoMessage}
                 </FieldMessage>
             )}

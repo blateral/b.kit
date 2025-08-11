@@ -117,7 +117,9 @@ const SearchInput: FC<{
     value?: string;
     placeholder?: string;
     submitIcon?: React.ReactNode;
+    submitAriaLabel?: string;
     clearIcon?: React.ReactNode;
+    clearAriaLabel?: string;
     onSubmit?: () => void;
     onClear?: () => void;
     onClick?: (ev: React.SyntheticEvent<HTMLInputElement>) => void;
@@ -129,7 +131,9 @@ const SearchInput: FC<{
     value,
     placeholder,
     submitIcon,
+    submitAriaLabel = 'Sucheingabe absenden',
     clearIcon,
+    clearAriaLabel = 'Sucheingabe löschen',
     onSubmit,
     onClick,
     onClear,
@@ -150,6 +154,7 @@ const SearchInput: FC<{
                 <SubmitBtn
                     isInverted={isInverted}
                     onClick={() => onSubmit && onSubmit()}
+                    aria-label={submitAriaLabel}
                 >
                     {submitIcon}
                 </SubmitBtn>
@@ -168,6 +173,7 @@ const SearchInput: FC<{
                 <ClearBtn
                     isInverted={isInverted}
                     onClick={() => onClear && onClear()}
+                    aria-label={clearAriaLabel}
                 >
                     {clearIcon}
                 </ClearBtn>

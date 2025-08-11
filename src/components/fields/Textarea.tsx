@@ -131,12 +131,9 @@ const Textarea: React.FC<TextareaProps> = ({
                     onChange={onChange}
                     onBlur={onBlur}
                     aria-required={isRequired}
-                    aria-label={label}
                     aria-invalid={!!errorMessage}
-                    aria-errormessage={errorMessage ? errorMessage : undefined}
                     aria-disabled={isDisabled}
-                    aria-placeholder={placeholder}
-                    aria-describedBy={infoMessage ? infoMessage : undefined}
+                    aria-describedby="info-message"
                 />
             </FieldWrapper.Content>
             <FieldWrapper.Messages

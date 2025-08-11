@@ -279,6 +279,7 @@ const Card: React.FC<
             {image?.small && (
                 <StyledImage
                     {...image}
+                    alt={image.alt ?? ''}
                     coverSpace
                     isInverted={isInverted}
                     ratios={{
@@ -309,7 +310,7 @@ const Card: React.FC<
                 <CardLink
                     isInverted={isInverted}
                     {...link}
-                    ariaLabel={title || undefined}
+                    ariaLabel={title || ''}
                 />
             )}
         </CardView>

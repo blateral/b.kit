@@ -219,7 +219,7 @@ const Accordion: React.FC<{
             <Wrapper addWhitespace>
                 <Grid.Row gutter={0}>
                     <Grid.Col>
-                        <AccordionContainer aria-label="Accordion Control Group Buttons">
+                        <AccordionContainer>
                             {items?.map(({ label, text, aside }, i) => {
                                 const isSelected =
                                     currentItems.indexOf(i) !== -1;
