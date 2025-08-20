@@ -366,7 +366,9 @@ const Copy: React.FC<{
     ariaLabel?: string;
     ariaLevel?: number;
     ariaRole?: string;
+    scope?: 'row' | 'col' | 'rowgroup' | 'colgroup';
 }> = ({
+    id,
     renderAs,
     isInverted,
     type = 'copy',
@@ -382,7 +384,7 @@ const Copy: React.FC<{
     ariaLabel,
     ariaLevel,
     ariaRole,
-    id,
+    scope,
     ...rest
 }) => {
     const { fonts } = useLibTheme();
@@ -390,8 +392,8 @@ const Copy: React.FC<{
 
     return (
         <View
-            as={renderAs}
             id={id}
+            as={renderAs}
             copyType={type}
             size={size}
             textColor={
@@ -417,6 +419,7 @@ const Copy: React.FC<{
             aria-label={ariaLabel}
             role={ariaRole}
             aria-level={ariaLevel}
+            scope={scope}
             {...rest}
         >
             {children}

@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useId, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import Grid from 'components/base/Grid';
@@ -161,6 +161,7 @@ const Teaser: FC<{
     const [isLoaded, setLoaded] = useState(!image?.small || false);
     const [isVideoActive, setVideoActive] = useState<boolean>(false);
     const isObserverSupported = useObserverSupport();
+    const id = useId();
 
     useUpdateEffect(() => {
         if (!viewRef.current || !hasVideo) return;
@@ -224,6 +225,11 @@ const Teaser: FC<{
                                         isInverted={isInverted}
                                         alt={image.alt ?? ''}
                                         coverSpace
+                                        ariaDescribedBy={
+                                            description
+                                                ? `media-caption-${id}`
+                                                : undefined
+                                        }
                                     />
                                 )}
                                 {hasVideo && (
@@ -247,14 +253,14 @@ const Teaser: FC<{
                                         }
                                         ariaDescribedBy={
                                             description
-                                                ? 'media-caption'
+                                                ? `media-caption-${id}`
                                                 : undefined
                                         }
                                     />
                                 )}
                                 {description && (
                                     <Description
-                                        id="media-caption"
+                                        id={`media-caption-${id}`}
                                         size="small"
                                         renderAs="figcaption"
                                         isInverted={isInverted}
