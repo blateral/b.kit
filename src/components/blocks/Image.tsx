@@ -280,13 +280,11 @@ const Image: React.FC<
                     srcSet={small}
                     alt={alt || ''}
                     loading="lazy"
-                    aria-describedby={copyright ? 'copyright' : ''}
                     role={isDecorative ? 'presentation' : undefined}
                 />
             </picture>
             {copyright && (
                 <Copyright
-                    id="copyright"
                     size="small"
                     textColor={colors.text.inverted}
                     innerHTML={`&copy; ${copyright}`}

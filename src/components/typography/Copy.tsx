@@ -350,7 +350,7 @@ export type CopyTag =
     | 'h3';
 
 const Copy: React.FC<{
-    id?: any;
+    id?: string;
     renderAs?: CopyTag;
     isInverted?: boolean;
     textColor?: string;

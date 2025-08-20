@@ -23,6 +23,18 @@ export const Default: Story = () => (
     />
 );
 
+export const WithCopyright: Story = () => (
+    <Image
+        small="https://unsplash.it/619/619"
+        medium="https://unsplash.it/791/791"
+        semilarge="https://unsplash.it/883/883"
+        large="https://unsplash.it/766/766"
+        xlarge="https://unsplash.it/824/824"
+        alt="Image"
+        copyright="Photo by John Doe on Unsplash"
+    />
+);
+
 export const WithSVG: Story = () => (
     <Image
         small="/images/testIcon.svg"
