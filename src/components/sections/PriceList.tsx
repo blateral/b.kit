@@ -22,7 +22,7 @@ const ItemBlock = styled.li<{ hasBg?: boolean }>`
     padding: ${spacings.nudge * 2}px;
 
     background: ${({ theme, hasBg }) =>
-        hasBg ? color(theme).elementBg.light : color(theme).elementBg.medium};
+        hasBg ? color(theme).mono.medium : color(theme).mono.light};
 
     & > * + * {
         margin-top: ${spacings.nudge * 2}px;
@@ -81,9 +81,6 @@ export const PriceBlock: React.FC<PriceItems & { hasBg?: boolean }> = ({
 };
 
 const PriceList: React.FC<{
-    /** ID value for targeting section with anchor hashes */
-    anchorId?: string;
-
     /** Array with price items */
     items?: PriceItems[];
 
@@ -91,7 +88,7 @@ const PriceList: React.FC<{
     bgMode?: 'inverted' | 'full';
 
     ariaLabel?: string;
-}> = ({ anchorId, bgMode, items, ariaLabel }) => {
+}> = ({ bgMode, items, ariaLabel }) => {
     const theme = React.useContext(ThemeContext);
 
     const isInverted = bgMode === 'inverted';
@@ -100,7 +97,6 @@ const PriceList: React.FC<{
     return (
         <Section
             addSeperation
-            anchorId={anchorId}
             bgColor={
                 isInverted
                     ? color(theme).dark
