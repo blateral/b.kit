@@ -94,6 +94,7 @@ export const HasBackground: Story = () => (
         bgMode="full"
         items={[
             {
+                title: 'Vorspeisen',
                 text: `<b>Bruschetta Tomate & Parmesan</b>
                     <br />
                     <div>
@@ -104,6 +105,7 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
+                title: 'Vorspeisen',
                 text: `<b>Bruschetta Tomate & Parmesan</b>
                     <br />
                     <div>
@@ -114,6 +116,7 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
+                title: 'Vorspeisen',
                 text: `<b>Bruschetta Tomate & Parmesan</b>
                     <br />
                     <div>
@@ -124,6 +127,7 @@ export const HasBackground: Story = () => (
                 price: '19,00',
             },
             {
+                title: 'Vorspeisen',
                 text: `<b>Bruschetta Tomate & Parmesan</b>
                     <br />
                     <div>
