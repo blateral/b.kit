@@ -17,12 +17,12 @@ const ItemList = styled.ul`
     }
 `;
 
-const ItemBlock = styled.li<{ hasBg?: boolean; isInverted?: boolean }>`
+const ItemBlock = styled.li<{ hasBg?: boolean }>`
     max-width: 100%;
     padding: ${spacings.nudge * 2}px;
 
-    background: ${({ theme, hasBg, isInverted }) =>
-        hasBg || isInverted ? color(theme).light : color(theme).mono.light};
+    background: ${({ theme, hasBg }) =>
+        hasBg ? color(theme).light : color(theme).mono.light};
 
     & > * + * {
         margin-top: ${spacings.nudge * 2}px;
@@ -63,11 +63,14 @@ export interface PriceItems {
     price?: string;
 }
 
-export const PriceBlock: React.FC<
-    PriceItems & { hasBg?: boolean; isInverted?: boolean }
-> = ({ text, price, hasBg = false, isInverted, title }) => {
+export const PriceBlock: React.FC<PriceItems & { hasBg?: boolean }> = ({
+    text,
+    price,
+    hasBg = false,
+    title,
+}) => {
     return (
-        <ItemBlock hasBg={hasBg} isInverted={isInverted}>
+        <ItemBlock hasBg={hasBg}>
             <ListHead>
                 {title && <Title type="copy-b">{title}</Title>}
                 {price && <Price type="copy-b">{price}</Price>}
@@ -109,8 +112,7 @@ const PriceList: React.FC<{
                         <PriceBlock
                             key={i}
                             {...item}
-                            hasBg={hasBg}
-                            isInverted={isInverted}
+                            hasBg={hasBg || isInverted}
                         />
                     ))}
                 </ItemList>
