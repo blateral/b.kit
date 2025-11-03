@@ -36,8 +36,6 @@ const View = styled.dialog<{ zIndex?: number; bgOpacity?: number }>`
     padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
     position: relative;
     bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
     text-align: center;
 
     background-color: ${({ theme }) => color(theme).elementBg.light};
@@ -202,7 +200,9 @@ export const CookieConsent: FC<{
 
     useEffect(() => {
         document.body.style.overflow = isVisible ? 'hidden' : 'visible';
-        document.body.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
+
+        if (!cookieConsentRef.current) return;
+        cookieConsentRef.current.setAttribute('closedby', 'none');
 
         if (isVisible) {
             cookieConsentRef.current?.focus();
@@ -216,12 +216,10 @@ export const CookieConsent: FC<{
     return (
         <LibThemeProvider theme={theme}>
             <View
-                role="dialog"
-                className={className}
-                tabIndex={1}
                 ref={cookieConsentRef}
                 zIndex={zIndex}
                 bgOpacity={overlayOpacity}
+                className={className}
             >
                 {children?.({
                     types: cookieTypes,
