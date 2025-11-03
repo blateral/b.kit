@@ -35,7 +35,7 @@ export default {
     component: Grid.Row,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;

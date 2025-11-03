@@ -84,6 +84,11 @@ export const parameters = {
                 color: '#fff',
                 description: 'Component is ready for final QS',
             },
+            production: {
+                background: '#4CAF50',
+                color: '#fff',
+                description: 'Component is ready for production',
+            },
         },
     },
     options: {

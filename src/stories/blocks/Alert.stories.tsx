@@ -8,7 +8,7 @@ export default {
     component: Alert,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
     decorators: [

@@ -7,7 +7,7 @@ export default {
     component: Image,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;

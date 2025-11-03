@@ -25,7 +25,7 @@ export default {
     component: Section,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
