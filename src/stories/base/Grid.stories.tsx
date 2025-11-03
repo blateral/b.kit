@@ -63,6 +63,52 @@ export const Default: Story = () => (
     </Grid.Row>
 );
 
+export const AsList: Story = () => (
+    <Grid.Row asList>
+        <Grid.Col>
+            <ExampleCol>100 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={14 / 28}>
+            <ExampleCol>50 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={14 / 28}>
+            <ExampleCol>50 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+    </Grid.Row>
+);
+
+export const WithAriaLabel: Story = () => (
+    <Grid.Row ariaLabel="Grid List">
+        <Grid.Col>
+            <ExampleCol>100 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={14 / 28}>
+            <ExampleCol>50 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={14 / 28}>
+            <ExampleCol>50 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+    </Grid.Row>
+);
+
 export const SpanWithMediaQueries: Story = () => (
     <Grid.Row>
         <Grid.Col
