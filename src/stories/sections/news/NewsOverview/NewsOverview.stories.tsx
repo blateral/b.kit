@@ -21,7 +21,7 @@ export default {
 
 const action = {
     action: (isInverted?: boolean) => (
-        <Pointer.View textDecoration="none" isInverted={isInverted}>
+        <Pointer.View decoration="none" isInverted={isInverted}>
             <Pointer.Label>Tertiary</Pointer.Label>
             <Pointer.Icon>
                 <AngleRight />

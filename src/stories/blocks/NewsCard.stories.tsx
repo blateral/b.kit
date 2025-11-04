@@ -114,7 +114,7 @@ export const WithAction: Story = () => (
             xlarge: 'https://unsplash.it/1400/1050?image=400',
         }}
         cardFooter={(isInverted) => (
-            <Pointer.View textDecoration="none" isInverted={isInverted}>
+            <Pointer.View decoration="none" isInverted={isInverted}>
                 <Pointer.Label>Tertiary</Pointer.Label>
                 <Pointer.Icon>
                     <AngleRight />
@@ -143,7 +143,7 @@ export const Inverted: Story = () => (
             xlarge: 'https://unsplash.it/1400/1050?image=400',
         }}
         cardFooter={(isInverted) => (
-            <Pointer.View textDecoration="none" isInverted={isInverted}>
+            <Pointer.View decoration="none" isInverted={isInverted}>
                 <Pointer.Label>Tertiary</Pointer.Label>
                 <Pointer.Icon>
                     <AngleRight />
