@@ -20,7 +20,7 @@ export const linkStyles = (isInverted?: boolean) => css`
     outline: none;
 
     @media (hover: hover) and (pointer: fine) {
-        &:hover {
+        &[href]:hover {
             color: ${({ theme }) =>
                 isInverted
                     ? font(theme).link.colorHoverInverted
@@ -49,9 +49,11 @@ const View = styled.a<{ isInverted?: boolean }>`
 const Link = forwardRef<
     HTMLAnchorElement,
     LinkProps & {
+        id?: string;
         ariaLabel?: string;
         tabIndex?: number;
         dataSheet?: string;
+        dataIdent?: string;
         isInverted?: boolean;
         onClick?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
         className?: string;
@@ -61,6 +63,7 @@ const Link = forwardRef<
 >(
     (
         {
+            id,
             isInverted = false,
             isExternal = false,
             onClick,
@@ -68,6 +71,7 @@ const Link = forwardRef<
             ariaLabel,
             tabIndex,
             dataSheet,
+            dataIdent,
             children,
             className,
             ariaHidden = false,
@@ -77,6 +81,7 @@ const Link = forwardRef<
         return (
             <View
                 ref={ref}
+                id={id}
                 href={href}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
@@ -84,6 +89,7 @@ const Link = forwardRef<
                 aria-label={ariaLabel}
                 tabIndex={tabIndex}
                 data-sheet={dataSheet}
+                data-ident={dataIdent}
                 onClick={onClick}
                 className={className}
                 aria-hidden={ariaHidden}

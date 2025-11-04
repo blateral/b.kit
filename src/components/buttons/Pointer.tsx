@@ -11,7 +11,7 @@ import {
 const View = styled.a<{
     inverted?: boolean;
     disable?: boolean;
-    textDecoration?: 'none' | 'underline';
+    decoration?: 'none' | 'underline';
 }>`
     padding: 0.2em 0;
 
@@ -27,8 +27,8 @@ const View = styled.a<{
     ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
     font-weight: ${({ theme }) => font(theme).copy.medium.weight};
     text-align: center;
-    text-decoration: ${({ textDecoration }) =>
-        textDecoration ? textDecoration : 'underline'};
+    text-decoration: ${({ decoration }) =>
+        decoration ? decoration : 'underline'};
     line-height: 1;
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
 
@@ -96,7 +96,7 @@ interface Props {
     isInverted?: boolean;
     isDisabled?: boolean;
     onClick?: () => void;
-    textDecoration?: 'none' | 'underline';
+    decoration?: 'none' | 'underline';
     className?: string;
     children?: React.ReactNode;
     ariaLabel?: string;
@@ -112,67 +112,97 @@ export type LinkProps = Props & {
     isExternal?: boolean;
 };
 
-const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
-    (
-        {
-            as,
-            isInverted,
-            isDisabled,
-            onClick,
-            className,
-            textDecoration,
-            children,
-            ariaLabel,
-            ...rest
-        },
-        ref
-    ) => {
-        if (as === 'button') {
-            return (
-                <View
-                    textDecoration={textDecoration}
-                    ref={ref}
-                    as={as as any}
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    aria-label={ariaLabel}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
-        } else {
-            return (
-                <View
-                    textDecoration={textDecoration}
-                    ref={ref}
-                    as={as as any}
-                    href={(rest as LinkProps).href}
-                    data-disabled={isDisabled}
-                    data-inverted={isInverted}
-                    target={
-                        (rest as LinkProps).isExternal ? '_blank' : undefined
-                    }
-                    rel={
-                        (rest as LinkProps).isExternal
-                            ? 'noopener noreferrer'
-                            : undefined
-                    }
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    aria-label={ariaLabel}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
+export type DecoratorProps = Props & {
+    as?: 'decorator';
+};
+
+const Pointer: React.FC<BtnProps | LinkProps | DecoratorProps> =
+    React.forwardRef(
+        (
+            {
+                as = 'a',
+                isInverted,
+                isDisabled,
+                onClick,
+                className,
+                decoration = 'underline',
+                children,
+                ariaLabel,
+                ...rest
+            },
+            ref
+        ) => {
+            switch (as) {
+                case 'button': {
+                    return (
+                        <View
+                            ref={ref}
+                            as={as as any}
+                            decoration={decoration}
+                            inverted={isInverted}
+                            disable={isDisabled}
+                            onClick={onClick}
+                            className={className}
+                            aria-label={ariaLabel}
+                            {...rest}
+                        >
+                            {children}
+                        </View>
+                    );
+                }
+
+                case 'a': {
+                    return (
+                        <View
+                            ref={ref}
+                            as={as as any}
+                            decoration={decoration}
+                            href={(rest as LinkProps).href}
+                            data-disabled={isDisabled}
+                            data-inverted={isInverted}
+                            target={
+                                (rest as LinkProps).isExternal
+                                    ? '_blank'
+                                    : undefined
+                            }
+                            rel={
+                                (rest as LinkProps).isExternal
+                                    ? 'noopener noreferrer'
+                                    : undefined
+                            }
+                            inverted={isInverted}
+                            disable={isDisabled}
+                            onClick={onClick}
+                            className={className}
+                            aria-label={ariaLabel}
+                            {...rest}
+                        >
+                            {children}
+                        </View>
+                    );
+                }
+
+                default: {
+                    return (
+                        <View
+                            ref={ref as any}
+                            as="span"
+                            decoration={decoration}
+                            data-disabled={isDisabled}
+                            data-inverted={isInverted}
+                            inverted={isInverted}
+                            onClick={onClick}
+                            className={className}
+                            aria-label={ariaLabel}
+                            {...rest}
+                        >
+                            {children}
+                        </View>
+                    );
+                }
+            }
         }
-    }
-);
+    );
 
 Pointer.displayName = 'Button';
 

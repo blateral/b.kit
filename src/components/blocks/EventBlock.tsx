@@ -1,23 +1,26 @@
-import React, { useMemo } from 'react';
+import React, { useId, useMemo } from 'react';
 import styled from 'styled-components';
 
 import Tag, { TagProps } from './Tag';
 import Copy, { copyStyle } from 'components/typography/Copy';
-import { spacings, mq, getFonts as font, getColors } from 'utils/styles';
+import {
+    spacings,
+    mq,
+    getFonts as font,
+    getColors as color,
+} from 'utils/styles';
 import StatusFormatter from 'utils/statusFormatter';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import Image, { ImageProps } from './Image';
 import Link, { LinkProps } from 'components/typography/Link';
 import { isValidArray } from 'utils/arrays';
 
-const View = styled.a<{ hasBg?: boolean }>`
+const View = styled.article<{ hasBg?: boolean; isInverted?: boolean }>`
     text-decoration: none;
     color: inherit;
 
     background-color: ${({ theme, hasBg }) =>
-        hasBg
-            ? getColors(theme).elementBg.light
-            : getColors(theme).elementBg.medium};
+        hasBg ? color(theme).elementBg.light : color(theme).elementBg.medium};
 
     & > * + * {
         margin-top: ${spacings.nudge}px;
@@ -34,8 +37,12 @@ const View = styled.a<{ hasBg?: boolean }>`
         }
     }
 
-    &:focus-visible {
-        outline: 2px solid ${({ theme }) => getColors(theme).primary.default};
+    &:has(a[data-ident='event-block-title']:focus-visible) {
+        outline: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
         outline-offset: 2px;
     }
 `;
@@ -81,6 +88,7 @@ const ImageContainer = styled.div`
 
 const CardImage = styled(Image)`
     height: 100%;
+    cursor: ${({ onClick }) => onClick && 'pointer'};
 
     img {
         width: calc(100% + 1px);
@@ -97,6 +105,9 @@ const CardImage = styled(Image)`
 
 const MainContent = styled.div`
     flex: 0 1 70%;
+
+    display: flex;
+    flex-direction: column;
     padding: ${spacings.nudge * 2}px;
     padding-bottom: ${spacings.nudge * 3}px;
 
@@ -111,6 +122,8 @@ const MainContent = styled.div`
 `;
 
 const TagContainer = styled.div`
+    order: -1;
+
     margin-top: -${spacings.nudge}px;
     margin-left: -${spacings.nudge}px;
 
@@ -130,7 +143,7 @@ const TagWrapper = styled.div`
     padding-left: ${spacings.nudge}px;
 `;
 
-const TitleLink = styled(Link)`
+const TitleLink = styled(Link)<{ hasTags?: boolean }>`
     display: inline-block;
     ${copyStyle('copy-b', 'big')}
 
@@ -138,12 +151,16 @@ const TitleLink = styled(Link)`
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    width: fit-content;
 
     color: ${({ theme, isInverted }) =>
         isInverted
             ? font(theme)['copy-b'].big.colorInverted
             : font(theme)['copy-b'].big.color};
     text-decoration: none;
+    outline: none !important;
+
+    ${({ hasTags }) => hasTags && `margin-top: ${spacings.nudge}px;`}
 `;
 
 const Text = styled(Copy)`
@@ -182,7 +199,10 @@ export interface EventProps {
     link?: LinkProps;
 
     /** Function to inject action elements */
-    action?: (props: { isInverted?: boolean }) => React.ReactNode;
+    action?: (props: {
+        isInverted?: boolean;
+        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
+    }) => React.ReactNode;
 
     /** Function to inject custom tag node */
     customTag?: (props: {
@@ -212,6 +232,7 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
     hasBg,
 }) => {
     const { globals } = useLibTheme();
+    const uniqueId = useId();
 
     let publishedAt = '';
     if (date) {
@@ -242,14 +263,23 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
         [images]
     );
 
-    const titleId = React.useId();
+    const handleClick = () => {
+        if (!link?.href) return;
+        if (link.isExternal) {
+            window.open(link.href, '_blank', 'noopener,noreferrer');
+        } else {
+            window.location.href = link.href;
+        }
+    };
+
+    const hasTags = isValidArray(filteredTags, false);
 
     return (
         <View
             hasBg={hasBg}
-            href={link?.href}
             role="group"
-            aria-labelledby={titleId}
+            aria-labelledby={uniqueId}
+            isInverted={isInverted}
         >
             {isValidArray(cardImages, false) && (
                 <ImageContainer>
@@ -263,13 +293,23 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
                             ratios={{
                                 small: { w: 4, h: 3 },
                             }}
-                            alt={img.alt ?? ''}
+                            onClick={link?.href ? handleClick : undefined}
                         />
                     ))}
                 </ImageContainer>
             )}
             <MainContent>
-                {isValidArray(filteredTags, false) && (
+                {title && (
+                    <TitleLink
+                        id={uniqueId}
+                        dataIdent="event-block-title"
+                        hasTags={hasTags}
+                        {...link}
+                    >
+                        {title}
+                    </TitleLink>
+                )}
+                {hasTags && (
                     <TagContainer>
                         {filteredTags.map(
                             (tag, i) =>
@@ -296,11 +336,6 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
                         )}
                     </TagContainer>
                 )}
-                {title && (
-                    <TitleLink as="h2" id={titleId} {...link}>
-                        {title}
-                    </TitleLink>
-                )}
                 <TextWrapper>
                     {date && (
                         <Copy size="medium" type="copy-b">
@@ -309,7 +344,14 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
                     )}
                     {text && <Text size="small" innerHTML={text} />}
                 </TextWrapper>
-                {action && <div> {action({ isInverted: false })} </div>}
+                {action && (
+                    <div>
+                        {action({
+                            isInverted: false,
+                            clickHandler: handleClick,
+                        })}
+                    </div>
+                )}
             </MainContent>
         </View>
     );
