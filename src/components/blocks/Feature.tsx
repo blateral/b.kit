@@ -1,17 +1,16 @@
-import React, { forwardRef } from 'react';
+import Image, { ImageProps } from 'components/blocks/Image';
+import Copy, { copyStyle } from 'components/typography/Copy';
+import Link, { LinkProps } from 'components/typography/Link';
+import React, { forwardRef, useId } from 'react';
 import styled, { css } from 'styled-components';
 import {
+    getFonts as font,
+    getGlobals as global,
     mq,
     spacings,
-    getGlobals as global,
-    getFonts as font,
 } from 'utils/styles';
 
-import Copy, { copyStyle } from 'components/typography/Copy';
-import Image, { ImageProps } from 'components/blocks/Image';
-import Link, { LinkProps } from 'components/typography/Link';
-
-const View = styled.div<{ isCentered?: boolean }>`
+const View = styled.article<{ isCentered?: boolean }>`
     position: relative;
     min-width: 270px;
     padding-bottom: ${spacings.nudge}px;
@@ -42,10 +41,39 @@ const TitleLink = styled(Link)<{ href?: string }>`
             }
         `}
 
-    &:before {
-        content: '';
-        position: absolute;
-        inset: 0;
+    * {
+        padding: 0;
+        margin: 0;
+        ${copyStyle('copy-b', 'big')}
+    }
+`;
+
+const Title = styled.div<{ isInverted?: boolean; onClick?: () => void }>`
+    display: inline-block;
+    ${copyStyle('copy-b', 'big')}
+
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme)['copy-b'].big.colorInverted
+            : font(theme)['copy-b'].big.color};
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            ${({ theme, isInverted, onClick }) =>
+                onClick &&
+                css`
+                    color: ${isInverted
+                        ? font(theme).link.colorHoverInverted
+                        : font(theme).link.colorHover};
+                    cursor: pointer;
+                `};
+        }
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+        ${copyStyle('copy-b', 'big')}
     }
 `;
 
@@ -59,6 +87,8 @@ const ImageContainer = styled.div<{ isCentered?: boolean }>`
 const StyledImage = styled(Image)`
     overflow: hidden;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+
+    cursor: ${({ onClick }) => onClick && 'pointer'};
 `;
 
 const ArticleContent = styled.div<{ isCentered?: boolean }>`
@@ -84,6 +114,9 @@ const CardFooter = styled.div`
 export interface FeatureActionProps {
     isInverted?: boolean;
     isTextCentered?: boolean;
+    title?: string;
+    link?: LinkProps;
+    clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
 }
 
 export interface FeatureProps {
@@ -112,7 +145,7 @@ export interface FeatureProps {
     link?: LinkProps;
 
     /** Function to inject custom primary button */
-    cardFooter?: (props: FeatureActionProps) => React.ReactNode;
+    action?: (props: FeatureActionProps) => React.ReactNode;
 }
 
 const Feature = forwardRef<
@@ -131,13 +164,29 @@ const Feature = forwardRef<
             image,
             isInverted = false,
             isCentered = false,
-            cardFooter,
+            action,
             className,
         },
         ref
     ) => {
+        const uniqueId = useId();
+
+        const handleClick = () => {
+            if (!link?.href) return;
+            if (link.isExternal) {
+                window.open(link.href, '_blank', 'noopener');
+            } else {
+                window.location.href = link.href;
+            }
+        };
+
         return (
-            <View ref={ref} isCentered={isCentered} className={className}>
+            <View
+                ref={ref}
+                isCentered={isCentered}
+                aria-labelledby={uniqueId}
+                className={className}
+            >
                 {image?.small && (
                     <ImageContainer isCentered={isCentered}>
                         <StyledImage
@@ -154,17 +203,29 @@ const Feature = forwardRef<
                                     : image.coverSpace
                             }
                             isInverted={isInverted}
+                            onClick={link?.href ? handleClick : undefined}
                         />
                     </ImageContainer>
                 )}
-                <TitleLink
-                    {...link}
-                    isInverted={isInverted}
-                    ariaLabel={title}
-                    dataSheet="title"
-                >
-                    {title}
-                </TitleLink>
+                {action ? (
+                    <Title
+                        isInverted={isInverted}
+                        data-sheet="title"
+                        aria-label={title}
+                        onClick={link?.href ? handleClick : undefined}
+                    >
+                        <h3 id={uniqueId}>{title}</h3>
+                    </Title>
+                ) : (
+                    <TitleLink
+                        {...link}
+                        isInverted={isInverted}
+                        ariaLabel={title}
+                        dataSheet="title"
+                    >
+                        <h3 id={uniqueId}>{title}</h3>
+                    </TitleLink>
+                )}
                 <Copy
                     size="small"
                     isInverted={isInverted}
@@ -186,9 +247,15 @@ const Feature = forwardRef<
                         data-sheet="text"
                     />
                 </ArticleContent>
-                {cardFooter && (
+                {action && (
                     <CardFooter>
-                        {cardFooter({ isInverted, isTextCentered: isCentered })}
+                        {action({
+                            isInverted,
+                            isTextCentered: isCentered,
+                            title,
+                            link,
+                            clickHandler: handleClick,
+                        })}
                     </CardFooter>
                 )}
             </View>

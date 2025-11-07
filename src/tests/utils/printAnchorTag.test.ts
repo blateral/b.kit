@@ -20,7 +20,7 @@ test('With external link', () => {
     expect(
         printAnchorTag({ href: 'https://www.google.de/', isExternal: true })
     ).toBe(
-        '<a target="_blank" rel="noopener noreferrer" href="https://www.google.de/">https://www.google.de/</a>'
+        '<a target="_blank" rel="noopener" href="https://www.google.de/">https://www.google.de/</a>'
     );
 });
 

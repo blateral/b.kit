@@ -161,6 +161,12 @@ const TitleLink = styled(Link)<{ hasTags?: boolean }>`
     outline: none !important;
 
     ${({ hasTags }) => hasTags && `margin-top: ${spacings.nudge}px;`}
+
+    * {
+        margin: 0;
+        padding: 0;
+        ${copyStyle('copy-b', 'big')}
+    }
 `;
 
 const Text = styled(Copy)`
@@ -201,6 +207,8 @@ export interface EventProps {
     /** Function to inject action elements */
     action?: (props: {
         isInverted?: boolean;
+        title?: string;
+        link?: LinkProps;
         clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
     }) => React.ReactNode;
 
@@ -266,7 +274,7 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
     const handleClick = () => {
         if (!link?.href) return;
         if (link.isExternal) {
-            window.open(link.href, '_blank', 'noopener,noreferrer');
+            window.open(link.href, '_blank', 'noopener');
         } else {
             window.location.href = link.href;
         }
@@ -301,12 +309,11 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
             <MainContent>
                 {title && (
                     <TitleLink
-                        id={uniqueId}
                         dataIdent="event-block-title"
                         hasTags={hasTags}
                         {...link}
                     >
-                        {title}
+                        <h3 id={uniqueId}>{title}</h3>
                     </TitleLink>
                 )}
                 {hasTags && (
@@ -348,6 +355,8 @@ const EventBlock: React.FC<EventProps & { hasBg?: boolean }> = ({
                     <div>
                         {action({
                             isInverted: false,
+                            title,
+                            link,
                             clickHandler: handleClick,
                         })}
                     </div>

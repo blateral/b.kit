@@ -64,7 +64,8 @@ const View = styled.a<{
             ? color(theme).text.inverted
             : color(theme).text.default};
 
-    transition: all ease-in-out 0.2s;
+    transition: color ease-in-out 0.2s, background-color ease-in-out 0.2s,
+        box-shadow ease-in-out 0.2s;
 
     & > * {
         color: ${({ theme, inverted, disable }) =>
@@ -120,6 +121,7 @@ interface Props {
     size?: 'default' | 'small';
     isInverted?: boolean;
     isDisabled?: boolean;
+    ariaLabel?: string;
     className?: string;
     children?: React.ReactNode;
 }
@@ -136,63 +138,105 @@ export type LinkProps = Props & {
     isExternal?: boolean;
 };
 
-const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
-    (
-        {
-            as,
-            size = 'default',
-            isInverted,
-            isDisabled,
-            onClick,
-            className,
-            children,
-            ...rest
-        },
-        ref
-    ) => {
-        if (as === 'button') {
-            return (
-                <View
-                    ref={ref as any}
-                    as="button"
-                    size={size}
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
-        } else {
-            return (
-                <View
-                    ref={ref}
-                    as={as as any}
-                    aria-disabled={isDisabled}
-                    size={size}
-                    href={(rest as LinkProps).href}
-                    target={
-                        (rest as LinkProps).isExternal ? '_blank' : undefined
-                    }
-                    rel={
-                        (rest as LinkProps).isExternal
-                            ? 'noopener noreferrer'
-                            : undefined
-                    }
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
+export type DecoratorProps = Props & {
+    as?: 'decorator';
+    onClick?: (ev: React.SyntheticEvent<HTMLSpanElement>) => void;
+};
+
+const ButtonGhost: React.FC<BtnProps | LinkProps | DecoratorProps> =
+    React.forwardRef(
+        (
+            {
+                as = 'a',
+                size = 'default',
+                isInverted,
+                isDisabled,
+                onClick,
+                ariaLabel,
+                className,
+                children,
+                ...rest
+            },
+            ref
+        ) => {
+            switch (as) {
+                case 'button': {
+                    return (
+                        <View
+                            ref={ref as any}
+                            as="button"
+                            size={size}
+                            inverted={isInverted}
+                            disable={isDisabled}
+                            aria-label={ariaLabel}
+                            onClick={
+                                onClick as (
+                                    ev: React.SyntheticEvent<HTMLButtonElement>
+                                ) => void
+                            }
+                            className={className}
+                            {...rest}
+                        >
+                            {children}
+                        </View>
+                    );
+                }
+
+                case 'a': {
+                    return (
+                        <View
+                            ref={ref}
+                            as={as as any}
+                            aria-disabled={isDisabled}
+                            aria-label={ariaLabel}
+                            size={size}
+                            href={(rest as LinkProps).href}
+                            target={
+                                (rest as LinkProps).isExternal
+                                    ? '_blank'
+                                    : undefined
+                            }
+                            rel={
+                                (rest as LinkProps).isExternal
+                                    ? 'noopener'
+                                    : undefined
+                            }
+                            inverted={isInverted}
+                            disable={isDisabled}
+                            onClick={onClick}
+                            className={className}
+                            {...rest}
+                        >
+                            {children}
+                        </View>
+                    );
+                }
+
+                default: {
+                    return (
+                        <View
+                            ref={ref as React.RefObject<HTMLSpanElement>}
+                            as="span"
+                            aria-disabled={isDisabled}
+                            aria-label={ariaLabel}
+                            size={size}
+                            inverted={isInverted}
+                            disable={isDisabled}
+                            onClick={
+                                onClick as (
+                                    ev: React.SyntheticEvent<HTMLSpanElement>
+                                ) => void
+                            }
+                            className={className}
+                            {...rest}
+                        >
+                            {children}
+                        </View>
+                    );
+                }
+            }
         }
-    }
-);
+    );
 
 ButtonGhost.displayName = 'Button Ghost';
 

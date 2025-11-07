@@ -167,7 +167,7 @@ const Pointer: React.FC<BtnProps | LinkProps | DecoratorProps> =
                             }
                             rel={
                                 (rest as LinkProps).isExternal
-                                    ? 'noopener noreferrer'
+                                    ? 'noopener'
                                     : undefined
                             }
                             inverted={isInverted}
@@ -191,6 +191,7 @@ const Pointer: React.FC<BtnProps | LinkProps | DecoratorProps> =
                             data-disabled={isDisabled}
                             data-inverted={isInverted}
                             inverted={isInverted}
+                            disable={isDisabled}
                             onClick={onClick}
                             className={className}
                             aria-label={ariaLabel}
