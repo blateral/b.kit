@@ -8,6 +8,7 @@ import NewsOverview, {
 import { generateItemList } from 'utils/storyHelpers';
 import Pointer from 'components/buttons/Pointer';
 import AngleRight from 'components/base/icons/AngleRight';
+import { NewsCardActionProps } from 'components/blocks/NewsCard';
 
 export default {
     title: 'Sections/News/NewsOverview',
@@ -20,9 +21,14 @@ export default {
 } as Meta;
 
 const action = {
-    action: (isInverted?: boolean) => (
-        <Pointer.View decoration="none" isInverted={isInverted}>
-            <Pointer.Label>Tertiary</Pointer.Label>
+    action: ({ isInverted, title, link }: NewsCardActionProps) => (
+        <Pointer.View
+            decoration="none"
+            isInverted={isInverted}
+            ariaLabel={title}
+            {...link}
+        >
+            <Pointer.Label>Read more</Pointer.Label>
             <Pointer.Icon>
                 <AngleRight />
             </Pointer.Icon>
