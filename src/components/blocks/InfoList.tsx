@@ -2,18 +2,9 @@ import Copy from 'components/typography/Copy';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
+import { mq, spacings } from 'utils/styles';
 
-import { getColors, mq, spacings } from 'utils/styles';
-
-const View = styled.div`
-    a {
-        &:focus-visible {
-            outline: 2px solid
-                ${({ theme }) => getColors(theme).primary.default};
-            outline-offset: 2px;
-        }
-    }
-`;
+const View = styled.div``;
 
 const Container = styled.ul`
     display: flex;
@@ -89,18 +80,25 @@ export interface Info {
     text?: string;
 }
 
-const InfoList: FC<{
+export interface InfoListProps {
     /** Invert text and icon color for dark backgrounds */
     isInverted?: boolean;
 
     /** Array of info groups */
     items?: InfoGroup[];
 
-    className?: string;
-}> = ({ isInverted, items, className }) => {
+    /** Optional aria-label for the list */
+    ariaLabel?: string;
+}
+
+const InfoList: FC<
+    InfoListProps & {
+        className?: string;
+    }
+> = ({ isInverted, items, ariaLabel, className }) => {
     return (
         <View className={className}>
-            <Container aria-label="Info-Liste">
+            <Container aria-label={ariaLabel || 'Information List'}>
                 {items?.map((group, i) => {
                     const groupItems =
                         group?.items?.filter((item) => item.text) || [];
