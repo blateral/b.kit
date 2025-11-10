@@ -7,7 +7,7 @@ export default {
     component: POIFacts,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;

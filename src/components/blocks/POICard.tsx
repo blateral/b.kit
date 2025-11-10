@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useId } from 'react';
 import styled from 'styled-components';
 
 import POIFacts from 'components/blocks/POIFacts';
-import Copy from 'components/typography/Copy';
+import Copy, { copyStyle } from 'components/typography/Copy';
 import { isValidArray } from 'utils/arrays';
 import {
     getColors as color,
+    getFonts as font,
     getGlobals as global,
     mq,
     spacings,
@@ -27,7 +28,15 @@ const View = styled.div<{ isInverted?: boolean }>`
     }
 `;
 
-const Title = styled(Copy)`
+const Title = styled.h3<{ isInverted?: boolean }>`
+    margin: 0;
+    padding: 0;
+    ${copyStyle('copy-b', 'big')};
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme).copy.big.colorInverted
+            : font(theme).copy.big.color};
+
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -37,6 +46,11 @@ const Title = styled(Copy)`
 
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
+    }
+
+    & > * {
+        margin: 0;
+        padding: 0;
     }
 `;
 
@@ -123,6 +137,11 @@ export type POIContact = {
     phone: string;
 };
 
+export interface POICardActionProps {
+    isInverted?: boolean;
+    name?: string;
+}
+
 export interface POICardProps {
     /** Invert text and background for use on dark sections */
     isInverted?: boolean;
@@ -147,7 +166,7 @@ export interface POICardProps {
     }) => React.ReactNode;
 
     /** Function to inject custom action node */
-    action?: (isInverted?: boolean) => React.ReactNode;
+    action?: (props: POICardActionProps) => React.ReactNode;
 }
 
 const POICard: React.FC<POICardProps> = ({
@@ -161,14 +180,16 @@ const POICard: React.FC<POICardProps> = ({
 }) => {
     const hasFacts = isValidArray(facts, false);
     const hasInfos = isValidArray(infos, false);
+    const id = useId();
 
     return (
-        <View isInverted={isInverted}>
+        <View isInverted={isInverted} aria-labelledby={id}>
             {name && (
-                <Title type="copy-b" size="big" isInverted={isInverted}>
+                <Title id={id} isInverted={isInverted}>
                     {name}
                 </Title>
             )}
+
             {(hasFacts || shortDescription || hasInfos || action) && (
                 <Body isInverted={isInverted}>
                     <Col>
@@ -185,7 +206,9 @@ const POICard: React.FC<POICardProps> = ({
                                 innerHTML={shortDescription}
                             />
                         )}
-                        {action && <Action>{action(isInverted)}</Action>}
+                        {action && (
+                            <Action>{action({ isInverted, name })}</Action>
+                        )}
                     </Col>
                     {isValidArray(infos, false) && (
                         <InfoCol>

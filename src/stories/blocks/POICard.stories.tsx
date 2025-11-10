@@ -47,12 +47,12 @@ export const WithPointer: Story = () => (
     <POICard
         name="Beispiel POI 1"
         shortDescription="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-        action={(isInverted) => (
+        action={({ isInverted, name }) => (
             <Pointer.View
                 as="a"
                 href="#"
                 isInverted={isInverted}
-                onClick={console.log}
+                ariaLabel={name}
             >
                 <Pointer.Label>Details</Pointer.Label>
                 <Pointer.Icon>
@@ -68,12 +68,12 @@ export const WithFacts: Story = () => (
         name="Beispiel POI 1"
         shortDescription="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         facts={['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5']}
-        action={(isInverted) => (
+        action={({ isInverted, name }) => (
             <Pointer.View
                 as="a"
                 href="#"
                 isInverted={isInverted}
-                onClick={console.log}
+                ariaLabel={name}
             >
                 <Pointer.Label>Details</Pointer.Label>
                 <Pointer.Icon>
@@ -111,12 +111,12 @@ export const WithInfos: Story = () => (
             },
         ]}
         facts={['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5']}
-        action={(isInverted) => (
+        action={({ isInverted, name }) => (
             <Pointer.View
                 as="a"
                 href="#"
                 isInverted={isInverted}
-                onClick={console.log}
+                ariaLabel={name}
             >
                 <Pointer.Label>Details</Pointer.Label>
                 <Pointer.Icon>
@@ -155,12 +155,12 @@ export const Inverted: Story = () => (
             },
         ]}
         facts={['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5']}
-        action={(isInverted) => (
+        action={({ isInverted, name }) => (
             <Pointer.View
                 as="a"
                 href="#"
                 isInverted={isInverted}
-                onClick={console.log}
+                ariaLabel={name}
             >
                 <Pointer.Label>Details</Pointer.Label>
                 <Pointer.Icon>
@@ -206,12 +206,12 @@ export const CustomFact: Story = () => (
         ]}
         facts={['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5']}
         customFact={({ name }) => <span>{name}</span>}
-        action={(isInverted) => (
+        action={({ isInverted, name }) => (
             <Pointer.View
                 as="a"
                 href="#"
                 isInverted={isInverted}
-                onClick={console.log}
+                ariaLabel={name}
             >
                 <Pointer.Label>Details</Pointer.Label>
                 <Pointer.Icon>
