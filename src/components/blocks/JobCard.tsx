@@ -33,17 +33,22 @@ const View = styled.div<{
             transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
             cursor: pointer;
 
-            &:hover {
-                box-shadow: 0px 2px 6px
-                    ${isInverted
-                        ? 'rgba(255, 255, 255, 0.7)'
-                        : 'rgba(0, 0, 0, 0.35)'};
+            @media (hover: hover) and (pointer: fine) {
+                &:hover {
+                    box-shadow: 0px 2px 6px
+                        ${isInverted
+                            ? 'rgba(255, 255, 255, 0.7)'
+                            : 'rgba(0, 0, 0, 0.35)'};
 
-                color: ${({ theme }) => color(theme).primary.hover};
+                    color: ${({ theme }) => color(theme).primary.hover};
+                }
             }
 
             &:has(:focus-visible) {
-                outline: 2px solid ${color(theme).primary.default};
+                outline: 2px solid
+                    ${isInverted
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default};
                 outline-offset: 2px;
             }
 
@@ -172,6 +177,12 @@ export interface JobCardProps {
 
     /** Job card link */
     link?: LinkProps;
+
+    /** Employment type label for accessibility */
+    employmentTypeAriaLabel?: string;
+
+    /** Location label for accessibility */
+    locationAriaLabel?: string;
 }
 
 const JobCard = React.forwardRef<
@@ -191,6 +202,8 @@ const JobCard = React.forwardRef<
             allLocationsLabel,
             modelIcon,
             locationIcon,
+            employmentTypeAriaLabel,
+            locationAriaLabel,
             className,
             link,
         },
@@ -234,6 +247,7 @@ const JobCard = React.forwardRef<
                     ariaLabel={link?.href ? jobTitle : undefined}
                 >
                     <Heading
+                        renderAs="h3"
                         textColor="inherit"
                         size="heading-2"
                         data-sheet="title"
@@ -249,7 +263,10 @@ const JobCard = React.forwardRef<
                                     {modelIcon ? modelIcon() : <ClockFilled />}
                                 </Icon>
                                 <MainLabel
-                                    aria-label={`Beschäftigungsart: ${employmentType}`}
+                                    aria-label={
+                                        employmentTypeAriaLabel ||
+                                        `Employment Type: ${employmentType}`
+                                    }
                                 >
                                     {employmentType}
                                 </MainLabel>
@@ -265,7 +282,10 @@ const JobCard = React.forwardRef<
                                     )}
                                 </Icon>
                                 <MainLabel
-                                    aria-label={`Standorte: ${locationText}`}
+                                    aria-label={
+                                        locationAriaLabel ||
+                                        `Locations: ${locationText}`
+                                    }
                                 >
                                     {locationText}
                                 </MainLabel>
