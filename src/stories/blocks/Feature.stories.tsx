@@ -72,11 +72,10 @@ export const WithActionFooter: Story = () => (
         intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         link={{ href: '#test' }}
-        action={({ isInverted, clickHandler, title, link }) => (
+        action={({ isInverted, title, link }) => (
             <ButtonGhost.View
                 isInverted={isInverted}
                 ariaLabel={title}
-                onClick={clickHandler}
                 {...link}
             >
                 <Button.Label>Primary</Button.Label>
@@ -99,11 +98,10 @@ export const Centered: Story = () => (
         intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         link={{ href: '#test' }}
-        action={({ isInverted, clickHandler, title, link }) => (
+        action={({ isInverted, title, link }) => (
             <ButtonGhost.View
                 isInverted={isInverted}
                 ariaLabel={title}
-                onClick={clickHandler}
                 {...link}
             >
                 <Button.Label>Primary</Button.Label>
@@ -126,11 +124,10 @@ export const Inverted: Story = () => (
         intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         link={{ href: '#test' }}
-        action={({ isInverted, clickHandler, title, link }) => (
+        action={({ isInverted, title, link }) => (
             <ButtonGhost.View
                 isInverted={isInverted}
                 ariaLabel={title}
-                onClick={clickHandler}
                 {...link}
             >
                 <Button.Label>Primary</Button.Label>

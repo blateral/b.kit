@@ -207,24 +207,28 @@ const Feature = forwardRef<
                         />
                     </ImageContainer>
                 )}
-                {action ? (
-                    <Title
-                        isInverted={isInverted}
-                        data-sheet="title"
-                        aria-label={title}
-                        onClick={link?.href ? handleClick : undefined}
-                    >
-                        <h3 id={uniqueId}>{title}</h3>
-                    </Title>
-                ) : (
-                    <TitleLink
-                        {...link}
-                        isInverted={isInverted}
-                        ariaLabel={title}
-                        dataSheet="title"
-                    >
-                        <h3 id={uniqueId}>{title}</h3>
-                    </TitleLink>
+                {title && (
+                    <>
+                        {action ? (
+                            <Title
+                                isInverted={isInverted}
+                                data-sheet="title"
+                                aria-label={title}
+                                onClick={link?.href ? handleClick : undefined}
+                            >
+                                <h3 id={uniqueId}>{title}</h3>
+                            </Title>
+                        ) : (
+                            <TitleLink
+                                {...link}
+                                isInverted={isInverted}
+                                ariaLabel={title}
+                                dataSheet="title"
+                            >
+                                <h3 id={uniqueId}>{title}</h3>
+                            </TitleLink>
+                        )}
+                    </>
                 )}
                 <Copy
                     size="small"

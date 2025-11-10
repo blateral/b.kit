@@ -1,5 +1,5 @@
-import React, { forwardRef, useMemo } from 'react';
-import styled from 'styled-components';
+import React, { forwardRef, useId, useMemo } from 'react';
+import styled, { css } from 'styled-components';
 
 import {
     spacings,
@@ -22,30 +22,25 @@ const View = styled.article<{ isInverted?: boolean }>`
     padding: 0;
 
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
+    gap: ${spacings.nudge * 3}px;
 
-    &:hover {
-        & > * {
-            color: ${({ theme, isInverted }) =>
-                isInverted
-                    ? font(theme).link.colorHoverInverted
-                    : font(theme).link.colorHover};
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            & > * {
+                color: ${({ theme, isInverted }) =>
+                    isInverted
+                        ? font(theme).link.colorHoverInverted
+                        : font(theme).link.colorHover};
+            }
         }
-    }
-
-    &:has([data-sheet='title']:focus-visible) {
-        outline: 2px solid
-            ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).primary.default
-                    : color(theme).primary.default};
-        outline-offset: 2px;
     }
 `;
 
 const StyledImage = styled(Image)`
     overflow: hidden;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
+    cursor: ${({ onClick }) => onClick && 'pointer'};
 `;
 
 const BorderPlaceholder = styled.div<{ hasBg?: boolean }>`
@@ -66,31 +61,52 @@ const TitleLink = styled(Link)`
             : font(theme)['copy-b'].big.color};
     text-decoration: none;
 
-    &:focus-visible {
-        outline: none;
+    * {
+        padding: 0;
+        margin: 0;
+        ${copyStyle('copy-b', 'big')}
+    }
+`;
+
+const Title = styled.div<{ isInverted?: boolean; onClick?: () => void }>`
+    display: inline-block;
+    ${copyStyle('copy-b', 'big')}
+
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? font(theme)['copy-b'].big.colorInverted
+            : font(theme)['copy-b'].big.color};
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            ${({ theme, isInverted, onClick }) =>
+                onClick &&
+                css`
+                    color: ${isInverted
+                        ? font(theme).link.colorHoverInverted
+                        : font(theme).link.colorHover};
+                    cursor: pointer;
+                `};
+        }
     }
 
-    &:before {
-        content: '';
-        position: absolute;
-        inset: 0;
+    * {
+        padding: 0;
+        margin: 0;
+        ${copyStyle('copy-b', 'big')}
     }
 `;
 
 const Head = styled.div`
+    order: 0;
     display: flex;
 
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
-    &:not(:first-child) {
-        margin-top: ${spacings.nudge * 3}px;
-    }
-
-    &:not(:last-child) {
-        margin-bottom: ${spacings.nudge * 3}px;
-    }
+    margin-left: -4px;
+    margin-top: -4px;
+    margin-bottom: -4px;
 
     & > * + * {
         margin-left: ${spacings.nudge * 3}px;
@@ -102,6 +118,8 @@ const Tags = styled.ul`
     margin: 0;
     padding: 0;
     display: flex;
+    gap: ${spacings.nudge}px;
+    padding: 4px;
     overflow: scroll;
     scrollbar-width: none;
 
@@ -112,10 +130,6 @@ const Tags = styled.ul`
         height: 0;
         display: none;
     }
-
-    & > * + * {
-        margin-left: ${spacings.nudge}px;
-    }
 `;
 
 const PublishDate = styled(Copy)`
@@ -125,6 +139,7 @@ const PublishDate = styled(Copy)`
 `;
 
 const Main = styled.div`
+    order: 1;
     max-width: 95%;
 
     & > * + * {
@@ -156,8 +171,15 @@ const Text = styled(Copy)`
 `;
 
 const CardFooter = styled.div`
-    margin-top: ${spacings.nudge * 3}px;
+    order: 2;
 `;
+
+export interface NewsCardActionProps {
+    isInverted?: boolean;
+    title?: string;
+    link?: LinkProps;
+    clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
+}
 
 export interface NewsCardProps {
     /** Invert text and background for use on dark sections */
@@ -184,8 +206,11 @@ export interface NewsCardProps {
     /** Callback function if tag in news iten has been clicked */
     onTagClick?: (tag: TagProps) => void;
 
+    /** Aria label for the tag list */
+    tagListAriaLabel?: string;
+
     /** Function to inject primary action */
-    cardFooter?: (isInverted?: boolean) => React.ReactNode;
+    action?: (props: NewsCardActionProps) => React.ReactNode;
 
     /** Function to inject custom tag node */
     customTag?: (props: {
@@ -217,13 +242,15 @@ const NewsCard = forwardRef<
             link,
             isInverted,
             customTag,
+            tagListAriaLabel,
             className,
             hasBg,
-            cardFooter,
+            action,
         },
         ref
     ) => {
         const { globals } = useLibTheme();
+        const uniqueId = useId();
 
         let publishedAt = '';
         if (publishDate) {
@@ -249,6 +276,15 @@ const NewsCard = forwardRef<
                       ev?.preventDefault();
                   };
 
+        const handleClick = () => {
+            if (!link?.href) return;
+            if (link.isExternal) {
+                window.open(link.href, '_blank', 'noopener');
+            } else {
+                window.location.href = link.href;
+            }
+        };
+
         const filteredTags = useMemo(() => {
             return tags?.filter((tag) => tag.name);
         }, [tags]);
@@ -257,19 +293,44 @@ const NewsCard = forwardRef<
             <View
                 ref={ref}
                 className={className}
-                aria-label={title}
+                aria-labelledby={uniqueId}
                 isInverted={isInverted}
             >
+                {image?.small ? (
+                    <StyledImage
+                        {...image}
+                        coverSpace
+                        isInverted={isInverted}
+                        onClick={link?.href ? handleClick : undefined}
+                    />
+                ) : (
+                    <BorderPlaceholder hasBg={hasBg} />
+                )}
                 <Main>
                     {title && (
-                        <TitleLink
-                            {...link}
-                            ariaLabel={title}
-                            isInverted={isInverted}
-                            dataSheet="title"
-                        >
-                            {title}
-                        </TitleLink>
+                        <>
+                            {action ? (
+                                <Title
+                                    isInverted={isInverted}
+                                    data-sheet="title"
+                                    aria-label={title}
+                                    onClick={
+                                        link?.href ? handleClick : undefined
+                                    }
+                                >
+                                    <h3 id={uniqueId}>{title}</h3>
+                                </Title>
+                            ) : (
+                                <TitleLink
+                                    {...link}
+                                    isInverted={isInverted}
+                                    ariaLabel={title}
+                                    dataSheet="title"
+                                >
+                                    <h3 id={uniqueId}>{title}</h3>
+                                </TitleLink>
+                            )}
+                        </>
                     )}
                     {text && (
                         <Text
@@ -281,9 +342,21 @@ const NewsCard = forwardRef<
                         />
                     )}
                 </Main>
+                {action && (
+                    <CardFooter>
+                        {action({
+                            isInverted,
+                            link,
+                            title,
+                            clickHandler: handleClick,
+                        })}
+                    </CardFooter>
+                )}
                 <Head data-sheet="head">
                     {isValidArray(filteredTags, false) && (
-                        <Tags aria-label="News Kategorien">
+                        <Tags
+                            aria-label={tagListAriaLabel || 'News categories'}
+                        >
                             {filteredTags.map((tag, i) => {
                                 if (customTag) {
                                     return customTag({
@@ -319,18 +392,6 @@ const NewsCard = forwardRef<
                         </PublishDate>
                     )}
                 </Head>
-                {cardFooter && (
-                    <CardFooter>{cardFooter(isInverted)}</CardFooter>
-                )}
-                {image?.small ? (
-                    <StyledImage
-                        {...image}
-                        coverSpace
-                        isInverted={isInverted}
-                    />
-                ) : (
-                    <BorderPlaceholder hasBg={hasBg} />
-                )}
             </View>
         );
     }

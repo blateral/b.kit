@@ -10,13 +10,8 @@ import { generateItemList } from 'utils/storyHelpers';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const actions = {
-    action: ({ isInverted, clickHandler, link, title }: FeatureActionProps) => (
-        <ButtonGhost.View
-            isInverted={isInverted}
-            ariaLabel={title}
-            onClick={clickHandler}
-            {...link}
-        >
+    action: ({ isInverted, link, title }: FeatureActionProps) => (
+        <ButtonGhost.View isInverted={isInverted} ariaLabel={title} {...link}>
             <Button.Label>Primary</Button.Label>
         </ButtonGhost.View>
     ),

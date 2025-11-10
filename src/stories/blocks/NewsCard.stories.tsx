@@ -51,14 +51,16 @@ export const WithCustomTags: Story = () => (
         onTagClick={console.log}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
-        customTag={({ name, isActive, clickHandler }) => (
+        customTag={({ key, name, isActive, clickHandler }) => (
             <button
+                key={key}
                 style={{ background: isActive ? 'gray' : 'lightgray' }}
                 onClick={() => clickHandler && clickHandler()}
             >
                 {name}
             </button>
         )}
+        link={{ href: '#0' }}
     />
 );
 
@@ -73,6 +75,7 @@ export const WithPublishDate: Story = () => (
         publishDate={new Date('July 22, 2021 03:24:00')}
         title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy"
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+        link={{ href: '#0' }}
     />
 );
 
@@ -93,6 +96,7 @@ export const WithImage: Story = () => (
             large: 'https://unsplash.it/1399/1048?image=400',
             xlarge: 'https://unsplash.it/1400/1050?image=400',
         }}
+        link={{ href: '#0' }}
     />
 );
 
@@ -113,14 +117,20 @@ export const WithAction: Story = () => (
             large: 'https://unsplash.it/1399/1048?image=400',
             xlarge: 'https://unsplash.it/1400/1050?image=400',
         }}
-        cardFooter={(isInverted) => (
-            <Pointer.View decoration="none" isInverted={isInverted}>
+        action={({ isInverted, title, link }) => (
+            <Pointer.View
+                decoration="none"
+                isInverted={isInverted}
+                ariaLabel={title}
+                {...link}
+            >
                 <Pointer.Label>Tertiary</Pointer.Label>
                 <Pointer.Icon>
                     <AngleRight />
                 </Pointer.Icon>
             </Pointer.View>
         )}
+        link={{ href: '#0' }}
     />
 );
 
@@ -142,14 +152,20 @@ export const Inverted: Story = () => (
             large: 'https://unsplash.it/1399/1048?image=400',
             xlarge: 'https://unsplash.it/1400/1050?image=400',
         }}
-        cardFooter={(isInverted) => (
-            <Pointer.View decoration="none" isInverted={isInverted}>
+        action={({ isInverted, title, link }) => (
+            <Pointer.View
+                decoration="none"
+                isInverted={isInverted}
+                ariaLabel={title}
+                {...link}
+            >
                 <Pointer.Label>Tertiary</Pointer.Label>
                 <Pointer.Icon>
                     <AngleRight />
                 </Pointer.Icon>
             </Pointer.View>
         )}
+        link={{ href: '#0' }}
     />
 );
 
