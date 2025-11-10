@@ -11,9 +11,8 @@ const View = styled.ul`
     display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
-
-    margin-top: -${spacings.nudge}px;
-    margin-left: -${spacings.nudge * 2}px;
+    row-gap: ${spacings.nudge}px;
+    column-gap: ${spacings.nudge * 2}px;
 
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
@@ -21,8 +20,8 @@ const View = styled.ul`
 `;
 
 const FactsWrapper = styled.li`
-    padding-top: ${spacings.nudge}px;
-    padding-left: ${spacings.nudge * 2}px;
+    display: flex;
+    align-items: center;
 `;
 
 const Fact = styled.span<{ isInverted?: boolean }>`
@@ -45,9 +44,10 @@ const POIFacts: React.FC<{
         isInverted?: boolean;
     }) => React.ReactNode;
     isInverted?: boolean;
-}> = ({ facts, customFact, isInverted }) => {
+    ariaLabel?: string;
+}> = ({ facts, customFact, isInverted, ariaLabel }) => {
     return (
-        <View aria-label="POI Fakten">
+        <View aria-label={ariaLabel || 'POI Facts'}>
             {facts.map((fact, i) => (
                 <FactsWrapper key={'tag_' + i}>
                     {customFact ? (
