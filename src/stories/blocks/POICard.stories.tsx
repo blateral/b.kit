@@ -22,7 +22,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
