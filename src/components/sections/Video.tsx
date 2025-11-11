@@ -15,6 +15,7 @@ const Video: React.FC<{
     embedId: string;
 
     consentText?: string;
+    playBtnAriaLabel?: string;
     consentAction?: (props: {
         handleClick?: () => void;
         consentProps: Record<string, string>;
@@ -33,7 +34,8 @@ const Video: React.FC<{
     bgImage,
     embedId,
     playIcon,
-    consentText,
+    consentText = 'Für die Wiedergabe von Videos muss der Nutzung von Cookies & Daten zugestimmt werden.',
+    playBtnAriaLabel = 'Play video',
     consentAction,
     onPlayClick,
 }) => {
@@ -57,8 +59,10 @@ const Video: React.FC<{
                 <VideoCard
                     bgImage={bgImage}
                     embedId={embedId}
+                    isInverted={isInverted}
                     playIcon={playIcon}
                     consentText={consentText}
+                    playBtnAriaLabel={playBtnAriaLabel}
                     consentAction={consentAction}
                     onPlayClick={onPlayClick}
                 />

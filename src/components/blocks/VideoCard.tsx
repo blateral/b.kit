@@ -21,6 +21,7 @@ import { useLibTheme } from 'utils/LibThemeProvider';
 const View = styled.div<{
     bgImage?: ImageProps;
     isActive?: boolean;
+    isInverted?: boolean;
     onClick?: () => void;
 }>`
     text-align: center;
@@ -90,13 +91,13 @@ const View = styled.div<{
         );
     }
 
-    &:focus-visible {
-        outline: 2px solid ${({ theme }) => color(theme).primary.default};
-        outline-offset: 2px;
-
-        & > * {
-            color: ${({ theme }) => color(theme).primary.default};
-        }
+    &:has(*[data-play]:focus-visible) {
+        outline: solid 2px
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+        outline-offset: 4px;
     }
 `;
 
@@ -111,6 +112,7 @@ const VideoControls = styled.button`
     color: ${({ theme }) => color(theme).elementBg.light};
     z-index: 1;
     padding: 0;
+    outline: none;
 
     cursor: pointer;
 
@@ -131,17 +133,6 @@ const VideoControls = styled.button`
     ${View}:active > & > * {
         transform: scale(0.95);
         opacity: 1;
-    }
-
-    &:focus-visible {
-        outline: 2px solid ${({ theme }) => color(theme).elementBg.dark};
-        outline-offset: 2px;
-        border-radius: 50%;
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
-        box-shadow: none;
     }
 `;
 
@@ -184,8 +175,10 @@ const Iframe = styled.iframe`
 export interface VideoCardProps {
     bgImage: ImageProps;
     embedId: string;
+    isInverted?: boolean;
     playIcon?: React.ReactNode;
     consentText?: string;
+    playBtnAriaLabel?: string;
     consentAction?: (props: {
         handleClick?: () => void;
         consentProps: Record<string, string>;
@@ -200,8 +193,10 @@ export interface VideoCardProps {
 const VideoCard: FC<VideoCardProps & { className?: string }> = ({
     bgImage,
     embedId,
+    isInverted,
     playIcon,
     consentText = 'Für die Wiedergabe von Videos muss der Nutzung von Cookies & Daten zugestimmt werden.',
+    playBtnAriaLabel = 'Play video',
     consentAction,
     onPlayClick,
     className,
@@ -248,29 +243,25 @@ const VideoCard: FC<VideoCardProps & { className?: string }> = ({
 
     return (
         <View
-            onClick={!showConsent ? handlePlayClick : undefined}
+            isInverted={isInverted}
             bgImage={isActive ? undefined : bgImage}
             isActive={isActive}
+            onClick={!showConsent ? handlePlayClick : undefined}
             className={className}
         >
-            <div aria-hidden="true">
-                {!isActive && !showConsent && (
-                    <VideoControls
-                        aria-label="Video abspielen"
-                        tabIndex={showConsent ? -1 : 0}
-                    >
-                        {playIcon || <Play iconColor="#000" />}
-                    </VideoControls>
-                )}
+            {!isActive && !showConsent && (
+                <VideoControls data-play aria-label={playBtnAriaLabel}>
+                    {playIcon || <Play iconColor="#000" />}
+                </VideoControls>
+            )}
 
-                {isActive && (
-                    <Iframe
-                        id="ytplayer"
-                        src={`https://www.youtube.com/embed/${embedId}?autoplay=1`}
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    />
-                )}
-            </div>
+            {isActive && (
+                <Iframe
+                    id="ytplayer"
+                    src={`https://www.youtube.com/embed/${embedId}?autoplay=1`}
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                />
+            )}
             <ConsentOverlay isVisible={showConsent}>
                 <ConsentContent>
                     {consentText && (

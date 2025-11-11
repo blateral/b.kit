@@ -22,6 +22,9 @@ const NewsVideo: React.FC<{
     /** Text for cookie consent overlay */
     consentText?: string;
 
+    /** Aria label for play button */
+    playBtnAriaLabel?: string;
+
     /** Function to inject custom action on cookie consent overlay */
     consentAction?: (props: {
         handleClick?: () => void;
@@ -40,7 +43,8 @@ const NewsVideo: React.FC<{
     bgImage,
     embedId,
     playIcon,
-    consentText,
+    consentText = 'Für die Wiedergabe von Videos muss der Nutzung von Cookies & Daten zugestimmt werden.',
+    playBtnAriaLabel = 'Play video',
     consentAction,
     onPlayClick,
     bgMode,
@@ -68,6 +72,7 @@ const NewsVideo: React.FC<{
                     <VideoCard
                         bgImage={bgImage}
                         embedId={embedId}
+                        playBtnAriaLabel={playBtnAriaLabel}
                         playIcon={playIcon}
                         consentText={consentText}
                         consentAction={consentAction}

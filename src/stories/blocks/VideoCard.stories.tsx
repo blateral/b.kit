@@ -15,7 +15,7 @@ export default {
     component: VideoCard,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
     decorators: [
@@ -39,26 +39,27 @@ export default {
                                 innerHTML='Wir verwenden Cookies, um die Zugriffe auf unsere Website zu analysieren. Dadurch können wir unsere Webseite für Sie verbessern. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die im Rahmen der Nutzung der Dienste gesammelt wurden. Wenn Sie der Verwendung nicht zustimmen, benutzen wir ausschließlich Cookies, die für die Funktionalität der Webseite essentiell sind. Weitere Informationen finden Sie unter <a href="#0">Impressum</a> und <a href="#0">Datenschutz.</a>'
                             />
                             <CookieActions
-                                isMirrored
                                 primary={
-                                    <Button.View
-                                        {...additionalAcceptProps}
-                                        onClick={acceptAll}
-                                    >
-                                        <Button.Label>
-                                            Cookies zustimmen
-                                        </Button.Label>
-                                    </Button.View>
-                                }
-                                secondary={
                                     <ButtonGhost.View
                                         {...additionalDeclineProps}
+                                        as="button"
                                         onClick={declineAll}
                                     >
                                         <ButtonGhost.Label>
                                             Cookies ablehnen
                                         </ButtonGhost.Label>
                                     </ButtonGhost.View>
+                                }
+                                secondary={
+                                    <Button.View
+                                        {...additionalAcceptProps}
+                                        as="button"
+                                        onClick={acceptAll}
+                                    >
+                                        <Button.Label>
+                                            Cookies zustimmen
+                                        </Button.Label>
+                                    </Button.View>
                                 }
                             />
                         </React.Fragment>
