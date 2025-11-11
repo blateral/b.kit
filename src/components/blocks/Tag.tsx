@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { copyStyle } from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
-import { getColors, spacings } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled(Link)<{
     isInverted?: boolean;
@@ -62,8 +62,8 @@ const View = styled(Link)<{
         outline: 2px solid
             ${({ isInverted, theme }) =>
                 isInverted
-                    ? getColors(theme).primary.inverted
-                    : getColors(theme).primary.default};
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
         outline-offset: 2px;
     }
 
@@ -111,8 +111,8 @@ const Tag: FC<
             isActive={isActive}
             onClick={onClick}
             isClickable={!!onClick || !!(link && link.href)}
+            aria-label={ariaLabel || name}
             className={className}
-            aria-label={ariaLabel}
             {...link}
         >
             {name || children}
