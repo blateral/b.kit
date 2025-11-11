@@ -8,14 +8,13 @@ export default {
     component: PromotionCard,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
 
 export const Default: Story = () => (
     <PromotionCard
-        title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
             medium: 'https://unsplash.it/722/541?image=409',
@@ -38,17 +37,6 @@ export const WithTitle: Story = () => (
 export const WithSuperTitle: Story = () => (
     <PromotionCard
         superTitle="Lorem ipsum dolor sit amet dolor"
-        title="Lorem ipsum dolor sit amet"
-        image={{
-            small: 'https://unsplash.it/338/253?image=409',
-            medium: 'https://unsplash.it/722/541?image=409',
-            large: 'https://unsplash.it/958/718?image=409',
-        }}
-    />
-);
-
-export const WithActions: Story = () => (
-    <PromotionCard
         title="Lorem ipsum dolor sit amet"
         image={{
             small: 'https://unsplash.it/338/253?image=409',
