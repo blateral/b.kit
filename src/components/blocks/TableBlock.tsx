@@ -139,6 +139,8 @@ export interface TableProps {
     isInverted?: boolean;
     hasBack?: boolean;
     lastCol?: 'left' | 'right';
+    ariaControlLeft?: string;
+    ariaControlRight?: string;
 }
 
 const TableBlock: FC<TableProps> = ({
@@ -148,6 +150,8 @@ const TableBlock: FC<TableProps> = ({
     isInverted = false,
     hasBack = false,
     lastCol = 'left',
+    ariaControlLeft,
+    ariaControlRight,
 }) => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [showButtonRight, setShowButtonRight] = React.useState(false);
@@ -260,7 +264,7 @@ const TableBlock: FC<TableProps> = ({
                 isVisible={showButtons && showButtonLeft}
                 tabIndex={!showButtons || !showButtonLeft ? -1 : undefined}
                 onClick={handleLeftClick}
-                aria-label="Scroll table to the left"
+                aria-label={ariaControlLeft || 'Scroll table to the left'}
             >
                 <Icons.ButtonLeft />
             </ButtonLeftContainer>
@@ -271,7 +275,7 @@ const TableBlock: FC<TableProps> = ({
                 isVisible={showButtons && showButtonRight}
                 tabIndex={!showButtons || !showButtonRight ? -1 : undefined}
                 onClick={handleRightClick}
-                aria-label="Scroll table to the right"
+                aria-label={ariaControlRight || 'Scroll table to the right'}
             >
                 <Icons.ButtonRight />
             </ButtonRightContainer>
