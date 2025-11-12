@@ -17,7 +17,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
@@ -35,6 +35,12 @@ export const Default: Story = () => (
     </Control>
 );
 
+export const Disabled: Story = () => (
+    <Control isInverted isDisabled>
+        <Icons.ArrowRightGhost />
+    </Control>
+);
+
 export const Inverted: Story = () => (
     <Control isInverted>
         <Icons.ArrowRightGhost />
@@ -42,6 +48,19 @@ export const Inverted: Story = () => (
 );
 
 Inverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};
+
+export const InvertedAndDisabled: Story = () => (
+    <Control isInverted isDisabled>
+        <Icons.ArrowRightGhost />
+    </Control>
+);
+
+InvertedAndDisabled.parameters = {
     backgrounds: {
         default: 'inverted',
         values: [{ name: 'inverted', value: 'black' }],

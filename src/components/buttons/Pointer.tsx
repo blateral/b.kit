@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import {
     getColors as color,
@@ -10,7 +10,7 @@ import {
 
 const View = styled.a<{
     inverted?: boolean;
-    disable?: boolean;
+    isDisabled?: boolean;
     decoration?: 'none' | 'underline';
 }>`
     padding: 0.2em 0;
@@ -45,19 +45,19 @@ const View = styled.a<{
     border: none;
     cursor: pointer;
 
-    pointer-events: ${({ disable }) => (disable ? 'none' : 'all')};
+    pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 
     background: none;
-    color: ${({ theme, inverted, disable }) =>
-        disable
+    color: ${({ theme, inverted, isDisabled }) =>
+        isDisabled
             ? color(theme).elementBg.medium
             : inverted
             ? color(theme).text.copyInverted
             : color(theme).text.copy};
 
     & > * {
-        color: ${({ theme, inverted, disable }) =>
-            disable
+        color: ${({ theme, inverted, isDisabled }) =>
+            isDisabled
                 ? color(theme).elementBg.medium
                 : inverted
                 ? color(theme).text.copyInverted
@@ -68,10 +68,6 @@ const View = styled.a<{
         margin-left: ${spacings.nudge}px;
     }
 
-    /* & > :not(:last-child) {
-        padding-right: ${spacings.nudge}px;
-    } */
-
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             opacity: 0.6;
@@ -79,13 +75,24 @@ const View = styled.a<{
     }
 
     &:focus-visible {
-        outline: 2px dotted ${({ theme }) => color(theme).primary.default};
-        outline-offset: 2px;
+        outline: none;
     }
 
-    &:active {
-        opacity: 0.6;
-    }
+    ${({ isDisabled, inverted, theme }) =>
+        !isDisabled &&
+        css`
+            &:focus-visible {
+                outline: 2px dotted
+                    ${inverted
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default};
+                outline-offset: 2px;
+            }
+
+            &:active {
+                opacity: 0.6;
+            }
+        `}
 `;
 
 interface Props {
@@ -112,94 +119,100 @@ export type DecoratorProps = Props & {
     as?: 'decorator';
 };
 
-const Pointer: React.FC<BtnProps | LinkProps | DecoratorProps> =
-    React.forwardRef(
-        (
-            {
-                as = 'a',
-                isInverted,
-                isDisabled,
-                onClick,
-                className,
-                decoration = 'underline',
-                children,
-                ariaLabel,
-                ...rest
-            },
-            ref
-        ) => {
-            switch (as) {
-                case 'button': {
-                    return (
-                        <View
-                            ref={ref}
-                            as={as as any}
-                            decoration={decoration}
-                            inverted={isInverted}
-                            disable={isDisabled}
-                            onClick={onClick}
-                            className={className}
-                            aria-label={ariaLabel}
-                            {...rest}
-                        >
-                            {children}
-                        </View>
-                    );
-                }
+const Pointer = React.forwardRef<
+    HTMLElement,
+    BtnProps | LinkProps | DecoratorProps
+>(
+    (
+        {
+            as = 'a',
+            isInverted,
+            isDisabled,
+            onClick,
+            className,
+            decoration = 'underline',
+            children,
+            ariaLabel,
+            ...rest
+        },
+        ref
+    ) => {
+        switch (as) {
+            case 'button': {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLButtonElement>}
+                        as={as}
+                        tabIndex={isDisabled ? -1 : 0}
+                        decoration={decoration}
+                        inverted={isInverted}
+                        disabled={isDisabled}
+                        isDisabled={isDisabled}
+                        onClick={onClick}
+                        className={className}
+                        aria-label={ariaLabel}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
 
-                case 'a': {
-                    return (
-                        <View
-                            ref={ref}
-                            as={as as any}
-                            decoration={decoration}
-                            href={(rest as LinkProps).href}
-                            data-disabled={isDisabled}
-                            data-inverted={isInverted}
-                            target={
-                                (rest as LinkProps).isExternal
-                                    ? '_blank'
-                                    : undefined
-                            }
-                            rel={
-                                (rest as LinkProps).isExternal
-                                    ? 'noopener'
-                                    : undefined
-                            }
-                            inverted={isInverted}
-                            disable={isDisabled}
-                            onClick={onClick}
-                            className={className}
-                            aria-label={ariaLabel}
-                            {...rest}
-                        >
-                            {children}
-                        </View>
-                    );
-                }
+            case 'a': {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLAnchorElement>}
+                        as={as}
+                        tabIndex={isDisabled ? -1 : 0}
+                        decoration={decoration}
+                        href={(rest as LinkProps).href}
+                        data-disabled={isDisabled}
+                        data-inverted={isInverted}
+                        target={
+                            (rest as LinkProps).isExternal
+                                ? '_blank'
+                                : undefined
+                        }
+                        rel={
+                            (rest as LinkProps).isExternal
+                                ? 'noopener'
+                                : undefined
+                        }
+                        inverted={isInverted}
+                        isDisabled={isDisabled}
+                        onClick={onClick}
+                        className={className}
+                        aria-label={ariaLabel}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
 
-                default: {
-                    return (
-                        <View
-                            ref={ref as any}
-                            as="span"
-                            decoration={decoration}
-                            data-disabled={isDisabled}
-                            data-inverted={isInverted}
-                            inverted={isInverted}
-                            disable={isDisabled}
-                            onClick={onClick}
-                            className={className}
-                            aria-label={ariaLabel}
-                            {...rest}
-                        >
-                            {children}
-                        </View>
-                    );
-                }
+            default: {
+                return (
+                    <View
+                        ref={ref}
+                        as="span"
+                        tabIndex={isDisabled ? -1 : 0}
+                        decoration={decoration}
+                        data-disabled={isDisabled}
+                        data-inverted={isInverted}
+                        inverted={isInverted}
+                        isDisabled={isDisabled}
+                        onClick={onClick}
+                        className={className}
+                        aria-label={ariaLabel}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
             }
         }
-    );
+    }
+);
 
 Pointer.displayName = 'Button';
 

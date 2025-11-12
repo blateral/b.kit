@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { getColors as color } from 'utils/styles';
 
@@ -21,27 +21,29 @@ const View = styled.button<{ isInverted?: boolean; disabled?: boolean }>`
 
     transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 
-    @media (hover: hover) and (pointer: fine) {
-        &:hover {
-            color: ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).primary.invertedHover
-                    : color(theme).primary.hover};
-        }
-    }
+    ${({ isInverted, disabled, theme }) =>
+        !disabled &&
+        css`
+            @media (hover: hover) and (pointer: fine) {
+                &:hover {
+                    color: ${isInverted
+                        ? color(theme).primary.invertedHover
+                        : color(theme).primary.hover};
+                }
+            }
 
-    &:focus-visible {
-        outline: solid 2px
-            ${({ theme, isInverted }) =>
-                isInverted
-                    ? color(theme).primary.inverted
-                    : color(theme).primary.default};
-        outline-offset: 2px;
-    }
+            &:focus-visible {
+                outline: solid 2px
+                    ${isInverted
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default};
+                outline-offset: 2px;
+            }
 
-    &:focus:not(:focus-visible) {
-        outline: none;
-    }
+            &:focus:not(:focus-visible) {
+                outline: none;
+            }
+        `}
 `;
 
 const Control: FC<{
