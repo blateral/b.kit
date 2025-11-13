@@ -87,12 +87,11 @@ const base = css<{
         }
 
         &:focus {
-            outline: 1px dashed
+            outline: 2px dotted
                 ${({ theme, isInverted }) =>
                     isInverted
                         ? font(theme).link.colorInverted
                         : font(theme).link.color};
-            outline-offset: 1px;
         }
 
         &:focus:not(:focus-visible) {

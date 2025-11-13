@@ -21,6 +21,7 @@ import useLazyInput from 'utils/useLazyInput';
 import useUpdateEffect from 'utils/useUpdateEffect';
 import useGeolocation from 'utils/useGeolocation';
 import * as Icons from 'components/base/icons/Icons';
+import { concat as cn } from 'utils/concat';
 
 const MapWrapper = styled.div<{ isVisible?: boolean }>`
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
@@ -35,16 +36,25 @@ const MapContainer = styled.div`
     outline: none;
 `;
 
-const ViewToggle = styled.button`
+const ToggleView = styled.button<{ isInverted?: boolean }>`
     display: flex;
     flex-direction: row;
     align-items: center;
     background: none;
     border: none;
     padding: ${spacings.nudge}px 0;
-    padding-bottom: ${spacings.nudge * 2}px;
+    margin-bottom: ${spacings.nudge * 2}px;
 
     cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px dotted
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? font(theme).link.colorInverted
+                    : font(theme).link.color};
+        outline-offset: 4px;
+    }
 
     & > * + * {
         margin-left: ${spacings.nudge * 2}px;
@@ -80,13 +90,8 @@ const ResetMapControl = styled.button`
         }
     }
 
-    &:focus {
-        outline: 1px solid ${({ theme }) => color(theme).primary.default};
-        outline-offset: 0;
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
+    &:focus-visible {
+        outline: 2px dotted ${({ theme }) => color(theme).primary.default};
     }
 `;
 
@@ -115,15 +120,9 @@ const TrackLocationControl = styled.button`
         }
     }
 
-    &:focus {
-        text-decoration: underline;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
-    }
-
-    &:focus:not(:focus-visible) {
-        text-decoration: none;
-        outline: none;
-        box-shadow: none;
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
+        outline-offset: 2px;
     }
 
     &:active {
@@ -264,6 +263,7 @@ export interface LocationFieldProps {
     }) => React.ReactNode;
     toggleLabel?: string;
     trackLocationLabel?: string;
+    resetMapLabel?: string;
 }
 
 const LocationField: FC<LocationFieldProps> = ({
@@ -286,7 +286,13 @@ const LocationField: FC<LocationFieldProps> = ({
     customResetControl,
     toggleLabel = 'Select location on map',
     trackLocationLabel = 'My location',
+    resetMapLabel = 'Reset map',
 }) => {
+    const id = React.useId();
+    const fieldId = `locationfield-${id}`;
+    const msgId = `locationfield-message-${id}`;
+    const errorMsgId = `locationfield-error-${id}`;
+
     if (isDisabled) {
         errorMessage = '';
     }
@@ -460,7 +466,10 @@ const LocationField: FC<LocationFieldProps> = ({
                 <input
                     type="hidden"
                     name={`${name}["location"]`}
-                    value={`${getValue?.position?.[0]},${getValue?.position?.[1]}`}
+                    value={cn(
+                        [getValue?.position?.[0], getValue?.position?.[1]],
+                        ','
+                    )}
                 />
             )}
 
@@ -469,6 +478,7 @@ const LocationField: FC<LocationFieldProps> = ({
                 onClick={(ev) => ev.preventDefault()}
             >
                 <FieldWrapper.Head
+                    htmlFor={fieldId}
                     label={label}
                     isRequired={isRequired}
                     isInverted={isInverted}
@@ -480,7 +490,13 @@ const LocationField: FC<LocationFieldProps> = ({
                         handleClick: toggleViewState,
                     })
                 ) : (
-                    <ViewToggle type="button" onClick={toggleViewState}>
+                    <ToggleView
+                        type="button"
+                        isInverted={isInverted}
+                        aria-label={toggleLabel}
+                        aria-pressed={useMapView}
+                        onClick={toggleViewState}
+                    >
                         {useMapView ? (
                             <Icons.ToggleOn
                                 iconColor={
@@ -505,7 +521,7 @@ const LocationField: FC<LocationFieldProps> = ({
                         >
                             {toggleLabel}
                         </ToggleText>
-                    </ViewToggle>
+                    </ToggleView>
                 )}
 
                 <MapWrapper isVisible={useMapView}>
@@ -524,7 +540,10 @@ const LocationField: FC<LocationFieldProps> = ({
                                 handleClick: setMapToInitial,
                             })
                         ) : (
-                            <ResetMapControl onClick={setMapToInitial}>
+                            <ResetMapControl
+                                aria-label={resetMapLabel}
+                                onClick={setMapToInitial}
+                            >
                                 <Icons.LocationSearch />
                             </ResetMapControl>
                         )}
@@ -538,6 +557,11 @@ const LocationField: FC<LocationFieldProps> = ({
                                 })
                             ) : (
                                 <TrackLocationControl
+                                    aria-label={
+                                        !trackLocationLabel
+                                            ? 'Track my location'
+                                            : undefined
+                                    }
                                     onClick={handleTrackClick}
                                 >
                                     {trackLocationLabel}
@@ -551,12 +575,14 @@ const LocationField: FC<LocationFieldProps> = ({
                         <FieldView>
                             <FieldWrapper.Content>
                                 <Area
+                                    id={fieldId}
                                     placeholder={placeholder}
                                     hasError={!!errorMessage}
                                     isInverted={isInverted}
                                     name={`${name}["description"]`}
                                     value={descValue}
                                     required={isRequired}
+                                    disabled={isDisabled}
                                     onChange={(ev) => {
                                         const value = ev.currentTarget.value;
                                         setDescValue(value);
@@ -565,19 +591,18 @@ const LocationField: FC<LocationFieldProps> = ({
                                         forceUpdate();
                                         onBlur?.(getValue);
                                     }}
-                                    aria-required={isRequired}
-                                    aria-label={label}
                                     aria-invalid={!!errorMessage}
-                                    aria-errormessage={
-                                        errorMessage ? errorMessage : undefined
-                                    }
+                                    aria-errormessage={errorMsgId}
+                                    aria-describedby={msgId}
                                 />
                             </FieldWrapper.Content>
                         </FieldView>
                     </React.Fragment>
                 )}
                 <FieldWrapper.Messages
+                    infoMsgId={msgId}
                     infoMessage={infoMessage}
+                    errorMsgId={errorMsgId}
                     errorMessage={errorMessage}
                     isInverted={isInverted}
                 />
