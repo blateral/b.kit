@@ -366,6 +366,7 @@ const Copy: React.FC<{
     ariaLabel?: string;
     ariaLevel?: number;
     ariaRole?: string;
+    htmlFor?: string;
     scope?: 'row' | 'col' | 'rowgroup' | 'colgroup';
 }> = ({
     id,
@@ -384,6 +385,7 @@ const Copy: React.FC<{
     ariaLabel,
     ariaLevel,
     ariaRole,
+    htmlFor,
     scope,
     ...rest
 }) => {
@@ -420,6 +422,7 @@ const Copy: React.FC<{
             role={ariaRole}
             aria-level={ariaLevel}
             scope={scope}
+            htmlFor={htmlFor}
             {...rest}
         >
             {children}

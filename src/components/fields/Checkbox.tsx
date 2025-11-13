@@ -1,11 +1,11 @@
 import Check from 'components/base/icons/Check';
 import Copy from 'components/typography/Copy';
-import React from 'react';
+import React, { useId } from 'react';
 import styled from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from 'utils/styles';
 
-const View = styled.label`
+const View = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -137,11 +137,12 @@ const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
     className,
 }) => {
     const { colors } = useLibTheme();
+    const id = useId();
 
-    const inputId = `${name}-${value}`;
+    const inputId = `${name}-${id}`;
 
     return (
-        <View className={className} htmlFor={inputId}>
+        <View className={className}>
             <CheckboxContainer
                 isDisabled={isDisabled}
                 isInverted={isInverted}
@@ -163,18 +164,17 @@ const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
                     required={isRequired}
                     onChange={onChange}
                     onBlur={onBlur}
-                    aria-checked={isSelected}
-                    aria-disabled={isDisabled}
-                    aria-required={isRequired}
+                    disabled={isDisabled}
                     tabIndex={isDisabled ? -1 : 0}
                 />
             </CheckboxContainer>
             {label && (
                 <Label
-                    renderAs="span"
+                    renderAs="label"
                     size="small"
                     type="copy-b"
                     isInverted={isInverted}
+                    htmlFor={inputId}
                     textColor={
                         isDisabled
                             ? isInverted
