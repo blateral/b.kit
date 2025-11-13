@@ -114,6 +114,11 @@ const Textfield: React.FC<TextfieldProps> = ({
     onChange,
     onBlur,
 }) => {
+    const id = React.useId();
+    const fieldId = `textfield-${id}`;
+    const msgId = `textfield-message-${id}`;
+    const errorMsgId = `textfield-error-${id}`;
+
     if (isDisabled) {
         errorMessage = '';
     }
@@ -122,11 +127,13 @@ const Textfield: React.FC<TextfieldProps> = ({
         <FieldWrapper.View isDisabled={isDisabled}>
             <FieldWrapper.Head
                 label={label}
+                htmlFor={fieldId}
                 isRequired={isRequired}
                 isInverted={isInverted}
             />
             <FieldWrapper.Content>
                 <InputField
+                    id={fieldId}
                     placeholder={placeholder}
                     hasError={!!errorMessage}
                     type={type}
@@ -134,16 +141,18 @@ const Textfield: React.FC<TextfieldProps> = ({
                     name={name}
                     value={value}
                     required={isRequired}
+                    disabled={isDisabled}
                     onChange={onChange}
                     onBlur={onBlur}
-                    aria-required={isRequired}
                     aria-invalid={!!errorMessage}
-                    aria-disabled={isDisabled}
-                    aria-placeholder={placeholder}
+                    aria-errormessage={errorMsgId}
+                    aria-describedby={msgId}
                 />
             </FieldWrapper.Content>
             <FieldWrapper.Messages
+                infoMsgId={msgId}
                 infoMessage={infoMessage}
+                errorMsgId={errorMsgId}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />

@@ -5,7 +5,7 @@ import Copy from 'components/typography/Copy';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { spacings } from 'utils/styles';
 
-const View = styled.label<{ isDisabled?: boolean }>`
+const View = styled.div<{ isDisabled?: boolean }>`
     display: block;
     text-align: left;
 
@@ -37,7 +37,7 @@ export interface FieldProps {
 
 const FieldWrapper: React.FC<{
     isDisabled?: boolean;
-    onClick?: (ev: React.SyntheticEvent<HTMLLabelElement>) => void;
+    onClick?: (ev: React.SyntheticEvent<HTMLDivElement>) => void;
     className?: string;
     children: React.ReactNode;
 }> = ({ isDisabled, onClick, className, children }) => {
@@ -50,14 +50,16 @@ const FieldWrapper: React.FC<{
 
 const Head: React.FC<{
     label?: string;
+    htmlFor?: string;
     isRequired?: boolean;
     isInverted?: boolean;
     className?: string;
-}> = ({ label, isRequired, isInverted, className }) => {
+}> = ({ label, htmlFor, isRequired, isInverted, className }) => {
     if (!label) return null;
     return (
         <FieldHead
-            renderAs="span"
+            renderAs={htmlFor ? 'label' : 'span'}
+            htmlFor={htmlFor}
             isInverted={isInverted}
             size="small"
             type="copy-b"
@@ -69,17 +71,19 @@ const Head: React.FC<{
 };
 
 const Messages: React.FC<{
+    errorMsgId?: string;
     errorMessage?: string;
+    infoMsgId?: string;
     infoMessage?: string;
     isInverted?: boolean;
-}> = ({ errorMessage, infoMessage, isInverted }) => {
+}> = ({ errorMsgId, errorMessage, infoMsgId, infoMessage, isInverted }) => {
     const { colors } = useLibTheme();
 
     return (
         <React.Fragment>
             {infoMessage && (
                 <FieldMessage
-                    id="info-message"
+                    id={infoMsgId}
                     size="small"
                     type="copy"
                     isInverted={isInverted}
@@ -89,6 +93,7 @@ const Messages: React.FC<{
             )}
             {errorMessage && (
                 <FieldMessage
+                    id={errorMsgId}
                     size="small"
                     type="copy"
                     textColor={

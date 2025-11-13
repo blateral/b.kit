@@ -15,7 +15,6 @@ import { FormProps } from './Textfield';
 const Area = styled.textarea<{
     isInverted?: boolean;
     hasError?: boolean;
-    isDisabled?: boolean;
     hasBack?: boolean;
 }>`
     display: block;
@@ -108,6 +107,11 @@ const Textarea: React.FC<TextareaProps> = ({
     onChange,
     onBlur,
 }) => {
+    const id = React.useId();
+    const fieldId = `textarea-${id}`;
+    const msgId = `textarea-message-${id}`;
+    const errorMsgId = `textarea-error-${id}`;
+
     if (isDisabled) {
         errorMessage = '';
     }
@@ -115,29 +119,32 @@ const Textarea: React.FC<TextareaProps> = ({
     return (
         <FieldWrapper.View isDisabled={isDisabled}>
             <FieldWrapper.Head
+                htmlFor={fieldId}
                 label={label}
                 isRequired={isRequired}
                 isInverted={isInverted}
             />
             <FieldWrapper.Content>
                 <Area
+                    id={fieldId}
                     value={value}
                     name={name}
                     placeholder={placeholder}
                     hasError={!!errorMessage}
-                    isDisabled={isDisabled}
+                    disabled={isDisabled}
                     isInverted={isInverted}
                     required={isRequired}
                     onChange={onChange}
                     onBlur={onBlur}
-                    aria-required={isRequired}
                     aria-invalid={!!errorMessage}
-                    aria-disabled={isDisabled}
-                    aria-describedby="info-message"
+                    aria-describedby={msgId}
+                    aria-errormessage={errorMsgId}
                 />
             </FieldWrapper.Content>
             <FieldWrapper.Messages
+                infoMsgId={msgId}
                 infoMessage={infoMessage}
+                errorMsgId={errorMsgId}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />
