@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from '../../utils/styles';
 
-const View = styled.label`
+const View = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -14,7 +14,10 @@ const View = styled.label`
     }
 `;
 
-const RadioContainer = styled.div<{ isDisabled?: boolean }>`
+const RadioContainer = styled.div<{
+    isDisabled?: boolean;
+    isInverted?: boolean;
+}>`
     cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
     pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 
@@ -22,7 +25,11 @@ const RadioContainer = styled.div<{ isDisabled?: boolean }>`
     border-radius: 50%;
 
     &:focus-within {
-        outline: 1px solid ${({ theme }) => color(theme).primary.default};
+        outline: 1px solid
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
         outline-offset: 0;
     }
 `;
@@ -49,15 +56,19 @@ const StyledRadioButton = styled.span<{
     border: 2px solid
         ${({ isInverted, theme, isSelected }) =>
             isSelected
-                ? color(theme).primary.default
+                ? isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
                 : isInverted
                 ? color(theme).elementBg.light
                 : color(theme).elementBg.medium};
 
-    ${({ isSelected, theme }) =>
+    ${({ isSelected, isInverted, theme }) =>
         isSelected
             ? css`
-                  background-color: ${color(theme).primary.default};
+                  background-color: ${isInverted
+                      ? color(theme).primary.inverted
+                      : color(theme).primary.default};
 
                   &:before {
                       content: '';
@@ -93,7 +104,6 @@ export interface RadioButtonProps {
     isInverted?: boolean;
     onChange?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
     name?: string;
-    id?: string;
     value?: string;
     label?: string;
 }
@@ -104,15 +114,17 @@ const RadioButton: React.FC<RadioButtonProps> = ({
     isInverted,
     onChange,
     label,
-    id,
     name,
     value,
 }) => {
+    const id = React.useId();
+    const fieldId = `radio-${id}`;
+
     const { colors } = useLibTheme();
 
     return (
         <View>
-            <RadioContainer isDisabled={isDisabled}>
+            <RadioContainer isDisabled={isDisabled} isInverted={isInverted}>
                 <StyledRadioButton
                     isSelected={isSelected}
                     isInverted={isInverted}
@@ -120,17 +132,17 @@ const RadioButton: React.FC<RadioButtonProps> = ({
                 <Original
                     type="radio"
                     name={name}
-                    id={id}
+                    id={fieldId}
                     value={value}
+                    disabled={isDisabled}
                     checked={isSelected}
                     onChange={onChange}
-                    aria-checked={isSelected}
-                    aria-disabled={isDisabled}
                 />
             </RadioContainer>
             {label && (
                 <Label
-                    renderAs="span"
+                    htmlFor={fieldId}
+                    renderAs="label"
                     size="small"
                     type="copy-b"
                     textColor={

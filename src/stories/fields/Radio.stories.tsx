@@ -19,7 +19,7 @@ export default {
             values: [{ name: 'gray', value: '#F0F0F0' }],
         },
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
@@ -39,6 +39,23 @@ export const Default: Story = () => (
     />
 );
 
+export const isInverted: Story = () => (
+    <RadioButton
+        isInverted
+        label="Example Radio"
+        name="test"
+        value=""
+        onChange={console.log}
+    />
+);
+
+isInverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};
+
 export const WithRichtext: Story = () => (
     <RadioButton
         label={'Example <a href="#">Radio</a>'}
@@ -57,6 +74,24 @@ export const isSelected: Story = () => (
         onChange={console.log}
     />
 );
+
+export const isSelectedAndInverted: Story = () => (
+    <RadioButton
+        isInverted
+        isSelected
+        label="Example Radio"
+        name="test"
+        value=""
+        onChange={console.log}
+    />
+);
+
+isSelectedAndInverted.parameters = {
+    backgrounds: {
+        default: 'inverted',
+        values: [{ name: 'inverted', value: 'black' }],
+    },
+};
 
 export const isDisabled: Story = () => (
     <RadioButton
