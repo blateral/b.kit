@@ -23,6 +23,7 @@ const View = styled.div<{ isInverted?: boolean }>`
 `;
 
 const InputField = styled.input<{
+    isInverted?: boolean;
     hasLeftIcon?: boolean;
     hasRightIcon?: boolean;
 }>`
@@ -54,12 +55,13 @@ const InputField = styled.input<{
     }
 
     &:focus {
-        outline: ${({ theme }) => `1px solid ${color(theme).primary.default}`};
-        outline-offset: 0;
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
+        outline: ${({ theme, isInverted }) =>
+            `2px solid ${
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default
+            }`};
+        outline-offset: 2px;
     }
 `;
 
@@ -131,9 +133,9 @@ const SearchInput: FC<{
     value,
     placeholder,
     submitIcon,
-    submitAriaLabel = 'Sucheingabe absenden',
+    submitAriaLabel = 'Submit search',
     clearIcon,
-    clearAriaLabel = 'Sucheingabe löschen',
+    clearAriaLabel = 'Clear search',
     onSubmit,
     onClick,
     onClear,
@@ -160,6 +162,7 @@ const SearchInput: FC<{
                 </SubmitBtn>
             )}
             <InputField
+                isInverted={isInverted}
                 hasLeftIcon={submitIcon !== undefined}
                 hasRightIcon={clearIcon !== undefined}
                 placeholder={placeholder}
