@@ -592,8 +592,10 @@ const LocationField: FC<LocationFieldProps> = ({
                                         onBlur?.(getValue);
                                     }}
                                     aria-invalid={!!errorMessage}
-                                    aria-errormessage={errorMsgId}
-                                    aria-describedby={msgId}
+                                    aria-errormessage={
+                                        errorMessage && errorMsgId
+                                    }
+                                    aria-describedby={infoMessage && msgId}
                                 />
                             </FieldWrapper.Content>
                         </FieldView>

@@ -182,6 +182,7 @@ const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
                             : undefined
                     }
                     innerHTML={`${label}${isRequired ? '<span> *</span>' : ''}`}
+                    onClick={onClick}
                 />
             )}
         </View>

@@ -137,8 +137,8 @@ const Textarea: React.FC<TextareaProps> = ({
                     onChange={onChange}
                     onBlur={onBlur}
                     aria-invalid={!!errorMessage}
-                    aria-describedby={msgId}
-                    aria-errormessage={errorMsgId}
+                    aria-describedby={infoMessage && msgId}
+                    aria-errormessage={errorMessage && errorMsgId}
                 />
             </FieldWrapper.Content>
             <FieldWrapper.Messages

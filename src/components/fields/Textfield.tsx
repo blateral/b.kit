@@ -145,8 +145,8 @@ const Textfield: React.FC<TextfieldProps> = ({
                     onChange={onChange}
                     onBlur={onBlur}
                     aria-invalid={!!errorMessage}
-                    aria-errormessage={errorMsgId}
-                    aria-describedby={msgId}
+                    aria-errormessage={errorMessage && errorMsgId}
+                    aria-describedby={infoMessage && msgId}
                 />
             </FieldWrapper.Content>
             <FieldWrapper.Messages

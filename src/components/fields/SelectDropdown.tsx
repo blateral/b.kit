@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import AngleDown from 'components/base/icons/AngleDown';
@@ -270,12 +270,9 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
     onBlur,
     indicator,
 }) => {
-    const id = React.useId();
+    const id = useId();
     const { colors } = useLibTheme();
     const [isOpen, setIsOpen] = useState(false);
-
-    const fieldId = `select-${id}`;
-
     const [activeItemIndex, setActiveItemIndex] = useState<number>(
         items?.findIndex((item) => item.label === selectedItem) || -1
     );
@@ -283,6 +280,10 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
     const selectBtnRef = useRef<HTMLButtonElement>(null);
     const isMounted = useMounted();
     const itemHasBeenClicked = useRef<boolean>(false);
+
+    const fieldId = `select-${id}`;
+    const msgId = `select-message-${id}`;
+    const errorMsgId = `select-error-${id}`;
 
     useEffect(() => {
         const index = items?.findIndex((item) => item.label === selectedItem);
@@ -324,13 +325,14 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
                         id={fieldId}
                         ref={selectBtnRef}
                         type="button"
-                        aria-label={
-                            activeItem?.label || placeholder || 'Select item'
-                        }
                         isOpen={isOpen}
                         isInverted={isInverted}
                         isSelected={!!activeItem}
                         hasError={!!errorMessage}
+                        aria-invalid={!!errorMessage}
+                        aria-errormessage={errorMessage && errorMsgId}
+                        aria-describedby={infoMessage && msgId}
+                        aria-expanded={isOpen}
                         onClick={() => {
                             setIsOpen((prev) => !prev);
                         }}
@@ -458,7 +460,14 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
                         })}
                     </Flyout>
                 </Container>
-                <OriginalSelect aria-hidden="true" tabIndex={-1} name={name}>
+                <OriginalSelect
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    name={name}
+                    defaultValue={
+                        activeItem ? JSON.stringify(activeItem.value) : ''
+                    }
+                >
                     <option value=""></option>
 
                     {items.map((item, i) => (
@@ -469,7 +478,9 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
                 </OriginalSelect>
             </FieldWrapper.Content>
             <FieldWrapper.Messages
+                infoMsgId={msgId}
                 infoMessage={infoMessage}
+                errorMsgId={errorMsgId}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />

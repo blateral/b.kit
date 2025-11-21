@@ -209,7 +209,15 @@ const DeleteIcon = styled.button<{ isInverted?: boolean }>`
 `;
 
 const Original = styled.input`
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 `;
 
 interface Preview {
@@ -383,8 +391,12 @@ const FileUpload: FC<FileUploadProps> = ({
                     })}
                     <UploadItem
                         type="button"
+                        id={fieldId}
                         isInverted={isInverted}
                         onClick={handleClick}
+                        aria-invalid={!!errorMessage}
+                        aria-errormessage={errorMessage && errorMsgId}
+                        aria-describedby={infoMessage && msgId}
                     >
                         {uploadLabel && <span>{uploadLabel}</span>}
                         <Icon isInverted={isInverted}>
@@ -398,16 +410,14 @@ const FileUpload: FC<FileUploadProps> = ({
                 </FieldMain>
                 <Original
                     type="file"
-                    id={fieldId}
                     onChange={handleChange}
                     ref={fileInputRef}
+                    aria-hidden="true"
+                    tabIndex={-1}
                     multiple
                     required={isRequired}
                     disabled={isDisabled}
                     accept={acceptedFormats}
-                    aria-invalid={!!errorMessage}
-                    aria-errormessage={errorMsgId}
-                    aria-describedby={msgId}
                 />
             </FieldWrapper.Content>
             <FieldWrapper.Messages
