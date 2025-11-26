@@ -102,8 +102,10 @@ const View = styled.a<{
                 outline-offset: 2px;
             }
 
-            &:active {
-                opacity: 0.6;
+            &:not(:focus-visible):focus {
+                background-color: ${inverted
+                    ? color(theme).elementBg.dark
+                    : color(theme).elementBg.medium};
             }
         `}
 `;

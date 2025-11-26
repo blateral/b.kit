@@ -1,8 +1,12 @@
-import * as React from 'react';
+/* eslint-disable react/display-name */
 import { Meta, Story } from '@storybook/react';
+import Datepicker, {
+    FooterRendererFn,
+    HeaderRendererFn,
+} from 'components/fields/Datepicker';
+import { format } from 'date-fns';
+import * as React from 'react';
 import styled from 'styled-components';
-import Datepicker from 'components/fields/Datepicker';
-import Clock from 'components/base/icons/Clock';
 
 export default {
     title: 'Fields / Datepicker',
@@ -20,7 +24,7 @@ export default {
             values: [{ name: 'gray', value: '#F0F0F0' }],
         },
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
@@ -34,35 +38,136 @@ const Helper = styled.div`
 export const Default: Story = () => (
     <Datepicker
         placeholder="Prompt Text"
-        onSubmit={(start, end) => console.log(start, end)}
+        onChange={(start, end) => console.log(start, end)}
     />
 );
 
 export const WithLabel: Story = () => (
-    <Datepicker label="Label" placeholder="Prompt Text" />
-);
-
-export const WithCustomButtons: Story = () => (
     <Datepicker
         label="Label"
         placeholder="Prompt Text"
-        submitAction={(clickHandler) => (
-            <button onClick={clickHandler}>Auswählen</button>
-        )}
-        deleteAction={(clickHandler) => (
-            <button onClick={clickHandler}>löschen</button>
-        )}
-        nextCtrlUrl="/images/Arrow-Right.svg"
-        prevCtrlUrl="/images/Arrow-Left.svg"
+        onChange={(start, end) => console.log(start, end)}
     />
 );
 
-export const CustomIcon: Story = () => (
+export const WithInfoMessage: Story = () => (
     <Datepicker
-        customIcon={() => <Clock />}
         label="Label"
         placeholder="Prompt Text"
-        nextCtrlUrl="/images/Arrow-Right.svg"
-        prevCtrlUrl="/images/Arrow-Left.svg"
+        infoMessage="This is a datepicker field"
+        onChange={(start, end) => console.log(start, end)}
+    />
+);
+
+export const Required: Story = () => (
+    <Datepicker
+        label="Label"
+        placeholder="Prompt Text"
+        infoMessage="This is a datepicker field"
+        isRequired
+        onChange={(start, end) => console.log(start, end)}
+    />
+);
+
+export const Disabled: Story = () => (
+    <Datepicker
+        label="Label"
+        placeholder="Prompt Text"
+        infoMessage="This is a datepicker field"
+        isDisabled
+        onChange={(start, end) => console.log(start, end)}
+    />
+);
+
+export const HasError: Story = () => (
+    <Datepicker
+        label="Label"
+        placeholder="Prompt Text"
+        infoMessage="This is a datepicker field"
+        errorMessage="Bitte geben Sie einen gültigen Wert ein!"
+        onChange={(start, end) => console.log(start, end)}
+    />
+);
+
+export const SingeSelect: Story = () => (
+    <Datepicker
+        singleSelect
+        label="Label"
+        placeholder="Prompt Text"
+        onChange={(start, end) => console.log(start, end)}
+    />
+);
+
+export const MultipleMonths: Story = () => (
+    <Datepicker
+        visibleMonths="2"
+        label="Label"
+        placeholder="Prompt Text"
+        onChange={(start, end) => console.log(start, end)}
+    />
+);
+
+const customHeader: HeaderRendererFn =
+    ({ monthsShown }) =>
+    ({ monthDate, customHeaderCount, increaseMonth, decreaseMonth }) =>
+        (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                {customHeaderCount === 0 ? (
+                    <button onClick={decreaseMonth}>-1</button>
+                ) : null}{' '}
+                {format(monthDate, 'LLLL')}
+                {customHeaderCount === monthsShown - 1 ? (
+                    <button
+                        onClick={increaseMonth}
+                        style={{ marginLeft: 'auto' }}
+                    >
+                        +1
+                    </button>
+                ) : null}
+            </div>
+        );
+
+export const CustomHeader: Story = () => (
+    <Datepicker
+        label="Label"
+        placeholder="Prompt Text"
+        onChange={(start, end) => console.log(start, end)}
+        customHeader={customHeader}
+    />
+);
+
+export const CustomHeaderTwoMonths: Story = () => (
+    <Datepicker
+        label="Label"
+        placeholder="Prompt Text"
+        visibleMonths="2"
+        onChange={(start, end) => console.log(start, end)}
+        customHeader={customHeader}
+    />
+);
+
+const customFooter: FooterRendererFn = ({ resetHandler, closeHandler }) => (
+    <div>
+        <button onClick={resetHandler}>reset</button>
+        <button onClick={closeHandler}>close</button>
+    </div>
+);
+
+export const CustomFooter: Story = () => (
+    <Datepicker
+        label="Label"
+        placeholder="Prompt Text"
+        onChange={(start, end) => console.log(start, end)}
+        customFooter={customFooter}
+    />
+);
+
+export const CustomFooterTwoMonths: Story = () => (
+    <Datepicker
+        label="Label"
+        placeholder="Prompt Text"
+        visibleMonths="2"
+        onChange={(start, end) => console.log(start, end)}
+        customFooter={customFooter}
     />
 );

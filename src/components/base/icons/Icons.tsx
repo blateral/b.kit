@@ -45,6 +45,7 @@ export { default as MenuBurger } from 'components/base/icons/MenuBurger';
 export { default as Language } from 'components/base/icons/Language';
 export { default as Cross } from 'components/base/icons/Cross';
 export { default as CrossSmall } from 'components/base/icons/CrossSmall';
+export { default as CircleX } from 'components/base/icons/CircleX';
 
 /** Mixed **/
 export { default as Check } from 'components/base/icons/Check';

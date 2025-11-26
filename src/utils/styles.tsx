@@ -95,6 +95,7 @@ export interface Colors {
     text: {
         default: string;
         inverted: string;
+        disabled: string;
         error: string;
         errorInverted: string;
         heading: string;
@@ -197,6 +198,7 @@ const defaultColors: Colors = {
     text: {
         default: '#333333',
         inverted: '#FAFAFA',
+        disabled: '#B8B8B8',
         error: '#FF2D2D',
         errorInverted: '#FF2D2D',
         heading: '#333333',

@@ -55,6 +55,8 @@ const View = styled.a<{
             ? color(theme).text.copyInverted
             : color(theme).text.copy};
 
+    transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
     & > * {
         color: ${({ theme, inverted, isDisabled }) =>
             isDisabled
@@ -89,7 +91,8 @@ const View = styled.a<{
                 outline-offset: 2px;
             }
 
-            &:active {
+            &:focus:not(:focus-visible) {
+                outline: none;
                 opacity: 0.6;
             }
         `}

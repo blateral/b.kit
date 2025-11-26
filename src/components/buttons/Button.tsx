@@ -115,6 +115,10 @@ const View = styled.a<{
             &:focus:not(:focus-visible) {
                 text-decoration: none;
                 outline: none;
+
+                background-color: ${inverted
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
             }
         `}
 
