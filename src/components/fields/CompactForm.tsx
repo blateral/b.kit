@@ -14,11 +14,13 @@ const View = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: ${spacings.nudge}px;
 
     color: ${({ theme }) => color(theme).text.default};
 
     @media ${mq.medium} {
         flex-direction: row;
+        gap: 0;
     }
 `;
 
@@ -65,8 +67,6 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
     width: 100%;
     height: 49px;
 
-    margin-top: ${spacings.spacer * 0.5}px;
-
     background-color: ${({ theme }) => color(theme).primary.default};
     color: ${({ theme }) => color(theme).text.inverted};
 
@@ -74,28 +74,37 @@ const SubmitBtn = styled.button<{ isInverted?: boolean }>`
     border: none;
     user-select: none;
     cursor: pointer;
-    transition: all ease-in-out 0.2s;
+    transition: background-color ease-in-out 0.2s;
 
     @media ${mq.medium} {
         width: 100px;
         margin-top: 0;
     }
 
-    &:hover {
-        transform: scale(1.05);
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            background-color: ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
+        }
     }
 
-    &:focus {
-        text-decoration: underline;
-        transform: scale(1.012);
+    &:focus-visible {
+        outline: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+
+        outline-offset: 2px;
     }
 
     &:focus:not(:focus-visible) {
-        text-decoration: none;
-    }
-
-    &:active {
-        transform: scale(0.95);
+        background-color: ${({ theme, isInverted }) =>
+            isInverted
+                ? color(theme).primary.invertedHover
+                : color(theme).primary.hover};
     }
 `;
 
