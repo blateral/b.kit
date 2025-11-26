@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useId } from 'react';
 import styled from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 
@@ -22,6 +22,18 @@ const View = styled.form`
         flex-direction: row;
         gap: 0;
     }
+`;
+
+const Label = styled.label`
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 `;
 
 const InputField = styled.input<{ backColor?: string }>`
@@ -134,6 +146,9 @@ const CompactForm: FC<{
     className,
 }) => {
     const { colors } = useLibTheme();
+    const id = useId();
+
+    const fieldId = `compact-form-${id}`;
     const bgColor =
         mode === 'default' ? colors.elementBg.medium : colors.elementBg.light;
 
@@ -144,7 +159,10 @@ const CompactForm: FC<{
             action={action}
             className={className}
         >
+            <Label htmlFor={fieldId}>E-Mail</Label>
             <InputField
+                id={fieldId}
+                type="email"
                 placeholder={placeholder}
                 value={value}
                 onClick={onClick}
