@@ -171,6 +171,7 @@ const PickerView = styled.div`
     .react-datepicker__day--outside-month {
         color: ${({ theme }) => color(theme).elementBg.medium} !important;
         cursor: default;
+        outline: none !important;
     }
 
     .react-datepicker__day--selected {
