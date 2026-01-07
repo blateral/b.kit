@@ -185,6 +185,14 @@ export interface CtaActionProps {
     isInverted?: boolean;
     isTextCentered?: boolean;
 }
+export type CtaActionFn = (props: CtaActionProps) => React.ReactNode;
+
+export interface CtaNewsFormMainFnProps {
+    isInverted?: boolean;
+}
+export type CtaNewsFormMainFn = (
+    props: CtaNewsFormMainFnProps
+) => React.ReactNode;
 
 export const CallToAction: FC<{
     /** ID value for targeting section with anchor hashes */
@@ -210,11 +218,11 @@ export const CallToAction: FC<{
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom primary button */
-    primaryAction?: (props: CtaActionProps) => React.ReactNode;
+    primaryAction?: CtaActionFn;
     /** Function to inject custom secondary button */
-    secondaryAction?: (props: CtaActionProps) => React.ReactNode;
+    secondaryAction?: CtaActionFn;
     /** Function to inject newsletter form */
-    newsFormMain?: (isInverted?: boolean) => React.ReactNode;
+    newsFormMain?: CtaNewsFormMainFn;
 }> = ({
     anchorId,
     title,
@@ -266,7 +274,7 @@ export const CallToAction: FC<{
                 )}
                 {newsFormMain && hasNewsletter && (
                     <NewsletterWrapper>
-                        {newsFormMain(isInverted)}
+                        {newsFormMain({ isInverted })}
                     </NewsletterWrapper>
                 )}
                 {(primaryAction || secondaryAction) && (

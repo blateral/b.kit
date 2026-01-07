@@ -22,7 +22,17 @@ const FeatureList: React.FC<{
 
     /** Section background */
     bgMode?: 'full' | 'splitted' | 'inverted';
-}> = ({ anchorId, features, bgMode, isCentered = false, columns }) => {
+
+    /** Aria label for the list */
+    ariaLabel?: string;
+}> = ({
+    anchorId,
+    features,
+    bgMode,
+    isCentered = false,
+    columns,
+    ariaLabel,
+}) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const featureCount = features?.length || 0;
@@ -70,7 +80,7 @@ const FeatureList: React.FC<{
                 <Grid.Row
                     halign={isHalf || featureCount <= 2 ? 'center' : 'left'}
                     asList
-                    ariaLabel={'Liste an Features'}
+                    ariaLabel={ariaLabel}
                 >
                     {features?.map((feature, i) => (
                         <Grid.Col

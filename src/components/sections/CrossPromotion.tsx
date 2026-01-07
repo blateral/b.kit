@@ -24,23 +24,22 @@ const Card = styled(PromotionCard)<{ isMain?: boolean }>`
     }
 `;
 
+export type CrossPromotionItem = Omit<
+    PromotionCardProps,
+    'externalLinkIcon' | 'isInverted'
+> & {
+    size?: 'full' | 'half';
+};
+
 const CrossPromotion: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** Promotion card settings in main grid column (default: on right side). The size prop controls the width. */
-    main?: Array<
-        Omit<PromotionCardProps, 'externalLinkIcon' | 'isInverted'> & {
-            size?: 'full' | 'half';
-        }
-    >;
+    main?: CrossPromotionItem[];
 
     /** Promotion card settings in second grid column (default: on left side). The size prop controls the width. */
-    aside?: Array<
-        Omit<PromotionCardProps, 'externalLinkIcon' | 'isInverted'> & {
-            size?: 'full' | 'half';
-        }
-    >;
+    aside?: CrossPromotionItem[];
 
     /** Section background */
     bgMode?: 'full' | 'inverted' | 'splitted';

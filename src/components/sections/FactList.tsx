@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import Section, { mapToBgMode } from 'components/base/Section';
 import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
@@ -17,7 +17,7 @@ const FactsContainer = styled.ul`
     }
 `;
 
-const FactItem = styled.li<{ hasText?: boolean; hasBack?: boolean }>`
+const FactItemView = styled.li<{ hasText?: boolean; hasBack?: boolean }>`
     padding: ${spacings.nudge * 2}px;
 
     background: ${({ theme, hasBack }) =>
@@ -51,6 +51,45 @@ const ContentBlock = styled.div`
 const Description = styled(Copy)`
     max-width: 880px;
 `;
+
+export interface FactItemProps {
+    label?: string;
+    text?: string;
+    hasBg?: boolean;
+    icon?: { src: string; alt?: string };
+}
+
+const FactItem: React.FC<FactItemProps> = ({ label, text, hasBg, icon }) => {
+    const id = useId();
+    const titleId = `fact-item-title-${id}`;
+    const descriptionId = `fact-item-description-${id}`;
+
+    return (
+        <FactItemView
+            aria-labelledby={titleId}
+            aria-describedby={descriptionId}
+            hasText={!!text}
+            hasBack={hasBg}
+            aria-label={label}
+        >
+            {icon && <Icon src={icon.src} alt={icon.alt || ''} aria-hidden />}
+            <ContentBlock>
+                {label && (
+                    <Copy id={titleId} type="copy-b">
+                        {label}
+                    </Copy>
+                )}
+                {text && (
+                    <Description
+                        id={descriptionId}
+                        type="copy"
+                        innerHTML={text}
+                    />
+                )}
+            </ContentBlock>
+        </FactItemView>
+    );
+};
 
 const FactList: React.FC<{
     /** ID value for targeting section with anchor hashes */
@@ -95,27 +134,11 @@ const FactList: React.FC<{
                             return (
                                 <FactItem
                                     key={i}
-                                    hasText={!!text}
-                                    hasBack={hasBack}
-                                >
-                                    {icon && (
-                                        <Icon
-                                            src={icon.src}
-                                            alt={icon.alt || ''}
-                                        />
-                                    )}
-                                    <ContentBlock>
-                                        {label && (
-                                            <Copy type="copy-b">{label}</Copy>
-                                        )}
-                                        {text && (
-                                            <Description
-                                                type="copy"
-                                                innerHTML={text}
-                                            />
-                                        )}
-                                    </ContentBlock>
-                                </FactItem>
+                                    label={label}
+                                    text={text}
+                                    hasBg={hasBack}
+                                    icon={icon}
+                                />
                             );
                         })}
                     </FactsContainer>

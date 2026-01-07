@@ -111,6 +111,8 @@ const CardFooter = styled.div`
     max-width: 100%;
 `;
 
+export type FeatureActionFn = (props: FeatureActionProps) => React.ReactNode;
+
 export interface FeatureActionProps {
     isInverted?: boolean;
     isTextCentered?: boolean;
@@ -145,7 +147,7 @@ export interface FeatureProps {
     link?: LinkProps;
 
     /** Function to inject custom primary button */
-    action?: (props: FeatureActionProps) => React.ReactNode;
+    action?: FeatureActionFn;
 }
 
 const Feature = forwardRef<

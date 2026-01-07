@@ -59,7 +59,7 @@ export default {
     component: FeatureListComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady', 'releaseCandidate'],
+            type: ['production'],
         },
     },
 } as Meta;

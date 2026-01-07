@@ -48,6 +48,12 @@ const ListItem = styled.li<{ itemsPerRow: number }>`
     }
 `;
 
+export interface AlertListIconFnProps {
+    isInverted?: boolean;
+}
+
+export type AlertListIconFn = (props: AlertListIconFnProps) => React.ReactNode;
+
 const AlertList: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -59,7 +65,7 @@ const AlertList: React.FC<{
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom alert icon */
-    customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+    customIcon?: AlertListIconFn;
 
     ariaLabel?: string;
 }> = ({ anchorId, items, bgMode, customIcon, ariaLabel }) => {
