@@ -91,9 +91,11 @@ const View = styled.a<{
                 outline-offset: 2px;
             }
 
-            &:focus:not(:focus-visible) {
-                outline: none;
-                opacity: 0.6;
+            &:active:not(:focus-visible) {
+                @media (hover: none) {
+                    outline: none;
+                    opacity: 0.6;
+                }
             }
         `}
 `;

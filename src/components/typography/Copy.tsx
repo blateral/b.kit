@@ -97,6 +97,15 @@ const base = css<{
         &:focus:not(:focus-visible) {
             outline: none;
         }
+
+        &:active:not(:focus-visible) {
+            @media (hover: none) {
+                color: ${({ theme, isInverted }) =>
+                    isInverted
+                        ? font(theme).link.colorHoverInverted
+                        : font(theme).link.colorHover};
+            }
+        }
     }
 
     & > p {

@@ -40,11 +40,13 @@ const View = styled.button<{ isInverted?: boolean; disabled?: boolean }>`
                 outline-offset: 2px;
             }
 
-            &:focus:not(:focus-visible) {
-                outline: none;
-                color: ${isInverted
-                    ? color(theme).primary.invertedHover
-                    : color(theme).primary.hover};
+            &:active:not(:focus-visible) {
+                @media (hover: none) {
+                    outline: none;
+                    color: ${isInverted
+                        ? color(theme).primary.invertedHover
+                        : color(theme).primary.hover};
+                }
             }
         `}
 `;

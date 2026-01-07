@@ -51,11 +51,17 @@ const View = styled.button<{ variant?: PickerActionVariant }>`
                 : color(theme).text.inverted};
     }
 
-    &:not(:focus-visible):focus {
-        background-color: ${({ theme, variant }) =>
-            variant === 'ghost'
-                ? color(theme).elementBg.medium
-                : color(theme).primary.hover};
+    &:active:not(:focus-visible) {
+        @media (hover: none) {
+            background-color: ${({ theme, variant }) =>
+                variant === 'ghost'
+                    ? color(theme).elementBg.medium
+                    : color(theme).primary.hover};
+
+            transition: 0.2s background-color ease-in-out;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-tap-highlight-color: transparent;
+        }
     }
 
     &:focus-visible {

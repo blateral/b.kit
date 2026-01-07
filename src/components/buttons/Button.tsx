@@ -112,13 +112,19 @@ const View = styled.a<{
                 outline-offset: 2px;
             }
 
-            &:focus:not(:focus-visible) {
-                text-decoration: none;
-                outline: none;
+            @media (hover: none) {
+                &:active:not(:focus-visible) {
+                    text-decoration: none;
+                    outline: none;
 
-                background-color: ${inverted
-                    ? color(theme).primary.invertedHover
-                    : color(theme).primary.hover};
+                    background-color: ${inverted
+                        ? color(theme).primary.invertedHover
+                        : color(theme).primary.hover};
+
+                    transition: 0.2s background-color ease-in-out;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    -webkit-tap-highlight-color: transparent;
+                }
             }
         `}
 

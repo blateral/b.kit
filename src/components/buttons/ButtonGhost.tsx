@@ -102,10 +102,15 @@ const View = styled.a<{
                 outline-offset: 2px;
             }
 
-            &:not(:focus-visible):focus {
-                background-color: ${inverted
-                    ? color(theme).elementBg.dark
-                    : color(theme).elementBg.medium};
+            @media (hover: none) {
+                &:active:not(:focus-visible) {
+                    background-color: ${inverted
+                        ? color(theme).elementBg.dark
+                        : color(theme).elementBg.medium};
+                    transition: 0.2s background-color ease-in-out;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    -webkit-tap-highlight-color: transparent;
+                }
             }
         `}
 `;
