@@ -9,7 +9,7 @@ export default {
     component: NavBlock,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;
