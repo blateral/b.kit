@@ -16,7 +16,11 @@ const POISection = styled(Section)`
     overflow: visible;
 `;
 
-const Content = styled.div`
+const Content = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
     & > * + * {
         margin-top: ${spacings.nudge * 5}px;
     }
@@ -75,6 +79,16 @@ export interface PoiOverviewFilters {
     }) => React.ReactNode;
 }
 
+export interface PointOfInterestCustomFilterFnProps {
+    pois: PointOfInterestOverviewItem[];
+    filters: FilterState;
+    setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+    settings?: PoiOverviewFilters;
+}
+export type PointOfInterestCustomFilterFn = (
+    props: PointOfInterestCustomFilterFnProps
+) => React.ReactNode;
+
 const PointOfInterestOverview: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -90,12 +104,10 @@ const PointOfInterestOverview: React.FC<{
 
     /** POI filter settings */
     poiFilters?: PoiOverviewFilters;
-    customPoiFilters?: (props: {
-        pois: PointOfInterestOverviewItem[];
-        filters: FilterState;
-        setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
-        settings?: PoiOverviewFilters;
-    }) => React.ReactNode;
+    customPoiFilters?: PointOfInterestCustomFilterFn;
+
+    /** Custom POI filter function */
+    listAriaLabel?: string;
 }> = ({
     anchorId,
     bgMode,
@@ -103,6 +115,7 @@ const PointOfInterestOverview: React.FC<{
     initialPoiFilters,
     poiFilters,
     customPoiFilters,
+    listAriaLabel = 'List of card items with points of interest',
 }) => {
     const { colors, globals } = useLibTheme();
     const filterName = globals.sections.poiFilterName;
@@ -213,13 +226,14 @@ const PointOfInterestOverview: React.FC<{
                         />
                     )
                 ) : null}
-                <Content>
+                <Content aria-label={listAriaLabel}>
                     {poiMatches
                         ?.sort((a, b) => a.priority - b.priority)
                         ?.map((poi, i) => (
                             <POICard
                                 key={i}
                                 {...poi.item}
+                                renderAs="li"
                                 isInverted={isInverted}
                             />
                         ))}

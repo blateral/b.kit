@@ -58,14 +58,7 @@ const Control: FC<{
     className?: string;
     children?: React.ReactNode;
     onClick?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
-}> = ({
-    isInverted,
-    isDisabled,
-    ariaLabel = 'control',
-    onClick,
-    className,
-    children,
-}) => {
+}> = ({ isInverted, isDisabled, ariaLabel, onClick, className, children }) => {
     return (
         <View
             isInverted={isInverted}

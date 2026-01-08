@@ -16,7 +16,7 @@ export default {
     component: PointOfInterestOverviewComponent,
     parameters: {
         status: {
-            type: ['preview'],
+            type: ['production'],
         },
     },
 } as Meta;

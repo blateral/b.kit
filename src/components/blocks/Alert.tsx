@@ -163,7 +163,12 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
                         ariaLabel={link?.href ? title : undefined}
                         isInverted={isInverted}
                     >
-                        <Title textColor="inherit" size="medium" type="copy-b">
+                        <Title
+                            textColor="inherit"
+                            size="medium"
+                            type="copy-b"
+                            renderAs="span"
+                        >
                             {title}
                         </Title>
                     </TitleLink>

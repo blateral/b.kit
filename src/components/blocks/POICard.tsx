@@ -137,12 +137,16 @@ export type POIContact = {
     phone: string;
 };
 
-export interface POICardActionProps {
+export interface POICardActionFnProps {
     isInverted?: boolean;
     name?: string;
 }
 
+export type POICardActionFn = (props: POICardActionFnProps) => React.ReactNode;
+
 export interface POICardProps {
+    renderAs?: 'li' | 'div';
+
     /** Invert text and background for use on dark sections */
     isInverted?: boolean;
 
@@ -166,10 +170,11 @@ export interface POICardProps {
     }) => React.ReactNode;
 
     /** Function to inject custom action node */
-    action?: (props: POICardActionProps) => React.ReactNode;
+    action?: POICardActionFn;
 }
 
 const POICard: React.FC<POICardProps> = ({
+    renderAs = 'div',
     isInverted,
     name,
     shortDescription,
@@ -183,7 +188,7 @@ const POICard: React.FC<POICardProps> = ({
     const id = useId();
 
     return (
-        <View isInverted={isInverted} aria-labelledby={id}>
+        <View as={renderAs} isInverted={isInverted} aria-labelledby={id}>
             {name && (
                 <Title id={id} isInverted={isInverted}>
                     {name}

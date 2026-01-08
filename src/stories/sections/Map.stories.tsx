@@ -13,7 +13,7 @@ export default {
     component: MapComponent,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;

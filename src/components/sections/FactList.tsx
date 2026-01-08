@@ -108,8 +108,14 @@ const FactList: React.FC<{
     bgMode?: 'full' | 'inverted';
 
     /** Aria-Label for accessibility */
-    ariaLabel?: string;
-}> = ({ anchorId, facts, icon, bgMode, ariaLabel }) => {
+    listAriaLabel?: string;
+}> = ({
+    anchorId,
+    facts,
+    icon,
+    bgMode,
+    listAriaLabel = 'List of items with facts and other informations',
+}) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBack = isInverted || bgMode === 'full';
@@ -129,7 +135,7 @@ const FactList: React.FC<{
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 {facts && (
-                    <FactsContainer aria-label={ariaLabel}>
+                    <FactsContainer aria-label={listAriaLabel}>
                         {facts.map(({ label, text }, i) => {
                             return (
                                 <FactItem

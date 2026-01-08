@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import styled from 'styled-components';
 
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
@@ -175,6 +175,9 @@ const IconList: React.FC<{
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
+
+    /** Aria label for the list */
+    listAriaLabel?: string;
 }> = ({
     anchorId,
     items,
@@ -186,10 +189,14 @@ const IconList: React.FC<{
     showMoreText = 'show more',
     enableToggle,
     bgMode,
+    listAriaLabel = 'List of linked icons/logos',
 }) => {
     const { colors } = useLibTheme();
+    const id = useId();
     const isInverted = bgMode === 'inverted';
     const [showMore, setShowMore] = useState<boolean>(!enableToggle);
+
+    const listId = `icon-list-${id}`;
 
     const handleToggleClick = () => {
         setShowMore((prev) => !prev);
@@ -212,10 +219,10 @@ const IconList: React.FC<{
             <Wrapper clampWidth="normal" addWhitespace>
                 <ItemContainer isCentered={isCentered}>
                     <Items
-                        id="icon-list-items"
+                        id={listId}
                         isVisible={!showMore ? true : showMore === true}
                         isCentered={isCentered}
-                        aria-label="Liste an Icons"
+                        aria-label={listAriaLabel}
                     >
                         {items?.map(
                             ({ src, link, alt, ratio, showPlaceholder }, i) => (
@@ -258,7 +265,7 @@ const IconList: React.FC<{
                                 as="button"
                                 isInverted={isInverted}
                                 aria-pressed={showMore}
-                                aria-controls="icon-list-items"
+                                aria-controls={listId}
                                 onClick={() => handleToggleClick()}
                             >
                                 <Pointer.Label>

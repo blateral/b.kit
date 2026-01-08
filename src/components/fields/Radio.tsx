@@ -117,6 +117,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
     name,
     value,
 }) => {
+    const inputRef = React.useRef<HTMLInputElement>(null);
     const id = React.useId();
     const fieldId = `radio-${id}`;
 
@@ -128,8 +129,13 @@ const RadioButton: React.FC<RadioButtonProps> = ({
                 <StyledRadioButton
                     isSelected={isSelected}
                     isInverted={isInverted}
+                    onClick={() => {
+                        if (!inputRef.current) return;
+                        inputRef.current.click();
+                    }}
                 />
                 <Original
+                    ref={inputRef}
                     type="radio"
                     name={name}
                     id={fieldId}

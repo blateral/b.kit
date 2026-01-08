@@ -174,7 +174,11 @@ const CardFooter = styled.div`
     order: 2;
 `;
 
-export interface NewsCardActionProps {
+export type NewsCardActionFn = (
+    props: NewsCardActionFnProps
+) => React.ReactNode;
+
+export interface NewsCardActionFnProps {
     isInverted?: boolean;
     title?: string;
     link?: LinkProps;
@@ -210,7 +214,7 @@ export interface NewsCardProps {
     tagListAriaLabel?: string;
 
     /** Function to inject primary action */
-    action?: (props: NewsCardActionProps) => React.ReactNode;
+    action?: NewsCardActionFn;
 
     /** Function to inject custom tag node */
     customTag?: (props: {

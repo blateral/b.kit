@@ -178,6 +178,50 @@ Inverted.parameters = {
     },
 };
 
+export const AsListItem: Story = () => (
+    <POICard
+        renderAs="li"
+        name="Beispiel POI 1"
+        shortDescription="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        infos={[
+            {
+                text: `Altes Rathaus, Münsterstraße , 12345 Example City`,
+                icon: () => <LocationPin />,
+            },
+            {
+                text: `Auf Karte anzeigen`,
+                icon: () => <Map />,
+            },
+            {
+                text: `07551 / 888666`,
+                icon: () => <Phone />,
+            },
+            {
+                text: `max.mustermann@gmail.com`,
+                icon: () => <Mail />,
+            },
+            {
+                text: `www.einrichtung.com`,
+                icon: () => <Computer />,
+            },
+        ]}
+        facts={['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5']}
+        action={({ isInverted, name }) => (
+            <Pointer.View
+                as="a"
+                href="#"
+                isInverted={isInverted}
+                ariaLabel={name}
+            >
+                <Pointer.Label>Details</Pointer.Label>
+                <Pointer.Icon>
+                    <AngleRight />
+                </Pointer.Icon>
+            </Pointer.View>
+        )}
+    />
+);
+
 export const CustomFact: Story = () => (
     <POICard
         name="Beispiel POI 1"

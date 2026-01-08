@@ -9,7 +9,7 @@ export default {
     component: NewsFooterComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady', 'releaseCandidate'],
+            type: ['production'],
         },
     },
 } as Meta;

@@ -67,8 +67,15 @@ const AlertList: React.FC<{
     /** Function to inject custom alert icon */
     customIcon?: AlertListIconFn;
 
-    ariaLabel?: string;
-}> = ({ anchorId, items, bgMode, customIcon, ariaLabel }) => {
+    /** Aria label for the list */
+    listAriaLabel?: string;
+}> = ({
+    anchorId,
+    items,
+    bgMode,
+    customIcon,
+    listAriaLabel = 'List of card items with important news/informations',
+}) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -102,7 +109,7 @@ const AlertList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List aria-label={ariaLabel}>
+                <List aria-label={listAriaLabel}>
                     {items?.map((item, i) => (
                         <ListItem
                             key={i}

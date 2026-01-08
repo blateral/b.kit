@@ -51,7 +51,7 @@ const CrossPromotion: React.FC<{
     externalLinkIcon?: React.ReactNode;
 
     /** Aria-Label for accessibility */
-    ariaLabel?: string;
+    listAriaLabel?: string;
 }> = ({
     anchorId,
     main,
@@ -59,7 +59,7 @@ const CrossPromotion: React.FC<{
     bgMode,
     isMirrored,
     externalLinkIcon,
-    ariaLabel,
+    listAriaLabel = 'List of cross promotion cards with image and text',
 }) => {
     const { colors } = useLibTheme();
 
@@ -81,7 +81,7 @@ const CrossPromotion: React.FC<{
             <Wrapper clampWidth="normal" addWhitespace>
                 {aside ? (
                     isMirrored ? (
-                        <Grid.Row asList ariaLabel={ariaLabel}>
+                        <Grid.Row asList ariaLabel={listAriaLabel}>
                             <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {main &&
                                     main.map((card, i) => (

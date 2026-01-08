@@ -8,20 +8,20 @@ import NewsOverview, {
 import { generateItemList } from 'utils/storyHelpers';
 import Pointer from 'components/buttons/Pointer';
 import AngleRight from 'components/base/icons/AngleRight';
-import { NewsCardActionProps } from 'components/blocks/NewsCard';
+import { NewsCardActionFnProps } from 'components/blocks/NewsCard';
 
 export default {
     title: 'Sections/News/NewsOverview',
     component: NewsOverviewComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;
 
 const action = {
-    action: ({ isInverted, title, link }: NewsCardActionProps) => (
+    action: ({ isInverted, title, link }: NewsCardActionFnProps) => (
         <Pointer.View
             decoration="none"
             isInverted={isInverted}

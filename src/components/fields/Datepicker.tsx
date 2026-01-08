@@ -393,6 +393,15 @@ const OriginalInput = styled.input`
     border-width: 0;
 `;
 
+export interface DatepickerCustomIconFnProps {
+    isInverted?: boolean;
+    singleSelect?: boolean;
+}
+
+export type DatepickerCustomIconFn = (
+    props: DatepickerCustomIconFnProps
+) => React.ReactNode;
+
 interface PickerBtnProps {
     label?: string;
     errorMessage?: string;
@@ -406,10 +415,7 @@ interface PickerBtnProps {
     endDate?: Date | null | undefined;
     onClick?: (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     dateFormat?: string;
-    customIcon?: (props: {
-        isInverted?: boolean;
-        singleSelect?: boolean;
-    }) => React.ReactNode;
+    customIcon?: DatepickerCustomIconFn;
     singleSelect?: boolean;
 }
 
@@ -514,10 +520,11 @@ const PickerHeader = styled.div`
     margin-bottom: ${spacings.nudge * 3}px;
 `;
 
+export type HeaderRendererFnProps = ReactDatePickerCustomHeaderProps;
 export type HeaderRendererFn = (settings: {
     locale?: string;
     monthsShown: number;
-}) => (props: ReactDatePickerCustomHeaderProps) => ReactNode;
+}) => (props: HeaderRendererFnProps) => ReactNode;
 
 const headerRenderer: HeaderRendererFn =
     ({ monthsShown }) =>
@@ -575,7 +582,7 @@ const headerRenderer: HeaderRendererFn =
             </PickerHeader>
         );
 
-export type FooterRendererFn = (props: {
+export interface FooterRendererFnProps {
     startDate: Date | null;
     endDate: Date | null;
     singleSelect: boolean;
@@ -584,7 +591,9 @@ export type FooterRendererFn = (props: {
     clearLabel: string;
     closeHandler?: () => void;
     resetHandler?: () => void;
-}) => ReactNode;
+}
+
+export type FooterRendererFn = (props: FooterRendererFnProps) => ReactNode;
 
 const FooterActions = styled.div`
     display: flex;
@@ -637,10 +646,7 @@ export interface DatepickerProps {
     customHeader?: HeaderRendererFn;
     customFooter?: FooterRendererFn;
 
-    customIcon?: (props: {
-        isInverted?: boolean;
-        singleSelect?: boolean;
-    }) => React.ReactNode;
+    customIcon?: DatepickerCustomIconFn;
 
     singleSelect?: boolean;
     visibleMonths?: '1' | '2';

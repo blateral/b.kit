@@ -31,6 +31,7 @@ import fieldGroupValidator from './validators/fieldGroupValidator';
 import uploadValidator from './validators/uploadValidator';
 import Copy from 'components/typography/Copy';
 import {
+    DatepickerCustomIconFn,
     FooterRendererFn,
     HeaderRendererFn,
 } from 'components/fields/Datepicker';
@@ -159,10 +160,7 @@ export interface Datepicker extends FormField {
     clearLabel?: string;
     customHeader?: HeaderRendererFn;
     customFooter?: FooterRendererFn;
-    customIcon?: (props: {
-        isInverted?: boolean;
-        singleSelect?: boolean;
-    }) => React.ReactNode;
+    customIcon?: DatepickerCustomIconFn;
 
     singleDateError?: string;
     multiDateError?: string;
