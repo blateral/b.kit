@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { getColors as color, mq, spacings } from 'utils/styles';
-
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 import Copy from 'components/typography/Copy';
+import React from 'react';
+import styled from 'styled-components';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import { generatePriceList, JsonLdPriceListProps } from 'utils/structuredData';
+import { getColors as color, mq, spacings } from 'utils/styles';
 
 const ItemList = styled.ul`
     margin: 0;
@@ -80,6 +80,14 @@ export const PriceBlock: React.FC<PriceItems & { hasBg?: boolean }> = ({
     );
 };
 
+export interface PriceListCustonJsonLdFnProps {
+    /** Array with price items */
+    items?: PriceItems[];
+}
+export type PriceListCustonJsonLdFn = (
+    props: PriceListCustonJsonLdFnProps
+) => JsonLdPriceListProps | undefined;
+
 const PriceList: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -90,8 +98,22 @@ const PriceList: React.FC<{
     /** Section background */
     bgMode?: 'inverted' | 'full';
 
-    ariaLabel?: string;
-}> = ({ anchorId, bgMode, items, ariaLabel }) => {
+    /** Aria label for the list */
+    listAriaLabel?: string;
+
+    /** JSON-LD type for the price list */
+    jsonLdType?: 'service' | 'product';
+
+    /** Custom JSON-LD data for the price list */
+    customJsonLdData?: PriceListCustonJsonLdFn;
+}> = ({
+    anchorId,
+    bgMode,
+    items,
+    listAriaLabel = 'List of items with price information',
+    jsonLdType = 'service',
+    customJsonLdData,
+}) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBack = isInverted || bgMode === 'full';
@@ -109,8 +131,19 @@ const PriceList: React.FC<{
             }
             bgMode={mapToBgMode(bgMode, true)}
         >
+            {customJsonLdData
+                ? generatePriceList(customJsonLdData({ items }))
+                : generatePriceList({
+                      type: jsonLdType,
+                      items: items?.map((item) => ({
+                          name: item.title,
+                          description: item.text,
+                          price: item.price,
+                      })),
+                  })}
+
             <Wrapper addWhitespace>
-                <ItemList aria-label={ariaLabel}>
+                <ItemList aria-label={listAriaLabel}>
                     {items?.map((item, i) => (
                         <PriceBlock key={i} {...item} hasBg={hasBack} />
                     ))}

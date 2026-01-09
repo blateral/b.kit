@@ -8,7 +8,7 @@ export default {
     component: RawVideoComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;

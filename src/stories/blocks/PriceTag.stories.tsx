@@ -9,7 +9,7 @@ export default {
     component: PriceTag,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;

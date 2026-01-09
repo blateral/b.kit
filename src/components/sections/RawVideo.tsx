@@ -13,6 +13,10 @@ import { isValidArray } from 'utils/arrays';
 const VideoContainer = styled.div<{ isInverted?: boolean }>`
     position: relative;
     cursor: pointer;
+
+    &:has(video) {
+        cursor: default;
+    }
 `;
 
 const Overlay = styled.div<{ bgImage?: ImageProps; isInverted?: boolean }>`
@@ -148,6 +152,9 @@ const RawVideo: React.FC<{
 
     /** Video play icon */
     playIcon?: React.ReactNode;
+
+    /** Aria label for play button */
+    playBtnAriaLabel?: string;
 }> = ({
     anchorId,
     bgMode,
@@ -156,6 +163,7 @@ const RawVideo: React.FC<{
     playIcon,
     autoplay,
     loop,
+    playBtnAriaLabel = 'Play video',
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
@@ -199,7 +207,7 @@ const RawVideo: React.FC<{
                             bgImage={placeholderImg}
                             isInverted={isInverted}
                         >
-                            <VideoControls>
+                            <VideoControls aria-label={playBtnAriaLabel}>
                                 {playIcon || <Play iconColor="#000" />}
                             </VideoControls>
                         </Overlay>

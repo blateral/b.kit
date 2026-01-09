@@ -1,31 +1,35 @@
-import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { PriceTableComponent } from 'components/sections/PriceTable';
 import Button from 'components/buttons/Button';
-import ButtonGhost from 'components/buttons/ButtonGhost';
+import { PriceTableComponent } from 'components/sections/PriceTable';
+import React from 'react';
 
 export default {
     title: 'Sections / PriceTable',
     component: PriceTableComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady', 'releaseCandidate'],
+            type: ['production'],
         },
     },
 } as Meta;
 
-const button = (props: { isInverted?: boolean; isHighlighted?: boolean }) => {
+const button = (props: {
+    isInverted?: boolean;
+    isHighlighted?: boolean;
+    title?: string;
+    superTitle?: string;
+}) => {
     if (props.isHighlighted) {
         return (
-            <Button.View isInverted={props.isInverted} as="button">
+            <Button.View isInverted={props.isInverted} href="#0">
                 <Button.Label>Primary</Button.Label>
             </Button.View>
         );
     } else {
         return (
-            <ButtonGhost.View isInverted={props.isInverted} as="button">
-                <ButtonGhost.Label>Secondary</ButtonGhost.Label>
-            </ButtonGhost.View>
+            <Button.View isInverted={props.isInverted} href="#0">
+                <Button.Label>Secondary</Button.Label>
+            </Button.View>
         );
     }
 };

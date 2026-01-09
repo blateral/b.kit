@@ -3,7 +3,7 @@ import {
     getColors as color,
     getGlobals as global,
 } from 'utils/styles';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useId } from 'react';
 import styled from 'styled-components';
 import Copy from 'components/typography/Copy';
 import Actions from './Actions';
@@ -48,14 +48,23 @@ const StyledActions = styled(Actions)`
     text-align: center;
 `;
 
+export interface PriceTagActionFnProps {
+    isInverted?: boolean;
+    isHighlighted?: boolean;
+    title?: string;
+    superTitle?: string;
+}
+
+export type PriceTagActionFn = (
+    props: PriceTagActionFnProps
+) => React.ReactNode;
+
 export interface PriceTagProps {
+    renderAs?: 'div' | 'li';
     title?: string;
     superTitle?: string;
     text?: string;
-    action?: (props: {
-        isInverted?: boolean;
-        isHighlighted?: boolean;
-    }) => React.ReactNode;
+    action?: PriceTagActionFn;
     isInverted?: boolean;
     isCentered?: boolean;
     hasBackground?: boolean;
@@ -68,6 +77,7 @@ const PriceTag = forwardRef<
 >(
     (
         {
+            renderAs,
             superTitle,
             title,
             text,
@@ -80,15 +90,21 @@ const PriceTag = forwardRef<
         },
         ref
     ) => {
+        const id = useId();
         const inverted = isHighlighted ? !isInverted : false;
+        const titleId = title ? `price-tag-title-${id}` : undefined;
+        const descriptionId = text ? `price-tag-desc-${id}` : undefined;
 
         return (
             <View
                 ref={ref}
+                as={renderAs || 'div'}
                 isInverted={isInverted}
                 isCentered={isCentered}
                 isHighlighted={isHighlighted}
                 hasBg={hasBackground}
+                aria-labelledby={titleId}
+                aria-describedby={descriptionId}
                 className={className}
             >
                 {superTitle && (
@@ -102,6 +118,7 @@ const PriceTag = forwardRef<
                 )}
                 {title && (
                     <Callout
+                        id={titleId}
                         renderAs="div"
                         size="big"
                         isInverted={inverted}
@@ -111,6 +128,7 @@ const PriceTag = forwardRef<
                 )}
                 {text && (
                     <Copy
+                        id={descriptionId}
                         size="medium"
                         isInverted={inverted}
                         innerHTML={text}
@@ -124,6 +142,8 @@ const PriceTag = forwardRef<
                         action({
                             isInverted: inverted,
                             isHighlighted: isHighlighted,
+                            title,
+                            superTitle,
                         })
                     }
                 />

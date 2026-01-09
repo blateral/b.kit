@@ -7,6 +7,7 @@ import Wrapper from 'components/base/Wrapper';
 import Callout from 'components/typography/Callout';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Copy from 'components/typography/Copy';
+import { concat as cn } from 'utils/concat';
 
 const Content = styled.figure`
     margin: 0;
@@ -55,18 +56,6 @@ const Quote: FC<{
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
-    // function decodeEntities(html: string): string {
-    //     const textarea = document.createElement('textarea');
-    //     textarea.innerHTML = html;
-    //     return textarea.value;
-    // }
-
-    const stripHtmlTags = (html: string) => {
-        const div = document.createElement('div');
-        div.innerHTML = html;
-        return div.textContent || div.innerText || '';
-    };
-
     return (
         <Section
             addSeperation
@@ -82,15 +71,10 @@ const Quote: FC<{
         >
             <Wrapper clampWidth="normal" addWhitespace>
                 <Content
-                    aria-label={
-                        text
-                            ? source
-                                ? `${stripHtmlTags(text)}, ${stripHtmlTags(
-                                      source
-                                  )}`
-                                : stripHtmlTags(text)
-                            : ''
-                    }
+                    aria-label={cn([text, source], ', ').replace(
+                        /<[^>]*>/g,
+                        ''
+                    )}
                 >
                     {text && (
                         <Text

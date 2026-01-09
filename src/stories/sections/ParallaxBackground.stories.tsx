@@ -55,7 +55,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'releaseCandidate',
+            type: 'production',
         },
     },
 } as Meta;
