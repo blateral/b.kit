@@ -162,6 +162,7 @@ const Teaser: FC<{
     const [isVideoActive, setVideoActive] = useState<boolean>(false);
     const isObserverSupported = useObserverSupport();
     const id = useId();
+    const captionId = description ? `media-caption-${id}` : undefined;
 
     useUpdateEffect(() => {
         if (!viewRef.current || !hasVideo) return;
@@ -225,11 +226,7 @@ const Teaser: FC<{
                                         isInverted={isInverted}
                                         alt={image.alt ?? ''}
                                         coverSpace
-                                        ariaDescribedBy={
-                                            description
-                                                ? `media-caption-${id}`
-                                                : undefined
-                                        }
+                                        ariaDescribedBy={captionId}
                                     />
                                 )}
                                 {hasVideo && (
@@ -249,18 +246,14 @@ const Teaser: FC<{
                                         ariaLabel={
                                             description
                                                 ? undefined
-                                                : `Video zu: ${title}`
+                                                : `Video of: ${title}`
                                         }
-                                        ariaDescribedBy={
-                                            description
-                                                ? `media-caption-${id}`
-                                                : undefined
-                                        }
+                                        ariaDescribedBy={captionId}
                                     />
                                 )}
                                 {description && (
                                     <Description
-                                        id={`media-caption-${id}`}
+                                        id={captionId}
                                         size="small"
                                         renderAs="figcaption"
                                         isInverted={isInverted}

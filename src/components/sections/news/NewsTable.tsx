@@ -26,7 +26,12 @@ const NewsTable: React.FC<{
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, bgMode, tableItems }) => {
+
+    /** Optional aria controls for left buttons */
+    ariaControlLeft?: string;
+    /** Optional aria controls for right buttons */
+    ariaControlRight?: string;
+}> = ({ anchorId, bgMode, tableItems, ariaControlLeft, ariaControlRight }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full' || isInverted;
@@ -52,6 +57,8 @@ const NewsTable: React.FC<{
                             key={i}
                             hasBack={hasBg}
                             isInverted={isInverted}
+                            ariaControlLeft={ariaControlLeft}
+                            ariaControlRight={ariaControlRight}
                         />
                     );
                 })}

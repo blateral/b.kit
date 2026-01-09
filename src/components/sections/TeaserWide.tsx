@@ -309,7 +309,7 @@ const TeaserWide: FC<{
                     isInverted={isInverted}
                     isMirrored={isMirrored}
                     ratios={video?.aspectRatios}
-                    ariaLabel={`Video zu: ${title}`}
+                    ariaLabel={`Video of: ${title}`}
                 />
             )}
             <Wrapper clampWidth="normal" addWhitespace>
