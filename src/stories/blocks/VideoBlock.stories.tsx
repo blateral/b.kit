@@ -7,7 +7,7 @@ export default {
     component: VideoBlock,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
@@ -30,6 +30,16 @@ export const Autoplay: Story = () => (
 
 export const Loop: Story = () => (
     <VideoBlock autoPlay loop urls={['images/videos/alps_stockvideo.mp4']} />
+);
+
+export const AriaLabels: Story = () => (
+    <VideoBlock
+        autoPlay
+        loop
+        urls={['images/videos/alps_stockvideo.mp4']}
+        ariaLabel="Alps Video"
+        ariaDescribedBy="video-description"
+    />
 );
 
 export const WithAspectRatio: Story = () => (

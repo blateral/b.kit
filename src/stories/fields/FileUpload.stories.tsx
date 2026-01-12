@@ -21,7 +21,7 @@ export default {
             values: [{ name: 'gray', value: '#F0F0F0' }],
         },
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;

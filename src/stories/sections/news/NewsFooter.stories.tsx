@@ -3,14 +3,13 @@ import { Meta, Story } from '@storybook/react';
 import NewsFooter, {
     NewsFooterComponent,
 } from 'components/sections/news/NewsFooter';
-import ButtonGhost from 'components/buttons/ButtonGhost';
 
 export default {
     title: 'Sections/News/NewsFooter',
     component: NewsFooterComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady', 'releaseCandidate'],
+            type: ['production'],
         },
     },
 } as Meta;
@@ -35,11 +34,6 @@ export const Default: Story = () => (
                     },
                 },
                 link: { href: '#0' },
-                action: (isInverted) => (
-                    <ButtonGhost.View isInverted={isInverted}>
-                        <ButtonGhost.Label>Read more</ButtonGhost.Label>
-                    </ButtonGhost.View>
-                ),
             },
             {
                 tags: [{ name: 'Tag 2', link: { href: '#0' } }],
@@ -55,11 +49,6 @@ export const Default: Story = () => (
                     },
                 },
                 link: { href: '#0' },
-                action: (isInverted) => (
-                    <ButtonGhost.View isInverted={isInverted}>
-                        <ButtonGhost.Label>Read more</ButtonGhost.Label>
-                    </ButtonGhost.View>
-                ),
             },
         ]}
     />
@@ -86,11 +75,6 @@ export const WithBackground: Story = () => (
                     },
                 },
                 link: { href: '#0' },
-                action: (isInverted) => (
-                    <ButtonGhost.View isInverted={isInverted}>
-                        <ButtonGhost.Label>Read more</ButtonGhost.Label>
-                    </ButtonGhost.View>
-                ),
             },
             {
                 tags: [{ name: 'Tag 2', link: { href: '#0' } }],
@@ -106,11 +90,6 @@ export const WithBackground: Story = () => (
                     },
                 },
                 link: { href: '#0' },
-                action: (isInverted) => (
-                    <ButtonGhost.View isInverted={isInverted}>
-                        <ButtonGhost.Label>Read more</ButtonGhost.Label>
-                    </ButtonGhost.View>
-                ),
             },
         ]}
     />
@@ -136,11 +115,6 @@ export const IsInverted: Story = () => (
                     },
                 },
                 link: { href: '#0' },
-                action: (isInverted) => (
-                    <ButtonGhost.View isInverted={isInverted}>
-                        <ButtonGhost.Label>Read more</ButtonGhost.Label>
-                    </ButtonGhost.View>
-                ),
             },
             {
                 tags: [{ name: 'Tag 2', link: { href: '#0' } }],
@@ -156,11 +130,6 @@ export const IsInverted: Story = () => (
                     },
                 },
                 link: { href: '#0' },
-                action: (isInverted) => (
-                    <ButtonGhost.View isInverted={isInverted}>
-                        <ButtonGhost.Label>Read more</ButtonGhost.Label>
-                    </ButtonGhost.View>
-                ),
             },
         ]}
         bgMode="inverted"
@@ -196,11 +165,6 @@ export const WithHandler: Story = () => (
                     },
                 },
                 link: { href: '#0' },
-                action: (isInverted) => (
-                    <ButtonGhost.View isInverted={isInverted}>
-                        <ButtonGhost.Label>Read more</ButtonGhost.Label>
-                    </ButtonGhost.View>
-                ),
             },
             {
                 tags: [{ name: 'Tag 2', link: { href: '#0' } }],
@@ -216,11 +180,6 @@ export const WithHandler: Story = () => (
                     },
                 },
                 link: { href: '#0' },
-                action: (isInverted) => (
-                    <ButtonGhost.View isInverted={isInverted}>
-                        <ButtonGhost.Label>Read more</ButtonGhost.Label>
-                    </ButtonGhost.View>
-                ),
             },
         ]}
     />

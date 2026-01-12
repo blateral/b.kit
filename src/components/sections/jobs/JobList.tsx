@@ -13,6 +13,7 @@ import useUpdateEffect from 'utils/useUpdateEffect';
 import { escapeRegExp } from 'utils/escape';
 import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
 import useMounted from 'utils/useMounted';
+import { concat as cn } from 'utils/concat';
 
 const List = styled.ul`
     display: flex;
@@ -230,6 +231,12 @@ const JobList: React.FC<{
 
     /** Injection function for filter reset icon */
     filterClearIcon?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Additional aria-label for the list */
+    listAriaLabel?: string;
+
+    /** Function to generate aria-label for each job item */
+    itemAriaLabel?: (title: string, type: string, location: string) => string;
 }> = ({
     anchorId,
     jobs,
@@ -243,6 +250,8 @@ const JobList: React.FC<{
     hasFilter,
     filterSubmitIcon,
     filterClearIcon,
+    listAriaLabel = 'List of job offers',
+    itemAriaLabel,
 }) => {
     const { colors, globals } = useLibTheme();
     const filterName = globals.sections.jobFilterName;
@@ -366,23 +375,70 @@ const JobList: React.FC<{
                         clearIcon={filterClearIcon}
                     />
                 )}
-                <List>
+                <List aria-label={listAriaLabel}>
                     {jobMatches
                         ?.sort((a, b) => a.priority - b.priority)
-                        .map((match, i) => (
-                            <Item key={i}>
-                                <JobCard
-                                    ref={cardRefs[i]}
-                                    {...match.item}
-                                    isInverted={isInverted}
-                                    hasBackground={hasBg}
-                                    modelIcon={modelIcon}
-                                    locationIcon={locationIcon}
-                                    totalLocations={totalJobLocations}
-                                    allLocationsLabel={allJobLocationsLabel}
-                                />
-                            </Item>
-                        ))}
+                        .map((match, i) => {
+                            const employmentType = match.item.employmentTypes
+                                ?.filter((type) => type.name)
+                                .map((type) => type.name)
+                                ?.join(', ');
+
+                            const validLocations = match.item.locations?.filter(
+                                (loc) => loc.name
+                            );
+                            const hasLocations = isValidArray(
+                                validLocations,
+                                false
+                            );
+
+                            let locationText = '';
+
+                            if (hasLocations) {
+                                if (
+                                    totalJobLocations !== undefined &&
+                                    validLocations.length >=
+                                        totalJobLocations &&
+                                    allJobLocationsLabel
+                                ) {
+                                    locationText = allJobLocationsLabel;
+                                } else {
+                                    locationText = validLocations
+                                        .map((loc) => loc.name)
+                                        ?.join(', ');
+                                }
+                            }
+
+                            const itemLabel = itemAriaLabel
+                                ? itemAriaLabel(
+                                      match.item.jobTitle,
+                                      employmentType || '',
+                                      locationText
+                                  )
+                                : `Job offer: ${cn(
+                                      [
+                                          match.item.jobTitle,
+                                          employmentType,
+                                          locationText,
+                                      ],
+                                      ', '
+                                  )}`;
+
+                            return (
+                                <Item key={i} aria-label={itemLabel}>
+                                    <JobCard
+                                        ref={cardRefs[i]}
+                                        {...match.item}
+                                        isInverted={isInverted}
+                                        hasBackground={hasBg}
+                                        modelIcon={modelIcon}
+                                        locationIcon={locationIcon}
+                                        totalLocations={totalJobLocations}
+                                        allLocationsLabel={allJobLocationsLabel}
+                                    />
+                                </Item>
+                            );
+                        })}
                 </List>
             </Wrapper>
         </Section>

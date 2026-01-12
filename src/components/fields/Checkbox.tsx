@@ -1,11 +1,11 @@
 import Check from 'components/base/icons/Check';
 import Copy from 'components/typography/Copy';
-import React from 'react';
+import React, { useId, useRef } from 'react';
 import styled from 'styled-components';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { getColors as color, spacings } from 'utils/styles';
 
-const View = styled.label`
+const View = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -112,7 +112,6 @@ export interface CheckboxProps {
 
     onChange?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
     onBlur?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
-    onClick?: () => void;
 
     name?: string;
     value?: string;
@@ -130,20 +129,25 @@ const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
     isInverted,
     onChange,
     onBlur,
-    onClick,
     name,
     value,
     isRequired,
     className,
 }) => {
     const { colors } = useLibTheme();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const id = useId();
+    const fieldId = `checkbox-${id}`;
 
     return (
         <View className={className}>
             <CheckboxContainer
                 isDisabled={isDisabled}
                 isInverted={isInverted}
-                onClick={onClick}
+                onClick={() => {
+                    if (!inputRef.current) return;
+                    inputRef.current.click();
+                }}
             >
                 <Box
                     isSelected={isSelected}
@@ -153,6 +157,8 @@ const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
                     {isSelected && <StyledCheck />}
                 </Box>
                 <Original
+                    ref={inputRef}
+                    id={fieldId}
                     type="checkbox"
                     name={`${name}[]`}
                     value={value}
@@ -160,14 +166,17 @@ const Checkbox: React.FC<CheckboxProps & { className?: string }> = ({
                     required={isRequired}
                     onChange={onChange}
                     onBlur={onBlur}
+                    disabled={isDisabled}
+                    tabIndex={isDisabled ? -1 : 0}
                 />
             </CheckboxContainer>
             {label && (
                 <Label
-                    renderAs="span"
+                    renderAs="label"
                     size="small"
                     type="copy-b"
                     isInverted={isInverted}
+                    htmlFor={fieldId}
                     textColor={
                         isDisabled
                             ? isInverted

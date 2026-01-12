@@ -8,7 +8,7 @@ export default {
     component: IndexListComponent,
     parameters: {
         status: {
-            type: ['preview'],
+            type: ['production'],
         },
     },
 } as Meta;

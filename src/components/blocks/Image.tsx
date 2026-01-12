@@ -207,6 +207,9 @@ const Image: React.FC<
 
         /** Allow edge radius defined by theme settings */
         allowEdgeRadius?: boolean;
+
+        isDecorative?: boolean;
+        ariaDescribedBy?: string;
     } & ImageProps
 > = ({
     className,
@@ -223,6 +226,8 @@ const Image: React.FC<
     showPlaceholder = true,
     allowEdgeRadius,
     copyright,
+    isDecorative = false,
+    ariaDescribedBy,
 }) => {
     const { colors } = useLibTheme();
     const imgRef = useRef<HTMLImageElement>(null);
@@ -277,6 +282,8 @@ const Image: React.FC<
                     srcSet={small}
                     alt={alt || ''}
                     loading="lazy"
+                    role={isDecorative ? 'presentation' : undefined}
+                    aria-describedby={ariaDescribedBy}
                 />
             </picture>
             {copyright && (

@@ -9,7 +9,7 @@ export default {
     components: NewsTableComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady', 'releaseCandidate'],
+            type: ['production'],
         },
     },
 } as Meta;

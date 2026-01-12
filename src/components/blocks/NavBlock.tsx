@@ -1,10 +1,11 @@
 import Copy from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
-import React from 'react';
+import React, { useId } from 'react';
 import styled from 'styled-components';
 import { getColors as color, mq, spacings } from 'utils/styles';
 
-const View = styled(Link)<{ isInverted?: boolean; hasIcon?: boolean }>`
+const View = styled.div<{ isInverted?: boolean; hasIcon?: boolean }>`
+    position: relative;
     display: -ms-grid;
     display: grid;
 
@@ -14,8 +15,6 @@ const View = styled(Link)<{ isInverted?: boolean; hasIcon?: boolean }>`
     -ms-grid-rows: min-content 1fr;
     grid-auto-rows: min-content 1fr;
 
-    cursor: pointer;
-    text-decoration: none;
     color: ${({ theme, isInverted }) =>
         isInverted
             ? color(theme).primary.inverted
@@ -26,7 +25,17 @@ const View = styled(Link)<{ isInverted?: boolean; hasIcon?: boolean }>`
             ? color(theme).primary.inverted
             : color(theme).primary.default};
 
-    transition: all ease-in-out 0.2s;
+    transition: color ease-in-out 0.2s, outline-color ease-in-out 0.2s;
+
+    &:has(:focus-visible) {
+        outline: 2px solid
+            ${({ isInverted, theme }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+
+        outline-offset: 2px;
+    }
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
@@ -60,8 +69,39 @@ const Icon = styled.div`
     }
 `;
 
+const TitleLink = styled(Link)`
+    outline: none;
+
+    &:focus-visible {
+        outline: none;
+    }
+`;
+
 const Title = styled(Copy)`
     display: inline-block;
+
+    color: ${({ theme, isInverted }) =>
+        isInverted
+            ? color(theme).primary.inverted
+            : color(theme).primary.default};
+
+    transition: color ease-in-out 0.2s;
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            color: ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
+        }
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
 `;
 
 const TitleIcon = styled.span`
@@ -104,17 +144,50 @@ const NavBlock: React.FC<NavBlockProps> = ({
     customTitleIcon,
     className,
 }) => {
+    const id = useId();
+    const titleId = `nav-block-title-${id}`;
+    const descriptionId = `nav-block-description-${id}`;
+
     return (
         <View
-            {...link}
             isInverted={isInverted}
             hasIcon={!!customIcon}
+            aria-labelledby={titleId}
+            aria-describedby={text ? descriptionId : undefined}
+            id={id}
+            role="navigation"
             className={className}
         >
             {customIcon ? <Icon>{customIcon({})}</Icon> : ''}
             <MainLabel hasIcon={!!customIcon}>
-                {title && (
-                    <Title textColor="inherit" size="medium" type="copy-b">
+                {link?.href ? (
+                    <TitleLink {...link} isInverted={isInverted}>
+                        {title && (
+                            <Title
+                                id={titleId}
+                                textColor="inherit"
+                                size="medium"
+                                type="copy-b"
+                                renderAs="span"
+                                isInverted={isInverted}
+                            >
+                                {title}
+                                {title && customTitleIcon && (
+                                    <TitleIcon>
+                                        {customTitleIcon({ isInverted })}
+                                    </TitleIcon>
+                                )}
+                            </Title>
+                        )}
+                    </TitleLink>
+                ) : title ? (
+                    <Title
+                        id={titleId}
+                        textColor="inherit"
+                        size="medium"
+                        type="copy-b"
+                        isInverted={isInverted}
+                    >
                         {title}
                         {title && customTitleIcon && (
                             <TitleIcon>
@@ -122,12 +195,13 @@ const NavBlock: React.FC<NavBlockProps> = ({
                             </TitleIcon>
                         )}
                     </Title>
-                )}
+                ) : null}
             </MainLabel>
             {text && (
                 <>
                     <span />
                     <Text
+                        id={descriptionId}
                         size="small"
                         isInverted={isInverted}
                         innerHTML={text}

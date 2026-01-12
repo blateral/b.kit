@@ -30,7 +30,9 @@ const Gallery: FC<{
 
     /** Section background */
     bgMode?: 'full' | 'splitted' | 'inverted';
-}> = ({ anchorId, bgMode, images }) => {
+
+    listAriaLabel?: string;
+}> = ({ anchorId, bgMode, images, listAriaLabel = 'Image Gallery' }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
@@ -48,16 +50,23 @@ const Gallery: FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace>
-                <Grid.Row>
+                <Grid.Row
+                    asList={images && images.length > 1}
+                    ariaLabel={listAriaLabel}
+                >
                     {images?.map((img, i) => (
                         <Grid.Col
                             key={i}
                             semilarge={{
                                 span: img.isFull ? 12 / 12 : 6 / 12,
                             }}
+                            ariaLabel={
+                                img.alt ? img.alt : `Galerie Bild ${i + 1}`
+                            }
                         >
                             <StyledImage
                                 {...img}
+                                alt={img.alt ?? ''}
                                 coverSpace
                                 isInverted={isInverted}
                             />

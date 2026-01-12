@@ -113,7 +113,7 @@ export default {
     component: FooterComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;

@@ -7,12 +7,13 @@ import FeatureList, {
 import Button from 'components/buttons/Button';
 import { FeatureActionProps, FeatureProps } from 'components/blocks/Feature';
 import { generateItemList } from 'utils/storyHelpers';
+import ButtonGhost from 'components/buttons/ButtonGhost';
 
 const actions = {
-    action: ({ isInverted }: FeatureActionProps) => (
-        <Button.View href="#test" isInverted={isInverted}>
+    action: ({ isInverted, link, title }: FeatureActionProps) => (
+        <ButtonGhost.View isInverted={isInverted} ariaLabel={title} {...link}>
             <Button.Label>Primary</Button.Label>
-        </Button.View>
+        </ButtonGhost.View>
     ),
 };
 
@@ -58,7 +59,7 @@ export default {
     component: FeatureListComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady', 'releaseCandidate'],
+            type: ['production'],
         },
     },
 } as Meta;

@@ -35,13 +35,59 @@ export default {
     component: Grid.Row,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
 
 export const Default: Story = () => (
     <Grid.Row>
+        <Grid.Col>
+            <ExampleCol>100 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={14 / 28}>
+            <ExampleCol>50 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={14 / 28}>
+            <ExampleCol>50 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+    </Grid.Row>
+);
+
+export const AsList: Story = () => (
+    <Grid.Row asList>
+        <Grid.Col>
+            <ExampleCol>100 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={14 / 28}>
+            <ExampleCol>50 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={14 / 28}>
+            <ExampleCol>50 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+        <Grid.Col span={4 / 12}>
+            <ExampleCol>33 %</ExampleCol>
+        </Grid.Col>
+    </Grid.Row>
+);
+
+export const WithAriaLabel: Story = () => (
+    <Grid.Row ariaLabel="Grid List">
         <Grid.Col>
             <ExampleCol>100 %</ExampleCol>
         </Grid.Col>

@@ -79,6 +79,7 @@ export type CalloutTag =
     | 'blockquote';
 
 const Callout: React.FC<{
+    id?: string;
     isInverted?: boolean;
     renderAs?: CalloutTag;
     size?: CalloutFontOptionType;
@@ -91,6 +92,7 @@ const Callout: React.FC<{
     className?: string;
     children?: React.ReactNode;
 }> = ({
+    id,
     isInverted,
     renderAs = 'h2',
     className,
@@ -108,6 +110,7 @@ const Callout: React.FC<{
 
     return (
         <View
+            id={id}
             as={renderAs}
             size={size}
             textColor={

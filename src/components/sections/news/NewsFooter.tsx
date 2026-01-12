@@ -1,13 +1,14 @@
-import React from 'react';
+import Grid from 'components/base/Grid';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
-import { useEffect, useState } from 'react';
-import { useMediaQuery } from 'utils/useMediaQuery';
-import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+import NewsCard, {
+    NewsCardCustomTagFn,
+    NewsCardProps,
+} from 'components/blocks/NewsCard';
+import React, { useEffect, useState } from 'react';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import Grid from 'components/base/Grid';
-import { LinkProps } from 'components/typography/Link';
+import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
+import { useMediaQuery } from 'utils/useMediaQuery';
 import { getNewsFilterParams } from './NewsOverview';
 
 type NewsFooterMq = 'small' | 'semilarge';
@@ -28,13 +29,7 @@ const NewsFooter: React.FC<{
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom tag node */
-    customTag?: (props: {
-        key: React.Key;
-        name: string;
-        isInverted?: boolean;
-        isActive?: boolean;
-        link?: LinkProps;
-    }) => React.ReactNode;
+    customTag?: NewsCardCustomTagFn;
 }> = ({ anchorId, news, bgMode, customTag }) => {
     const { colors, theme } = useLibTheme();
     const newsCount = news?.length || 0;
@@ -93,13 +88,14 @@ const NewsFooter: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace clampWidth="small">
-                <Grid.Row>
+                <Grid.Row asList ariaLabel="Weitere News">
                     {news
                         ?.filter((_, i) => i < visibleRows * itemsPerRow)
                         .map((item, i) => (
                             <Grid.Col
                                 medium={{ span: 6 / 12 }}
                                 key={`${i}_news_${item.title}`}
+                                ariaLabel={item.title}
                             >
                                 <NewsCard
                                     key={i}

@@ -12,7 +12,7 @@ import {
 
 const View = styled.a<{
     inverted?: boolean;
-    disable?: boolean;
+    isDisabled?: boolean;
     size?: 'default' | 'small';
 }>`
     min-height: 3em;
@@ -40,10 +40,9 @@ const View = styled.a<{
     text-decoration: none;
 
     outline: none;
-    box-shadow: none;
     border: solid 1px
-        ${({ inverted, disable, theme }) =>
-            disable
+        ${({ inverted, isDisabled, theme }) =>
+            isDisabled
                 ? color(theme).elementBg.medium
                 : inverted
                 ? color(theme).elementBg.light
@@ -52,11 +51,11 @@ const View = styled.a<{
     user-select: none;
     cursor: pointer;
 
-    pointer-events: ${({ disable }) => (disable ? 'none' : 'all')};
+    pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 
     background-color: transparent;
-    color: ${({ theme, inverted, disable }) =>
-        disable
+    color: ${({ theme, inverted, isDisabled }) =>
+        isDisabled
             ? inverted
                 ? hexToRgba(color(theme).text.inverted, 0.6)
                 : hexToRgba(color(theme).text.default, 0.6)
@@ -64,11 +63,11 @@ const View = styled.a<{
             ? color(theme).text.inverted
             : color(theme).text.default};
 
-    transition: all ease-in-out 0.2s;
+    transition: color ease-in-out 0.2s, background-color ease-in-out 0.2s;
 
     & > * {
-        color: ${({ theme, inverted, disable }) =>
-            disable
+        color: ${({ theme, inverted, isDisabled }) =>
+            isDisabled
                 ? inverted
                     ? hexToRgba(color(theme).text.inverted, 0.6)
                     : hexToRgba(color(theme).text.default, 0.6)
@@ -82,47 +81,45 @@ const View = styled.a<{
     }
 
     @media (hover: hover) and (pointer: fine) {
-        ${({ disable, inverted, theme }) =>
-            !disable &&
-            css`
-                &:hover {
-                    box-shadow: 0px 8px 16px
-                        ${inverted
-                            ? 'rgba(255, 255, 255, 0.25)'
-                            : 'rgba(0, 0, 0, 0.25)'};
-                }
-
-                &:focus {
-                    outline: 1px solid
-                        ${inverted
-                            ? color(theme).primary.inverted
-                            : color(theme).primary.default};
-                    outline-offset: 0;
-                    box-shadow: 0px 2px 6px
-                        ${inverted
-                            ? 'rgba(255, 255, 255, 0.25)'
-                            : 'rgba(0, 0, 0, 0.3)'};
-                }
-
-                &:focus:not(:focus-visible) {
-                    outline: none;
-                    box-shadow: none;
-                }
-
-                &:active {
-                    box-shadow: 0px 2px 6px
-                        ${inverted
-                            ? 'rgba(255, 255, 255, 0.25)'
-                            : 'rgba(0, 0, 0, 0.3)'};
-                }
-            `}
+        &:hover {
+            background-color: ${({ theme, isDisabled, inverted }) =>
+                isDisabled
+                    ? color(theme).elementBg.medium
+                    : inverted
+                    ? color(theme).elementBg.dark
+                    : color(theme).elementBg.medium};
+        }
     }
+
+    ${({ isDisabled, inverted, theme }) =>
+        !isDisabled &&
+        css`
+            &:focus-visible {
+                outline: 2px solid
+                    ${inverted
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default};
+                outline-offset: 2px;
+            }
+
+            @media (hover: none) {
+                &:active:not(:focus-visible) {
+                    background-color: ${inverted
+                        ? color(theme).elementBg.dark
+                        : color(theme).elementBg.medium};
+                    transition: 0.2s background-color ease-in-out;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    -webkit-tap-highlight-color: transparent;
+                }
+            }
+        `}
 `;
 
 interface Props {
     size?: 'default' | 'small';
     isInverted?: boolean;
     isDisabled?: boolean;
+    ariaLabel?: string;
     className?: string;
     children?: React.ReactNode;
 }
@@ -139,60 +136,112 @@ export type LinkProps = Props & {
     isExternal?: boolean;
 };
 
-const ButtonGhost: React.FC<BtnProps | LinkProps> = React.forwardRef(
+export type DecoratorProps = Props & {
+    as?: 'decorator';
+    onClick?: (ev: React.SyntheticEvent<HTMLSpanElement>) => void;
+};
+
+const ButtonGhost = React.forwardRef<
+    HTMLElement,
+    BtnProps | LinkProps | DecoratorProps
+>(
     (
         {
-            as,
+            as = 'a',
             size = 'default',
             isInverted,
             isDisabled,
             onClick,
+            ariaLabel,
             className,
             children,
             ...rest
         },
         ref
     ) => {
-        if (as === 'button') {
-            return (
-                <View
-                    ref={ref}
-                    as={as as any}
-                    size={size}
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
-        } else {
-            return (
-                <View
-                    ref={ref}
-                    as={as as any}
-                    aria-disabled={isDisabled}
-                    size={size}
-                    href={(rest as LinkProps).href}
-                    target={
-                        (rest as LinkProps).isExternal ? '_blank' : undefined
-                    }
-                    rel={
-                        (rest as LinkProps).isExternal
-                            ? 'noopener noreferrer'
-                            : undefined
-                    }
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
+        switch (as) {
+            case 'button': {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLButtonElement>}
+                        as="button"
+                        tabIndex={isDisabled ? -1 : 0}
+                        size={size}
+                        inverted={isInverted}
+                        disabled={isDisabled}
+                        isDisabled={isDisabled}
+                        aria-label={ariaLabel}
+                        onClick={
+                            onClick as (
+                                ev: React.SyntheticEvent<HTMLButtonElement>
+                            ) => void
+                        }
+                        className={className}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
+
+            case 'a': {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLAnchorElement>}
+                        as={as}
+                        tabIndex={isDisabled ? -1 : 0}
+                        aria-disabled={isDisabled}
+                        aria-label={ariaLabel}
+                        size={size}
+                        href={(rest as LinkProps).href}
+                        target={
+                            (rest as LinkProps).isExternal
+                                ? '_blank'
+                                : undefined
+                        }
+                        rel={
+                            (rest as LinkProps).isExternal
+                                ? 'noopener'
+                                : undefined
+                        }
+                        inverted={isInverted}
+                        isDisabled={isDisabled}
+                        onClick={
+                            onClick as (
+                                ev: React.SyntheticEvent<HTMLAnchorElement>
+                            ) => void
+                        }
+                        className={className}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
+
+            default: {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLSpanElement>}
+                        as="span"
+                        tabIndex={isDisabled ? -1 : 0}
+                        aria-disabled={isDisabled}
+                        aria-label={ariaLabel}
+                        size={size}
+                        inverted={isInverted}
+                        isDisabled={isDisabled}
+                        onClick={
+                            onClick as (
+                                ev: React.SyntheticEvent<HTMLSpanElement>
+                            ) => void
+                        }
+                        className={className}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
         }
     }
 );

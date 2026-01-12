@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import Heading, { HeadlineTag } from 'components/typography/Heading';
 import { FontType, spacings } from 'utils/styles';
 import { useLibTheme } from 'utils/LibThemeProvider';
+import Link, { LinkProps } from 'components/typography/Link';
 
 const View = styled.div<{ isCentered?: boolean }>`
     display: block;
@@ -25,6 +26,20 @@ const SuperTitle = styled(Heading)`
     -webkit-line-clamp: 2; /* number of lines to show */
     line-clamp: 2;
     -webkit-box-orient: vertical;
+`;
+
+const TitleLink = styled(Link)`
+    display: block;
+    text-decoration: none;
+
+    &:focus-visible {
+        outline: none;
+
+        & > * {
+            outline: 2px dotted currentColor;
+            outline-offset: 2px;
+        }
+    }
 `;
 
 const MainTitle = styled(Heading)<{ maxLines?: number }>`
@@ -64,6 +79,12 @@ const Title: FC<{
     /** Main title HTML tag type (h2, h3, h4...) */
     titleAs?: HeadlineTag;
 
+    /** Link properties for main title */
+    titleLink?: LinkProps;
+
+    /** ID for main title */
+    titleId?: string;
+
     /** Style type of main title */
     titleSize?: TitleSize;
 
@@ -83,6 +104,8 @@ const Title: FC<{
     superTitleAs,
     title,
     titleAs,
+    titleLink,
+    titleId,
     titleSize = 'heading-2',
     maxLines,
     isCentered = false,
@@ -106,20 +129,51 @@ const Title: FC<{
                     innerHTML={superTitle}
                 />
             )}
+
             {title && (
-                <MainTitle
-                    renderAs={titleAs || 'h2'}
-                    size={titleSize === 'heading-1' ? 'heading-1' : 'heading-2'}
-                    hyphens={titleHyphens}
-                    textColor={
-                        colorMode === 'onImage'
-                            ? colors.text.inverted
-                            : undefined
-                    }
-                    isInverted={colorMode === 'inverted'}
-                    innerHTML={title}
-                    maxLines={maxLines}
-                />
+                <>
+                    {titleLink?.href ? (
+                        <TitleLink ariaLabel={title} {...titleLink}>
+                            <MainTitle
+                                id={titleId}
+                                renderAs={titleAs || 'h2'}
+                                size={
+                                    titleSize === 'heading-1'
+                                        ? 'heading-1'
+                                        : 'heading-2'
+                                }
+                                hyphens={titleHyphens}
+                                textColor={
+                                    colorMode === 'onImage'
+                                        ? colors.text.inverted
+                                        : undefined
+                                }
+                                isInverted={colorMode === 'inverted'}
+                                innerHTML={title}
+                                maxLines={maxLines}
+                            />
+                        </TitleLink>
+                    ) : (
+                        <MainTitle
+                            id={titleId}
+                            renderAs={titleAs || 'h2'}
+                            size={
+                                titleSize === 'heading-1'
+                                    ? 'heading-1'
+                                    : 'heading-2'
+                            }
+                            hyphens={titleHyphens}
+                            textColor={
+                                colorMode === 'onImage'
+                                    ? colors.text.inverted
+                                    : undefined
+                            }
+                            isInverted={colorMode === 'inverted'}
+                            innerHTML={title}
+                            maxLines={maxLines}
+                        />
+                    )}
+                </>
             )}
         </View>
     );

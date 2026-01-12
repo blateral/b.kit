@@ -32,7 +32,17 @@ const FactGrid: FC<{
 
     /** Center text inside fact card items */
     isCentered?: boolean;
-}> = ({ anchorId, columns = 3, facts, bgMode, isCentered }) => {
+
+    /** Aria-Label for accessibility */
+    listAriaLabel?: string;
+}> = ({
+    anchorId,
+    columns = 3,
+    facts,
+    bgMode,
+    isCentered,
+    listAriaLabel = 'List of items with facts and other informations',
+}) => {
     const { colors } = useLibTheme();
     const factCount = facts?.length || 0;
 
@@ -64,7 +74,7 @@ const FactGrid: FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <Grid.Row>
+                <Grid.Row asList ariaLabel={listAriaLabel}>
                     {facts &&
                         facts.map((fact, i) => {
                             if (

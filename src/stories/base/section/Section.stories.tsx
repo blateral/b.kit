@@ -25,7 +25,7 @@ export default {
     component: Section,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
@@ -36,6 +36,37 @@ export const Default: Story = () => (
             <ExampleContent />
         </Section>
         <Section>
+            <ExampleContent />
+        </Section>
+    </>
+);
+
+export const WithAriaLabels: Story = () => (
+    <>
+        <Section ariaLabel="Test Section">
+            <ExampleContent />
+        </Section>
+        <Section ariaLabeledBy="testsection">
+            <ExampleContent />
+        </Section>
+    </>
+);
+
+export const DifferentTags: Story = () => (
+    <>
+        <Section renderAs="header">
+            <ExampleContent />
+        </Section>
+        <Section renderAs="article">
+            <ExampleContent />
+        </Section>
+        <Section renderAs="div">
+            <ExampleContent />
+        </Section>
+        <Section>
+            <ExampleContent />
+        </Section>
+        <Section renderAs="footer">
             <ExampleContent />
         </Section>
     </>

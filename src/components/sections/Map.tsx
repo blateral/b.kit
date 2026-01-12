@@ -183,7 +183,7 @@ const ContactListLink = styled(Link)`
     }
 `;
 
-const AddressContainer = styled.div<{ hasIcon?: boolean }>`
+const AddressContainer = styled.address<{ hasIcon?: boolean }>`
     display: -ms-grid;
     display: grid;
 
@@ -294,7 +294,10 @@ const LocationInfoCard: FC<
                 />
             )}
             {contact && (
-                <ContactList isInverted={isInverted}>
+                <ContactList
+                    isInverted={isInverted}
+                    aria-label="contact information"
+                >
                     {contact?.telephone?.label && (
                         <li>
                             {phoneIconContent && (
@@ -401,6 +404,14 @@ export interface MapLocation {
     description?: string;
 }
 
+export interface MapControlFnProps {
+    isInverted?: boolean;
+    isActive?: boolean;
+    name?: string;
+    clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
+}
+export type MapControlFn = (props: MapControlFnProps) => React.ReactNode;
+
 const Map: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -442,20 +453,10 @@ const Map: FC<{
     flyToControl?: React.ReactNode;
 
     /** Injection function to replace default control button */
-    controlNext?: (props: {
-        isInverted?: boolean;
-        isActive?: boolean;
-        name?: string;
-        clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
-    }) => React.ReactNode;
+    controlNext?: MapControlFn;
 
     /** Injection function to replace default control button */
-    controlPrev?: (props: {
-        isInverted?: boolean;
-        isActive?: boolean;
-        name?: string;
-        clickHandler?: (ev: React.SyntheticEvent<HTMLButtonElement>) => void;
-    }) => React.ReactNode;
+    controlPrev?: MapControlFn;
 }> = ({
     anchorId,
     bgMode,
@@ -628,6 +629,7 @@ const Map: FC<{
                                                     isInverted={isInverted}
                                                     isDisabled={false}
                                                     onClick={goToNext}
+                                                    ariaLabel="Next location"
                                                 >
                                                     <Icons.ArrowRightGhost />
                                                 </Control>
@@ -644,6 +646,7 @@ const Map: FC<{
                                                     isInverted={isInverted}
                                                     isDisabled={false}
                                                     onClick={goToPrevious}
+                                                    ariaLabel="Previous location"
                                                 >
                                                     <Icons.ArrowLeftGhost />
                                                 </Control>

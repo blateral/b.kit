@@ -11,6 +11,7 @@ import StatusFormatter from '../../utils/statusFormatter';
 import Info from '../base/icons/Info';
 
 const View = styled.div<{ isInverted?: boolean }>`
+    position: relative;
     display: -ms-grid;
     display: grid;
 
@@ -21,7 +22,6 @@ const View = styled.div<{ isInverted?: boolean }>`
 
     text-decoration: none;
 
-    position: relative;
     border: 2px solid
         ${({ theme, isInverted }) =>
             isInverted
@@ -38,7 +38,6 @@ const View = styled.div<{ isInverted?: boolean }>`
 
     text-align: left;
     width: 100%;
-    cursor: pointer;
 
     transition: color ease-in-out 0.2s, border 0.2s ease-in-out;
 
@@ -47,7 +46,7 @@ const View = styled.div<{ isInverted?: boolean }>`
     }
 
     @media (hover: hover) and (pointer: fine) {
-        &:hover {
+        &:has(a):hover {
             border: 2px solid
                 ${({ theme, isInverted }) =>
                     isInverted
@@ -88,29 +87,28 @@ const Title = styled(Copy)`
     display: inline-block;
 `;
 
-const ViewLink = styled(Link)`
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+const TitleLink = styled(Link)`
+    color: inherit;
+    cursor: pointer;
+    outline: none;
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            color: ${({ isInverted, theme }) =>
+                isInverted
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
+        }
+    }
 
     && {
         margin: 0;
     }
 
-    &:focus-within {
-        outline: dotted 2px
-            ${({ isInverted, theme }) =>
-                isInverted
-                    ? color(theme).primary.inverted
-                    : color(theme).primary.default};
-        outline-offset: 4px;
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
-        box-shadow: none;
+    &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
     }
 `;
 
@@ -159,7 +157,22 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
         <View isInverted={isInverted} data-sheet="alert" className={className}>
             <Icon>{customIcon ? customIcon({ isInverted }) : <Info />}</Icon>
             <MainLabel>
-                {title && (
+                {title && link?.href ? (
+                    <TitleLink
+                        {...link}
+                        ariaLabel={link?.href ? title : undefined}
+                        isInverted={isInverted}
+                    >
+                        <Title
+                            textColor="inherit"
+                            size="medium"
+                            type="copy-b"
+                            renderAs="span"
+                        >
+                            {title}
+                        </Title>
+                    </TitleLink>
+                ) : (
                     <Title textColor="inherit" size="medium" type="copy-b">
                         {title}
                     </Title>
@@ -180,12 +193,6 @@ const Alert: React.FC<AlertProps & { className?: string }> = ({
                     </Copy>
                 )}
             </Content>
-            {link && (
-                <ViewLink
-                    {...link}
-                    ariaLabel={link?.href ? title : undefined}
-                />
-            )}
         </View>
     );
 };

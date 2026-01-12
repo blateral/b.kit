@@ -13,10 +13,14 @@ const Tag = styled(PriceTag)`
     min-height: 500px;
 `;
 
-const Items = styled.div`
+const Items = styled.ul`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
     margin-top: -${gridSettings.gutter}px;
     margin-left: -${gridSettings.gutter}px;
@@ -40,12 +44,21 @@ const PriceTable: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
     /** Array of PriceTag card items */
-    items: Array<Omit<PriceTagProps, 'isInverted'>>;
+    items: Array<Omit<PriceTagProps, 'isInverted' | 'renderAs'>>;
     /** Center text inside card items */
     isCentered?: boolean;
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, items, isCentered, bgMode }) => {
+
+    /** Aria label for the list */
+    listAriaLabel?: string;
+}> = ({
+    anchorId,
+    items,
+    isCentered,
+    bgMode,
+    listAriaLabel = 'List of price cards',
+}) => {
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
     const priceTagCount = items?.length || 0;
@@ -82,11 +95,12 @@ const PriceTable: React.FC<{
             bgMode={mapToBgMode(bgMode)}
         >
             <Wrapper addWhitespace>
-                <Items>
+                <Items aria-label={listAriaLabel}>
                     {items?.map((item, i) => (
                         <Tag
                             key={i}
                             ref={cardRefs[i]}
+                            renderAs="li"
                             {...item}
                             isInverted={isInverted}
                             isCentered={isCentered}

@@ -8,7 +8,7 @@ export default {
     components: TableComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;

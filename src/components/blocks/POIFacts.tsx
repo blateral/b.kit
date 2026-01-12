@@ -4,22 +4,24 @@ import React from 'react';
 import styled from 'styled-components';
 import { getColors as color, spacings } from 'utils/styles';
 
-const View = styled.div`
+const View = styled.ul`
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
-
-    margin-top: -${spacings.nudge}px;
-    margin-left: -${spacings.nudge * 2}px;
+    row-gap: ${spacings.nudge}px;
+    column-gap: ${spacings.nudge * 2}px;
 
     &:not(:first-child) {
         margin-top: ${spacings.nudge * 3}px;
     }
 `;
 
-const FactsWrapper = styled.div`
-    padding-top: ${spacings.nudge}px;
-    padding-left: ${spacings.nudge * 2}px;
+const FactsWrapper = styled.li`
+    display: flex;
+    align-items: center;
 `;
 
 const Fact = styled.span<{ isInverted?: boolean }>`
@@ -42,9 +44,10 @@ const POIFacts: React.FC<{
         isInverted?: boolean;
     }) => React.ReactNode;
     isInverted?: boolean;
-}> = ({ facts, customFact, isInverted }) => {
+    ariaLabel?: string;
+}> = ({ facts, customFact, isInverted, ariaLabel }) => {
     return (
-        <View>
+        <View aria-label={ariaLabel || 'POI Facts'}>
             {facts.map((fact, i) => (
                 <FactsWrapper key={'tag_' + i}>
                     {customFact ? (

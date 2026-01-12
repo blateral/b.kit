@@ -16,7 +16,7 @@ export default {
     component: PointOfInterestOverviewComponent,
     parameters: {
         status: {
-            type: ['preview'],
+            type: ['production'],
         },
     },
 } as Meta;
@@ -59,12 +59,12 @@ export const Default: Story = () => (
                     'Fact 5',
                     'Fact 6',
                 ],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -101,12 +101,12 @@ export const Default: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -143,12 +143,12 @@ export const Default: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -196,12 +196,12 @@ export const WithFiltering: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 6'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -238,12 +238,12 @@ export const WithFiltering: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 4', 'Fact 5'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -280,12 +280,12 @@ export const WithFiltering: Story = () => (
                     },
                 ],
                 facts: ['Fact 2'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -365,12 +365,12 @@ export const WithCustomFiltering: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 6'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -407,12 +407,12 @@ export const WithCustomFiltering: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 4', 'Fact 5'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -449,12 +449,12 @@ export const WithCustomFiltering: Story = () => (
                     },
                 ],
                 facts: ['Fact 2'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -510,12 +510,12 @@ export const WithBackground: Story = () => (
                     'Fact 5',
                     'Fact 6',
                 ],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -552,12 +552,12 @@ export const WithBackground: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -594,12 +594,12 @@ export const WithBackground: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -655,12 +655,12 @@ export const Inverted: Story = () => (
                     'Fact 5',
                     'Fact 6',
                 ],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -697,12 +697,12 @@ export const Inverted: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>
@@ -739,12 +739,12 @@ export const Inverted: Story = () => (
                     },
                 ],
                 facts: ['Fact 1', 'Fact 2', 'Fact 3', 'Fact 4', 'Fact 5'],
-                action: (isInverted) => (
+                action: ({ isInverted, name }) => (
                     <Pointer.View
                         as="a"
                         href="#"
                         isInverted={isInverted}
-                        onClick={console.log}
+                        ariaLabel={name}
                     >
                         <Pointer.Label>Details</Pointer.Label>
                         <Pointer.Icon>

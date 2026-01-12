@@ -10,7 +10,7 @@ export default {
     component: SocialWallComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;
@@ -43,6 +43,9 @@ export const Default: Story = () => (
                     large: 'https://unsplash.it/450/450?image=703',
                     alt: 'bild 2',
                 },
+                followUs: 'Follow us on Facebook',
+                hashTag: '#badday',
+                socialIcon: <FlyTo />,
             },
             {
                 link: {
@@ -131,6 +134,9 @@ export const WithBackground: Story = () => (
                     large: 'https://unsplash.it/450/450?image=703',
                     alt: 'bild 2',
                 },
+                followUs: 'Follow us on Facebook',
+                hashTag: '#badday',
+                socialIcon: <FlyTo />,
             },
             {
                 link: {
@@ -219,6 +225,9 @@ export const Inverted: Story = () => (
                     large: 'https://unsplash.it/450/450?image=703',
                     alt: 'bild 2',
                 },
+                followUs: 'Follow us on Facebook',
+                hashTag: '#badday',
+                socialIcon: <FlyTo />,
             },
             {
                 link: {
@@ -306,6 +315,9 @@ export const CustomSocialIcon: Story = () => (
                     large: 'https://unsplash.it/450/450?image=703',
                     alt: 'bild 2',
                 },
+                followUs: 'Follow us on Facebook',
+                hashTag: '#badday',
+                socialIcon: <FlyTo />,
             },
             {
                 link: {
@@ -362,6 +374,5 @@ export const CustomSocialIcon: Story = () => (
         ]}
         hashTag="#hashtag"
         followUs="FOLLOW US ON INSTAGRAM"
-        socialIcon={<FlyTo />}
     />
 );

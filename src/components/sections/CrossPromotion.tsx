@@ -24,23 +24,22 @@ const Card = styled(PromotionCard)<{ isMain?: boolean }>`
     }
 `;
 
+export type CrossPromotionItem = Omit<
+    PromotionCardProps,
+    'externalLinkIcon' | 'isInverted'
+> & {
+    size?: 'full' | 'half';
+};
+
 const CrossPromotion: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** Promotion card settings in main grid column (default: on right side). The size prop controls the width. */
-    main?: Array<
-        Omit<PromotionCardProps, 'externalLinkIcon' | 'isInverted'> & {
-            size?: 'full' | 'half';
-        }
-    >;
+    main?: CrossPromotionItem[];
 
     /** Promotion card settings in second grid column (default: on left side). The size prop controls the width. */
-    aside?: Array<
-        Omit<PromotionCardProps, 'externalLinkIcon' | 'isInverted'> & {
-            size?: 'full' | 'half';
-        }
-    >;
+    aside?: CrossPromotionItem[];
 
     /** Section background */
     bgMode?: 'full' | 'inverted' | 'splitted';
@@ -50,7 +49,18 @@ const CrossPromotion: React.FC<{
 
     /** Inject custom icon that indicates an external link */
     externalLinkIcon?: React.ReactNode;
-}> = ({ anchorId, main, aside, bgMode, isMirrored, externalLinkIcon }) => {
+
+    /** Aria-Label for accessibility */
+    listAriaLabel?: string;
+}> = ({
+    anchorId,
+    main,
+    aside,
+    bgMode,
+    isMirrored,
+    externalLinkIcon,
+    listAriaLabel = 'List of cross promotion cards with image and text',
+}) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -71,7 +81,7 @@ const CrossPromotion: React.FC<{
             <Wrapper clampWidth="normal" addWhitespace>
                 {aside ? (
                     isMirrored ? (
-                        <Grid.Row>
+                        <Grid.Row asList ariaLabel={listAriaLabel}>
                             <Grid.Col semilarge={{ span: 6 / 12 }}>
                                 {main &&
                                     main.map((card, i) => (

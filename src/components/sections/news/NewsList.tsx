@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
-import styled from 'styled-components';
-
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-
-import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
+import NewsCard, {
+    NewsCardCustomTagFn,
+    NewsCardProps,
+} from 'components/blocks/NewsCard';
+import React, { useMemo } from 'react';
+import styled from 'styled-components';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { mq, spacings } from 'utils/styles';
 import { useEqualSheetHeight } from 'utils/useEqualSheetHeight';
-import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import { LinkProps } from 'components/typography/Link';
 import { getNewsFilterParams } from './NewsOverview';
 
 const News = styled.ul`
@@ -62,13 +62,7 @@ const NewsList: React.FC<{
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom tag node */
-    customTag?: (props: {
-        key: React.Key;
-        name: string;
-        isInverted?: boolean;
-        isActive?: boolean;
-        link?: LinkProps;
-    }) => React.ReactNode;
+    customTag?: NewsCardCustomTagFn;
 }> = ({ anchorId, mode = 'short', news, bgMode, customTag }) => {
     const { colors, theme } = useLibTheme();
 
@@ -111,7 +105,7 @@ const NewsList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <News>
+                <News aria-label="News-Liste">
                     {items?.map((item, i) => (
                         <NewsItem key={i}>
                             <NewsCard

@@ -9,12 +9,20 @@ export default {
     component: EventBlock,
     parameters: {
         status: {
-            type: ['preview'],
+            type: ['production'],
         },
     },
 } as Meta;
 
 export const Default: Story = () => (
+    <EventBlock
+        date={new Date('July 22, 2021 03:24:00')}
+        title="Sitzung des Gemeinderates"
+        text="17:00-22:00 Uhr | Stadt Überlingen, im Pfarrsaal, Münsterplatz 5"
+    />
+);
+
+export const WithTags: Story = () => (
     <EventBlock
         date={new Date('July 22, 2021 03:24:00')}
         title="Sitzung des Gemeinderates"
@@ -41,11 +49,12 @@ export const WithTertiaryAction: Story = () => (
             { name: 'Tag 4', link: { href: '#0' } },
             { name: 'Tag 5', link: { href: '#0' } },
         ]}
-        action={({ isInverted }) => (
+        action={({ isInverted, clickHandler }) => (
             <Pointer.View
-                href="#0"
-                textDecoration="none"
+                as="decorator"
+                decoration="none"
                 isInverted={isInverted}
+                onClick={clickHandler}
             >
                 <Pointer.Label>Lorem Ipsum</Pointer.Label>
                 <Pointer.Icon>
@@ -76,11 +85,12 @@ export const WithImage: Story = () => (
             { name: 'Tag 4', link: { href: '#0' } },
             { name: 'Tag 5', link: { href: '#0' } },
         ]}
-        action={({ isInverted }) => (
+        action={({ isInverted, clickHandler }) => (
             <Pointer.View
-                href="#0"
-                textDecoration="none"
+                as="decorator"
+                decoration="none"
                 isInverted={isInverted}
+                onClick={clickHandler}
             >
                 <Pointer.Label>Lorem Ipsum</Pointer.Label>
                 <Pointer.Icon>

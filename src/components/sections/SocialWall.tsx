@@ -53,10 +53,9 @@ const Item = styled.li`
     padding: 0;
 `;
 
-const Card = styled(Link)<{ isInverted?: boolean }>`
+const Card = styled.div<{ isInverted?: boolean }>`
     position: relative;
     display: block;
-    text-decoration: none;
     color: '#fff';
     outline-color: ${({ theme, isInverted }) =>
         isInverted
@@ -97,6 +96,32 @@ const Card = styled(Link)<{ isInverted?: boolean }>`
             pointer-events: all;
         }
     }
+
+    &:has(:focus-visible) {
+        outline: 2px solid
+            ${({ isInverted, theme }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+
+        outline-offset: 2px;
+    }
+`;
+
+const TitleLink = styled(Link)`
+    text-decoration: none;
+    outline: none;
+
+    &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
+
+    &:focus-visible {
+        outline: none;
+    }
 `;
 
 const StyledImage = styled(Image)`
@@ -107,11 +132,16 @@ const StyledImage = styled(Image)`
 
 const TextContainer = styled.div`
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
     width: 100%;
-    transform: translate(-50%, -50%);
+    height: 100%;
     text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     padding: ${spacings.nudge * 2}px;
 
@@ -155,15 +185,20 @@ const InstagramIcon = styled.div`
     }
 `;
 
+export interface SocialWallItem {
+    link?: LinkProps;
+    image?: Omit<ImageProps, 'coverSpace' | 'ratio'>;
+    followUs?: string;
+    hashTag?: string;
+    socialIcon?: React.ReactNode;
+}
+
 const SocialWall: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** Array with item settings */
-    items?: Array<{
-        link?: LinkProps;
-        image?: Omit<ImageProps, 'coverSpace' | 'ratio'>;
-    }>;
+    items?: SocialWallItem[];
 
     /** Text for main social media follow call */
     followUs?: string;
@@ -171,12 +206,19 @@ const SocialWall: React.FC<{
     /** Text for e.g. social media hashtag */
     hashTag?: string;
 
-    /** Function to inject custom social icon on bottom left corner */
-    socialIcon?: React.ReactNode;
-
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, items, hashTag, followUs, socialIcon, bgMode }) => {
+
+    /** Aria label for the list */
+    listAriaLabel?: string;
+}> = ({
+    anchorId,
+    items,
+    hashTag,
+    followUs,
+    bgMode,
+    listAriaLabel = 'List of cards with social media links',
+}) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -195,43 +237,48 @@ const SocialWall: React.FC<{
             addSeperation
         >
             <Wrapper addWhitespace>
-                <Cards>
-                    {items?.map((item, i) => (
-                        <Item key={i}>
-                            <Card
-                                isExternal
-                                {...item.link}
-                                isInverted={isInverted}
-                                ariaLabel={item?.image?.alt}
-                            >
-                                {item.image && (
-                                    <StyledImage
-                                        {...item.image}
-                                        coverSpace
-                                        ratios={{
-                                            small: { w: 1, h: 1 },
-                                        }}
-                                        isInverted={isInverted}
-                                    />
-                                )}
-                                <TextContainer>
-                                    <FollowUs size="super" isInverted>
-                                        {followUs
-                                            ? followUs
-                                            : 'Follow Us On Instagram'}
-                                    </FollowUs>
-                                    {hashTag && (
-                                        <Heading size="heading-2" isInverted>
-                                            {hashTag}
-                                        </Heading>
+                <Cards aria-label={listAriaLabel}>
+                    {items?.map((item, i) => {
+                        const followUsText =
+                            item.followUs || followUs || 'Follow Us';
+                        const hashTagText = item.hashTag || hashTag;
+
+                        return (
+                            <Item key={i}>
+                                <Card isInverted={isInverted}>
+                                    {item.image && (
+                                        <StyledImage
+                                            {...item.image}
+                                            coverSpace
+                                            ratios={{
+                                                small: { w: 1, h: 1 },
+                                            }}
+                                            isInverted={isInverted}
+                                            isDecorative
+                                        />
                                     )}
-                                </TextContainer>
-                                <InstagramIcon>
-                                    {socialIcon || <Instagram />}
-                                </InstagramIcon>
-                            </Card>
-                        </Item>
-                    ))}
+                                    <TextContainer>
+                                        <TitleLink isExternal {...item.link}>
+                                            <FollowUs size="super" isInverted>
+                                                {followUsText}
+                                            </FollowUs>
+                                        </TitleLink>
+                                        {hashTagText && (
+                                            <Heading
+                                                size="heading-2"
+                                                isInverted
+                                            >
+                                                {hashTagText}
+                                            </Heading>
+                                        )}
+                                    </TextContainer>
+                                    <InstagramIcon>
+                                        {item.socialIcon || <Instagram />}
+                                    </InstagramIcon>
+                                </Card>
+                            </Item>
+                        );
+                    })}
                 </Cards>
             </Wrapper>
         </Section>

@@ -11,7 +11,7 @@ import Actions from 'components/blocks/Actions';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { gridSettings, getGridWidth } from 'components/base/Grid';
 
-const ContactView = styled.div`
+const ContactView = styled.figure`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -106,11 +106,12 @@ const ContactBox: FC<ContactBoxProps & { className?: string }> = ({
         <ContactView className={className}>
             <Avatar
                 src={avatar?.src}
-                alt={avatar?.alt}
+                alt={avatar?.alt ?? ''}
                 isInverted={isInverted}
             />
             {description && (
                 <Description
+                    renderAs="figcaption"
                     type="copy"
                     isInverted={isInverted}
                     innerHTML={description}
@@ -184,6 +185,14 @@ export interface CtaActionProps {
     isInverted?: boolean;
     isTextCentered?: boolean;
 }
+export type CtaActionFn = (props: CtaActionProps) => React.ReactNode;
+
+export interface CtaNewsFormMainFnProps {
+    isInverted?: boolean;
+}
+export type CtaNewsFormMainFn = (
+    props: CtaNewsFormMainFnProps
+) => React.ReactNode;
 
 export const CallToAction: FC<{
     /** ID value for targeting section with anchor hashes */
@@ -209,11 +218,11 @@ export const CallToAction: FC<{
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom primary button */
-    primaryAction?: (props: CtaActionProps) => React.ReactNode;
+    primaryAction?: CtaActionFn;
     /** Function to inject custom secondary button */
-    secondaryAction?: (props: CtaActionProps) => React.ReactNode;
+    secondaryAction?: CtaActionFn;
     /** Function to inject newsletter form */
-    newsFormMain?: (isInverted?: boolean) => React.ReactNode;
+    newsFormMain?: CtaNewsFormMainFn;
 }> = ({
     anchorId,
     title,
@@ -265,7 +274,7 @@ export const CallToAction: FC<{
                 )}
                 {newsFormMain && hasNewsletter && (
                     <NewsletterWrapper>
-                        {newsFormMain(isInverted)}
+                        {newsFormMain({ isInverted })}
                     </NewsletterWrapper>
                 )}
                 {(primaryAction || secondaryAction) && (

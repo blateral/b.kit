@@ -110,6 +110,9 @@ export type JobArticleProps = Omit<
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
+
+    ariaLabelEmploymentType?: (type: string) => string;
+    ariaLabelLocation?: (location: string) => string;
 };
 
 const JobArticle: React.FC<JobArticleProps> = ({
@@ -128,6 +131,8 @@ const JobArticle: React.FC<JobArticleProps> = ({
     datePosted,
     primaryAction,
     secondaryAction,
+    ariaLabelEmploymentType,
+    ariaLabelLocation,
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
@@ -160,6 +165,19 @@ const JobArticle: React.FC<JobArticleProps> = ({
                 .map((el) => el.type) as StructuredEmploymentType[]) || [],
         datePosted, // datePosted
     };
+
+    const employmentType = employmentTypes
+        ?.filter((type) => type.name)
+        .map((type) => type.name)
+        ?.join(', ');
+
+    const employmentTypeAriaLabel = ariaLabelEmploymentType
+        ? ariaLabelEmploymentType(employmentType || '')
+        : `Employment type: ${employmentType || ''}`;
+
+    const locationAriaLabel = ariaLabelLocation
+        ? ariaLabelLocation(locationText || '')
+        : `Location: ${locationText || ''}`;
 
     return (
         <Section
@@ -197,11 +215,10 @@ const JobArticle: React.FC<JobArticleProps> = ({
                                             <ClockFilled />
                                         )}
                                     </Icon>
-                                    <MainLabel>
-                                        {employmentTypes
-                                            ?.filter((type) => type.name)
-                                            .map((type) => type.name)
-                                            ?.join(', ')}
+                                    <MainLabel
+                                        aria-label={employmentTypeAriaLabel}
+                                    >
+                                        {employmentType}
                                     </MainLabel>
                                 </Info>
                             )}
@@ -215,7 +232,9 @@ const JobArticle: React.FC<JobArticleProps> = ({
                                             <LocationPin />
                                         )}
                                     </Icon>
-                                    <MainLabel>{locationText}</MainLabel>
+                                    <MainLabel aria-label={locationAriaLabel}>
+                                        {locationText}
+                                    </MainLabel>
                                 </Info>
                             )}
                         </JobInfos>

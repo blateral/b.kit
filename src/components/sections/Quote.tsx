@@ -7,6 +7,7 @@ import Wrapper from 'components/base/Wrapper';
 import Callout from 'components/typography/Callout';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Copy from 'components/typography/Copy';
+import { concat as cn } from 'utils/concat';
 
 const Content = styled.figure`
     margin: 0;
@@ -69,7 +70,12 @@ const Quote: FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper clampWidth="normal" addWhitespace>
-                <Content>
+                <Content
+                    aria-label={cn([text, source], ', ').replace(
+                        /<[^>]*>/g,
+                        ''
+                    )}
+                >
                     {text && (
                         <Text
                             size="small"

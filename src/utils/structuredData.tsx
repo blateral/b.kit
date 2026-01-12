@@ -1,10 +1,17 @@
 import React from 'react';
 import { JsonLd } from 'react-schemaorg';
 import { MapLocation } from 'components/sections/Map';
-import { FAQPage, JobPosting, LocalBusiness, Place } from 'schema-dts';
+import {
+    FAQPage,
+    ItemList,
+    JobPosting,
+    LocalBusiness,
+    Place,
+} from 'schema-dts';
 import { OrganizationData } from 'components/sections/jobs/JobArticle';
 import { distinct } from './filters';
 import { JobLocation } from 'components/blocks/JobCard';
+import { isValidArray } from './arrays';
 
 export const generateLocalBusiness = (locations: MapLocation[]) => {
     return locations?.map(
@@ -144,6 +151,55 @@ export const generateJob = ({
                     },
                 })),
                 directApply: directApply,
+            }}
+        />
+    );
+};
+
+export interface JsonLdPriceListItem {
+    name?: string;
+    description?: string;
+    price?: string;
+    currency?: string;
+    url?: string;
+    priceValidUntil?: string;
+}
+
+export interface JsonLdPriceListProps {
+    type: 'service' | 'product';
+    items?: JsonLdPriceListItem[];
+    name?: string;
+}
+
+export const generatePriceList = (props?: JsonLdPriceListProps) => {
+    if (!props || !isValidArray(props.items, false)) return null;
+
+    return (
+        <JsonLd<ItemList>
+            item={{
+                '@context': 'https://schema.org',
+                '@type': 'ItemList',
+                name: props.name,
+                itemListElement: props.items?.map((item) => {
+                    return {
+                        '@type': 'ListItem',
+                        item: {
+                            '@type':
+                                props.type === 'service'
+                                    ? 'Service'
+                                    : 'Product',
+                            name: item.name,
+                            description: item.description,
+                            offers: {
+                                '@type': 'Offer',
+                                url: item.url,
+                                price: item.price,
+                                priceCurrency: item.currency || 'EUR',
+                                priceValidUntil: item.priceValidUntil,
+                            },
+                        },
+                    };
+                }),
             }}
         />
     );

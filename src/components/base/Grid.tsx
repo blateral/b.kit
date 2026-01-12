@@ -27,6 +27,7 @@ interface ColProps extends ColPropsSettings {
     toRight?: boolean;
     /** force column to the left */
     toLeft?: boolean;
+    ariaLabel?: string;
 }
 
 export const gridSettings = {
@@ -396,6 +397,9 @@ interface GridPropsSettings {
 }
 
 interface GridProps extends GridPropsSettings {
+    asList?: boolean;
+    ariaLabel?: string;
+
     medium?: GridPropsSettings;
     semilarge?: GridPropsSettings;
     large?: GridPropsSettings;
@@ -403,6 +407,10 @@ interface GridProps extends GridPropsSettings {
 }
 
 const StyledGrid = styled.div<GridProps>`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
     ${getGutter('grid')}
     display: flex;
     flex-direction: row;
@@ -435,6 +443,8 @@ const Grid: React.FC<GridProps & { children?: React.ReactNode }> = ({
     semilarge,
     large,
     xlarge,
+    asList,
+    ariaLabel,
 }) => {
     return (
         <StyledGrid
@@ -445,11 +455,15 @@ const Grid: React.FC<GridProps & { children?: React.ReactNode }> = ({
             semilarge={semilarge}
             large={large}
             xlarge={xlarge}
+            as={asList ? 'ul' : 'div'}
+            aria-label={ariaLabel}
         >
             {React.Children.map(children, (comp: any) => {
                 return comp ? (
                     <StyledCol
+                        aria-label={comp?.props?.ariaLabel}
                         {...comp?.props}
+                        as={asList ? 'li' : 'div'}
                         gutter={gutter}
                         medium={mapGutterToCol(
                             medium?.gutter,

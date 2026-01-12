@@ -172,6 +172,7 @@ const ParallaxBackground: FC<{
                                     hAlign={hAlign}
                                     coverSpace={width !== -1}
                                     {...image}
+                                    alt=""
                                 />
                             )}
                         </Content>

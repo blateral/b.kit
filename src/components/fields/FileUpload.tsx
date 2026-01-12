@@ -1,5 +1,5 @@
 import { copyStyle } from 'components/typography/Copy';
-import React, { FC, useEffect, useState, useRef } from 'react';
+import React, { FC, useEffect, useState, useRef, useId } from 'react';
 import styled from 'styled-components';
 import {
     getColors as color,
@@ -14,7 +14,7 @@ import * as Icons from 'components/base/icons/Icons';
 import { getFormFieldTextSize } from 'utils/formFieldText';
 
 const FieldView = styled(FieldWrapper.View)`
-    pointer-events: none;
+    /* pointer-events: none; */
 `;
 
 const FieldMain = styled.div<{
@@ -209,7 +209,15 @@ const DeleteIcon = styled.button<{ isInverted?: boolean }>`
 `;
 
 const Original = styled.input`
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 `;
 
 interface Preview {
@@ -268,6 +276,11 @@ const FileUpload: FC<FileUploadProps> = ({
     customDeleteIcon,
     customUploadIcon,
 }) => {
+    const id = useId();
+    const fieldId = `file-upload-${id}`;
+    const msgId = `file-upload-message-${id}`;
+    const errorMsgId = `file-upload-error-${id}`;
+
     const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([]);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -344,6 +357,7 @@ const FileUpload: FC<FileUploadProps> = ({
         <FieldView isDisabled={isDisabled}>
             <FieldWrapper.Head
                 label={label}
+                htmlFor={fieldId}
                 isRequired={isRequired}
                 isInverted={isInverted}
             />
@@ -356,6 +370,7 @@ const FileUpload: FC<FileUploadProps> = ({
                     {previews.map((file) => {
                         const fileName =
                             (file.url && file.url.split('/')) || [];
+
                         return (
                             <FileItem key={file.uid} isInverted={isInverted}>
                                 <span>{fileName}</span>
@@ -376,8 +391,12 @@ const FileUpload: FC<FileUploadProps> = ({
                     })}
                     <UploadItem
                         type="button"
+                        id={fieldId}
                         isInverted={isInverted}
                         onClick={handleClick}
+                        aria-invalid={!!errorMessage}
+                        aria-errormessage={errorMessage && errorMsgId}
+                        aria-describedby={infoMessage && msgId}
                     >
                         {uploadLabel && <span>{uploadLabel}</span>}
                         <Icon isInverted={isInverted}>
@@ -393,6 +412,8 @@ const FileUpload: FC<FileUploadProps> = ({
                     type="file"
                     onChange={handleChange}
                     ref={fileInputRef}
+                    aria-hidden="true"
+                    tabIndex={-1}
                     multiple
                     required={isRequired}
                     disabled={isDisabled}
@@ -400,7 +421,9 @@ const FileUpload: FC<FileUploadProps> = ({
                 />
             </FieldWrapper.Content>
             <FieldWrapper.Messages
+                infoMsgId={msgId}
                 infoMessage={infoMessage}
+                errorMsgId={errorMsgId}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />

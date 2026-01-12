@@ -12,6 +12,7 @@ import {
     mq,
     getGlobals as global,
 } from 'utils/styles';
+import { concat as cn } from 'utils/concat';
 
 const View = styled.div<{
     isInverted?: boolean;
@@ -27,6 +28,19 @@ const View = styled.div<{
     min-height: 110px;
 
     overflow: hidden;
+
+    ${({ hasLink, isInverted, theme }) =>
+        hasLink &&
+        css`
+            &:has(:focus-visible) {
+                outline: 2px solid
+                    ${isInverted
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default};
+
+                outline-offset: 2px;
+            }
+        `}
 
     @media ${mq.medium} {
         display: block;
@@ -52,6 +66,15 @@ const SolidView = styled(View)`
             @media (hover: hover) and (pointer: fine) {
                 &:hover {
                     box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+                }
+            }
+
+            @media (hover: none) {
+                &:has(:active:not(:focus-visible)) {
+                    box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    -webkit-tap-highlight-color: transparent;
                 }
             }
         `}
@@ -82,6 +105,25 @@ const ImageView = styled(View)`
 
                     img {
                         transform: scale(1.03);
+                    }
+                }
+            }
+
+            @media (hover: none) {
+                &:active:not(:focus-visible) {
+                    box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    -webkit-tap-highlight-color: transparent;
+
+                    img {
+                        transition-timing-function: cubic-bezier(
+                            0.4,
+                            0,
+                            0.2,
+                            1
+                        );
+                        -webkit-tap-highlight-color: transparent;
                     }
                 }
             }
@@ -218,26 +260,24 @@ const Icon = styled.div`
 `;
 
 const CardLink = styled(Link)<{ isInverted?: boolean }>`
-    z-index: 1;
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    outline: none;
+    text-decoration: none;
 
-    outline-color: ${({ theme }) => color(theme).primary.default};
-
-    &:focus {
-        border: 2px dotted ${({ theme }) => color(theme).primary.invertedHover};
-        outline-offset: 4px;
-
-        color: ${({ theme, isInverted }) =>
-            isInverted
-                ? color(theme).primary.invertedHover
-                : color(theme).primary.hover};
+    &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
     }
 `;
+
+export interface CardListCardIconFnProps {
+    isInverted?: boolean;
+}
+
+export type CardListCardIconFn = (
+    props: CardListCardIconFnProps
+) => React.ReactNode;
 
 export interface CardProps {
     isInverted?: boolean;
@@ -245,9 +285,9 @@ export interface CardProps {
     subLabel?: string;
     image?: ImageProps;
     link?: LinkProps;
-    decorator?: (props: { isInverted?: boolean }) => React.ReactNode;
+    decorator?: CardListDecoratorFn;
     cardColor?: string;
-    customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
+    customIcon?: CardListCardIconFn;
 }
 
 const Card: React.FC<
@@ -279,6 +319,7 @@ const Card: React.FC<
             {image?.small && (
                 <StyledImage
                     {...image}
+                    alt={image.alt ?? ''}
                     coverSpace
                     isInverted={isInverted}
                     ratios={{
@@ -290,11 +331,28 @@ const Card: React.FC<
             <Content hasIcon={!!customIcon}>
                 {customIcon ? <Icon>{customIcon({})}</Icon> : ''}
                 <TextContainer>
-                    {title && (
+                    {link?.href ? (
+                        <CardLink
+                            isInverted={isInverted}
+                            {...link}
+                            ariaLabel={cn([title, subLabel], ' - ')}
+                        >
+                            {title && (
+                                <Title
+                                    size="big"
+                                    type="copy"
+                                    isInverted
+                                    renderAs="span"
+                                >
+                                    {title}
+                                </Title>
+                            )}
+                        </CardLink>
+                    ) : title ? (
                         <Title size="big" type="copy" isInverted>
                             {title}
                         </Title>
-                    )}
+                    ) : null}
                     {subLabel && (
                         <Footer>
                             <SubLabel type="copy-b" size="big" isInverted>
@@ -305,13 +363,6 @@ const Card: React.FC<
                     )}
                 </TextContainer>
             </Content>
-            {link?.href && (
-                <CardLink
-                    isInverted={isInverted}
-                    {...link}
-                    ariaLabel={title || undefined}
-                />
-            )}
         </CardView>
     );
 };
@@ -357,22 +408,42 @@ const CardItem = styled.li<{ isEqual?: boolean; threeCols?: boolean }>`
     }
 `;
 
+export interface CardListDecoratorFnProps {
+    isInverted?: boolean;
+}
+
+export type CardListDecoratorFn = (
+    props: CardListDecoratorFnProps
+) => React.ReactNode;
+
+export type CardListItem = Omit<CardProps, 'decorator' | 'isInverted'>;
+
 const CardList: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** Array with card item settings */
-    items?: Omit<CardProps, 'decorator' | 'isInverted'>[];
+    items?: CardListItem[];
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom decoration icon */
-    decorator?: (props: { isInverted?: boolean }) => React.ReactNode;
+    decorator?: CardListDecoratorFn;
 
     /** Force maximal three items per row */
     maxThreeCols?: boolean;
-}> = ({ anchorId, items, bgMode, decorator, maxThreeCols }) => {
+
+    /** Aria label for the list */
+    listAriaLabel?: string;
+}> = ({
+    anchorId,
+    items,
+    bgMode,
+    decorator,
+    maxThreeCols,
+    listAriaLabel = 'List of card items with image/text and link',
+}) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 
@@ -390,7 +461,7 @@ const CardList: React.FC<{
             addSeperation
         >
             <Wrapper addWhitespace>
-                <List>
+                <List aria-label={listAriaLabel}>
                     {items?.map((item, i) => (
                         <CardItem
                             key={i}

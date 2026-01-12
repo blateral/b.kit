@@ -119,7 +119,8 @@ const AnimationImages: FC<{
                         scale={imgZoom}
                         opacity={i === activeImg ? 1 : 0}
                         zoomPoint={imgZoomPoint}
-                        alt={img.alt || ''}
+                        alt=""
+                        role="presentation"
                     />
                 );
             })}

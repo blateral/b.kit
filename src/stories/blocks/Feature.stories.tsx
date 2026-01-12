@@ -2,13 +2,14 @@ import * as React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Feature from 'components/blocks/Feature';
 import Button from 'components/buttons/Button';
+import { ButtonGhost } from 'buttons';
 
 export default {
     title: 'Blocks/Feature',
     component: Feature,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
@@ -58,7 +59,7 @@ export const WithDescription: Story = () => (
     />
 );
 
-export const WithActions: Story = () => (
+export const WithActionFooter: Story = () => (
     <Feature
         image={{
             small: 'https://unsplash.it/502/376?image=703',
@@ -71,10 +72,14 @@ export const WithActions: Story = () => (
         intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         link={{ href: '#test' }}
-        action={({ isInverted }) => (
-            <Button.View isInverted={isInverted}>
+        action={({ isInverted, title, link }) => (
+            <ButtonGhost.View
+                isInverted={isInverted}
+                ariaLabel={title}
+                {...link}
+            >
                 <Button.Label>Primary</Button.Label>
-            </Button.View>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -93,10 +98,14 @@ export const Centered: Story = () => (
         intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         link={{ href: '#test' }}
-        action={({ isInverted }) => (
-            <Button.View isInverted={isInverted}>
+        action={({ isInverted, title, link }) => (
+            <ButtonGhost.View
+                isInverted={isInverted}
+                ariaLabel={title}
+                {...link}
+            >
                 <Button.Label>Primary</Button.Label>
-            </Button.View>
+            </ButtonGhost.View>
         )}
     />
 );
@@ -115,10 +124,14 @@ export const Inverted: Story = () => (
         intro="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
         link={{ href: '#test' }}
-        action={({ isInverted }) => (
-            <Button.View isInverted={isInverted}>
+        action={({ isInverted, title, link }) => (
+            <ButtonGhost.View
+                isInverted={isInverted}
+                ariaLabel={title}
+                {...link}
+            >
                 <Button.Label>Primary</Button.Label>
-            </Button.View>
+            </ButtonGhost.View>
         )}
     />
 );

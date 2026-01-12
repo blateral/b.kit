@@ -38,6 +38,6 @@ export const printAnchorTag = (props: {
     if (props.type === 'phone') pre = 'tel:';
 
     return `<a ${
-        props.isExternal ? 'target="_blank" rel="noopener noreferrer" ' : ''
+        props.isExternal ? 'target="_blank" rel="noopener" ' : ''
     }href="${pre}${props.href}">${props.label || props.href}</a>`;
 };

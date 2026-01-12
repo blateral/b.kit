@@ -162,6 +162,7 @@ const HeaderVideo: React.FC<{
                     ratios={undefined}
                     isInverted={isInverted}
                     focus={focus}
+                    isDecorative
                 />
             )}
             {videoUrl && isVideoAllowed && (
@@ -177,6 +178,7 @@ const HeaderVideo: React.FC<{
                         setLoaded(true);
                     }}
                     focus={focus}
+                    aria-hidden="true"
                 />
             )}
             {children}

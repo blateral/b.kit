@@ -1,5 +1,4 @@
-import ButtonLeft from 'components/base/icons/ButtonLeft';
-import ButtonRight from 'components/base/icons/ButtonRight';
+import * as Icons from 'components/base/icons/Icons';
 import Copy from 'components/typography/Copy';
 import React, { FC, useEffect, useRef } from 'react';
 import styled from 'styled-components';
@@ -9,14 +8,6 @@ import { getColors as color, spacings } from 'utils/styles';
 const View = styled.div`
     display: grid;
     position: relative;
-
-    &:focus {
-        outline: 1px dashed ${({ theme }) => color(theme).primary.default};
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
-    }
 `;
 
 const Caption = styled(Copy)`
@@ -25,7 +16,7 @@ const Caption = styled(Copy)`
     text-align: left;
 `;
 
-const TableContainer = styled.div`
+const TableContainer = styled.div<{ isInverted?: boolean }>`
     position: relative;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -33,15 +24,14 @@ const TableContainer = styled.div`
 
     grid-column: 1;
     grid-row: 1;
+    outline: none;
 
-    &:focus {
-        outline: none;
-        border: 1px solid ${({ theme }) => color(theme).primary.default};
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
-        border: none;
+    &:focus-visible {
+        outline: 2px solid
+            ${({ theme, isInverted }) =>
+                isInverted
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
     }
 
     &::-webkit-scrollbar {
@@ -124,6 +114,10 @@ const ButtonContainer = styled.button<{ isVisible?: boolean }>`
     & > * {
         pointer-events: all;
     }
+
+    &:focus-visible {
+        outline: 2px solid ${({ theme }) => color(theme).primary.default};
+    }
 `;
 
 const ButtonRightContainer = styled(ButtonContainer)`
@@ -145,6 +139,8 @@ export interface TableProps {
     isInverted?: boolean;
     hasBack?: boolean;
     lastCol?: 'left' | 'right';
+    ariaControlLeft?: string;
+    ariaControlRight?: string;
 }
 
 const TableBlock: FC<TableProps> = ({
@@ -154,6 +150,8 @@ const TableBlock: FC<TableProps> = ({
     isInverted = false,
     hasBack = false,
     lastCol = 'left',
+    ariaControlLeft = 'Scroll table to the left',
+    ariaControlRight = 'Scroll table to the right',
 }) => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [showButtonRight, setShowButtonRight] = React.useState(false);
@@ -207,7 +205,11 @@ const TableBlock: FC<TableProps> = ({
 
     return (
         <View>
-            <TableContainer tabIndex={1} ref={scrollRef}>
+            <TableContainer
+                tabIndex={0}
+                ref={scrollRef}
+                isInverted={isInverted}
+            >
                 <TableBody>
                     {tableTitle && (
                         <Caption
@@ -226,6 +228,7 @@ const TableBlock: FC<TableProps> = ({
                                         key={ii}
                                         type="copy-b"
                                         renderAs="th"
+                                        scope="col"
                                         isInverted={!isInverted}
                                         alignRight={lastCol === 'right'}
                                     >
@@ -259,18 +262,22 @@ const TableBlock: FC<TableProps> = ({
                     marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
                 }}
                 isVisible={showButtons && showButtonLeft}
+                tabIndex={!showButtons || !showButtonLeft ? -1 : undefined}
                 onClick={handleLeftClick}
+                aria-label={ariaControlLeft}
             >
-                <ButtonLeft id="left" />
+                <Icons.ButtonLeft />
             </ButtonLeftContainer>
             <ButtonRightContainer
                 style={{
                     marginTop: rowTitle && row.length > 1 ? '80px' : undefined,
                 }}
                 isVisible={showButtons && showButtonRight}
+                tabIndex={!showButtons || !showButtonRight ? -1 : undefined}
                 onClick={handleRightClick}
+                aria-label={ariaControlRight}
             >
-                <ButtonRight id="right" />
+                <Icons.ButtonRight />
             </ButtonRightContainer>
         </View>
     );

@@ -45,6 +45,7 @@ export { default as MenuBurger } from 'components/base/icons/MenuBurger';
 export { default as Language } from 'components/base/icons/Language';
 export { default as Cross } from 'components/base/icons/Cross';
 export { default as CrossSmall } from 'components/base/icons/CrossSmall';
+export { default as CircleX } from 'components/base/icons/CircleX';
 
 /** Mixed **/
 export { default as Check } from 'components/base/icons/Check';
@@ -72,3 +73,5 @@ export { default as ClockFilled } from 'components/base/icons/ClockFilled';
 export { default as Magnifier } from 'components/base/icons/Magnifier';
 export { default as CrossBubble } from 'components/base/icons/CrossBubble';
 export { default as Filter } from 'components/base/icons/Filter';
+export { default as ButtonRight } from 'components/base/icons/ButtonRight';
+export { default as ButtonLeft } from 'components/base/icons/ButtonLeft';

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { copyStyle } from 'components/typography/Copy';
 import Link, { LinkProps } from 'components/typography/Link';
-import { getColors, spacings } from 'utils/styles';
+import { getColors as color, spacings } from 'utils/styles';
 
 const View = styled(Link)<{
     isInverted?: boolean;
@@ -58,17 +58,13 @@ const View = styled(Link)<{
             }
         `}
 
-    &:focus {
-        /* background-color: ${({ isInverted }) =>
-            isInverted ? '#dddddd' : '#444444'};
-        color: ${({ isInverted }) => (isInverted ? '#444444' : '#ffff')}; */
+    &:focus-visible {
         outline: 2px solid
             ${({ isInverted, theme }) =>
                 isInverted
-                    ? getColors(theme).primary.inverted
-                    : getColors(theme).primary.default};
-        outline-offset: -1px;
-        text-decoration: underline;
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+        outline-offset: 2px;
     }
 
     &:focus:not(:focus-visible) {
@@ -94,8 +90,18 @@ const Tag: FC<
         onClick?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
         className?: string;
         children?: React.ReactNode;
+        ariaLabel?: string;
     }
-> = ({ name, link, isInverted, isActive, onClick, className, children }) => {
+> = ({
+    name,
+    link,
+    isInverted,
+    isActive,
+    onClick,
+    className,
+    children,
+    ariaLabel,
+}) => {
     const tag = link?.href ? 'a' : onClick ? 'button' : 'span';
 
     return (
@@ -105,6 +111,7 @@ const Tag: FC<
             isActive={isActive}
             onClick={onClick}
             isClickable={!!onClick || !!(link && link.href)}
+            aria-label={ariaLabel || name}
             className={className}
             {...link}
         >

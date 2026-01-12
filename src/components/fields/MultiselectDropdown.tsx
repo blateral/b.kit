@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import AngleDown from 'components/base/icons/AngleDown';
@@ -252,6 +252,18 @@ const Icon = styled.div`
     transition: transform 0.2s ease-in-out;
 `;
 
+const OriginalSelect = styled.select`
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+`;
+
 interface FilterItem {
     value: string;
     label: string;
@@ -296,6 +308,7 @@ const MultiselectDropdown: React.FC<
     indicator,
     className,
 }) => {
+    const id = useId();
     const { colors } = useLibTheme();
     const [isOpen, setIsOpen] = useState(inlined || false);
     const [selected, setSelected] = useState<string[]>(selectedItems || []);
@@ -304,6 +317,10 @@ const MultiselectDropdown: React.FC<
     const selectContainerRef = useRef<HTMLDivElement>(null);
     const isMounted = useMounted();
     const itemHasBeenClicked = useRef<boolean>(false);
+
+    const fieldId = `muliselect-${id}`;
+    const msgId = `multiselect-message-${id}`;
+    const errorMsgId = `multiselect-error-${id}`;
 
     useEffect(() => {
         if (selectedItems) {
@@ -337,6 +354,7 @@ const MultiselectDropdown: React.FC<
         <FieldWrapper.View isDisabled={isDisabled} className={className}>
             <FieldWrapper.Head
                 label={label}
+                htmlFor={fieldId}
                 isRequired={isRequired}
                 isInverted={isInverted}
             />
@@ -358,6 +376,7 @@ const MultiselectDropdown: React.FC<
                 >
                     <Select
                         ref={selectBtnRef}
+                        id={fieldId}
                         type="button"
                         isOpen={isOpen}
                         inlined={inlined}
@@ -367,6 +386,9 @@ const MultiselectDropdown: React.FC<
                             if (inlined) return;
                             setIsOpen((prev) => !prev);
                         }}
+                        aria-invalid={!!errorMessage}
+                        aria-errormessage={errorMessage && errorMsgId}
+                        aria-describedby={infoMessage && msgId}
                         aria-expanded={isOpen}
                     >
                         <SelectMain>
@@ -401,13 +423,19 @@ const MultiselectDropdown: React.FC<
                                 ))}
                         </Indicator>
                     </Select>
-                    <Flyout isVisible={isOpen} inlined={inlined}>
+                    <Flyout
+                        role="presentation"
+                        isVisible={isOpen}
+                        inlined={inlined}
+                    >
                         {items.map((item, i) => {
                             const isSelected = selected.includes(item.value);
 
                             return (
                                 <ItemStyle
                                     key={`key_${i + 1}`}
+                                    role="option"
+                                    aria-selected={isSelected}
                                     onMouseDown={() => {
                                         itemHasBeenClicked.current = true;
                                     }}
@@ -420,6 +448,7 @@ const MultiselectDropdown: React.FC<
                                             itemHasBeenClicked.current = false;
                                         }}
                                         label={item.label}
+                                        name={`${fieldId}-option-${i}`}
                                     />
                                 </ItemStyle>
                             );
@@ -431,18 +460,26 @@ const MultiselectDropdown: React.FC<
                         )}
                     </Flyout>
                 </Container>
-                <select name={name} multiple hidden defaultValue={selected}>
+                <OriginalSelect
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    name={name}
+                    multiple
+                    defaultValue={selected}
+                >
                     {items.map((item, i) => {
                         return (
-                            <option key={`key_${i}`} value={item.value}>
+                            <option key={i} value={item.value}>
                                 {item.label}
                             </option>
                         );
                     })}
-                </select>
+                </OriginalSelect>
             </FieldWrapper.Content>
             <FieldWrapper.Messages
+                infoMsgId={msgId}
                 infoMessage={infoMessage}
+                errorMsgId={errorMsgId}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />

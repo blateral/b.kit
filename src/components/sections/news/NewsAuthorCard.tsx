@@ -88,7 +88,10 @@ const NewsAuthorCard: React.FC<{
                         <Seperator isTop isInverted={isInverted} />
                         <AuthorContainer>
                             {avatar && (
-                                <Avatar src={avatar.src} alt={avatar.alt} />
+                                <Avatar
+                                    src={avatar.src}
+                                    alt={avatar.alt ?? ''}
+                                />
                             )}
                             <Author>
                                 {author && (

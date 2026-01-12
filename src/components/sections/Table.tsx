@@ -17,16 +17,26 @@ const TableWrapper = styled(Wrapper)`
     }
 `;
 
+export type TableItem = Omit<
+    TableProps,
+    'isInverted' | 'hasBack' | 'ariaControlLeft' | 'ariaControlRight'
+>;
+
 const Table: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
 
     /** Table rows and columns */
-    tableItems: TableProps[];
+    tableItems: TableItem[];
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
-}> = ({ anchorId, bgMode, tableItems }) => {
+
+    /** Optional aria controls for left buttons */
+    ariaControlLeft?: string;
+    /** Optional aria controls for right buttons */
+    ariaControlRight?: string;
+}> = ({ anchorId, bgMode, tableItems, ariaControlLeft, ariaControlRight }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full' || isInverted;
@@ -52,6 +62,8 @@ const Table: React.FC<{
                             {...item}
                             isInverted={isInverted}
                             hasBack={hasBg}
+                            ariaControlLeft={ariaControlLeft}
+                            ariaControlRight={ariaControlRight}
                         />
                     );
                 })}

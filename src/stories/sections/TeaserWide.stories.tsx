@@ -11,7 +11,7 @@ export default {
     component: TeaserWideComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;

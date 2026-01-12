@@ -10,7 +10,7 @@ export default {
     component: ComparisonSliderComponent,
     parameters: {
         status: {
-            type: 'stable',
+            type: 'production',
         },
     },
 } as Meta;

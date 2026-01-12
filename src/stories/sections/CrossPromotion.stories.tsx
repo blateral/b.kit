@@ -13,7 +13,7 @@ export default {
     component: CrossPromotionComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;

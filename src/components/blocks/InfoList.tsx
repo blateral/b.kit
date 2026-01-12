@@ -2,7 +2,6 @@ import Copy from 'components/typography/Copy';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { isValidArray } from 'utils/arrays';
-
 import { mq, spacings } from 'utils/styles';
 
 const View = styled.div``;
@@ -81,18 +80,25 @@ export interface Info {
     text?: string;
 }
 
-const InfoList: FC<{
+export interface InfoListProps {
     /** Invert text and icon color for dark backgrounds */
     isInverted?: boolean;
 
     /** Array of info groups */
     items?: InfoGroup[];
 
-    className?: string;
-}> = ({ isInverted, items, className }) => {
+    /** Optional aria-label for the list */
+    ariaLabel?: string;
+}
+
+const InfoList: FC<
+    InfoListProps & {
+        className?: string;
+    }
+> = ({ isInverted, items, ariaLabel, className }) => {
     return (
         <View className={className}>
-            <Container>
+            <Container aria-label={ariaLabel || 'Information List'}>
                 {items?.map((group, i) => {
                     const groupItems =
                         group?.items?.filter((item) => item.text) || [];
@@ -106,12 +112,14 @@ const InfoList: FC<{
                                     type="copy-b"
                                     renderAs="span"
                                     isInverted={isInverted}
+                                    ariaLevel={3}
+                                    ariaRole="heading"
                                 >
                                     {group.title}
                                 </Title>
                             )}
                             {hasItems && (
-                                <Infos>
+                                <Infos aria-label={group.title}>
                                     {groupItems.map((info, ii) => (
                                         <Content key={ii}>
                                             <Icon isInverted={isInverted}>

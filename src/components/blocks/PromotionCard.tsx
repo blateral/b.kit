@@ -1,24 +1,21 @@
-import React, { forwardRef } from 'react';
+import External from 'components/base/icons/External';
+import Image, { ImageProps } from 'components/blocks/Image';
+import Title from 'components/blocks/Title';
+import { HeadlineTag } from 'components/typography/Heading';
+import Link, { LinkProps } from 'components/typography/Link';
+import React, { forwardRef, useId } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import styled, { css } from 'styled-components';
-
 import {
-    spacings,
+    getColors as color,
     getGlobals as global,
     mq,
+    spacings,
     withRange,
-    getColors as color,
 } from 'utils/styles';
-import Image, { ImageProps } from 'components/blocks/Image';
-import Link, { LinkProps } from 'components/typography/Link';
-import Title from 'components/blocks/Title';
-import External from 'components/base/icons/External';
-import { HeadlineTag } from 'components/typography/Heading';
 
-const View = styled(Link)<{
-    clickable?: boolean;
-}>`
-    display: block;
+const View = styled(Link)<{ clickable?: boolean }>`
+    display: flex;
     position: relative;
     width: 100%;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
@@ -43,12 +40,14 @@ const View = styled(Link)<{
             transition: box-shadow 0.2s ease-in-out;
             cursor: pointer;
 
-            &:hover {
-                box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+            @media (hover: hover) and (pointer: fine) {
+                &:hover {
+                    box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+                }
             }
 
-            &:focus {
-                box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.35);
+            &:focus-visible,
+            &:has(:focus-visible) {
                 outline: solid 2px
                     ${isInverted
                         ? color(theme).primary.inverted
@@ -58,11 +57,6 @@ const View = styled(Link)<{
                 color: ${isInverted
                     ? color(theme).primary.invertedHover
                     : color(theme).primary.hover};
-            }
-
-            &:focus:not(:focus-visible) {
-                outline: none;
-                box-shadow: none;
             }
         `}
 `;
@@ -108,6 +102,21 @@ const IntroContainer = styled.div`
 const StyledTitle = styled(Title)<{ clampTitle?: boolean }>`
     max-width: ${({ clampTitle }) =>
         clampTitle && (13 / 28) * spacings.wrapper + 'px'};
+
+    ${({ titleLink }) =>
+        titleLink?.href &&
+        css`
+            * {
+                outline: none !important;
+            }
+
+            a:before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                z-index: 1;
+            }
+        `}
 `;
 
 const ExternalIconHolder = styled.span`
@@ -178,6 +187,8 @@ const PromotionCard = forwardRef<
         },
         ref
     ) => {
+        const id = useId();
+
         // fallback for older versions
         let linkObj = link;
         if (href && !link) {
@@ -196,11 +207,18 @@ const PromotionCard = forwardRef<
         return (
             <View
                 ref={ref}
-                clickable={!!href || !!link}
-                {...linkObj}
+                as={linkObj?.href && !title ? 'a' : 'div'}
+                {...(linkObj?.href && !title ? linkObj : {})}
+                clickable={!!linkObj?.href}
+                aria-labelledby={title ? id : undefined}
                 className={className}
             >
-                <StyledImage {...image} isInverted={isInverted} coverSpace />
+                <StyledImage
+                    {...image}
+                    alt={image.alt ?? ''}
+                    isInverted={isInverted}
+                    coverSpace
+                />
                 {icon && <Icon>{icon({ isInverted })}</Icon>}
                 {title && (
                     <IntroContainer>
@@ -208,12 +226,14 @@ const PromotionCard = forwardRef<
                             colorMode="onImage"
                             superTitle={superTitle}
                             superTitleAs={superTitleAs}
+                            titleId={id}
                             title={
                                 linkObj?.isExternal
                                     ? title + externalIconString
                                     : title
                             }
-                            titleAs={titleAs || 'div'}
+                            titleAs={titleAs || 'h3'}
+                            titleLink={linkObj}
                             clampTitle
                         />
                     </IntroContainer>

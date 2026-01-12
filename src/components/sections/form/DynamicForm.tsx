@@ -30,6 +30,11 @@ import locationValidator from './validators/locationValidator';
 import fieldGroupValidator from './validators/fieldGroupValidator';
 import uploadValidator from './validators/uploadValidator';
 import Copy from 'components/typography/Copy';
+import {
+    DatepickerCustomIconFn,
+    FooterRendererFn,
+    HeaderRendererFn,
+} from 'components/fields/Datepicker';
 
 const StyledSection = styled(Section)`
     overflow: visible;
@@ -147,32 +152,23 @@ export interface Datepicker extends FormField {
     placeholder?: string;
     minDate?: Date;
     maxDate?: Date;
-    singleSelect?: boolean;
     info?: string;
-    customIcon?: (props: {
-        isInverted?: boolean;
-        singleSelect?: boolean;
-    }) => React.ReactNode;
+    singleSelect?: boolean;
+    visibleMonths?: '1' | '2';
+    shouldCloseOnSelect?: boolean;
+    submitLabel?: string;
+    clearLabel?: string;
+    customHeader?: HeaderRendererFn;
+    customFooter?: FooterRendererFn;
+    customIcon?: DatepickerCustomIconFn;
 
     singleDateError?: string;
     multiDateError?: string;
-    nextCtrlUrl?: React.ReactNode;
-    prevCtrlUrl?: React.ReactNode;
     validate?: (
         key: string,
         value: [Date | null, Date | null],
         config: Datepicker
     ) => Promise<string>;
-    deleteAction?: (
-        handleClick?: (
-            e: React.SyntheticEvent<HTMLButtonElement, Event>
-        ) => void
-    ) => React.ReactNode;
-    submitAction?: (
-        handleClick?: (
-            e: React.SyntheticEvent<HTMLButtonElement, Event>
-        ) => void
-    ) => React.ReactNode;
 }
 
 export interface Location extends FormField {

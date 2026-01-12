@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import {
     getColors as color,
@@ -10,8 +10,8 @@ import {
 
 const View = styled.a<{
     inverted?: boolean;
-    disable?: boolean;
-    textDecoration?: 'none' | 'underline';
+    isDisabled?: boolean;
+    decoration?: 'none' | 'underline';
 }>`
     padding: 0.2em 0;
 
@@ -27,8 +27,8 @@ const View = styled.a<{
     ${({ theme }) => withRange(font(theme).copy.medium.size, 'font-size')}
     font-weight: ${({ theme }) => font(theme).copy.medium.weight};
     text-align: center;
-    text-decoration: ${({ textDecoration }) =>
-        textDecoration ? textDecoration : 'underline'};
+    text-decoration: ${({ decoration }) =>
+        decoration ? decoration : 'underline'};
     line-height: 1;
     letter-spacing: ${({ theme }) => font(theme).copy.medium.letterSpacing};
 
@@ -45,19 +45,21 @@ const View = styled.a<{
     border: none;
     cursor: pointer;
 
-    pointer-events: ${({ disable }) => (disable ? 'none' : 'all')};
+    pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 
     background: none;
-    color: ${({ theme, inverted, disable }) =>
-        disable
+    color: ${({ theme, inverted, isDisabled }) =>
+        isDisabled
             ? color(theme).elementBg.medium
             : inverted
             ? color(theme).text.copyInverted
             : color(theme).text.copy};
 
+    transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
     & > * {
-        color: ${({ theme, inverted, disable }) =>
-            disable
+        color: ${({ theme, inverted, isDisabled }) =>
+            isDisabled
                 ? color(theme).elementBg.medium
                 : inverted
                 ? color(theme).text.copyInverted
@@ -68,36 +70,44 @@ const View = styled.a<{
         margin-left: ${spacings.nudge}px;
     }
 
-    /* & > :not(:last-child) {
-        padding-right: ${spacings.nudge}px;
-    } */
-
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             opacity: 0.6;
         }
     }
 
-    &:focus {
-        outline: 2px solid ${({ theme }) => color(theme).primary.default};
-    }
-
-    &:focus:not(:focus-visible) {
+    &:focus-visible {
         outline: none;
     }
 
-    &:active {
-        opacity: 0.6;
-    }
+    ${({ isDisabled, inverted, theme }) =>
+        !isDisabled &&
+        css`
+            &:focus-visible {
+                outline: 2px dotted
+                    ${inverted
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default};
+                outline-offset: 2px;
+            }
+
+            &:active:not(:focus-visible) {
+                @media (hover: none) {
+                    outline: none;
+                    opacity: 0.6;
+                }
+            }
+        `}
 `;
 
 interface Props {
     isInverted?: boolean;
     isDisabled?: boolean;
     onClick?: () => void;
-    textDecoration?: 'none' | 'underline';
+    decoration?: 'none' | 'underline';
     className?: string;
     children?: React.ReactNode;
+    ariaLabel?: string;
 }
 
 export type BtnProps = Props & {
@@ -110,61 +120,101 @@ export type LinkProps = Props & {
     isExternal?: boolean;
 };
 
-const Pointer: React.FC<BtnProps | LinkProps> = React.forwardRef(
+export type DecoratorProps = Props & {
+    as?: 'decorator';
+};
+
+const Pointer = React.forwardRef<
+    HTMLElement,
+    BtnProps | LinkProps | DecoratorProps
+>(
     (
         {
-            as,
+            as = 'a',
             isInverted,
             isDisabled,
             onClick,
             className,
-            textDecoration,
+            decoration = 'underline',
             children,
+            ariaLabel,
             ...rest
         },
         ref
     ) => {
-        if (as === 'button') {
-            return (
-                <View
-                    textDecoration={textDecoration}
-                    ref={ref}
-                    as={as as any}
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
-        } else {
-            return (
-                <View
-                    textDecoration={textDecoration}
-                    ref={ref}
-                    as={as as any}
-                    href={(rest as LinkProps).href}
-                    data-disabled={isDisabled}
-                    data-inverted={isInverted}
-                    target={
-                        (rest as LinkProps).isExternal ? '_blank' : undefined
-                    }
-                    rel={
-                        (rest as LinkProps).isExternal
-                            ? 'noopener noreferrer'
-                            : undefined
-                    }
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
+        switch (as) {
+            case 'button': {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLButtonElement>}
+                        as={as}
+                        tabIndex={isDisabled ? -1 : 0}
+                        decoration={decoration}
+                        inverted={isInverted}
+                        disabled={isDisabled}
+                        isDisabled={isDisabled}
+                        onClick={onClick}
+                        className={className}
+                        aria-label={ariaLabel}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
+
+            case 'a': {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLAnchorElement>}
+                        as={as}
+                        tabIndex={isDisabled ? -1 : 0}
+                        decoration={decoration}
+                        href={(rest as LinkProps).href}
+                        data-disabled={isDisabled}
+                        data-inverted={isInverted}
+                        target={
+                            (rest as LinkProps).isExternal
+                                ? '_blank'
+                                : undefined
+                        }
+                        rel={
+                            (rest as LinkProps).isExternal
+                                ? 'noopener'
+                                : undefined
+                        }
+                        inverted={isInverted}
+                        isDisabled={isDisabled}
+                        onClick={onClick}
+                        className={className}
+                        aria-label={ariaLabel}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
+
+            default: {
+                return (
+                    <View
+                        ref={ref}
+                        as="span"
+                        tabIndex={isDisabled ? -1 : 0}
+                        decoration={decoration}
+                        data-disabled={isDisabled}
+                        data-inverted={isInverted}
+                        inverted={isInverted}
+                        isDisabled={isDisabled}
+                        onClick={onClick}
+                        className={className}
+                        aria-label={ariaLabel}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
         }
     }
 );

@@ -183,6 +183,12 @@ const AccordionBlock: React.FC<
     );
 };
 
+export interface AccordionIconFnProps {
+    isSelected: boolean;
+}
+
+export type AccordionIconFn = (props: AccordionIconFnProps) => React.ReactNode;
+
 const Accordion: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -194,7 +200,7 @@ const Accordion: React.FC<{
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom item state icon */
-    itemIcon?: (props: { isSelected: boolean }) => React.ReactNode;
+    itemIcon?: AccordionIconFn;
 }> = ({ anchorId, items, bgMode, itemIcon }) => {
     const [currentItems, setCurrentItems] = React.useState<number[]>([]);
 
@@ -219,7 +225,7 @@ const Accordion: React.FC<{
             <Wrapper addWhitespace>
                 <Grid.Row gutter={0}>
                     <Grid.Col>
-                        <AccordionContainer aria-label="Accordion Control Group Buttons">
+                        <AccordionContainer>
                             {items?.map(({ label, text, aside }, i) => {
                                 const isSelected =
                                     currentItems.indexOf(i) !== -1;

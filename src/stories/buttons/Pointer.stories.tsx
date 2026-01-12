@@ -17,7 +17,7 @@ export default {
     ],
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
@@ -30,19 +30,25 @@ const Helper = styled.div`
 `;
 
 export const Default: Story = () => (
-    <Pointer.View as="button" onClick={console.log}>
-        <Pointer.Label>Primary</Pointer.Label>
-    </Pointer.View>
-);
-
-export const Link: Story = () => (
-    <Pointer.View as="a" href="#" onClick={console.log}>
+    <Pointer.View onClick={console.log}>
         <Pointer.Label>Primary</Pointer.Label>
     </Pointer.View>
 );
 
 export const ExternalLink: Story = () => (
-    <Pointer.View as="a" href="#" isExternal onClick={console.log}>
+    <Pointer.View href="#" isExternal onClick={console.log}>
+        <Pointer.Label>Primary</Pointer.Label>
+    </Pointer.View>
+);
+
+export const Button: Story = () => (
+    <Pointer.View as="button" onClick={console.log}>
+        <Pointer.Label>Primary</Pointer.Label>
+    </Pointer.View>
+);
+
+export const Decorator: Story = () => (
+    <Pointer.View as="decorator" onClick={console.log}>
         <Pointer.Label>Primary</Pointer.Label>
     </Pointer.View>
 );

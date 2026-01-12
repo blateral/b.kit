@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import AngleDown from 'components/base/icons/AngleDown';
@@ -223,6 +223,18 @@ const Container = styled.div`
     outline: none;
 `;
 
+const OriginalSelect = styled.select`
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+`;
+
 interface SelectItem {
     value: Record<string, string>;
     label: string;
@@ -258,9 +270,9 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
     onBlur,
     indicator,
 }) => {
+    const id = useId();
     const { colors } = useLibTheme();
     const [isOpen, setIsOpen] = useState(false);
-
     const [activeItemIndex, setActiveItemIndex] = useState<number>(
         items?.findIndex((item) => item.label === selectedItem) || -1
     );
@@ -268,6 +280,10 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
     const selectBtnRef = useRef<HTMLButtonElement>(null);
     const isMounted = useMounted();
     const itemHasBeenClicked = useRef<boolean>(false);
+
+    const fieldId = `select-${id}`;
+    const msgId = `select-message-${id}`;
+    const errorMsgId = `select-error-${id}`;
 
     useEffect(() => {
         const index = items?.findIndex((item) => item.label === selectedItem);
@@ -299,21 +315,24 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
         <FieldWrapper.View isDisabled={isDisabled}>
             <FieldWrapper.Head
                 label={label}
+                htmlFor={fieldId}
                 isRequired={isRequired}
                 isInverted={isInverted}
             />
             <FieldWrapper.Content>
                 <Container>
                     <Select
+                        id={fieldId}
                         ref={selectBtnRef}
                         type="button"
-                        aria-label={
-                            activeItem?.label || placeholder || 'Select item'
-                        }
                         isOpen={isOpen}
                         isInverted={isInverted}
                         isSelected={!!activeItem}
                         hasError={!!errorMessage}
+                        aria-invalid={!!errorMessage}
+                        aria-errormessage={errorMessage && errorMsgId}
+                        aria-describedby={infoMessage && msgId}
+                        aria-expanded={isOpen}
                         onClick={() => {
                             setIsOpen((prev) => !prev);
                         }}
@@ -373,10 +392,12 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
                                 ))}
                         </Indicator>
                     </Select>
-                    <Flyout isVisible={isOpen}>
+                    <Flyout role="presentation" isVisible={isOpen}>
                         {isValidArray(items, false) && (
                             <ItemStyle
                                 key="key_0"
+                                role="option"
+                                aria-selected={activeItemIndex === -1}
                                 onMouseDown={() => {
                                     itemHasBeenClicked.current = true;
                                 }}
@@ -403,6 +424,8 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
                             return (
                                 <ItemStyle
                                     key={`key_${i + 1}`}
+                                    role="option"
+                                    aria-selected={i === activeItemIndex}
                                     onMouseDown={() => {
                                         itemHasBeenClicked.current = true;
                                     }}
@@ -437,16 +460,27 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
                         })}
                     </Flyout>
                 </Container>
-                {activeItem && (
-                    <input
-                        type="hidden"
-                        name={name}
-                        value={JSON.stringify(activeItem.value)}
-                    />
-                )}
+                <OriginalSelect
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    name={name}
+                    defaultValue={
+                        activeItem ? JSON.stringify(activeItem.value) : ''
+                    }
+                >
+                    <option value=""></option>
+
+                    {items.map((item, i) => (
+                        <option key={i} value={JSON.stringify(item.value)}>
+                            {item.label}
+                        </option>
+                    ))}
+                </OriginalSelect>
             </FieldWrapper.Content>
             <FieldWrapper.Messages
+                infoMsgId={msgId}
                 infoMessage={infoMessage}
+                errorMsgId={errorMsgId}
                 errorMessage={errorMessage}
                 isInverted={isInverted}
             />

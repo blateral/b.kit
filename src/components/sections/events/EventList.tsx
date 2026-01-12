@@ -1,14 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import EventBlock, { EventProps } from 'components/blocks/EventBlock';
-import { getColors as color, spacings } from 'utils/styles';
-import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
-import { LinkProps } from 'components/typography/Link';
-import StatusFormatter from 'utils/statusFormatter';
+import EventBlock, {
+    EventCustomTagFn,
+    EventProps,
+} from 'components/blocks/EventBlock';
+import React from 'react';
+import styled from 'styled-components';
 import { concat } from 'utils/concat';
+import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
+import StatusFormatter from 'utils/statusFormatter';
+import { getColors as color, spacings } from 'utils/styles';
 import { getEventFilterParams } from './EventOverview';
 
 const List = styled.ul<{ hasBg?: boolean }>`
@@ -59,13 +60,7 @@ const EventList: React.FC<{
     bgMode?: 'inverted' | 'full';
 
     /** Function to inject custom tag node */
-    customTag?: (props: {
-        key: React.Key;
-        name: string;
-        isInverted?: boolean;
-        isActive?: boolean;
-        link?: LinkProps;
-    }) => React.ReactNode;
+    customTag?: EventCustomTagFn;
 }> = ({ anchorId, events, bgMode, customTag }) => {
     const { colors, globals, theme } = useLibTheme();
     const isInverted = bgMode === 'inverted';
@@ -85,7 +80,7 @@ const EventList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List hasBg={hasBg}>
+                <List hasBg={hasBg} aria-label="Veranstaltungen">
                     {events?.map((event, i) => {
                         let timespan = '';
 

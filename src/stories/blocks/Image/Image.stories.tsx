@@ -7,7 +7,7 @@ export default {
     component: Image,
     parameters: {
         status: {
-            type: 'preview',
+            type: 'production',
         },
     },
 } as Meta;
@@ -20,6 +20,18 @@ export const Default: Story = () => (
         large="https://unsplash.it/766/766"
         xlarge="https://unsplash.it/824/824"
         alt="Image"
+    />
+);
+
+export const WithCopyright: Story = () => (
+    <Image
+        small="https://unsplash.it/619/619"
+        medium="https://unsplash.it/791/791"
+        semilarge="https://unsplash.it/883/883"
+        large="https://unsplash.it/766/766"
+        xlarge="https://unsplash.it/824/824"
+        alt="Image"
+        copyright="Photo by John Doe on Unsplash"
     />
 );
 

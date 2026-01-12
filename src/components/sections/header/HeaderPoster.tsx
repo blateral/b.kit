@@ -32,6 +32,7 @@ const HeaderPoster: React.FC<{
             {bgImage && (
                 <BgImage
                     {...bgImage}
+                    alt=""
                     coverSpace
                     ratios={undefined}
                     isInverted={isInverted}

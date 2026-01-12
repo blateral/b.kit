@@ -108,6 +108,8 @@ export interface VideoProps {
     controls?: boolean;
     playsInline?: boolean;
     onCanPlayThrough?: () => void;
+    ariaLabel?: string;
+    ariaDescribedBy?: string;
 }
 
 const VideoBlock = forwardRef<
@@ -125,6 +127,8 @@ const VideoBlock = forwardRef<
             controls = false,
             playsInline = true,
             onCanPlayThrough,
+            ariaLabel,
+            ariaDescribedBy,
             className,
         },
         ref
@@ -156,6 +160,8 @@ const VideoBlock = forwardRef<
                     controls={controls}
                     onCanPlayThrough={onCanPlayThrough}
                     playsInline={playsInline}
+                    aria-label={ariaLabel}
+                    aria-describedby={ariaDescribedBy}
                 >
                     {urls?.map((url, i) => (
                         <source src={url} key={i} />

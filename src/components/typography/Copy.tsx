@@ -87,16 +87,24 @@ const base = css<{
         }
 
         &:focus {
-            outline: 1px dashed
+            outline: 2px dotted
                 ${({ theme, isInverted }) =>
                     isInverted
                         ? font(theme).link.colorInverted
                         : font(theme).link.color};
-            outline-offset: 1px;
         }
 
         &:focus:not(:focus-visible) {
             outline: none;
+        }
+
+        &:active:not(:focus-visible) {
+            @media (hover: none) {
+                color: ${({ theme, isInverted }) =>
+                    isInverted
+                        ? font(theme).link.colorHoverInverted
+                        : font(theme).link.colorHover};
+            }
         }
     }
 
@@ -346,9 +354,11 @@ export type CopyTag =
     | 'li'
     | 'p'
     | 'caption'
-    | 'figcaption';
+    | 'figcaption'
+    | 'h3';
 
 const Copy: React.FC<{
+    id?: string;
     renderAs?: CopyTag;
     isInverted?: boolean;
     textColor?: string;
@@ -361,7 +371,13 @@ const Copy: React.FC<{
     onClick?: (ev: React.SyntheticEvent<HTMLElement>) => void;
     className?: string;
     children?: React.ReactNode;
+    ariaLabel?: string;
+    ariaLevel?: number;
+    ariaRole?: string;
+    htmlFor?: string;
+    scope?: 'row' | 'col' | 'rowgroup' | 'colgroup';
 }> = ({
+    id,
     renderAs,
     isInverted,
     type = 'copy',
@@ -374,6 +390,11 @@ const Copy: React.FC<{
     onClick,
     className,
     children,
+    ariaLabel,
+    ariaLevel,
+    ariaRole,
+    htmlFor,
+    scope,
     ...rest
 }) => {
     const { fonts } = useLibTheme();
@@ -381,6 +402,7 @@ const Copy: React.FC<{
 
     return (
         <View
+            id={id}
             as={renderAs}
             copyType={type}
             size={size}
@@ -404,6 +426,11 @@ const Copy: React.FC<{
             }
             onClick={onClick}
             className={className}
+            aria-label={ariaLabel}
+            role={ariaRole}
+            aria-level={ariaLevel}
+            scope={scope}
+            htmlFor={htmlFor}
             {...rest}
         >
             {children}

@@ -13,7 +13,7 @@ import {
 
 const View = styled.a<{
     inverted?: boolean;
-    disable?: boolean;
+    isDisabled?: boolean;
     size?: 'default' | 'small';
 }>`
     min-height: 3em;
@@ -44,27 +44,27 @@ const View = styled.a<{
     user-select: none;
     cursor: pointer;
 
-    pointer-events: ${({ disable }) => (disable ? 'none' : 'all')};
+    pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'all')};
 
-    background-color: ${({ theme, inverted, disable }) =>
-        disable
+    background-color: ${({ theme, inverted, isDisabled }) =>
+        isDisabled
             ? color(theme).elementBg.medium
             : inverted
             ? color(theme).primary.inverted
             : color(theme).primary.default};
-    color: ${({ theme, inverted, disable }) =>
-        disable
+    color: ${({ theme, inverted, isDisabled }) =>
+        isDisabled
             ? hexToRgba(color(theme).text.default, 0.4)
             : !inverted
             ? color(theme).text.inverted
             : color(theme).text.default};
     text-align: left;
 
-    transition: all ease-in-out 0.2s;
+    transition: color ease-in-out 0.2s, background-color ease-in-out 0.2s;
 
     & > * {
-        color: ${({ theme, inverted, disable }) =>
-            disable
+        color: ${({ theme, inverted, isDisabled }) =>
+            isDisabled
                 ? hexToRgba(color(theme).text.default, 0.4)
                 : !inverted
                 ? color(theme).text.inverted
@@ -88,40 +88,43 @@ const View = styled.a<{
     }
 
     @media (hover: hover) and (pointer: fine) {
-        ${({ disable, inverted }) =>
-            !disable &&
-            css`
-                &:hover {
-                    box-shadow: 0px 8px 16px
-                        ${inverted
-                            ? 'rgba(255, 255, 255, 0.25)'
-                            : 'rgba(0, 0, 0, 0.25)'};
-                }
-            `}
+        &:hover {
+            background-color: ${({ theme, isDisabled, inverted }) =>
+                isDisabled
+                    ? color(theme).elementBg.medium
+                    : inverted
+                    ? color(theme).primary.invertedHover
+                    : color(theme).primary.hover};
+        }
     }
 
-    ${({ disable, inverted }) =>
-        !disable &&
+    ${({ isDisabled, inverted, theme }) =>
+        !isDisabled &&
         css`
-            &:focus {
-                text-decoration: underline;
-                box-shadow: 0px 8px 16px
-                    ${inverted
-                        ? 'rgba(255, 255, 255, 0.25)'
-                        : 'rgba(0, 0, 0, 0.25)'};
+            &:focus-visible {
+                outline: 2px solid
+                    ${isDisabled
+                        ? color(theme).elementBg.medium
+                        : inverted
+                        ? color(theme).primary.inverted
+                        : color(theme).primary.default};
+
+                outline-offset: 2px;
             }
 
-            &:focus:not(:focus-visible) {
-                text-decoration: none;
-                outline: none;
-                box-shadow: none;
-            }
+            @media (hover: none) {
+                &:active:not(:focus-visible) {
+                    text-decoration: none;
+                    outline: none;
 
-            &:active {
-                box-shadow: 0px 2px 6px
-                    ${inverted
-                        ? 'rgba(255, 255, 255, 0.25)'
-                        : 'rgba(0, 0, 0, 0.3)'};
+                    background-color: ${inverted
+                        ? color(theme).primary.invertedHover
+                        : color(theme).primary.hover};
+
+                    transition: 0.2s background-color ease-in-out;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    -webkit-tap-highlight-color: transparent;
+                }
             }
         `}
 
@@ -142,6 +145,7 @@ interface Props {
     size?: 'default' | 'small';
     isInverted?: boolean;
     isDisabled?: boolean;
+    ariaLabel?: string;
     className?: string;
     children?: React.ReactNode;
 }
@@ -158,13 +162,22 @@ export type LinkProps = Props & {
     isExternal?: boolean;
 };
 
-const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
+export type DecoratorProps = Props & {
+    as?: 'decorator';
+    onClick?: (ev: React.SyntheticEvent<HTMLSpanElement>) => void;
+};
+
+const Button = React.forwardRef<
+    HTMLElement,
+    BtnProps | LinkProps | DecoratorProps
+>(
     (
         {
-            as,
+            as = 'a',
             size = 'default',
             isInverted,
             isDisabled,
+            ariaLabel,
             onClick,
             className,
             children,
@@ -172,46 +185,89 @@ const Button: React.FC<BtnProps | LinkProps> = React.forwardRef(
         },
         ref
     ) => {
-        if (as === 'button') {
-            return (
-                <View
-                    ref={ref}
-                    as={as as any}
-                    size={size}
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
-        } else {
-            return (
-                <View
-                    ref={ref}
-                    as={as as any}
-                    aria-disabled={isDisabled}
-                    size={size}
-                    href={(rest as LinkProps).href}
-                    target={
-                        (rest as LinkProps).isExternal ? '_blank' : undefined
-                    }
-                    rel={
-                        (rest as LinkProps).isExternal
-                            ? 'noopener noreferrer'
-                            : undefined
-                    }
-                    inverted={isInverted}
-                    disable={isDisabled}
-                    onClick={onClick}
-                    className={className}
-                    {...rest}
-                >
-                    {children}
-                </View>
-            );
+        switch (as) {
+            case 'button': {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLButtonElement>}
+                        as="button"
+                        tabIndex={isDisabled ? -1 : 0}
+                        size={size}
+                        inverted={isInverted}
+                        aria-label={ariaLabel}
+                        disabled={isDisabled}
+                        isDisabled={isDisabled}
+                        onClick={
+                            onClick as (
+                                ev: React.SyntheticEvent<HTMLButtonElement>
+                            ) => void
+                        }
+                        className={className}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
+
+            case 'a': {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLAnchorElement>}
+                        as={as}
+                        tabIndex={isDisabled ? -1 : 0}
+                        aria-disabled={isDisabled}
+                        aria-label={ariaLabel}
+                        size={size}
+                        href={(rest as LinkProps).href}
+                        target={
+                            (rest as LinkProps).isExternal
+                                ? '_blank'
+                                : undefined
+                        }
+                        rel={
+                            (rest as LinkProps).isExternal
+                                ? 'noopener'
+                                : undefined
+                        }
+                        inverted={isInverted}
+                        isDisabled={isDisabled}
+                        onClick={
+                            onClick as (
+                                ev: React.SyntheticEvent<HTMLAnchorElement>
+                            ) => void
+                        }
+                        className={className}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
+
+            default: {
+                return (
+                    <View
+                        ref={ref as React.RefObject<HTMLSpanElement>}
+                        as="span"
+                        tabIndex={isDisabled ? -1 : 0}
+                        size={size}
+                        inverted={isInverted}
+                        isDisabled={isDisabled}
+                        aria-disabled={isDisabled}
+                        aria-label={ariaLabel}
+                        onClick={
+                            onClick as (
+                                ev: React.SyntheticEvent<HTMLSpanElement>
+                            ) => void
+                        }
+                        className={className}
+                        {...rest}
+                    >
+                        {children}
+                    </View>
+                );
+            }
         }
     }
 );

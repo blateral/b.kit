@@ -48,6 +48,12 @@ const ListItem = styled.li<{ itemsPerRow: number }>`
     }
 `;
 
+export interface AlertListIconFnProps {
+    isInverted?: boolean;
+}
+
+export type AlertListIconFn = (props: AlertListIconFnProps) => React.ReactNode;
+
 const AlertList: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -59,8 +65,17 @@ const AlertList: React.FC<{
     bgMode?: 'full' | 'inverted';
 
     /** Function to inject custom alert icon */
-    customIcon?: (props: { isInverted?: boolean }) => React.ReactNode;
-}> = ({ anchorId, items, bgMode, customIcon }) => {
+    customIcon?: AlertListIconFn;
+
+    /** Aria label for the list */
+    listAriaLabel?: string;
+}> = ({
+    anchorId,
+    items,
+    bgMode,
+    customIcon,
+    listAriaLabel = 'List of card items with important news/informations',
+}) => {
     const { colors } = useLibTheme();
 
     const isInverted = bgMode === 'inverted';
@@ -94,7 +109,7 @@ const AlertList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List>
+                <List aria-label={listAriaLabel}>
                     {items?.map((item, i) => (
                         <ListItem
                             key={i}

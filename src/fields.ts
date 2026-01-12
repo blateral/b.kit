@@ -1,6 +1,5 @@
 /***** Fields *****/
 export { default as CompactForm } from 'components/fields/CompactForm';
-export { default as SearchInput } from 'components/fields/SearchInput';
 export { default as FilterField } from 'components/fields/FilterField';
 export { default as FormField } from 'components/fields/FormField';
 export { default as Datepicker } from 'components/fields/Datepicker';

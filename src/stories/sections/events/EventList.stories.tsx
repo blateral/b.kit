@@ -12,7 +12,7 @@ export default {
     component: EventListComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;
@@ -32,8 +32,13 @@ export const Default: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -53,8 +58,13 @@ export const Default: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -74,8 +84,13 @@ export const Default: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -95,8 +110,13 @@ export const Default: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -116,8 +136,13 @@ export const Default: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -158,8 +183,13 @@ export const WithImages: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -187,8 +217,13 @@ export const WithImages: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -222,8 +257,13 @@ export const WithImages: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -257,8 +297,13 @@ export const WithImages: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -292,8 +337,13 @@ export const WithImages: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -334,8 +384,13 @@ export const WithBackground: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -369,8 +424,13 @@ export const WithBackground: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -404,8 +464,13 @@ export const WithBackground: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -439,8 +504,13 @@ export const WithBackground: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -474,8 +544,13 @@ export const WithBackground: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -517,8 +592,13 @@ export const IsInverted: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -552,8 +632,13 @@ export const IsInverted: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -587,8 +672,13 @@ export const IsInverted: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -622,8 +712,13 @@ export const IsInverted: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -657,8 +752,13 @@ export const IsInverted: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -700,8 +800,13 @@ export const WithCustomTag: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -735,8 +840,13 @@ export const WithCustomTag: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -770,8 +880,13 @@ export const WithCustomTag: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -805,8 +920,13 @@ export const WithCustomTag: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />
@@ -840,8 +960,13 @@ export const WithCustomTag: Story = () => (
                     { name: 'Tag 5', link: { href: '#0' } },
                 ],
                 link: { href: '#0' },
-                action: ({ isInverted }) => (
-                    <Pointer.View isInverted={isInverted} textDecoration="none">
+                action: ({ isInverted, clickHandler }) => (
+                    <Pointer.View
+                        as="decorator"
+                        isInverted={isInverted}
+                        decoration="none"
+                        onClick={clickHandler}
+                    >
                         <Pointer.Label>Lorem Ipsum</Pointer.Label>
                         <Pointer.Icon>
                             <AngleRight />

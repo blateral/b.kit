@@ -461,7 +461,7 @@ const Header: FC<{
                                     isInverted
                                     size="heading-1"
                                     isCentered={isCentered}
-                                    renderAs={titleAs}
+                                    renderAs={titleAs || 'h1'}
                                     innerHTML={title}
                                 />
                             )}
