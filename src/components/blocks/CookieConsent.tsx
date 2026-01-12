@@ -34,7 +34,6 @@ const View = styled.dialog<{ zIndex?: number; bgOpacity?: number }>`
     max-height: 85%;
     overflow-y: scroll;
     padding: ${spacings.spacer}px ${spacings.nudge * 2}px;
-    position: relative;
     bottom: 0;
     text-align: center;
 

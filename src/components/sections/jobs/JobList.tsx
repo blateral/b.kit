@@ -13,6 +13,7 @@ import useUpdateEffect from 'utils/useUpdateEffect';
 import { escapeRegExp } from 'utils/escape';
 import { deleteUrlParam, getUrlParams, setUrlParam } from 'utils/urlParams';
 import useMounted from 'utils/useMounted';
+import { concat as cn } from 'utils/concat';
 
 const List = styled.ul`
     display: flex;
@@ -230,6 +231,12 @@ const JobList: React.FC<{
 
     /** Injection function for filter reset icon */
     filterClearIcon?: (isInverted?: boolean) => React.ReactNode;
+
+    /** Additional aria-label for the list */
+    listAriaLabel?: string;
+
+    /** Function to generate aria-label for each job item */
+    itemAriaLabel?: (title: string, type: string, location: string) => string;
 }> = ({
     anchorId,
     jobs,
@@ -243,6 +250,8 @@ const JobList: React.FC<{
     hasFilter,
     filterSubmitIcon,
     filterClearIcon,
+    listAriaLabel = 'List of job offers',
+    itemAriaLabel,
 }) => {
     const { colors, globals } = useLibTheme();
     const filterName = globals.sections.jobFilterName;
@@ -366,7 +375,7 @@ const JobList: React.FC<{
                         clearIcon={filterClearIcon}
                     />
                 )}
-                <List aria-label="Stellenangebote">
+                <List aria-label={listAriaLabel}>
                     {jobMatches
                         ?.sort((a, b) => a.priority - b.priority)
                         .map((match, i) => {
@@ -399,11 +408,24 @@ const JobList: React.FC<{
                                         ?.join(', ');
                                 }
                             }
+
+                            const itemLabel = itemAriaLabel
+                                ? itemAriaLabel(
+                                      match.item.jobTitle,
+                                      employmentType || '',
+                                      locationText
+                                  )
+                                : `Job offer: ${cn(
+                                      [
+                                          match.item.jobTitle,
+                                          employmentType,
+                                          locationText,
+                                      ],
+                                      ', '
+                                  )}`;
+
                             return (
-                                <Item
-                                    key={i}
-                                    aria-label={`Stellenangebot: ${match.item.jobTitle}, ${employmentType}, ${locationText}`}
-                                >
+                                <Item key={i} aria-label={itemLabel}>
                                     <JobCard
                                         ref={cardRefs[i]}
                                         {...match.item}

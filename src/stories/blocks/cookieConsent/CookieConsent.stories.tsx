@@ -18,7 +18,7 @@ export default {
     component: CookieConsent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;

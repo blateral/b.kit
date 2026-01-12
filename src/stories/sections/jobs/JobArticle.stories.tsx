@@ -11,7 +11,7 @@ export default {
     component: JobArticleComponent,
     parameters: {
         status: {
-            type: ['preview'],
+            type: ['production'],
         },
     },
 } as Meta;

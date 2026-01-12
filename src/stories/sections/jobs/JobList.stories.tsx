@@ -10,7 +10,7 @@ export default {
     component: JobListComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;

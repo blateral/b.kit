@@ -14,6 +14,7 @@ import StatusFormatter from 'utils/statusFormatter';
 import Link, { LinkProps } from 'components/typography/Link';
 import { useLibTheme } from 'utils/LibThemeProvider';
 import { isValidArray } from 'utils/arrays';
+import { concat as cn } from 'utils/concat';
 
 const View = styled.article<{ isInverted?: boolean }>`
     position: relative;
@@ -185,6 +186,18 @@ export interface NewsCardActionFnProps {
     clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
 }
 
+export interface NewsCardCustomTagFnProps {
+    key: React.Key;
+    name: string;
+    isInverted?: boolean;
+    isActive?: boolean;
+    link?: LinkProps;
+    clickHandler?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
+}
+export type NewsCardCustomTagFn = (
+    props: NewsCardCustomTagFnProps
+) => React.ReactNode;
+
 export interface NewsCardProps {
     /** Invert text and background for use on dark sections */
     isInverted?: boolean;
@@ -217,14 +230,7 @@ export interface NewsCardProps {
     action?: NewsCardActionFn;
 
     /** Function to inject custom tag node */
-    customTag?: (props: {
-        key: React.Key;
-        name: string;
-        isInverted?: boolean;
-        isActive?: boolean;
-        link?: LinkProps;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLAnchorElement>) => void;
-    }) => React.ReactNode;
+    customTag?: NewsCardCustomTagFn;
 
     hasBg?: boolean;
 }
@@ -351,7 +357,7 @@ const NewsCard = forwardRef<
                         {action({
                             isInverted,
                             link,
-                            title,
+                            title: cn(['Read article', title], ': '),
                             clickHandler: handleClick,
                         })}
                     </CardFooter>

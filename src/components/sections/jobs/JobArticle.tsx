@@ -110,6 +110,9 @@ export type JobArticleProps = Omit<
 
     /** Section background */
     bgMode?: 'full' | 'inverted';
+
+    ariaLabelEmploymentType?: (type: string) => string;
+    ariaLabelLocation?: (location: string) => string;
 };
 
 const JobArticle: React.FC<JobArticleProps> = ({
@@ -128,6 +131,8 @@ const JobArticle: React.FC<JobArticleProps> = ({
     datePosted,
     primaryAction,
     secondaryAction,
+    ariaLabelEmploymentType,
+    ariaLabelLocation,
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
@@ -166,6 +171,14 @@ const JobArticle: React.FC<JobArticleProps> = ({
         .map((type) => type.name)
         ?.join(', ');
 
+    const employmentTypeAriaLabel = ariaLabelEmploymentType
+        ? ariaLabelEmploymentType(employmentType || '')
+        : `Employment type: ${employmentType || ''}`;
+
+    const locationAriaLabel = ariaLabelLocation
+        ? ariaLabelLocation(locationText || '')
+        : `Location: ${locationText || ''}`;
+
     return (
         <Section
             addSeperation
@@ -203,7 +216,7 @@ const JobArticle: React.FC<JobArticleProps> = ({
                                         )}
                                     </Icon>
                                     <MainLabel
-                                        aria-label={`Beschäftigungsart: ${employmentType}`}
+                                        aria-label={employmentTypeAriaLabel}
                                     >
                                         {employmentType}
                                     </MainLabel>
@@ -219,9 +232,7 @@ const JobArticle: React.FC<JobArticleProps> = ({
                                             <LocationPin />
                                         )}
                                     </Icon>
-                                    <MainLabel
-                                        aria-label={`Standort: ${locationText}`}
-                                    >
+                                    <MainLabel aria-label={locationAriaLabel}>
                                         {locationText}
                                     </MainLabel>
                                 </Info>

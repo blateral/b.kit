@@ -10,7 +10,10 @@ import styled, { DefaultTheme } from 'styled-components';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
 
-import NewsCard, { NewsCardProps } from 'components/blocks/NewsCard';
+import NewsCard, {
+    NewsCardCustomTagFn,
+    NewsCardProps,
+} from 'components/blocks/NewsCard';
 import { mq, spacings } from 'utils/styles';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import Tag, { TagProps } from 'components/blocks/Tag';
@@ -159,13 +162,7 @@ const NewsOverview: React.FC<{
     onTagClick?: (tag: TagProps, insideList?: boolean) => void;
 
     /** Function to inject custom tag node */
-    customTag?: (props: {
-        key: React.Key;
-        name: string;
-        isInverted?: boolean;
-        isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
-    }) => React.ReactNode;
+    customTag?: NewsCardCustomTagFn;
 }> = ({
     anchorId,
     news,
