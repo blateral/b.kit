@@ -1,7 +1,10 @@
 import Filter from 'components/base/icons/Filter';
 import Section, { mapToBgMode } from 'components/base/Section';
 import Wrapper from 'components/base/Wrapper';
-import EventBlock, { EventProps } from 'components/blocks/EventBlock';
+import EventBlock, {
+    EventCustomTagFn,
+    EventProps,
+} from 'components/blocks/EventBlock';
 import Tag, { TagProps } from 'components/blocks/Tag';
 import Pointer from 'components/buttons/Pointer';
 import Copy from 'components/typography/Copy';
@@ -150,13 +153,7 @@ const EventOverview: React.FC<{
     onTagClick?: (tag: TagProps, insideList?: boolean) => void;
 
     /** Function to inject custom tag node */
-    customTag?: (props: {
-        key: React.Key;
-        name: string;
-        isInverted?: boolean;
-        isActive?: boolean;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
-    }) => React.ReactNode;
+    customTag?: EventCustomTagFn;
 }> = ({
     tags,
     events,

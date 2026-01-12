@@ -12,7 +12,7 @@ export default {
     component: EventListComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;

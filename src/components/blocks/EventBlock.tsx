@@ -176,6 +176,26 @@ const Text = styled(Copy)`
     overflow: hidden;
 `;
 
+export interface EventActionFnProps {
+    isInverted?: boolean;
+    title?: string;
+    link?: LinkProps;
+    clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
+}
+export type EventActionFn = (props: EventActionFnProps) => React.ReactNode;
+
+export interface EventCustomTagFnProps {
+    key: React.Key;
+    name: string;
+    isInverted?: boolean;
+    isActive?: boolean;
+    link?: LinkProps;
+    clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
+}
+export type EventCustomTagFn = (
+    props: EventCustomTagFnProps
+) => React.ReactNode;
+
 export interface EventProps {
     /** Array of tag item settings */
     tags?: TagProps[];
@@ -205,22 +225,10 @@ export interface EventProps {
     link?: LinkProps;
 
     /** Function to inject action elements */
-    action?: (props: {
-        isInverted?: boolean;
-        title?: string;
-        link?: LinkProps;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
-    }) => React.ReactNode;
+    action?: EventActionFn;
 
     /** Function to inject custom tag node */
-    customTag?: (props: {
-        key: React.Key;
-        name: string;
-        isInverted?: boolean;
-        isActive?: boolean;
-        link: LinkProps;
-        clickHandler?: (ev?: React.SyntheticEvent<HTMLElement>) => void;
-    }) => React.ReactNode;
+    customTag?: EventCustomTagFn;
 
     /** Callback function if tag in news iten has been clicked */
     onTagClick?: (tag: TagProps) => void;

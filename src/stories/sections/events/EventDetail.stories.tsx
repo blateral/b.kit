@@ -14,7 +14,7 @@ export default {
     component: EventDetailComponent,
     parameters: {
         status: {
-            type: ['preview', 'qsReady'],
+            type: ['production'],
         },
     },
 } as Meta;

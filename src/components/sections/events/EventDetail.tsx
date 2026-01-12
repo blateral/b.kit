@@ -173,6 +173,17 @@ export interface EventInfo {
     text?: string;
 }
 
+export interface EventDetailCustomTagFnProps {
+    key: React.Key;
+    name: string;
+    isInverted?: boolean;
+    isActive?: boolean;
+    link?: LinkProps;
+}
+export type EventDetailCustomTagFn = (
+    props: EventDetailCustomTagFnProps
+) => React.ReactNode;
+
 const EventDetail: React.FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -189,15 +200,20 @@ const EventDetail: React.FC<{
     /** Section background */
     bgMode?: 'inverted' | 'full';
 
+    /** Aria-label for the info list */
+    infoListAriaLabel?: string;
+
     /** Function to inject custom tag node */
-    customTag?: (props: {
-        key: React.Key;
-        name: string;
-        isInverted?: boolean;
-        isActive?: boolean;
-        link?: LinkProps;
-    }) => React.ReactNode;
-}> = ({ anchorId, event, infos, useImageAsBg, bgMode, customTag }) => {
+    customTag?: EventDetailCustomTagFn;
+}> = ({
+    anchorId,
+    event,
+    infos,
+    useImageAsBg,
+    bgMode,
+    infoListAriaLabel,
+    customTag,
+}) => {
     const { colors, globals } = useLibTheme();
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';
@@ -362,7 +378,11 @@ const EventDetail: React.FC<{
                     </Grid.Col>
                     {hasInfos && (
                         <Grid.Col semilarge={{ span: 2.3 / 8 }}>
-                            <InfoList isInverted={isInverted} items={infos} />
+                            <InfoList
+                                isInverted={isInverted}
+                                items={infos}
+                                ariaLabel={infoListAriaLabel}
+                            />
                         </Grid.Col>
                     )}
                 </Grid.Row>
