@@ -48,6 +48,16 @@ const FlexContainer = styled.div`
     }
 `;
 
+const HpFieldContainer = styled.div`
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+`;
+
 const ActionWrapper = styled(Actions)`
     margin-top: ${spacings.spacer * 3}px;
 `;
@@ -99,6 +109,7 @@ const Form: React.FC<{
         value?: string;
         isDisabled?: boolean;
     };
+    honeypotFieldName?: string;
 }> = ({
     bgMode,
     isInverted = false,
@@ -115,6 +126,7 @@ const Form: React.FC<{
     checkbox,
     yupValidationSchema,
     validation,
+    honeypotFieldName = 'hp-office-address',
 }) => {
     const theme = React.useContext(ThemeContext);
 
@@ -180,6 +192,19 @@ const Form: React.FC<{
                     }}
                     validationSchema={yupValidationSchema}
                     onSubmit={async (values) => {
+                        const hpField = document.getElementsByName(
+                            honeypotFieldName
+                        )[0] as HTMLInputElement;
+
+                        if (hpField && hpField.value) {
+                            console.warn(
+                                'honeypot field is filled, probably a bot, do not submit'
+                            );
+
+                            // honeypot field is filled, probably a bot, do not submit
+                            return;
+                        }
+
                         onSubmit && onSubmit(values);
                     }}
                 >
@@ -332,6 +357,16 @@ const Form: React.FC<{
                                     isInverted={isInverted}
                                     isRequired
                                 />
+                            )}
+                            {honeypotFieldName && (
+                                <HpFieldContainer>
+                                    <Textfield
+                                        tabIndex={-1}
+                                        ariaHidden
+                                        label={honeypotFieldName}
+                                        name={honeypotFieldName}
+                                    />
+                                </HpFieldContainer>
                             )}
                             {submitAction && (
                                 <ActionWrapper

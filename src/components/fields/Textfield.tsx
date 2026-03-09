@@ -77,6 +77,8 @@ export type FormProps = {
     placeholder?: string;
     isRequired?: boolean;
     isDisabled?: boolean;
+    tabIndex?: number;
+    ariaHidden?: boolean;
 };
 
 const Textfield: React.FC<
@@ -98,6 +100,8 @@ const Textfield: React.FC<
     isInverted,
     isDisabled,
     isRequired,
+    tabIndex,
+    ariaHidden,
     onChange,
 }) => {
     const theme = React.useContext(ThemeContext);
@@ -127,6 +131,8 @@ const Textfield: React.FC<
                     value={value}
                     required={isRequired}
                     onChange={onChange}
+                    tabIndex={tabIndex}
+                    aria-hidden={ariaHidden}
                 />
             </Copy>
             {infoMessage && (
