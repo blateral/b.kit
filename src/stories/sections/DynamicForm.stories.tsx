@@ -462,6 +462,31 @@ export const WithErrorResponse: Story = () => (
     />
 );
 
+export const WithHoneypotField: Story = () => (
+    <DynamicForm
+        fields={{
+            Nachname: {
+                type: 'Field',
+                placeholder: 'Nachname..',
+                isRequired: true,
+                info: 'Nachname eingeben',
+            },
+        }}
+        honeypot={{
+            fieldName: 'hp-work-address',
+            fieldLabel: 'Work Address',
+            placeholder: 'Enter your work address',
+        }}
+        onSubmit={async (values) => {
+            console.log(values);
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
+        }}
+    />
+);
+
 export const CustomSubmitButton: Story = () => (
     <DynamicForm
         fields={{
