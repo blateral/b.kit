@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+    FC,
+    useCallback,
+    useEffect,
+    useId,
+    useRef,
+    useState,
+} from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
@@ -84,6 +91,16 @@ const ActionContainer = styled.div`
     @media ${mq.semilarge} {
         max-width: 610px;
     }
+`;
+
+const HpLabel = styled.label`
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
 `;
 
 export interface FormStructure {
@@ -304,6 +321,12 @@ export interface SubmitResponse {
     isError?: boolean;
 }
 
+export interface HoneypotConfig {
+    fieldName: string;
+    fieldLabel?: string;
+    placeholder?: string;
+}
+
 const DynamicForm: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -343,6 +366,8 @@ const DynamicForm: FC<{
         radio?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
         upload?: (props: FieldGenerationProps<FileUpload>) => React.ReactNode;
     };
+
+    honeypot?: HoneypotConfig;
 }> = ({
     anchorId,
     fields,
@@ -352,7 +377,10 @@ const DynamicForm: FC<{
     subjectLine,
     targetEmails,
     bgMode,
+    honeypot,
 }) => {
+    const id = useId();
+    const hpFieldId = `hp-${id}`;
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full' || isInverted;
 
@@ -566,6 +594,19 @@ const DynamicForm: FC<{
         } as FormData,
 
         onSubmit: async (values, helpers) => {
+            // check of honeypot field is filled
+            const hpFieldValue = (
+                document.getElementById(hpFieldId) as HTMLInputElement
+            )?.value;
+
+            if (hpFieldValue) {
+                setSubmitting(false);
+                console.warn(
+                    'Honeypot field is filled. Possible bot submission.'
+                );
+                return;
+            }
+
             const valuesAndMails = {
                 ...values,
                 targetEmails: targetEmails || [],
@@ -732,6 +773,20 @@ const DynamicForm: FC<{
                                         return null;
                                 }
                             })}
+                        {honeypot && (
+                            <HpLabel>
+                                {honeypot.fieldLabel}
+                                <input
+                                    id={hpFieldId}
+                                    type="text"
+                                    name={honeypot.fieldName}
+                                    placeholder={honeypot.placeholder}
+                                    tabIndex={-1}
+                                    aria-hidden="true"
+                                    autoComplete="off"
+                                />
+                            </HpLabel>
+                        )}
                     </FieldContainer>
                 </Form>
                 {(fields || submitReponse?.message) && (
