@@ -9,7 +9,6 @@ import CookieConsent, {
     CookieTitle,
 } from 'components/blocks/CookieConsent';
 
-import cookieImg from '../../../../public/images/Cookie.png';
 import Button from 'components/buttons/Button';
 import ButtonGhost from 'components/buttons/ButtonGhost';
 
@@ -30,7 +29,7 @@ export const WithIcon: Story = () => (
         <CookieConsent>
             {() => (
                 <React.Fragment>
-                    <CookieIcon src={cookieImg} alt="logo" />
+                    <CookieIcon src="/images/Cookie.png" alt="logo" />
                 </React.Fragment>
             )}
         </CookieConsent>
@@ -44,7 +43,7 @@ export const WithTitle: Story = () => (
         <CookieConsent>
             {() => (
                 <React.Fragment>
-                    <CookieIcon src={cookieImg} alt="logo" />
+                    <CookieIcon src="/images/Cookie.png" alt="logo" />
                     <CookieTitle
                         isCentered
                         innerHTML="Verwendung von Cookies für Analysezwecke"
@@ -62,7 +61,7 @@ export const WithText: Story = () => (
         <CookieConsent>
             {() => (
                 <React.Fragment>
-                    <CookieIcon src={cookieImg} alt="logo" />
+                    <CookieIcon src="/images/Cookie.png" alt="logo" />
                     <CookieTitle
                         isCentered
                         innerHTML="Verwendung von Cookies für Analysezwecke"
@@ -89,7 +88,7 @@ export const WithActions: Story = () => (
                 additionalDeclineProps,
             }) => (
                 <React.Fragment>
-                    <CookieIcon src={cookieImg} alt="logo" />
+                    <CookieIcon src="/images/Cookie.png" alt="logo" />
                     <CookieTitle
                         isCentered
                         innerHTML="Verwendung von Cookies für Analysezwecke"
