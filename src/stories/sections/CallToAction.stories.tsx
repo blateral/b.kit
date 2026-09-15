@@ -41,7 +41,7 @@ export const WithContact: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         contact={{
             avatar: {
-                src: 'https://via.placeholder.com/180',
+                src: '/images/placeholders/669/180x180.jpg',
                 alt: 'avatar',
             },
             description: `
@@ -90,7 +90,7 @@ export const WithActions: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         contact={{
             avatar: {
-                src: 'https://via.placeholder.com/180',
+                src: '/images/placeholders/669/180x180.jpg',
                 alt: 'avatar',
             },
             description: `
@@ -149,7 +149,7 @@ export const WithBadge: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         contact={{
             avatar: {
-                src: 'https://via.placeholder.com/180',
+                src: '/images/placeholders/669/180x180.jpg',
                 alt: 'avatar',
             },
             description: `
@@ -200,7 +200,7 @@ export const WithBadge: Story = () => (
         )}
         badge={
             <img
-                src="https://via.placeholder.com/392x392/?text=badge"
+                src="/images/placeholders/392x392-text-badge.png"
                 style={{ height: '100%', width: '100%' }}
             />
         }
@@ -215,7 +215,7 @@ export const IsInverted: Story = () => (
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
         contact={{
             avatar: {
-                src: 'https://via.placeholder.com/180',
+                src: '/images/placeholders/669/180x180.jpg',
                 alt: 'avatar',
             },
             description: `
@@ -266,7 +266,7 @@ export const IsInverted: Story = () => (
         )}
         badge={
             <img
-                src="https://via.placeholder.com/392x392/?text=badge"
+                src="/images/placeholders/392x392-text-badge.png"
                 style={{ height: '100%', width: '100%' }}
             />
         }
@@ -291,7 +291,7 @@ export const WithNewsletterForm: Story = () => (
         )}
         badge={
             <img
-                src="https://via.placeholder.com/392x392/?text=badge"
+                src="/images/placeholders/392x392-text-badge.png"
                 style={{ height: '100%', width: '100%' }}
             />
         }
@@ -317,7 +317,7 @@ export const WithNewsletterFormInverted: Story = () => (
         )}
         badge={
             <img
-                src="https://via.placeholder.com/392x392/?text=badge"
+                src="/images/placeholders/392x392-text-badge.png"
                 style={{ height: '100%', width: '100%' }}
             />
         }

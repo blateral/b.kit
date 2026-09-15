@@ -306,7 +306,7 @@ const base = css<{
     }
 
     .icon-label--list + .icon-label--list {
-        margin-top: ${spacings.nudge * 3}px;
+        margin-top: ${spacings.nudge * 2}px;
     }
 
     *:first-child {
