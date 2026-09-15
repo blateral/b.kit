@@ -3,6 +3,7 @@ export { default as Accordion } from 'components/sections/Accordion';
 export { default as AlertList } from 'components/sections/AlertList';
 export { default as Article } from 'components/sections/Article';
 export { default as CallToAction } from 'components/sections/CallToAction';
+export { default as CallToActionTwoUp } from 'components/sections/CallToActionTwoUp';
 export { default as CardList } from 'components/sections/CardList';
 export { default as ComparisonSlider } from 'components/sections/ComparisonSlider';
 export { default as CrossPromotion } from 'components/sections/CrossPromotion';

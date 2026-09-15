@@ -5,18 +5,18 @@ import {
     ThemeMods,
     useLibTheme,
 } from 'utils/LibThemeProvider';
-import { useMediaQueries } from 'utils/useMediaQuery';
 import { useMenuKeyboard } from 'utils/menuHooks';
+import { useMediaQueries } from 'utils/useMediaQuery';
+import useMessage from 'utils/useMessage';
 import usePageScroll, { PageScrollDirection } from 'utils/usePageScroll';
 import Menu, { MenuStates, MenuTypeProps, NavItem } from './menu/Menu';
-
 import NavBar, {
-    getFullHeight,
-    NavBarSize,
     BarStates,
-    hasTopBar,
-    hasBottomBar,
     ExcludeType,
+    getFullHeight,
+    hasBottomBar,
+    hasTopBar,
+    NavBarSize,
     PageFlow,
 } from './NavBar';
 
@@ -152,6 +152,7 @@ const Navigation: FC<NavigationProps> = ({
     const mediaQueries = useMediaQueries();
 
     const { theme } = useLibTheme();
+    const { send: sendMessage } = useMessage<MessageNavigationState>();
 
     /** Navigation bar states */
     const [isNavBarSticky, setIsNavBarSticky] = useState<boolean>(false);
@@ -204,6 +205,27 @@ const Navigation: FC<NavigationProps> = ({
     useEffect(() => {
         document.body.style.overflow = isMenuOpen ? 'hidden' : 'visible';
     }, [isMenuOpen]);
+
+    useEffect(() => {
+        sendMessage('NAVIGATION_STATE', {
+            isMenuOpen,
+            isTop,
+            isNavBarSticky,
+            isNavBarOpen,
+            scrollDirection,
+            isInOffset,
+            leftOffsetFromTop,
+        });
+    }, [
+        isMenuOpen,
+        isTop,
+        isNavBarSticky,
+        isNavBarOpen,
+        scrollDirection,
+        isInOffset,
+        leftOffsetFromTop,
+        sendMessage,
+    ]);
 
     const topBar = navBar?.topBar
         ? (props: BarStates) => {
@@ -348,5 +370,15 @@ const Navigation: FC<NavigationProps> = ({
         </header>
     );
 };
+
+export interface MessageNavigationState {
+    isMenuOpen: boolean;
+    isNavBarSticky: boolean;
+    isNavBarOpen: boolean;
+    isTop: boolean;
+    scrollDirection: PageScrollDirection;
+    isInOffset: boolean;
+    leftOffsetFromTop: boolean;
+}
 
 export default Navigation;
