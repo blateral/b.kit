@@ -8,12 +8,9 @@ export interface Message<TData = Record<string, any> | string | number> {
 }
 
 const useMessage = <TData = Record<string, any> | string | number>() => {
-    const send = useCallback(
-        (type: MessageType, data: TData, targetOrigin = '*') => {
-            window.postMessage({ type, data }, targetOrigin);
-        },
-        []
-    );
+    const send = useCallback((type: MessageType, data: TData) => {
+        window.postMessage({ type, data });
+    }, []);
 
     const listen = useCallback(
         (type: MessageType, callback: (message: Message<TData>) => void) => {
