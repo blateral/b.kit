@@ -19,6 +19,7 @@ import NavBar, {
     ExcludeType,
     PageFlow,
 } from './NavBar';
+import useMessage from 'utils/useMessage';
 
 /**
  * Checks which navbar parts are defined in navigation.
@@ -152,6 +153,7 @@ const Navigation: FC<NavigationProps> = ({
     const mediaQueries = useMediaQueries();
 
     const { theme } = useLibTheme();
+    const { send: sendMessage } = useMessage<MessageNavigationState>();
 
     /** Navigation bar states */
     const [isNavBarSticky, setIsNavBarSticky] = useState<boolean>(false);
@@ -200,6 +202,27 @@ const Navigation: FC<NavigationProps> = ({
     const closeMenu = () => {
         setIsMenuOpen(false);
     };
+
+    useEffect(() => {
+        sendMessage('NAVIGATION_STATE', {
+            isMenuOpen,
+            isTop,
+            isNavBarSticky,
+            isNavBarOpen,
+            scrollDirection,
+            isInOffset,
+            leftOffsetFromTop,
+        });
+    }, [
+        isMenuOpen,
+        isTop,
+        isNavBarSticky,
+        isNavBarOpen,
+        scrollDirection,
+        isInOffset,
+        leftOffsetFromTop,
+        sendMessage,
+    ]);
 
     useEffect(() => {
         document.body.style.overflow = isMenuOpen ? 'hidden' : 'visible';
@@ -348,5 +371,15 @@ const Navigation: FC<NavigationProps> = ({
         </header>
     );
 };
+
+export interface MessageNavigationState {
+    isMenuOpen: boolean;
+    isNavBarSticky: boolean;
+    isNavBarOpen: boolean;
+    isTop: boolean;
+    scrollDirection: PageScrollDirection;
+    isInOffset: boolean;
+    leftOffsetFromTop: boolean;
+}
 
 export default Navigation;
