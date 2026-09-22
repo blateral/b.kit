@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+    FC,
+    useCallback,
+    useEffect,
+    useId,
+    useRef,
+    useState,
+} from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
 import { getColors as color, mq, spacings } from 'utils/styles';
@@ -89,6 +96,16 @@ const ActionContainer = styled.div`
     @media ${mq.semilarge} {
         max-width: 610px;
     }
+`;
+
+const HpLabel = styled.label`
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
 `;
 
 export interface FormStructure {
@@ -300,6 +317,19 @@ export interface SubmitResponse {
     isError?: boolean;
 }
 
+export interface HoneypotConfig {
+    /** Name attribute of the hidden field. Avoid common autofill-triggering
+     * names like "email", "name" or "phone" — browsers may auto-populate
+     * hidden fields with those names and cause false positives. */
+    fieldName: string;
+    fieldLabel?: string;
+    placeholder?: string;
+    /** Minimum time (ms) the form must be visible before a submit is
+     * accepted. Submits faster than this are treated as bot traffic.
+     * Defaults to 1500ms. Set to 0 to disable this check. */
+    minFillTimeMs?: number;
+}
+
 const DynamicForm: FC<{
     /** ID value for targeting section with anchor hashes */
     anchorId?: string;
@@ -339,6 +369,8 @@ const DynamicForm: FC<{
         radio?: (props: FieldGenerationProps<FieldGroup>) => React.ReactNode;
         upload?: (props: FieldGenerationProps<FileUpload>) => React.ReactNode;
     };
+
+    honeypot?: HoneypotConfig;
 }> = ({
     anchorId,
     fields,
@@ -348,7 +380,12 @@ const DynamicForm: FC<{
     subjectLine,
     targetEmails,
     bgMode,
+    honeypot,
 }) => {
+    const id = useId();
+    const hpFieldId = `hp-${id}`;
+    const hpInputRef = useRef<HTMLInputElement>(null);
+    const renderedAtRef = useRef<number>(Date.now());
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full' || isInverted;
 
@@ -562,6 +599,25 @@ const DynamicForm: FC<{
         } as FormData,
 
         onSubmit: async (values, helpers) => {
+            if (honeypot) {
+                const hpFieldValue = hpInputRef.current?.value;
+                const minFillTime = honeypot.minFillTimeMs ?? 1500;
+                const filledTooFast =
+                    minFillTime > 0 &&
+                    Date.now() - renderedAtRef.current < minFillTime;
+
+                if (hpFieldValue || filledTooFast) {
+                    console.warn(
+                        'Honeypot triggered. Possible bot submission.'
+                    );
+                    // Pretend the submission succeeded so bots don't learn
+                    // they were caught and adapt their behavior.
+                    helpers.resetForm({ values });
+                    setSubmitting(false);
+                    return;
+                }
+            }
+
             const valuesAndMails = {
                 ...values,
                 targetEmails: targetEmails || [],
@@ -728,6 +784,20 @@ const DynamicForm: FC<{
                                         return null;
                                 }
                             })}
+                        {honeypot && (
+                            <HpLabel aria-hidden="true">
+                                {honeypot.fieldLabel}
+                                <input
+                                    ref={hpInputRef}
+                                    id={hpFieldId}
+                                    type="text"
+                                    name={honeypot.fieldName}
+                                    placeholder={honeypot.placeholder}
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                />
+                            </HpLabel>
+                        )}
                     </FieldContainer>
                 </Form>
                 {(fields || submitReponse?.message) && (
