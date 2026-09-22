@@ -294,72 +294,6 @@ export const WithErrorResponse: Story = () => (
                 isRequired: true,
                 info: 'Nachname eingeben',
             },
-            // Nachricht: {
-            //     type: 'Area',
-            //     placeholder: 'Nachricht eingeben..',
-            //     info: 'Nachricht eingeben',
-            //     isRequired: true,
-            // },
-            // Email: {
-            //     type: 'Field',
-            //     placeholder: 'Email eingeben..',
-            //     info: 'Email eingeben',
-            //     isRequired: true,
-            //     inputType: 'email',
-            // },
-            // Reisezeitraum: {
-            //     customIcon: ({ singleSelect }) => {
-            //         return singleSelect ? (
-            //             <Icons.CalendarToday />
-            //         ) : (
-            //             <Icons.DateRange />
-            //         );
-            //     },
-            //     type: 'Datepicker',
-            //     isRequired: true,
-            //     info: 'Reisezeitraum eingeben',
-            //     placeholder: 'Reisezeitraum wählen..',
-            // },
-            // Leistungen: {
-            //     type: 'FieldGroup',
-            //     groupType: 'Checkbox',
-            //     isRequired: true,
-            //     fields: [
-            //         { text: 'mit Bad' },
-            //         { text: 'mit Küche', initialChecked: true },
-            //     ],
-            // },
-            // Personen: {
-            //     type: 'FieldGroup',
-            //     groupType: 'Radio',
-            //     isRequired: true,
-            //     fields: [{ text: '1' }, { text: '2', initialChecked: true }],
-            // },
-            // Alter: {
-            //     type: 'Field',
-            //     placeholder: 'Alter eingeben',
-            //     info: 'Bitte geben Sie Ihr Alter an',
-            //     inputType: 'number',
-            // },
-            // Land: {
-            //     placeholder: 'Select',
-            //     type: 'Select',
-            //     initialOption: 'Deutschland',
-            //     isRequired: true,
-            //     dropdownItems: [
-            //         { label: 'Schweiz', value: { country: 'Switzerland' } },
-            //         { label: 'Deutschland', value: { country: 'Switzerland' } },
-            //     ],
-            // },
-            // Upload: {
-            //     type: 'Upload',
-            //     customUploadIcon: () => <Icons.UploadFile />,
-            //     customDeleteIcon: () => <Icons.DeleteForever />,
-            //     isRequired: true,
-            //     addBtnLabel: 'Datei/en auswählen',
-            //     removeBtnLabel: 'Auswahl löschen',
-            //     acceptedFormats: 'image/png, image/jpg',
-            // },
         }}
         onSubmit={async (values) => {
             console.log(values);
@@ -367,6 +301,31 @@ export const WithErrorResponse: Story = () => (
                 isError: true,
                 message: 'Cannot send mail data!',
             };
+        }}
+    />
+);
+
+export const WithHoneypotField: Story = () => (
+    <DynamicForm
+        fields={{
+            Nachname: {
+                type: 'Field',
+                placeholder: 'Nachname..',
+                isRequired: true,
+                info: 'Nachname eingeben',
+            },
+        }}
+        onSubmit={async (values) => {
+            console.log(values);
+            return {
+                isError: false,
+                message: 'Mail has been sent!',
+            };
+        }}
+        honeypot={{
+            fieldName: 'hpField',
+            fieldLabel: 'Leave this field empty',
+            placeholder: 'Do not fill this field',
         }}
     />
 );
