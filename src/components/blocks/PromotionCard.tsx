@@ -14,25 +14,38 @@ import {
     withRange,
 } from 'utils/styles';
 
-const View = styled(Link)<{ clickable?: boolean }>`
+const View = styled(Link)<{
+    clickable?: boolean;
+    bgColor?: string;
+    hasImage?: boolean;
+}>`
     display: flex;
     position: relative;
     width: 100%;
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
     overflow: hidden;
     outline: none;
+    background: ${({ bgColor }) => bgColor};
+    padding-top: 70%;
 
-    &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background: ${({ theme }) => global(theme).sections.imageTextGradient};
-        pointer-events: none;
-    }
+    ${({ hasImage }) =>
+        hasImage &&
+        css`
+            padding-top: 0;
+
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background: ${({ theme }) =>
+                    global(theme).sections.imageTextGradient};
+                pointer-events: none;
+            }
+        `}
 
     ${({ clickable, theme, isInverted }) =>
         clickable &&
@@ -146,8 +159,10 @@ const Icon = styled.div`
 export interface PromotionCardProps {
     /** Setup Card for dark backgrounds */
     isInverted?: boolean;
+    /** Optional Card Background Color */
+    bgColor?: string;
     /** Card image settings */
-    image: ImageProps;
+    image?: ImageProps;
     /** Card title */
     title?: string;
     /** Card title HTML tag type (h2, h3, h4...) */
@@ -174,6 +189,7 @@ const PromotionCard = forwardRef<
     (
         {
             isInverted,
+            bgColor,
             image,
             title,
             titleAs,
@@ -208,17 +224,21 @@ const PromotionCard = forwardRef<
             <View
                 ref={ref}
                 as={linkObj?.href && !title ? 'a' : 'div'}
+                bgColor={bgColor}
+                hasImage={!!image?.small}
                 {...(linkObj?.href && !title ? linkObj : {})}
                 clickable={!!linkObj?.href}
                 aria-labelledby={title ? id : undefined}
                 className={className}
             >
-                <StyledImage
-                    {...image}
-                    alt={image.alt ?? ''}
-                    isInverted={isInverted}
-                    coverSpace
-                />
+                {image?.small && (
+                    <StyledImage
+                        {...image}
+                        alt={image.alt ?? ''}
+                        isInverted={isInverted}
+                        coverSpace
+                    />
+                )}
                 {icon && <Icon>{icon({ isInverted })}</Icon>}
                 {title && (
                     <IntroContainer>
