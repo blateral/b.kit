@@ -232,6 +232,33 @@ export const MixedImages: Story = () => (
     />
 );
 
+export const WithBgColor: Story = () => (
+    <CrossPromotion
+        main={[
+            {
+                size: 'half',
+                bgColor: 'red',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+        ]}
+        aside={[
+            {
+                size: 'half',
+                bgColor: 'green',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+            {
+                size: 'half',
+                bgColor: 'blue',
+                title: 'Lorem ipsum dolor sit amet',
+                superTitle: 'Lorem ipsum dolor sit amet dolor',
+            },
+        ]}
+    />
+);
+
 export const WithFullBackground: Story = () => (
     <CrossPromotion
         bgMode="full"
