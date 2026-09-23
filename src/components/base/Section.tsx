@@ -6,30 +6,19 @@ import { mq, spacings, withRange, getGlobals as global } from 'utils/styles';
 export type BgMode = 'full' | 'larger-left' | 'larger-right' | 'inverted';
 
 const getBackground = (bgColor: string, mode?: BgMode) => {
-    let bgValue = undefined;
+    // split point: 40% of the centered wrapper, measured inside the (large wrapper clamped) background box
+    const splitStop = `calc(50% - min(100%, ${spacings.wrapper}px) * 0.1)`;
 
     switch (mode) {
-        case 'full':
-            bgValue = bgColor;
-            break;
-
-        case 'inverted':
-            bgValue = bgColor;
-            break;
-
         case 'larger-left':
-            bgValue = `linear-gradient(to left, transparent 40%, ${bgColor} 40%)`;
-            break;
+            return `linear-gradient(to left, transparent ${splitStop}, ${bgColor} ${splitStop})`;
 
         case 'larger-right':
-            bgValue = `linear-gradient(to right, transparent 40%, ${bgColor} 40%)`;
-            break;
+            return `linear-gradient(to right, transparent ${splitStop}, ${bgColor} ${splitStop})`;
 
         default:
-            bgValue = bgColor;
-            break;
+            return bgColor;
     }
-    return bgValue;
 };
 
 const View = styled.section<{
@@ -40,7 +29,7 @@ const View = styled.section<{
     addSeperation?: boolean;
 }>`
     position: relative;
-    overflow: ${({ as }) => (as === 'div' ? 'visible' : 'hidden')};
+    display: flow-root; // new block formatting context: prevents child margins (e.g. negative grid gutter) from collapsing through
 
     // section paddings
     ${({ addSeperation, isStackable, bgIdent, theme }) => {
@@ -125,55 +114,25 @@ const View = styled.section<{
 `;
 
 const Back = styled.div<{
-    bgColor?: string;
+    bgColor: string;
     bgMode?: BgMode;
     clampSolidBg?: boolean;
 }>`
-    display: ${({ bgColor }) => (bgColor ? 'block' : 'none')};
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    max-width: ${({ bgMode, clampSolidBg }) => {
-        if (bgMode !== 'larger-left' && bgMode !== 'larger-right') {
-            return clampSolidBg ? `${spacings.wrapperLarge}px` : undefined;
-        } else {
-            return `${spacings.wrapper}px`;
-        }
-    }};
-    background: ${({ bgColor }) => bgColor || undefined};
+    max-width: ${({ bgMode, clampSolidBg }) =>
+        bgMode === 'larger-left' || bgMode === 'larger-right' || clampSolidBg
+            ? `${spacings.wrapperLarge}px`
+            : undefined};
     margin: 0 auto;
+    background: ${({ bgColor }) => bgColor};
     z-index: -1;
 
     @media ${mq.semilarge} {
-        background: ${({ bgColor, bgMode }) =>
-            bgColor && bgMode ? getBackground(bgColor, bgMode) : undefined};
-    }
-
-    @media ${mq.xlarge} {
-        :before {
-            content: ${({ bgMode }) =>
-                bgMode === 'larger-left' ? `""` : undefined};
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: ${(spacings.wrapperLarge - spacings.wrapper) / 2}px;
-            background-color: ${({ bgColor }) => bgColor && bgColor};
-            transform: translateX(-100%);
-        }
-        :after {
-            content: ${({ bgMode }) =>
-                bgMode === 'larger-right' ? `""` : undefined};
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: ${(spacings.wrapperLarge - spacings.wrapper) / 2}px;
-            background-color: ${({ bgColor }) => bgColor && bgColor};
-            transform: translateX(100%);
-        }
+        background: ${({ bgColor, bgMode }) => getBackground(bgColor, bgMode)};
     }
 `;
 
