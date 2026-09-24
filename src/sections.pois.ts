@@ -3,3 +3,4 @@ export { default as PointOfInterestOverview } from 'components/sections/pois/Poi
 export { default as PointOfInterestMap } from 'components/sections/pois/PointOfInterestMap';
 
 export * as PoiPartials from 'components/sections/pois/partials/index';
+export * as PoiFilters from 'components/sections/pois/filters';
