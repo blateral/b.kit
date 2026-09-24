@@ -734,6 +734,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
         };
 
         if (isOpen) {
+            flyoutRef.current?.focus();
             document.addEventListener('focusin', handleFocus);
         } else {
             document.removeEventListener('focusin', handleFocus);
@@ -768,7 +769,12 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                 onClick={onClose}
             />
             <Stage isOpen={isOpen} clampWidth={clampWidth}>
-                <Flyout ref={flyoutRef} isOpen={isOpen}>
+                <Flyout
+                    ref={flyoutRef}
+                    isOpen={isOpen}
+                    tabIndex={isOpen ? 0 : -1}
+                    aria-label="menu flyout"
+                >
                     {hasHeader && (
                         <Header navBarSize={navBarSize}>
                             {header ? (
