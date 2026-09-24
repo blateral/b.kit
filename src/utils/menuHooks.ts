@@ -57,11 +57,11 @@ export const useMenuKeyboard = (
         };
 
         // settings focus if menu is open
-        if (isMenuOpen) {
-            closeBtnRef?.current?.focus();
-        } else if (prevMenuState.current) {
-            openBtnRef?.current?.focus();
-        }
+        // if (isMenuOpen) {
+        //     closeBtnRef?.current?.focus();
+        // } else if (prevMenuState.current) {
+        //     openBtnRef?.current?.focus();
+        // }
 
         prevMenuState.current = isMenuOpen;
 
