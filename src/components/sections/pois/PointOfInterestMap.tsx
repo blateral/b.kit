@@ -72,6 +72,12 @@ const genHeightStyles = () => css`
             return idents.map((id) => `[data-navbar-ident*='${id}']`).join('');
         };
 
+        // matches section after navbar or inside <main> after navbar
+        const afterNav = (idents: string[]) => {
+            const nav = `header${mapToSelector(idents)}`;
+            return `${nav} ~ &, ${nav} ~ main &`;
+        };
+
         const refHeight = '100vh';
 
         return css`
@@ -80,28 +86,28 @@ const genHeightStyles = () => css`
             }
 
             // with main navbar element
-            header${mapToSelector(mainIdent.split('-'))} ~ & {
+            ${afterNav(mainIdent.split('-'))} {
                 ${Map} {
                     height: calc(${refHeight} - ${navMainHeight[0]}px);
                 }
             }
 
             // with main and top navbar elements
-            header${mapToSelector(mainTopIdent.split('-'))} ~ & {
+            ${afterNav(mainTopIdent.split('-'))} {
                 ${Map} {
                     height: calc(${refHeight} - ${navMainTopHeight[0]}px);
                 }
             }
 
             // with main and bottom navbar elements
-            header${mapToSelector(mainBottomIdent.split('-'))} ~ & {
+            ${afterNav(mainBottomIdent.split('-'))} {
                 ${Map} {
                     height: calc(${refHeight} - ${navMainBottomHeight[0]}px);
                 }
             }
 
             // with all navbar elements
-            header${mapToSelector(fullIdent.split('-'))} ~ & {
+            ${afterNav(fullIdent.split('-'))} {
                 ${Map} {
                     height: calc(${refHeight} - ${navFullHeight[0]}px);
                 }
@@ -109,21 +115,21 @@ const genHeightStyles = () => css`
 
             @media ${mq.semilarge} {
                 // with main navbar element
-                header${mapToSelector(mainIdent.split('-'))} ~ & {
+                ${afterNav(mainIdent.split('-'))} {
                     ${Map} {
                         height: calc(${refHeight} - ${navMainHeight[1]}px);
                     }
                 }
 
                 // with main and top navbar elements
-                header${mapToSelector(mainTopIdent.split('-'))} ~ & {
+                ${afterNav(mainTopIdent.split('-'))} {
                     ${Map} {
                         height: calc(${refHeight} - ${navMainTopHeight[1]}px);
                     }
                 }
 
                 // with main and bottom navbar elements
-                header${mapToSelector(mainBottomIdent.split('-'))} ~ & {
+                ${afterNav(mainBottomIdent.split('-'))} {
                     ${Map} {
                         height: calc(
                             ${refHeight} - ${navMainBottomHeight[1]}px
@@ -132,7 +138,7 @@ const genHeightStyles = () => css`
                 }
 
                 // with all navbar elements
-                header${mapToSelector(fullIdent.split('-'))} ~ & {
+                ${afterNav(fullIdent.split('-'))} {
                     ${Map} {
                         height: calc(${refHeight} - ${navFullHeight[1]}px);
                     }
@@ -146,7 +152,8 @@ const PoiMapSection = styled(Section)<{ isLarge?: boolean }>`
     position: relative;
     ${({ isLarge }) => isLarge && genHeightStyles()}
 
-    header + & {
+    header + &,
+    header + main > &:first-child {
         ${withRange([0], 'padding-top')}
         ${withRange([0], 'margin-top')}
     }
