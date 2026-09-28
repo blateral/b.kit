@@ -129,6 +129,12 @@ const genHeightStyles = (isFull: boolean) => css`
             return idents.map((id) => `[data-navbar-ident*='${id}']`).join('');
         };
 
+        // matches section directly after navbar or as first child of <main> after navbar
+        const afterNav = (idents: string[]) => {
+            const nav = `header${mapToSelector(idents)}`;
+            return `${nav} + &, ${nav} + main > &:first-child`;
+        };
+
         const refHeight = isFull ? '100vh' : '80vh';
 
         return css`
@@ -138,28 +144,28 @@ const genHeightStyles = (isFull: boolean) => css`
             }
 
             // with main navbar element
-            header${mapToSelector(mainIdent.split('-'))} + & {
+            ${afterNav(mainIdent.split('-'))} {
                 & > ${StyledPoster} {
                     height: calc(${refHeight} - ${navMainHeight[0]}px);
                 }
             }
 
             // with main and top navbar elements
-            header${mapToSelector(mainTopIdent.split('-'))} + & {
+            ${afterNav(mainTopIdent.split('-'))} {
                 & > ${StyledPoster} {
                     height: calc(${refHeight} - ${navMainTopHeight[0]}px);
                 }
             }
 
             // with main and bottom navbar elements
-            header${mapToSelector(mainBottomIdent.split('-'))} + & {
+            ${afterNav(mainBottomIdent.split('-'))} {
                 & > ${StyledPoster} {
                     height: calc(${refHeight} - ${navMainBottomHeight[0]}px);
                 }
             }
 
             // with all navbar elements
-            header${mapToSelector(fullIdent.split('-'))} + & {
+            ${afterNav(fullIdent.split('-'))} {
                 & > ${StyledPoster} {
                     height: calc(${refHeight} - ${navFullHeight[0]}px);
                 }
@@ -167,21 +173,21 @@ const genHeightStyles = (isFull: boolean) => css`
 
             @media ${mq.semilarge} {
                 // with main navbar element
-                header${mapToSelector(mainIdent.split('-'))} + & {
+                ${afterNav(mainIdent.split('-'))} {
                     & > ${StyledPoster} {
                         height: calc(${refHeight} - ${navMainHeight[1]}px);
                     }
                 }
 
                 // with main and top navbar elements
-                header${mapToSelector(mainTopIdent.split('-'))} + & {
+                ${afterNav(mainTopIdent.split('-'))} {
                     & > ${StyledPoster} {
                         height: calc(${refHeight} - ${navMainTopHeight[1]}px);
                     }
                 }
 
                 // with main and bottom navbar elements
-                header${mapToSelector(mainBottomIdent.split('-'))} + & {
+                ${afterNav(mainBottomIdent.split('-'))} {
                     & > ${StyledPoster} {
                         height: calc(
                             ${refHeight} - ${navMainBottomHeight[1]}px
@@ -190,7 +196,7 @@ const genHeightStyles = (isFull: boolean) => css`
                 }
 
                 // with all navbar elements
-                header${mapToSelector(fullIdent.split('-'))} + & {
+                ${afterNav(fullIdent.split('-'))} {
                     & > ${StyledPoster} {
                         height: calc(${refHeight} - ${navFullHeight[1]}px);
                     }
@@ -204,7 +210,8 @@ const HeaderSection = styled(Section)`
     position: relative;
     ${genHeightStyles(true)}
 
-    header + & {
+    header + &,
+    header + main > &:first-child {
         ${withRange([0], 'padding-top')}
         ${withRange([0], 'margin-top')}
     }
@@ -214,7 +221,8 @@ const HeaderSectionSmall = styled(Section)`
     position: relative;
     ${genHeightStyles(false)}
 
-    header + & {
+    header + &,
+    header + main > &:first-child {
         ${withRange([0], 'padding-top')}
         ${withRange([0], 'margin-top')}
     }
