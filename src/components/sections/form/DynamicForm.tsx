@@ -47,7 +47,9 @@ const StyledSection = styled(Section)`
     overflow: visible;
 `;
 
-const Form = styled.form`
+const Form = styled.form``;
+
+const FormFields = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -576,6 +578,8 @@ const DynamicForm: FC<{
         return errors;
     };
 
+    const submitLockRef = useRef(false);
+
     // formik hook
     const {
         handleSubmit,
@@ -599,42 +603,50 @@ const DynamicForm: FC<{
         } as FormData,
 
         onSubmit: async (values, helpers) => {
-            if (honeypot) {
-                const hpFieldValue = hpInputRef.current?.value;
-                const minFillTime = honeypot.minFillTimeMs ?? 1500;
-                const filledTooFast =
-                    minFillTime > 0 &&
-                    Date.now() - renderedAtRef.current < minFillTime;
+            // guard against concurrent submits (e.g. button click + native form submit)
+            if (submitLockRef.current) return;
+            submitLockRef.current = true;
 
-                if (hpFieldValue || filledTooFast) {
-                    console.warn(
-                        'Honeypot triggered. Possible bot submission.'
-                    );
-                    // Pretend the submission succeeded so bots don't learn
-                    // they were caught and adapt their behavior.
-                    helpers.resetForm({ values });
+            try {
+                if (honeypot) {
+                    const hpFieldValue = hpInputRef.current?.value;
+                    const minFillTime = honeypot.minFillTimeMs ?? 1500;
+                    const filledTooFast =
+                        minFillTime > 0 &&
+                        Date.now() - renderedAtRef.current < minFillTime;
+
+                    if (hpFieldValue || filledTooFast) {
+                        console.warn(
+                            'Honeypot triggered. Possible bot submission.'
+                        );
+                        // Pretend the submission succeeded so bots don't learn
+                        // they were caught and adapt their behavior.
+                        helpers.resetForm({ values });
+                        setSubmitting(false);
+                        return;
+                    }
+                }
+
+                const valuesAndMails = {
+                    ...values,
+                    targetEmails: targetEmails || [],
+                    subjectLine: subjectLine || '',
+                };
+
+                if (!onSubmit) {
                     setSubmitting(false);
                     return;
                 }
-            }
 
-            const valuesAndMails = {
-                ...values,
-                targetEmails: targetEmails || [],
-                subjectLine: subjectLine || '',
-            };
+                const response = await onSubmit(valuesAndMails);
+                helpers.resetForm({ values });
+                setSubmitResponse(response);
 
-            if (!onSubmit) {
-                setSubmitting(false);
-                return;
-            }
-
-            const response = await onSubmit(valuesAndMails);
-            helpers.resetForm({ values });
-            setSubmitResponse(response);
-
-            if (response.isError) {
-                setSubmitting(false);
+                if (response.isError) {
+                    setSubmitting(false);
+                }
+            } finally {
+                submitLockRef.current = false;
             }
         },
         validateOnBlur: true,
@@ -683,167 +695,180 @@ const DynamicForm: FC<{
         >
             <Wrapper addWhitespace>
                 <Form noValidate onSubmit={handleSubmit}>
-                    <FieldContainer>
-                        {fields &&
-                            fieldKeys?.map((label, i) => {
-                                const props = {
-                                    index: i,
-                                    field: fields[label],
-                                    key: label,
-                                    value: values[label],
-                                    error: errors[label],
-                                    isTouched: touched[label] || false,
-                                    isInverted: isInverted,
-                                    hasBg: hasBg,
-                                    setField: setField,
-                                    setTouched: setFieldTouched,
-                                    validateField: validateField,
-                                    handleChange: handleChange,
-                                    handleBlur: handleBlur,
-                                    validateOnBlur,
-                                    validateOnChange,
-                                    theme: theme,
-                                } as FieldGenerationProps<any>;
+                    <FormFields>
+                        <FieldContainer>
+                            {fields &&
+                                fieldKeys?.map((label, i) => {
+                                    const props = {
+                                        index: i,
+                                        field: fields[label],
+                                        key: label,
+                                        value: values[label],
+                                        error: errors[label],
+                                        isTouched: touched[label] || false,
+                                        isInverted: isInverted,
+                                        hasBg: hasBg,
+                                        setField: setField,
+                                        setTouched: setFieldTouched,
+                                        validateField: validateField,
+                                        handleChange: handleChange,
+                                        handleBlur: handleBlur,
+                                        validateOnBlur,
+                                        validateOnChange,
+                                        theme: theme,
+                                    } as FieldGenerationProps<any>;
 
-                                switch (fields[label].type) {
-                                    case 'Field': {
-                                        if (definitions?.field) {
-                                            return definitions.field(props);
-                                        } else {
-                                            return renderField(props);
-                                        }
-                                    }
-
-                                    case 'Area': {
-                                        if (definitions?.area) {
-                                            return definitions.area(props);
-                                        } else {
-                                            return renderAreaField(props);
-                                        }
-                                    }
-
-                                    case 'Datepicker': {
-                                        if (definitions?.datepicker) {
-                                            return definitions.datepicker(
-                                                props
-                                            );
-                                        } else {
-                                            return renderDatepickerField(props);
-                                        }
-                                    }
-
-                                    case 'Location': {
-                                        if (definitions?.location) {
-                                            return definitions.location(props);
-                                        } else {
-                                            return renderLocationField(props);
-                                        }
-                                    }
-
-                                    case 'FieldGroup': {
-                                        if (
-                                            (fields[label] as FieldGroup)
-                                                .groupType === 'Checkbox'
-                                        ) {
-                                            if (definitions?.checkbox) {
-                                                return definitions.checkbox(
-                                                    props
-                                                );
+                                    switch (fields[label].type) {
+                                        case 'Field': {
+                                            if (definitions?.field) {
+                                                return definitions.field(props);
                                             } else {
-                                                return renderCheckboxGroupField(
-                                                    props
-                                                );
+                                                return renderField(props);
                                             }
-                                        } else {
-                                            if (definitions?.radio) {
-                                                return definitions.radio(props);
+                                        }
+
+                                        case 'Area': {
+                                            if (definitions?.area) {
+                                                return definitions.area(props);
                                             } else {
-                                                return renderRadioGroupField(
+                                                return renderAreaField(props);
+                                            }
+                                        }
+
+                                        case 'Datepicker': {
+                                            if (definitions?.datepicker) {
+                                                return definitions.datepicker(
+                                                    props
+                                                );
+                                            } else {
+                                                return renderDatepickerField(
                                                     props
                                                 );
                                             }
                                         }
-                                    }
 
-                                    case 'Select': {
-                                        if (definitions?.select) {
-                                            return definitions.select(props);
-                                        } else {
-                                            return renderSelectField(props);
+                                        case 'Location': {
+                                            if (definitions?.location) {
+                                                return definitions.location(
+                                                    props
+                                                );
+                                            } else {
+                                                return renderLocationField(
+                                                    props
+                                                );
+                                            }
                                         }
-                                    }
 
-                                    case 'Upload': {
-                                        if (definitions?.upload) {
-                                            return definitions.upload(props);
-                                        } else {
-                                            return renderUploadField(props);
+                                        case 'FieldGroup': {
+                                            if (
+                                                (fields[label] as FieldGroup)
+                                                    .groupType === 'Checkbox'
+                                            ) {
+                                                if (definitions?.checkbox) {
+                                                    return definitions.checkbox(
+                                                        props
+                                                    );
+                                                } else {
+                                                    return renderCheckboxGroupField(
+                                                        props
+                                                    );
+                                                }
+                                            } else {
+                                                if (definitions?.radio) {
+                                                    return definitions.radio(
+                                                        props
+                                                    );
+                                                } else {
+                                                    return renderRadioGroupField(
+                                                        props
+                                                    );
+                                                }
+                                            }
                                         }
+
+                                        case 'Select': {
+                                            if (definitions?.select) {
+                                                return definitions.select(
+                                                    props
+                                                );
+                                            } else {
+                                                return renderSelectField(props);
+                                            }
+                                        }
+
+                                        case 'Upload': {
+                                            if (definitions?.upload) {
+                                                return definitions.upload(
+                                                    props
+                                                );
+                                            } else {
+                                                return renderUploadField(props);
+                                            }
+                                        }
+                                        default:
+                                            return null;
                                     }
-                                    default:
-                                        return null;
-                                }
-                            })}
-                        {honeypot && (
-                            <HpLabel aria-hidden="true">
-                                {honeypot.fieldLabel}
-                                <input
-                                    ref={hpInputRef}
-                                    id={hpFieldId}
-                                    type="text"
-                                    name={honeypot.fieldName}
-                                    placeholder={honeypot.placeholder}
-                                    tabIndex={-1}
-                                    autoComplete="off"
-                                />
-                            </HpLabel>
-                        )}
-                    </FieldContainer>
+                                })}
+                            {honeypot && (
+                                <HpLabel aria-hidden="true">
+                                    {honeypot.fieldLabel}
+                                    <input
+                                        ref={hpInputRef}
+                                        id={hpFieldId}
+                                        type="text"
+                                        name={honeypot.fieldName}
+                                        placeholder={honeypot.placeholder}
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                    />
+                                </HpLabel>
+                            )}
+                        </FieldContainer>
+                    </FormFields>
+                    {(fields || submitReponse?.message) && (
+                        <FormFooter>
+                            {submitReponse?.message && !dirty && (
+                                <Status
+                                    textColor={
+                                        submitReponse?.isError
+                                            ? color(theme).error
+                                            : isInverted
+                                            ? color(theme).text.copyInverted
+                                            : color(theme).text.copy
+                                    }
+                                >
+                                    {submitReponse.message || ''}
+                                </Status>
+                            )}
+                            {fields && (
+                                <ActionContainer>
+                                    <Actions
+                                        primary={
+                                            submitAction ? (
+                                                submitAction({
+                                                    isInverted,
+                                                    isSubmitting,
+                                                    handleSubmit: submitForm,
+                                                })
+                                            ) : (
+                                                <Button.View
+                                                    as="button"
+                                                    {...{
+                                                        type: 'submit',
+                                                    }}
+                                                >
+                                                    <Button.Label>
+                                                        Send mail
+                                                    </Button.Label>
+                                                </Button.View>
+                                            )
+                                        }
+                                    />
+                                </ActionContainer>
+                            )}
+                        </FormFooter>
+                    )}
                 </Form>
-                {(fields || submitReponse?.message) && (
-                    <FormFooter>
-                        {submitReponse?.message && !dirty && (
-                            <Status
-                                textColor={
-                                    submitReponse?.isError
-                                        ? color(theme).error
-                                        : isInverted
-                                        ? color(theme).text.copyInverted
-                                        : color(theme).text.copy
-                                }
-                            >
-                                {submitReponse.message || ''}
-                            </Status>
-                        )}
-                        {fields && (
-                            <ActionContainer>
-                                <Actions
-                                    primary={
-                                        submitAction ? (
-                                            submitAction({
-                                                isInverted,
-                                                isSubmitting,
-                                                handleSubmit: submitForm,
-                                            })
-                                        ) : (
-                                            <Button.View
-                                                as="button"
-                                                onClick={submitForm}
-                                                {...{
-                                                    type: 'submit',
-                                                }}
-                                            >
-                                                <Button.Label>
-                                                    Send mail
-                                                </Button.Label>
-                                            </Button.View>
-                                        )
-                                    }
-                                />
-                            </ActionContainer>
-                        )}
-                    </FormFooter>
-                )}
             </Wrapper>
         </StyledSection>
     );
