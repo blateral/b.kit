@@ -325,14 +325,19 @@ const NewsCard = forwardRef<
                             >
                                 {filteredTags.map((tag, i) => {
                                     if (customTag) {
-                                        return customTag({
-                                            key: i,
-                                            name: tag.name || '',
-                                            isInverted: isInverted,
-                                            isActive: false,
-                                            link: tag.link,
-                                            clickHandler: handleTagClick(tag),
-                                        });
+                                        return (
+                                            <li key={i}>
+                                                {customTag({
+                                                    key: i,
+                                                    name: tag.name || '',
+                                                    isInverted: isInverted,
+                                                    isActive: false,
+                                                    link: tag.link,
+                                                    clickHandler:
+                                                        handleTagClick(tag),
+                                                })}
+                                            </li>
+                                        );
                                     } else {
                                         return (
                                             <li key={i}>
