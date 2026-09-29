@@ -35,17 +35,23 @@ const View = styled.div<{
 const Wrapper: React.FC<{
     addWhitespace?: boolean;
     clampWidth?: ClampWidthType;
+    renderAs?: 'div' | 'nav';
+    ariaLabel?: string;
     className?: string;
     children?: React.ReactNode;
 }> = ({
     addWhitespace = false,
     clampWidth = 'normal',
+    renderAs = 'div',
     className,
+    ariaLabel,
     children,
 }) => {
     return (
         <View
+            as={renderAs}
             className={className}
+            aria-label={ariaLabel}
             addWhitespace={addWhitespace}
             clampWidth={clampWidth}
         >

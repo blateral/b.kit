@@ -24,6 +24,7 @@ const MainView = styled.div`
 `;
 
 const ColTitle = styled(Copy)`
+    margin: 0;
     margin-bottom: ${spacings.nudge * 2}px;
 `;
 
@@ -190,7 +191,7 @@ const Footer: React.FC<{
                     : colors.sectionBg.light
             }
         >
-            <Wrapper addWhitespace>
+            <Wrapper addWhitespace renderAs="nav" ariaLabel="Footer navigation">
                 <MainView>
                     <Grid.Row
                         gutter={spacings.nudge * 5}
@@ -208,10 +209,11 @@ const Footer: React.FC<{
                                     <ColTitle
                                         type="copy-b"
                                         isInverted={isInverted}
+                                        renderAs="h3"
                                     >
                                         {title}
                                     </ColTitle>
-                                    <LinkList aria-label={title}>
+                                    <LinkList>
                                         {links?.map(({ link, label }, ii) => (
                                             <LinkItem key={ii}>
                                                 <StyledLink
