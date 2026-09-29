@@ -231,7 +231,7 @@ const NumberList: React.FC<{
     items,
     bgMode,
     isCentered = true,
-    listAriaLabel = 'List of items with number values and description',
+    listAriaLabel = 'Liste von Einträgen mit Zahlenwerten und Beschreibung',
 }) => {
     const theme = useContext(ThemeContext);
     const isInverted = bgMode === 'inverted';

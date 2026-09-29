@@ -375,7 +375,7 @@ const FileUpload: FC<FileUploadProps> = ({
                             <FileItem key={file.uid} isInverted={isInverted}>
                                 <span>{fileName}</span>
                                 <DeleteIcon
-                                    aria-label="remove file"
+                                    aria-label="Datei entfernen"
                                     type="button"
                                     isInverted={isInverted}
                                     onClick={handleDelete(file)}

@@ -191,7 +191,7 @@ const Footer: React.FC<{
                     : colors.sectionBg.light
             }
         >
-            <Wrapper addWhitespace renderAs="nav" ariaLabel="Footer navigation">
+            <Wrapper addWhitespace renderAs="nav" ariaLabel="Footer-Navigation">
                 <MainView>
                     <Grid.Row
                         gutter={spacings.nudge * 5}

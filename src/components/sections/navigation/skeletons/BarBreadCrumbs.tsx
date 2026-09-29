@@ -200,7 +200,7 @@ const BarBreadcrumbs: FC<{
     };
 
     return (
-        <View aria-label="breadcrumbs" className={className}>
+        <View aria-label="Brotkrümelnavigation" className={className}>
             <List>
                 <ListItem>
                     <BreadcrumbItem

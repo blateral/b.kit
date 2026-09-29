@@ -59,7 +59,7 @@ const CrossPromotion: React.FC<{
     bgMode,
     isMirrored,
     externalLinkIcon,
-    listAriaLabel = 'List of cross promotion cards with image and text',
+    listAriaLabel = 'Liste von Cross-Promotion-Karten mit Bild und Text',
 }) => {
     const { colors } = useLibTheme();
 

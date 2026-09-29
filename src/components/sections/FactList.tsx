@@ -114,7 +114,7 @@ const FactList: React.FC<{
     facts,
     icon,
     bgMode,
-    listAriaLabel = 'List of items with facts and other informations',
+    listAriaLabel = 'Liste von Einträgen mit Fakten und weiteren Informationen',
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';

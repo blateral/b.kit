@@ -265,7 +265,7 @@ const JobCard = React.forwardRef<
                                 <MainLabel
                                     aria-label={
                                         employmentTypeAriaLabel ||
-                                        `Employment Type: ${employmentType}`
+                                        `Anstellungsart: ${employmentType}`
                                     }
                                 >
                                     {employmentType}
@@ -284,7 +284,7 @@ const JobCard = React.forwardRef<
                                 <MainLabel
                                     aria-label={
                                         locationAriaLabel ||
-                                        `Locations: ${locationText}`
+                                        `Standorte: ${locationText}`
                                     }
                                 >
                                     {locationText}

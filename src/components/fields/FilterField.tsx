@@ -212,7 +212,7 @@ const FilterField: FC<{
             {getValue !== '' && clearIconElement && (
                 <ClearBtn
                     isInverted={isInverted}
-                    aria-label="clear filter"
+                    aria-label="Filter zurücksetzen"
                     onClick={() => {
                         update('', true);
                     }}

@@ -246,7 +246,7 @@ const Teaser: FC<{
                                         ariaLabel={
                                             description
                                                 ? undefined
-                                                : `Video of: ${title}`
+                                                : `Video: ${title}`
                                         }
                                         ariaDescribedBy={captionId}
                                     />

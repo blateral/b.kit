@@ -57,7 +57,7 @@ const PriceTable: React.FC<{
     items,
     isCentered,
     bgMode,
-    listAriaLabel = 'List of price cards',
+    listAriaLabel = 'Liste von Preiskarten',
 }) => {
     const isInverted = bgMode === 'inverted';
     const hasBg = bgMode === 'full';

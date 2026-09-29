@@ -442,7 +442,7 @@ const CardList: React.FC<{
     bgMode,
     decorator,
     maxThreeCols,
-    listAriaLabel = 'List of card items with image/text and link',
+    listAriaLabel = 'Liste von Karten mit Bild/Text und Link',
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';

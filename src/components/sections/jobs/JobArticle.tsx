@@ -173,11 +173,11 @@ const JobArticle: React.FC<JobArticleProps> = ({
 
     const employmentTypeAriaLabel = ariaLabelEmploymentType
         ? ariaLabelEmploymentType(employmentType || '')
-        : `Employment type: ${employmentType || ''}`;
+        : `Anstellungsart: ${employmentType || ''}`;
 
     const locationAriaLabel = ariaLabelLocation
         ? ariaLabelLocation(locationText || '')
-        : `Location: ${locationText || ''}`;
+        : `Standort: ${locationText || ''}`;
 
     return (
         <Section

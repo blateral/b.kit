@@ -72,7 +72,7 @@ const NavList: React.FC<{
     items,
     bgMode,
     customTitleIcon,
-    listAriaLabel = 'List of navigation items',
+    listAriaLabel = 'Liste von Navigationselementen',
 }) => {
     const { colors } = useLibTheme();
 

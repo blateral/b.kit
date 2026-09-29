@@ -56,7 +56,7 @@ const BarMenuToggle: FC<{
         <Toggle
             isInverted={isInverted}
             aria-expanded={isExpanded}
-            aria-label={isExpanded ? 'close menu' : 'open menu'}
+            aria-label={isExpanded ? 'Menü schließen' : 'Menü öffnen'}
             aria-haspopup="true"
             aria-controls="mainMenu"
             onClick={onClick}

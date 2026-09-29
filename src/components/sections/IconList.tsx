@@ -189,7 +189,7 @@ const IconList: React.FC<{
     showMoreText = 'show more',
     enableToggle,
     bgMode,
-    listAriaLabel = 'List of linked icons/logos',
+    listAriaLabel = 'Liste verlinkter Icons/Logos',
 }) => {
     const { colors } = useLibTheme();
     const id = useId();

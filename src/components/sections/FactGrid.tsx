@@ -41,7 +41,7 @@ const FactGrid: FC<{
     facts,
     bgMode,
     isCentered,
-    listAriaLabel = 'List of items with facts and other informations',
+    listAriaLabel = 'Liste von Einträgen mit Fakten und weiteren Informationen',
 }) => {
     const { colors } = useLibTheme();
     const factCount = facts?.length || 0;

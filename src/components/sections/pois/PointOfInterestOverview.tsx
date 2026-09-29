@@ -115,7 +115,7 @@ const PointOfInterestOverview: React.FC<{
     initialPoiFilters,
     poiFilters,
     customPoiFilters,
-    listAriaLabel = 'List of card items with points of interest',
+    listAriaLabel = 'Liste von Karten mit Points of Interest',
 }) => {
     const { colors, globals } = useLibTheme();
     const filterName = globals.sections.poiFilterName;

@@ -217,7 +217,7 @@ const SocialWall: React.FC<{
     hashTag,
     followUs,
     bgMode,
-    listAriaLabel = 'List of cards with social media links',
+    listAriaLabel = 'Liste von Karten mit Social-Media-Links',
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';

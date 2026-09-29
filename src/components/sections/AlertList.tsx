@@ -74,7 +74,7 @@ const AlertList: React.FC<{
     items,
     bgMode,
     customIcon,
-    listAriaLabel = 'List of card items with important news/informations',
+    listAriaLabel = 'Liste von Karten mit wichtigen Neuigkeiten/Informationen',
 }) => {
     const { colors } = useLibTheme();
 

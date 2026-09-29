@@ -43,7 +43,7 @@ export const Default: Story = () => (
 
 export const WithAriaLabels: Story = () => (
     <>
-        <Section ariaLabel="Test Section">
+        <Section ariaLabel="Test-Sektion">
             <ExampleContent />
         </Section>
         <Section ariaLabeledBy="testsection">
