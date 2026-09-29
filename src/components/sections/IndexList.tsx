@@ -11,6 +11,7 @@ import ArrowDown from 'components/base/icons/ArrowDown';
 import { useScrollTo } from 'utils/useScrollTo';
 import { getFullNavbarHeights, getNavbarState } from './navigation/Navigation';
 import { useMediaQueries } from 'utils/useMediaQuery';
+import { isValidArray } from 'utils/arrays';
 
 const List = styled.ul<{ hasBg?: boolean; isInverted?: boolean }>`
     margin: 0;
@@ -163,30 +164,31 @@ const IndexList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List
-                    hasBg={hasBg}
-                    isInverted={isInverted}
-                    aria-label={listAriaLabel}
-                >
-                    {items?.map((item, i) => (
-                        <ListItem key={i}>
-                            <IndexLink
-                                {...item.link}
-                                isInverted={isInverted}
-                                onClick={handleLinkClick}
-                            >
-                                <LinkLabel>{item.label}</LinkLabel>
-                                <IconWrapper>
-                                    {customIcon ? (
-                                        customIcon({ isInverted })
-                                    ) : (
-                                        <ArrowDown />
-                                    )}
-                                </IconWrapper>
-                            </IndexLink>
-                        </ListItem>
-                    ))}
-                </List>
+                {isValidArray(items, false) && (
+                    <nav aria-label={listAriaLabel}>
+                        <List hasBg={hasBg} isInverted={isInverted}>
+                            {items?.map((item, i) => (
+                                <ListItem key={i}>
+                                    <IndexLink
+                                        {...item.link}
+                                        isInverted={isInverted}
+                                        onClick={handleLinkClick}
+                                        ariaLabel={item.label}
+                                    >
+                                        <LinkLabel>{item.label}</LinkLabel>
+                                        <IconWrapper>
+                                            {customIcon ? (
+                                                customIcon({ isInverted })
+                                            ) : (
+                                                <ArrowDown />
+                                            )}
+                                        </IconWrapper>
+                                    </IndexLink>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </nav>
+                )}
             </Wrapper>
         </Section>
     );
