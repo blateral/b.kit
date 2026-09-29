@@ -145,26 +145,25 @@ const NavBlock: React.FC<NavBlockProps> = ({
     className,
 }) => {
     const id = useId();
-    const titleId = `nav-block-title-${id}`;
     const descriptionId = `nav-block-description-${id}`;
 
     return (
         <View
             isInverted={isInverted}
             hasIcon={!!customIcon}
-            aria-labelledby={titleId}
-            aria-describedby={text ? descriptionId : undefined}
             id={id}
-            role="navigation"
             className={className}
         >
             {customIcon ? <Icon>{customIcon({})}</Icon> : ''}
             <MainLabel hasIcon={!!customIcon}>
                 {link?.href ? (
-                    <TitleLink {...link} isInverted={isInverted}>
+                    <TitleLink
+                        {...link}
+                        isInverted={isInverted}
+                        aria-describedby={text ? descriptionId : undefined}
+                    >
                         {title && (
                             <Title
-                                id={titleId}
                                 textColor="inherit"
                                 size="medium"
                                 type="copy-b"
@@ -182,7 +181,6 @@ const NavBlock: React.FC<NavBlockProps> = ({
                     </TitleLink>
                 ) : title ? (
                     <Title
-                        id={titleId}
                         textColor="inherit"
                         size="medium"
                         type="copy-b"
