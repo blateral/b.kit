@@ -74,7 +74,7 @@ const Link = forwardRef<
             dataIdent,
             children,
             className,
-            ariaHidden = false,
+            ariaHidden,
         },
         ref
     ) => {
