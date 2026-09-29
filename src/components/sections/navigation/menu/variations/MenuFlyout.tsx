@@ -199,7 +199,7 @@ const ScrollArea = styled.div`
 const NavView = styled.nav``;
 
 const Navigation: FC<{ children?: React.ReactNode }> = ({ children }) => {
-    return <NavView aria-label="menu">{children}</NavView>;
+    return <NavView aria-label="Menü">{children}</NavView>;
 };
 
 const NavList = styled.ul<{ hasNonFeaturedItems?: boolean }>`
@@ -773,7 +773,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                     ref={flyoutRef}
                     isOpen={isOpen}
                     tabIndex={isOpen ? 0 : -1}
-                    aria-label="menu flyout"
+                    aria-label="Menü-Flyout"
                 >
                     {hasHeader && (
                         <Header navBarSize={navBarSize}>

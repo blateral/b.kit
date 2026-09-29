@@ -31,7 +31,7 @@ const FeatureList: React.FC<{
     bgMode,
     isCentered = false,
     columns,
-    listAriaLabel = 'List of features/articles with text and images',
+    listAriaLabel = 'Liste von Features/Artikeln mit Text und Bildern',
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';

@@ -250,7 +250,7 @@ const JobList: React.FC<{
     hasFilter,
     filterSubmitIcon,
     filterClearIcon,
-    listAriaLabel = 'List of job offers',
+    listAriaLabel = 'Liste von Stellenangeboten',
     itemAriaLabel,
 }) => {
     const { colors, globals } = useLibTheme();
@@ -415,7 +415,7 @@ const JobList: React.FC<{
                                       employmentType || '',
                                       locationText
                                   )
-                                : `Job offer: ${cn(
+                                : `Stellenangebot: ${cn(
                                       [
                                           match.item.jobTitle,
                                           employmentType,

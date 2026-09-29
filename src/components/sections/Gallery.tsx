@@ -32,7 +32,7 @@ const Gallery: FC<{
     bgMode?: 'full' | 'splitted' | 'inverted';
 
     listAriaLabel?: string;
-}> = ({ anchorId, bgMode, images, listAriaLabel = 'Image Gallery' }) => {
+}> = ({ anchorId, bgMode, images, listAriaLabel = 'Bildergalerie' }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';
 

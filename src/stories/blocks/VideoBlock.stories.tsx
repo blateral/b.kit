@@ -37,7 +37,7 @@ export const AriaLabels: Story = () => (
         autoPlay
         loop
         urls={['images/videos/alps_stockvideo.mp4']}
-        ariaLabel="Alps Video"
+        ariaLabel="Alpen-Video"
         ariaDescribedBy="video-description"
     />
 );

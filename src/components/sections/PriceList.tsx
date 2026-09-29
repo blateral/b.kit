@@ -110,7 +110,7 @@ const PriceList: React.FC<{
     anchorId,
     bgMode,
     items,
-    listAriaLabel = 'List of items with price information',
+    listAriaLabel = 'Liste von Einträgen mit Preisinformationen',
     jsonLdType = 'service',
     customJsonLdData,
 }) => {

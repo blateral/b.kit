@@ -87,7 +87,7 @@ export const AsList: Story = () => (
 );
 
 export const WithAriaLabel: Story = () => (
-    <Grid.Row ariaLabel="Grid List">
+    <Grid.Row ariaLabel="Grid-Liste">
         <Grid.Col>
             <ExampleCol>100 %</ExampleCol>
         </Grid.Col>

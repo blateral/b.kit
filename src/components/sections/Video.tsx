@@ -35,7 +35,7 @@ const Video: React.FC<{
     embedId,
     playIcon,
     consentText = 'Für die Wiedergabe von Videos muss der Nutzung von Cookies & Daten zugestimmt werden.',
-    playBtnAriaLabel = 'Play video',
+    playBtnAriaLabel = 'Video abspielen',
     consentAction,
     onPlayClick,
 }) => {

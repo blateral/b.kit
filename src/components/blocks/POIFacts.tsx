@@ -47,7 +47,7 @@ const POIFacts: React.FC<{
     ariaLabel?: string;
 }> = ({ facts, customFact, isInverted, ariaLabel }) => {
     return (
-        <View aria-label={ariaLabel || 'POI Facts'}>
+        <View aria-label={ariaLabel || 'POI-Fakten'}>
             {facts.map((fact, i) => (
                 <FactsWrapper key={'tag_' + i}>
                     {customFact ? (

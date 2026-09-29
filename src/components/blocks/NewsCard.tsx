@@ -320,7 +320,7 @@ const NewsCard = forwardRef<
                         {isValidArray(filteredTags, false) && (
                             <Tags
                                 aria-label={
-                                    tagListAriaLabel || 'News categories'
+                                    tagListAriaLabel || 'News-Kategorien'
                                 }
                             >
                                 {filteredTags.map((tag, i) => {

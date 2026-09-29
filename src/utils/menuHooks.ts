@@ -23,8 +23,8 @@ export const useMenuKeyboard = (
     const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
     const defaultSettings: Settings = {
-        openMenuIdent: 'button[aria-label="open menu"]',
-        closeMenuIdent: 'button[aria-label="close menu"]',
+        openMenuIdent: 'button[aria-label="Menü öffnen"]',
+        closeMenuIdent: 'button[aria-label="Menü schließen"]',
         ...settings,
     };
 

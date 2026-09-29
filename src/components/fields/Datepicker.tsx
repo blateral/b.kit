@@ -535,7 +535,7 @@ const headerRenderer: HeaderRendererFn =
                 {customHeaderCount === 0 ? (
                     <button
                         type="button"
-                        aria-label="Previous Month"
+                        aria-label="Vorheriger Monat"
                         className={
                             'react-datepicker__navigation react-datepicker__navigation--previous'
                         }
@@ -561,7 +561,7 @@ const headerRenderer: HeaderRendererFn =
                 {customHeaderCount === monthsShown - 1 ? (
                     <button
                         type="button"
-                        aria-label="Next Month"
+                        aria-label="Nächster Monat"
                         className={
                             'react-datepicker__navigation react-datepicker__navigation--next'
                         }
@@ -616,13 +616,13 @@ const footerRenderer: FooterRendererFn = ({
             {(startDate || endDate) && (
                 <PickerAction
                     variant="ghost"
-                    ariaLabel="Reset date"
+                    ariaLabel="Datum zurücksetzen"
                     onClick={resetHandler}
                 >
                     {clearLabel}
                 </PickerAction>
             )}
-            <PickerAction ariaLabel="Reset date" onClick={closeHandler}>
+            <PickerAction ariaLabel="Datum zurücksetzen" onClick={closeHandler}>
                 <Pointer.Label>{submitLabel}</Pointer.Label>
             </PickerAction>
         </FooterActions>

@@ -163,7 +163,7 @@ const RawVideo: React.FC<{
     playIcon,
     autoplay,
     loop,
-    playBtnAriaLabel = 'Play video',
+    playBtnAriaLabel = 'Video abspielen',
 }) => {
     const { colors } = useLibTheme();
     const isInverted = bgMode === 'inverted';

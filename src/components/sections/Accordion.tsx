@@ -26,7 +26,7 @@ const AccordionContainer = styled.div`
 
 const View = styled.details`
     border-radius: ${({ theme }) => global(theme).sections.edgeRadius};
-    overflow: hidden;
+    /* overflow: hidden; */
 `;
 
 const AccordionHead = styled.summary<{
@@ -75,15 +75,13 @@ const AccordionHead = styled.summary<{
         }
     }
 
-    &:focus {
-        background: ${({ theme, isInverted, hasBg }) =>
-            isInverted || hasBg
-                ? color(theme).elementBg.lightHover
-                : color(theme).elementBg.mediumHover};
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
+    &:focus-visible {
+        outline: solid 2px
+            ${({ theme, isInverted, hasBg }) =>
+                isInverted || hasBg
+                    ? color(theme).primary.inverted
+                    : color(theme).primary.default};
+        outline-offset: 2px;
     }
 `;
 

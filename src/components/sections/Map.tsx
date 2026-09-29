@@ -296,7 +296,7 @@ const LocationInfoCard: FC<
             {contact && (
                 <ContactList
                     isInverted={isInverted}
-                    aria-label="contact information"
+                    aria-label="Kontaktinformationen"
                 >
                     {contact?.telephone?.label && (
                         <li>
@@ -629,7 +629,7 @@ const Map: FC<{
                                                     isInverted={isInverted}
                                                     isDisabled={false}
                                                     onClick={goToNext}
-                                                    ariaLabel="Next location"
+                                                    ariaLabel="Nächster Standort"
                                                 >
                                                     <Icons.ArrowRightGhost />
                                                 </Control>
@@ -646,7 +646,7 @@ const Map: FC<{
                                                     isInverted={isInverted}
                                                     isDisabled={false}
                                                     onClick={goToPrevious}
-                                                    ariaLabel="Previous location"
+                                                    ariaLabel="Vorheriger Standort"
                                                 >
                                                     <Icons.ArrowLeftGhost />
                                                 </Control>

@@ -96,7 +96,7 @@ const IndexList: React.FC<{
     bgMode,
     customIcon,
     scrollToOffset,
-    listAriaLabel = 'Link list to anchors on page',
+    listAriaLabel = 'Linkliste zu Ankern auf der Seite',
 }) => {
     const { colors, theme } = useLibTheme();
     const setTargetPos = useScrollTo(500);

@@ -286,7 +286,7 @@ const LocationField: FC<LocationFieldProps> = ({
     customResetControl,
     toggleLabel = 'Select location on map',
     trackLocationLabel = 'My location',
-    resetMapLabel = 'Reset map',
+    resetMapLabel = 'Karte zurücksetzen',
 }) => {
     const id = React.useId();
     const fieldId = `locationfield-${id}`;
@@ -559,7 +559,7 @@ const LocationField: FC<LocationFieldProps> = ({
                                 <TrackLocationControl
                                     aria-label={
                                         !trackLocationLabel
-                                            ? 'Track my location'
+                                            ? 'Meinen Standort ermitteln'
                                             : undefined
                                     }
                                     onClick={handleTrackClick}

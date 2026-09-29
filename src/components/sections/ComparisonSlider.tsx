@@ -385,7 +385,7 @@ const ComparisonSlider: FC<{
                                     aria-valuemin={0}
                                     aria-valuemax={100}
                                     aria-valuenow={Math.round(slideValue * 100)}
-                                    aria-label="Image comparison slider"
+                                    aria-label="Bildvergleichs-Schieberegler"
                                     onKeyDown={handleControlKeydown}
                                 >
                                     <ArrowLeftRight

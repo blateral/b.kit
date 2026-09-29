@@ -98,7 +98,7 @@ const InfoList: FC<
 > = ({ isInverted, items, ariaLabel, className }) => {
     return (
         <View className={className}>
-            <Container aria-label={ariaLabel || 'Information List'}>
+            <Container aria-label={ariaLabel || 'Informationsliste'}>
                 {items?.map((group, i) => {
                     const groupItems =
                         group?.items?.filter((item) => item.text) || [];

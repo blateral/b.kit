@@ -6,6 +6,7 @@ import Wrapper from 'components/base/Wrapper';
 import NavBlock, { NavBlockProps } from 'components/blocks/NavBlock';
 import { useLibTheme, withLibTheme } from 'utils/LibThemeProvider';
 import { mq, spacings } from 'utils/styles';
+import { isValidArray } from 'utils/arrays';
 
 const List = styled.ul`
     margin: 0;
@@ -72,7 +73,7 @@ const NavList: React.FC<{
     items,
     bgMode,
     customTitleIcon,
-    listAriaLabel = 'List of navigation items',
+    listAriaLabel = 'Liste von Navigationselementen',
 }) => {
     const { colors } = useLibTheme();
 
@@ -93,17 +94,21 @@ const NavList: React.FC<{
             bgMode={mapToBgMode(bgMode, true)}
         >
             <Wrapper addWhitespace>
-                <List aria-label={listAriaLabel}>
-                    {items?.map((item, i) => (
-                        <ListItem key={i}>
-                            <NavBlock
-                                {...item}
-                                isInverted={isInverted}
-                                customTitleIcon={customTitleIcon}
-                            />
-                        </ListItem>
-                    ))}
-                </List>
+                {isValidArray(items, false) && (
+                    <nav aria-label={listAriaLabel}>
+                        <List>
+                            {items?.map((item, i) => (
+                                <ListItem key={i}>
+                                    <NavBlock
+                                        {...item}
+                                        isInverted={isInverted}
+                                        customTitleIcon={customTitleIcon}
+                                    />
+                                </ListItem>
+                            ))}
+                        </List>
+                    </nav>
+                )}
             </Wrapper>
         </Section>
     );
