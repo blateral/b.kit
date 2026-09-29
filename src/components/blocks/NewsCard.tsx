@@ -99,7 +99,6 @@ const Title = styled.div<{ isInverted?: boolean; onClick?: () => void }>`
 `;
 
 const Head = styled.div`
-    order: 0;
     display: flex;
 
     flex-direction: row;
@@ -303,7 +302,7 @@ const NewsCard = forwardRef<
             <View
                 ref={ref}
                 className={className}
-                aria-labelledby={uniqueId}
+                aria-labelledby={title ? uniqueId : undefined}
                 isInverted={isInverted}
             >
                 {image?.small ? (
@@ -317,6 +316,50 @@ const NewsCard = forwardRef<
                     <BorderPlaceholder hasBg={hasBg} />
                 )}
                 <Main>
+                    <Head data-sheet="head">
+                        {isValidArray(filteredTags, false) && (
+                            <Tags
+                                aria-label={
+                                    tagListAriaLabel || 'News categories'
+                                }
+                            >
+                                {filteredTags.map((tag, i) => {
+                                    if (customTag) {
+                                        return customTag({
+                                            key: i,
+                                            name: tag.name || '',
+                                            isInverted: isInverted,
+                                            isActive: false,
+                                            link: tag.link,
+                                            clickHandler: handleTagClick(tag),
+                                        });
+                                    } else {
+                                        return (
+                                            <li key={i}>
+                                                <Tag
+                                                    isInverted={isInverted}
+                                                    name={tag.name}
+                                                    link={tag.link}
+                                                    onClick={handleTagClick(
+                                                        tag
+                                                    )}
+                                                />
+                                            </li>
+                                        );
+                                    }
+                                })}
+                            </Tags>
+                        )}
+                        {publishedAt && (
+                            <PublishDate
+                                size="small"
+                                renderAs="div"
+                                isInverted={isInverted}
+                            >
+                                {publishedAt}
+                            </PublishDate>
+                        )}
+                    </Head>
                     {title && (
                         <>
                             {action ? (
@@ -362,46 +405,6 @@ const NewsCard = forwardRef<
                         })}
                     </CardFooter>
                 )}
-                <Head data-sheet="head">
-                    {isValidArray(filteredTags, false) && (
-                        <Tags
-                            aria-label={tagListAriaLabel || 'News categories'}
-                        >
-                            {filteredTags.map((tag, i) => {
-                                if (customTag) {
-                                    return customTag({
-                                        key: i,
-                                        name: tag.name || '',
-                                        isInverted: isInverted,
-                                        isActive: false,
-                                        link: tag.link,
-                                        clickHandler: handleTagClick(tag),
-                                    });
-                                } else {
-                                    return (
-                                        <li key={i}>
-                                            <Tag
-                                                isInverted={isInverted}
-                                                name={tag.name}
-                                                link={tag.link}
-                                                onClick={handleTagClick(tag)}
-                                            />
-                                        </li>
-                                    );
-                                }
-                            })}
-                        </Tags>
-                    )}
-                    {publishedAt && (
-                        <PublishDate
-                            size="small"
-                            renderAs="div"
-                            isInverted={isInverted}
-                        >
-                            {publishedAt}
-                        </PublishDate>
-                    )}
-                </Head>
             </View>
         );
     }
