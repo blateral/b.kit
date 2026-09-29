@@ -655,7 +655,7 @@ const MenuNav = {
 export interface FlyoutMenuProps {
     type: 'flyout';
     collapseIcon?: (props: { isCollapsed?: boolean }) => React.ReactNode;
-    subNavTitle?: string;
+    subNavTitle?: ((item: NavItem) => string) | string;
     backdropFilter?: string;
 }
 
@@ -831,6 +831,12 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                 item.isCurrent ||
                                                 hasCurrentSubItem;
 
+                                            const subNavLabel =
+                                                typeof subNavTitle ===
+                                                'function'
+                                                    ? subNavTitle(item)
+                                                    : subNavTitle;
+
                                             return (
                                                 <MenuNav.Item
                                                     key={item.uid}
@@ -842,7 +848,7 @@ const MenuFlyout: FC<MenuBaseProps & FlyoutMenuProps> = ({
                                                     }
                                                     isActive={isActive}
                                                     isCurrent={isCurrent}
-                                                    subNavTitle={subNavTitle}
+                                                    subNavTitle={subNavLabel}
                                                     navBarSize={navBarSize}
                                                     collapseIcon={collapseIcon}
                                                     onItemClick={() =>
