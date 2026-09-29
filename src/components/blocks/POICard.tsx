@@ -188,7 +188,12 @@ const POICard: React.FC<POICardProps> = ({
     const id = useId();
 
     return (
-        <View as={renderAs} isInverted={isInverted} aria-labelledby={id}>
+        <View
+            as={renderAs}
+            isInverted={isInverted}
+            role={renderAs === 'div' ? 'group' : undefined}
+            aria-labelledby={name ? id : undefined}
+        >
             {name && (
                 <Title id={id} isInverted={isInverted}>
                     {name}
